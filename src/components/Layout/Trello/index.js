@@ -83,18 +83,15 @@ const Milestones = (props) => {
                                 key={index}
                                 style={{ backgroundColor: '#f5f5f5' }}
                                 className="board-card"
-                                onClick={() => dispatch(actionCreators.getLists(board._id, (res) => {
-                                    // console.log(res)
+                                onClick={() => dispatch(actionCreators.getLists(board.id, (res) => {
+
                                     if (res.success === true) {
                                         props.history.push('/cards', { data: board })
                                     }
                                 }))}
                             >
                                 <h3>{board.name}</h3>
-                                {/* <div>
-                                    <GroupIcon className="icon" style={{ fontSize: '30px', color: 'rgba(255, 255, 255, 0.685)' }} />
-                                    <p>Members</p>
-                                </div> */}
+
                             </Card>
                         ))}
                     </div>

@@ -15,12 +15,13 @@ const Cards = (props) => {
     const [open, setOpen] = useState(false)
 
     const boardName = props.location.state.data.name
-    const boardId = props.location.state.data._id
+    const boardId = props.location.state.data.id
+    console.log(props)
 
     const lists = useSelector(state => state.requests.lists)
     const cards = useSelector(state => state.requests.cards)
-    // console.log(lists, 'lists')
-    // console.log(cards, 'cards')
+    console.log(lists, 'lists')
+    console.log(cards, 'cards')
 
     const dispatch = useDispatch()
 
@@ -84,20 +85,20 @@ const Cards = (props) => {
                     </div>
                     <div className="milestone-row">
                         {lists.map((list, index) => (
-                            <div className="list-card" key={list._id}>
+                            <div className="list-card" key={index}>
                                 <div className="list-header">
                                     <h3>{list.name}</h3>
-                                    {/* <p>2 cards</p> */}
+
                                 </div>
                                 {cards.map(card => {
-                                    if (list._id === card.listId)
+                                    if (list.id === card.idList)
                                         return (
-                                            <div className="card-column" key={card._id}>
+                                            <div className="card-column">
                                                 <h5>{card.name}</h5>
                                             </div>
                                         )
                                 })}
-                                {show && activeListId === list._id ? <div className="add-card">
+                                {show && activeListId === list.id ? <div className="add-card">
                                     <input
                                         placeholder="Enter Card Title"
                                         type="text"
@@ -105,7 +106,7 @@ const Cards = (props) => {
                                         onChange={(e) => setCardName(e.target.value)}
                                     />
                                     <button onClick={() => {
-                                        dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
+                                        dispatch(actionCreators.createCard(list.id, cardName, (res) => {
                                             if (res.success === true) {
                                                 setTimeout(() => {
                                                     dispatch(actionCreators.getBoardCards(boardId))
@@ -115,9 +116,9 @@ const Cards = (props) => {
                                         setCardName('')
                                     }}>Add</button>
                                 </div> : null}
-                                { activeListId !== list._id ? <button onClick={() => {
+                                { activeListId !== list.id ? <button onClick={() => {
                                     setShow(true)
-                                    setActiveListId(list._id)
+                                    setActiveListId(list.id)
                                 }}>+ Add Card</button> : <button onClick={() => setShow(false)}>Close</button>}
                             </div>
                         ))}

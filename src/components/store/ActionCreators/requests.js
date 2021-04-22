@@ -52,7 +52,7 @@ export const getAirTableData = () => {
             }
         )
 
-        axios.get('https://api.airtable.com/v0/appX6seHGXGpzQbwk/REVENUES?maxRecords=3&view=Grid%20view')
+        axios.get('https://api.airtable.com/v0/appX6seHGXGpzQbwk/REVENUES?maxRecords=7&view=Grid%20view')
             .then(res => {
                 // console.log(res)
                 dispatch(setAirtableData(res.data.records))
@@ -64,71 +64,9 @@ export const getAirTableData = () => {
 }
 
 export const createBoard = (name, callback) => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
 
-        const token = getState().auth.token
-
-        const data = {
-            name
-        }
-
-        axios.post('https://starthubafrica-api.herokuapp.com/catalyzer/board', data, {
-            headers: {
-                ContentType: 'Application/json',
-                Authorization: token
-            }
-        }
-        )
-            .then(res => {
-                // console.log(res)
-                callback({ success: true, res: res })
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-}
-
-export const createListOnBoard = (id, name, callback) => {
-    return (dispatch, getState) => {
-
-        const token = getState().auth.token
-
-        const data = {
-            name
-        }
-
-        axios.post(`https://starthubafrica-api.herokuapp.com/catalyzer/list/${id}`, data, {
-            headers: {
-                ContentType: 'Application/json',
-                Authorization: token
-            }
-        })
-            .then(res => {
-                // console.log(res)
-                callback({ success: true, res: res })
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-}
-
-export const createCard = (boardId, listId, name, callback) => {
-    return (dispatch, getState) => {
-
-        const token = getState().auth.token
-
-        const data = {
-            name
-        }
-
-        axios.post(`https://starthubafrica-api.herokuapp.com/catalyzer/board/${boardId}/list/${listId}`, data, {
-            headers: {
-                ContentType: 'Application/json',
-                Authorization: token
-            }
-        })
+        axios.post(`https://api.trello.com/1/boards/?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}&name=${name}`)
             .then(res => {
                 console.log(res)
                 callback({ success: true, res: res })
@@ -140,20 +78,15 @@ export const createCard = (boardId, listId, name, callback) => {
 }
 
 
-export const getBoards = (callback) => {
-    return (dispatch, getState) => {
 
-        const token = getState().auth.token
+export const createListOnBoard = (id, name, callback) => {
+    return (dispatch) => {
 
-        axios.get('https://starthubafrica-api.herokuapp.com/catalyzer/boards', {
-            headers: {
-                ContentType: 'Application/json',
-                Authorization: token
-            }
-        })
+
+        axios.post(`https://api.trello.com/1/boards/${id}/lists?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}&name=${name}`)
             .then(res => {
-                // console.log(res.data.boards)
-                dispatch(setMilestones(res.data.boards))
+                // console.log(res)
+                callback({ success: true, res: res })
             })
             .catch(err => {
                 console.log(err)
@@ -161,20 +94,46 @@ export const getBoards = (callback) => {
     }
 }
 
-export const getLists = (id, callback) => {
-    return (dispatch, getState) => {
 
-        const token = getState().auth.token
 
-        axios.get(`https://starthubafrica-api.herokuapp.com/catalyzer/board/${id}/lists`, {
-            headers: {
-                ContentType: 'Application/json',
-                Authorization: token
-            }
-        })
+export const createCard = (id, name, callback) => {
+    return (dispatch) => {
+
+
+        axios.post(`https://api.trello.com/1/cards?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}&idList=${id}&name=${name}`)
             .then(res => {
-                // console.log(res.data)
-                dispatch(setLists(res.data.lists))
+                callback({ success: true, res: res })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
+export const getBoards = (callback) => {
+    return (dispatch) => {
+
+        axios.get(`https://api.trello.com/1/members/me/boards?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
+            .then(res => {
+                console.log(res.data)
+                dispatch(setMilestones(res.data))
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
+
+
+export const getLists = (id, callback) => {
+    return (dispatch) => {
+
+
+        axios.get(`https://api.trello.com/1/boards/${id}/lists?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
+            .then(res => {
+                console.log(res.data)
+                dispatch(setLists(res.data))
                 callback({ success: true, res: res })
             })
             .catch(err => {
@@ -197,20 +156,15 @@ export const getCards = (id) => {
     }
 }
 
+
 export const getBoardCards = (id) => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
 
-        const token = getState().auth.token
 
-        axios.get(`https://starthubafrica-api.herokuapp.com/catalyzer/board/${id}/cards`, {
-            headers: {
-                ContentType: 'Application/json',
-                Authorization: token
-            }
-        })
+        axios.get(`https://api.trello.com/1/boards/${id}/cards?key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`)
             .then(res => {
-                // console.log(res.data, 'd')
-                dispatch(setCards(res.data.cards))
+                console.log(res.data)
+                dispatch(setCards(res.data))
                 // callback({ success: true, res: res })
             })
             .catch(err => {
