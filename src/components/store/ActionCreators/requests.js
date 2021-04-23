@@ -215,7 +215,7 @@ export const getsBlogs = () => {
 
         const token = getState().auth.token
 
-        axios.get('http://localhost:8080/catalyzer/blogs/catalyzer/blogs', {
+        axios.get('https://starthubafrica-api.herokuapp.com/catalyzer/blogs', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
