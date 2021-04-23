@@ -112,6 +112,14 @@
   /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); */
 }
 
+.stats-card h1 {
+  color: #69191b;
+}
+
+.stats-card h2 {
+  color: #dfa126;
+}
+
 .stats-card-chart {
   display: flex;
   align-items: center;

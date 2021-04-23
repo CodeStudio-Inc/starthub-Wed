@@ -5,29 +5,31 @@ import Blog from './Blog'
 import CreateIcon from '@material-ui/icons/Create';
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close';
-import { storage } from '../../store/Firebase'
+// import { storage } from '../../store/Firebase'
+import firebase from 'firebase'
 import * as actionCreators from '../../store/ActionCreators'
 
 import './Styles.css'
 const Blogs = () => {
 
     const [open, setOpen] = useState(false)
-    const [blogTitle, setBlogTitle] = useState('')
-    const [subTitle, setSubTitle] = useState('')
-    const [quote, setQuote] = useState('')
-    const [description, setDesc] = useState('')
+    const [blogTitle, setBlogTitle] = useState('hello')
+    const [subTitle, setSubTitle] = useState('hello')
+    const [quote, setQuote] = useState('hello')
+    const [description, setDesc] = useState('hello')
     const [imageUrl, setImage] = useState('')
     const [blogImage, setBlogImage] = useState('')
-    const [videoUrl, setVideoUrl] = useState('')
-    const [category, setCategory] = useState('')
-    const [conclusion, setConclusion] = useState('')
-    const [author, setAuthor] = useState('')
+    const [videoUrl, setVideoUrl] = useState('https://www.youtube.com/embed/bBRAseMeAIU')
+    const [category, setCategory] = useState('hello')
+    const [conclusion, setConclusion] = useState('hello')
+    const [author, setAuthor] = useState('hello')
     const [progress, setProgress] = useState(0)
 
 
     const dispatch = useDispatch()
 
     useEffect(() => {
+        dispatch(actionCreators.blog())
         dispatch(actionCreators.getsBlogs())
     }, [])
 
@@ -38,8 +40,8 @@ const Blogs = () => {
         if (event.target.files[0]) {
             const name = event.target.files[0].name;
             try {
-                const uploadImage = storage.ref();
-                const _ref = uploadImage.child(`images/${name}`);
+                const uploadImage = firebase.storage().ref();
+                const _ref = uploadImage.child(`blog/${name}`);
                 _ref.put(event.target.files[0]).on(
                     'state_changed',
                     (snapshot) => {
@@ -65,7 +67,7 @@ const Blogs = () => {
         if (event.target.files[0]) {
             const name = event.target.files[0].name;
             try {
-                const uploadImage = storage.ref();
+                const uploadImage = firebase.storage().ref();
                 const _ref = uploadImage.child(`images/${name}`);
                 _ref.put(event.target.files[0]).on(
                     'state_changed',

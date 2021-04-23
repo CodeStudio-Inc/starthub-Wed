@@ -6,6 +6,7 @@ import Search from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close';
+import Drag from './drag'
 
 const Cards = (props) => {
     const [listName, setListName] = useState('')
@@ -124,6 +125,7 @@ const Cards = (props) => {
                         ))}
                     </div>
                 </div>
+                {/* <Drag /> */}
             </div>
         </div>
     )

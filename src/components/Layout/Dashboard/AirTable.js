@@ -16,7 +16,7 @@ const AirTable = () => {
     const headers = [
         // { label: 'Emploment Fullname' },
         { label: 'Name Of Customer' },
-        { label: 'Saving Account' },
+        // { label: 'Saving Account' },
         { label: 'Amount' },
         // { label: 'Date' },
         // { label: 'Created' },
@@ -77,8 +77,8 @@ const AirTable = () => {
                                         <tr className="table-detail">
                                             {/* <td>{row.fields['EMPLOYEE FULLNAME']}</td> */}
                                             <td>{row.fields['NAME OF CUSTOMER']}</td>
-                                            <td>{row.fields['SAVING ACCOUNT']}</td>
-                                            <td>{row.fields.AMOUNT}</td>
+                                            {/* <td>{row.fields['SAVING ACCOUNT']}</td> */}
+                                            <td>{row.fields.AMOUNT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                             {/* <td>{moment(row.fields.Created).format('LT')}</td> */}
                                         </tr>
                                     ))}
@@ -101,7 +101,8 @@ const AirTable = () => {
                                     </div>
                                 </div>
                             ))}
-                        </div><div className="stats-card">
+                        </div>
+                        <div className="stats-card">
                             <div className="stats-header">
                                 <h3>Total Revenue</h3>
                             </div>

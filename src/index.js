@@ -11,6 +11,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 import storage from 'redux-persist/lib/storage'
 import rootReducer from './components/store/Reducers'
 
+require('./components/store/Firebase')
+
 const reducerPersistor = persistReducer({ key: "root", storage }, rootReducer)
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

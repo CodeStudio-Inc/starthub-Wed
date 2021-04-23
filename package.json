@@ -10,6 +10,8 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "chart.js": "^3.1.1",
+    "contentful": "^8.3.1",
+    "dragula": "^3.7.3",
     "firebase": "^8.3.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",

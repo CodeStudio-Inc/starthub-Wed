@@ -7,8 +7,8 @@ import './Styles.css'
 const Login = (props) => {
 
     const [state, setState] = useState({
-        email: '',
-        password: '',
+        email: 'stuartkal@gmail.com',
+        password: 'starthub@123',
         message: ''
     })
 

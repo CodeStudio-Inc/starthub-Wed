@@ -2,6 +2,8 @@ import * as actions from '../Actions'
 import axios from 'axios'
 import { TRELLO_KEY, TRELLO_TOKEN } from '../Config'
 
+const contentful = require('contentful');
+
 export const setAirtableData = (data) => {
     return {
         type: actions.SET_AIRTABLE_DATA,
@@ -191,7 +193,7 @@ export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blog
             author: author
         }
 
-        axios.post('https://starthubafrica-api.herokuapp.com/catalyzer/blog', data, {
+        axios.post('http://localhost:8080/catalyzer/blog', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -213,7 +215,7 @@ export const getsBlogs = () => {
 
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica-api.herokuapp.com/catalyzer/blogs', {
+        axios.get('http://localhost:8080/catalyzer/blogs/catalyzer/blogs', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -229,3 +231,47 @@ export const getsBlogs = () => {
             })
     }
 }
+
+
+const client = contentful.createClient({
+    space: 'v8tfhiasde9f',
+    accessToken: '_9-tF4zAzF9ooH5BVphzPa-rzeOd3X0HtaH_Eg3rqkM'
+});
+
+export const blog = () => {
+    return dispatch => {
+
+        client.getEntries({ content_type: 'startHubAfrica' })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+        // const ACCESS_TOKEN = 'G9eaaCuz3xk1fz5wfHi6ZLvPn77MZ3xo1TDl5muA2tE'
+
+        // axios.get(`https://cdn.contentful.com/spaces/cfexampleapi/entries?access_token=${ACCESS_TOKEN}`)
+        //     .then(res => {
+        //         console.log(res)
+        //     })
+        //     .catch(err => {
+        //         console.log(err.message)
+        //     })
+    }
+}
+
+// export const addBlog = () => {
+//     return dispatch => {
+
+//         client.getSpace('86hc0dtv3g49')
+//             .then((space) => {
+//                 space.createEntries({
+//                     fields: {
+//                         blogTitle: 'fdsfds'
+//                     }
+//                 })
+//             })
+//             .catch(console.error)
+//     }
+// }

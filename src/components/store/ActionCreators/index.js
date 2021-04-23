@@ -1,2 +1,2 @@
 export { register, login, removeUser } from './auth'
-export { getAirTableData, getBoards, getCards, createBoard, createListOnBoard, getLists, createCard, getBoardCards, postBlog, getsBlogs } from './requests'
+export { getAirTableData, getBoards, getCards, createBoard, createListOnBoard, getLists, createCard, getBoardCards, postBlog, getsBlogs, blog } from './requests'
