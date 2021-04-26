@@ -29,7 +29,6 @@ const Blogs = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(actionCreators.blog())
         dispatch(actionCreators.getsBlogs())
     }, [])
 

@@ -2,7 +2,6 @@ import * as actions from '../Actions'
 import axios from 'axios'
 import { TRELLO_KEY, TRELLO_TOKEN } from '../Config'
 
-const contentful = require('contentful');
 
 export const setAirtableData = (data) => {
     return {
@@ -193,7 +192,7 @@ export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blog
             author: author
         }
 
-        axios.post('http://localhost:8080/catalyzer/blog', data, {
+        axios.post('https://starthubafrica-api.herokuapp.com/catalyzer/blog', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -222,7 +221,7 @@ export const getsBlogs = () => {
             }
         })
             .then(res => {
-                // console.log(res.data)
+                console.log(res.data)
                 dispatch(setBlogs(res.data.blogs))
                 // callback({ success: true, res: res })
             })
@@ -233,21 +232,21 @@ export const getsBlogs = () => {
 }
 
 
-const client = contentful.createClient({
-    space: 'v8tfhiasde9f',
-    accessToken: '_9-tF4zAzF9ooH5BVphzPa-rzeOd3X0HtaH_Eg3rqkM'
-});
+// const client = contentful.createClient({
+//     space: 'v8tfhiasde9f',
+//     accessToken: '_9-tF4zAzF9ooH5BVphzPa-rzeOd3X0HtaH_Eg3rqkM'
+// });
 
-export const blog = () => {
-    return dispatch => {
+// export const blog = () => {
+//     return dispatch => {
 
-        client.getEntries({ content_type: 'startHubAfrica' })
-            .then(res => {
-                console.log(res)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+//         client.getEntries({ content_type: 'startHubAfrica' })
+//             .then(res => {
+//                 console.log(res)
+//             })
+//             .catch(error => {
+//                 console.log(error)
+//             })
 
         // const ACCESS_TOKEN = 'G9eaaCuz3xk1fz5wfHi6ZLvPn77MZ3xo1TDl5muA2tE'
 
@@ -258,8 +257,8 @@ export const blog = () => {
         //     .catch(err => {
         //         console.log(err.message)
         //     })
-    }
-}
+    // }
+// }
 
 // export const addBlog = () => {
 //     return dispatch => {
