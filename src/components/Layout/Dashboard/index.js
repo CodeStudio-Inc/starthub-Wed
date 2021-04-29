@@ -11,28 +11,41 @@ import './Dashboard.css'
 const Dashboard = (props) => {
 
     const [open, setOpen] = useState(false)
+    const [cashAmount, setCashAmount] = useState(0)
+    const [mobileMoneyAmount, setMobileMoneyAmount] = useState(0)
 
     const dispatch = useDispatch()
 
     const data = useSelector(state => state.requests.data)
-    console.log(data, 'jj')
+    // console.log(data, 'jj')
+
+    useEffect(() => {
+        dispatch(actionCreators.getAirTableData())
+        getCashAmount()
+        MobileMoneyAmount()
+    }, [])
+
+    const getCashAmount = () => {
+        setCashAmount(data.filter(el => el.fields['SAVING ACCOUNT'] === 'CASH ACCOUNT').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
+
+    const MobileMoneyAmount = () => {
+        setMobileMoneyAmount(data.filter(el => el.fields['SAVING ACCOUNT'] === 'MM ACCOUNT').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
 
     const state = {
-        labels: ['Investor', 'Talents', 'Ticketing'],
+        labels: ['Cash Account', 'Mobile Money Account'],
         datasets: [
             {
-                label: 'Revenue Total',
+                label: 'Accounts Revenue',
                 backgroundColor: '#dfa126',
                 borderColor: '#fff',
                 borderWidth: 1,
-                data: [5000000, 248000, 300000]
+                data: [cashAmount, mobileMoneyAmount]
             }
         ]
     };
 
-    useEffect(() => {
-        dispatch(actionCreators.getAirTableData())
-    }, [])
 
     const handleAirtableNavigate = () => {
         props.history.push('/air-table')

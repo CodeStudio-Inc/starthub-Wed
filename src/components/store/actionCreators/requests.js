@@ -58,6 +58,20 @@ export const setAirtableData = (data) => {
     }
 }
 
+export const deleteCardAction = (id) => {
+    return {
+        type: actions.DELETE_CARD,
+        id
+    }
+}
+
+export const deleteListAction = (id) => {
+    return {
+        type: actions.DELETE_LIST,
+        id
+    }
+}
+
 export const createBoard = (name, callback) => {
     return (dispatch, getState) => {
 
@@ -74,7 +88,7 @@ export const createBoard = (name, callback) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -99,7 +113,7 @@ export const createList = (id, name, callback) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -125,7 +139,7 @@ export const createCard = (boardId, listId, name, callback) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -328,11 +342,53 @@ export const getAirTableData = () => {
 
         axios.get('https://api.airtable.com/v0/appX6seHGXGpzQbwk/REVENUES?maxRecords=7&view=Grid%20view')
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 dispatch(setAirtableData(res.data.records))
             })
             .catch(err => {
                 console.log(err)
+            })
+    }
+}
+
+export const deleteCard = (id) => {
+    return (dispatch, getState) => {
+
+        const token = getState().auth.token
+
+        axios.delete(`https://starthubafrica-api.herokuapp.com/catalyzer/card/${id}`, {
+            headers: {
+                ContentType: 'Application/json',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(deleteCardAction(id))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const deleteList = (id) => {
+    return (dispatch, getState) => {
+
+        const token = getState().auth.token
+
+        axios.delete(`https://starthubafrica-api.herokuapp.com/catalyzer/list/${id}`, {
+            headers: {
+                ContentType: 'Application/json',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(deleteListAction(id))
+            })
+            .catch(error => {
+                console.log(error)
             })
     }
 }

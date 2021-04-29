@@ -8,11 +8,20 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import RateReviewIcon from '@material-ui/icons/RateReview';
+import * as actionCreators from '../store/actionCreators'
 
 import './Navigation.css'
 const Sidebar = (props) => {
 
+    const dispatch = useDispatch()
+
     const email = useSelector(state => state.auth.email)
+
+    const handleLogout = () => {
+        dispatch(actionCreators.removeUser())
+        props.history.push('/')
+    }
+
 
     const handleTodosNavigation = () => {
         props.history.push('/')
@@ -90,7 +99,7 @@ const Sidebar = (props) => {
                     <h5>Business Modal</h5>
                 </div>
             </div>
-            <div className="logout-container">
+            <div className="logout-container" onClick={handleLogout}>
                 <button>Logout</button>
                 <ExitToAppIcon className="icon" style={{ fontSize: '14px' }} />
             </div>

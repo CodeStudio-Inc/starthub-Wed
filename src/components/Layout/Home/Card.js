@@ -6,6 +6,8 @@ import Search from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 import './Home.css'
 const Card = (props) => {
@@ -28,7 +30,7 @@ const Card = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(actionCreators.getListsOnBoard(boardId))
+        dispatch(actionCreators.getListsOnBoard(boardId, () => { }))
         dispatch(actionCreators.getCardsOnBoard(boardId))
     }, [])
 
@@ -87,13 +89,16 @@ const Card = (props) => {
                             <div className="list-card" key={list._id}>
                                 <div className="list-header">
                                     <h3>{list.name}</h3>
-
+                                    <DeleteIcon onClick={() => dispatch(actionCreators.deleteList(list._id))} className="delete-icon" />
                                 </div>
                                 {cards.map(card => {
                                     if (list._id === card.listId)
                                         return (
                                             <div className="card-column" key={card._id}>
-                                                <h5>{card.name}</h5>
+                                                <div className="card-text">
+                                                    <h5>{card.name}</h5>
+                                                </div>
+                                                <button onClick={() => dispatch(actionCreators.deleteCard(card._id))}>remove</button>
                                             </div>
                                         )
                                 })}

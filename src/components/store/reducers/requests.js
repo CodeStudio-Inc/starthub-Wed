@@ -55,6 +55,14 @@ const requests = (state = initialState, action) => {
                 milestone_board_id: action.boardId,
                 milestone_board_name: action.boardName
             })
+        case actions.DELETE_CARD:
+            return updateObject(state, {
+                cards: state.cards.filter(({ _id }) => _id !== action.id)
+            })
+        case actions.DELETE_LIST:
+            return updateObject(state, {
+                lists: state.lists.filter(({ _id }) => _id !== action.id)
+            })
 
         default:
             return state

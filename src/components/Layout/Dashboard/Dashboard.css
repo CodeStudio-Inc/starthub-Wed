@@ -218,15 +218,21 @@
 }
 
 .time {
-  width: 30%;
+  width: 50%;
   background: #dfa126;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.time h5 {
+  color: #fff;
+  font-weight: 100;
+  font-size: 12px;
+}
+
 .event-detail {
-  width: 70%;
+  width: 50%;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;

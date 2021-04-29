@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Sidebar from '../../Navigation/Sidebar'
 import * as actionCreators from '../../store/actionCreators'
@@ -8,37 +8,59 @@ import moment from 'moment'
 import './Dashboard.css'
 const AirTable = () => {
 
+    const [revenue, setRevenue] = useState('')
+    const [cashAmount, setCashAmount] = useState(0)
+    const [mobileMoneyAmount, setMobileMoneyAmount] = useState(0)
+
     const dispatch = useDispatch()
 
     const data = useSelector(state => state.requests.data)
-    console.log(data, 'jj')
+    // console.log(data, 'jj')
 
     const headers = [
         // { label: 'Emploment Fullname' },
-        { label: 'Name Of Customer' },
-        // { label: 'Saving Account' },
+        // { label: 'Name Of Customer' },
+        { label: 'Saving Account' },
         { label: 'Amount' },
         // { label: 'Date' },
         // { label: 'Created' },
     ]
 
+    useEffect(() => {
+        dispatch(actionCreators.getAirTableData())
+        getAmount()
+        getCashAmount()
+        MobileMoneyAmount()
+    }, [])
+
+    const getAmount = () => {
+        setRevenue(data.reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
+
+
+    const getCashAmount = () => {
+        setCashAmount(data.filter(el => el.fields['SAVING ACCOUNT'] === 'CASH ACCOUNT').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
+
+    const MobileMoneyAmount = () => {
+        setMobileMoneyAmount(data.filter(el => el.fields['SAVING ACCOUNT'] === 'MM ACCOUNT').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
+
+
     const state = {
-        labels: ['Investor', 'Talents', 'Ticketing'],
+        labels: ['Payment Method Totals'],
         datasets: [
             {
-                label: 'Case',
+                // label: 'Payment Method',
                 backgroundColor: '#dfa126',
                 borderColor: '#fff',
                 borderWidth: 1,
-                data: [5000000, 248000, 300000]
+                data: [cashAmount, mobileMoneyAmount]
             }
         ]
     };
 
-    useEffect(() => {
-        dispatch(actionCreators.getAirTableData())
-    }, [])
-
+    // console.log(mobileMoneyAmount, 'filter')
 
     return (
         <div className="main-container-table">
@@ -76,8 +98,8 @@ const AirTable = () => {
                                     {data.map(row => (
                                         <tr className="table-detail">
                                             {/* <td>{row.fields['EMPLOYEE FULLNAME']}</td> */}
-                                            <td>{row.fields['NAME OF CUSTOMER']}</td>
-                                            {/* <td>{row.fields['SAVING ACCOUNT']}</td> */}
+                                            {/* <td>{row.fields['NAME OF CUSTOMER']}</td> */}
+                                            <td>{row.fields['SAVING ACCOUNT']}</td>
                                             <td>{row.fields.AMOUNT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                             {/* <td>{moment(row.fields.Created).format('LT')}</td> */}
                                         </tr>
@@ -107,7 +129,7 @@ const AirTable = () => {
                                 <h3>Total Revenue</h3>
                             </div>
                             <h2>UGX</h2>
-                            <h1>7,780,000</h1>
+                            <h1>{revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h1>
                         </div>
                     </div>
                 </div>
