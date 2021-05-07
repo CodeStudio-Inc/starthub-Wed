@@ -43,6 +43,18 @@
   padding: 10px;
 }
 
+.expense {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  width: 95%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 10px;
+}
+
 .overview-header-main {
   display: flex;
   justify-content: flex-end;

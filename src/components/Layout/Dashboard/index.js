@@ -4,47 +4,137 @@ import Sidebar from '../../Navigation/Sidebar'
 import * as actionCreators from '../../store/actionCreators'
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { Line } from 'react-chartjs-2'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import { Line, Pie } from 'react-chartjs-2'
 
 import './Dashboard.css'
 const Dashboard = (props) => {
 
     const [open, setOpen] = useState(false)
-    const [cashAmount, setCashAmount] = useState(0)
-    const [mobileMoneyAmount, setMobileMoneyAmount] = useState(0)
+    const [jan, setJan] = useState(0)
+    const [feb, setFeb] = useState(0)
+    const [march, setMarch] = useState(0)
+    const [april, setApril] = useState(0)
+    const [may, setMay] = useState(0)
+    const [june, setJune] = useState(0)
 
     const dispatch = useDispatch()
 
     const data = useSelector(state => state.requests.data)
-    // console.log(data, 'jj')
+    const expense = useSelector(state => state.requests.expense)
+    console.log(feb)
+
 
     useEffect(() => {
         dispatch(actionCreators.getAirTableData())
-        getCashAmount()
-        MobileMoneyAmount()
+        dispatch(actionCreators.getExpenseData())
+        setJanRevenue()
+        setFebRevenue()
+        setMarchRevenue()
+        setAprilRevenue()
+        setMayRevenue()
+        setJuneRevenue()
     }, [])
 
-    const getCashAmount = () => {
-        setCashAmount(data.filter(el => el.fields['SAVING ACCOUNT'] === 'CASH ACCOUNT').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+
+    const janstartDate = '2021-01-01'
+    const janendDate = '2021-01-31'
+    const febstartDate = '2021-02-01'
+    const febendDate = '2021-02-28'
+    const marchstartDate = '2021-03-01'
+    const marchendDate = '2021-03-31'
+    const aprilstartDate = '2021-04-01'
+    const aprilendDate = '2021-04-31'
+    const maystartDate = '2021-05-01'
+    const mayendDate = '2021-05-31'
+    const junstartDate = '2021-06-01'
+    const junendDate = '2021-06-31'
+
+    const setJanRevenue = () => {
+        setJan(data.filter(el => el.fields['DATE'] >= janstartDate && el.fields['DATE'] <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
     }
 
-    const MobileMoneyAmount = () => {
-        setMobileMoneyAmount(data.filter(el => el.fields['SAVING ACCOUNT'] === 'MM ACCOUNT').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    const setFebRevenue = () => {
+        setFeb(data.filter(el => el.fields['DATE'] >= febstartDate && el.fields['DATE'] <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
     }
+
+    const setMarchRevenue = () => {
+        setMarch(data.filter(el => el.fields['DATE'] >= marchstartDate && el.fields['DATE'] <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
+
+    const setAprilRevenue = () => {
+        setApril(data.filter(el => el.fields['DATE'] >= aprilstartDate && el.fields['DATE'] <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
+
+    const setMayRevenue = () => {
+        setMay(data.filter(el => el.fields['DATE'] >= maystartDate && el.fields['DATE'] <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
+
+    const setJuneRevenue = () => {
+        setJune(data.filter(el => el.fields['DATE'] >= junstartDate && el.fields['DATE'] <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
+    }
+
+    const expenseTotal = expense.reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    // console.log(expenseTotal)
+
+    const events = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'event costs').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const helpers = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'onscore helpers').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const transport_mgt = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'Transport mgt').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const transport_players = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'Transport players').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const airtime = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'Airtime/ Data').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const salary = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'onscore salaries').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const IT = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'IT costs').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const allawance = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'onscore allawances').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const equipment = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'club equipments').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+
+    const source1 = data.filter(el => el.fields.SOURCE.includes('REGISTRATION RUKUNGIRI')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const source2 = data.filter(el => el.fields.SOURCE.includes('TICKETING')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const source3 = data.filter(el => el.fields.SOURCE.includes('INVESTOR')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const source4 = data.filter(el => el.fields.SOURCE.includes('REGISTRATION KAMPALA')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const source5 = data.filter(el => el.fields.SOURCE.includes('SPONSORS')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const source6 = data.filter(el => el.fields.SOURCE.includes('SPORTS PRODUCTS')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    console.log(source6, 'hhh')
 
     const state = {
-        labels: ['Cash Account', 'Mobile Money Account'],
+        labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
         datasets: [
             {
-                label: 'Accounts Revenue',
+                label: 'Total Cash Revenues',
                 backgroundColor: '#dfa126',
                 borderColor: '#fff',
                 borderWidth: 1,
-                data: [cashAmount, mobileMoneyAmount]
+                data: [jan, feb, march, april, may, june]
             }
         ]
     };
+
+    const expenseData = {
+        labels: ['Event Costs', 'Onscore Helpers', 'Transport Managment', 'Transport Players', 'Airtime/Data', 'Onscore Salaries', 'IT Costs', 'Onscore Allawances', 'Club Equipments'],
+        datasets: [
+            {
+                label: 'Total Expenditures',
+                backgroundColor: '#dfa126',
+                borderColor: '#fff',
+                borderWidth: 1,
+                data: [events, helpers, transport_mgt, transport_players, airtime, salary, IT, allawance, equipment]
+            }
+        ]
+    };
+
+    const aquisitionData = {
+        labels: ['Registration Rukungiri', 'Ticketing', 'Investors', 'Registration Kampala', 'Sponsors', 'Sports Products'],
+        datasets: [
+            {
+                label: 'Total Expenditures',
+                backgroundColor: '#dfa126',
+                borderColor: '#fff',
+                borderWidth: 1,
+                data: [source1, source2, source3, source4, source5, source6]
+            }
+        ]
+    };
+
+
 
 
     const handleAirtableNavigate = () => {
@@ -71,7 +161,7 @@ const Dashboard = (props) => {
                 </div>
                 <div className="revenue">
                     <div className="overview-header">
-                        <h2>Revenue</h2>
+                        <h2> Six Months Revenue Development</h2>
                     </div>
                     <Line
                         data={state}
@@ -85,20 +175,37 @@ const Dashboard = (props) => {
                     />
                 </div>
 
-                <div className="revenue">
-                    <div className="overview-header">
-                        <h2>Costs</h2>
-                    </div>
-                    <Line
-                        data={state}
-                        width={100}
-                        height={20}
-                    // options={{
-                    //     maintainAspectRatio: false,
-                    //     responsive: true
+                <div className="expense">
+                    <div className="stats-card-chart">
+                        <div className="stats-header">
+                            <h3>Breakdown of Cost Structure for previous month</h3>
+                        </div>
+                        <Pie
+                            data={expenseData}
+                            width={100}
+                            height={20}
 
-                    // }}
-                    />
+                            options={{
+                                maintainAspectRatio: false,
+                                responsive: true
+
+                            }}
+                        />
+                    </div>
+                    <div className="stats-card-chart">
+                        <div className="stats-header">
+                            <h3>Revenue Aquisition Development</h3>
+                        </div>
+                        <Line
+                            data={aquisitionData}
+                            width={100}
+                            height={20}
+                            options={{
+                                maintainAspectRatio: false,
+                                responsive: true
+                            }}
+                        />
+                    </div>
                 </div>
 
                 {/* <div className="header-row">

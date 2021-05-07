@@ -3,6 +3,7 @@ import { updateObject } from './utility'
 
 const initialState = {
     data: [],
+    expense: [],
     boards: [],
     lists: [],
     cards: [],
@@ -25,6 +26,11 @@ const requests = (state = initialState, action) => {
         case actions.SET_AIRTABLE_DATA:
             return updateObject(state, {
                 data: action.data
+            })
+
+        case actions.SET_EXPENSE_DATA:
+            return updateObject(state, {
+                expense: action.data
             })
 
         case actions.SET_BOARDS:

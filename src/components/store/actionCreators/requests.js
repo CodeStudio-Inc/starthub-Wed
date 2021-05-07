@@ -58,6 +58,13 @@ export const setAirtableData = (data) => {
     }
 }
 
+export const setExpenseData = (data) => {
+    return {
+        type: actions.SET_EXPENSE_DATA,
+        data
+    }
+}
+
 export const deleteCardAction = (id) => {
     return {
         type: actions.DELETE_CARD,
@@ -386,6 +393,33 @@ export const deleteList = (id) => {
             .then(res => {
                 // console.log(res)
                 dispatch(deleteListAction(id))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+
+export const getExpenseData = () => {
+    return dispatch => {
+
+        const key = 'key8X69XD5EQ4Gsjn'
+
+        axios.interceptors.request.use(
+            config => {
+                config.headers.authorization = `Bearer ${key}`;
+                return config
+            },
+            error => {
+                return Promise.reject(error)
+            }
+        )
+
+        axios.get('https://api.airtable.com/v0/appX6seHGXGpzQbwk/EXPENDITURE?maxRecords=50&view=Grid%20view')
+            .then(res => {
+                // console.log(res.data.records)
+                dispatch(setExpenseData(res.data.records))
             })
             .catch(error => {
                 console.log(error)

@@ -4,10 +4,14 @@ import * as actionCreators from '../../store/actionCreators'
 import Sidebar from '../../Navigation/Sidebar'
 import Search from '@material-ui/icons/Search';
 
-
+import './Canvas.css'
 const Canvas = () => {
     const [cardName, setCardName] = useState('')
-    const [show, setShow] = useState(false)
+    const [show1, setShow1] = useState(false)
+    const [show2, setShow2] = useState(false)
+    const [show3, setShow3] = useState(false)
+    const [show4, setShow4] = useState(false)
+    const [show5, setShow5] = useState(false)
     const [activeListId, setActiveListId] = useState(null)
 
     const boardId = useSelector(state => state.requests.canvas_board_id)
@@ -33,18 +37,108 @@ const Canvas = () => {
                     <div className="boards-header">
                         <h2>{boardName}</h2>
                         <div className="edit-row">
-                            <div className="search">
-                                <input
-                                    type="text"
-                                    placeholder="Search"
-                                />
-                                <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
-                            </div>
+                            {/*   */}
                             {/* <div className="separator" /> */}
                             {/* <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} /> */}
                         </div>
                     </div>
-                    <div className="milestone-row">
+                    <div className="canvas-main">
+                        <div className="milestone-row">
+                            <div className="canvas-list">
+                                <div className="canvas-header">
+                                    <h3>Unique Value Proposition</h3>
+                                </div>
+                                <div className="canvas-list-card">
+
+                                </div>
+                                {show1 ? <div className="canvas-add-card">
+                                    <input
+                                        placeholder="Enter Card Title"
+                                        type="text"
+                                        value={cardName}
+                                        onChange={(e) => setCardName(e.target.value)}
+                                    />
+                                    <button >update</button>
+                                </div> : null}
+                                {show1 ? <button onClick={() => setShow1(false)}>close</button> : <button onClick={() => setShow1(true)}>+ Edit Card</button>}
+                            </div>
+                            <div className="canvas-list">
+                                <div className="canvas-list-list">
+                                    <div className="canvas-header">
+                                        <h3>Unfair Advantage</h3>
+                                    </div>
+                                    <div className="canvas-list-card">
+
+                                    </div>
+                                    {show2 ? <div className="canvas-add-card">
+                                        <input
+                                            placeholder="Enter Card Title"
+                                            type="text"
+                                            value={cardName}
+                                            onChange={(e) => setCardName(e.target.value)}
+                                        />
+                                        <button >update</button>
+                                    </div> : null}
+                                    {show2 ? <button onClick={() => setShow2(false)}>close</button> : <button onClick={() => setShow2(true)}>+ Edit Card</button>}
+                                </div>
+                                <div className="canvas-list-list">
+                                    <div className="canvas-header">
+                                        <h3>Channels</h3>
+                                    </div>
+                                    <div className="canvas-list-card">
+
+                                    </div>
+                                    {show3 ? <div className="canvas-add-card">
+                                        <input
+                                            placeholder="Enter Card Title"
+                                            type="text"
+                                            value={cardName}
+                                            onChange={(e) => setCardName(e.target.value)}
+                                        />
+                                        <button >update</button>
+                                    </div> : null}
+                                    {show3 ? <button onClick={() => setShow3(false)}>close</button> : <button onClick={() => setShow3(true)}>+ Edit Card</button>}
+                                </div>
+                            </div>
+                            <div className="canvas-list">
+                                <div className="canvas-header">
+                                    <h3>Customer Segments</h3>
+                                </div>
+                                <div className="canvas-list-card">
+
+                                </div>
+                                {show4 ? <div className="canvas-add-card">
+                                    <input
+                                        placeholder="Enter Card Title"
+                                        type="text"
+                                        value={cardName}
+                                        onChange={(e) => setCardName(e.target.value)}
+                                    />
+                                    <button >update</button>
+                                </div> : null}
+                                {show4 ? <button onClick={() => setShow4(false)}>close</button> : <button onClick={() => setShow4(true)}>+ Edit Card</button>}
+                            </div>
+                        </div>
+                        <div className="canvas-list-list3">
+                            <div className="canvas-header">
+                                <h3>Revenue Streams</h3>
+                            </div>
+                            <div className="canvas-list-card">
+
+                            </div>
+                            {show5 ? <div className="canvas-add-card">
+                                <input
+                                    placeholder="Enter Card Title"
+                                    type="text"
+                                    value={cardName}
+                                    onChange={(e) => setCardName(e.target.value)}
+                                />
+                                <button >update</button>
+                            </div> : null}
+                            {show5 ? <button onClick={() => setShow5(false)}>close</button> : <button onClick={() => setShow5(true)}>+ Edit Card</button>}
+                        </div>
+                    </div>
+                    {/* <div className="milestone-row">
                         {lists.map((list, index) => (
                             <div className="list-card" key={list._id}>
                                 <div className="list-header">
@@ -83,7 +177,7 @@ const Canvas = () => {
                                 }}>+ Add Card</button> : <button onClick={() => setShow(false)}>Close</button>}
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

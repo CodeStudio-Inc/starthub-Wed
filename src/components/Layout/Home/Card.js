@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import * as actionCreators from '../../store/actionCreators'
-import Sidebar from '../../Navigation/Sidebar'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actionCreators from '../../store/actionCreators';
+import Sidebar from '../../Navigation/Sidebar';
 import Search from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import ModalUI from '../../ModalUI'
+import ModalUI from '../../ModalUI';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 

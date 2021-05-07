@@ -48,10 +48,10 @@ const AirTable = () => {
 
 
     const state = {
-        labels: ['Payment Method Totals'],
+        labels: ['Cash Amount', 'Mobile oney Account'],
         datasets: [
             {
-                // label: 'Payment Method',
+                label: 'Payment Method',
                 backgroundColor: '#dfa126',
                 borderColor: '#fff',
                 borderWidth: 1,
