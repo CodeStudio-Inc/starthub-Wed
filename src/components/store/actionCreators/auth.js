@@ -33,7 +33,7 @@ export const login = (email, password) => {
             password
         }
 
-        axios.post('https://starthubafrica-api.herokuapp.com/auth/signin', data)
+        axios.post('https://starthubafrica.herokuapp.com/auth/signin', data)
             .then(res => {
                 dispatch(setUser(res.data.userId, res.data.username, res.data.email, res.data.token))
                 // console.log(res)
@@ -54,7 +54,7 @@ export const signUp = (username, email, password) => {
             password
         }
 
-        axios.put('https://starthubafrica-api.herokuapp.com/auth/signup', data,
+        axios.put('https://starthubafrica.herokuapp.com/auth/signup', data,
             {
                 headers:
                 {

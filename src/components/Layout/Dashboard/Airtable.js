@@ -72,7 +72,7 @@ const AirTable = () => {
                     <div className="stats-row-left">
                         <div className="stats-card-chart">
                             <div className="stats-header">
-                                <h3>Revenues    </h3>
+                                <h3>Revenues</h3>
                             </div>
                             <Doughnut
                                 data={state}

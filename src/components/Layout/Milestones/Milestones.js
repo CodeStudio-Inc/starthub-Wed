@@ -13,13 +13,17 @@ const Milestones = () => {
     const boardName = useSelector(state => state.requests.milestone_board_name)
     const lists = useSelector(state => state.requests.lists)
     const cards = useSelector(state => state.requests.cards)
-    console.log(lists)
+    // console.log(cards)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(actionCreators.getListsOnBoard(boardId, () => { }))
         dispatch(actionCreators.getCardsOnBoard(boardId))
     }, [])
+
+    const statements = lists.filter(el => el.name.includes('Statement'))
+    const Milestone = lists.filter(el => el.name.includes('Milestone'))
+    console.log("object", statements)
 
     return (
         <div className="main-container">
@@ -42,22 +46,25 @@ const Milestones = () => {
                             {/* <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} /> */}
                         </div>
                     </div>
-                    <div className="milestone-row">
-                        {lists.map((list, index) => (
-                            <div className="list-card" key={list._id}>
+                    <div className="statement-row">
+                        {statements.map((vision, index) => (
+                            <div className="list-card" key={vision._id}>
                                 <div className="list-header">
-                                    <h3>{list.name}</h3>
+                                    <h3>{vision.name}</h3>
 
                                 </div>
                                 {cards.map(card => {
-                                    if (list._id === card.listId)
+                                    if (vision._id === card.listId)
                                         return (
                                             <div className="card-column" key={card._id}>
-                                                <h5>{card.name}</h5>
+                                                <div className="card-text">
+                                                    <h5>{card.name}</h5>
+                                                </div>
+                                                <button onClick={() => dispatch(actionCreators.deleteCard(card._id))}>remove</button>
                                             </div>
                                         )
                                 })}
-                                {show && activeListId === list._id ? <div className="add-card">
+                                {show && activeListId === vision._id ? <div className="add-card">
                                     <input
                                         placeholder="Enter Card Title"
                                         type="text"
@@ -65,7 +72,7 @@ const Milestones = () => {
                                         onChange={(e) => setCardName(e.target.value)}
                                     />
                                     <button onClick={() => {
-                                        dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
+                                        dispatch(actionCreators.createCard(boardId, vision._id, cardName, (res) => {
                                             if (res.success === true) {
                                                 setTimeout(() => {
                                                     dispatch(actionCreators.getCardsOnBoard(boardId))
@@ -75,9 +82,52 @@ const Milestones = () => {
                                         setCardName('')
                                     }}>Add</button>
                                 </div> : null}
-                                { activeListId !== list._id ? <button onClick={() => {
+                                { activeListId !== vision._id ? <button onClick={() => {
                                     setShow(true)
-                                    setActiveListId(list._id)
+                                    setActiveListId(vision._id)
+                                }}>+ Add Card</button> : <button onClick={() => setShow(false)}>Close</button>}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="milestones-row">
+                        {Milestone.map((mission, index) => (
+                            <div className="list-card" key={mission._id}>
+                                <div className="list-header">
+                                    <h3>{mission.name}</h3>
+
+                                </div>
+                                {cards.map(card => {
+                                    if (mission._id === card.listId)
+                                        return (
+                                            <div className="card-column" key={card._id}>
+                                                <div className="card-text">
+                                                    <h5>{card.name}</h5>
+                                                </div>
+                                                <button onClick={() => dispatch(actionCreators.deleteCard(card._id))}>remove</button>
+                                            </div>
+                                        )
+                                })}
+                                {show && activeListId === mission._id ? <div className="add-card">
+                                    <input
+                                        placeholder="Enter Card Title"
+                                        type="text"
+                                        value={cardName}
+                                        onChange={(e) => setCardName(e.target.value)}
+                                    />
+                                    <button onClick={() => {
+                                        dispatch(actionCreators.createCard(boardId, mission._id, cardName, (res) => {
+                                            if (res.success === true) {
+                                                setTimeout(() => {
+                                                    dispatch(actionCreators.getCardsOnBoard(boardId))
+                                                }, 2000)
+                                            }
+                                        }))
+                                        setCardName('')
+                                    }}>Add</button>
+                                </div> : null}
+                                { activeListId !== mission._id ? <button onClick={() => {
+                                    setShow(true)
+                                    setActiveListId(mission._id)
                                 }}>+ Add Card</button> : <button onClick={() => setShow(false)}>Close</button>}
                             </div>
                         ))}

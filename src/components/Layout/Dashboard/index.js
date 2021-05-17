@@ -11,29 +11,18 @@ import './Dashboard.css'
 const Dashboard = (props) => {
 
     const [open, setOpen] = useState(false)
-    const [jan, setJan] = useState(0)
-    const [feb, setFeb] = useState(0)
-    const [march, setMarch] = useState(0)
-    const [april, setApril] = useState(0)
-    const [may, setMay] = useState(0)
-    const [june, setJune] = useState(0)
+
 
     const dispatch = useDispatch()
 
     const data = useSelector(state => state.requests.data)
     const expense = useSelector(state => state.requests.expense)
-    console.log(feb)
+
 
 
     useEffect(() => {
         dispatch(actionCreators.getAirTableData())
         dispatch(actionCreators.getExpenseData())
-        setJanRevenue()
-        setFebRevenue()
-        setMarchRevenue()
-        setAprilRevenue()
-        setMayRevenue()
-        setJuneRevenue()
     }, [])
 
 
@@ -50,29 +39,13 @@ const Dashboard = (props) => {
     const junstartDate = '2021-06-01'
     const junendDate = '2021-06-31'
 
-    const setJanRevenue = () => {
-        setJan(data.filter(el => el.fields['DATE'] >= janstartDate && el.fields['DATE'] <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
-    }
+    const jan = data.filter(el => el.fields['DATE'] >= janstartDate && el.fields['DATE'] <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const feb = data.filter(el => el.fields['DATE'] >= febstartDate && el.fields['DATE'] <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const march = data.filter(el => el.fields['DATE'] >= marchstartDate && el.fields['DATE'] <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const april = data.filter(el => el.fields['DATE'] >= aprilstartDate && el.fields['DATE'] <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const may = data.filter(el => el.fields['DATE'] >= maystartDate && el.fields['DATE'] <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
+    const june = data.filter(el => el.fields['DATE'] >= junstartDate && el.fields['DATE'] <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
 
-    const setFebRevenue = () => {
-        setFeb(data.filter(el => el.fields['DATE'] >= febstartDate && el.fields['DATE'] <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
-    }
-
-    const setMarchRevenue = () => {
-        setMarch(data.filter(el => el.fields['DATE'] >= marchstartDate && el.fields['DATE'] <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
-    }
-
-    const setAprilRevenue = () => {
-        setApril(data.filter(el => el.fields['DATE'] >= aprilstartDate && el.fields['DATE'] <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
-    }
-
-    const setMayRevenue = () => {
-        setMay(data.filter(el => el.fields['DATE'] >= maystartDate && el.fields['DATE'] <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
-    }
-
-    const setJuneRevenue = () => {
-        setJune(data.filter(el => el.fields['DATE'] >= junstartDate && el.fields['DATE'] <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0))
-    }
 
     const expenseTotal = expense.reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
     // console.log(expenseTotal)

@@ -21,6 +21,7 @@ export const setLists = (data) => {
     }
 }
 
+
 export const setCards = (data) => {
     return {
         type: actions.SET_CARDS,
@@ -88,7 +89,7 @@ export const createBoard = (name, callback) => {
             name
         }
 
-        axios.post('https://starthubafrica-api.herokuapp.com/catalyzer/board', data, {
+        axios.post('https://starthubafrica.herokuapp.com/catalyzer/board', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -113,7 +114,7 @@ export const createList = (id, name, callback) => {
             name
         }
 
-        axios.post(`https://starthubafrica-api.herokuapp.com/catalyzer/list/${id}`, data, {
+        axios.post(`https://starthubafrica.herokuapp.com/catalyzer/list/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -139,14 +140,14 @@ export const createCard = (boardId, listId, name, callback) => {
             name
         }
 
-        axios.post(`https://starthubafrica-api.herokuapp.com/catalyzer/board/${boardId}/list/${listId}`, data, {
+        axios.post(`https://starthubafrica.herokuapp.com/catalyzer/board/${boardId}/list/${listId}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
             }
         })
             .then(res => {
-                // console.log(res)
+                console.log(res)
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -174,7 +175,7 @@ export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blog
             author: author
         }
 
-        axios.post('https://starthubafrica-api.herokuapp.com/catalyzer/blog', data, {
+        axios.post('https://starthubafrica.herokuapp.com/catalyzer/blog', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -196,7 +197,7 @@ export const getBoards = () => {
 
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica-api.herokuapp.com/catalyzer/boards', {
+        axios.get('https://starthubafrica.herokuapp.com/catalyzer/boards', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -217,7 +218,7 @@ export const getListsOnBoard = (id, callback) => {
 
         const token = getState().auth.token
 
-        axios.get(`https://starthubafrica-api.herokuapp.com/catalyzer//board/${id}/lists`, {
+        axios.get(`https://starthubafrica.herokuapp.com/catalyzer/board/${id}/lists`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -239,7 +240,7 @@ export const getCardsOnBoard = (id) => {
 
         const token = getState().auth.token
 
-        axios.get(`https://starthubafrica-api.herokuapp.com/catalyzer//board/${id}/cards`, {
+        axios.get(`https://starthubafrica.herokuapp.com/catalyzer//board/${id}/cards`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -260,7 +261,7 @@ export const getBlogs = () => {
 
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica-api.herokuapp.com/catalyzer/blogs', {
+        axios.get('https://starthubafrica.herokuapp.com/catalyzer/blogs', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -281,7 +282,7 @@ export const getCanvasBoard = () => {
 
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica-api.herokuapp.com/catalyzer/canvas/board', {
+        axios.get('https://starthubafrica.herokuapp.com/catalyzer/canvas/board', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -309,7 +310,7 @@ export const getMilestonesBoard = () => {
 
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica-api.herokuapp.com/catalyzer/milestone/board', {
+        axios.get('https://starthubafrica.herokuapp.com/catalyzer/milestone/board', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -363,7 +364,7 @@ export const deleteCard = (id) => {
 
         const token = getState().auth.token
 
-        axios.delete(`https://starthubafrica-api.herokuapp.com/catalyzer/card/${id}`, {
+        axios.delete(`https://starthubafrica.herokuapp.com/catalyzer/card/${id}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -384,7 +385,7 @@ export const deleteList = (id) => {
 
         const token = getState().auth.token
 
-        axios.delete(`https://starthubafrica-api.herokuapp.com/catalyzer/list/${id}`, {
+        axios.delete(`https://starthubafrica.herokuapp.com/catalyzer/list/${id}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -399,7 +400,6 @@ export const deleteList = (id) => {
             })
     }
 }
-
 
 export const getExpenseData = () => {
     return dispatch => {
@@ -426,3 +426,4 @@ export const getExpenseData = () => {
             })
     }
 }
+

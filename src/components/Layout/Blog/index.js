@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Sidebar from '../../Navigation/Sidebar'
 import Blog from './Blog'
-import CreateIcon from '@material-ui/icons/Create';
+import CreateIcon from '@material-ui/icons/Create'
 import ModalUI from '../../ModalUI'
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@material-ui/icons/Close'
 // import { storage } from '../../store/Firebase'
 import firebase from 'firebase'
 import * as actionCreators from '../../store/actionCreators'
@@ -13,16 +13,16 @@ import './Blog.css'
 const Blogs = () => {
 
     const [open, setOpen] = useState(false)
-    const [blogTitle, setBlogTitle] = useState('hello')
-    const [subTitle, setSubTitle] = useState('hello')
-    const [quote, setQuote] = useState('hello')
-    const [description, setDesc] = useState('hello')
+    const [blogTitle, setBlogTitle] = useState('')
+    const [subTitle, setSubTitle] = useState('')
+    const [quote, setQuote] = useState('')
+    const [description, setDesc] = useState('')
     const [imageUrl, setImage] = useState('')
     const [blogImage, setBlogImage] = useState('')
-    const [videoUrl, setVideoUrl] = useState('https://www.youtube.com/embed/bBRAseMeAIU')
-    const [category, setCategory] = useState('hello')
-    const [conclusion, setConclusion] = useState('hello')
-    const [author, setAuthor] = useState('hello')
+    const [videoUrl, setVideoUrl] = useState('')
+    const [category, setCategory] = useState('')
+    const [conclusion, setConclusion] = useState('')
+    const [author, setAuthor] = useState('')
     const [progress, setProgress] = useState(0)
 
 

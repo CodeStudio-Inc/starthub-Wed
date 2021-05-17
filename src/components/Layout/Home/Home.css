@@ -58,10 +58,30 @@
   margin-top: 1rem;
 }
 
+.statement-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 70%;
+  overflow-x: auto;
+  /* padding: 0px 10px; */
+  margin-top: 1rem;
+}
+
+.milestones-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 95%;
+  overflow-x: auto;
+  /* padding: 0px 10px; */
+  margin-top: 1rem;
+}
+
 .milestone-row {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   overflow-x: auto;
   /* padding: 0px 10px; */
@@ -155,7 +175,7 @@
   overflow: hidden;
   width: 100%;
   border-radius: 3px;
-  background-color: #fff;
+  background: #fbfcc8;
   box-sizing: border-box;
   height: 100%;
   margin-bottom: 1rem;
@@ -168,6 +188,7 @@
   color: #dfa126;
   align-content: center;
   display: flex;
+  outline: none;
 }
 
 .card-text {
