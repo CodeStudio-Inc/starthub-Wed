@@ -7,8 +7,8 @@ import './Auth.css'
 const Login = (props) => {
 
     const [state, setState] = useState({
-        email: '',
-        password: '',
+        email: 'Stuartkal@gmail.com',
+        password: 'starthub@123',
         message: ''
     })
 

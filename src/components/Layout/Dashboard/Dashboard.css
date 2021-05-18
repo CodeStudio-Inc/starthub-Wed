@@ -30,16 +30,24 @@
   overflow-y: scroll;
 }
 
-.revenue {
+.revenue-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   background: #fff;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   width: 95%;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  padding: 10px;
+}
+
+.revenue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
   padding: 10px;
 }
 

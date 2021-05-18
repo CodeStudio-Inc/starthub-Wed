@@ -23,7 +23,7 @@ const Milestones = () => {
 
     const statements = lists.filter(el => el.name.includes('Statement'))
     const Milestone = lists.filter(el => el.name.includes('Milestone'))
-    console.log("object", statements)
+    // console.log("object", statements)
 
     return (
         <div className="main-container">

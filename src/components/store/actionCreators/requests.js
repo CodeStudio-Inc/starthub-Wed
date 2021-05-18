@@ -348,7 +348,7 @@ export const getAirTableData = () => {
             }
         )
 
-        axios.get('https://api.airtable.com/v0/appX6seHGXGpzQbwk/REVENUES?maxRecords=7&view=Grid%20view')
+        axios.get('https://api.airtable.com/v0/appX6seHGXGpzQbwk/REVENUES?maxRecords=13&view=Grid%20view')
             .then(res => {
                 // console.log(res)
                 dispatch(setAirtableData(res.data.records))

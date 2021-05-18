@@ -22,7 +22,7 @@ const Canvas = () => {
     // const boardName = useSelector(state => state.requests.canvas_board_name)
     // const lists = useSelector(state => state.requests.lists)
     // const cards = useSelector(state => state.requests.cards)
-    console.log(cards)
+    // console.log(cards)
     const dispatch = useDispatch()
 
     useEffect(() => {

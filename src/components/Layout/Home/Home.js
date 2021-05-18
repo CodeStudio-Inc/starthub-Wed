@@ -15,7 +15,7 @@ const Home = (props) => {
     const [open, setOpen] = useState(false)
 
     const Boards = useSelector(state => state.requests.boards)
-    console.log(Boards)
+    // console.log(Boards)
 
     const dispatch = useDispatch()
 
