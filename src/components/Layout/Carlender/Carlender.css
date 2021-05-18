@@ -8,20 +8,22 @@
   width: 15%;
 }
 
-.right-column {
+.right-column-carlender {
   width: 85%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
+  background: #eee;
+  height: 100vh;
 }
 
 .right-column h2 {
-  line-height: 0;
+  /* line-height: 0; */
 }
 
 .right-column h3 {
-  line-height: 0;
+  /* line-height: 0; */
 }
 
 .carlender {
@@ -66,7 +68,7 @@
   align-items: flex-start;
   flex-direction: column;
   width: 90%;
-  line-height: 0px;
+  /* line-height: 0px; */
   margin-bottom: 1rem;
 }
 

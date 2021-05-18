@@ -81,7 +81,7 @@ const Home = (props) => {
                         {Boards.map((board, index) => (
                             <Card
                                 key={index}
-                                style={{ backgroundColor: '#f5f5f5', width: '25%' }}
+                                style={{ backgroundColor: '#fff', width: '25%' }}
                                 className="board-card"
                                 onClick={() => dispatch(actionCreators.getListsOnBoard(board._id, (res) => {
                                     if (res.success === true) {

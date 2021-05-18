@@ -35,7 +35,7 @@
   align-items: center;
   justify-content: center;
   background: #fff;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); */
   width: 95%;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -56,7 +56,7 @@
   align-items: center;
   justify-content: center;
   background: #fff;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); */
   width: 95%;
   margin-top: 1rem;
   margin-bottom: 1rem;

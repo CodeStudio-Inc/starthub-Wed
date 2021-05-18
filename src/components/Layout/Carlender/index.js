@@ -22,7 +22,7 @@ const index = (props) => {
             <div className="left-column">
                 <Sidebar />
             </div>
-            <div className="right-column">
+            <div className="right-column-carlender">
                 <h2>Schedule Meetings with Mentors</h2>
                 <h3>You can also schedule meetings with the entire Team</h3>
                 <div className="schedule-card-row" >

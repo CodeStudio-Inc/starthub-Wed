@@ -11,7 +11,7 @@ const AndrewSchedule = () => {
             <div className="left-column">
                 <Sidebar />
             </div>
-            <div className="right-column">
+            <div className="right-column-carlender">
                 <InlineWidget styles={{ width: '90%', height: '90vh' }} url="https://calendly.com/atugumestarthubafrica" />
             </div>
         </div>
