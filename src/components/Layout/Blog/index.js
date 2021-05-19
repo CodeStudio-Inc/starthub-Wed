@@ -6,6 +6,7 @@ import CreateIcon from '@material-ui/icons/Create'
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
 // import { storage } from '../../store/Firebase'
+import PostBlog from './PostBlog'
 import firebase from 'firebase'
 import * as actionCreators from '../../store/actionCreators'
 
@@ -118,83 +119,7 @@ const Blogs = () => {
                         <CloseIcon className="close-icon" onClick={() => setOpen(false)} style={{ fontSize: '30px', color: 'rgba(0,0,0,0.1)', marginRight: '0.5rem' }} />
                     </div>
                     <div className="write-blog-row">
-                        <div className="right-blog-column">
-                            <div className="input-column">
-                                <input
-                                    placeholder="Title"
-                                    value={blogTitle}
-                                    onChange={(e) => setBlogTitle(e.target.value)}
-                                />
-                                <input
-                                    placeholder="SubTitle"
-                                    value={subTitle}
-                                    onChange={(e) => setSubTitle(e.target.value)}
-                                />
-                                <input
-                                    placeholder="quote"
-                                    value={quote}
-                                    onChange={(e) => setQuote(e.target.value)}
-                                />
-                                <textarea
-                                    placeholder="Blog Description"
-                                    value={description}
-                                    onChange={(e) => setDesc(e.target.value)}
-                                />
-                            </div>
-                            <div>
-                                <h5>Upload Featured Image<span style={{ color: 'red' }}> *required</span></h5>
-                                <div className="image-upload">
-                                    <input type="file" onChange={featuredImageUploadHandler} />
-
-                                    <div className="image">
-                                        <img src={imageUrl ? imageUrl : null} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>Upload Blog Image</h5>
-                                <div className="image-upload">
-                                    <input type="file" onChange={blogImageUploadHandler} />
-                                    <div className="image">
-                                        {/* {!imageUrl ? <h4>Upload image</h4> : null} */}
-                                        <img src={blogImage ? blogImage : null} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="youtube-link">
-                                <h4>Youtube link</h4>
-                                <input
-                                    placeholder="Paste youtube embedded link"
-                                    value={videoUrl}
-                                    onChange={(e) => setVideoUrl(e.target.value)}
-                                />
-                            </div>
-                            <div className="youtube-link">
-                                <h4>Conclusion</h4>
-                                <input
-                                    placeholder="Conclude"
-                                    value={conclusion}
-                                    onChange={(e) => setConclusion(e.target.value)}
-                                />
-                            </div>
-                            <button onClick={handlePostBlog}>Post</button>
-                        </div>
-                        <div className="left-blog-column">
-                            <div className="column">
-                                <h5>Author</h5>
-                                <input
-                                    value={author}
-                                    onChange={(e) => setAuthor(e.target.value)}
-                                />
-                            </div>
-                            <div className="column">
-                                <h5>Topic</h5>
-                                <input
-                                    value={category}
-                                    onChange={(e) => setCategory(e.target.value)}
-                                />
-                            </div>
-                        </div>
+                        <PostBlog />
                     </div>
                 </div>
             </ModalUI> : null}
