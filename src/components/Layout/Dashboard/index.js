@@ -165,10 +165,10 @@ const Dashboard = (props) => {
             </div>
             <div className="right-column-overview">
                 <div className="overview-header-main">
-                    <div className="header-right" onClick={handleAirtableNavigate}>
+                    {/* <div className="header-right" onClick={handleAirtableNavigate}>
                         <h2>Go to overview</h2>
                         <ArrowForwardIcon className="arrow-icon" style={{ fontSize: '25px' }} />
-                    </div>
+                    </div> */}
                 </div>
                 <div className="revenue-row">
                     <div className="revenue">
@@ -188,7 +188,7 @@ const Dashboard = (props) => {
                     </div>
                     <div className="revenue">
                         <div className="overview-header">
-                            <h2>Six Months Data Submission Development</h2>
+                            <h2>Weekly Finacials Submission</h2>
                         </div>
                         <Line
                             data={expenseDataEntry}
@@ -206,7 +206,7 @@ const Dashboard = (props) => {
                 <div className="expense">
                     <div className="stats-card-chart">
                         <div className="stats-header">
-                            <h3>Breakdown of Cost Structure for previous month</h3>
+                            <h3>Cost Structure</h3>
                         </div>
                         <Pie
                             data={expenseData}
@@ -222,7 +222,7 @@ const Dashboard = (props) => {
                     </div>
                     <div className="stats-card-chart">
                         <div className="stats-header">
-                            <h3>Revenue Aquisition Development</h3>
+                            <h3>Revenue Streams</h3>
                         </div>
                         <Line
                             data={aquisitionData}

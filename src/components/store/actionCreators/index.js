@@ -13,6 +13,7 @@ export {
     getAirTableData,
     deleteCard,
     deleteList,
-    getExpenseData
+    getExpenseData,
+    updateCard
 } from './requests'
 

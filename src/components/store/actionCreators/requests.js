@@ -157,6 +157,29 @@ export const createCard = (boardId, listId, name, callback) => {
     }
 }
 
+export const updateCard = (id, name, callback) => {
+    return (dispatch, getState) => {
+        const token = getState().auth.token
+
+        const data = {
+            name
+        }
+        axios.put(`https://starthubafrica.herokuapp.com/catalyzer/card/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                console.log(res)
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
 export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blogImage, videoUrl, category, conclusion, author, callback) => {
     return (dispatch, getState) => {
 

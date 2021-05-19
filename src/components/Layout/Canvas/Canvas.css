@@ -72,7 +72,7 @@
   display: flex;
   align-items: center;
   /* justify-content: center; */
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   flex-direction: column;
 }
 
@@ -106,13 +106,21 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
+.canvas-card-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
 .canvas-list-card {
   width: 95%;
   height: 70px;
   border-radius: 10px;
   background: #fbfcc8;
   margin-top: 1rem;
-  padding-left: 5px;
+  padding: 5px;
   word-wrap: break-word;
 }
 
@@ -123,8 +131,18 @@
   width: 98%;
 }
 
+.edit-icon {
+  font-size: 20px;
+  color: #dfa126;
+}
+
+.edit-icon:hover {
+  cursor: pointer;
+}
+
 .canvas-list-card-row button {
-  height: 30px;
+  height: 23px;
+  font-size: 12px;
   background: #fff;
   border: 1px solid #dfa126;
   color: #dfa126;

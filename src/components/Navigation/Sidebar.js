@@ -5,7 +5,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import * as actionCreators from '../store/actionCreators'
 import { Menu } from 'antd';
-import { CalendarOutlined, DashboardOutlined, BookOutlined, AccountBookOutlined } from '@ant-design/icons';
+import { CalendarOutlined, DashboardOutlined, SettingOutlined, AccountBookOutlined, LineChartOutlined, EditOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 
 import './Navigation.css'
@@ -73,23 +73,25 @@ const Sidebar = (props) => {
                 mode="inline"
             >
                 <SubMenu key="sub1" icon={<CalendarOutlined />} title="Schedule">
-                    <Menu.ItemGroup key="g1" title="Schedule Meeting">
+                    <Menu.ItemGroup key="g1" title="Schedule Meeting" >
                         <Menu.Item onClick={handleCarlenderNavigation} key="1">Carlender</Menu.Item>
                     </Menu.ItemGroup>
                 </SubMenu>
-                <SubMenu key="sub2" icon={<DashboardOutlined />} title="Milestones">
-                    <Menu.ItemGroup key="g2" title="Company milestones"></Menu.ItemGroup>
-                    <Menu.Item onClick={handleTodosNavigation} key="2">Todos</Menu.Item>
-                    <Menu.Item onClick={handleMilestonesNavigation} key="3">Business Modal</Menu.Item>
-                    <Menu.Item onClick={handleCanvasNavigation} key="4">Lean Canvas</Menu.Item>
+                <SubMenu key="sub2" icon={<EditOutlined />} title="Track">
+                    <Menu.ItemGroup key="g2" title="Progress"></Menu.ItemGroup>
+                    <Menu.Item onClick={handleTodosNavigation} key="2">Tasks</Menu.Item>
+                    <Menu.Item onClick={handleMilestonesNavigation} key="3">Milestones</Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub5" icon={<SettingOutlined />} title="Business Model">
+                    <Menu.ItemGroup key="g5" title="Iterate Business Model"></Menu.ItemGroup>
+                    <Menu.Item onClick={handleCanvasNavigation} key="8">Lean Canvas</Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub3" icon={<AccountBookOutlined />} title="Learn">
-                    <Menu.ItemGroup key="g3" title="Blogs"></Menu.ItemGroup>
-                    <Menu.Item onClick={handleBlogsNavigation} key="5">Learn</Menu.Item>
+                    <Menu.ItemGroup key="g3" title="Toolkit"></Menu.ItemGroup>
+                    <Menu.Item onClick={handleBlogsNavigation} key="5">Blogs</Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub4" icon={<DashboardOutlined />} title="Dashboard">
-                    <Menu.ItemGroup key="g4" title="Data Visualization"></Menu.ItemGroup>
-                    <Menu.Item onClick={handleAirtableNavigate} key="6">Overview</Menu.Item>
+                <SubMenu key="sub4" icon={<LineChartOutlined />} title="Dashboard">
+                    <Menu.ItemGroup key="g4" title="Analyse"></Menu.ItemGroup>
                     <Menu.Item onClick={handleDashboardNavigation} key="7">Graphs</Menu.Item>
                 </SubMenu>
             </Menu>

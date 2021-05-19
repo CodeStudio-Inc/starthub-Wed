@@ -15,7 +15,10 @@ const Home = (props) => {
     const [open, setOpen] = useState(false)
 
     const Boards = useSelector(state => state.requests.boards)
-    // console.log(Boards)
+
+
+    const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
+    console.log(filtereBoards)
 
     const dispatch = useDispatch()
 
@@ -78,7 +81,7 @@ const Home = (props) => {
                     </div>
                     {/* <Cards /> */}
                     <div className="boards-row">
-                        {Boards.map((board, index) => (
+                        {filtereBoards.map((board, index) => (
                             <Card
                                 key={index}
                                 style={{ backgroundColor: '#fff', width: '25%' }}
