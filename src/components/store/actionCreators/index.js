@@ -4,6 +4,7 @@ export {
     getBoards,
     getListsOnBoard,
     getCardsOnBoard,
+    getMetricsData,
     createBoard,
     createList,
     createCard,
@@ -14,6 +15,8 @@ export {
     deleteCard,
     deleteList,
     getExpenseData,
-    updateCard
+    updateCard,
+    createCanvasBoard,
+    createMilestoneBoard,
 } from './requests'
 

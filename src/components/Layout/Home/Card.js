@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as actionCreators from '../../store/actionCreators';
-import Sidebar from '../../Navigation/Sidebar';
-import Search from '@material-ui/icons/Search';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import ModalUI from '../../ModalUI';
-import CloseIcon from '@material-ui/icons/Close';
-import DeleteIcon from '@material-ui/icons/Delete';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import * as actionCreators from '../../store/actionCreators'
+import Search from '@material-ui/icons/Search'
+import AddBoxIcon from '@material-ui/icons/AddBox'
+import ModalUI from '../../ModalUI'
+import CloseIcon from '@material-ui/icons/Close'
+import DeleteIcon from '@material-ui/icons/Delete'
+import Cards from './Cards'
 
 
 import './Home.css'
 const Card = (props) => {
 
     const [listName, setListName] = useState('')
-    const [cardName, setCardName] = useState('')
     const [show, setShow] = useState(false)
-    const [activeListId, setActiveListId] = useState(null)
     const [open, setOpen] = useState(false)
+    const [cardName, setCardName] = useState('')
+    const [activeListId, setActiveListId] = useState(null)
 
     const boardName = props.location.state.data.name
     const boardId = props.location.state.data._id
-
-
+    const loading = useSelector(state => state.requests.loading)
     const lists = useSelector(state => state.requests.lists)
     const cards = useSelector(state => state.requests.cards)
     // console.log(lists, 'lists')
-    // console.log(cards, 'cards')
+    console.log(cards, 'cards')
 
     const dispatch = useDispatch()
 
@@ -59,15 +58,11 @@ const Card = (props) => {
                             value={listName}
                             placeholder="List Name"
                             onChange={(e) => setListName(e.target.value)}
-
                         />
-                        <button onClick={createList}>Create List</button>
+                        <button onClick={createList}>Create</button>
                     </div>
                 </div>
             </ModalUI> : null}
-            <div className="left-column">
-                <Sidebar />
-            </div>
             <div className="right-column-content">
                 <div className="boards-header">
                     <h2>{boardName}</h2>
@@ -80,9 +75,10 @@ const Card = (props) => {
                             <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
                         </div>
                         <div className="separator" />
-                        <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} />
+                        <button onClick={() => setOpen(true)}>Create Board</button>
                     </div>
                 </div>
+
                 <div className="milestone-row">
                     {lists.map((list, index) => (
                         <div className="list-card" key={list._id}>
@@ -126,6 +122,7 @@ const Card = (props) => {
                         </div>
                     ))}
                 </div>
+
             </div>
         </div>
     )

@@ -13,15 +13,9 @@ const index = (props) => {
         props.history.push('/mathius-schedule')
     }
 
-    const handleYusufuNavigation = () => {
-        props.history.push('/yusufu-schedule')
-    }
 
     return (
         <div className="main-container">
-            <div className="left-column">
-                <Sidebar />
-            </div>
             <div className="right-column-carlender">
                 <h2>Schedule Meetings with Mentors</h2>
                 <h3>You can also schedule meetings with the entire Team</h3>

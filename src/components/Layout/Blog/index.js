@@ -123,9 +123,6 @@ const Blogs = () => {
                     </div>
                 </div>
             </ModalUI> : null}
-            <div className="left-column">
-                <Sidebar />
-            </div>
             <div className="blog-column">
                 <div className="right-column-blog-content">
                     <div className="blog-header">

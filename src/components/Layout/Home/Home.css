@@ -1,8 +1,8 @@
 .main-container {
   width: 100%;
   display: flex;
-  /* align-items: center;
-    justify-content: center; */
+  align-items: center;
+  justify-content: center;
   background: #eee;
 }
 
@@ -35,11 +35,16 @@
 }
 
 .right-column-content {
-  width: 85%;
+  width: 95%;
   background: #eee;
   height: 100vh;
+  align-items: center;
   /* display: flex; */
   /* justify-content: center; */
+}
+
+.right-column-content h3 {
+  font-weight: bold;
 }
 
 .cards-right-column-content {
@@ -47,9 +52,13 @@
   align-items: center;
   /* justify-content: center; */
   flex-direction: column;
-  width: 80vw;
+  width: 100%;
   height: 100%;
   overflow-y: scroll;
+}
+
+.cards-right-column-content h3 {
+  font-weight: bold;
 }
 
 .boards-row {
@@ -87,7 +96,7 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  overflow-x: auto;
+  overflow-x: scroll;
   /* padding: 0px 10px; */
   margin-top: 1rem;
 }
@@ -216,7 +225,7 @@
 .add-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   margin-bottom: 1rem;
 }
@@ -225,20 +234,33 @@
   border: none;
   outline: none;
   padding-left: 5px;
-  height: 40px;
+  height: 30px;
   border-radius: 2px;
+  transition: 0.5s ease-in-out;
   /* margin-right: 0.5rem; */
   width: 70%;
 }
 
+.add-card input:focus {
+  background: #fbfcc8;
+}
+
 .add-card button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   outline: none;
   background: rgba(0, 0, 0, 0.6);
   height: 30px;
+  width: 30%;
   margin: 0;
   color: #fff;
-  width: 20%;
+  width: 0%;
+}
+
+.add-card button:hover {
+  cursor: pointer;
 }
 
 .board-card {
@@ -276,6 +298,18 @@
   align-items: center;
   justify-content: space-between;
   width: 25%;
+}
+
+.edit-row button {
+  border: 1px solid #dfa126;
+  color: #dfa126;
+  outline: none;
+  background: none;
+  transition: 0.5s ease-in-out;
+}
+
+.edit-row button:focus {
+  background: #dfa12675;
 }
 
 .search {
@@ -320,18 +354,16 @@
 }
 
 .create-board-row button {
-  border: none;
-  background: #dfa126;
-  border-radius: 5px;
+  border: 1px solid #dfa126;
+  color: #dfa126;
   outline: none;
-  color: #fff;
-  transition: 1s ease-in-out;
-  height: 30px;
-  margin-left: 1rem;
+  background: none;
+  transition: 0.5s ease-in-out;
+  margin-left: 0.5rem;
 }
 
 .create-board-row button:focus {
-  background: #f7a708c9;
+  background: #dfa12675;
 }
 
 .add-icon {

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
-import Sidebar from '../../Navigation/Sidebar'
-import CloseIcon from '@material-ui/icons/Close';
-import Search from '@material-ui/icons/Search';
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import CloseIcon from '@material-ui/icons/Close'
+import Search from '@material-ui/icons/Search'
+import AddBoxIcon from '@material-ui/icons/AddBox'
 import { Card } from '@material-ui/core'
 import ModalUI from '../../ModalUI'
 
@@ -26,6 +25,8 @@ const Home = (props) => {
         dispatch(actionCreators.getCanvasBoard())
         dispatch(actionCreators.getMilestonesBoard())
         dispatch(actionCreators.getBoards())
+        dispatch(actionCreators.createCanvasBoard())
+        dispatch(actionCreators.createMilestoneBoard())
     }, [])
 
     const createBoard = () => {
@@ -56,13 +57,10 @@ const Home = (props) => {
                             onChange={(e) => setBoardName(e.target.value)}
 
                         />
-                        <button onClick={createBoard}>Create Board</button>
+                        <button onClick={createBoard}>Create</button>
                     </div>
                 </div>
             </ModalUI> : null}
-            <div className="left-column">
-                <Sidebar />
-            </div>
             <div className="boards-right-column">
                 <div className="boards-right-column-content">
                     <div className="boards-header">
@@ -76,7 +74,7 @@ const Home = (props) => {
                                 <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
                             </div>
                             <div className="separator" />
-                            <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} />
+                            <button onClick={() => setOpen(true)}>Create Board</button>
                         </div>
                     </div>
                     {/* <Cards /> */}

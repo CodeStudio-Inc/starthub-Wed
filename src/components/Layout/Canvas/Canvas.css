@@ -1,13 +1,17 @@
 .canvas-main {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  width: 95%;
+  width: 100%;
   flex-direction: column;
 }
 
+.canvas-main h3 {
+  font-weight: bold;
+}
+
 .canvas-list {
-  width: 35%;
+  width: 300px;
   display: flex;
   align-items: center;
   /* justify-content: center; */
@@ -78,10 +82,20 @@
 
 .canvas-row {
   width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  padding: 5px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-direction: row;
   margin-bottom: 1rem;
+  border: 1px solid black;
+}
+
+.canvas-row h6 {
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .canvas-list-list3 {
@@ -115,16 +129,13 @@
 }
 
 .canvas-list-card {
-  width: 95%;
-  height: 70px;
-  border-radius: 10px;
-  background: #fbfcc8;
-  margin-top: 1rem;
-  padding: 5px;
-  word-wrap: break-word;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.canvas-list-card-row {
+.canvas-list-card .canvas-list-card-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -132,12 +143,22 @@
 }
 
 .edit-icon {
-  font-size: 20px;
   color: #dfa126;
 }
 
 .edit-icon:hover {
   cursor: pointer;
+}
+
+.icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.icon-row:hover {
+  opacity: 2;
 }
 
 .canvas-list-card-row button {

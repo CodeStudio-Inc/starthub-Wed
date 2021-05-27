@@ -7,53 +7,34 @@ import ModalUI from '../../ModalUI'
 import EditIcon from '@material-ui/icons/Edit';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import CancelIcon from '@material-ui/icons/Cancel';
+import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
+import CanvasCard from './CanvasCard'
 
 import './Canvas.css'
 const Canvas = () => {
-    const [cardName, setCardName] = useState('')
-    const [show1, setShow1] = useState(false)
-    const [show2, setShow2] = useState(false)
-    const [show3, setShow3] = useState(false)
-    const [show4, setShow4] = useState(false)
-    const [show5, setShow5] = useState(false)
-    const [show6, setShow6] = useState(false)
-    const [show7, setShow7] = useState(false)
-    const [show8, setShow8] = useState(false)
-    const [show9, setShow9] = useState(false)
 
-    const [update1, setUpdate1] = useState(false)
-    const [update2, setUpdate2] = useState(false)
-    const [update3, setUpdate3] = useState(false)
-    const [update4, setUpdate4] = useState(false)
-    const [update5, setUpdate5] = useState(false)
-    const [update6, setUpdate6] = useState(false)
-    const [update7, setUpdate7] = useState(false)
-    const [update8, setUpdate8] = useState(false)
-    const [update9, setUpdate9] = useState(false)
+    const loading = useSelector(state => state.requests.loading)
+    const cards = useSelector(state => state.requests.canvas_cards)
+    const boardName = useSelector(state => state.requests.canvas_board_name)
+    const boardId = useSelector(state => state.requests.canvas_board_id)
+    const lists = useSelector(state => state.requests.canvas_lists)
+    // console.log(cards, 'ff')
 
-
-    const cards = useSelector(state => state.requests.cards)
-    // const boardName = useSelector(state => state.requests.canvas_board_name)
-    // const lists = useSelector(state => state.requests.lists)
-    // const cards = useSelector(state => state.requests.cards)
-    // console.log(cards)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
+        dispatch(actionCreators.getListsOnBoard(boardId, () => { }))
+        dispatch(actionCreators.getCardsOnBoard(boardId))
     }, [])
+
 
 
     return (
         <div className="main-container">
-
-            <div className="left-column">
-                <Sidebar />
-            </div>
             <div className="right-column-content">
                 <div className="cards-right-column-content">
                     <div className="boards-header">
-                        <h2>Lean Canvas</h2>
+                        <h2>{boardName}</h2>
                         <div className="edit-row">
                             {/*   */}
                             {/* <div className="separator" /> */}
@@ -61,448 +42,17 @@ const Canvas = () => {
                         </div>
                     </div>
                     <div className="canvas-main">
-                        <div className="milestone-row">
-                            <div className="canvas-list">
-                                <div className="canvas-header">
-                                    <h3>Problem</h3>
-                                </div>
-                                {cards.map(card => {
-                                    if (card.listId === '609a7901503e390004168f70')
-                                        return (
-                                            <div className="canvas-card-container">
-                                                <div className="canvas-list-card" key={card._id}>
-                                                    <div className="canvas-list-card-row">
-                                                        <div className="canvas-list-card-row">
-                                                            <p>{card.name}</p>
-                                                            {update1 ? <CancelIcon onClick={() => setUpdate1(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate1(true)} className="edit-icon" />}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {update1 ? <div className="canvas-add-card">
-                                                    <input
-                                                        placeholder="Enter Update"
-                                                        type="text"
-                                                        value={cardName}
-                                                        onChange={(e) => setCardName(e.target.value)}
-                                                    />
-                                                    <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                        if (res.success === true) {
-                                                            setUpdate1(false)
-                                                            setCardName('')
-                                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                        }
-                                                    }))}>save</button>
-                                                </div> : null}
-                                            </div>
-                                        )
-                                })}
-                                {show1 ? <div className="canvas-add-card">
-                                    <input
-                                        placeholder="Enter Card Title"
-                                        type="text"
-                                        value={cardName}
-                                        onChange={(e) => setCardName(e.target.value)}
+                        {loading ? <h3>loading...</h3> :
+                            <div className="milestone-row">
+                                {lists.map(list => (
+                                    <CanvasCard
+                                        key={list._id}
+                                        list={list}
+                                        cards={cards}
                                     />
-                                    <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '609a7901503e390004168f70', cardName, (res) => {
-                                        if (res.success === true) {
-                                            setCardName('')
-                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                        }
-                                    }))} >Add Card</button>
-                                </div> : null}
-                                {show1 ? <button onClick={() => setShow1(false)}>close</button> : <button onClick={() => setShow1(true)}>New Card</button>}
+                                ))}
                             </div>
-                            <div className="canvas-list">
-                                <div className="canvas-list-list">
-                                    <div className="canvas-header">
-                                        <h3>Solution</h3>
-                                    </div>
-                                    {cards.map(card => {
-                                        if (card.listId === '609a790d503e390004168f71')
-                                            return (
-                                                <div className="canvas-card-container">
-                                                    <div className="canvas-list-card" key={card._id}>
-                                                        <div className="canvas-list-card-row">
-                                                            <p>{card.name}</p>
-                                                            {update2 ? <CancelIcon onClick={() => setUpdate2(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate2(true)} className="edit-icon" />}
-                                                        </div>
-                                                    </div>
-                                                    {update2 ? <div className="canvas-add-card">
-                                                        <input
-                                                            placeholder="Enter Update"
-                                                            type="text"
-                                                            value={cardName}
-                                                            onChange={(e) => setCardName(e.target.value)}
-                                                        />
-                                                        <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                            if (res.success === true) {
-                                                                setUpdate2(false)
-                                                                setCardName('')
-                                                                dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                            }
-                                                        }))}>save</button>
-                                                    </div> : null}
-                                                </div>
-                                            )
-                                    })}
-                                    {show2 ? <div className="canvas-add-card">
-                                        <input
-                                            placeholder="Enter Card Title"
-                                            type="text"
-                                            value={cardName}
-                                            onChange={(e) => setCardName(e.target.value)}
-                                        />
-                                        <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '609a790d503e390004168f71', cardName, (res) => {
-                                            if (res.success === true) {
-                                                setCardName('')
-                                                dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                            }
-                                        }))} >Add Card</button>
-                                    </div> : null}
-                                    {show2 ? <button onClick={() => setShow2(false)}>close</button> : <button onClick={() => setShow2(true)}>New Card</button>}
-                                </div>
-                                <div className="canvas-list-list">
-                                    <div className="canvas-header">
-                                        <h3>Key Metrics</h3>
-                                    </div>
-                                    {cards.map(card => {
-                                        if (card.listId === '609a791f503e390004168f72')
-                                            return (
-                                                <div className="canvas-card-container">
-                                                    <div className="canvas-list-card" key={card._id}>
-                                                        <div className="canvas-list-card-row">
-                                                            <p>{card.name}</p>
-                                                            {update3 ? <CancelIcon onClick={() => setUpdate3(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate3(true)} className="edit-icon" />}
-                                                        </div>
-                                                    </div>
-                                                    {update3 ? <div className="canvas-add-card">
-                                                        <input
-                                                            placeholder="Enter Update"
-                                                            type="text"
-                                                            value={cardName}
-                                                            onChange={(e) => setCardName(e.target.value)}
-                                                        />
-                                                        <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                            if (res.success === true) {
-                                                                setUpdate3(false)
-                                                                setCardName('')
-                                                                dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                            }
-                                                        }))}>save</button>
-                                                    </div> : null}
-                                                </div>
-                                            )
-                                    })}
-                                    {show9 ? <div className="canvas-add-card">
-                                        <input
-                                            placeholder="Enter Card Title"
-                                            type="text"
-                                            value={cardName}
-                                            onChange={(e) => setCardName(e.target.value)}
-                                        />
-                                        <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '609a791f503e390004168f72', cardName, (res) => {
-                                            if (res.success === true) {
-                                                setCardName('')
-                                                dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                            }
-                                        }))} >Add Card</button>
-                                    </div> : null}
-                                    {show9 ? <button onClick={() => setShow9(false)}>close</button> : <button onClick={() => setShow9(true)}>New Card</button>}
-                                </div>
-                            </div>
-                            <div className="canvas-list">
-                                <div className="canvas-header">
-                                    <h3>Unique Value Proposition</h3>
-                                </div>
-                                {cards.map(card => {
-                                    if (card.listId === '608831c513defb3410ea1f3b')
-                                        return (
-                                            <div className="canvas-card-container">
-                                                <div className="canvas-list-card" key={card._id}>
-                                                    <div className="canvas-list-card-row">
-                                                        <p>{card.name}</p>
-                                                        {update4 ? <CancelIcon onClick={() => setUpdate4(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate4(true)} className="edit-icon" />}
-                                                    </div>
-                                                </div>
-                                                {update4 ? <div className="canvas-add-card">
-                                                    <input
-                                                        placeholder="Enter Update"
-                                                        type="text"
-                                                        value={cardName}
-                                                        onChange={(e) => setCardName(e.target.value)}
-                                                    />
-                                                    <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                        if (res.success === true) {
-                                                            setUpdate4(false)
-                                                            setCardName('')
-                                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                        }
-                                                    }))}>save</button>
-                                                </div> : null}
-                                            </div>
-                                        )
-                                })}
-                                {show3 ? <div className="canvas-add-card">
-                                    <input
-                                        placeholder="Enter Card Title"
-                                        type="text"
-                                        value={cardName}
-                                        onChange={(e) => setCardName(e.target.value)}
-                                    />
-                                    <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '608831c513defb3410ea1f3b', cardName, (res) => {
-                                        if (res.success === true) {
-                                            setCardName('')
-                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                        }
-                                    }))} >Add Card</button>
-                                </div> : null}
-                                {show3 ? <button onClick={() => setShow3(false)}>close</button> : <button onClick={() => setShow3(true)}>New Card</button>}
-                            </div>
-                            <div className="canvas-list">
-                                <div className="canvas-list-list">
-                                    <div className="canvas-header">
-                                        <h3>Unfair Advantage</h3>
-                                    </div>
-                                    {cards.map(card => {
-                                        if (card.listId === '608831c513defb3410ea1f3c')
-                                            return (
-                                                <div className="canvas-card-container">
-                                                    <div className="canvas-list-card" key={card._id}>
-                                                        <div className="canvas-list-card-row">
-                                                            <p>{card.name}</p>
-                                                            {update5 ? <CancelIcon onClick={() => setUpdate5(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate5(true)} className="edit-icon" />}
-                                                        </div>
-                                                    </div>
-                                                    {update5 ? <div className="canvas-add-card">
-                                                        <input
-                                                            placeholder="Enter Update"
-                                                            type="text"
-                                                            value={cardName}
-                                                            onChange={(e) => setCardName(e.target.value)}
-                                                        />
-                                                        <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                            if (res.success === true) {
-                                                                setUpdate5(false)
-                                                                setCardName('')
-                                                                dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                            }
-                                                        }))}>save</button>
-                                                    </div> : null}
-                                                </div>
-                                            )
-                                    })}
-                                    {show4 ? <div className="canvas-add-card">
-                                        <input
-                                            placeholder="Enter Card Title"
-                                            type="text"
-                                            value={cardName}
-                                            onChange={(e) => setCardName(e.target.value)}
-                                        />
-                                        <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '608831c513defb3410ea1f3c', cardName, (res) => {
-                                            if (res.success === true) {
-                                                setCardName('')
-                                                dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                            }
-                                        }))} >Add Card</button>
-                                    </div> : null}
-                                    {show4 ? <button onClick={() => setShow4(false)}>close</button> : <button onClick={() => setShow4(true)}>New Card</button>}
-                                </div>
-                                <div className="canvas-list-list">
-                                    <div className="canvas-header">
-                                        <h3>Channels</h3>
-                                    </div>
-                                    {cards.map(card => {
-                                        if (card.listId === '608831c513defb3410ea1f3e')
-                                            return (
-                                                <div className="canvas-card-container">
-                                                    <div className="canvas-list-card" key={card._id}>
-                                                        <div className="canvas-list-card-row">
-                                                            <p>{card.name}</p>
-                                                            {update6 ? <CancelIcon onClick={() => setUpdate6(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate6(true)} className="edit-icon" />}
-                                                        </div>
-                                                    </div>
-                                                    {update6 ? <div className="canvas-add-card">
-                                                        <input
-                                                            placeholder="Enter Update"
-                                                            type="text"
-                                                            value={cardName}
-                                                            onChange={(e) => setCardName(e.target.value)}
-                                                        />
-                                                        <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                            if (res.success === true) {
-                                                                setUpdate6(false)
-                                                                setCardName('')
-                                                                dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                            }
-                                                        }))}>save</button>
-                                                    </div> : null}
-                                                </div>
-                                            )
-                                    })}
-                                    {show5 ? <div className="canvas-add-card">
-                                        <input
-                                            placeholder="Enter Card Title"
-                                            type="text"
-                                            value={cardName}
-                                            onChange={(e) => setCardName(e.target.value)}
-                                        />
-                                        <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '608831c513defb3410ea1f3e', cardName, (res) => {
-                                            if (res.success === true) {
-                                                setCardName('')
-                                                dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                            }
-                                        }))} >Add Card</button>
-                                    </div> : null}
-                                    {show5 ? <button onClick={() => setShow5(false)}>close</button> : <button onClick={() => setShow5(true)}>New Card</button>}
-                                </div>
-                            </div>
-                            <div className="canvas-list">
-                                <div className="canvas-header">
-                                    <h3>Customer Segments</h3>
-                                </div>
-                                {cards.map(card => {
-                                    if (card.listId === '608831c513defb3410ea1f3d')
-                                        return (
-                                            <div className="canvas-card-container">
-                                                <div className="canvas-list-card" key={card._id}>
-                                                    <div className="canvas-list-card-row">
-                                                        <p>{card.name}</p>
-                                                        {update7 ? <CancelIcon onClick={() => setUpdate7(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate7(true)} className="edit-icon" />}
-                                                    </div>
-                                                </div>
-                                                {update7 ? <div className="canvas-add-card">
-                                                    <input
-                                                        placeholder="Enter Update"
-                                                        type="text"
-                                                        value={cardName}
-                                                        onChange={(e) => setCardName(e.target.value)}
-                                                    />
-                                                    <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                        if (res.success === true) {
-                                                            setUpdate7(false)
-                                                            setCardName('')
-                                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                        }
-                                                    }))}>save</button>
-                                                </div> : null}
-                                            </div>
-                                        )
-                                })}
-                                {show6 ? <div className="canvas-add-card">
-                                    <input
-                                        placeholder="Enter Card Title"
-                                        type="text"
-                                        value={cardName}
-                                        onChange={(e) => setCardName(e.target.value)}
-                                    />
-                                    <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '608831c513defb3410ea1f3d', cardName, (res) => {
-                                        if (res.success === true) {
-                                            setCardName('')
-                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                        }
-                                    }))} >Add Card</button>
-                                </div> : null}
-                                {show6 ? <button onClick={() => setShow6(false)}>close</button> : <button onClick={() => setShow6(true)}>New Card</button>}
-                            </div>
-                        </div>
-                        <div className="canvas-row">
-                            <div className="canvas-list-list3">
-                                <div className="canvas-header">
-                                    <h3>Cost Structure</h3>
-                                </div>
-                                {cards.map(card => {
-                                    if (card.listId === '609a793e503e390004168f73')
-                                        return (
-                                            <div className="canvas-card-container">
-                                                <div className="canvas-list-card" key={card._id}>
-                                                    <div className="canvas-list-card-row">
-                                                        <p>{card.name}</p>
-                                                        {update8 ? <CancelIcon onClick={() => setUpdate8(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate8(true)} className="edit-icon" />}
-                                                    </div>
-                                                </div>
-                                                {update8 ? <div className="canvas-add-card">
-                                                    <input
-                                                        placeholder="Enter Update"
-                                                        type="text"
-                                                        value={cardName}
-                                                        onChange={(e) => setCardName(e.target.value)}
-                                                    />
-                                                    <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                        if (res.success === true) {
-                                                            setUpdate8(false)
-                                                            setCardName('')
-                                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                        }
-                                                    }))}>save</button>
-                                                </div> : null}
-                                            </div>
-                                        )
-                                })}
-                                {show7 ? <div className="canvas-add-card">
-                                    <input
-                                        placeholder="Enter Card Title"
-                                        type="text"
-                                        value={cardName}
-                                        onChange={(e) => setCardName(e.target.value)}
-                                    />
-                                    <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '609a793e503e390004168f73', cardName, (res) => {
-                                        if (res.success === true) {
-                                            setCardName('')
-                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                        }
-                                    }))} >Add Card</button>
-                                </div> : null}
-                                {show7 ? <button onClick={() => setShow7(false)}>close</button> : <button onClick={() => setShow7(true)}>New Card</button>}
-                            </div>
-                            <div className="canvas-list-list3">
-                                <div className="canvas-header">
-                                    <h3>Revenue Streams</h3>
-                                </div>
-                                {cards.map(card => {
-                                    if (card.listId === '608831c513defb3410ea1f3f')
-                                        return (
-                                            <div className="canvas-card-container">
-                                                <div className="canvas-list-card" key={card._id}>
-                                                    <div className="canvas-list-card-row">
-                                                        <p>{card.name}</p>
-                                                        {update9 ? <CancelIcon onClick={() => setUpdate9(false)} className="edit-icon" /> : <EditIcon onClick={() => setUpdate9(true)} className="edit-icon" />}
-                                                    </div>
-                                                </div>
-                                                {update9 ? <div className="canvas-add-card">
-                                                    <input
-                                                        placeholder="Enter Update"
-                                                        type="text"
-                                                        value={cardName}
-                                                        onChange={(e) => setCardName(e.target.value)}
-                                                    />
-                                                    <button onClick={() => dispatch(actionCreators.updateCard(card._id, cardName, (res) => {
-                                                        if (res.success === true) {
-                                                            setUpdate9(false)
-                                                            setCardName('')
-                                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                                        }
-                                                    }))}>save</button>
-                                                </div> : null}
-                                            </div>
-                                        )
-                                })}
-                                {show8 ? <div className="canvas-add-card">
-                                    <input
-                                        placeholder="Enter Card Title"
-                                        type="text"
-                                        value={cardName}
-                                        onChange={(e) => setCardName(e.target.value)}
-                                    />
-                                    <button onClick={() => dispatch(actionCreators.createCard('608831c413defb3410ea1f3a', '608831c513defb3410ea1f3f', cardName, (res) => {
-                                        if (res.success === true) {
-                                            setCardName('')
-                                            dispatch(actionCreators.getCardsOnBoard('608831c413defb3410ea1f3a'))
-                                        }
-                                    }))} >Add Card</button>
-                                </div> : null}
-                                {show8 ? <button onClick={() => setShow8(false)}>close</button> : <button onClick={() => setShow8(true)}>New Card</button>}
-                            </div>
-                        </div>
+                        }
                     </div>
                     {/* <div className="milestone-row">
                         {lists.map((list, index) => (

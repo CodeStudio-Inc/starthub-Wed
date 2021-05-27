@@ -21,10 +21,37 @@ export const setLists = (data) => {
     }
 }
 
+export const setMilestoneLists = (data) => {
+    return {
+        type: actions.SET_MILESTONE_LISTS,
+        data
+    }
+}
+
+export const setCanvasLists = (data) => {
+    return {
+        type: actions.SET_CANVAS_LISTS,
+        data
+    }
+}
 
 export const setCards = (data) => {
     return {
         type: actions.SET_CARDS,
+        data
+    }
+}
+
+export const setMilestoneCards = (data) => {
+    return {
+        type: actions.SET_MILESTONE_CARDS,
+        data
+    }
+}
+
+export const setCanvasCards = (data) => {
+    return {
+        type: actions.SET_CANVAS_CARDS,
         data
     }
 }
@@ -66,6 +93,13 @@ export const setExpenseData = (data) => {
     }
 }
 
+export const setMetricsData = (data) => {
+    return {
+        type: actions.SET_METRICS_DATA,
+        data
+    }
+}
+
 export const deleteCardAction = (id) => {
     return {
         type: actions.DELETE_CARD,
@@ -77,6 +111,54 @@ export const deleteListAction = (id) => {
     return {
         type: actions.DELETE_LIST,
         id
+    }
+}
+
+export const createCanvasBoard = () => {
+    return (dispatch, getState) => {
+
+        const data = {
+            name: 'name'
+        }
+
+        const token = getState().auth.token
+
+        axios.post('https://starthubafrica.herokuapp.com/catalyzer/create/canvas', data, {
+            headers: {
+                ContentType: 'Application/json',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
+export const createMilestoneBoard = () => {
+    return (dispatch, getState) => {
+
+        const data = {
+            name: 'name'
+        }
+
+        const token = getState().auth.token
+
+        axios.post('https://starthubafrica.herokuapp.com/catalyzer/create/milestone', data, {
+            headers: {
+                ContentType: 'Application/json',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }
 
@@ -227,7 +309,7 @@ export const getBoards = () => {
             }
         })
             .then(res => {
-                // console.log(res)
+
                 dispatch(setBoards(res.data.boards))
             })
             .catch(error => {
@@ -238,7 +320,7 @@ export const getBoards = () => {
 
 export const getListsOnBoard = (id, callback) => {
     return (dispatch, getState) => {
-
+        dispatch(loadAction())
         const token = getState().auth.token
 
         axios.get(`https://starthubafrica.herokuapp.com/catalyzer/board/${id}/lists`, {
@@ -250,6 +332,8 @@ export const getListsOnBoard = (id, callback) => {
             .then(res => {
                 // console.log(res)     
                 dispatch(setLists(res.data.lists))
+                dispatch(setCanvasLists(res.data.lists))
+                dispatch(setMilestoneLists(res.data.lists))
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -270,8 +354,9 @@ export const getCardsOnBoard = (id) => {
             }
         })
             .then(res => {
-                // console.log(res)
                 dispatch(setCards(res.data.cards))
+                dispatch(setCanvasCards(res.data.cards))
+                dispatch(setMilestoneCards(res.data.cards))
             })
             .catch(error => {
                 console.log(error)
@@ -292,7 +377,7 @@ export const getBlogs = () => {
         })
             .then(res => {
                 dispatch(setBlogs(res.data.blogs))
-                // console.log(res)
+                console.log(res)
             })
             .catch(error => {
                 console.log(error)
@@ -318,7 +403,7 @@ export const getCanvasBoard = () => {
                 board.forEach(element => {
                     boardId = element._id
                     boardName = element.name
-                });
+                })
                 dispatch(setCanvas(boardId, boardName))
             })
             .catch(error => {
@@ -384,7 +469,7 @@ export const getAirTableData = () => {
 
 export const deleteCard = (id) => {
     return (dispatch, getState) => {
-
+        dispatch(loadAction())
         const token = getState().auth.token
 
         axios.delete(`https://starthubafrica.herokuapp.com/catalyzer/card/${id}`, {
@@ -443,6 +528,32 @@ export const getExpenseData = () => {
             .then(res => {
                 // console.log(res.data.records)
                 dispatch(setExpenseData(res.data.records))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const getMetricsData = () => {
+    return dispatch => {
+
+        const key = 'key8X69XD5EQ4Gsjn'
+
+        axios.interceptors.request.use(
+            config => {
+                config.headers.authorization = `Bearer ${key}`;
+                return config
+            },
+            error => {
+                return Promise.reject(error)
+            }
+        )
+
+        axios.get(`https://api.airtable.com/v0/appX6seHGXGpzQbwk/Monthly%20Metrics?maxRecords=6&view=Grid%20view`)
+            .then(res => {
+                // console.log(res.data.records)
+                dispatch(setMetricsData(res.data.records))
             })
             .catch(error => {
                 console.log(error)

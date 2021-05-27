@@ -8,7 +8,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import { Line, Pie } from 'react-chartjs-2'
 
 import './Dashboard.css'
-import moment from 'moment'
 const Dashboard = (props) => {
 
     const [open, setOpen] = useState(false)
@@ -18,11 +17,28 @@ const Dashboard = (props) => {
 
     const data = useSelector(state => state.requests.data)
     const expense = useSelector(state => state.requests.expense)
+    const metrics = useSelector(state => state.requests.metrics)
+    console.log(metrics, 'dk')
+
+    const array = metrics.map(el => {
+        return el.fields['MonthlyRevenue(UGX)']
+    })
+
+    const players = metrics.map(el => {
+        return el.fields['New players who paid']
+    })
+
+    const meetings = metrics.map(el => {
+        return el.fields['Meetings with sponsors this month']
+    })
+
+    console.log(meetings, 'meetings')
 
 
     useEffect(() => {
         dispatch(actionCreators.getAirTableData())
         dispatch(actionCreators.getExpenseData())
+        dispatch(actionCreators.getMetricsData())
     }, [])
 
 
@@ -46,30 +62,6 @@ const Dashboard = (props) => {
     const may = data.filter(el => el.fields['DATE'] >= maystartDate && el.fields['DATE'] <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
     const june = data.filter(el => el.fields['DATE'] >= junstartDate && el.fields['DATE'] <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
 
-
-    const expenseTotal = expense.reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    // console.log(data)
-
-
-    const events = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'event costs').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const helpers = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'onscore helpers').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const transport_mgt = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'Transport mgt').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const transport_players = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'Transport players').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const airtime = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'Airtime/ Data').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const salary = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'onscore salaries').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const IT = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'IT costs').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const allawance = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'onscore allawances').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const equipment = expense.filter(el => el.fields['EXPENSE CATEGORY'] === 'club equipments').reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-
-    const source1 = data.filter(el => el.fields.SOURCE.includes('REGISTRATION RUKUNGIRI')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const source2 = data.filter(el => el.fields.SOURCE.includes('TICKETING')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const source3 = data.filter(el => el.fields.SOURCE.includes('INVESTOR')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const source4 = data.filter(el => el.fields.SOURCE.includes('REGISTRATION KAMPALA')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const source5 = data.filter(el => el.fields.SOURCE.includes('SPONSORS')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const source6 = data.filter(el => el.fields.SOURCE.includes('SPORTS PRODUCTS')).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    // console.log(source6, 'hhh')
-
-
     const expensejan = expense.filter(el => el.fields['DATE '] >= janstartDate && el.fields['DATE '] <= janendDate).length
     const expensefeb = expense.filter(el => el.fields['DATE '] >= febstartDate && el.fields['DATE '] <= febendDate).length
     const expensemarch = expense.filter(el => el.fields['DATE '] >= marchstartDate && el.fields['DATE '] <= marchendDate).length
@@ -86,44 +78,46 @@ const Dashboard = (props) => {
 
     // console.log(revenuemay, 'hhh')
 
-    const state = {
+
+    const revenue = {
         labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
         datasets: [
             {
-                label: 'Total Cash Revenues',
+                label: 'Monthly Revenues',
                 backgroundColor: '#dfa126',
-                borderColor: '#fff',
+                borderColor: '#69191b',
                 borderWidth: 1,
-                data: [jan, feb, march, april, may, june]
+                data: array
             }
         ]
     };
 
-    const expenseData = {
-        labels: ['Event Costs', 'Onscore Helpers', 'Transport Managment', 'Transport Players', 'Airtime/Data', 'Onscore Salaries', 'IT Costs', 'Onscore Allawances', 'Club Equipments'],
+    const soccer = {
+        labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
         datasets: [
             {
-                label: 'Total Expenditures',
+                label: 'New players who paid',
                 backgroundColor: '#dfa126',
-                borderColor: '#fff',
+                borderColor: '#69191b',
                 borderWidth: 1,
-                data: [events, helpers, transport_mgt, transport_players, airtime, salary, IT, allawance, equipment]
+                data: players
             }
         ]
     };
 
-    const aquisitionData = {
-        labels: ['Registration Rukungiri', 'Ticketing', 'Investors', 'Registration Kampala', 'Sponsors', 'Sports Products'],
+    const meet = {
+        labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
         datasets: [
             {
-                label: 'Total Expenditures',
+                label: 'Meetings with sponsors this month',
                 backgroundColor: '#dfa126',
-                borderColor: '#fff',
+                borderColor: '#69191b',
                 borderWidth: 1,
-                data: [source1, source2, source3, source4, source5, source6]
+                data: meetings
             }
         ]
     };
+
 
     const expenseDataEntry = {
         labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
@@ -131,26 +125,22 @@ const Dashboard = (props) => {
             {
                 label: 'Total Monthly Expense Data Entry',
                 backgroundColor: '#dfa126',
-                borderColor: '#fff',
+                borderColor: '#69191b',
                 borderWidth: 1,
                 data: [expensejan, expensefeb, expensemarch, expenseapril, expensemay, expensejune]
             },
             {
                 label: 'Total Monthly Revenue Data Entry',
                 backgroundColor: '#69191b',
-                borderColor: '#fff',
+                borderColor: '#dfa126',
                 borderWidth: 1,
-                data: [revenuejan, revenuefeb, revenuemarch, revenueapril, revenuemay, revenuemay]
+                data: [revenuejan, revenuefeb, revenuemarch, revenueapril, revenuemay, revenuejune]
             }
         ]
     };
 
 
 
-
-    const handleAirtableNavigate = () => {
-        props.history.push('/air-table')
-    }
 
     return (
         <div className="main-container">
@@ -160,9 +150,6 @@ const Dashboard = (props) => {
                 </div>
                 <iframe class="airtable-embed" src="https://airtable.com/embed/shrS6aSAZIgqjP1g0?backgroundColor=green" frameborder="0" onmousewheel="" width="100%" height="95%" ></iframe>
             </ModalUI> : null}
-            <div className="left-column">
-                <Sidebar />
-            </div>
             <div className="right-column-overview">
                 <div className="overview-header-main">
                     {/* <div className="header-right" onClick={handleAirtableNavigate}>
@@ -171,21 +158,6 @@ const Dashboard = (props) => {
                     </div> */}
                 </div>
                 <div className="revenue-row">
-                    <div className="revenue">
-                        <div className="overview-header">
-                            <h2> Six Months Revenue Development</h2>
-                        </div>
-                        <Line
-                            data={state}
-                            width={100}
-                            height={20}
-                        // options={{
-                        //     maintainAspectRatio: false,
-                        //     responsive: true
-
-                        // }}
-                        />
-                    </div>
                     <div className="revenue">
                         <div className="overview-header">
                             <h2>Weekly Finacials Submission</h2>
@@ -201,9 +173,59 @@ const Dashboard = (props) => {
                         // }}
                         />
                     </div>
+
+                    <div className="revenue">
+                        <div className="overview-header">
+                            <h2>Monthly Revenue</h2>
+                        </div>
+                        <Line
+                            data={revenue}
+                            width={100}
+                            height={20}
+                        // options={{
+                        //     maintainAspectRatio: false,
+                        //     responsive: true
+
+                        // }}
+                        />
+                    </div>
+
+                    <div className="revenue">
+                        <div className="overview-header">
+                            <h2>New Players Who paid</h2>
+                        </div>
+                        <Line
+                            data={soccer}
+                            width={100}
+                            height={20}
+                        // options={{
+                        //     maintainAspectRatio: false,
+                        //     responsive: true
+
+                        // }}
+                        />
+                    </div>
+
+                    <div className="revenue">
+                        <div className="overview-header">
+                            <h2>Meetings with sponsers this month</h2>
+                        </div>
+                        <Line
+                            data={meet}
+                            width={100}
+                            height={20}
+                        // options={{
+                        //     maintainAspectRatio: false,
+                        //     responsive: true
+
+                        // }}
+                        />
+                    </div>
+
+
                 </div>
 
-                <div className="expense">
+                {/* <div className="expense">
                     <div className="stats-card-chart">
                         <div className="stats-header">
                             <h3>Cost Structure</h3>
@@ -234,7 +256,7 @@ const Dashboard = (props) => {
                             }}
                         />
                     </div>
-                </div>
+                </div> */}
 
                 {/* <div className="header-row">
                     <button onClick={() => setOpen(true)}>Form</button>

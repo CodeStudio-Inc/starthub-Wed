@@ -12,10 +12,12 @@ import MathiusSchedule from '../Layout/Carlender/MathiusSchedule'
 import YusufuSchedule from '../Layout/Carlender/YusufuSchedule'
 import Dashboard from '../Layout/Dashboard'
 import Airtable from '../Layout/Dashboard/Airtable'
+import Navbar from './Navbar'
 
 const HomeRoutes = () => {
     return (
         <BrowserRouter>
+            <Navbar />
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/cards" component={Cards} />

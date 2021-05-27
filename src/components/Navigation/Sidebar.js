@@ -1,11 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import NotificationsIcon from '@material-ui/icons/Notifications'
 import * as actionCreators from '../store/actionCreators'
 import { Menu } from 'antd';
-import { CalendarOutlined, DashboardOutlined, SettingOutlined, AccountBookOutlined, LineChartOutlined, EditOutlined } from '@ant-design/icons';
+import { AccountBookOutlined, LineChartOutlined, EditOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 
 import './Navigation.css'
@@ -15,13 +15,12 @@ const Sidebar = (props) => {
 
     const dispatch = useDispatch()
 
-    const email = useSelector(state => state.auth.email)
+    const email = useSelector(state => state.auth.username)
 
     const handleLogout = () => {
         dispatch(actionCreators.removeUser())
         props.history.push('/')
     }
-
 
     const handleTodosNavigation = () => {
         props.history.push('/')
@@ -72,26 +71,16 @@ const Sidebar = (props) => {
                 defaultOpenKeys={['sub1']}
                 mode="inline"
             >
-                <SubMenu key="sub1" icon={<CalendarOutlined />} title="Schedule">
-                    <Menu.ItemGroup key="g1" title="Schedule Meeting" >
-                        <Menu.Item onClick={handleCarlenderNavigation} key="1">Carlender</Menu.Item>
-                    </Menu.ItemGroup>
-                </SubMenu>
+                <Menu.Item onClick={handleCarlenderNavigation} key="1">Carlender</Menu.Item>
                 <SubMenu key="sub2" icon={<EditOutlined />} title="Track">
-                    <Menu.ItemGroup key="g2" title="Progress"></Menu.ItemGroup>
                     <Menu.Item onClick={handleTodosNavigation} key="2">Tasks</Menu.Item>
                     <Menu.Item onClick={handleMilestonesNavigation} key="3">Milestones</Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub5" icon={<SettingOutlined />} title="Business Model">
-                    <Menu.ItemGroup key="g5" title="Iterate Business Model"></Menu.ItemGroup>
-                    <Menu.Item onClick={handleCanvasNavigation} key="8">Lean Canvas</Menu.Item>
-                </SubMenu>
+                <Menu.Item onClick={handleCanvasNavigation} key="8">Lean Canvas</Menu.Item>
                 <SubMenu key="sub3" icon={<AccountBookOutlined />} title="Learn">
-                    <Menu.ItemGroup key="g3" title="Toolkit"></Menu.ItemGroup>
                     <Menu.Item onClick={handleBlogsNavigation} key="5">Blogs</Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub4" icon={<LineChartOutlined />} title="Dashboard">
-                    <Menu.ItemGroup key="g4" title="Analyse"></Menu.ItemGroup>
                     <Menu.Item onClick={handleDashboardNavigation} key="7">Graphs</Menu.Item>
                 </SubMenu>
             </Menu>
