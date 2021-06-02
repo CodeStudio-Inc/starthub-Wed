@@ -330,7 +330,7 @@ export const getListsOnBoard = (id, callback) => {
             }
         })
             .then(res => {
-                // console.log(res)     
+                console.log(res)
                 dispatch(setLists(res.data.lists))
                 dispatch(setCanvasLists(res.data.lists))
                 dispatch(setMilestoneLists(res.data.lists))

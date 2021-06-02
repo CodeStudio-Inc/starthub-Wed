@@ -40,8 +40,9 @@ const CanvasCard = ({ list, cards }) => {
     const getListStyle = isDraggingOver => ({
         background: isDraggingOver ? "#69191a96" : "#fff",
         padding: grid,
-        width: 250,
-        margin: 2
+        width: '50%',
+        margin: 2,
+        height: 330
     });
 
     const [state, setState] = useState({ items: cards })
@@ -72,7 +73,6 @@ const CanvasCard = ({ list, cards }) => {
 
     }, [])
 
-    const canvas_items = state.items
 
 
     return (
@@ -85,11 +85,11 @@ const CanvasCard = ({ list, cards }) => {
                         style={getListStyle(snapshot.isDraggingOver)}
                     >
                         <div className="canvas-row">
-                            <h6>{list.name}</h6>
-                            <h1>{list.listNumber}</h1>
+                            <h6>{list && list.name}</h6>
+                            <h1>{list && list.listNumber}</h1>
                         </div>
                         {cards.map((card, index) => {
-                            if (list._id === card.listId)
+                            if (list && list._id === card.listId)
                                 return (
                                     <Draggable key={card._id} draggableId={card._id} index={index}>
                                         {(provided, snapshot) => (
@@ -118,13 +118,17 @@ const CanvasCard = ({ list, cards }) => {
                                 placeholder="Type.."
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
+                                onKeyUp={(e) => {
+                                    if (e.key === 'Enter') {
+                                        dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
+                                            setCardName('')
+                                            if (res.success === true) {
+                                                dispatch(actionCreators.getCardsOnBoard(boardId))
+                                            }
+                                        }))
+                                    }
+                                }}
                             />
-                            <button onClick={() => dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
-                                setCardName('')
-                                if (res.success === true) {
-                                    dispatch(actionCreators.getCardsOnBoard(boardId))
-                                }
-                            }))}  >+</button>
                         </div>
                         {provided.placeholder}
                     </div>

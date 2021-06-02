@@ -111,13 +111,17 @@ const MilestoneCard = ({ list, data }) => {
                                 placeholder="Type.."
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
+                                onKeyUp={(e) => {
+                                    if (e.key === 'Enter') {
+                                        dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
+                                            setCardName('')
+                                            if (res.success === true) {
+                                                dispatch(actionCreators.getCardsOnBoard(boardId))
+                                            }
+                                        }))
+                                    }
+                                }}
                             />
-                            <button onClick={() => dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
-                                setCardName('')
-                                if (res.success === true) {
-                                    dispatch(actionCreators.getCardsOnBoard(boardId))
-                                }
-                            }))}  >+</button>
                         </div>
                         {provided.placeholder}
                     </div>

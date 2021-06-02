@@ -12,6 +12,7 @@ import MathiusSchedule from '../Layout/Carlender/MathiusSchedule'
 import YusufuSchedule from '../Layout/Carlender/YusufuSchedule'
 import Dashboard from '../Layout/Dashboard'
 import Airtable from '../Layout/Dashboard/Airtable'
+import CanvasHome from '../Layout/Canvas'
 import Navbar from './Navbar'
 
 const HomeRoutes = () => {
@@ -31,11 +32,7 @@ const HomeRoutes = () => {
                 <Route path="/overview" component={Dashboard} />
                 <Route path="/air-table" component={Airtable} />
                 <Route path="/carlender" component={Carlender} />
-                {/* 
-                <Route path="/trello" component={Trello} />
-                <Route path="/lists" component={Lists} />
-                
-    */}
+                <Route path="/canvas-board" component={CanvasHome} />
             </Switch>
         </BrowserRouter>
     )

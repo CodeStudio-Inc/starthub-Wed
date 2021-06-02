@@ -36,14 +36,6 @@ const index = (props) => {
                             <button onClick={handleMathiusNavigation}>Schedule Meeting</button>
                         </div>
                     </div>
-                    {/* <div className="schedule-card" onClick={handleYusufuNavigation}>
-                        <img src="https://res.cloudinary.com/dwa3soopc/image/upload/v1617797017/rsz_2yusuf_vl96o4.jpg" />
-                        <div className="card-txt">
-                            <h3>Yusufu Mutamba</h3>
-                            <p>StartHub Africa Catalyzer Mentor</p>
-                            <button onClick={handleYusufuNavigation}>Schedule Meeting</button>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </div>

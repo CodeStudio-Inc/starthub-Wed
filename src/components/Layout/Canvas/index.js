@@ -3,11 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import CloseIcon from '@material-ui/icons/Close'
 import Search from '@material-ui/icons/Search'
-import AddBoxIcon from '@material-ui/icons/AddBox'
 import { Card } from '@material-ui/core'
 import ModalUI from '../../ModalUI'
 
-import './Home.css'
+import '../Home/Home.css'
 const Home = (props) => {
 
     const [name, setBoardName] = useState('')
@@ -16,7 +15,7 @@ const Home = (props) => {
     const Boards = useSelector(state => state.requests.boards)
 
 
-    const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
+    const filtereBoards = Boards.filter(el => el.name === 'Lean Canvas')
     console.log(filtereBoards)
 
     const dispatch = useDispatch()
@@ -25,8 +24,6 @@ const Home = (props) => {
         dispatch(actionCreators.getCanvasBoard())
         dispatch(actionCreators.getMilestonesBoard())
         dispatch(actionCreators.getBoards())
-        // dispatch(actionCreators.createCanvasBoard())
-        // dispatch(actionCreators.createMilestoneBoard())
     }, [])
 
     const createBoard = () => {
@@ -46,7 +43,7 @@ const Home = (props) => {
             {open ? <ModalUI setOpen={setOpen}>
                 <div className="create-board-column">
                     <div className="close-row">
-                        <p>Create Board</p>
+                        <p>New Lean Canvas</p>
                         <CloseIcon onClick={() => setOpen(false)} className="close" style={{ fontSize: '20px' }} />
                     </div>
                     <div className="create-board-row">
@@ -74,7 +71,7 @@ const Home = (props) => {
                                 <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
                             </div>
                             <div className="separator" />
-                            <button onClick={() => setOpen(true)}>Create Board</button>
+                            <button onClick={() => setOpen(true)}>New Lean Canvas</button>
                         </div>
                     </div>
                     {/* <Cards /> */}
