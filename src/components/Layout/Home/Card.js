@@ -24,7 +24,7 @@ const Card = (props) => {
     const lists = useSelector(state => state.requests.lists)
     const cards = useSelector(state => state.requests.cards)
     // console.log(lists, 'lists')
-    console.log(cards, 'cards')
+    // console.log(cards, 'cards')
 
     const dispatch = useDispatch()
 
@@ -75,7 +75,7 @@ const Card = (props) => {
                             <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
                         </div>
                         <div className="separator" />
-                        <button onClick={() => setOpen(true)}>Create Board</button>
+                        <button onClick={() => setOpen(true)}>Create List</button>
                     </div>
                 </div>
 

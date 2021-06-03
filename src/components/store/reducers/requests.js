@@ -45,6 +45,7 @@ const requests = (state = initialState, action) => {
 
         case actions.SET_BOARDS:
             return updateObject(state, {
+                loading: false,
                 boards: action.data
             })
 

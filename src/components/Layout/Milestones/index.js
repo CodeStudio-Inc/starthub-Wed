@@ -14,9 +14,10 @@ const Home = (props) => {
 
     const Boards = useSelector(state => state.requests.boards)
 
+    const loading = useSelector(state => state.requests.loading)
 
     const filtereBoards = Boards.filter(el => el.name === 'Milestones')
-    console.log(filtereBoards)
+    // console.log(filtereBoards)
 
     const dispatch = useDispatch()
 
@@ -73,23 +74,25 @@ const Home = (props) => {
                         </div>
                     </div>
                     {/* <Cards /> */}
+                    {loading ? <h3>Loading...</h3>:
                     <div className="boards-row">
-                        {filtereBoards.map((board, index) => (
-                            <Card
-                                key={index}
-                                style={{ backgroundColor: '#fff', width: '25%' }}
-                                className="board-card"
-                                onClick={() => dispatch(actionCreators.getListsOnBoard(board._id, (res) => {
-                                    if (res.success === true) {
-                                        props.history.push('/milestones', { data: board })
-                                    }
-                                }))}
-                            >
-                                <h3>{board.name}</h3>
+                    {filtereBoards.map((board, index) => (
+                        <Card
+                            key={index}
+                            style={{ backgroundColor: '#fff', width: '25%' }}
+                            className="board-card"
+                            onClick={() => dispatch(actionCreators.getListsOnBoard(board._id, (res) => {
+                                if (res.success === true) {
+                                    props.history.push('/milestones', { data: board })
+                                }
+                            }))}
+                        >
+                            <h3>{board.name}</h3>
 
-                            </Card>
-                        ))}
-                    </div>
+                        </Card>
+                    ))}
+                </div>
+                    }
                 </div>
             </div>
         </div>

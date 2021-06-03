@@ -301,7 +301,7 @@ export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blog
 
 export const getBoards = () => {
     return (dispatch, getState) => {
-
+        dispatch(loadAction())
         const token = getState().auth.token
 
         axios.get('https://starthubafrica.herokuapp.com/catalyzer/boards', {
