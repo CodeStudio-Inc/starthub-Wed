@@ -5,7 +5,7 @@ import * as actionCreators from '../../store/actionCreators'
 import EditIcon from '@material-ui/icons/Edit';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-const MilestoneCard = ({ list, data }) => {
+const MilestoneCard = ({ list, data, boardId }) => {
 
     // console.log(cards, 'll')
     // a little function to help us with reordering the result
@@ -26,8 +26,8 @@ const MilestoneCard = ({ list, data }) => {
         margin: `0 0 ${grid}px 0`,
 
         // change background colour if dragging
-        background: isDragging ? "#dfa126" : "#fbfcc8",
-        height: 40,
+        background: isDragging ? "#dfa126" : "#fde7a9",
+        height: 30,
         // styles we need to apply on draggables
         ...draggableStyle
     });
@@ -43,7 +43,6 @@ const MilestoneCard = ({ list, data }) => {
     const [cardName, setCardName] = useState('')
     console.log(state, 'ff')
 
-    const boardId = useSelector(state => state.requests.milestone_board_id)
 
     const dispatch = useDispatch()
 
@@ -98,7 +97,7 @@ const MilestoneCard = ({ list, data }) => {
                                             >
                                                 <p>{card.name}</p>
                                                 <div className="icon-row">
-                                                    <EditIcon className="edit-icon" fontSize="small" />
+                                                    {/* <EditIcon className="edit-icon" fontSize="small" /> */}
                                                     <CancelIcon onClick={() => dispatch(actionCreators.deleteCard(card._id))} className="edit-icon" fontSize="small" />
                                                 </div>
                                             </div>

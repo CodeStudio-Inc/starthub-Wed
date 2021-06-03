@@ -9,7 +9,7 @@ import ModalUI from '../../ModalUI'
 import '../Home/Home.css'
 const Home = (props) => {
 
-    const [name, setBoardName] = useState('')
+    const [name, setBoardName] = useState('Lean Canvas')
     const [open, setOpen] = useState(false)
 
     const Boards = useSelector(state => state.requests.boards)
@@ -21,13 +21,11 @@ const Home = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(actionCreators.getCanvasBoard())
-        dispatch(actionCreators.getMilestonesBoard())
         dispatch(actionCreators.getBoards())
     }, [])
 
     const createBoard = () => {
-        dispatch(actionCreators.createBoard(name, (res) => {
+        dispatch(actionCreators.createCanvasBoard( (res) => {
             if (res.success === true) {
                 setOpen(false)
                 setBoardName('')
@@ -83,7 +81,7 @@ const Home = (props) => {
                                 className="board-card"
                                 onClick={() => dispatch(actionCreators.getListsOnBoard(board._id, (res) => {
                                     if (res.success === true) {
-                                        props.history.push('/cards', { data: board })
+                                        props.history.push('/canvas', { data: board })
                                     }
                                 }))}
                             >

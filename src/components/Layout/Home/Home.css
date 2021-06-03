@@ -234,7 +234,7 @@
   border: none;
   outline: none;
   padding-left: 5px;
-  height: 30px;
+  height: 25px;
   border-radius: 2px;
   transition: 0.5s ease-in-out;
   /* margin-right: 0.5rem; */
@@ -242,7 +242,7 @@
 }
 
 .add-card input:focus {
-  background: #fbfcc8;
+  background: #fde7a9;
 }
 
 .add-card button {
@@ -297,7 +297,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 25%;
+  width: 35%;
 }
 
 .edit-row button {

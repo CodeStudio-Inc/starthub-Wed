@@ -114,7 +114,7 @@ export const deleteListAction = (id) => {
     }
 }
 
-export const createCanvasBoard = () => {
+export const createCanvasBoard = (callback) => {
     return (dispatch, getState) => {
 
         const data = {
@@ -130,7 +130,8 @@ export const createCanvasBoard = () => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
+                callback({ success: true, res: res })
             })
             .catch(err => {
                 console.log(err)
@@ -138,7 +139,7 @@ export const createCanvasBoard = () => {
     }
 }
 
-export const createMilestoneBoard = () => {
+export const createMilestoneBoard = (callback) => {
     return (dispatch, getState) => {
 
         const data = {
@@ -154,7 +155,8 @@ export const createMilestoneBoard = () => {
             }
         })
             .then(res => {
-                console.log(res)
+                callback({ success: true, res: res })
+                // console.log(res)
             })
             .catch(err => {
                 console.log(err)

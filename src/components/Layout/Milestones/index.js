@@ -3,31 +3,29 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import CloseIcon from '@material-ui/icons/Close'
 import Search from '@material-ui/icons/Search'
-import AddBoxIcon from '@material-ui/icons/AddBox'
 import { Card } from '@material-ui/core'
 import ModalUI from '../../ModalUI'
 
-import './Home.css'
+import '../Home/Home.css'
 const Home = (props) => {
 
-    const [name, setBoardName] = useState('')
+    const [name, setBoardName] = useState('Milestones')
     const [open, setOpen] = useState(false)
 
     const Boards = useSelector(state => state.requests.boards)
 
 
-    const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
+    const filtereBoards = Boards.filter(el => el.name === 'Milestones')
     console.log(filtereBoards)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(actionCreators.getBoards())
-        // dispatch(actionCreators.createMilestoneBoard())
     }, [])
 
     const createBoard = () => {
-        dispatch(actionCreators.createBoard(name, (res) => {
+        dispatch(actionCreators.createMilestoneBoard( (res) => {
             if (res.success === true) {
                 setOpen(false)
                 setBoardName('')
@@ -43,7 +41,7 @@ const Home = (props) => {
             {open ? <ModalUI setOpen={setOpen}>
                 <div className="create-board-column">
                     <div className="close-row">
-                        <p>Create Board</p>
+                        <p>New Lean Canvas</p>
                         <CloseIcon onClick={() => setOpen(false)} className="close" style={{ fontSize: '20px' }} />
                     </div>
                     <div className="create-board-row">
@@ -71,7 +69,7 @@ const Home = (props) => {
                                 <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
                             </div>
                             <div className="separator" />
-                            <button onClick={() => setOpen(true)}>Create Board</button>
+                            <button onClick={() => setOpen(true)}>New Milestones</button>
                         </div>
                     </div>
                     {/* <Cards /> */}
@@ -83,7 +81,7 @@ const Home = (props) => {
                                 className="board-card"
                                 onClick={() => dispatch(actionCreators.getListsOnBoard(board._id, (res) => {
                                     if (res.success === true) {
-                                        props.history.push('/cards', { data: board })
+                                        props.history.push('/milestones', { data: board })
                                     }
                                 }))}
                             >

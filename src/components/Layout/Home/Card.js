@@ -80,7 +80,16 @@ const Card = (props) => {
                 </div>
 
                 <div className="milestone-row">
-                    {lists.map((list, index) => (
+                    {lists.map(list =>(
+                            <Cards
+                            key={list._id} 
+                            list={list}     
+                            cards={cards}
+                            boardId={boardId}
+                            /> 
+                    ))
+                    }
+                    {/* {lists.map((list, index) => (
                         <div className="list-card" key={list._id}>
                             <div className="list-header">
                                 <h3>{list.name}</h3>
@@ -120,7 +129,7 @@ const Card = (props) => {
                                 setActiveListId(list._id)
                             }}>+ Add Card</button> : <button onClick={() => setShow(false)}>Close</button>}
                         </div>
-                    ))}
+                    ))} */}
                 </div>
 
             </div>

@@ -5,7 +5,7 @@ import * as actionCreators from '../../store/actionCreators'
 import EditIcon from '@material-ui/icons/Edit';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-const CanvasCard = ({ list, cards }) => {
+const CanvasCard = ({ list, cards, boardId }) => {
 
     const getItems = count =>
         Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -31,8 +31,8 @@ const CanvasCard = ({ list, cards }) => {
         margin: `0 0 ${grid}px 0`,
 
         // change background colour if dragging
-        background: isDragging ? "#dfa126" : "#fbfcc8",
-        height: 40,
+        background: isDragging ? "#dfa126" : "#fde7a9",
+        height: 30,
         // styles we need to apply on draggables
         ...draggableStyle
     });
@@ -48,7 +48,6 @@ const CanvasCard = ({ list, cards }) => {
     const [state, setState] = useState({ items: cards })
     const [cardName, setCardName] = useState('')
 
-    const boardId = useSelector(state => state.requests.canvas_board_id)
 
     const dispatch = useDispatch()
 
@@ -105,7 +104,7 @@ const CanvasCard = ({ list, cards }) => {
                                             >
                                                 <p>{card.name}</p>
                                                 <div className="icon-row">
-                                                    <EditIcon className="edit-icon" fontSize="small" />
+                                                    {/* <EditIcon className="edit-icon" fontSize="small" /> */}
                                                     <CancelIcon onClick={() => dispatch(actionCreators.deleteCard(card._id))} className="edit-icon" fontSize="small" />
                                                 </div>
                                             </div>

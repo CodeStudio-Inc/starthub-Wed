@@ -11,13 +11,14 @@ import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
 import CanvasCard from './CanvasCard'
 
 import './Canvas.css'
-const Canvas = () => {
+const Canvas = (props) => {
 
     const loading = useSelector(state => state.requests.loading)
     const cards = useSelector(state => state.requests.canvas_cards)
-    const boardName = useSelector(state => state.requests.canvas_board_name)
-    const boardId = useSelector(state => state.requests.canvas_board_id)
     const lists = useSelector(state => state.requests.canvas_lists)
+
+    const boardName = props.location.state.data.name
+    const boardId = props.location.state.data._id
 
     const problem = lists.find(el => el.name === 'Problem')
     const solution = lists.find(el => el.name === 'Solution')
@@ -28,7 +29,7 @@ const Canvas = () => {
     const segments = lists.find(el => el.name === 'Customer Segments')
     const revenue = lists.find(el => el.name === 'Revenue Streams')
     const cost = lists.find(el => el.name === 'Cost Structure')
-    console.log(lists, 'ff')
+    // console.log(props, 'ff')
 
     const dispatch = useDispatch()
 
@@ -60,36 +61,43 @@ const Canvas = () => {
                                         key={problem && problem._id}
                                         list={problem && problem}
                                         cards={cards}
+                                        boardId={boardId}
                                     />
                                     <CanvasCard
                                         key={solution && solution._id}
                                         list={solution && solution}
                                         cards={cards}
+                                        boardId={boardId}
                                     />
                                     <CanvasCard
                                         key={metrics && metrics._id}
                                         list={metrics && metrics}
                                         cards={cards}
+                                        boardId={boardId}
                                     />
                                     <CanvasCard
                                         key={proposition && proposition._id}
                                         list={proposition && proposition}
                                         cards={cards}
+                                        boardId={boardId}
                                     />
                                     <CanvasCard
                                         key={advantage && advantage._id}
                                         list={advantage && advantage}
                                         cards={cards}
+                                        boardId={boardId}
                                     />
                                     <CanvasCard
                                         key={channels && channels._id}
                                         list={channels && channels}
                                         cards={cards}
+                                        boardId={boardId}
                                     />
                                     <CanvasCard
                                         key={segments && segments._id}
                                         list={segments && segments}
                                         cards={cards}
+                                        boardId={boardId}
                                     />
                                 </div>
                         }
@@ -100,10 +108,12 @@ const Canvas = () => {
                                         key={cost && cost._id}
                                         list={cost && cost}
                                         cards={cards}
+                                        boardId={boardId}
                                     /><CanvasCard
                                         key={revenue && revenue._id}
                                         list={revenue && revenue}
                                         cards={cards}
+                                        boardId={boardId}
                                     />
                                 </div>
                         }

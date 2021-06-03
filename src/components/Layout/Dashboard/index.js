@@ -158,6 +158,7 @@ const Dashboard = (props) => {
                     </div> */}
                 </div>
                 <div className="revenue-row">
+                    <div className="graph-row">
                     <div className="revenue">
                         <div className="overview-header">
                             <h2>Weekly Finacials Submission</h2>
@@ -189,7 +190,9 @@ const Dashboard = (props) => {
                         // }}
                         />
                     </div>
+                    </div>
 
+                    <div className="graph-row">
                     <div className="revenue">
                         <div className="overview-header">
                             <h2>New Players Who paid</h2>
@@ -220,6 +223,7 @@ const Dashboard = (props) => {
 
                         // }}
                         />
+                    </div>
                     </div>
 
 

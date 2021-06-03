@@ -4,14 +4,16 @@ import * as actionCreators from '../../store/actionCreators'
 import Search from '@material-ui/icons/Search'
 import MilestoneCard from './MilestoneCard'
 
-const Milestones = () => {
+const Milestones = (props) => {
     const [cardName, setCardName] = useState('')
     const [show, setShow] = useState(false)
     const [activeListId, setActiveListId] = useState(null)
 
     const loading = useSelector(state => state.requests.loading)
-    const boardId = useSelector(state => state.requests.milestone_board_id)
-    const boardName = useSelector(state => state.requests.milestone_board_name)
+    
+    const boardName = props.location.state.data.name
+    const boardId = props.location.state.data._id
+
     const lists = useSelector(state => state.requests.milestone_lists)
     const cards = useSelector(state => state.requests.milestone_cards)
     // console.log(cards)
@@ -51,6 +53,7 @@ const Milestones = () => {
                                     key={statement._id}
                                     list={statement}
                                     data={cards}
+                                    boardId={boardId}
                                 />
                             ))}
                             {/* {statements.map((vision, index) => (
@@ -102,6 +105,7 @@ const Milestones = () => {
                                 key={milestone._id}
                                 list={milestone}
                                 data={cards}
+                                boardId={boardId}
                             />
                         ))}
                         {/* {Milestone.map((mission, index) => (

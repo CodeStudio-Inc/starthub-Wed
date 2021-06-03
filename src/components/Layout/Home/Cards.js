@@ -6,7 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete'
 
-const Cards = ({ list, cards }) => {
+const Cards = ({ list, cards, boardId }) => {
 
     const getItems = count =>
         Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -32,8 +32,8 @@ const Cards = ({ list, cards }) => {
         margin: `0 0 ${grid}px 0`,
 
         // change background colour if dragging
-        background: isDragging ? "#dfa126" : "#fbfcc8",
-        height: 40,
+        background: isDragging ? "#dfa126" : "#fde7a9",
+        height: 30,
         // styles we need to apply on draggables
         ...draggableStyle
     });
@@ -48,8 +48,6 @@ const Cards = ({ list, cards }) => {
     const [state, setState] = useState({ items: cards })
     const [cardName, setCardName] = useState('')
 
-
-    const boardId = useSelector(state => state.requests.canvas_board_id)
 
     const dispatch = useDispatch()
 
@@ -107,7 +105,7 @@ const Cards = ({ list, cards }) => {
                                             >
                                                 <p>{card.name}</p>
                                                 <div className="icon-row">
-                                                    <EditIcon className="edit-icon" fontSize="small" />
+                                                    {/* <EditIcon className="edit-icon" fontSize="small" /> */}
                                                     <CancelIcon onClick={() => dispatch(actionCreators.deleteCard(card._id))} className="edit-icon" fontSize="small" />
                                                 </div>
                                             </div>
@@ -120,13 +118,17 @@ const Cards = ({ list, cards }) => {
                                 placeholder="Type.."
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
+                                onKeyUp={(e) => {
+                                    if (e.key === 'Enter') {
+                                        dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
+                                            setCardName('')
+                                            if (res.success === true) {
+                                                dispatch(actionCreators.getCardsOnBoard(boardId))
+                                            }
+                                        }))
+                                    }
+                                }}
                             />
-                            <button onClick={() => dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
-                                setCardName('')
-                                if (res.success === true) {
-                                    dispatch(actionCreators.getCardsOnBoard(boardId))
-                                }
-                            }))}  >+</button>
                         </div>
                         {provided.placeholder}
                     </div>
