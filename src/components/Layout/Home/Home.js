@@ -39,6 +39,14 @@ const Home = (props) => {
         }))
     }
 
+    let empty_array = null
+
+    if(filtereBoards.length === 0) {
+        empty_array = (
+            <h2>Create new Board</h2>
+        )
+    }
+
     return (
         <div className="main-container">
             {open ? <ModalUI setOpen={setOpen}>
@@ -75,9 +83,9 @@ const Home = (props) => {
                             <button onClick={() => setOpen(true)}>Create Board</button>
                         </div>
                     </div>
-                    {/* <Cards /> */}
                     {loading ? <h3>Loading...</h3> :
                     <div className="boards-row">
+                        {empty_array}
                     {filtereBoards.map((board, index) => (
                         <Card
                             key={index}
