@@ -47,6 +47,7 @@ const Canvas = (props) => {
                     <div className="boards-header">
                         <h2>{boardName}</h2>
                         <div className="edit-row">
+                        <h5 onClick={() => props.history.goBack()}>Go Back</h5>
                             {/*   */}
                             {/* <div className="separator" /> */}
                             {/* <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} /> */}

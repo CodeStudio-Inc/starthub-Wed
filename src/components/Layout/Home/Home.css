@@ -317,6 +317,14 @@
   background: #dfa12675;
 }
 
+.edit-row h5 {
+  color: #dfa126;
+}
+
+.edit-row h5:hover {
+  cursor: pointer;
+}
+
 .search {
   display: flex;
   align-items: center;

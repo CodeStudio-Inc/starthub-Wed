@@ -43,6 +43,7 @@ const Milestones = (props) => {
                                 <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
                             </div>
                             <div className="separator" />
+                            <h5 onClick={() => props.history.goBack()}>Go Back</h5>
                             {/* <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} /> */}
                         </div>
                     </div>

@@ -23,7 +23,7 @@ const Card = (props) => {
     const loading = useSelector(state => state.requests.loading)
     const lists = useSelector(state => state.requests.lists)
     const cards = useSelector(state => state.requests.cards)
-    // console.log(lists, 'lists')
+    // console.log(props, 'lists')
     // console.log(cards, 'cards')
 
     const dispatch = useDispatch()
@@ -76,6 +76,7 @@ const Card = (props) => {
                         </div>
                         <div className="separator" />
                         <button onClick={() => setOpen(true)}>Create List</button>
+                        <h5 onClick={() => props.history.goBack()}>Go Back</h5>
                     </div>
                 </div>
 
