@@ -68,7 +68,7 @@ const Home = (props) => {
             <div className="boards-right-column">
                 <div className="boards-right-column-content">
                     <div className="boards-header">
-                        <h2>Todos</h2>
+                        <h2>Milestones</h2>
                         <div className="edit-row">
                             <div className="search">
                                 <input
