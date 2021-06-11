@@ -22,9 +22,19 @@ const Navbar = (props) => {
         ]
     })
 
+    const [adminAppState, setAdminAppState] = useState({
+        actionObject: null,
+        objects: [
+            { id: 1, title: "Startups", route: "/admin/home" },
+        ]
+    })
+
     const dispatch = useDispatch()
 
     const username = useSelector(state => state.auth.username)
+    const admin_username = useSelector(state => state.auth.admin_username)
+    const admin = useSelector(state => state.auth.admin)
+    console.log(admin,'hello')
 
 
     const handleLogoutClick = e => {
@@ -51,6 +61,18 @@ const Navbar = (props) => {
         }
     }
 
+    const toggleAdminActive = (index) => {
+        setAdminAppState({ ...adminAppState, actionObject: adminAppState.objects[index] })
+    }
+
+    const toggleAdminActiveStyle = (index) => {
+        if (adminAppState.objects[index] === adminAppState.actionObject) {
+            return "link-box active"
+        } else {
+            return "link-box inactive"
+        }
+    }
+
 
     const logout = (
         <Menu onClick={handleLogoutClick}>
@@ -64,7 +86,27 @@ const Navbar = (props) => {
         <div className="nav-container">
             <div className="nav-row">
                 <img src={logo} />
+                {admin ? 
                 <div className="links">
+                {adminAppState.objects.map((element, index) => (
+                    <div
+                        key={index}
+                        className={toggleAdminActiveStyle(index)}
+                        onClick={() => {
+                            toggleAdminActive(index)
+                            props.history.push(element.route)
+                        }}
+                    >
+                        <h4>{element.title}</h4>
+                    </div>
+                ))
+                }
+                {/* <h4>Lean Canvas</h4>
+                <h4>Dashboard</h4>
+                <h4>Learn</h4> */}
+            </div>
+            :
+            <div className="links">
                     {appState.objects.map((element, index) => (
                         <div
                             key={index}
@@ -81,10 +123,11 @@ const Navbar = (props) => {
                     {/* <h4>Lean Canvas</h4>
                     <h4>Dashboard</h4>
                     <h4>Learn</h4> */}
-                </div>
+                </div>    
+            }
                 <div className="profile">
                     <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottomCenter" icon={<UserOutlined />}>
-                        <p>{username}</p>
+                        <p>{username ? username : admin_username}</p>
                     </Dropdown.Button>
                 </div>
             </div>

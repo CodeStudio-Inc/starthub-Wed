@@ -1,0 +1,132 @@
+.main-container {
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+	background: #eee;
+}
+
+.home-main {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	align-self: flex-start;
+	height: 100%;
+}
+
+.home-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.home-row-left {
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+	flex-direction: column;
+	width: 60%;
+	height: 100vh;
+	overflow-y: scroll;
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.title {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 95%;
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+}
+
+.title h2 {
+	color: rgba(0, 0, 0, 0.7);
+	font-weight: 800;
+	font-size: 17px;
+}
+
+.home-row-right {
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+	flex-direction: column;
+	overflow-y: scroll;
+	width: 40%;
+	height: 100vh;
+	padding: 10px;
+	background: #faf8f9;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 95%;
+	background: #fff;
+	height: 50px;
+	padding-left: 5px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.header h3 {
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.cell {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 25%;
+}
+
+.cell-small {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 10%;
+}
+
+.list-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 95%;
+	height: 50px;
+	padding-left: 5px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.list-row:hover {
+	background: #fff;
+	cursor: pointer;
+}
+
+.table-width {
+	width: 85%;
+	margin-bottom: 1rem;
+}
+
+/* .table-header-row {
+	height: 50px;
+}
+
+.table-header-row td {
+	align-items: center;
+	color: rgba(0, 0, 0, 0.2);
+	font-weight: 500;
+}
+
+.table-detail-row {
+	height: 50px;
+	align-items: center;
+	background: #fff;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	padding-left: 10px;
+}
+
+.table-detail-row td {
+	align-items: center;
+} */

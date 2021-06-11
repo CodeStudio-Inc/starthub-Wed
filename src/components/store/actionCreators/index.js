@@ -1,4 +1,4 @@
-export { signUp, login, removeUser } from './auth'
+export { signUp, login, removeUser,loginAdmin } from './auth'
 export {
     getBlogs,
     getBoards,
@@ -19,4 +19,6 @@ export {
     createCanvasBoard,
     createMilestoneBoard,
 } from './requests'
+
+export { getUsers, getAdminBoard, getAdminLists, getAdminCards} from './admin'
 
