@@ -3,21 +3,35 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import CloseIcon from '@material-ui/icons/Close'
 import Search from '@material-ui/icons/Search'
-import { Card } from '@material-ui/core'
+import CanvasCard from './CanvasCard'
 import ModalUI from '../../ModalUI'
+import { Card } from '@material-ui/core'
 
 import '../Home/Home.css'
 const Home = (props) => {
 
     const [name, setBoardName] = useState('Lean Canvas')
     const [open, setOpen] = useState(false)
+    const [boardId, setBoardId] = useState('')
 
     const Boards = useSelector(state => state.requests.boards)
+    const cards = useSelector(state => state.requests.canvas_cards)
+    const lists = useSelector(state => state.requests.canvas_lists)
 
     const loading = useSelector(state => state.requests.loading)
 
     const filtereBoards = Boards.filter(el => el.name === 'Lean Canvas')
     // console.log(filtereBoards)
+
+    const problem = lists.find(el => el.name === 'Problem')
+    const solution = lists.find(el => el.name === 'Solution')
+    const metrics = lists.find(el => el.name === 'Key Metrics')
+    const proposition = lists.find(el => el.name === 'Unique Value Proposition')
+    const advantage = lists.find(el => el.name === 'Unfair Advantage')
+    const channels = lists.find(el => el.name === 'Channels')
+    const segments = lists.find(el => el.name === 'Customer Segments')
+    const revenue = lists.find(el => el.name === 'Revenue Streams')
+    const cost = lists.find(el => el.name === 'Cost Structure')
 
     const dispatch = useDispatch()
 
@@ -37,9 +51,12 @@ const Home = (props) => {
         }))
     }
 
+    const list_length = lists.length >= 1
+    const board_length = filtereBoards.length === 1
+
     let empty_array = null
 
-    if(filtereBoards.length === 0) {
+    if (filtereBoards.length === 0) {
         empty_array = (
             <h2>Create new Board</h2>
         )
@@ -70,38 +87,39 @@ const Home = (props) => {
                     <div className="boards-header">
                         <h2>Lean Canvas</h2>
                         <div className="edit-row">
-                            <div className="search">
+                            {/* <div className="search">
                                 <input
                                     type="text"
                                     placeholder="Search"
                                 />
                                 <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
-                            </div>
-                            <div className="separator" />
-                            <button onClick={() => setOpen(true)}>New Lean Canvas</button>
+                            </div> */}
+                            {board_length ? null : <div className="separator" />}
+                            {board_length ? null : <button onClick={() => setOpen(true)}>New Lean Canvas</button>}
                         </div>
                     </div>
-                    {/* <Cards /> */}
-                    {loading ? <h3>Loading...</h3> : 
                     <div className="boards-row">
-                        {empty_array}
-                    {filtereBoards.map((board, index) => (
-                        <Card
-                            key={index}
-                            style={{ backgroundColor: '#fff', width: '25%' }}
-                            className="board-card"
-                            onClick={() => dispatch(actionCreators.getListsOnBoard(board._id, (res) => {
-                                if (res.success === true) {
-                                    props.history.push('/canvas', { data: board })
-                                }
-                            }))}
-                        >
-                            <h3>{board.name}</h3>
+                    {loading ? <h3>Loading...</h3> :
+                        <div className="boards-row">
+                            {empty_array}
+                            {filtereBoards.map((board, index) => (
+                                <div
+                                    key={index}
+                                    className="board-card"
+                                    onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
+                                        if (res.success === true) {
+                                            props.history.push('/canvas', { data: board })
+                                        }
+                                    }))}
+                                >
+                                    <h3>{board.name}</h3>
 
-                        </Card>
-                    ))}
-                </div>
+                                </div>
+                            ))}
+                        </div>
                     }
+                    </div>
+                   
                 </div>
             </div>
         </div>

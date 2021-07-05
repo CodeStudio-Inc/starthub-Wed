@@ -7,6 +7,7 @@ const initialState = {
     metrics: [],
     boards: [],
     lists: [],
+    all_lists: [],
     canvas_lists: [],
     milestone_lists: [],
     cards: [],
@@ -17,7 +18,12 @@ const initialState = {
     canvas_board_name: '',
     milestone_board_id: '',
     milestone_board_name: '',
-    loading: false
+    loading: false,
+    droppableIdStart: '',
+    droppableIdEnd: '',
+    droppableIndexStart: '',
+    droppableIndexEnd: '',
+    draggableId: ''
 }
 
 const requests = (state = initialState, action) => {
@@ -54,6 +60,8 @@ const requests = (state = initialState, action) => {
                 loading: false,
                 lists: action.data
             })
+
+
 
         case actions.SET_CANVAS_LISTS:
             return updateObject(state, {
@@ -113,6 +121,58 @@ const requests = (state = initialState, action) => {
                 canvas_lists: state.canvas_lists.filter(({ _id }) => _id !== action.id),
                 milestone_lists: state.milestone_lists.filter(({ _id }) => _id !== action.id)
             })
+
+        case actions.DRAG_WITHIN_LIST:
+            const { 
+                droppableIdStart: src, 
+                droppableIdEnd: dest, 
+                droppableIndexStart: sIndx, 
+                droppableIndexEnd: eIndx
+            } = action;
+            
+            let lists;
+
+            if(src === dest){
+                let list = {...state.lists.find(list => src === list._id)}
+                const card = list.cards[sIndx]
+                list.cards.splice(sIndx, 1)
+                list.cards.splice(eIndx, 0, card )
+                const cards = list.cards;
+                lists = [...state.lists.map(list => src === list._id ? ({...list, cards}) :list)]
+            }
+
+
+            if(src !== dest){
+                //cards of sourcelist, remove card
+                //cards of destlist, add cards
+                let stateLists = [...state.lists]
+                //const listSource = stateLists.find(list => src === list._id)
+                const listSourceIndex = stateLists.findIndex(list => src === list._id)
+                 const card = stateLists[listSourceIndex].cards[sIndx]
+                 stateLists[listSourceIndex].cards.splice(sIndx, 1)
+                // lists = [...state.lists.map(list => src === list._id ? ({...list, cards: sourceCards}) :list)]
+                //const listEnd = stateLists.find(list => dest === list._id)
+                const listEndIndex = stateLists.findIndex(list => dest === list._id)
+                 stateLists[listEndIndex].cards.splice(eIndx, 0, card)
+                // lists = [...state.lists.map(list => dest === list._id ? ({...list, cards: destCards}) :list)]
+                console.log('Lists---', lists)
+                    lists = stateLists;
+
+            }
+
+            return updateObject(state, {
+                lists,
+                droppableIdStart: action.droppableIdStart,
+                droppableIdEnd: action.droppableIdEnd,
+                droppableIndexStart: action.droppableIndexStart,
+                droppableIndexEnd: action.droppableIndexEnd,
+                draggableId: action.draggableId,
+            })
+
+            case actions.SET_NEW_LISTS:
+                return updateObject(state, {
+                    lists: action.data
+                })
 
         default:
             return state

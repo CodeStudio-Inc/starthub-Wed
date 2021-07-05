@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import Navbar from '../../../Navigation/Navbar'
 import { Table, Pagination } from 'antd'
 import * as actionCreators from '../../../store/actionCreators'
 import moment from 'moment'
@@ -102,8 +101,6 @@ const Home = () => {
     // ];
 
     return(
-            <div>
-                <Navbar/>
                 <div className="main-container">
                 <div className="home-main">
                 <div className="home-row">
@@ -181,7 +178,6 @@ const Home = () => {
                     {/* <Table columns={columns} dataSource={users} size="middle" className="table-width" pagination={false} rowSelection={(e) => console.log(object)} />
                     <Pagination defaultCurrent={1} total={50} /> */}
                 </div>
-            </div>
             </div>
     )
 }

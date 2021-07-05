@@ -7,26 +7,19 @@ export const loaderAction = () => {
     }
 }
 
-export const setUser = (userId, username, email, token) => {
+export const setUser = (admin,userId, username, base_key, link, email, token) => {
     return {
         type: actions.SET_USER,
+        admin,
         userId,
         username,
+        base_key,
+        link,
         email,
         token
     }
 }
 
-export const setAdmin = (userId, username, email, token,admin) => {
-    return {
-        type: actions.SET_ADMIN,
-        userId,
-        username,
-        email,
-        token,
-        admin
-    }
-}
 
 export const removeUser = () => {
     return {
@@ -44,9 +37,9 @@ export const login = (email, password) => {
             password
         }
 
-        axios.post('https://starthubafrica.herokuapp.com/auth/signin', data)
+        axios.post('http://localhost:8080/auth/signin', data)
             .then(res => {
-                dispatch(setUser(res.data.userId, res.data.username, res.data.email, res.data.token))
+                dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token))
                 // console.log(res)
             })
             .catch(error => {
@@ -55,38 +48,20 @@ export const login = (email, password) => {
     }
 }
 
-export const loginAdmin = (email, password, callback) => {
-    return dispatch => {
-        dispatch(loaderAction())
 
-        const data = {
-            email,
-            password
-        }
-
-        axios.post('https://starthubafrica.herokuapp.com/auth/signin', data)
-            .then(res => {
-                dispatch(setAdmin(res.data.userId, res.data.username, res.data.email, res.data.token, res.data.admin))
-                callback({success: true, res: res})
-                // console.log(res.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-}
-
-export const signUp = (username, email, password) => {
+export const signUp = (username, base_key,link, email, password,callback) => {
     return dispatch => {
         dispatch(loaderAction())
 
         const data = {
             username,
+            base_key,
+            link,
             email,
             password
         }
 
-        axios.put('https://starthubafrica.herokuapp.com/auth/signup', data,
+        axios.put('http://localhost:8080/auth/signup', data,
             {
                 headers:
                 {
@@ -96,9 +71,11 @@ export const signUp = (username, email, password) => {
             }
         )
             .then(res => {
-                // console.log(res)
+                // console.log(res,'response')
+                dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token))
             })
             .catch(error => {
+                callback({ success: false, res: error })
                 console.log(error)
             })
     }

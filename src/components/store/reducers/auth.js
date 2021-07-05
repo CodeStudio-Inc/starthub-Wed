@@ -4,12 +4,11 @@ import { updateObject } from './utility'
 const initialState = {
     userId: '',
     username: '',
+    base_key:'',
+    unique_startup_link:'',
+    link:'',
     email: '',
     token: '',
-    admin_userId: '',
-    admin_username: '',
-    admin_email: '',
-    admin_token: '',
     admin:null,
     loading: false,
     authenticated: false,
@@ -27,22 +26,15 @@ const auth = (state = initialState, action) => {
         case actions.SET_USER:
             return updateObject(state, {
                 loading: false,
+                admin: action.admin,
                 userId: action.userId,
                 username: action.username,
+                base_key: action.base_key,
+                link: action.link,
                 email: action.email,
                 token: action.token,
                 authenticated: true
             })
-
-            case actions.SET_ADMIN:
-                return updateObject(state, {
-                    loading: false,
-                    admin_userId: action.userId,
-                    admin_username: action.username,
-                    admin_email: action.email,
-                    admin_token: action.token,
-                    admin: action.admin
-                })
 
         case actions.REMOVE_USER:
             return updateObject(state, {

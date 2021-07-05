@@ -41,7 +41,7 @@ const Home = (props) => {
 
     let empty_array = null
 
-    if(filtereBoards.length === 0) {
+    if (filtereBoards.length === 0) {
         empty_array = (
             <h2>Create new Board</h2>
         )
@@ -71,7 +71,7 @@ const Home = (props) => {
                 <div className="boards-right-column-content">
                     <div className="boards-header">
                         <h2>Todos</h2>
-                        <div className="edit-row">
+                        {/* <div className="edit-row">
                             <div className="search">
                                 <input
                                     type="text"
@@ -80,28 +80,27 @@ const Home = (props) => {
                                 <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
                             </div>
                             <div className="separator" />
+                        </div> */}
                             <button onClick={() => setOpen(true)}>Create Board</button>
-                        </div>
                     </div>
                     {loading ? <h3>Loading...</h3> :
-                    <div className="boards-row">
-                        {empty_array}
-                    {filtereBoards.map((board, index) => (
-                        <Card
-                            key={index}
-                            style={{ backgroundColor: '#fff', width: '25%' }}
-                            className="board-card"
-                            onClick={() => dispatch(actionCreators.getListsOnBoard(board._id, (res) => {
-                                if (res.success === true) {
-                                    props.history.push('/cards', { data: board })
-                                }
-                            }))}
-                        >
-                            <h3>{board.name}</h3>
+                        <div className="boards-row">
+                            {empty_array}
+                            {filtereBoards.map((board, index) => (
+                                <div
+                                    key={index}
+                                    className="board-card"
+                                    onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
+                                        if (res.success === true) {
+                                            props.history.push('/cards', { data: board })
+                                        }
+                                    }))}
+                                >
+                                    <h3>{board.name}</h3>
 
-                        </Card>
-                    ))}
-                </div>
+                                </div>
+                            ))}
+                        </div>
                     }
                 </div>
             </div>

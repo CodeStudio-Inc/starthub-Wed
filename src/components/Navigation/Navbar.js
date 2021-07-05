@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
-import { Menu, Dropdown } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { Menu, Dropdown } from 'antd'
+import { DownOutlined, UserOutlined } from '@ant-design/icons'
 import * as actionCreators from '../store/actionCreators'
+
 import './Navigation.css'
 const Navbar = (props) => {
 
@@ -14,7 +15,7 @@ const Navbar = (props) => {
         actionObject: null,
         objects: [
             { id: 1, title: "Schedule Meeting", route: "/carlender" },
-            { id: 2, title: "Learn", route: "/blogs" },
+            // { id: 2, title: "Learn", route: "/blogs" },
             { id: 3, title: "Dashboard", route: "/overview" },
             { id: 4, title: "Lean Canvas", route: "/canvas-board" },
             { id: 5, title: "Todos", route: "/" },
@@ -32,9 +33,9 @@ const Navbar = (props) => {
     const dispatch = useDispatch()
 
     const username = useSelector(state => state.auth.username)
-    const admin_username = useSelector(state => state.auth.admin_username)
     const admin = useSelector(state => state.auth.admin)
-    console.log(admin,'hello')
+    const link = useSelector(state => state.auth.link)
+    // console.log(key,'hello')
 
 
     const handleLogoutClick = e => {
@@ -125,9 +126,10 @@ const Navbar = (props) => {
                     <h4>Learn</h4> */}
                 </div>    
             }
+                <a href={link} target="blank"><button className="report">Report</button></a>
                 <div className="profile">
                     <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottomCenter" icon={<UserOutlined />}>
-                        <p>{username ? username : admin_username}</p>
+                        <p>{username}</p>
                     </Dropdown.Button>
                 </div>
             </div>

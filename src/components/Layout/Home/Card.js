@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Cards from './Cards'
 
 
+
 import './Home.css'
 const Card = (props) => {
 
@@ -22,16 +23,20 @@ const Card = (props) => {
     const boardId = props.location.state.data._id
     const loading = useSelector(state => state.requests.loading)
     const lists = useSelector(state => state.requests.lists)
-    const cards = useSelector(state => state.requests.cards)
-    // console.log(props, 'lists')
-    // console.log(cards, 'cards')
+    // console.log(lists, 'lists')
+    
+    const todoLists = lists && lists.filter(el => el.boardId === boardId)
+    // console.log(todoLists, 'todoLists')
+
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(actionCreators.getListsOnBoard(boardId, () => { }))
-        dispatch(actionCreators.getCardsOnBoard(boardId))
+        // dispatch(actionCreators.getListsOnBoard( () => { }))
+            getListsOnBoard()
     }, [])
+    
+    const getListsOnBoard = () => dispatch(actionCreators.getListsOnBoard( () => { }))
 
     const createList = () => {
         dispatch(actionCreators.createList(boardId, listName, (res) => {
@@ -43,6 +48,7 @@ const Card = (props) => {
             }
         }))
     }
+
 
     return (
         <div className="main-container">
@@ -67,71 +73,23 @@ const Card = (props) => {
                 <div className="boards-header">
                     <h2>{boardName}</h2>
                     <div className="edit-row">
-                        <div className="search">
+                        {/* <div className="search">
                             <input
                                 type="text"
                                 placeholder="Search"
                             />
                             <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
                         </div>
-                        <div className="separator" />
-                        <button onClick={() => setOpen(true)}>Create List</button>
+                        <div className="separator" /> */}
+                        {/* <button onClick={() => setOpen(true)}>Create List</button> */}
                         <h5 onClick={() => props.history.goBack()}>Go Back</h5>
                     </div>
                 </div>
-
-                <div className="milestone-row">
-                    {lists.map(list =>(
-                            <Cards
-                            key={list._id} 
-                            list={list}     
-                            cards={cards}
-                            boardId={boardId}
-                            /> 
-                    ))
-                    }
-                    {/* {lists.map((list, index) => (
-                        <div className="list-card" key={list._id}>
-                            <div className="list-header">
-                                <h3>{list.name}</h3>
-                                <DeleteIcon onClick={() => dispatch(actionCreators.deleteList(list._id))} className="delete-icon" />
-                            </div>
-                            {cards.map(card => {
-                                if (list._id === card.listId)
-                                    return (
-                                        <div className="card-column" key={card._id}>
-                                            <div className="card-text">
-                                                <h5>{card.name}</h5>
-                                            </div>
-                                            <button onClick={() => dispatch(actionCreators.deleteCard(card._id))}>remove</button>
-                                        </div>
-                                    )
-                            })}
-                            {show && activeListId === list._id ? <div className="add-card">
-                                <input
-                                    placeholder="Enter Card Title"
-                                    type="text"
-                                    value={cardName}
-                                    onChange={(e) => setCardName(e.target.value)}
-                                />
-                                <button onClick={() => {
-                                    dispatch(actionCreators.createCard(boardId, list._id, cardName, (res) => {
-                                        if (res.success === true) {
-                                            setTimeout(() => {
-                                                dispatch(actionCreators.getCardsOnBoard(boardId))
-                                            }, 2000)
-                                        }
-                                    }))
-                                    setCardName('')
-                                }}>Add</button>
-                            </div> : null}
-                            { activeListId !== list._id ? <button onClick={() => {
-                                setShow(true)
-                                setActiveListId(list._id)
-                            }}>+ Add Card</button> : <button onClick={() => setShow(false)}>Close</button>}
-                        </div>
-                    ))} */}
-                </div>
+                <Cards
+                    todoLists={todoLists}
+                    boardId={boardId}
+                    getLists={getListsOnBoard}
+                />
 
             </div>
         </div>

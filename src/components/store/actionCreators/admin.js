@@ -39,7 +39,7 @@ export const setCards = (data) => {
 export const getUsers = () => {
     return (dispatch, getState) => {
         dispatch(loadAction())
-        const token = getState().auth.admin_token
+        const token = getState().auth.token
 
         axios.get('https://starthubafrica.herokuapp.com/admin/users', {
             headers: {
@@ -60,7 +60,7 @@ export const getUsers = () => {
 export const getAdminBoard = (userId) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
-        const token = getState().auth.admin_token
+        const token = getState().auth.token
 
         axios.get(`https://starthubafrica.herokuapp.com/admin/boards/${userId}`, {
             headers: {
@@ -81,7 +81,7 @@ export const getAdminBoard = (userId) => {
 export const getAdminLists = (userId, boardId) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
-        const token = getState().auth.admin_token
+        const token = getState().auth.token
 
         axios.get(`https://starthubafrica.herokuapp.com/admin/lists/${userId}/${boardId}`, {
             headers: {
@@ -102,7 +102,7 @@ export const getAdminLists = (userId, boardId) => {
 export const getAdminCards = (userId, boardId) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
-        const token = getState().auth.admin_token
+        const token = getState().auth.token
 
         axios.get(`https://starthubafrica.herokuapp.com/admin/cards/${userId}/${boardId}`, {
             headers: {

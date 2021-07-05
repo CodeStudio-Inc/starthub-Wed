@@ -21,6 +21,13 @@ export const setLists = (data) => {
     }
 }
 
+export const setNewLists = (data) => {
+    return {
+        type: actions.SET_NEW_LISTS,
+        data: data
+    }
+}
+
 export const setMilestoneLists = (data) => {
     return {
         type: actions.SET_MILESTONE_LISTS,
@@ -114,6 +121,82 @@ export const deleteListAction = (id) => {
     }
 }
 
+export const dragWithListAction = (
+    droppableIdStart,
+    droppableIdEnd,
+    droppableIndexStart,
+    droppableIndexEnd,
+    draggableId
+) => {
+    console.log(droppableIdStart)
+    return {
+        type: actions.DRAG_WITHIN_LIST,
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexStart,
+        droppableIndexEnd,
+        draggableId
+    }
+}
+
+export const dragCardWithInList = (
+    droppableIdStart,
+    droppableIdEnd,
+    droppableIndexStart,
+    droppableIndexEnd,
+    draggableId
+) => {
+    return dispatch => {
+        dispatch(dragWithListAction(
+            droppableIdStart,
+            droppableIdEnd,
+            droppableIndexStart,
+            droppableIndexEnd,
+            draggableId
+        ))
+        // console.log(droppableIdStart,
+        //     droppableIdEnd,
+        //     droppableIndexStart,
+        //     droppableIndexEnd,
+        //     draggableId)
+    }
+}
+
+export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,callback ) => {
+    return (dispatch, getState) => {
+        
+        let lists = [...getState().requests.lists]
+
+        let sourceCards, destinationCards = [];
+        
+        if(sourceId === destinationId) {
+            sourceCards = [...sourceList.cards.map((l ,index) => ({...l, cardIndex: index}))]
+        }
+        
+        if(sourceId !== destinationId){
+            sourceCards = [...sourceList.cards.map((l ,index) => ({...l, cardIndex: index}))]
+            destinationCards = [...DestList.cards.map((l ,index) => ({...l, cardIndex: index}))]
+            console.log(sourceCards ,destinationCards,'lists')
+        }
+
+        const token = getState().auth.token
+
+        axios.post('http://localhost:8080/catalyzer/list/updateIndexes', {sourceId, destinationId, sourceCards, destinationCards}, {
+            headers: {
+                ContentType: 'Application/json',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                console.log(res,'fsd')
+                callback()
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
 export const createCanvasBoard = (callback) => {
     return (dispatch, getState) => {
 
@@ -123,7 +206,7 @@ export const createCanvasBoard = (callback) => {
 
         const token = getState().auth.token
 
-        axios.post('https://starthubafrica.herokuapp.com/catalyzer/create/canvas', data, {
+        axios.post('http://localhost:8080/catalyzer/create/canvas', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -148,7 +231,7 @@ export const createMilestoneBoard = (callback) => {
 
         const token = getState().auth.token
 
-        axios.post('https://starthubafrica.herokuapp.com/catalyzer/create/milestone', data, {
+        axios.post('http://localhost:8080/catalyzer/create/milestone', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -173,7 +256,7 @@ export const createBoard = (name, callback) => {
             name
         }
 
-        axios.post('https://starthubafrica.herokuapp.com/catalyzer/board', data, {
+        axios.post('http://localhost:8080/catalyzer/board', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -198,7 +281,7 @@ export const createList = (id, name, callback) => {
             name
         }
 
-        axios.post(`https://starthubafrica.herokuapp.com/catalyzer/list/${id}`, data, {
+        axios.post(`http://localhost:8080/catalyzer/list/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -215,16 +298,22 @@ export const createList = (id, name, callback) => {
     }
 }
 
-export const createCard = (boardId, listId, name, callback) => {
+export const createCard = (listId, name, callback) => {
     return (dispatch, getState) => {
 
-        const token = getState().auth.token
+        const token = getState().auth.token;
+        const lists = getState().requests.lists
+        let cardIndex;
 
+        const list = lists.find(l => l._id === listId);
+
+        if(list.cards.length === 0) cardIndex = 0;
+        if(list.cards.length > 0) cardIndex = parseInt(list.cards.length)
         const data = {
-            name
+           cardIndex, name,listId, description: '', dueDate: ''
         }
 
-        axios.post(`https://starthubafrica.herokuapp.com/catalyzer/board/${boardId}/list/${listId}`, data, {
+        axios.post(`http://localhost:8080/catalyzer/card`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -248,7 +337,7 @@ export const updateCard = (id, name, callback) => {
         const data = {
             name
         }
-        axios.put(`https://starthubafrica.herokuapp.com/catalyzer/card/${id}`, data, {
+        axios.put(`http://localhost:8080/catalyzer/card/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -282,7 +371,7 @@ export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blog
             author: author
         }
 
-        axios.post('https://starthubafrica.herokuapp.com/catalyzer/blog', data, {
+        axios.post('http://localhost:8080/catalyzer/blog', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -304,7 +393,7 @@ export const getBoards = () => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica.herokuapp.com/catalyzer/boards', {
+        axios.get('http://localhost:8080/catalyzer/boards', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -320,22 +409,22 @@ export const getBoards = () => {
     }
 }
 
-export const getListsOnBoard = (id, callback) => {
+export const getListsOnBoard = ( callback) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get(`https://starthubafrica.herokuapp.com/catalyzer/board/${id}/lists`, {
+        axios.get(`http://localhost:8080/catalyzer/lists`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
             }
         })
             .then(res => {
-                console.log(res)
-                dispatch(setLists(res.data.lists))
-                dispatch(setCanvasLists(res.data.lists))
-                dispatch(setMilestoneLists(res.data.lists))
+                // console.log(res)
+                dispatch(setLists(res.data.list))
+                dispatch(setCanvasLists(res.data.list))
+                dispatch(setMilestoneLists(res.data.list))
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -349,7 +438,7 @@ export const getCardsOnBoard = (id) => {
 
         const token = getState().auth.token
 
-        axios.get(`https://starthubafrica.herokuapp.com/catalyzer//board/${id}/cards`, {
+        axios.get(`http://localhost:8080/catalyzer//board/${id}/cards`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -371,7 +460,7 @@ export const getBlogs = () => {
 
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica.herokuapp.com/catalyzer/blogs', {
+        axios.get('http://localhost:8080/catalyzer/blogs', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -392,7 +481,7 @@ export const getCanvasBoard = () => {
 
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica.herokuapp.com/catalyzer/canvas/board', {
+        axios.get('http://localhost:8080/catalyzer/canvas/board', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -420,7 +509,7 @@ export const getMilestonesBoard = () => {
 
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica.herokuapp.com/catalyzer/milestone/board', {
+        axios.get('http://localhost:8080/catalyzer/milestone/board', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -444,9 +533,9 @@ export const getMilestonesBoard = () => {
 }
 
 export const getAirTableData = () => {
-    return dispatch => {
+    return (dispatch, getState) => {
 
-        const key = 'key8X69XD5EQ4Gsjn'
+        const key = getState().auth.base_key
 
         axios.interceptors.request.use(
             config => {
@@ -474,7 +563,7 @@ export const deleteCard = (id) => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.delete(`https://starthubafrica.herokuapp.com/catalyzer/card/${id}`, {
+        axios.delete(`http://localhost:8080/catalyzer/card/${id}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -495,7 +584,7 @@ export const deleteList = (id) => {
 
         const token = getState().auth.token
 
-        axios.delete(`https://starthubafrica.herokuapp.com/catalyzer/list/${id}`, {
+        axios.delete(`http://localhost:8080/catalyzer/list/${id}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -538,9 +627,11 @@ export const getExpenseData = () => {
 }
 
 export const getMetricsData = () => {
-    return dispatch => {
+    return (dispatch, getState) => {
 
-        const key = 'key8X69XD5EQ4Gsjn'
+        const base_key = getState().auth.base_key
+        console.log(base_key,'ll')
+        const key = 'keyIxHVaXHJZn0ECq'
 
         axios.interceptors.request.use(
             config => {
@@ -552,9 +643,9 @@ export const getMetricsData = () => {
             }
         )
 
-        axios.get(`https://api.airtable.com/v0/appX6seHGXGpzQbwk/Monthly%20Metrics?maxRecords=6&view=Grid%20view`)
+        axios.get(`https://api.airtable.com/v0/${base_key}/Metrics?maxRecords=3&view=Grid%20View`)
             .then(res => {
-                // console.log(res.data.records)
+                console.log(res.data.records)
                 dispatch(setMetricsData(res.data.records))
             })
             .catch(error => {
@@ -562,4 +653,58 @@ export const getMetricsData = () => {
             })
     }
 }
+
+export const archiveCard = (id) => {
+    return (dispatch, getState) => {
+        dispatch(loadAction())
+        const token = getState().auth.token
+        
+        const data = {
+            archive: true
+        }
+
+        axios.put(`http://localhost:8080/catalyzer/card/archive/${id}`,data, {
+            headers: {
+                ContentType: 'Application/json',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(deleteCardAction(id))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const archiveList = (id) => {
+    return (dispatch, getState) => {
+        dispatch(loadAction())
+        const token = getState().auth.token
+
+        const data = {
+            archive: true
+        }
+
+        axios.put(`http://localhost:8080/catalyzer/list/archive/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(deleteListAction(id))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+
+
+
 

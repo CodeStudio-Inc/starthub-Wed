@@ -5,9 +5,24 @@ import * as actionCreators from '../../store/actionCreators'
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import { Line, Pie } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
+import {
+    janstartDate,
+    janendDate,
+    febstartDate,
+    febendDate,
+    marchstartDate,
+    marchendDate,
+    aprilstartDate,
+    aprilendDate,
+    maystartDate,
+    mayendDate,
+    junstartDate,
+    junendDate
+} from './dates'
 
 import './Dashboard.css'
+import { AirlineSeatIndividualSuite } from '@material-ui/icons'
 const Dashboard = (props) => {
 
     const [open, setOpen] = useState(false)
@@ -18,11 +33,20 @@ const Dashboard = (props) => {
     const data = useSelector(state => state.requests.data)
     const expense = useSelector(state => state.requests.expense)
     const metrics = useSelector(state => state.requests.metrics)
-    console.log(metrics, 'dk')
+    // console.log(metrics.length,'metrics')
 
-    const array = metrics.map(el => {
-        return el.fields['MonthlyRevenue(UGX)']
-    })
+    const [keys, setKeys] = useState([])
+    
+    const object = {name: "stuart", department: "IT"}
+    console.log(keys)
+
+    
+    // const columnName = () => {
+    //  for(metric of metrics){
+    //      setKeys(Object.keys(x))
+    //      return Object.keys(x)
+    //  }
+    // }
 
     const players = metrics.map(el => {
         return el.fields['New players who paid']
@@ -32,36 +56,37 @@ const Dashboard = (props) => {
         return el.fields['Meetings with sponsors this month']
     })
 
-    console.log(meetings, 'meetings')
-
 
     useEffect(() => {
-        dispatch(actionCreators.getAirTableData())
-        dispatch(actionCreators.getExpenseData())
         dispatch(actionCreators.getMetricsData())
+        // columnName()
     }, [])
 
+    
+    
+    const revenue_jan = metrics.filter(el => el.fields.Month >= janstartDate && el.fields.Month <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const revenue_feb = metrics.filter(el => el.fields.Month >= febstartDate && el.fields.Month <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const revenue_march = metrics.filter(el => el.fields.Month >= marchstartDate && el.fields.Month <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const revenue_april = metrics.filter(el => el.fields.Month >= aprilstartDate && el.fields.Month <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const revenue_may = metrics.filter(el => el.fields.Month >= maystartDate && el.fields.Month <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const revenue_june = metrics.filter(el => el.fields.Month >= junstartDate && el.fields.Month <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
 
-    const janstartDate = '2021-01-01'
-    const janendDate = '2021-01-31'
-    const febstartDate = '2021-02-01'
-    const febendDate = '2021-02-28'
-    const marchstartDate = '2021-03-01'
-    const marchendDate = '2021-03-31'
-    const aprilstartDate = '2021-04-01'
-    const aprilendDate = '2021-04-31'
-    const maystartDate = '2021-05-01'
-    const mayendDate = '2021-05-31'
-    const junstartDate = '2021-06-01'
-    const junendDate = '2021-06-31'
+    const players_jan = metrics.filter(el => el.fields.Month >= janstartDate && el.fields.Month <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
+    const players_feb = metrics.filter(el => el.fields.Month >= febstartDate && el.fields.Month <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
+    const players_march = metrics.filter(el => el.fields.Month >= marchstartDate && el.fields.Month <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
+    const players_april = metrics.filter(el => el.fields.Month >= aprilstartDate && el.fields.Month <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
+    const players_may = metrics.filter(el => el.fields.Month >= maystartDate && el.fields.Month <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
+    const players_june = metrics.filter(el => el.fields.Month >= junstartDate && el.fields.Month <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
 
-    const jan = data.filter(el => el.fields['DATE'] >= janstartDate && el.fields['DATE'] <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const feb = data.filter(el => el.fields['DATE'] >= febstartDate && el.fields['DATE'] <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const march = data.filter(el => el.fields['DATE'] >= marchstartDate && el.fields['DATE'] <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const april = data.filter(el => el.fields['DATE'] >= aprilstartDate && el.fields['DATE'] <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const may = data.filter(el => el.fields['DATE'] >= maystartDate && el.fields['DATE'] <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
-    const june = data.filter(el => el.fields['DATE'] >= junstartDate && el.fields['DATE'] <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields.AMOUNT), 0)
 
+    const meetings_jan = metrics.filter(el => el.fields.Month >= janstartDate && el.fields.Month <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const meetings_feb = metrics.filter(el => el.fields.Month >= febstartDate && el.fields.Month <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const meetings_march = metrics.filter(el => el.fields.Month >= marchstartDate && el.fields.Month <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const meetings_april = metrics.filter(el => el.fields.Month >= aprilstartDate && el.fields.Month <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const meetings_may = metrics.filter(el => el.fields.Month >= maystartDate && el.fields.Month <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+    const meetings_june = metrics.filter(el => el.fields.Month >= junstartDate && el.fields.Month <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
+
+    
     const expensejan = expense.filter(el => el.fields['DATE '] >= janstartDate && el.fields['DATE '] <= janendDate).length
     const expensefeb = expense.filter(el => el.fields['DATE '] >= febstartDate && el.fields['DATE '] <= febendDate).length
     const expensemarch = expense.filter(el => el.fields['DATE '] >= marchstartDate && el.fields['DATE '] <= marchendDate).length
@@ -85,9 +110,9 @@ const Dashboard = (props) => {
             {
                 label: 'Monthly Revenues',
                 backgroundColor: '#dfa126',
-                borderColor: '#69191b',
+                borderColor: '#222323',
                 borderWidth: 1,
-                data: array
+                data:[revenue_jan, revenue_feb, revenue_march, revenue_april, revenue_may, revenue_june]
             }
         ]
     };
@@ -98,7 +123,7 @@ const Dashboard = (props) => {
             {
                 label: 'New players who paid',
                 backgroundColor: '#dfa126',
-                borderColor: '#69191b',
+                borderColor: '#222323',
                 borderWidth: 1,
                 data: players
             }
@@ -111,7 +136,7 @@ const Dashboard = (props) => {
             {
                 label: 'Meetings with sponsors this month',
                 backgroundColor: '#dfa126',
-                borderColor: '#69191b',
+                borderColor: '#222323',
                 borderWidth: 1,
                 data: meetings
             }
@@ -125,13 +150,13 @@ const Dashboard = (props) => {
             {
                 label: 'Total Monthly Expense Data Entry',
                 backgroundColor: '#dfa126',
-                borderColor: '#69191b',
+                borderColor: '#222323',
                 borderWidth: 1,
                 data: [expensejan, expensefeb, expensemarch, expenseapril, expensemay, expensejune]
             },
             {
                 label: 'Total Monthly Revenue Data Entry',
-                backgroundColor: '#69191b',
+                backgroundColor: '#222323',
                 borderColor: '#dfa126',
                 borderWidth: 1,
                 data: [revenuejan, revenuefeb, revenuemarch, revenueapril, revenuemay, revenuejune]

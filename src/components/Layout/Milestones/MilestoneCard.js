@@ -41,7 +41,7 @@ const MilestoneCard = ({ list, data, boardId }) => {
 
     const [state, setState] = useState({ items: data })
     const [cardName, setCardName] = useState('')
-    console.log(state, 'ff')
+    // console.log(state, 'ff')
 
 
     const dispatch = useDispatch()
