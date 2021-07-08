@@ -5,164 +5,106 @@ import * as actionCreators from '../../store/actionCreators'
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import moment from 'moment'
+import Airtable from 'airtable'
 import { Line } from 'react-chartjs-2'
-import {
-    janstartDate,
-    janendDate,
-    febstartDate,
-    febendDate,
-    marchstartDate,
-    marchendDate,
-    aprilstartDate,
-    aprilendDate,
-    maystartDate,
-    mayendDate,
-    junstartDate,
-    junendDate
-} from './dates'
+
 
 import './Dashboard.css'
-import { AirlineSeatIndividualSuite } from '@material-ui/icons'
-const Dashboard = (props) => {
+
+const Dashboard = () => {
 
     const [open, setOpen] = useState(false)
+    const [keysArrayFilter, setkeysArrayFilter] = useState()
+    const [metricsData, setMetricsData] = useState([])
 
-
-    const dispatch = useDispatch()
-
-    const data = useSelector(state => state.requests.data)
-    const expense = useSelector(state => state.requests.expense)
-    const metrics = useSelector(state => state.requests.metrics)
-    // console.log(metrics.length,'metrics')
-
-    const [keys, setKeys] = useState([])
-    
-    const object = {name: "stuart", department: "IT"}
-    console.log(keys)
-
-    
-    // const columnName = () => {
-    //  for(metric of metrics){
-    //      setKeys(Object.keys(x))
-    //      return Object.keys(x)
-    //  }
-    // }
-
-    const players = metrics.map(el => {
-        return el.fields['New players who paid']
-    })
-
-    const meetings = metrics.map(el => {
-        return el.fields['Meetings with sponsors this month']
-    })
-
+    const baseId = useSelector(state => state.auth.base_key)
 
     useEffect(() => {
-        dispatch(actionCreators.getMetricsData())
-        // columnName()
+        const key = process.env.REACT_APP_API_KEY
+        var base = new Airtable({apiKey: key}).base(baseId)
+
+        base('Metrics').select({
+        maxRecords: 20
+        }).eachPage(function page(records, fetchNextPage) {
+            setMetricsData(records)
+            fetchNextPage();
+
+        }, function done(err) {
+        if (err) { console.error(err); return }
+        })
     }, [])
-
     
+    const dispatch = useDispatch()
+
+    const metricsFilter = metricsData && metricsData.map(el => el.fields )
+
+    const date = moment(new Date().toISOString()).format("YYYY-DD-MM")
+
+    // const filterKeys = () => {
+
+    //     const singleObject = metricsFilter.find(e => e.Month <= date)
+    //     // return  setkeysArrayFilter(Object.keys(singleObject))
+    // }
+
+
+    console.log(metricsFilter && Object.keys(metricsFilter[0]),'Keys')
     
-    const revenue_jan = metrics.filter(el => el.fields.Month >= janstartDate && el.fields.Month <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const revenue_feb = metrics.filter(el => el.fields.Month >= febstartDate && el.fields.Month <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const revenue_march = metrics.filter(el => el.fields.Month >= marchstartDate && el.fields.Month <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const revenue_april = metrics.filter(el => el.fields.Month >= aprilstartDate && el.fields.Month <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const revenue_may = metrics.filter(el => el.fields.Month >= maystartDate && el.fields.Month <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const revenue_june = metrics.filter(el => el.fields.Month >= junstartDate && el.fields.Month <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-
-    const players_jan = metrics.filter(el => el.fields.Month >= janstartDate && el.fields.Month <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
-    const players_feb = metrics.filter(el => el.fields.Month >= febstartDate && el.fields.Month <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
-    const players_march = metrics.filter(el => el.fields.Month >= marchstartDate && el.fields.Month <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
-    const players_april = metrics.filter(el => el.fields.Month >= aprilstartDate && el.fields.Month <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
-    const players_may = metrics.filter(el => el.fields.Month >= maystartDate && el.fields.Month <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
-    const players_june = metrics.filter(el => el.fields.Month >= junstartDate && el.fields.Month <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields['New players who paid']), 0)
-
-
-    const meetings_jan = metrics.filter(el => el.fields.Month >= janstartDate && el.fields.Month <= janendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const meetings_feb = metrics.filter(el => el.fields.Month >= febstartDate && el.fields.Month <= febendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const meetings_march = metrics.filter(el => el.fields.Month >= marchstartDate && el.fields.Month <= marchendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const meetings_april = metrics.filter(el => el.fields.Month >= aprilstartDate && el.fields.Month <= aprilendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const meetings_may = metrics.filter(el => el.fields.Month >= maystartDate && el.fields.Month <= mayendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-    const meetings_june = metrics.filter(el => el.fields.Month >= junstartDate && el.fields.Month <= junendDate).reduce((acc, cv) => acc + parseInt(cv.fields['MonthlyRevenue (UGX)']), 0)
-
+    // const graph1 = metricsFilter.map(el => el.fields[keysArray[0]] )
+    // const graph2 = metricsFilter.map(el => el.fields[keysArray[1]] )
+    // const graph3 = metricsFilter.map(el => el.fields[keysArray[2]] )
+    // const graph4 = metricsFilter.map(el => el.fields[keysArray[3]] )
+    // const graph5 = metricsFilter.map(el => el.fields[keysArray[4]] )
+    // const graph6 = metricsFilter.map(el => el.fields[keysArray[5]] )
+    // const graph7 = metricsFilter.map(el => el.fields[keysArray[6]] )
+    // const graph8 = metricsFilter.map(el => el.fields[keysArray[7]] )
     
-    const expensejan = expense.filter(el => el.fields['DATE '] >= janstartDate && el.fields['DATE '] <= janendDate).length
-    const expensefeb = expense.filter(el => el.fields['DATE '] >= febstartDate && el.fields['DATE '] <= febendDate).length
-    const expensemarch = expense.filter(el => el.fields['DATE '] >= marchstartDate && el.fields['DATE '] <= marchendDate).length
-    const expenseapril = expense.filter(el => el.fields['DATE '] >= aprilstartDate && el.fields['DATE '] <= aprilendDate).length
-    const expensemay = expense.filter(el => el.fields['DATE '] >= maystartDate && el.fields['DATE '] <= mayendDate).length
-    const expensejune = expense.filter(el => el.fields['DATE '] >= junstartDate && el.fields['DATE '] <= junendDate).length
-
-    const revenuejan = data.filter(el => el.fields['DATE'] >= janstartDate && el.fields['DATE'] <= janendDate).length
-    const revenuefeb = data.filter(el => el.fields['DATE'] >= febstartDate && el.fields['DATE'] <= febendDate).length
-    const revenuemarch = data.filter(el => el.fields['DATE'] >= marchstartDate && el.fields['DATE'] <= marchendDate).length
-    const revenueapril = data.filter(el => el.fields['DATE'] >= aprilstartDate && el.fields['DATE'] <= aprilendDate).length
-    const revenuemay = data.filter(el => el.fields['DATE'] >= maystartDate && el.fields['DATE'] <= mayendDate).length
-    const revenuejune = data.filter(el => el.fields['DATE'] >= junstartDate && el.fields['DATE'] <= junendDate).length
+    // console.log(graph6,'Values')
+        
 
     // console.log(revenuemay, 'hhh')
 
 
-    const revenue = {
-        labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
-        datasets: [
-            {
-                label: 'Monthly Revenues',
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data:[revenue_jan, revenue_feb, revenue_march, revenue_april, revenue_may, revenue_june]
-            }
-        ]
-    };
+    // const revenue = {
+    //     labels: months,
+    //     datasets: [
+    //         {
+    //             label: keysArray[2],
+    //             backgroundColor: '#dfa126',
+    //             borderColor: '#222323',
+    //             borderWidth: 1,
+    //             data:revenu
+    //         }
+    //     ]
+    // };
 
-    const soccer = {
-        labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
-        datasets: [
-            {
-                label: 'New players who paid',
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data: players
-            }
-        ]
-    };
+    // const soccer = {
+    //     labels: months,
+    //     datasets: [
+    //         {
+    //             label: keysArray[1],
+    //             backgroundColor: '#dfa126',
+    //             borderColor: '#222323',
+    //             borderWidth: 1,
+    //             data: players
+    //         }
+    //     ]
+    // };
 
-    const meet = {
-        labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
-        datasets: [
-            {
-                label: 'Meetings with sponsors this month',
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data: meetings
-            }
-        ]
-    };
+    // const meet = {
+    //     labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
+    //     datasets: [
+    //         {
+    //             label: 'Meetings with sponsors this month',
+    //             backgroundColor: '#dfa126',
+    //             borderColor: '#222323',
+    //             borderWidth: 1,
+    //             data: meetings
+    //         }
+    //     ]
+    // };
 
 
-    const expenseDataEntry = {
-        labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
-        datasets: [
-            {
-                label: 'Total Monthly Expense Data Entry',
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data: [expensejan, expensefeb, expensemarch, expenseapril, expensemay, expensejune]
-            },
-            {
-                label: 'Total Monthly Revenue Data Entry',
-                backgroundColor: '#222323',
-                borderColor: '#dfa126',
-                borderWidth: 1,
-                data: [revenuejan, revenuefeb, revenuemarch, revenueapril, revenuemay, revenuejune]
-            }
-        ]
-    };
 
 
 
@@ -177,26 +119,18 @@ const Dashboard = (props) => {
             </ModalUI> : null}
             <div className="right-column-overview">
                 <div className="overview-header-main">
-                    {/* <div className="header-right" onClick={handleAirtableNavigate}>
-                        <h2>Go to overview</h2>
-                        <ArrowForwardIcon className="arrow-icon" style={{ fontSize: '25px' }} />
-                    </div> */}
                 </div>
                 <div className="revenue-row">
-                    <div className="graph-row">
+                    <h1>{date}</h1>
+                    {/* <div className="graph-row">
                     <div className="revenue">
                         <div className="overview-header">
                             <h2>Weekly Finacials Submission</h2>
                         </div>
                         <Line
-                            data={expenseDataEntry}
+                            data={revenue}
                             width={100}
                             height={20}
-                        // options={{
-                        //     maintainAspectRatio: false,
-                        //     responsive: true
-
-                        // }}
                         />
                     </div>
 
@@ -208,16 +142,12 @@ const Dashboard = (props) => {
                             data={revenue}
                             width={100}
                             height={20}
-                        // options={{
-                        //     maintainAspectRatio: false,
-                        //     responsive: true
-
-                        // }}
+                        
                         />
                     </div>
-                    </div>
+                    </div> */}
 
-                    <div className="graph-row">
+                    {/* <div className="graph-row">
                     <div className="revenue">
                         <div className="overview-header">
                             <h2>New Players Who paid</h2>
@@ -226,11 +156,6 @@ const Dashboard = (props) => {
                             data={soccer}
                             width={100}
                             height={20}
-                        // options={{
-                        //     maintainAspectRatio: false,
-                        //     responsive: true
-
-                        // }}
                         />
                     </div>
 
@@ -242,61 +167,21 @@ const Dashboard = (props) => {
                             data={meet}
                             width={100}
                             height={20}
-                        // options={{
-                        //     maintainAspectRatio: false,
-                        //     responsive: true
-
-                        // }}
                         />
                     </div>
-                    </div>
+                    </div> */}
 
 
                 </div>
-
-                {/* <div className="expense">
-                    <div className="stats-card-chart">
-                        <div className="stats-header">
-                            <h3>Cost Structure</h3>
-                        </div>
-                        <Pie
-                            data={expenseData}
-                            width={100}
-                            height={20}
-
-                            options={{
-                                maintainAspectRatio: false,
-                                responsive: true
-
-                            }}
-                        />
-                    </div>
-                    <div className="stats-card-chart">
-                        <div className="stats-header">
-                            <h3>Revenue Streams</h3>
-                        </div>
-                        <Line
-                            data={aquisitionData}
-                            width={100}
-                            height={20}
-                            options={{
-                                maintainAspectRatio: false,
-                                responsive: true
-                            }}
-                        />
-                    </div>
-                </div> */}
-
-                {/* <div className="header-row">
-                    <button onClick={() => setOpen(true)}>Form</button>
-                    <button onClick={handleAirtableNavigate}>Edit</button>
-                </div> */}
-                {/* <div className="air-table">
-                    <iframe class="airtable-embed" src="https://airtable.com/embed/shr8yQb2R2ss8I9VE?backgroundColor=green" frameborder="0" onmousewheel="" style={{ width: '100%', height: '90vh' }} ></iframe>
-                </div> */}
             </div>
         </div>
     )
 }
 
 export default Dashboard
+
+// options={{
+//     maintainAspectRatio: false,
+//     responsive: true
+
+// }}

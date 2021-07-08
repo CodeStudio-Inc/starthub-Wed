@@ -181,7 +181,7 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,ca
 
         const token = getState().auth.token
 
-        axios.post('http://localhost:8080/catalyzer/list/updateIndexes', {sourceId, destinationId, sourceCards, destinationCards}, {
+        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/list/updateIndexes', {sourceId, destinationId, sourceCards, destinationCards}, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -206,7 +206,7 @@ export const createCanvasBoard = (callback) => {
 
         const token = getState().auth.token
 
-        axios.post('http://localhost:8080/catalyzer/create/canvas', data, {
+        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/create/canvas', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -231,7 +231,7 @@ export const createMilestoneBoard = (callback) => {
 
         const token = getState().auth.token
 
-        axios.post('http://localhost:8080/catalyzer/create/milestone', data, {
+        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/create/milestone', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -256,7 +256,7 @@ export const createBoard = (name, callback) => {
             name
         }
 
-        axios.post('http://localhost:8080/catalyzer/board', data, {
+        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/board', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -281,7 +281,7 @@ export const createList = (id, name, callback) => {
             name
         }
 
-        axios.post(`http://localhost:8080/catalyzer/list/${id}`, data, {
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -313,7 +313,7 @@ export const createCard = (listId, name, callback) => {
            cardIndex, name,listId, description: '', dueDate: ''
         }
 
-        axios.post(`http://localhost:8080/catalyzer/card`, data, {
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -337,7 +337,7 @@ export const updateCard = (id, name, callback) => {
         const data = {
             name
         }
-        axios.put(`http://localhost:8080/catalyzer/card/${id}`, data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -371,7 +371,7 @@ export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blog
             author: author
         }
 
-        axios.post('http://localhost:8080/catalyzer/blog', data, {
+        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/blog', data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -393,7 +393,7 @@ export const getBoards = () => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get('http://localhost:8080/catalyzer/boards', {
+        axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/boards', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -414,7 +414,7 @@ export const getListsOnBoard = ( callback) => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get(`http://localhost:8080/catalyzer/lists`, {
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/catalyzer/lists`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -438,7 +438,7 @@ export const getCardsOnBoard = (id) => {
 
         const token = getState().auth.token
 
-        axios.get(`http://localhost:8080/catalyzer//board/${id}/cards`, {
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/catalyzer//board/${id}/cards`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -460,7 +460,7 @@ export const getBlogs = () => {
 
         const token = getState().auth.token
 
-        axios.get('http://localhost:8080/catalyzer/blogs', {
+        axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/blogs', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -481,7 +481,7 @@ export const getCanvasBoard = () => {
 
         const token = getState().auth.token
 
-        axios.get('http://localhost:8080/catalyzer/canvas/board', {
+        axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/canvas/board', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -509,7 +509,7 @@ export const getMilestonesBoard = () => {
 
         const token = getState().auth.token
 
-        axios.get('http://localhost:8080/catalyzer/milestone/board', {
+        axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/milestone/board', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -563,7 +563,7 @@ export const deleteCard = (id) => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.delete(`http://localhost:8080/catalyzer/card/${id}`, {
+        axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/${id}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -584,7 +584,7 @@ export const deleteList = (id) => {
 
         const token = getState().auth.token
 
-        axios.delete(`http://localhost:8080/catalyzer/list/${id}`, {
+        axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -628,9 +628,7 @@ export const getExpenseData = () => {
 
 export const getMetricsData = () => {
     return (dispatch, getState) => {
-
         const base_key = getState().auth.base_key
-        console.log(base_key,'ll')
         const key = 'keyIxHVaXHJZn0ECq'
 
         axios.interceptors.request.use(
@@ -643,9 +641,9 @@ export const getMetricsData = () => {
             }
         )
 
-        axios.get(`https://api.airtable.com/v0/${base_key}/Metrics?maxRecords=3&view=Grid%20View`)
+        axios.get(base_key)
             .then(res => {
-                console.log(res.data.records)
+                console.log(res)
                 dispatch(setMetricsData(res.data.records))
             })
             .catch(error => {
@@ -663,7 +661,7 @@ export const archiveCard = (id) => {
             archive: true
         }
 
-        axios.put(`http://localhost:8080/catalyzer/card/archive/${id}`,data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/archive/${id}`,data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -688,7 +686,7 @@ export const archiveList = (id) => {
             archive: true
         }
 
-        axios.put(`http://localhost:8080/catalyzer/list/archive/${id}`, data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/archive/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token

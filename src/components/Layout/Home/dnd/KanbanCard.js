@@ -1,8 +1,10 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
+import CancelIcon from '@material-ui/icons/Cancel';
 
+export const KanbanCard = ({cardId, text, index,open, object, setActiveCard}) => {
 
-export const KanbanCard = ({cardId, text, index}) => {
+    // console.log(object,'my object')
 
     const grid = 8;
 
@@ -33,8 +35,14 @@ export const KanbanCard = ({cardId, text, index}) => {
                         provided.draggableProps.style
                     )}
                 >
-                    <div className="draggable">
+                    <div className="draggable" onClick={() => {
+                        open()
+                        setActiveCard(object)
+                    }}>
                         <p>{text}</p>
+                        <div className="icon-row">
+                            <CancelIcon  className="edit-icon" fontSize="small" />
+                        </div>
                     </div>
                 </div>
             )}

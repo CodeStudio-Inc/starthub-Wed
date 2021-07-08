@@ -6,7 +6,7 @@ import CanvasCard from './CanvasCard'
 import * as actionCreators from '../../store/actionCreators'
 
 
-const CanvasList2 = ({listId, title, cards,boardId}) => {
+const CanvasList2 = ({listId, title, cards,boardId,callback, open, setActiveCard}) => {
 
     const [cardName, setCardName] = useState('')
 
@@ -31,22 +31,23 @@ const CanvasList2 = ({listId, title, cards,boardId}) => {
                                 onChange={(e) => setCardName(e.target.value)}
                                 onKeyUp={(e) => {
                                     if (e.key === 'Enter') {
-                                        dispatch(actionCreators.createCard(boardId, listId, cardName, (res) => {
-                                            if (res.success === true) {
-                                                setCardName('')
-                                                dispatch(actionCreators.getListsOnBoard(()=>{}))
-                                            }
+                                        dispatch(actionCreators.createCard( listId, cardName,(res)=>{
+                                            setCardName('')
+                                            if(res.success) callback()
                                         }))
                                     }
                                 }}
                             />
                     </div>
-                    {cards.map((c,index) => (
+                    {cards && cards.map((c,index) => (
                         <CanvasCard
-                            key={c._id}
-                            cardId={c._id}
+                            key={c.dateCreated}
+                            cardId={c.dateCreated}
                             text={c.name}
                             index={index}
+                            object={c}
+                            open={open}
+                            setActiveCard={setActiveCard}
                         />
                     ))}
                     {provided.placeholder}

@@ -5,7 +5,7 @@ import {Droppable} from 'react-beautiful-dnd'
 import KanbanCard from './KanbanCard'
 import * as actionCreators from '../../../store/actionCreators'
 
-const KanbanList = ({listId, title, cards,boardId, callback}) => {
+const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
 
     const [cardName, setCardName] = useState('')
 
@@ -43,7 +43,10 @@ const KanbanList = ({listId, title, cards,boardId, callback}) => {
                             key={c.dateCreated}
                             cardId={c.dateCreated}
                             text={c.name}
+                            object={c}
                             index={index}
+                            open={open}
+                            setActiveCard={setActiveCard}
                         />
                     ))}
                     {provided.placeholder}

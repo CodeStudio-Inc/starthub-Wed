@@ -18,7 +18,7 @@ import './Home.css'
      const [open, setOpen] = useState(false)
      const [onFocus, setOnFocus] = useState(false)
      const [visible, setVisible] = useState(false)
-     const [activeListId, setActiveListId] = useState({})
+     const [activeCard, setActiveCard] = useState({})
      console.log(listName,'ll')
 
     const dispatch = useDispatch()
@@ -27,6 +27,7 @@ import './Home.css'
         
     }, [])
 
+    const openEditModal = () => setOpen(true)
 
 
      const onDragEnd = (result) => {
@@ -59,12 +60,12 @@ import './Home.css'
                 <div className="edit-card">
                     <div className="edit-card-row">
                         {/* <p>Create Board</p> */}
-                        <CloseIcon onClick={() => setOpen(false)}  className="close" style={{ fontSize: '20px' }} />
+                        <CloseIcon onClick={() => setOpen(false)}  className="close" style={{ fontSize: '20px', color:'rgba(0,0,0,0.7)' }} />
                     </div>
                     <div className="edit-card-detail">
                         {!visible ? 
                             <div className="edit-card-row2">
-                                <h3>{activeListId && activeListId.name}</h3>
+                                <h3>{activeCard && activeCard.name}</h3>
                                 <EditIcon className="edit-card-icon" style={{ fontSize: '20px' }} onClick={() => setVisible(true)} />
                             </div>
                             : null
@@ -76,7 +77,7 @@ import './Home.css'
                                     value={cardName}
                                     onChange={(e) => setCardName(e.target.value)}
                                 />
-                                <button onClick={() => dispatch(actionCreators.updateCard(cardName,activeListId._id))}>save</button>
+                                <button >save</button>
                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
                             </div>
                             : null}
@@ -107,6 +108,8 @@ import './Home.css'
                     cards={l.cards}
                     boardId={boardId}
                     callback={getLists}
+                    open={openEditModal}
+                    setActiveCard={setActiveCard}
                 />
             ))}
             <input

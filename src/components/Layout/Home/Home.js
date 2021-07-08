@@ -18,7 +18,7 @@ const Home = (props) => {
     const loading = useSelector(state => state.requests.loading)
 
     const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
-    // console.log(filtereBoards)
+    console.log(Boards,'kk')
 
     const dispatch = useDispatch()
 

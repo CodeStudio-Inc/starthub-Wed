@@ -37,7 +37,7 @@ export const login = (email, password) => {
             password
         }
 
-        axios.post('http://localhost:8080/auth/signin', data)
+        axios.post('https://starthubafrica-api.el.r.appspot.com/auth/signin', data)
             .then(res => {
                 dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token))
                 // console.log(res)
@@ -61,7 +61,7 @@ export const signUp = (username, base_key,link, email, password,callback) => {
             password
         }
 
-        axios.put('http://localhost:8080/auth/signup', data,
+        axios.put('https://starthubafrica-api.el.r.appspot.com/auth/signin/auth/signup', data,
             {
                 headers:
                 {
