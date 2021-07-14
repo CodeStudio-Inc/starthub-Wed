@@ -116,6 +116,25 @@ const Home = (props) => {
 
                                 </div>
                             ))}
+                            {filtereBoards.length === 1 ? null : <input
+                                className="add-list"
+                                placeholder="+ Add New Board"
+                                value={name}
+                                onChange={(e) => setBoardName(e.target.value)}
+                                onKeyUp={(e) => {
+                                            if (e.key === 'Enter') {
+                                                dispatch(actionCreators.createBoard( name, (res) => {
+                                                if (res.success === true) {
+                                                    setOpen(false)
+                                                    setBoardName('')
+                                                    setTimeout(() => {
+                                                        dispatch(actionCreators.getBoards())
+                                                    }, 2000)
+                                                }
+                                            }))
+                                            }
+                                        }}
+                            />}
                         </div>
                     }
                     </div>

@@ -84,43 +84,6 @@ const Sidebar = (props) => {
                     <Menu.Item onClick={handleDashboardNavigation} key="7">Graphs</Menu.Item>
                 </SubMenu>
             </Menu>
-
-            {/* <div className="sidebar-links">
-                <div className="links-row" onClick={handleCarlenderNavigation} >
-                    <CalendarTodayIcon className="icon" style={{ fontSize: '30px' }} />
-                    <h5>Schedule</h5>
-                </div>
-            </div>
-            <div className="sidebar-links" onClick={handleTodosNavigation}>
-                <div className="links-row">
-                    <AssignmentTurnedInIcon className="icon" style={{ fontSize: '30px' }} />
-                    <h5>ToDos</h5>
-                </div>
-            </div>
-            <div className="sidebar-links">
-                <div className="links-row" onClick={handleBlogsNavigation}>
-                    <RateReviewIcon className="icon" style={{ fontSize: '30px' }} />
-                    <h5>Learn</h5>
-                </div>
-            </div>
-            <div className="sidebar-links">
-                <div className="links-row" onClick={handleMilestonesNavigation} >
-                    <AssignmentIcon className="icon" style={{ fontSize: '30px' }} />
-                    <h5>Miletones</h5>
-                </div>
-            </div>
-            <div className="sidebar-links">
-                <div className="links-row" onClick={handleDashboardNavigation}>
-                    <DashboardIcon className="icon" style={{ fontSize: '30px' }} />
-                    <h5>Dashboard</h5>
-                </div>
-            </div>
-            <div className="sidebar-links">
-                <div className="links-row" onClick={handleCanvasNavigation}>
-                    <DashboardIcon className="icon" style={{ fontSize: '30px' }} />
-                    <h5>Business Modal</h5>
-                </div>
-            </div> */}
             <div className="logout-container" onClick={handleLogout}>
                 <button>Logout</button>
                 <ExitToAppIcon className="icon" style={{ fontSize: '14px' }} />

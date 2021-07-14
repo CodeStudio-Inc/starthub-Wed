@@ -41,7 +41,8 @@ const auth = (state = initialState, action) => {
                 userId: '',
                 email: '',
                 token: '',
-                authenticated: false
+                authenticated: false,
+                loading: false
             })
 
 

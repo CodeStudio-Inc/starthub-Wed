@@ -532,32 +532,6 @@ export const getMilestonesBoard = () => {
     }
 }
 
-export const getAirTableData = () => {
-    return (dispatch, getState) => {
-
-        const key = getState().auth.base_key
-
-        axios.interceptors.request.use(
-            config => {
-                config.headers.authorization = `Bearer ${key}`;
-                return config
-            },
-            error => {
-                return Promise.reject(error)
-            }
-        )
-
-        axios.get('https://api.airtable.com/v0/appX6seHGXGpzQbwk/REVENUES?maxRecords=13&view=Grid%20view')
-            .then(res => {
-                // console.log(res)
-                dispatch(setAirtableData(res.data.records))
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-}
-
 export const deleteCard = (id) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
@@ -600,31 +574,6 @@ export const deleteList = (id) => {
     }
 }
 
-export const getExpenseData = () => {
-    return dispatch => {
-
-        const key = 'key8X69XD5EQ4Gsjn'
-
-        axios.interceptors.request.use(
-            config => {
-                config.headers.authorization = `Bearer ${key}`;
-                return config
-            },
-            error => {
-                return Promise.reject(error)
-            }
-        )
-
-        axios.get('https://api.airtable.com/v0/appX6seHGXGpzQbwk/EXPENDITURE?maxRecords=50&view=Grid%20view')
-            .then(res => {
-                // console.log(res.data.records)
-                dispatch(setExpenseData(res.data.records))
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-}
 
 export const getMetricsData = () => {
     return (dispatch, getState) => {

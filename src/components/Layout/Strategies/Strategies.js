@@ -1,36 +1,45 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {withRouter} from 'react-router-dom'
 import * as actionCreators from '../../store/actionCreators'
-import CloseIcon from '@material-ui/icons/Close'
-import KanbanList from './dnd/KanbanList'
+import {DragDropContext} from 'react-beautiful-dnd'
+import KanbanList from '../Home/dnd/KanbanList'
 import EditIcon from '@material-ui/icons/Edit'
+import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../ModalUI'
-import { DragDropContext} from 'react-beautiful-dnd'
 
-import axios from 'axios'
 
-import './Home.css'
- const Cards = ({ todoLists, boardId, history, getLists}) => {
-     
-     const [cardName, setCardName] = useState('')
-     const [listName, setListName] = useState('')
-     const [open, setOpen] = useState(false)
-     const [onFocus, setOnFocus] = useState(false)
-     const [visible, setVisible] = useState(false)
-     const [activeCard, setActiveCard] = useState({})
-     console.log(listName,'ll')
+const Strategies = (props) => {
+    const [cardName, setCardName] = useState('')
+    const [open, setOpen] = useState(false)
+    const [activeCard, setActiveCard] = useState({})
+    const [onFocus, setOnFocus] = useState(false)
+    const [visible, setVisible] = useState(false)
+
+    const loading = useSelector(state => state.requests.loading)
+    
+    const boardName = props.location.state.data.name
+    const boardId = props.location.state.data._id
+
+    const lists = useSelector(state => state.requests.milestone_lists)
+
+    const todoLists = lists.filter(el => el.boardId === boardId)
+    // console.log(todoLists)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        
+        getLists()
     }, [])
 
     const openEditModal = () => setOpen(true)
 
+    const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
 
-     const onDragEnd = (result) => {
+    const statements = todoLists.filter(el => el.name.includes('Statement'))
+    const Milestones = todoLists.filter(el => el.name.includes('Milestone'))
+    // console.log("object", Milestones)
+
+    const onDragEnd = (result) => {
             const { destination, source, draggableId } = result
             if(!destination){
                 return
@@ -51,11 +60,9 @@ import './Home.css'
                     getLists()
                 } ))
      }
-   
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-        <div className="milestone-row">
             {open ? <ModalUI>
                 <div className="edit-card">
                     <div className="edit-card-row">
@@ -100,37 +107,48 @@ import './Home.css'
                     </div>
                 </div>
             </ModalUI> : null}
-            {todoLists && todoLists.map(l => (
-                <KanbanList
-                    key={l._id}
-                    listId={l._id}
-                    title={l.name}
-                    cards={l.cards}
-                    boardId={boardId}
-                    callback={getLists}
-                    open={openEditModal}
-                    setActiveCard={setActiveCard}
-                />
-            ))}
-            <input
-                className="add-list"
-                placeholder="+ Add New list"
-                value={listName}
-                onChange={(e) => setListName(e.target.value)}
-                onKeyUp={(e) => {
-                            if (e.key === 'Enter') {
-                                dispatch(actionCreators.createList( boardId, listName,(res)=>{
-                                    setListName('')
-                                    if(res.success) getLists()
-                                }))
-                            }
-                        }}
-            />
+            <div className="main-container">
+            <div className="right-column-content">
+                <div className="cards-right-column-content">
+                    <div className="boards-header">
+                        <h2>{boardName}</h2>
+                        <div className="edit-row">
+                            <h5 onClick={() => props.history.goBack()}>Go Back</h5>
+                            {/* <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} /> */}
+                        </div>
+                    </div>
+                        <div className="statement-row">
+                           {statements.map(l => (
+                                <KanbanList
+                                    key={l._id}
+                                    listId={l._id}
+                                    title={l.name}
+                                    cards={l.cards}
+                                    callback={getLists}
+                                    open={openEditModal}
+                                    setActiveCard={setActiveCard}
+                                />
+                            ))}
+                        </div>
+                    
+                    <div className="milestones-row">
+                        {Milestones.map(l => (
+                                <KanbanList
+                                    key={l._id}
+                                    listId={l._id}
+                                    title={l.name}
+                                    cards={l.cards}
+                                    callback={getLists}
+                                    open={openEditModal}
+                                    setActiveCard={setActiveCard}
+                                />
+                            ))}
+                    </div>
+                </div>
+            </div>
         </div>
         </DragDropContext>
     )
 }
 
-export default withRouter(Cards)
-
-
+export default Strategies

@@ -61,7 +61,7 @@ export const signUp = (username, base_key,link, email, password,callback) => {
             password
         }
 
-        axios.put('https://starthubafrica-api.el.r.appspot.com/auth/signin/auth/signup', data,
+        axios.put('https://starthubafrica-api.el.r.appspot.com/auth/signup', data,
             {
                 headers:
                 {

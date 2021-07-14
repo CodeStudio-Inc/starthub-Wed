@@ -7,11 +7,13 @@ import './Auth.css'
 const Login = (props) => {
 
     const [state, setState] = useState({
-        email: '',
-        password: '',
+        email: 'stuartkal@gmail.com',
+        password: 'pass0123',
         message: ''
     })
 
+    const loading = useSelector(state => state.auth.loading)
+    console.log(loading,'load')
     const dispatch = useDispatch()
 
     const handleLogin = () => {
@@ -41,7 +43,7 @@ const Login = (props) => {
                         onChange={(e) => setState({ ...state, password: e.target.value })}
                     />
                 </div>
-                <button onClick={handleLogin}>Login</button>
+                <button onClick={handleLogin}>{loading ? 'Loading...' : 'Login'}</button>
                 <div className="link-container">
                     <button>Forgot password?</button>
                     <button onClick={() => props.history.push('/signup')}>SignUp</button>

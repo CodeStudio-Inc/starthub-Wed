@@ -13,7 +13,7 @@ const Milestones = (props) => {
     const [open, setOpen] = useState(false)
     const [activeCard, setActiveCard] = useState({})
     const [onFocus, setOnFocus] = useState(false)
-     const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(false)
 
     const loading = useSelector(state => state.requests.loading)
     

@@ -17,7 +17,7 @@ const Home = (props) => {
 
     const filtereBoards = Boards.filter(el => el.name === 'Milestones')
     // console.log(filtereBoards)
-
+    
     
 
     const dispatch = useDispatch()
@@ -72,7 +72,7 @@ const Home = (props) => {
             <div className="boards-right-column">
                 <div className="boards-right-column-content">
                     <div className="boards-header">
-                        <h2>Milestones</h2>
+                        <h2>Strategies</h2>
                         <div className="edit-row">
                             {/* <div className="search">
                                 <input
@@ -95,7 +95,7 @@ const Home = (props) => {
                                     className="board-card"
                                     onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
                                         if (res.success === true) {
-                                            props.history.push('/milestones', { data: board })
+                                            props.history.push('/strategies', { data: board })
                                         }
                                     }))}
                                 >

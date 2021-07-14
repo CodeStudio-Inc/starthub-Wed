@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import logo from '../../../assets/images/logo.png'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -18,7 +18,7 @@ const SignUp = (props) => {
 
     const [visible, setVisible] = useState(false)
 
-    console.log(state.base_key, state.username,state.link)
+    const loading = useSelector(state => state.auth.loading)
 
     const dispatch = useDispatch()
 
@@ -85,7 +85,7 @@ const SignUp = (props) => {
                         onChange={(e) => setState({ ...state, password: e.target.value })}
                     />
                 </div>
-                <button onClick={handleSignUp}>SignUp</button>
+                <button onClick={handleSignUp}>{loading ? 'Loading...' : 'SignUp'}</button>
                 <div className="link-container">
                     <button onClick={() => props.history.push('/')}>Already have an Account</button>
                 </div>

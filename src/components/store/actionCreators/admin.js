@@ -41,7 +41,7 @@ export const getUsers = () => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica.herokuapp.com/admin/users', {
+        axios.get('https://starthubafrica-api.el.r.appspot.com/admin/users', {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -57,12 +57,12 @@ export const getUsers = () => {
     }
 }
 
-export const getAdminBoard = (userId) => {
+export const getAdminBoard = (userId, callback) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get(`https://starthubafrica.herokuapp.com/admin/boards/${userId}`, {
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/boards/${userId}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -71,6 +71,7 @@ export const getAdminBoard = (userId) => {
             .then(res => {
                 // console.log(res)
                 dispatch(setBoards(res.data.boards))
+                callback({ success: true, res: res })
             })
             .catch(error => {
                 console.log(error)
@@ -83,7 +84,7 @@ export const getAdminLists = (userId, boardId) => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get(`https://starthubafrica.herokuapp.com/admin/lists/${userId}/${boardId}`, {
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/lists/${userId}/${boardId}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token
@@ -104,7 +105,7 @@ export const getAdminCards = (userId, boardId) => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get(`https://starthubafrica.herokuapp.com/admin/cards/${userId}/${boardId}`, {
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/cards/${userId}/${boardId}`, {
             headers: {
                 ContentType: 'Application/json',
                 Authorization: token

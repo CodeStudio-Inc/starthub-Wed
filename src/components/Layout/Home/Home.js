@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
-import CloseIcon from '@material-ui/icons/Close'
-import Search from '@material-ui/icons/Search'
-import AddBoxIcon from '@material-ui/icons/AddBox'
-import { Card } from '@material-ui/core'
-import ModalUI from '../../ModalUI'
 
 import './Home.css'
 const Home = (props) => {
@@ -14,17 +9,19 @@ const Home = (props) => {
     const [open, setOpen] = useState(false)
 
     const Boards = useSelector(state => state.requests.boards)
-
+    const admin = useSelector(state => state.auth.admin)
+    const users = useSelector(state => state.admin.users)
     const loading = useSelector(state => state.requests.loading)
 
     const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
-    console.log(Boards,'kk')
+    const filtereUsers = users.filter(el => el.admin === false)
+    console.log(users,'kk')
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(actionCreators.getBoards())
-        // dispatch(actionCreators.createMilestoneBoard())
+        dispatch(actionCreators.getUsers())
     }, [])
 
     const createBoard = () => {
@@ -49,25 +46,42 @@ const Home = (props) => {
 
     return (
         <div className="main-container">
-            {open ? <ModalUI setOpen={setOpen}>
-                <div className="create-board-column">
-                    <div className="close-row">
-                        <p>Create Board</p>
-                        <CloseIcon onClick={() => setOpen(false)} className="close" style={{ fontSize: '20px' }} />
-                    </div>
-                    <div className="create-board-row">
-                        <input
-                            type="text"
-                            value={name}
-                            placeholder="Board Name"
-                            onChange={(e) => setBoardName(e.target.value)}
-
-                        />
-                        <button onClick={createBoard}>Create</button>
-                    </div>
-                </div>
-            </ModalUI> : null}
             <div className="boards-right-column">
+                {admin ? 
+                <div className="boards-right-column-content">
+                    <div className="boards-header">
+                        <h2>StartUps</h2>
+                        {/* <div className="edit-row">
+                            <div className="search">
+                                <input
+                                    type="text"
+                                    placeholder="Search"
+                                />
+                                <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
+                            </div>
+                            <div className="separator" />
+                        </div> */}
+                            {/* <button onClick={() => setOpen(true)}>Create Board</button> */}
+                    </div>
+                    {loading ? <h3>Loading...</h3> :
+                        <div className="boards-row">
+                            {filtereUsers.map((user, index) => (
+                                <div
+                                    key={index}
+                                    className="board-card"
+                                    onClick={() => dispatch(actionCreators.getAdminBoard(user._id, (res) => {
+                                        if (res.success === true) {
+                                            props.history.push('/admin/home', { data: user })
+                                        }
+                                    }))}
+                                >
+                                    <h3>{user.username}</h3>
+
+                                </div>
+                            ))}
+                        </div>
+                    }
+                </div> : 
                 <div className="boards-right-column-content">
                     <div className="boards-header">
                         <h2>Todos</h2>
@@ -81,7 +95,7 @@ const Home = (props) => {
                             </div>
                             <div className="separator" />
                         </div> */}
-                            <button onClick={() => setOpen(true)}>Create Board</button>
+                            {/* <button onClick={() => setOpen(true)}>Create Board</button> */}
                     </div>
                     {loading ? <h3>Loading...</h3> :
                         <div className="boards-row">
@@ -100,9 +114,29 @@ const Home = (props) => {
 
                                 </div>
                             ))}
+                            <input
+                                className="add-list"
+                                placeholder="+ Add New Board"
+                                value={name}
+                                onChange={(e) => setBoardName(e.target.value)}
+                                onKeyUp={(e) => {
+                                            if (e.key === 'Enter') {
+                                                dispatch(actionCreators.createBoard( name, (res) => {
+                                                if (res.success === true) {
+                                                    setOpen(false)
+                                                    setBoardName('')
+                                                    setTimeout(() => {
+                                                        dispatch(actionCreators.getBoards())
+                                                    }, 2000)
+                                                }
+                                            }))
+                                            }
+                                        }}
+                            />
                         </div>
                     }
-                </div>
+                </div>    
+            }
             </div>
         </div>
     )

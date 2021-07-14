@@ -15,18 +15,18 @@ const Navbar = (props) => {
         actionObject: null,
         objects: [
             { id: 1, title: "Schedule Meeting", route: "/carlender" },
-            // { id: 2, title: "Learn", route: "/blogs" },
-            { id: 3, title: "Dashboard", route: "/overview" },
-            { id: 4, title: "Lean Canvas", route: "/canvas-board" },
-            { id: 5, title: "Todos", route: "/" },
-            { id: 6, title: "Milestones", route: "/milestone-board" },
+            { id: 2, title: "Dashboard", route: "/overview" },
+            { id: 3, title: "Lean Canvas", route: "/canvas-board" },
+            { id: 4, title: "Todos", route: "/" },
+            { id: 5, title: "Milestones", route: "/milestone-board" },
+            // { id: 6, title: "Strategies", route: "/strategies-board" }
         ]
     })
 
     const [adminAppState, setAdminAppState] = useState({
         actionObject: null,
         objects: [
-            { id: 1, title: "Startups", route: "/admin/home" },
+            { id: 1, title: "Startups", route: "/" },
         ]
     })
 
@@ -126,7 +126,7 @@ const Navbar = (props) => {
                     <h4>Learn</h4> */}
                 </div>    
             }
-                <a href={link} target="blank"><button className="report">Report</button></a>
+                {admin ? null : <a href={link} target="blank"><button className="report">Report</button></a>}
                 <div className="profile">
                     <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottomCenter" icon={<UserOutlined />}>
                         <p>{username}</p>

@@ -87,10 +87,11 @@
 	margin-right: 1rem;
 	padding-left: 5px;
 	padding-top: 10px;
-	background: #fff;
+	background: #fbf2e1;
 	border-radius: 5px;
 	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 	width: 250px;
+	margin-bottom: 1rem;
 }
 
 .board-card:hover {
@@ -119,14 +120,11 @@
 
 .milestone-row {
 	display: flex;
-	align-items: flex-start;
 	justify-content: flex-start;
-	padding: 0.5rem;
-	width: 100%;
+	align-items: center;
 	overflow-x: scroll;
-	overflow: hidden;
-	/* padding: 0px 10px; */
-	/* margin-top: 1rem; */
+	margin-top: 1rem;
+	padding: 1rem;
 }
 
 ::placeholder {

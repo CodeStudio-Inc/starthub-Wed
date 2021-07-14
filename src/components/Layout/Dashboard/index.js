@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Sidebar from '../../Navigation/Sidebar'
-import * as actionCreators from '../../store/actionCreators'
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import moment from 'moment'
 import Airtable from 'airtable'
 import { Line } from 'react-chartjs-2'
@@ -47,8 +44,10 @@ const Dashboard = () => {
     //     // return  setkeysArrayFilter(Object.keys(singleObject))
     // }
 
+    const no_object= {"No Graph": 1}
 
-    console.log(metricsFilter && Object.keys(metricsFilter[0]),'Keys')
+
+    console.log(Object.keys(null ? no_object : metricsFilter[0]),'Keys')
     
     // const graph1 = metricsFilter.map(el => el.fields[keysArray[0]] )
     // const graph2 = metricsFilter.map(el => el.fields[keysArray[1]] )
