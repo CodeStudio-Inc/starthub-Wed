@@ -4,20 +4,29 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createStore, applyMiddleware, compose } from 'redux'
+import {persistStore, persistReducer} from 'redux-persist'
+import {PersistGate} from 'redux-persist/es/integration/react'
+import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import rootReducer from './components/store/reducers'
 
 require('./components/store/firebase')
 
+const reducerPersistor = persistReducer({ key: "root", storage }, rootReducer)
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(reducerPersistor, composeEnhancers(applyMiddleware(thunk)));
+
+const persistor = persistStore(store)
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
