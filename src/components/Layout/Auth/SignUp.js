@@ -11,8 +11,8 @@ const SignUp = (props) => {
         username: '',
         base_key: '',
         link: '',
-        email: 'Safari12@gmail.com',
-        password: 'pass0123',
+        email: '',
+        password: '',
         message: ''
     })
 

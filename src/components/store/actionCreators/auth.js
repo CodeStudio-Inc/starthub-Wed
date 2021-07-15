@@ -37,7 +37,14 @@ export const login = (email, password) => {
             password
         }
 
-        axios.post('https://starthubafrica-api.el.r.appspot.com/auth/signin', data)
+        axios.post('https://starthubafrica-api.el.r.appspot.com/auth/signin', data,
+            {
+                headers:
+                {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(res => {
                 dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token))
                 // console.log(res)

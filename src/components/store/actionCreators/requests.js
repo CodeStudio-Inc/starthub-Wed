@@ -184,6 +184,7 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,ca
         axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/list/updateIndexes', {sourceId, destinationId, sourceCards, destinationCards}, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -209,6 +210,7 @@ export const createCanvasBoard = (callback) => {
         axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/create/canvas', data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -234,6 +236,7 @@ export const createMilestoneBoard = (callback) => {
         axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/create/milestone', data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -259,6 +262,7 @@ export const createBoard = (name, callback) => {
         axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/board', data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -284,6 +288,7 @@ export const createList = (id, name, callback) => {
         axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -316,6 +321,7 @@ export const createCard = (listId, name, callback) => {
         axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card`, data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -340,6 +346,7 @@ export const updateCard = (id, name, callback) => {
         axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -374,6 +381,7 @@ export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blog
         axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/blog', data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -396,6 +404,7 @@ export const getBoards = () => {
         axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/boards', {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -417,6 +426,7 @@ export const getListsOnBoard = ( callback) => {
         axios.get(`https://starthubafrica-api.el.r.appspot.com/catalyzer/lists`, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -441,6 +451,7 @@ export const getCardsOnBoard = (id) => {
         axios.get(`https://starthubafrica-api.el.r.appspot.com/catalyzer//board/${id}/cards`, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -463,6 +474,7 @@ export const getBlogs = () => {
         axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/blogs', {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -484,6 +496,7 @@ export const getCanvasBoard = () => {
         axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/canvas/board', {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -512,6 +525,7 @@ export const getMilestonesBoard = () => {
         axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/milestone/board', {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -540,6 +554,7 @@ export const deleteCard = (id) => {
         axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/${id}`, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -561,6 +576,7 @@ export const deleteList = (id) => {
         axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -613,6 +629,7 @@ export const archiveCard = (id) => {
         axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/archive/${id}`,data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -638,6 +655,7 @@ export const archiveList = (id) => {
         axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/archive/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })

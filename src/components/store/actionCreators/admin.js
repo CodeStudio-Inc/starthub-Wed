@@ -44,6 +44,7 @@ export const getUsers = () => {
         axios.get('https://starthubafrica-api.el.r.appspot.com/admin/users', {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -65,6 +66,7 @@ export const getAdminBoard = (userId, callback) => {
         axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/boards/${userId}`, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -87,6 +89,7 @@ export const getAdminLists = (userId, boardId) => {
         axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/lists/${userId}/${boardId}`, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
@@ -108,6 +111,7 @@ export const getAdminCards = (userId, boardId) => {
         axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/cards/${userId}/${boardId}`, {
             headers: {
                 ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
                 Authorization: token
             }
         })
