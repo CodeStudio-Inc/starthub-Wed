@@ -47,7 +47,7 @@ const Dashboard = () => {
     const no_object= {"No Graph": 1}
 
 
-    console.log(Object.keys(null ? no_object : metricsFilter[0]),'Keys')
+    // console.log(Object.keys(null ? no_object : metricsFilter[0]),'Keys')
     
     // const graph1 = metricsFilter.map(el => el.fields[keysArray[0]] )
     // const graph2 = metricsFilter.map(el => el.fields[keysArray[1]] )
@@ -120,7 +120,7 @@ const Dashboard = () => {
                 <div className="overview-header-main">
                 </div>
                 <div className="revenue-row">
-                    <h1>{date}</h1>
+                    <h1>Still building content, try again later</h1>
                     {/* <div className="graph-row">
                     <div className="revenue">
                         <div className="overview-header">

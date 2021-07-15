@@ -21,6 +21,8 @@ import './Home.css'
      const [activeCard, setActiveCard] = useState({})
      console.log(listName,'ll')
 
+     const admin = useSelector(state => state.auth.admin)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -112,7 +114,7 @@ import './Home.css'
                     setActiveCard={setActiveCard}
                 />
             ))}
-            <input
+            {admin ? null : <input
                 className="add-list"
                 placeholder="+ Add New list"
                 value={listName}
@@ -125,7 +127,7 @@ import './Home.css'
                                 }))
                             }
                         }}
-            />
+            />}
         </div>
         </DragDropContext>
     )

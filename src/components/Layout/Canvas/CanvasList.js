@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import {Droppable} from 'react-beautiful-dnd'
 import CanvasCard from './CanvasCard'
@@ -8,7 +8,7 @@ import * as actionCreators from '../../store/actionCreators'
 const CanvasList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
 
     const [cardName, setCardName] = useState('')
-
+    const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
 
     return (
@@ -21,10 +21,10 @@ const CanvasList = ({listId, title, cards,boardId, callback, open, setActiveCard
                 >
                     <div className={"canvas-row"}>
                         <h6>{title}</h6>
-                        <MoreHorizIcon className="close" style={{ fontSize: '25px' }} />
+                        <MoreHorizIcon onClick={() => alert('Still Under Development')} className="close" style={{ fontSize: '25px' }} />
                     </div>
                     <div className="add-card">
-                            <input
+                            {admin ? null : <input
                                 placeholder="Type.."
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
@@ -36,7 +36,7 @@ const CanvasList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                         }))
                                     }
                                 }}
-                            />
+                            />}
                     </div>
                     {cards && cards.map((c,index) => (
                         <CanvasCard

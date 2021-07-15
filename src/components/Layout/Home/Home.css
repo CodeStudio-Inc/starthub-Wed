@@ -133,15 +133,42 @@
 	opacity: 1; /* Firefox */
 }
 
-.add-list {
+.add-canvas {
 	outline: none;
 	border: none;
-	background: rgba(0, 0, 0, 0.3);
-	padding: 0.2rem;
+	background: rgba(0, 0, 0, 0.2);
+	padding: 0.4rem !important;
 	width: 200px;
 	border-radius: 2px;
 	transition: 0.5s ease-in-out;
 	color: #eee;
+	height: 100px;
+}
+
+
+.add-canvas:focus {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.add-list {
+	outline: none;
+	border: none;
+	background: rgba(0, 0, 0, 0.2);
+	padding: 0.4rem !important;
+	width: 200px;
+	border-radius: 2px;
+	transition: 0.5s ease-in-out;
+	color: #eee;
+	height: 100px;
+}
+
+.caution {
+	display: flex;
+	align-items: flex-start;
+	padding: 0.5rem;
+	height: 40px;
+	background: #fff;
+	margin-left: 0.5rem;
 }
 
 .add-list:focus {
