@@ -33,13 +33,10 @@ export const CanvasCard = ({cardId, text, index,open, object, setActiveCard}) =>
                         provided.draggableProps.style
                     )}
                 >
-                    <div className="draggable" onClick={() => {
-                        open()
-                        setActiveCard(object)
-                    }}>
+                    <div className="draggable">
                         <p>{text}</p>
                         <div className="icon-row">
-                            <CancelIcon  className="edit-icon" fontSize="small" />
+                            {/* <CancelIcon  className="edit-icon" fontSize="small" /> */}
                         </div>
                     </div>
                 </div>

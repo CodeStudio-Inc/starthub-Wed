@@ -7,6 +7,7 @@ import '../Home/Home.css'
 const Home = (props) => {
 
     const [name, setBoardName] = useState('')
+    const [show, setShow] = useState(false)
     const [open, setOpen] = useState(false)
     const [boardId, setBoardId] = useState('')
 
@@ -17,25 +18,25 @@ const Home = (props) => {
     const loading = useSelector(state => state.requests.loading)
 
     const filtereBoards = Boards.filter(el => el.name === 'Lean Canvas')
+    const expire = useSelector(state => state.auth.tokenExpiration)
     // console.log(filtereBoards)
-
-    const problem = lists.find(el => el.name === 'Problem')
-    const solution = lists.find(el => el.name === 'Solution')
-    const metrics = lists.find(el => el.name === 'Key Metrics')
-    const proposition = lists.find(el => el.name === 'Unique Value Proposition')
-    const advantage = lists.find(el => el.name === 'Unfair Advantage')
-    const channels = lists.find(el => el.name === 'Channels')
-    const segments = lists.find(el => el.name === 'Customer Segments')
-    const revenue = lists.find(el => el.name === 'Revenue Streams')
-    const cost = lists.find(el => el.name === 'Cost Structure')
 
     const dispatch = useDispatch()
 
+    const current_date = Date.now()
+
     useEffect(() => {
+        if(current_date >= expire) {
+           return setShow(true)
+        }
         dispatch(actionCreators.getBoards())
     }, [])
 
-    const board_length = filtereBoards.length === 1
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            props.history.push('/')
+    }
+
 
     let empty_array = null
 
@@ -49,7 +50,7 @@ const Home = (props) => {
                 onFocus={() => setOpen(true)}
                 onKeyUp={(e) => {
                             if (e.key === 'Enter') {
-                                dispatch(actionCreators.createBoard( name, (res) => {
+                                dispatch(actionCreators.createCanvasBoard((res) => {
                                 if (res.success === true) {
                                     setOpen(false)
                                     setBoardName('')
@@ -66,18 +67,17 @@ const Home = (props) => {
 
     return (
         <div className="main-container">
+            {show ? <ModalUI>
+                <div className="edit-card">
+                    <h5>Session timeout please login again</h5>
+                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+                </div>
+            </ModalUI>: null}
             <div className="boards-right-column">
                 <div className="boards-right-column-content">
                     <div className="boards-header">
                         <h2>Lean Canvas</h2>
                         <div className="edit-row">
-                            {/* <div className="search">
-                                <input
-                                    type="text"
-                                    placeholder="Search"
-                                />
-                                <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
-                            </div> */}
                         </div>
                     </div>
                     <div className="boards-row">

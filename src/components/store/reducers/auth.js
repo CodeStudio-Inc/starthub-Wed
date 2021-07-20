@@ -9,6 +9,7 @@ const initialState = {
     link:'',
     email: '',
     token: '',
+    tokenExpiration:'',
     admin:null,
     loading: false,
     authenticated: false,
@@ -33,6 +34,7 @@ const auth = (state = initialState, action) => {
                 link: action.link,
                 email: action.email,
                 token: action.token,
+                tokenExpiration: action.tokenExpiration,
                 authenticated: true
             })
 

@@ -511,6 +511,20 @@
 	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
+.edit-card h5 {
+	margin-top: 0.5rem;
+}
+
+.edit-card button {
+	outline: none;
+	border: none;
+	background: #69191b;
+	color: #fff;
+	width: 20%;
+	padding: 0.2rem;
+	border-radius: 2px;
+}
+
 .edit-card-row {
 	display: flex;
 	align-items: center;
@@ -524,10 +538,21 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+	width: 100%;
 }
 
-.edit-card-row2 h3 {
+.edit-card-row2 input {
+	outline: none;
+	border: none;
+	transition:0.5s ease-in-out;
+	background-color: #dfa1268c;
+	padding: 0.2rem;
 	margin-right: 0.2rem;
+	width: 100%;
+}
+
+.edit-card-row2 input:focus {
+	background-color: #dfa1266c;
 }
 
 .edit-card-icon {
@@ -578,6 +603,10 @@
 	background: #dfa126;
 	color: #fff;
 	margin-right: 0.5rem;
+}
+
+.desc-text  {
+	font-weight: bold;
 }
 
 .edit-description button:hover {

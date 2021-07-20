@@ -13,7 +13,8 @@ const Login = (props) => {
     })
 
     const loading = useSelector(state => state.auth.loading)
-    console.log(loading,'load')
+    
+    
     const dispatch = useDispatch()
 
     const handleLogin = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import {DragDropContext} from 'react-beautiful-dnd'
-import KanbanList from '../Home/dnd/KanbanList'
+import MilestoneList from './MilestoneList'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../ModalUI'
@@ -10,6 +10,7 @@ import ModalUI from '../../ModalUI'
 
 const Milestones = (props) => {
     const [cardName, setCardName] = useState('')
+    const [show, setShow] = useState(false)
     const [open, setOpen] = useState(false)
     const [activeCard, setActiveCard] = useState({})
     const [onFocus, setOnFocus] = useState(false)
@@ -21,15 +22,26 @@ const Milestones = (props) => {
     const boardId = props.location.state.data._id
 
     const lists = useSelector(state => state.requests.milestone_lists)
+    const expire = useSelector(state => state.auth.tokenExpiration)
 
     const todoLists = lists.filter(el => el.boardId === boardId)
     // console.log(todoLists)
 
     const dispatch = useDispatch()
 
+    const current_date = Date.now()
+
     useEffect(() => {
+        if(current_date >= expire) {
+           return setOpen(true)
+        }
         getLists()
     }, [])
+
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            props.history.push('/')
+    }
 
     const openEditModal = () => setOpen(true)
 
@@ -63,6 +75,12 @@ const Milestones = (props) => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
+            {show ? <ModalUI>
+                <div className="edit-card">
+                    <h5>Session timeout please login again</h5>
+                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+                </div>
+            </ModalUI>: null}
             {open ? <ModalUI>
                 <div className="edit-card">
                     <div className="edit-card-row">
@@ -119,7 +137,7 @@ const Milestones = (props) => {
                     </div>
                         <div className="statement-row">
                            {statements.map(l => (
-                                <KanbanList
+                                <MilestoneList
                                     key={l._id}
                                     listId={l._id}
                                     title={l.name}
@@ -133,7 +151,7 @@ const Milestones = (props) => {
                     
                     <div className="milestones-row">
                         {Milestones.map(l => (
-                                <KanbanList
+                                <MilestoneList
                                     key={l._id}
                                     listId={l._id}
                                     title={l.name}

@@ -2,11 +2,11 @@ import React,{useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import EditIcon from '@material-ui/icons/Edit'
 import {Droppable} from 'react-beautiful-dnd'
-import KanbanCard from './KanbanCard'
+import MilestoneCard from './MilestoneCard'
 import CloseIcon from '@material-ui/icons/Close'
-import * as actionCreators from '../../../store/actionCreators'
+import * as actionCreators from '../../store/actionCreators'
 
-const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
+const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
     console.log(title,'d')
     const [cardName, setCardName] = useState('')
     const [listName, setListName] = useState('')
@@ -24,8 +24,8 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                     className={"container"}
                 >
                     <div className={"canvas-row"}>
-                        {visible ? null : <h6>{title}</h6>}
-                        {visible ?
+                         <h6>{title}</h6>
+                        {/* {visible ?
                             <div className="edit-card-row2">
                                 <input
                                     placeholder="Enter List Title"
@@ -44,7 +44,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
                             </div>
                             : null}
-                        {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '25px' }} />}
+                        {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '25px' }} />} */}
                     </div>
                     <div className="add-card">
                             {admin ? null : <input
@@ -62,7 +62,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                             />}
                     </div>
                     {cards && cards.map((c,index) => (
-                        <KanbanCard
+                        <MilestoneCard
                             key={c.dateCreated}
                             cardId={c.dateCreated}
                             text={c.name}
@@ -80,4 +80,4 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
     )
 }
 
-export default KanbanList
+export default MilestoneList

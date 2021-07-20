@@ -7,7 +7,7 @@ export const loaderAction = () => {
     }
 }
 
-export const setUser = (admin,userId, username, base_key, link, email, token) => {
+export const setUser = (admin,userId, username, base_key, link, email, token, tokenExpiration) => {
     return {
         type: actions.SET_USER,
         admin,
@@ -16,7 +16,8 @@ export const setUser = (admin,userId, username, base_key, link, email, token) =>
         base_key,
         link,
         email,
-        token
+        token,
+        tokenExpiration
     }
 }
 
@@ -46,8 +47,7 @@ export const login = (email, password) => {
                 }
             })
             .then(res => {
-                dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token))
-                // console.log(res)
+                dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token, res.data.tokenExpiration))
             })
             .catch(error => {
                 console.log(error)

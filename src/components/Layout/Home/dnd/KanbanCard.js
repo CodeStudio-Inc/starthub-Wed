@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import {Draggable} from 'react-beautiful-dnd'
-import CancelIcon from '@material-ui/icons/Cancel';
+import EditIcon from '@material-ui/icons/Edit'
+import CloseIcon from '@material-ui/icons/Close'
+import * as actionCreators from '../../../store/actionCreators'
 
-export const KanbanCard = ({cardId, text, index,open, object, setActiveCard}) => {
+export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId}) => {
+
+    const [cardName, setCardName] = useState('')
+    const [visible, setVisible] = useState(false)
+
+    const dispatch = useDispatch()
 
     // console.log(object,'my object')
 
@@ -35,14 +43,30 @@ export const KanbanCard = ({cardId, text, index,open, object, setActiveCard}) =>
                         provided.draggableProps.style
                     )}
                 >
-                    <div className="draggable" onClick={() => {
-                        open()
-                        setActiveCard(object)
-                    }}>
-                        <p>{text}</p>
-                        <div className="icon-row">
-                            <CancelIcon  className="edit-icon" fontSize="small" />
-                        </div>
+                    <div className="draggable">
+                        {visible ? null : <p>{text}</p>}
+                        {visible ?
+                            <div className="edit-card-row2">
+                                <input
+                                    placeholder="Enter Card Title"
+                                    value={cardName}
+                                    onChange={(e) => setCardName(e.target.value)}
+                                    onKeyUp={(e) => {
+                                        if (e.key === 'Enter') {
+                                            dispatch(actionCreators.updateCard(listId,cardIndex,cardName,()=>{
+                                            dispatch(actionCreators.getListsOnBoard(()=>{
+                                                setVisible(false)
+                                            }))
+                                        } ))
+                                        }
+                                    }}
+                                />
+                                <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
+                            </div>
+                            : null}
+                        {visible ? null : <div className="icon-row">
+                            <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" />
+                        </div>}
                     </div>
                 </div>
             )}

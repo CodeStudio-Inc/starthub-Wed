@@ -13,6 +13,7 @@ export {
     postBlog,
     deleteCard,
     deleteList,
+    updateList,
     updateCard,
     createCanvasBoard,
     createMilestoneBoard,

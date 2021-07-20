@@ -12,15 +12,17 @@ import './Canvas.css'
 const Canvas = (props) => {
 
     const [cardName, setCardName] = useState('')
+    const [show, setShow] = useState(false)
     const [open, setOpen] = useState(false)
     const [activeCard, setActiveCard] = useState({})
     const [onFocus, setOnFocus] = useState(false)
      const [visible, setVisible] = useState(false)
 
     const loading = useSelector(state => state.requests.loading)
-    const cards = useSelector(state => state.requests.canvas_cards)
     const lists = useSelector(state => state.requests.canvas_lists)
-    console.log(lists)
+    const expire = useSelector(state => state.auth.tokenExpiration)
+
+    // console.log(lists)
     const boardName = props.location.state.data.name
     const boardId = props.location.state.data._id
 
@@ -33,13 +35,24 @@ const Canvas = (props) => {
     const segments = lists.find(el => el.name === 'Customer Segments')
     const revenue = lists.find(el => el.name === 'Revenue Streams')
     const cost = lists.find(el => el.name === 'Cost Structure')
+    
     // console.log(props, 'ff')
 
     const dispatch = useDispatch()
 
+    const current_date = Date.now()
+
     useEffect(() => {
+        if(current_date >= expire) {
+           return setShow(true)
+        }
         getLists()
     }, [])
+
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            props.history.push('/')
+    }
 
     const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
 
@@ -71,6 +84,12 @@ const Canvas = (props) => {
 
     return (
         <div className="main-container">
+            {show ? <ModalUI>
+                <div className="edit-card">
+                    <h5>Session timeout please login again</h5>
+                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+                </div>
+            </ModalUI>: null}
             {open ? <ModalUI>
                 <div className="edit-card">
                     <div className="edit-card-row">

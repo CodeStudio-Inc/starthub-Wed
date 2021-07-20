@@ -8,10 +8,12 @@ import '../Home/Home.css'
 const Home = (props) => {
 
     const [name, setBoardName] = useState('')
+    const [show, setShow] = useState(false)
     const [open, setOpen] = useState(false)
     const [boardId, setBoardId] = useState('')
 
     const Boards = useSelector(state => state.requests.boards)
+    const expire = useSelector(state => state.auth.tokenExpiration)
 
     const loading = useSelector(state => state.requests.loading)
 
@@ -22,20 +24,18 @@ const Home = (props) => {
 
     const dispatch = useDispatch()
 
+    const current_date = Date.now()
+
     useEffect(() => {
+        if(current_date >= expire) {
+           return setShow(true)
+        }
         dispatch(actionCreators.getBoards())
     }, [])
 
-    const createBoard = () => {
-        dispatch(actionCreators.createMilestoneBoard( (res) => {
-            if (res.success === true) {
-                setOpen(false)
-                setBoardName('')
-                setTimeout(() => {
-                    dispatch(actionCreators.getBoards())
-                }, 2000)
-            }
-        }))
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            props.history.push('/')
     }
 
 
@@ -52,7 +52,7 @@ const Home = (props) => {
                 onFocus={() => setOpen(true)}
                 onKeyUp={(e) => {
                             if (e.key === 'Enter') {
-                                dispatch(actionCreators.createBoard( name, (res) => {
+                                dispatch(actionCreators.createMilestoneBoard((res) => {
                                 if (res.success === true) {
                                     setOpen(false)
                                     setBoardName('')
@@ -69,6 +69,12 @@ const Home = (props) => {
 
     return (
         <div className="main-container">
+            {show ? <ModalUI>
+                <div className="edit-card">
+                    <h5>Session timeout please login again</h5>
+                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+                </div>
+            </ModalUI>: null}
             <div className="boards-right-column">
                 <div className="boards-right-column-content">
                     <div className="boards-header">

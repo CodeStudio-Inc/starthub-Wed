@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
-import Search from '@material-ui/icons/Search'
-import AddBoxIcon from '@material-ui/icons/AddBox'
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
-import DeleteIcon from '@material-ui/icons/Delete'
 import Cards from './Cards'
 
 
@@ -26,15 +23,25 @@ const Card = (props) => {
     // console.log(lists, 'lists')
     
     const todoLists = lists && lists.filter(el => el.boardId === boardId)
+    const expire = useSelector(state => state.auth.tokenExpiration)
     // console.log(todoLists, 'todoLists')
 
 
     const dispatch = useDispatch()
 
+    const current_date = Date.now()
+
     useEffect(() => {
-        // dispatch(actionCreators.getListsOnBoard( () => { }))
+            if(current_date >= expire) {
+            return setShow(true)
+            }
             getListsOnBoard()
     }, [])
+
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            props.history.push('/')
+    }
     
     const getListsOnBoard = () => dispatch(actionCreators.getListsOnBoard( () => { }))
 
@@ -52,6 +59,12 @@ const Card = (props) => {
 
     return (
         <div className="main-container">
+            {show ? <ModalUI>
+                <div className="edit-card">
+                    <h5>Session timeout please login again</h5>
+                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+                </div>
+            </ModalUI>: null}
             {open ? <ModalUI setOpen={setOpen}>
                 <div className="create-board-column">
                     <div className="close-row">

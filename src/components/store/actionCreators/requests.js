@@ -198,6 +198,7 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,ca
     }
 }
 
+
 export const createCanvasBoard = (callback) => {
     return (dispatch, getState) => {
 
@@ -336,12 +337,37 @@ export const createCard = (listId, name, callback) => {
     }
 }
 
-export const updateCard = (id, name, callback) => {
+export const updateList = (id, name, callback) => {
     return (dispatch, getState) => {
         const token = getState().auth.token
 
         const data = {
             name
+        }
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                console.log(res)
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const updateCard = (id, cardIndex, name, callback) => {
+    return (dispatch, getState) => {
+        const token = getState().auth.token
+
+        const data = {
+            name,
+            cardIndex
         }
         axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/${id}`, data, {
             headers: {
@@ -351,7 +377,7 @@ export const updateCard = (id, name, callback) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -589,7 +615,6 @@ export const deleteList = (id) => {
             })
     }
 }
-
 
 export const getMetricsData = () => {
     return (dispatch, getState) => {

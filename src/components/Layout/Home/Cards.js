@@ -8,28 +8,43 @@ import EditIcon from '@material-ui/icons/Edit'
 import ModalUI from '../../ModalUI'
 import { DragDropContext} from 'react-beautiful-dnd'
 
-import axios from 'axios'
+import moment from 'moment'
 
 import './Home.css'
  const Cards = ({ todoLists, boardId, history, getLists}) => {
      
      const [cardName, setCardName] = useState('')
+     const [cardDescription, setCardDescription] = useState('')
      const [listName, setListName] = useState('')
      const [open, setOpen] = useState(false)
      const [onFocus, setOnFocus] = useState(false)
      const [visible, setVisible] = useState(false)
      const [activeCard, setActiveCard] = useState({})
-     console.log(listName,'ll')
+    //  console.log(activeCard.object,'ll')
+
+    const expire = useSelector(state => state.auth.tokenExpiration)
+
+    //  const description = activeCard.object.description
+    //  const date = activeCard.object.dateCreated
 
      const admin = useSelector(state => state.auth.admin)
 
     const dispatch = useDispatch()
 
+    const current_date = Date.now()
+
     useEffect(() => {
-        
+        if(current_date >= expire) {
+           return setOpen(true)
+        }
     }, [])
 
     const openEditModal = () => setOpen(true)
+
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            history.push('/')
+    }
 
 
      const onDragEnd = (result) => {
@@ -60,14 +75,20 @@ import './Home.css'
         <div className="milestone-row">
             {open ? <ModalUI>
                 <div className="edit-card">
+                    <h5>Session timeout please login again</h5>
+                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+                </div>
+            </ModalUI>: null}
+            {/* {open ? <ModalUI>
+                <div className="edit-card">
                     <div className="edit-card-row">
-                        {/* <p>Create Board</p> */}
+                        <p>Create Board</p>
                         <CloseIcon onClick={() => setOpen(false)}  className="close" style={{ fontSize: '20px', color:'rgba(0,0,0,0.7)' }} />
                     </div>
                     <div className="edit-card-detail">
                         {!visible ? 
                             <div className="edit-card-row2">
-                                <h3>{activeCard && activeCard.name}</h3>
+                                <h3>{activeCard && activeCard.object.name}</h3>
                                 <EditIcon className="edit-card-icon" style={{ fontSize: '20px' }} onClick={() => setVisible(true)} />
                             </div>
                             : null
@@ -79,29 +100,30 @@ import './Home.css'
                                     value={cardName}
                                     onChange={(e) => setCardName(e.target.value)}
                                 />
-                                <button >save</button>
+                                <button onClick={updateCardName} >save</button>
                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
                             </div>
                             : null}
                             <h5>Description</h5>
-                            <textarea
+                             <textarea
                                 placeholder="Add a more detailed description"
+                                onChange={(e) => setCardDescription(e.target.value)}
                                 onFocus={() => setOnFocus(true)}
                             />
                         {onFocus ? 
                             <div className="edit-description">
-                                <button >Save</button>
+                                <button onClick={updateCardDescription}>Save</button>
                                 <button onClick={() => setOnFocus(false)}>Cancel</button>
                             </div>
                             : null
                         }
                         <div className="edit-description">
                             <h4>Created:</h4>
-                            <h5>12/09/02</h5>
+                            <h5>{moment(date).fromNow()}</h5>
                         </div>
                     </div>
                 </div>
-            </ModalUI> : null}
+            </ModalUI> : null} */}
             {todoLists && todoLists.map(l => (
                 <KanbanList
                     key={l._id}

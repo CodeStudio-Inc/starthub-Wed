@@ -5,19 +5,28 @@ import CloseIcon from '@material-ui/icons/Close'
 import moment from 'moment'
 import Airtable from 'airtable'
 import { Line } from 'react-chartjs-2'
+import * as actionCreators from '../../store/actionCreators'
 
 
 import './Dashboard.css'
 
-const Dashboard = () => {
+const Dashboard = (props) => {
 
     const [open, setOpen] = useState(false)
-    const [keysArrayFilter, setkeysArrayFilter] = useState()
+    const [show, setShow] = useState(false)
     const [metricsData, setMetricsData] = useState([])
 
     const baseId = useSelector(state => state.auth.base_key)
+    const expire = useSelector(state => state.auth.tokenExpiration)
+
+    const current_date = Date.now()
 
     useEffect(() => {
+
+        if(current_date >= expire) {
+           return setOpen(true)
+        }
+
         const key = process.env.REACT_APP_API_KEY
         var base = new Airtable({apiKey: key}).base(baseId)
 
@@ -31,6 +40,10 @@ const Dashboard = () => {
         if (err) { console.error(err); return }
         })
     }, [])
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            props.history.push('/')
+    }
     
     const dispatch = useDispatch()
 
@@ -41,7 +54,7 @@ const Dashboard = () => {
     // const filterKeys = () => {
 
     //     const singleObject = metricsFilter.find(e => e.Month <= date)
-    //     // return  setkeysArrayFilter(Object.keys(singleObject))
+        // return  setkeysArrayFilter(Object.keys(singleObject))
     // }
 
     const no_object= {"No Graph": 1}
@@ -110,6 +123,12 @@ const Dashboard = () => {
 
     return (
         <div className="main-container">
+            {show ? <ModalUI>
+                <div className="edit-card">
+                    <h5>Session timeout please login again</h5>
+                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+                </div>
+            </ModalUI>: null}
             {open ? <ModalUI setOpen={setOpen}>
                 <div className="modal-row">
                     <CloseIcon onClick={() => setOpen(false)} className="close-icon" style={{ fontSize: '30px' }} />
