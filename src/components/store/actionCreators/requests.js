@@ -164,7 +164,7 @@ export const dragCardWithInList = (
 
 export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,callback ) => {
     return (dispatch, getState) => {
-        
+        dispatch(loadAction())
         let lists = [...getState().requests.lists]
 
         let sourceCards, destinationCards = [];
@@ -197,7 +197,6 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,ca
             })
     }
 }
-
 
 export const createCanvasBoard = (callback) => {
     return (dispatch, getState) => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import ModalUI from '../../ModalUI'
+import svg from '../../../assets/images/spinner.svg'
 
 import '../Home/Home.css'
 const Home = (props) => {
@@ -80,8 +81,7 @@ const Home = (props) => {
                         <div className="edit-row">
                         </div>
                     </div>
-                    <div className="boards-row">
-                    {loading ? <h3>Loading...</h3> :
+                    {loading ? <img src={svg}/> :
                         <div className="boards-row">
                             {empty_array}
                             {filtereBoards.map((board, index) => (
@@ -105,7 +105,6 @@ const Home = (props) => {
                              : null}
                         </div>
                     }
-                    </div>
                    
                 </div>
             </div>

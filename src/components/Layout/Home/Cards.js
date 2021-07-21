@@ -7,6 +7,7 @@ import KanbanList from './dnd/KanbanList'
 import EditIcon from '@material-ui/icons/Edit'
 import ModalUI from '../../ModalUI'
 import { DragDropContext} from 'react-beautiful-dnd'
+import svg from '../../../assets/images/spinner.svg'
 
 import moment from 'moment'
 
@@ -23,6 +24,7 @@ import './Home.css'
     //  console.log(activeCard.object,'ll')
 
     const expire = useSelector(state => state.auth.tokenExpiration)
+    const dragdropLoading = useSelector(state => state.requests.loading)
 
     //  const description = activeCard.object.description
     //  const date = activeCard.object.dateCreated
@@ -73,6 +75,12 @@ import './Home.css'
     return (
         <DragDropContext onDragEnd={onDragEnd}>
         <div className="milestone-row">
+            {dragdropLoading ? 
+            <ModalUI>
+                <div>
+                    <img src={svg}/>
+                </div>
+            </ModalUI> : null}
             {open ? <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>

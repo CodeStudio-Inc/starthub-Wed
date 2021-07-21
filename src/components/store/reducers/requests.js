@@ -167,6 +167,7 @@ const requests = (state = initialState, action) => {
                 droppableIndexStart: action.droppableIndexStart,
                 droppableIndexEnd: action.droppableIndexEnd,
                 draggableId: action.draggableId,
+                loading: false 
             })
 
             case actions.SET_NEW_LISTS:

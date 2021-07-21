@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../ModalUI'
+import svg from '../../../assets/images/spinner.svg'
 
 import '../Home/Home.css'
 const Home = (props) => {
@@ -89,7 +90,7 @@ const Home = (props) => {
                             </div> */}
                         </div>
                     </div>
-                    {loading ? <h3>Loading...</h3> :
+                    {loading ? <img src={svg}/> :
                         <div className="boards-row">
                             {empty_array}
                             {filtereBoards.map((board, index) => (
