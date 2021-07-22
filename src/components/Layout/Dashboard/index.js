@@ -54,7 +54,7 @@ const Dashboard = (props) => {
     keysArray = Object.keys(metricsFilter[0]).sort()
 
     // const data = metrics.map(el => el.fields['Month'])
-    console.log(keysArray)
+    // console.log(keysArray)
     
     
     const graph1 = metrics.map(el => el.fields[keysArray[0]] )
