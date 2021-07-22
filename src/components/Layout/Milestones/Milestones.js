@@ -6,7 +6,7 @@ import MilestoneList from './MilestoneList'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../ModalUI'
-
+import svg from '../../../assets/images/spinner.svg'
 
 const Milestones = (props) => {
     const [cardName, setCardName] = useState('')
@@ -23,6 +23,7 @@ const Milestones = (props) => {
 
     const lists = useSelector(state => state.requests.milestone_lists)
     const expire = useSelector(state => state.auth.tokenExpiration)
+    const dragdropLoading = useSelector(state => state.requests.loading)
 
     const todoLists = lists.filter(el => el.boardId === boardId)
     // console.log(todoLists)
@@ -135,6 +136,10 @@ const Milestones = (props) => {
                             {/* <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} /> */}
                         </div>
                     </div>
+                    {dragdropLoading ? 
+                    <div>
+                        <img src={svg} style={{width:'30px',height:'30px'}}/>
+                    </div> : null}
                         <div className="statement-row">
                            {statements.map(l => (
                                 <MilestoneList

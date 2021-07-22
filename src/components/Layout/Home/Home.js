@@ -63,7 +63,7 @@ const Home = (props) => {
                     <div className="boards-header">
                         <h2>StartUps</h2>
                     </div>
-                    {loading ? <img src={svg}/> :
+                    {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
                         <div className="boards-row">
                             {filtereUsers.map((user, index) => (
                                 <div
@@ -86,7 +86,7 @@ const Home = (props) => {
                     <div className="boards-header">
                         <h2>Todos</h2>
                     </div>
-                    {loading ? <img src={svg}/> :
+                    {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
                         <div className="boards-row">
                             {filtereBoards.map((board, index) => (
                                 <div

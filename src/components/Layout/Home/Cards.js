@@ -76,11 +76,9 @@ import './Home.css'
         <DragDropContext onDragEnd={onDragEnd}>
         <div className="milestone-row">
             {dragdropLoading ? 
-            <ModalUI>
                 <div>
-                    <img src={svg}/>
-                </div>
-            </ModalUI> : null}
+                    <img src={svg} style={{width:'30px',height:'30px'}}/>
+                </div> : null}
             {open ? <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>

@@ -7,6 +7,7 @@ import CanvasList2 from './CanvasList2'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../ModalUI'
+import svg from '../../../assets/images/spinner.svg'
 
 import './Canvas.css'
 const Canvas = (props) => {
@@ -16,9 +17,9 @@ const Canvas = (props) => {
     const [open, setOpen] = useState(false)
     const [activeCard, setActiveCard] = useState({})
     const [onFocus, setOnFocus] = useState(false)
-     const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(false)
 
-    const loading = useSelector(state => state.requests.loading)
+    const dragdropLoading = useSelector(state => state.requests.loading)
     const lists = useSelector(state => state.requests.canvas_lists)
     const expire = useSelector(state => state.auth.tokenExpiration)
 
@@ -147,7 +148,10 @@ const Canvas = (props) => {
                     </div>
                     <DragDropContext onDragEnd={onDragEnd}>
                         <div className="canvas-main">
-                        
+                            {dragdropLoading ? 
+                        <div>
+                            <img src={svg} style={{width:'30px',height:'30px'}}/>
+                        </div> : null}
                         <div className="canvas-main-row">
                             <CanvasList
                                 key={problem && problem._id}

@@ -81,7 +81,7 @@ const Home = (props) => {
                         <div className="edit-row">
                         </div>
                     </div>
-                    {loading ? <img src={svg}/> :
+                    {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
                         <div className="boards-row">
                             {empty_array}
                             {filtereBoards.map((board, index) => (

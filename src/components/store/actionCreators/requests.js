@@ -1,5 +1,6 @@
 import * as actions from '../actions'
 import axios from 'axios'
+import Airtable from 'airtable'
 
 export const loadAction = () => {
     return {
@@ -617,27 +618,20 @@ export const deleteList = (id) => {
 
 export const getMetricsData = () => {
     return (dispatch, getState) => {
-        const base_key = getState().auth.base_key
-        const key = 'keyIxHVaXHJZn0ECq'
 
-        axios.interceptors.request.use(
-            config => {
-                config.headers.authorization = `Bearer ${key}`;
-                return config
-            },
-            error => {
-                return Promise.reject(error)
-            }
-        )
+        const baseId = getState().auth.base_key
+        const key = process.env.REACT_APP_API_KEY
+        var base = new Airtable({apiKey: key}).base(baseId)
 
-        axios.get(base_key)
-            .then(res => {
-                console.log(res)
-                dispatch(setMetricsData(res.data.records))
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        base('Metrics').select({
+        maxRecords: 20
+        }).eachPage(function page(records, fetchNextPage) {
+            dispatch(setMetricsData(records))
+            fetchNextPage();
+
+        }, function done(err) {
+        if (err) { console.error(err); return }
+        })
     }
 }
 
