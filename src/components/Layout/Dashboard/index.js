@@ -22,7 +22,6 @@ const Dashboard = (props) => {
     const current_date = Date.now()
 
     useEffect(() => {
-
         if(current_date >= expire) {
            return setOpen(true)
         }
@@ -37,13 +36,13 @@ const Dashboard = (props) => {
 
     const metricsFilter = metrics.map(el => el.fields )
 
-    const date = moment(new Date().toISOString()).format("YYYY-DD-MM")
-
-
+    // const date = moment(new Date().toISOString()).format("YYYY-DD-MM")
 
     let keysArray = []
 
-    keysArray = metricsFilter && Object.keys(metricsFilter[0]).sort()
+    keysArray = Object.keys(metricsFilter[0] || []).sort()     
+    
+    
 
     
     const graph1 = metrics.map(el => el.fields[keysArray[0]] )
@@ -55,8 +54,6 @@ const Dashboard = (props) => {
     const graph7 = metrics.map(el => el.fields[keysArray[6]] )
     const graph8 = metrics.map(el => el.fields[keysArray[7]] )
     
-
-
 
     const line_graph1 = {
         labels: graph1,
