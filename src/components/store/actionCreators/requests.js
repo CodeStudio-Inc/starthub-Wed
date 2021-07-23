@@ -621,7 +621,7 @@ export const getMetricsData = () => {
 
         const baseId = getState().auth.base_key
         const key = process.env.REACT_APP_API_KEY
-        var base = new Airtable({apiKey: key}).base(baseId)
+        var base = new Airtable({apiKey: 'keyIxHVaXHJZn0ECq'}).base(baseId)
 
         base('Metrics').select({
         maxRecords: 20
