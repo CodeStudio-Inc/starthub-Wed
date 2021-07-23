@@ -17,16 +17,16 @@ const reducerPersistor = persistReducer({ key: "root", storage }, rootReducer)
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(reducerPersistor, composeEnhancers(applyMiddleware(thunk)));
 
 const persistor = persistStore(store)
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
+      <PersistGate loading={null} persistor={persistor}>
       <App />
-      {/* </PersistGate> */}
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
