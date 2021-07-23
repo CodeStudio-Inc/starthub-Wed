@@ -39,23 +39,12 @@ const Dashboard = (props) => {
 
     const date = moment(new Date().toISOString()).format("YYYY-DD-MM")
 
-    // const filterKeys = () => {
 
-        // return  setkeysArrayFilter(Object.keys(singleObject))
-        // }
-        
-        // const Month = metricsFilter.find(e => e.Month <= date)
-
-    // console.log(Object.keys(null ? no_object : metricsFilter[0]),'Keys')
-    // console.log(Object.keys(metricsFilter[0])[0],'ff')
 
     let keysArray = []
 
-    keysArray = Object.keys(metricsFilter[0]).sort()
+    keysArray = Object.keys(metricsFilter && metricsFilter[0]).sort()
 
-    // const data = metrics.map(el => el.fields['Month'])
-    // console.log(keysArray)
-    
     
     const graph1 = metrics.map(el => el.fields[keysArray[0]] )
     const graph2 = metrics.map(el => el.fields[keysArray[1]] )
@@ -66,10 +55,7 @@ const Dashboard = (props) => {
     const graph7 = metrics.map(el => el.fields[keysArray[6]] )
     const graph8 = metrics.map(el => el.fields[keysArray[7]] )
     
-    // console.log(graph1)
-        
 
-    // console.log(revenuemay, 'hhh')
 
 
     const line_graph1 = {
@@ -164,37 +150,6 @@ const Dashboard = (props) => {
     }
 
 
-    // const soccer = {
-    //     labels: graph4s,
-    //     datasets: [
-    //         {
-    //             label: keysArray[1],
-    //             backgroundColor: '#dfa126',
-    //             borderColor: '#222323',
-    //             borderWidth: 1,
-    //             data: players
-    //         }
-    //     ]
-    // };
-
-    // const meet = {
-    //     labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
-    //     datasets: [
-    //         {
-    //             label: 'Meetings with sponsors this month',
-    //             backgroundColor: '#dfa126',
-    //             borderColor: '#222323',
-    //             borderWidth: 1,
-    //             data: meetings
-    //         }
-    //     ]
-    // };
-
-
-
-
-
-
     return (
         <div className="main-container">
             {show ? <ModalUI>
@@ -213,12 +168,8 @@ const Dashboard = (props) => {
                 <div className="overview-header-main">
                 </div>
                 <div className="revenue-row">
-                    {/* <h1>Still building content, try again later</h1> */}
                     <div className="graph-row">
                     <div className="revenue">
-                        <div className="overview-header">
-                            {/* <h2>{keysArray[0]}</h2> */}
-                        </div>
                         <Line
                             data={line_graph1}
                             width={100}
@@ -227,9 +178,6 @@ const Dashboard = (props) => {
                     </div>
 
                     <div className="revenue">
-                        <div className="overview-header">
-                            {/* <h2>{keysArray[1]}</h2> */}
-                        </div>
                         <Line
                             data={line_graph2}
                             width={100}
@@ -241,9 +189,6 @@ const Dashboard = (props) => {
 
                     <div className="graph-row">
                     <div className="revenue">
-                        <div className="overview-header">
-                            {/* <h2>{keysArray[2]}</h2> */}
-                        </div>
                         <Line
                             data={line_graph3}
                             width={100}
@@ -252,9 +197,6 @@ const Dashboard = (props) => {
                     </div>
 
                     <div className="revenue">
-                        <div className="overview-header">
-                            {/* <h2>{keysArray[3]}</h2> */}
-                        </div>
                         <Line
                             data={line_graph4}
                             width={100}
@@ -265,9 +207,6 @@ const Dashboard = (props) => {
 
                     <div className="graph-row">
                     <div className="revenue">
-                        <div className="overview-header">
-                            {/* <h2>{keysArray[0]}</h2> */}
-                        </div>
                         <Line
                             data={line_graph5}
                             width={100}
@@ -276,9 +215,6 @@ const Dashboard = (props) => {
                     </div>
 
                     <div className="revenue">
-                        <div className="overview-header">
-                            {/* <h2>{keysArray[1]}</h2> */}
-                        </div>
                         <Line
                             data={line_graph6}
                             width={100}
@@ -290,9 +226,6 @@ const Dashboard = (props) => {
 
                     <div className="graph-row">
                     <div className="revenue">
-                        <div className="overview-header">
-                            {/* <h2>{keysArray[0]}</h2> */}
-                        </div>
                         <Line
                             data={line_graph7}
                             width={100}
@@ -301,9 +234,6 @@ const Dashboard = (props) => {
                     </div>
 
                     <div className="revenue" style={{visibility:'hidden'}}>
-                        <div className="overview-header">
-                            {/* <h2>{keysArray[1]}</h2> */}
-                        </div>
                         <Line
                             data={line_graph6}
                             width={100}
