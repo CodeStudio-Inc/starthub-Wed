@@ -43,7 +43,7 @@ const Dashboard = (props) => {
 
     let keysArray = []
 
-    keysArray = Object.keys(metricsFilter && metricsFilter[0]).sort()
+    keysArray = metricsFilter && Object.keys(metricsFilter[0]).sort()
 
     
     const graph1 = metrics.map(el => el.fields[keysArray[0]] )
