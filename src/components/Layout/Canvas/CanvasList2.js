@@ -22,7 +22,7 @@ const CanvasList2 = ({listId, title, cards,boardId,callback, open, setActiveCard
                 >
                     <div className={"canvas-row"}>
                         <h6>{title}</h6>
-                        <MoreHorizIcon className="close" style={{ fontSize: '25px' }} />
+                        <MoreHorizIcon className="close" style={{ fontSize: '25px', visibility:'hidden' }} />
                     </div>
                     <div className="add-card">
                             <input
