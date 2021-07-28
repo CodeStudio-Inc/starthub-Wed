@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import logo from '../../../assets/images/logo.png'
@@ -16,6 +16,10 @@ const Login = (props) => {
     
     
     const dispatch = useDispatch()
+
+    useEffect(() =>{
+        dispatch(actionCreators.removeUser())
+    },[])
 
     const handleLogin = () => {
         dispatch(actionCreators.login(state.email, state.password, (res) => {

@@ -106,7 +106,7 @@
 }
 
 .canvas-list-list3 {
-	width: 750px;
+	width: 780px !important;
 	height: 250px;
 	display: flex;
 	align-items: center;

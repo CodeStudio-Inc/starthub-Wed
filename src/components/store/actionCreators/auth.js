@@ -29,7 +29,7 @@ export const removeUser = () => {
 }
 
 
-export const login = (email, password) => {
+export const login = (email, password,callback) => {
     return dispatch => {
         dispatch(loaderAction())
 
@@ -51,6 +51,7 @@ export const login = (email, password) => {
             })
             .catch(error => {
                 console.log(error)
+                callback({ success: false, error: error })
             })
     }
 }
