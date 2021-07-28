@@ -101,7 +101,7 @@
 }
 
 .canvas-row h6 {
-	font-size: 10px;
+	font-size: 14px;
 	font-weight: bold;
 }
 
@@ -203,3 +203,5 @@
 .boards-row button:focus {
 	color: #fff !important;
 }
+
+

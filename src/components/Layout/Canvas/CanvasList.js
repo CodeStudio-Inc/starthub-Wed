@@ -21,7 +21,7 @@ const CanvasList = ({listId, title, cards,boardId, callback, open, setActiveCard
                 >
                     <div className={"canvas-row"}>
                         <h6>{title}</h6>
-                        <MoreHorizIcon onClick={() => alert('Still Under Development')} className="close" style={{ fontSize: '25px' }} />
+                        <MoreHorizIcon onClick={() => alert('Still Under Development')} className="close" style={{ fontSize: '25px',visibility:'hidden' }} />
                     </div>
                     <div className="add-card">
                             {admin ? null : <input

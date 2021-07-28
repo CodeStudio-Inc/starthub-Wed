@@ -34,6 +34,11 @@ const requests = (state = initialState, action) => {
                 loading: true
             })
 
+        case actions.STOP_LOADER:
+            return updateObject(state, {
+                loading: false
+            })
+
         case actions.SET_AIRTABLE_DATA:
             return updateObject(state, {
                 data: action.data

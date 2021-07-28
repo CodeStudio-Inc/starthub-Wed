@@ -83,7 +83,6 @@ const Home = (props) => {
                     </div>
                     {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
                         <div className="boards-row">
-                            {empty_array}
                             {filtereBoards.map((board, index) => (
                                 <div
                                     key={index}
@@ -98,11 +97,12 @@ const Home = (props) => {
 
                                 </div>
                             ))}
-                            {open ? 
+                            {empty_array}
+                            {/* {open ? 
                                 <div className="caution">
                                     <p style={{color:'red'}}><strong>Note: </strong>Board Name can only be "Lean canvas", and user can only have 1 Lean Canvas Board</p>
                                 </div>
-                             : null}
+                             : null} */}
                         </div>
                     }
                    

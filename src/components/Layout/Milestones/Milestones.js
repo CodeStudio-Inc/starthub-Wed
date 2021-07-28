@@ -6,7 +6,7 @@ import MilestoneList from './MilestoneList'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../ModalUI'
-import svg from '../../../assets/images/spinner.svg'
+import Loader from '../../ModalUI/Loader'
 
 const Milestones = (props) => {
     const [cardName, setCardName] = useState('')
@@ -136,10 +136,7 @@ const Milestones = (props) => {
                             {/* <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} /> */}
                         </div>
                     </div>
-                    {dragdropLoading ? 
-                    <div>
-                        <img src={svg} style={{width:'30px',height:'30px'}}/>
-                    </div> : null}
+                    {dragdropLoading ? <Loader/> : null}
                         <div className="statement-row">
                            {statements.map(l => (
                                 <MilestoneList

@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import KanbanList from './dnd/KanbanList'
 import EditIcon from '@material-ui/icons/Edit'
 import ModalUI from '../../ModalUI'
+import Loader from '../../ModalUI/Loader'
 import { DragDropContext} from 'react-beautiful-dnd'
 import svg from '../../../assets/images/spinner.svg'
 
@@ -75,10 +76,7 @@ import './Home.css'
     return (
         <DragDropContext onDragEnd={onDragEnd}>
         <div className="milestone-row">
-            {dragdropLoading ? 
-                <div>
-                    <img src={svg} style={{width:'30px',height:'30px'}}/>
-                </div> : null}
+            {dragdropLoading ? <Loader/> : null}
             {open ? <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>

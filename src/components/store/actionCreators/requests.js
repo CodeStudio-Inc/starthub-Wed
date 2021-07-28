@@ -8,6 +8,12 @@ export const loadAction = () => {
     }
 }
 
+export const stopLoader = () => {
+    return {
+        type: actions.STOP_LOADER
+    }
+}
+
 export const setBoards = (data) => {
     return {
         type: actions.SET_BOARDS,
@@ -202,6 +208,8 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,ca
 export const createCanvasBoard = (callback) => {
     return (dispatch, getState) => {
 
+        dispatch(loadAction())
+
         const data = {
             name: 'name'
         }
@@ -217,6 +225,7 @@ export const createCanvasBoard = (callback) => {
         })
             .then(res => {
                 // console.log(res)
+                dispatch(stopLoader())
                 callback({ success: true, res: res })
             })
             .catch(err => {
@@ -227,6 +236,8 @@ export const createCanvasBoard = (callback) => {
 
 export const createMilestoneBoard = (callback) => {
     return (dispatch, getState) => {
+
+        dispatch(loadAction())
 
         const data = {
             name: 'name'
@@ -242,6 +253,7 @@ export const createMilestoneBoard = (callback) => {
             }
         })
             .then(res => {
+                dispatch(stopLoader())
                 callback({ success: true, res: res })
                 // console.log(res)
             })
@@ -253,6 +265,8 @@ export const createMilestoneBoard = (callback) => {
 
 export const createBoard = (name, callback) => {
     return (dispatch, getState) => {
+
+        dispatch(loadAction())
 
         const token = getState().auth.token
 
@@ -269,6 +283,7 @@ export const createBoard = (name, callback) => {
         })
             .then(res => {
                 // console.log(res)
+                dispatch(stopLoader())
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -279,6 +294,8 @@ export const createBoard = (name, callback) => {
 
 export const createList = (id, name, callback) => {
     return (dispatch, getState) => {
+
+        dispatch(loadAction())
 
         const token = getState().auth.token
 
@@ -295,6 +312,7 @@ export const createList = (id, name, callback) => {
         })
             .then(res => {
                 // console.log(res)
+                dispatch(stopLoader())
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -306,6 +324,8 @@ export const createList = (id, name, callback) => {
 
 export const createCard = (listId, name, callback) => {
     return (dispatch, getState) => {
+
+        dispatch(loadAction())
 
         const token = getState().auth.token;
         const lists = getState().requests.lists
@@ -327,7 +347,8 @@ export const createCard = (listId, name, callback) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
+                dispatch(stopLoader())
                 callback({ success: true, res: res })
             })
             .catch(error => {

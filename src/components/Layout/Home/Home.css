@@ -141,25 +141,25 @@
 	width: 200px;
 	border-radius: 2px;
 	transition: 0.5s ease-in-out;
-	color: #eee;
-	height: 100px;
+	color:black;
+	height: 50px;
 }
 
 
 .add-canvas:focus {
-	background: rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.3);
 }
 
 .add-list {
 	outline: none;
 	border: none;
-	background: rgba(0, 0, 0, 0.2);
+	background: #dfe2e7 !important;
 	padding: 0.4rem !important;
-	width: 200px;
+	width: 250px !important;
 	border-radius: 2px;
 	transition: 0.5s ease-in-out;
-	color: #eee;
-	height: 100px;
+	color: black !important;
+	height: 50px;
 }
 
 .caution {
@@ -471,18 +471,16 @@
 	padding: 5px;
 	overflow: hidden;
 	width: 100%;
-	/* border-radius: 3px; */
 	cursor: grab;
 	background: rgb(255, 255, 255);
 	box-sizing: border-box;
 	height: 100%;
-	/* margin-bottom: 1rem; */
 }
 
 .draggable p {
-	color: rgba(0, 0, 0, 0.6);
-	font-size: 12px;
-	font-weight: 500;
+	color: rgba(0, 0, 0, 0.8) !important;
+	font-size: 14px !important;
+	font-weight: 400 !important;
 }
 
 .dragging {
