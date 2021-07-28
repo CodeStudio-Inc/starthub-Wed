@@ -46,7 +46,8 @@ const requests = (state = initialState, action) => {
 
         case actions.SET_METRICS_DATA:
             return updateObject(state, {
-                metrics: action.data
+                metrics: action.data,
+                loading: false
             })
 
         case actions.SET_BOARDS:

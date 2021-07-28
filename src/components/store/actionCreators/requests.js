@@ -619,6 +619,7 @@ export const deleteList = (id) => {
 export const getMetricsData = () => {
     return (dispatch, getState) => {
 
+        dispatch(loadAction())
         const baseId = getState().auth.base_key
         const key = process.env.REACT_APP_API_KEY
         var base = new Airtable({apiKey: key}).base(baseId)

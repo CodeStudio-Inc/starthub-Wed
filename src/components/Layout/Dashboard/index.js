@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import moment from 'moment'
 import { Line } from 'react-chartjs-2'
 import * as actionCreators from '../../store/actionCreators'
-
+import svg from '../../../assets/images/spinner.svg'
 
 import './Dashboard.css'
 
@@ -15,7 +15,7 @@ const Dashboard = (props) => {
     const [show, setShow] = useState(false)
     const [metricsData, setMetricsData] = useState([])
 
-    const baseId = useSelector(state => state.auth.base_key)
+    const loading = useSelector(state => state.requests.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
     const metrics = useSelector(state => state.requests.metrics)
 
@@ -34,17 +34,17 @@ const Dashboard = (props) => {
     
     const dispatch = useDispatch()
 
-    const metricsFilter = metrics.map(el => el.fields )
 
+    const metricsFilter = metrics.map(el => el.fields)
     // const date = moment(new Date().toISOString()).format("YYYY-DD-MM")
+
+    const metricsSort = metricsFilter.sort((a,b) => moment(a['A-Month'])-moment(b['A-Month']))
+
 
     let keysArray = []
 
     keysArray = Object.keys(metricsFilter[0] || []).sort()     
-    
-    
-
-    
+     
     const graph1 = metrics.map(el => el.fields[keysArray[0]] )
     const graph2 = metrics.map(el => el.fields[keysArray[1]] )
     const graph3 = metrics.map(el => el.fields[keysArray[2]] )
@@ -53,10 +53,20 @@ const Dashboard = (props) => {
     const graph6 = metrics.map(el => el.fields[keysArray[5]] )
     const graph7 = metrics.map(el => el.fields[keysArray[6]] )
     const graph8 = metrics.map(el => el.fields[keysArray[7]] )
+
+    let months = []
+
+    // graph1.sort((a,b) => moment(a)-moment(b))
+
+    for(let month of graph1) {
+        months.push(moment(month).format("MMM"))
+    }
+    
+    // console.log(metrics)
     
 
     const line_graph1 = {
-        labels: graph1,
+        labels: months,
         datasets: [
             {
                 label: keysArray[1],
@@ -69,7 +79,7 @@ const Dashboard = (props) => {
     }
 
     const line_graph2 = {
-        labels: graph1,
+        labels: months,
         datasets: [
             {
                 label: keysArray[2],
@@ -82,7 +92,7 @@ const Dashboard = (props) => {
     }
 
     const line_graph3 = {
-        labels: graph1,
+        labels: months,
         datasets: [
             {
                 label: keysArray[3],
@@ -95,7 +105,7 @@ const Dashboard = (props) => {
     }
 
     const line_graph4 = {
-        labels: graph1,
+        labels: months,
         datasets: [
             {
                 label: keysArray[4],
@@ -108,7 +118,7 @@ const Dashboard = (props) => {
     }
 
     const line_graph5 = {
-        labels: graph1,
+        labels: months,
         datasets: [
             {
                 label: keysArray[5],
@@ -121,7 +131,7 @@ const Dashboard = (props) => {
     }
 
     const line_graph6 = {
-        labels: graph1,
+        labels: months,
         datasets: [
             {
                 label: keysArray[6],
@@ -134,7 +144,7 @@ const Dashboard = (props) => {
     }
 
     const line_graph7 = {
-        labels: graph1,
+        labels: months,
         datasets: [
             {
                 label: keysArray[7],
@@ -145,6 +155,9 @@ const Dashboard = (props) => {
             }
         ]
     }
+
+
+        
 
 
     return (
@@ -194,41 +207,41 @@ const Dashboard = (props) => {
                     </div>
 
                     <div className="revenue">
-                        <Line
+                        {line_graph4.datasets[0].data[0] === undefined ? null : <Line
                             data={line_graph4}
                             width={100}
                             height={20}
-                        />
+                        />}
                     </div>
                     </div>
 
                     <div className="graph-row">
-                    <div className="revenue">
-                        <Line
+                    {line_graph5.datasets[0].data[0] === undefined ? null :<div className="revenue">
+                         <Line
                             data={line_graph5}
                             width={100}
                             height={20}
                         />
-                    </div>
+                    </div>}
 
-                    <div className="revenue">
+                    {line_graph6.datasets[0].data[0] === undefined ? null : <div className="revenue">
                         <Line
                             data={line_graph6}
                             width={100}
                             height={20}
                         
                         />
-                    </div>
+                    </div>}
                     </div>
 
                     <div className="graph-row">
-                    <div className="revenue">
+                    {line_graph7.datasets[0].data[0] === undefined ? null : <div className="revenue">
                         <Line
                             data={line_graph7}
                             width={100}
                             height={20}
                         />
-                    </div>
+                    </div>}
 
                     <div className="revenue" style={{visibility:'hidden'}}>
                         <Line
