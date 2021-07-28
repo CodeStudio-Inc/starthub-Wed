@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Cards from './Cards'
 
 
@@ -85,17 +86,9 @@ const Card = (props) => {
             <div className="right-column-content">
                 <div className="boards-header">
                     <h2>{boardName}</h2>
-                    <div className="edit-row">
-                        {/* <div className="search">
-                            <input
-                                type="text"
-                                placeholder="Search"
-                            />
-                            <Search style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.1)' }} />
-                        </div>
-                        <div className="separator" /> */}
-                        {/* <button onClick={() => setOpen(true)}>Create List</button> */}
-                        <h5 onClick={() => props.history.goBack()}>Go Back</h5>
+                    <div className="edit-row" onClick={() => props.history.goBack()}>
+                        <ArrowBackIcon  className="close" style={{ fontSize: '20px', color:'#dfa126' }} />
+                        <h5>Boards</h5>
                     </div>
                 </div>
                 <Cards

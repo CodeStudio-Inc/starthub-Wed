@@ -5,6 +5,7 @@ import { DragDropContext } from 'react-beautiful-dnd'
 import CanvasList from './CanvasList'
 import CanvasList2 from './CanvasList2'
 import EditIcon from '@material-ui/icons/Edit'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../ModalUI'
 import Loader from '../../ModalUI/Loader'
@@ -142,11 +143,9 @@ const Canvas = (props) => {
                 <div className="cards-right-column-content">
                     <div className="boards-header">
                         <h2>{boardName}</h2>
-                        <div className="edit-row">
-                        <h5 onClick={() => props.history.goBack()}>Go Back</h5>
-                            {/*   */}
-                            {/* <div className="separator" /> */}
-                            {/* <AddBoxIcon onClick={() => setOpen(true)} className="add-icon" style={{ fontSize: '40px', color: 'rgba(0, 0, 0, 0.1)' }} /> */}
+                        <div className="edit-row" onClick={() => props.history.goBack()}>
+                        <ArrowBackIcon className="close" style={{ fontSize: '20px', color:'#dfa126' }} />
+                            <h5>Board</h5>
                         </div>
                     </div>
                     <DragDropContext onDragEnd={onDragEnd}>
