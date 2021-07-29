@@ -180,7 +180,7 @@ const Dashboard = (props) => {
                 <div className="revenue-row">
                     <div className="graph-row">
                     <div className="revenue">
-                        <h4>{keysArray[1] && keysArray[1].split('-').splice(1)}</h4>
+                        <h3>{keysArray[1] && keysArray[1].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph1}
                             width={100}
@@ -189,7 +189,7 @@ const Dashboard = (props) => {
                     </div>
 
                     <div className="revenue">
-                        <h4>{keysArray[2] && keysArray[2].split('-').splice(1)}</h4>
+                        <h3>{keysArray[2] && keysArray[2].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph2}
                             width={100}
@@ -200,7 +200,7 @@ const Dashboard = (props) => {
 
                     <div className="graph-row">
                     <div className="revenue">
-                        <h4>{keysArray[3] && keysArray[3].split('-').splice(1)}</h4>
+                        <h3>{keysArray[3] && keysArray[3].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph3}
                             width={100}
@@ -209,7 +209,7 @@ const Dashboard = (props) => {
                     </div>
 
                     <div className="revenue">
-                        <h4>{keysArray[4] && keysArray[4].split('-').splice(1)}</h4>
+                        <h3>{keysArray[4] && keysArray[4].split('-').splice(1)}</h3>
                         {line_graph4.datasets[0].data[0] === undefined ? null : <Line
                             data={line_graph4}
                             width={100}
@@ -220,7 +220,7 @@ const Dashboard = (props) => {
 
                     <div className="graph-row">
                     {line_graph5.datasets[0].data[0] === undefined ? null :<div className="revenue">
-                        <h4>{keysArray[5] && keysArray[5].split('-').splice(1)}</h4>
+                        <h3>{keysArray[5] && keysArray[5].split('-').splice(1)}</h3>
                          <Line
                             data={line_graph5}
                             width={100}
@@ -229,7 +229,7 @@ const Dashboard = (props) => {
                     </div>}
 
                     {line_graph6.datasets[0].data[0] === undefined ? null : <div className="revenue">
-                        <h4>{keysArray[6] && keysArray[6].split('-').splice(1)}</h4>
+                        <h3>{keysArray[6] && keysArray[6].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph6}
                             width={100}
@@ -241,7 +241,7 @@ const Dashboard = (props) => {
 
                     <div className="graph-row">
                     {line_graph7.datasets[0].data[0] === undefined ? null : <div className="revenue">
-                        <h4>{keysArray[7] && keysArray[7].split('-').splice(1)}</h4>
+                        <h3>{keysArray[7] && keysArray[7].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph7}
                             width={100}
