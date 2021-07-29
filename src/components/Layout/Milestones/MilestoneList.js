@@ -21,7 +21,7 @@ const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveC
                 <div
                     {...provided.droppableProps}
                     ref={provided.innerRef}
-                    className={"container"}
+                    className={"list"}
                 >
                     <div className={"canvas-row"}>
                          <h6>{title}</h6>

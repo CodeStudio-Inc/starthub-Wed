@@ -156,6 +156,7 @@ const Canvas = (props) => {
                                 <CanvasList
                                 key={problem && problem._id}
                                 listId={problem && problem._id}
+                                listNumber={problem && problem.listNumber}
                                 title={problem && problem.name}
                                 cards={problem && problem.cards}
                                 boardId={boardId}
@@ -178,6 +179,7 @@ const Canvas = (props) => {
                                 <CanvasList
                                 key={solution && solution._id}
                                 listId={solution && solution._id}
+                                listNumber={solution && solution.listNumber}
                                 title={solution && solution.name}
                                 cards={solution && solution.cards}
                                 boardId={boardId}
@@ -188,6 +190,7 @@ const Canvas = (props) => {
                                 <CanvasList
                                 key={metrics && metrics._id}
                                 listId={metrics && metrics._id}
+                                listNumber={metrics && metrics.listNumber}
                                 title={metrics && metrics.name}
                                 cards={metrics && metrics.cards}
                                 boardId={boardId}
@@ -196,10 +199,10 @@ const Canvas = (props) => {
                                 setActiveCard={setActiveCard}
                             />
                             </div>
-                            <div className="canvas-list-list">
                             <CanvasList
                                 key={proposition && proposition._id}
                                 listId={proposition && proposition._id}
+                                listNumber={proposition && proposition.listNumber}
                                 title={proposition && proposition.name}
                                 cards={proposition && proposition.cards}
                                 boardId={boardId}
@@ -207,7 +210,7 @@ const Canvas = (props) => {
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
                             />
-                            <CanvasList
+                            {/* <CanvasList
                                 key={concept && concept._id}
                                 listId={concept && concept._id}
                                 title={concept && concept.name}
@@ -216,12 +219,12 @@ const Canvas = (props) => {
                                 callback={getLists}
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
-                            />
-                            </div>
+                            /> */}
                             <div className="canvas-list-list">
                                 <CanvasList
                                 key={advantage && advantage._id}
                                 listId={advantage && advantage._id}
+                                listNumber={advantage && advantage.listNumber}
                                 title={advantage && advantage.name}
                                 cards={advantage && advantage.cards}
                                 boardId={boardId}
@@ -232,6 +235,7 @@ const Canvas = (props) => {
                                 <CanvasList
                                 key={channels && channels._id}
                                 listId={channels && channels._id}
+                                listNumber={channels && channels.listNumber}
                                 title={channels && channels.name}
                                 cards={channels && channels.cards}
                                 boardId={boardId}
@@ -244,6 +248,7 @@ const Canvas = (props) => {
                                 <CanvasList
                                 key={segments && segments._id}
                                 listId={segments && segments._id}
+                                listNumber={segments && segments.listNumber}
                                 title={segments && segments.name}
                                 cards={segments && segments.cards}
                                 boardId={boardId}
@@ -267,20 +272,22 @@ const Canvas = (props) => {
                 
                         <div className="canvas-main-row">
                             <CanvasList2
-                                key={revenue && revenue._id}
-                                listId={revenue && revenue._id}
-                                title={revenue && revenue.name}
-                                cards={revenue && revenue.cards}
+                                key={cost && cost._id}
+                                listId={cost && cost._id}
+                                listNumber={cost && cost.listNumber}
+                                title={cost && cost.name}
+                                cards={cost && cost.cards}
                                 boardId={boardId}
                                 callback={getLists}
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
                             />
                             <CanvasList2
-                                key={cost && cost._id}
-                                listId={cost && cost._id}
-                                title={cost && cost.name}
-                                cards={cost && cost.cards}
+                                key={revenue && revenue._id}
+                                listId={revenue && revenue._id}
+                                listNumber={revenue && revenue.listNumber}
+                                title={revenue && revenue.name}
+                                cards={revenue && revenue.cards}
                                 boardId={boardId}
                                 callback={getLists}
                                 open={openEditModal}

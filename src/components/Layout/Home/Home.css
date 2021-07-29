@@ -463,19 +463,34 @@
 
 /* draggable css*/
 
-.container {
+/* .container {
 	display: flex;
+	align-items: flex-start !important;
 	justify-content: center;
-	align-items: center;
 	flex-direction: column;
 	width: 250px;
+	min-height: 150px;
 	padding: 5px;
 	border-radius: 5px;
 	box-sizing: border-box;
-	/* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); */
+	margin-right: 0.5rem;
+	background: #dfe2e7;
+} */
+
+.list {
+	display: flex;
+	align-items: flex-start !important;
+	/* justify-content: center; */
+	flex-direction: column;
+	width: 250px;
+	min-height: 150px;
+	padding: 5px;
+	border-radius: 5px;
+	box-sizing: border-box;
 	margin-right: 0.5rem;
 	background: #dfe2e7;
 }
+
 
 .draggable {
 	display: flex;
@@ -492,7 +507,7 @@
 
 .draggable p {
 	color: rgba(0, 0, 0, 0.8) !important;
-	font-size: 14px !important;
+	font-size: 18px !important;
 	font-weight: 400 !important;
 }
 

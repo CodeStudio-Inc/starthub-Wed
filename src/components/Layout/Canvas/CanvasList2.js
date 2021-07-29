@@ -6,7 +6,7 @@ import CanvasCard from './CanvasCard'
 import * as actionCreators from '../../store/actionCreators'
 
 
-const CanvasList2 = ({listId, title, cards,boardId,callback, open, setActiveCard}) => {
+const CanvasList2 = ({listId,listNumber, title, cards,boardId,callback, open, setActiveCard}) => {
 
     const [cardName, setCardName] = useState('')
 
@@ -22,6 +22,7 @@ const CanvasList2 = ({listId, title, cards,boardId,callback, open, setActiveCard
                 >
                     <div className={"canvas-row"}>
                         <h6>{title}</h6>
+                        <h6>{listNumber}</h6>
                         <MoreHorizIcon className="close" style={{ fontSize: '25px', visibility:'hidden' }} />
                     </div>
                     <div className="add-card">

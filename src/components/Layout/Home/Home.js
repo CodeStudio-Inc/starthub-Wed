@@ -60,9 +60,9 @@ const Home = (props) => {
             <div className="boards-right-column">
                 {admin ? 
                 <div className="boards-right-column-content">
-                    <div className="boards-header">
+                    {/* <div className="boards-header">
                         <h2>StartUps</h2>
-                    </div>
+                    </div> */}
                     {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
                         <div className="boards-row">
                             {filtereUsers.map((user, index) => (
@@ -71,7 +71,7 @@ const Home = (props) => {
                                     className="board-card"
                                     onClick={() => dispatch(actionCreators.getAdminBoard(user._id, (res) => {
                                         if (res.success === true) {
-                                            props.history.push('/admin/home', { data: user })
+                                            props.history.push('/admin/boards', { data: user })
                                         }
                                     }))}
                                 >

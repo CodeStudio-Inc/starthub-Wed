@@ -169,6 +169,29 @@
 	width: 65%;
 }
 
+.links h4 {
+	font-weight: lighter;
+}
+
+.links h4:hover {
+	cursor: pointer;
+}
+
+.admin-links {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 20%;
+}
+
+.admin-links h4 {
+	font-weight: lighter;
+}
+
+.admin-links h4:hover {
+	cursor: pointer;
+}
+
 .report {
 	border: none;
 	outline: none;
@@ -208,10 +231,4 @@
 	color: #dfa126;
 }
 
-.links h4 {
-	font-weight: lighter;
-}
 
-.links h4:hover {
-	cursor: pointer;
-}

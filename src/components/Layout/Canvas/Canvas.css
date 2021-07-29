@@ -90,19 +90,26 @@
 
 .canvas-row {
 	width: 100%;
-	height: 20px;
-	border-radius: 5px;
-	padding: 5px;
+	/* height: 20px; */
+	/* border-radius: 5px; */
+	padding-left: 5px;
 	display: flex;
-	align-items: center;
+	/* align-items: center; */
 	justify-content: space-between;
 	flex-direction: row;
-	margin-bottom: 0.5rem;
+	/* margin-bottom: 0.5rem; */
+	margin-top: 0.5rem;
 }
 
 .canvas-row h6 {
-	font-size: 14px;
+	font-size: 19px;
 	font-weight: bold;
+}
+
+.canvas-row h5 {
+	font-size: 18px;
+	font-weight: bold;
+	color: rgba(0, 0, 0, 0.9);
 }
 
 .canvas-list-list3 {

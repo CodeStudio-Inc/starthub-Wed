@@ -10,11 +10,14 @@ import BlogDetails from '../Layout/Blog/BlogDetails'
 import Carlender from '../Layout/Carlender'
 import AndrewSchedule from '../Layout/Carlender/AndrewSchedule'
 import MathiusSchedule from '../Layout/Carlender/MathiusSchedule'
+import TimothySchedule from '../Layout/Carlender/TimothySchedule'
+import EdisonSchedule from '../Layout/Carlender/EdisonSchedule'
 import Dashboard from '../Layout/Dashboard'
 import CanvasHome from '../Layout/Canvas'
 import MilestoneHome from '../Layout/Milestones'
 import StrategiesHome from '../Layout/Strategies'
 import AdminHome from '../Layout/Admin/Home/Home'
+import Register from '../Layout/Admin/Register'
 import Navbar from './Navbar'
 
 const HomeRoutes = () => {
@@ -31,12 +34,15 @@ const HomeRoutes = () => {
                 <Route path="/blog-details" component={BlogDetails} />
                 <Route path="/andrew-schedule" component={AndrewSchedule} />
                 <Route path="/mathius-schedule" component={MathiusSchedule} />
+                <Route path="/timothy-schedule" component={TimothySchedule} />
+                <Route path="/edison-schedule" component={EdisonSchedule} />
                 <Route path="/overview" component={Dashboard} />
                 <Route path="/carlender" component={Carlender} />
                 <Route path="/canvas-board" component={CanvasHome} />
                 <Route path="/milestone-board" component={MilestoneHome} />
                 <Route path="/strategies-board" component={StrategiesHome} />
-                <Route path="/" component={AdminHome} />
+                <Route path="/admin/boards" component={AdminHome} />
+                <Route path="/register" component={Register} />
             </Switch>
         </BrowserRouter>
     )

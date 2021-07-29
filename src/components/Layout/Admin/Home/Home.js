@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../../store/actionCreators'
+import svg from '../../../../assets/images/spinner.svg'
 
 import './Home.css'
 const Home = (props) => {
@@ -15,7 +16,7 @@ const Home = (props) => {
 
     const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
 
-    // console.log(canvas,'rf')
+    console.log(userId,'rf')
 
     const dispatch = useDispatch()
 
@@ -78,7 +79,7 @@ const Home = (props) => {
         <div className="main-container">
             <div className="boards-right-column">
                 <div className="boards-right-column-content">
-                    {loading ? <h3>Loading...</h3> :
+                    {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
                         <div className="boards">
                             <div className="boards-name">
                                 <h2>{username} Todos</h2>

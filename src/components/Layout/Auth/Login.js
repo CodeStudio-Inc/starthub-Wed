@@ -51,7 +51,7 @@ const Login = (props) => {
                 <button onClick={handleLogin}>{loading ? 'Loading...' : 'Login'}</button>
                 <div className="link-container">
                     <button>Forgot password?</button>
-                    <button onClick={() => props.history.push('/signup')}>SignUp</button>
+                    {/* <button onClick={() => props.history.push('/signup')}>SignUp</button> */}
                 </div>
             </div>
             <h5 style={{ color: '#dfa126' }}>{state.message}</h5>

@@ -5,7 +5,7 @@ import {Droppable} from 'react-beautiful-dnd'
 import CanvasCard from './CanvasCard'
 import * as actionCreators from '../../store/actionCreators'
 
-const CanvasList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
+const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, setActiveCard}) => {
 
     const [cardName, setCardName] = useState('')
     const admin = useSelector(state => state.auth.admin)
@@ -21,6 +21,7 @@ const CanvasList = ({listId, title, cards,boardId, callback, open, setActiveCard
                 >
                     <div className={"canvas-row"}>
                         <h6>{title}</h6>
+                        <h5>{listNumber}</h5>
                         <MoreHorizIcon onClick={() => alert('Still Under Development')} className="close" style={{ fontSize: '25px',visibility:'hidden' }} />
                     </div>
                     <div className="add-card">

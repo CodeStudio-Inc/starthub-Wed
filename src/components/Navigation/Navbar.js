@@ -27,6 +27,7 @@ const Navbar = (props) => {
         actionObject: null,
         objects: [
             { id: 1, title: "Startups", route: "/" },
+            { id: 2, title: "Register Startup", route: "/register" }
         ]
     })
 
@@ -88,7 +89,7 @@ const Navbar = (props) => {
             <div className="nav-row">
                 <img src={logo} />
                 {admin ? 
-                <div className="links">
+                <div className="admin-links">
                 {adminAppState.objects.map((element, index) => (
                     <div
                         key={index}

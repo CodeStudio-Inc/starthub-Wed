@@ -79,8 +79,9 @@ export const signUp = (username, base_key,link, email, password,callback) => {
             }
         )
             .then(res => {
+                callback({ success: true, res: res })
                 // console.log(res,'response')
-                dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token))
+                // dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token))
             })
             .catch(error => {
                 callback({ success: false, res: error })

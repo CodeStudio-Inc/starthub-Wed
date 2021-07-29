@@ -21,7 +21,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                 <div
                     {...provided.droppableProps}
                     ref={provided.innerRef}
-                    className={"container"}
+                    className={"list"}
                 >
                     <div className={"canvas-row"}>
                         {visible ? null : <h6>{title}</h6>}
