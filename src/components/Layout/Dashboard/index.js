@@ -54,6 +54,9 @@ const Dashboard = (props) => {
     const graph7 = metrics.map(el => el.fields[keysArray[6]] )
     const graph8 = metrics.map(el => el.fields[keysArray[7]] )
 
+    const mon = metrics.map(el => el.fields['A-Month'] )
+
+
     let months = []
 
     // graph1.sort((a,b) => moment(a)-moment(b))
@@ -61,8 +64,12 @@ const Dashboard = (props) => {
     for(let month of graph1) {
         months.push(moment(month).format("MMM"))
     }
+
+//     keysArray.sort(function(a,b) {
+//     return b.split(" ").length - a.split(" ").length;
+// })
     
-    // console.log(graph2)
+    console.log(mon,graph2)
     
 
     const line_graph1 = {
