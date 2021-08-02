@@ -133,7 +133,7 @@ const Milestones = (props) => {
                     <div className="boards-header">
                         <h2>{boardName}</h2>
                         <div className="edit-row" onClick={() => props.history.goBack()}>
-                            <ArrowBackIcon  className="close" style={{ fontSize: '20px', color:'#dfa126' }} />
+                            <ArrowBackIcon  style={{ fontSize: '20px', color:'#dfa126' }} />
                             <h5>Board</h5>
                         </div>
                     </div>

@@ -32,6 +32,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                 setVisible(false)
                             }}>No</button>
                             <button onClick={() => dispatch(actionCreators.deleteList(listId, (res) => {
+                                setDeleteModal(false)
                                 if(res.success) callback()
                             }))}>Yes</button>
                         </div>
@@ -64,11 +65,11 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                         }
                                     }}
                                 />
-                                <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
-                                <DeleteIcon onClick={() => setDeleteModal(true)} className="close" style={{ fontSize: '25px' }} />
+                                <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '20px' }} />
+                                <DeleteIcon onClick={() => setDeleteModal(true)} className="close" style={{ fontSize: '20px' }} />
                             </div>
                             : null}
-                        {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '25px' }} />}
+                        {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />}
                     </div>
                     <div className="add-card">
                             {admin ? null : <input

@@ -139,7 +139,7 @@ const Canvas = (props) => {
                     </div>
                 </div>
             </ModalUI> : null}
-            <div className="right-column-content">
+            <div className="right-column-canvas-content">
                 <div className="cards-right-column-content">
                     <div className="boards-header">
                         <h2>{boardName}</h2>

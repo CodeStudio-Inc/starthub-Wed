@@ -646,6 +646,7 @@ export const deleteCard = (id) => {
 export const deleteList = (id,callback) => {
     return (dispatch, getState) => {
 
+        dispatch(loadAction())
         const token = getState().auth.token
 
         axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, {
@@ -659,6 +660,7 @@ export const deleteList = (id,callback) => {
                 // console.log(res)
                 dispatch(deleteListAction(id))
                 callback({ success: true, res: res })
+                dispatch(stopLoader())
             })
             .catch(error => {
                 console.log(error)

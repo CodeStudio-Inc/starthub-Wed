@@ -83,51 +83,6 @@ import './Home.css'
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>: null}
-            {/* {open ? <ModalUI>
-                <div className="edit-card">
-                    <div className="edit-card-row">
-                        <p>Create Board</p>
-                        <CloseIcon onClick={() => setOpen(false)}  className="close" style={{ fontSize: '20px', color:'rgba(0,0,0,0.7)' }} />
-                    </div>
-                    <div className="edit-card-detail">
-                        {!visible ? 
-                            <div className="edit-card-row2">
-                                <h3>{activeCard && activeCard.object.name}</h3>
-                                <EditIcon className="edit-card-icon" style={{ fontSize: '20px' }} onClick={() => setVisible(true)} />
-                            </div>
-                            : null
-                        }
-                        {visible ?
-                            <div className="edit-card-row2">
-                                <input
-                                    placeholder="Text"
-                                    value={cardName}
-                                    onChange={(e) => setCardName(e.target.value)}
-                                />
-                                <button onClick={updateCardName} >save</button>
-                                <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
-                            </div>
-                            : null}
-                            <h5>Description</h5>
-                             <textarea
-                                placeholder="Add a more detailed description"
-                                onChange={(e) => setCardDescription(e.target.value)}
-                                onFocus={() => setOnFocus(true)}
-                            />
-                        {onFocus ? 
-                            <div className="edit-description">
-                                <button onClick={updateCardDescription}>Save</button>
-                                <button onClick={() => setOnFocus(false)}>Cancel</button>
-                            </div>
-                            : null
-                        }
-                        <div className="edit-description">
-                            <h4>Created:</h4>
-                            <h5>{moment(date).fromNow()}</h5>
-                        </div>
-                    </div>
-                </div>
-            </ModalUI> : null} */}
             {todoLists && todoLists.map(l => (
                 <KanbanList
                     key={l._id}
