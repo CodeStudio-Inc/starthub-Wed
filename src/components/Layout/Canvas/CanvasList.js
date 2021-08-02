@@ -19,7 +19,7 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
                     ref={provided.innerRef}
                     className={"canvas-list"}
                 >
-                    <div className={"canvas-row"}>
+                    <div className={"canvas1-row"}>
                         <h6>{title}</h6>
                         <h5>{listNumber}</h5>
                         <MoreHorizIcon onClick={() => alert('Still Under Development')} className="close" style={{ fontSize: '25px',visibility:'hidden' }} />
@@ -44,6 +44,8 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
                             key={c.dateCreated}
                             cardId={c.dateCreated}
                             text={c.name}
+                            cardIndex={c.cardIndex}
+                            listId={listId}
                             index={index}
                             object={c}
                             open={open}

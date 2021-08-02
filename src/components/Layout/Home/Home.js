@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../store/actionCreators'
+import EditIcon from '@material-ui/icons/Edit'
+import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../ModalUI'
 import svg from '../../../assets/images/spinner.svg'
 
@@ -9,6 +11,8 @@ const Home = (props) => {
 
     const [name, setBoardName] = useState('')
     const [open, setOpen] = useState(false)
+    const [boardName, setName] = useState('')
+    const [visible, setVisible] = useState(false)
 
     const Boards = useSelector(state => state.requests.boards)
     const admin = useSelector(state => state.auth.admin)
@@ -75,7 +79,7 @@ const Home = (props) => {
                                         }
                                     }))}
                                 >
-                                    <h3>{user.username}</h3>
+                                        <h3>{user.username}</h3>
 
                                 </div>
                             ))}
@@ -91,14 +95,42 @@ const Home = (props) => {
                             {filtereBoards.map((board, index) => (
                                 <div
                                     key={index}
-                                    className="board-card"
-                                    onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
+                                    className="board1-card"
+                                >
+                                    <div className="boards-inner-row">
+                                        {visible ? null : 
+                                        <h3
+                                        onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
                                         if (res.success === true) {
                                             props.history.push('/cards', { data: board })
                                         }
-                                    }))}
-                                >
-                                    <h3>{board.name}</h3>
+                                        }))} >
+                                            {board.name}
+                                        </h3>
+                                        }
+                                        {visible ?
+                                            <div className="edit-card-row2">
+                                                <input
+                                                    placeholder="Enter Card Title"
+                                                    value={boardName}
+                                                    onChange={(e) => setName(e.target.value)}
+                                                    onKeyUp={(e) => {
+                                                        if (e.key === 'Enter') {
+                                                        dispatch(actionCreators.updateBoard(board._id, boardName, (res) => {
+                                                        if(res.success) {
+                                                            dispatch(actionCreators.getBoards())
+                                                            setVisible(false)
+                                                            setName('')
+                                                        }
+                                                    }))
+                                                        }
+                                                    }}
+                                                />
+                                                <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
+                                            </div>
+                                            : null}
+                                        {visible ? null : <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" />}
+                                    </div>     
 
                                 </div>
                             ))}

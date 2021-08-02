@@ -98,6 +98,22 @@
 	cursor: pointer;
 }
 
+.board1-card {
+	height: 100px;
+	margin-right: 1rem;
+	padding-left: 5px;
+	padding-top: 10px;
+	background: #fbf2e1;
+	border-radius: 5px;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+	width: 250px;
+	margin-bottom: 1rem;
+}
+
+.board1-card h3:hover{
+	cursor: pointer;
+}
+
 .statement-row {
 	display: flex;
 	align-items: flex-start;
@@ -133,6 +149,46 @@
 	opacity: 1; /* Firefox */
 }
 
+.caution-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 40%;
+	padding: 0.5rem;
+	background: #fff;
+	
+}
+
+.caution-container p {
+	margin: 0;
+	text-align: center;
+	color: #dfa126;
+}
+
+.caution-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.caution-btn button{
+	width: 50px;
+	outline: none;
+	border: 1px solid #69191b;
+	background: none;
+	color: #69191b;
+	margin: 0.5rem;
+	transition: 0.7s ease-in-out;
+}
+
+.caution-btn button:hover {
+	background: #69191b;
+	cursor: pointer;
+	color: #fff;
+}
+
 .add-canvas {
 	outline: none;
 	border: none;
@@ -154,7 +210,7 @@
 .add-list {
 	outline: none;
 	border: none;
-	background: #dfe2e7 !important;
+	background: #dfa1268e !important;
 	padding: 0.4rem !important;
 	width: 250px !important;
 	border-radius: 2px;
@@ -449,7 +505,7 @@
 
 .close {
 	cursor: pointer;
-	color: rgba(0, 0, 0, 0.1);
+	color: #69191b !important;
 }
 
 .create-board-column {
@@ -477,6 +533,13 @@
 	background: #dfe2e7;
 } */
 
+.list-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
 .list {
 	display: flex;
 	align-items: flex-start !important;
@@ -488,7 +551,7 @@
 	border-radius: 5px;
 	box-sizing: border-box;
 	margin-right: 0.5rem;
-	background: #dfe2e7;
+	background: #dfa1268e;
 }
 
 
@@ -563,7 +626,7 @@
 .edit-card-row2 {
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: space-between;
 	width: 100%;
 }
 
@@ -571,14 +634,14 @@
 	outline: none;
 	border: none;
 	transition:0.5s ease-in-out;
-	background-color: #dfa1268c;
+	background-color: rgba(0, 0, 0, 0.3);
 	padding: 0.2rem;
 	margin-right: 0.2rem;
 	width: 100%;
 }
 
 .edit-card-row2 input:focus {
-	background-color: #dfa1266c;
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .edit-card-icon {

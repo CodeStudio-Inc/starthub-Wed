@@ -23,7 +23,7 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
         // margin: `0 0 ${grid}px 0`,
 
         // change background colour if dragging
-        background: isDragging ? "#eee" : "",
+        background: isDragging ? "rgba(0,0,0,0.4)" : "",
         // height: 30,
         width:'100%',
         // styles we need to apply on draggables
@@ -44,8 +44,8 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
                     )}
                 >
                     <div className="draggable">
-                        <p>{text}</p>
-                        {/* {visible ?
+                        {visible ? null : <p>{text}</p>}
+                        {visible ?
                             <div className="edit-card-row2">
                                 <input
                                     placeholder="Enter Card Title"
@@ -66,7 +66,7 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
                             : null}
                         {visible ? null : <div className="icon-row">
                             <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" />
-                        </div>} */}
+                        </div>}
                     </div>
                 </div>
             )}

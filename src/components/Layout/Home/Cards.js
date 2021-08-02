@@ -19,7 +19,6 @@ import './Home.css'
      const [cardDescription, setCardDescription] = useState('')
      const [listName, setListName] = useState('')
      const [open, setOpen] = useState(false)
-     const [onFocus, setOnFocus] = useState(false)
      const [visible, setVisible] = useState(false)
      const [activeCard, setActiveCard] = useState({})
     //  console.log(activeCard.object,'ll')
@@ -71,6 +70,7 @@ import './Home.css'
                     getLists()
                 } ))
      }
+
    
 
     return (

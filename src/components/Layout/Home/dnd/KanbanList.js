@@ -4,19 +4,42 @@ import EditIcon from '@material-ui/icons/Edit'
 import {Droppable} from 'react-beautiful-dnd'
 import KanbanCard from './KanbanCard'
 import CloseIcon from '@material-ui/icons/Close'
+import DeleteIcon from '@material-ui/icons/Delete';
+import Loader from '../../../ModalUI/Loader'
 import * as actionCreators from '../../../store/actionCreators'
 
 const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
-    console.log(title,'d')
+
     const [cardName, setCardName] = useState('')
     const [listName, setListName] = useState('')
     const [visible, setVisible] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
 
     const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
 
+
+
     return (
-        <Droppable droppableId={String(listId)}>
+        <div className="list-container">
+             {deleteModal ?
+                <Loader>
+                    <div className="caution-container">
+                        <p>Deleting List will delete cards on the list as well, Are you sure you want to delete the list?</p>
+                        <div className="caution-btn">
+                            <button onClick={() => {
+                                setDeleteModal(false)
+                                setVisible(false)
+                            }}>No</button>
+                            <button onClick={() => dispatch(actionCreators.deleteList(listId, (res) => {
+                                if(res.success) callback()
+                            }))}>Yes</button>
+                        </div>
+                    </div>
+                </Loader>
+                : null
+            }
+            <Droppable droppableId={String(listId)}>
             {provided => (
                 <div
                     {...provided.droppableProps}
@@ -42,6 +65,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                     }}
                                 />
                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
+                                <DeleteIcon onClick={() => setDeleteModal(true)} className="close" style={{ fontSize: '25px' }} />
                             </div>
                             : null}
                         {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '25px' }} />}
@@ -76,7 +100,8 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                     {provided.placeholder}
                 </div>
             )}
-        </Droppable>  
+        </Droppable>
+        </div>  
     )
 }
 

@@ -23,7 +23,7 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
         // margin: `0 0 ${grid}px 0`,
 
         // change background colour if dragging
-        background: isDragging ? "#eee" : "",
+        background: isDragging ? "rgba(0,0,0,0.4)" : "",
         // height: 30,
         width:'100%',
         // styles we need to apply on draggables

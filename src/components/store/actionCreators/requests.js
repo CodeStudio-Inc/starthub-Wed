@@ -373,8 +373,36 @@ export const updateList = (id, name, callback) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const updateBoard = (id, name, callback) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+        const token = getState().auth.token
+
+        const data = {
+            name
+        }
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/update/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                callback({ success: true, res: res })
+                dispatch(stopLoader())
+
             })
             .catch(error => {
                 console.log(error)
@@ -615,7 +643,7 @@ export const deleteCard = (id) => {
     }
 }
 
-export const deleteList = (id) => {
+export const deleteList = (id,callback) => {
     return (dispatch, getState) => {
 
         const token = getState().auth.token
@@ -630,6 +658,7 @@ export const deleteList = (id) => {
             .then(res => {
                 // console.log(res)
                 dispatch(deleteListAction(id))
+                callback({ success: true, res: res })
             })
             .catch(error => {
                 console.log(error)

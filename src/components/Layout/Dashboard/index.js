@@ -36,9 +36,10 @@ const Dashboard = (props) => {
 
 
     const metricsFilter = metrics.map(el => el.fields)
+    // console.log(metricsFilter)
     // const date = moment(new Date().toISOString()).format("YYYY-DD-MM")
 
-    const metricsSort = metricsFilter.sort((a,b) => moment(a['A-Month'])-moment(b['A-Month']))
+    // const metricsSort = metricsFilter.sort((a,b) => moment(a['A-Month'])-moment(b['A-Month']))
 
 
     let keysArray = []
@@ -69,7 +70,7 @@ const Dashboard = (props) => {
 //     return b.split(" ").length - a.split(" ").length;
 // })
     
-    console.log(mon,graph2)
+    console.log(months,graph2)
     
 
     const line_graph1 = {

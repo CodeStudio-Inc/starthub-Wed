@@ -14,6 +14,7 @@ export {
     deleteCard,
     deleteList,
     updateList,
+    updateBoard,
     updateCard,
     createCanvasBoard,
     createMilestoneBoard,
