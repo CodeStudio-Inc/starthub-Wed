@@ -18,7 +18,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
     const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
 
-
+    console.log(cardName)
 
     return (
         <div className="list-container">
@@ -56,7 +56,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                     value={listName}
                                     onChange={(e) => setListName(e.target.value)}
                                     onKeyUp={(e) => {
-                                        if (e.key === 'Enter') {
+                                        if (e.key === 'Enter' && listName) {
                                             dispatch(actionCreators.updateList(listId,listName,()=>{
                                             dispatch(actionCreators.getListsOnBoard(()=>{
                                                 setVisible(false)
@@ -77,7 +77,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onKeyUp={(e) => {
-                                    if (e.key === 'Enter') {
+                                    if (e.key === 'Enter' && cardName) {
                                         dispatch(actionCreators.createCard( listId, cardName,(res)=>{
                                             setCardName('')
                                             if(res.success) callback()

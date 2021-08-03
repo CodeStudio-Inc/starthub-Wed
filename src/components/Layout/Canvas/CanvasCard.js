@@ -56,7 +56,7 @@ export const CanvasCard = ({cardId, text, index,listId,cardIndex, setActiveCard}
                                     value={cardName}
                                     onChange={(e) => setCardName(e.target.value)}
                                     onKeyUp={(e) => {
-                                        if (e.key === 'Enter') {
+                                        if (e.key === 'Enter' && cardName) {
                                             dispatch(actionCreators.updateCard(listId,cardIndex,cardName,()=>{
                                             dispatch(actionCreators.getListsOnBoard(()=>{
                                                 setVisible(false)

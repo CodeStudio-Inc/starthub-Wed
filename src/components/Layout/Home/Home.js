@@ -140,7 +140,7 @@ const Home = (props) => {
                                 value={name}
                                 onChange={(e) => setBoardName(e.target.value)}
                                 onKeyUp={(e) => {
-                                            if (e.key === 'Enter') {
+                                            if (e.key === 'Enter' && name) {
                                                 dispatch(actionCreators.createBoard( name, (res) => {
                                                 if (res.success === true) {
                                                     setBoardName('')

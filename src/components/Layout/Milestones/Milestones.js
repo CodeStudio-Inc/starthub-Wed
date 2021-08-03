@@ -27,7 +27,7 @@ const Milestones = (props) => {
     const dragdropLoading = useSelector(state => state.requests.loading)
 
     const todoLists = lists.filter(el => el.boardId === boardId)
-    // console.log(todoLists)
+    console.log(boardId)
 
     const dispatch = useDispatch()
 

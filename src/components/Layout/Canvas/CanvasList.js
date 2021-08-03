@@ -30,7 +30,7 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onKeyUp={(e) => {
-                                    if (e.key === 'Enter') {
+                                    if (e.key === 'Enter' && cardName) {
                                         dispatch(actionCreators.createCard( listId, cardName,(res)=>{
                                             setCardName('')
                                             if(res.success) callback()

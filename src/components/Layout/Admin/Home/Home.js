@@ -16,7 +16,7 @@ const Home = (props) => {
 
     const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
 
-    console.log(userId,'rf')
+    console.log(boards,'rf')
 
     const dispatch = useDispatch()
 
@@ -132,7 +132,7 @@ const Home = (props) => {
                                 className="board-card"
                                 onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
                                     if (res.success === true) {
-                                        props.history.push('/milestones', { data: milestone })
+                                        props.history.push('/admin/milestones', { data: milestone })
                                     }
                                 }))}
                             >

@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import * as actionCreators from '../../store/actionCreators'
 
 const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
-    console.log(title,'d')
+    // console.log(title,'d')
     const [cardName, setCardName] = useState('')
     const [listName, setListName] = useState('')
     const [visible, setVisible] = useState(false)
@@ -52,7 +52,7 @@ const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveC
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onKeyUp={(e) => {
-                                    if (e.key === 'Enter') {
+                                    if (e.key === 'Enter' && cardName) {
                                         dispatch(actionCreators.createCard( listId, cardName,(res)=>{
                                             setCardName('')
                                             if(res.success) callback()

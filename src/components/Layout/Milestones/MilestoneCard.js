@@ -52,7 +52,7 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
                                     value={cardName}
                                     onChange={(e) => setCardName(e.target.value)}
                                     onKeyUp={(e) => {
-                                        if (e.key === 'Enter') {
+                                        if (e.key === 'Enter' && cardName) {
                                             dispatch(actionCreators.updateCard(listId,cardIndex,cardName,()=>{
                                             dispatch(actionCreators.getListsOnBoard(()=>{
                                                 setVisible(false)
