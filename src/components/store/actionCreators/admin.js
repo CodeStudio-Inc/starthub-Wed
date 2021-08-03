@@ -81,7 +81,7 @@ export const getAdminBoard = (userId, callback) => {
     }
 }
 
-export const getAdminLists = (userId, boardId) => {
+export const getAdminLists = (userId, boardId,callback) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
         const token = getState().auth.token
@@ -94,8 +94,9 @@ export const getAdminLists = (userId, boardId) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 dispatch(setLists(res.data.lists))
+                callback({ success: true, res: res })
             })
             .catch(error => {
                 console.log(error)

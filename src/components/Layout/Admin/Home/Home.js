@@ -16,7 +16,7 @@ const Home = (props) => {
 
     const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
 
-    console.log(boards,'rf')
+    // console.log(userId,'rf')
 
     const dispatch = useDispatch()
 
@@ -39,7 +39,7 @@ const Home = (props) => {
 
     let canvas_array = []
     let milestone_array = []
-    console.log(canvas_array,'rf')
+    // console.log(canvas_array,'rf')
     
     boards.forEach(element => {
         if(element.name === 'Lean Canvas') canvas_array.push(element)
@@ -90,9 +90,9 @@ const Home = (props) => {
                                 <div
                                     key={index}
                                     className="board-card"
-                                    onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
+                                    onClick={() => dispatch(actionCreators.getAdminLists(userId,board._id, (res) => {
                                         if (res.success === true) {
-                                            props.history.push('/cards', { data: board })
+                                            props.history.push('/admin/todo', { data: board })
                                         }
                                     }))}
                                 >
@@ -112,7 +112,7 @@ const Home = (props) => {
                                 className="board-card"
                                 onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
                                     if (res.success === true) {
-                                        props.history.push('/canvas', { data: canvas })
+                                        props.history.push('/admin/canvas', { data: canvas })
                                     }
                                 }))}
                             >

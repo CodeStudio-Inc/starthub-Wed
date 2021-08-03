@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import * as actionCreators from '../../store/actionCreators'
+import * as actionCreators from '../../../store/actionCreators'
 import {DragDropContext} from 'react-beautiful-dnd'
 import MilestoneList from './MilestoneList'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
-import ModalUI from '../../ModalUI'
-import Loader from '../../ModalUI/Loader'
+import ModalUI from '../../../ModalUI'
+import Loader from '../../../ModalUI/Loader'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import NoDragModal from '../../../ModalUI/NoDragModal'
 
 const Milestones = (props) => {
     const [cardName, setCardName] = useState('')
@@ -17,16 +18,17 @@ const Milestones = (props) => {
     const [onFocus, setOnFocus] = useState(false)
     const [visible, setVisible] = useState(false)
 
-    const loading = useSelector(state => state.requests.loading)
+    // const loading = useSelector(state => state.requests.loading)
     
     const boardName = props.location.state.data.name
     const boardId = props.location.state.data._id
+    const creator = props.location.state.data.creator
 
-    const lists = useSelector(state => state.requests.milestone_lists)
+    const lists = useSelector(state => state.admin.lists)
     const expire = useSelector(state => state.auth.tokenExpiration)
     const dragdropLoading = useSelector(state => state.requests.loading)
 
-    const todoLists = lists.filter(el => el.boardId === boardId)
+    const todoLists = lists.filter(el => el.creator === creator)
     // console.log(lists)
 
     const dispatch = useDispatch()
@@ -38,6 +40,7 @@ const Milestones = (props) => {
            return setOpen(true)
         }
         getLists()
+        dispatch(actionCreators.getAdminLists(creator,boardId,() => { }))
     }, [])
 
     const handleLogoutClick = () => {
@@ -83,51 +86,8 @@ const Milestones = (props) => {
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>: null}
-            {open ? <ModalUI>
-                <div className="edit-card">
-                    <div className="edit-card-row">
-                        {/* <p>Create Board</p> */}
-                        <CloseIcon onClick={() => setOpen(false)}  className="close" style={{ fontSize: '20px', color:'rgba(0,0,0,0.7)' }} />
-                    </div>
-                    <div className="edit-card-detail">
-                        {!visible ? 
-                            <div className="edit-card-row2">
-                                <h3>{activeCard && activeCard.name}</h3>
-                                <EditIcon className="edit-card-icon" style={{ fontSize: '20px' }} onClick={() => setVisible(true)} />
-                            </div>
-                            : null
-                        }
-                        {visible ?
-                            <div className="edit-card-row2">
-                                <input
-                                    placeholder="Text"
-                                    value={cardName}
-                                    onChange={(e) => setCardName(e.target.value)}
-                                />
-                                <button >save</button>
-                                <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
-                            </div>
-                            : null}
-                            <h5>Description</h5>
-                            <textarea
-                                placeholder="Add a more detailed description"
-                                onFocus={() => setOnFocus(true)}
-                            />
-                        {onFocus ? 
-                            <div className="edit-description">
-                                <button >Save</button>
-                                <button onClick={() => setOnFocus(false)}>Cancel</button>
-                            </div>
-                            : null
-                        }
-                        <div className="edit-description">
-                            <h4>Created:</h4>
-                            <h5>12/09/02</h5>
-                        </div>
-                    </div>
-                </div>
-            </ModalUI> : null}
             <div className="main-container">
+                    <NoDragModal/>
             <div className="right-column-content">
                 <div className="cards-right-column-content">
                     <div className="boards-header">

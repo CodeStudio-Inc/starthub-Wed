@@ -142,6 +142,19 @@
 	width: 100% !important;
 	padding: 1rem;
 	min-height: 700px;
+	background: #dfa126;
+}
+
+.todo-row {
+	display: flex;
+	justify-content: flex-start;
+	/* align-items: center; */
+	overflow-x: scroll !important;
+	margin-top: 1rem;
+	width: 100% !important;
+	padding: 1rem;
+	min-height: 700px;
+	background: #69191b;
 }
 
 .list-container {
@@ -287,6 +300,7 @@
 	justify-content: space-between;
 	/* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
 }
+
 
 .boards-header h2 {
 	color: #dfa126 !important;
