@@ -31,18 +31,18 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
     });
 
     return (
-        <Draggable draggableId={String(cardId)} index={index}>
-            {(provided, snapshot) => (
-                <div 
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    ref={provided.innerRef}
-                    // style={{width:'100%'}}
-                    style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                    )}
-                >
+        // <Draggable draggableId={String(cardId)} index={index}>
+        //     {(provided, snapshot) => (
+        //         <div 
+        //             {...provided.draggableProps}
+        //             {...provided.dragHandleProps}
+        //             ref={provided.innerRef}
+        //             // style={{width:'100%'}}
+        //             style={getItemStyle(
+        //                 snapshot.isDragging,
+        //                 provided.draggableProps.style
+        //             )}
+        //         >
                     <div className="draggable">
                         {visible ? null : <p>{text}</p>}
                         {visible ?
@@ -68,9 +68,9 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
                             {/* <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" /> */}
                         </div>}
                     </div>
-                </div>
-            )}
-        </Draggable>
+        //         </div>
+        //     )}
+        // </Draggable>
     )
 }
 

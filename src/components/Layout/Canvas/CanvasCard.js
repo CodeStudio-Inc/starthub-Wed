@@ -5,7 +5,7 @@ import * as actionCreators from '../../store/actionCreators'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
 
-export const CanvasCard = ({cardId, text, index,listId,cardIndex, setActiveCard}) => {
+export const CanvasCard = ({cardId, text, index,listId,cardIndex}) => {
 
     const [cardName, setCardName] = useState('')
     const [visible, setVisible] = useState(false)
@@ -47,7 +47,7 @@ export const CanvasCard = ({cardId, text, index,listId,cardIndex, setActiveCard}
                             <CancelIcon  className="edit-icon" fontSize="small" />
                         </div>
                     </div> */}
-                    <div className="draggable">
+                    <div className="canvas-draggable">
                         {visible ? null : <p>{text}</p>}
                         {visible ?
                             <div className="edit-card-row2">

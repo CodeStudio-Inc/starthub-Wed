@@ -5,11 +5,14 @@ import logo from '../../assets/images/logo.png'
 import { Menu, Dropdown } from 'antd'
 import { DownOutlined, UserOutlined } from '@ant-design/icons'
 import * as actionCreators from '../store/actionCreators'
+import MenuIcon from '@material-ui/icons/Menu'
+import Sidebar from './Sidebar'
 
 import './Navigation.css'
 const Navbar = (props) => {
 
     const [visibleLogout, setVisisbleLogout] = useState(false)
+    const [openSidebar, setopenSidebar] = useState(false)
 
     const [appState, setAppState] = useState({
         actionObject: null,
@@ -75,6 +78,8 @@ const Navbar = (props) => {
         }
     }
 
+    const closeSidebar = () => setopenSidebar(false)
+
 
     const logout = (
         <Menu onClick={handleLogoutClick}>
@@ -86,6 +91,7 @@ const Navbar = (props) => {
 
     return (
         <div className="nav-container">
+            {openSidebar ? <Sidebar closeSidebar={closeSidebar}/> : null}
             <div className="nav-row">
                 <img src={logo} />
                 {admin ? 
@@ -132,6 +138,9 @@ const Navbar = (props) => {
                     <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottomCenter" icon={<UserOutlined />}>
                         <p>{username}</p>
                     </Dropdown.Button>
+                </div>
+                <div className="menu-container">
+                    <MenuIcon onClick={() => setopenSidebar(true)}  className="menu" style={{ fontSize: '40px' }} />
                 </div>
             </div>
         </div>

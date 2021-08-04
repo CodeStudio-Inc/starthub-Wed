@@ -5,7 +5,6 @@ import {DragDropContext} from 'react-beautiful-dnd'
 import TodoList from './TodoList'
 import ModalUI from '../../../ModalUI'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import NoDragModal from '../../../ModalUI/NoDragModal'
 
 const Milestones = (props) => {
     const [cardName, setCardName] = useState('')
@@ -85,7 +84,6 @@ const Milestones = (props) => {
                         <h5>Boards</h5>
                     </div>
                 </div>
-            <NoDragModal/>
                 <div className="todo-row">
             {show ? <ModalUI>
                 <div className="edit-card">

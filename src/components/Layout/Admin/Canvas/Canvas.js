@@ -9,7 +9,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../../ModalUI'
 import Loader from '../../../ModalUI/Loader'
-import NoDragModal from '../../../ModalUI/NoDragModal'
 
 import '../../Canvas/Canvas.css'
 const Canvas = (props) => {
@@ -97,7 +96,6 @@ const Canvas = (props) => {
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>: null}
-            <NoDragModal/>
             <div className="right-column-canvas-content">
                 <div className="cards-right-column-content">
                     <div className="boards-header">
@@ -158,7 +156,8 @@ const Canvas = (props) => {
                                 setActiveCard={setActiveCard}
                             />
                             </div>
-                            <CanvasList
+                            <div className="canvas-list-list">
+                                <CanvasList
                                 key={proposition && proposition._id}
                                 listId={proposition && proposition._id}
                                 listNumber={proposition && proposition.listNumber}
@@ -169,6 +168,7 @@ const Canvas = (props) => {
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
                             />
+                            </div>
                             {/* <CanvasList
                                 key={concept && concept._id}
                                 listId={concept && concept._id}

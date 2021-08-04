@@ -543,10 +543,10 @@
 .list {
 	display: flex;
 	align-items: flex-start !important;
-	/* justify-content: center; */
 	flex-direction: column;
 	width: 250px;
 	min-height: 150px;
+	/* height: 100%; */
 	padding: 5px;
 	border-radius: 5px;
 	box-sizing: border-box;
@@ -563,12 +563,33 @@
 	overflow: hidden;
 	width: 100%;
 	cursor: grab;
-	background: rgb(255, 255, 255);
+	background: rgb(250, 229, 171) !important;
 	box-sizing: border-box;
 	height: 100%;
 }
 
 .draggable p {
+	color: rgba(0, 0, 0, 0.8) !important;
+	font-size: 14px !important;
+	font-weight: 400 !important;
+}
+
+.canvas-draggable {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px;
+	margin-bottom: 0.5rem;
+	width: 100%;
+	cursor: grab;
+	background: rgb(250, 229, 171) !important;
+	box-sizing: border-box;
+	height: 100%;
+	-webkit-user-drag: none !important;
+	user-select: none;
+}
+
+.canvas-draggable p {
 	color: rgba(0, 0, 0, 0.8) !important;
 	font-size: 14px !important;
 	font-weight: 400 !important;

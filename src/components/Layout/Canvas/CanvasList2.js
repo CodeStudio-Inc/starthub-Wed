@@ -20,7 +20,7 @@ const CanvasList2 = ({listId,listNumber, title, cards,boardId,callback, open, se
                     ref={provided.innerRef}
                     className={"canvas-list-list3"}
                 >
-                    <div className={"canvas-row"}>
+                    <div className={"canvas1-row"}>
                         <h6>{title}</h6>
                         <h6>{listNumber}</h6>
                         <MoreHorizIcon className="close" style={{ fontSize: '25px', visibility:'hidden' }} />

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {Draggable} from 'react-beautiful-dnd'
-import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
 import * as actionCreators from '../../../store/actionCreators'
 
@@ -24,26 +23,26 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
 
         // change background colour if dragging
         background: isDragging ? "rgba(0,0,0,0.4)" : "",
-        // height: 30,
+                // height: 30,
         width:'100%',
         // styles we need to apply on draggables
         ...draggableStyle
     });
 
     return (
-        <Draggable draggableId={String(cardId)} index={index}>
-            {(provided, snapshot) => (
-                <div 
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    ref={provided.innerRef}
-                    // style={{width:'100%'}}
-                    style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                    )}
-                >
-                    <div className="draggable">
+        // <Draggable draggableId={String(cardId)} index={index}>
+        //     {(provided, snapshot) => (
+        //         <div 
+        //             {...provided.draggableProps}
+        //             {...provided.dragHandleProps}
+        //             ref={provided.innerRef}
+        //             // style={{width:'100%'}}
+        //             style={getItemStyle(
+        //                 snapshot.isDragging,
+        //                 provided.draggableProps.style
+        //             )}
+        //         >
+                    <div className="canvas-draggable" draggable="false">
                         {visible ? null : <p>{text}</p>}
                         {visible ?
                             <div className="edit-card-row2">
@@ -68,9 +67,9 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
                             {/* <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" /> */}
                         </div>}
                     </div>
-                </div>
-            )}
-        </Draggable>
+        //         </div>
+        //     )}
+        // </Draggable>
     )
 }
 

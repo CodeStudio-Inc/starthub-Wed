@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import DeleteIcon from '@material-ui/icons/Delete';
 import Loader from '../../../ModalUI/Loader'
 import * as actionCreators from '../../../store/actionCreators'
+import ListModal from '../../../ModalUI/ListModal'
 
 const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
 

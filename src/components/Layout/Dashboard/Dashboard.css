@@ -281,3 +281,12 @@
   margin-left: 0.5rem;
   color: rgba(0, 0, 0, 0.5);
 }
+
+@media screen and (max-width: 768px) {
+  .revenue-row {
+    width: 100%;
+  }
+  .graph-row {
+    flex-direction: column;
+  }
+}

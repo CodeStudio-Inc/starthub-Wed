@@ -10,15 +10,29 @@
 	font-weight: bold;
 }
 
+
+.canvas-list-list {
+	width: 100%;
+	display: flex;
+	/* align-items: flex-start; */
+	justify-content: flex-start;
+	min-height: 500px;
+	height: 100%;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	flex-direction: column;
+}
+
 .canvas-list {
-	width: 300px;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	/* justify-content: center; */
-	height: 600px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
+	min-height: 200px;
+	height: 100%;
+	/* border: 1px solid rgba(0, 0, 0, 0.2); */
 	flex-direction: column;
-	background-color: #eee;
+	overflow-y: scroll;
+	background-color: #fff;
 }
 
 .canvas-list button {
@@ -29,6 +43,31 @@
 	border-radius: 10px;
 	background: rgba(0, 0, 0, 0.2);
 }
+
+.canvas-list-list3 {
+	width: 100% !important;
+	min-height: 300px;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	flex-direction: column;
+	background-color: #fff;
+	margin-bottom: 1rem;
+	overflow-y: scroll;
+}
+
+.canvas-list-list3 button {
+	margin-top: 1rem;
+	border: none;
+	outline: none;
+	height: 40px;
+	border-radius: 10px;
+	margin-bottom: 1rem;
+	background: rgba(0, 0, 0, 0.2);
+}
+
 
 .canvas-add-card {
 	display: flex;
@@ -70,17 +109,6 @@
 	font-size: 15px;
 }
 
-.canvas-list-list {
-	width: 300px;
-	display: flex;
-	align-items: center;
-	/* justify-content: center; */
-	height: 600px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	flex-direction: column;
-	background-color: #fff;
-}
-
 .canvas-main-row {
 	display: flex;
 	align-items: center;
@@ -120,7 +148,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border: 1px solid rgba(0, 0, 0, 0.2); 
+	/* border: 1px solid rgba(0, 0, 0, 0.2);  */
 	margin-bottom: 0.5rem;
 }
 
@@ -136,27 +164,6 @@
 	color: rgba(0, 0, 0, 0.9);
 }
 
-.canvas-list-list3 {
-	width: 750px !important;
-	height: 250px;
-	display: flex;
-	align-items: center;
-	/* justify-content: center; */
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	flex-direction: column;
-	background-color: #eee;
-	margin-bottom: 1rem;
-}
-
-.canvas-list-list3 button {
-	margin-top: 1rem;
-	border: none;
-	outline: none;
-	height: 40px;
-	border-radius: 10px;
-	margin-bottom: 1rem;
-	background: rgba(0, 0, 0, 0.2);
-}
 
 .canvas-card-container {
 	display: flex;
@@ -241,5 +248,6 @@
 	justify-content: space-between;
 	width: 95%;
 }
+
 
 

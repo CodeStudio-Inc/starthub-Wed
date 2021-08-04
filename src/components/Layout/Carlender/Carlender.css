@@ -17,6 +17,14 @@
   height: 100vh;
 }
 
+.right-column-carlender h2 {
+  text-align: center;
+}
+
+.right-column-carlender h3 {
+  text-align: center;
+}
+
 .carlender {
   width: 85%;
   height: 400px;
@@ -84,4 +92,13 @@
 
 .card-txt button:hover {
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .schedule-card-row {
+    flex-direction: column;
+  }
+  .schedule-card {
+    margin-bottom: 1rem;
+  }
 }

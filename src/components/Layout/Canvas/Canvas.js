@@ -43,6 +43,7 @@ const Canvas = (props) => {
     
     // console.log(props, 'ff')
 
+
     const dispatch = useDispatch()
 
     const current_date = Date.now()
@@ -199,6 +200,7 @@ const Canvas = (props) => {
                                 setActiveCard={setActiveCard}
                             />
                             </div>
+                            <div className="canvas-list-list">
                             <CanvasList
                                 key={proposition && proposition._id}
                                 listId={proposition && proposition._id}
@@ -210,6 +212,7 @@ const Canvas = (props) => {
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
                             />
+                            </div>
                             {/* <CanvasList
                                 key={concept && concept._id}
                                 listId={concept && concept._id}

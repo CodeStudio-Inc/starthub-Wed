@@ -29,25 +29,19 @@ export const CanvasCard = ({cardId, text, index,listId,cardIndex, setActiveCard}
     });
 
     return (
-        <Draggable draggableId={String(cardId)} index={index}>
-            {(provided, snapshot) => (
-                <div 
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    ref={provided.innerRef}
-                    // style={{width:'100%'}}
-                    style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                    )}
-                >
-                    {/* <div className="draggable">
-                        <p>{text}</p>
-                        <div className="icon-row">
-                            <CancelIcon  className="edit-icon" fontSize="small" />
-                        </div>
-                    </div> */}
-                    <div className="draggable">
+        // <Draggable draggableId={String(cardId)} index={index}>
+        //     {(provided, snapshot) => (
+        //         <div 
+        //             {...provided.draggableProps}
+        //             {...provided.dragHandleProps}
+        //             ref={provided.innerRef}
+        //             // style={{width:'100%'}}
+        //             style={getItemStyle(
+        //                 snapshot.isDragging,
+        //                 provided.draggableProps.style
+        //             )}
+        //         >
+                    <div className="canvas-draggable">
                         {visible ? null : <p>{text}</p>}
                         {visible ?
                             <div className="edit-card-row2">
@@ -72,9 +66,9 @@ export const CanvasCard = ({cardId, text, index,listId,cardIndex, setActiveCard}
                             {/* <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" /> */}
                         </div>}
                     </div>
-                </div>
-            )}
-        </Draggable>
+        //         </div>
+        //     )}
+        // </Draggable>
     )
 }
 

@@ -24,6 +24,7 @@
 	height: 100vh;
 }
 
+
 .boards-right-column-content {
 	display: flex;
 	align-items: center;
@@ -64,6 +65,7 @@
 	align-items: flex-start;
 	justify-content: flex-start;
 	flex-direction: column;
+	flex-wrap: wrap;
 	width:100%;
 }
 
@@ -603,4 +605,10 @@
 
 .highlighted {
 	background: olive;
+}
+
+@media screen and (max-width: 768px) {
+	.boards-row {
+		flex-direction: column;
+	}
 }

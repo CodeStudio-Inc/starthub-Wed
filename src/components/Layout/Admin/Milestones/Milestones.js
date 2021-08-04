@@ -8,7 +8,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import ModalUI from '../../../ModalUI'
 import Loader from '../../../ModalUI/Loader'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import NoDragModal from '../../../ModalUI/NoDragModal'
 
 const Milestones = (props) => {
     const [cardName, setCardName] = useState('')
@@ -87,7 +86,6 @@ const Milestones = (props) => {
                 </div>
             </ModalUI>: null}
             <div className="main-container">
-                    <NoDragModal/>
             <div className="right-column-content">
                 <div className="cards-right-column-content">
                     <div className="boards-header">

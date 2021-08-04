@@ -5,89 +5,98 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import * as actionCreators from '../store/actionCreators'
 import { Menu } from 'antd';
-import { AccountBookOutlined, LineChartOutlined, EditOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 
 import './Navigation.css'
-const Sidebar = (props) => {
+const Sidebar = ({history, closeSidebar}) => {
 
     const { SubMenu } = Menu;
 
     const dispatch = useDispatch()
 
-    const email = useSelector(state => state.auth.username)
+    const username = useSelector(state => state.auth.username)
+    const admin = useSelector(state => state.auth.admin)
 
-    const handleLogout = () => {
-        dispatch(actionCreators.removeUser())
-        props.history.push('/')
-    }
 
     const handleTodosNavigation = () => {
-        props.history.push('/')
+        closeSidebar()
+        history.push('/')
     }
 
     const handleCarlenderNavigation = () => {
-        props.history.push('/carlender')
+        closeSidebar()
+        history.push('/carlender')
     }
 
     const handleDashboardNavigation = () => {
-        props.history.push('/overview')
+        closeSidebar()
+        history.push('/overview')
     }
 
     const handleCanvasNavigation = () => {
-        props.history.push('/canvas')
+        closeSidebar()
+        history.push('/canvas-board')
     }
 
     const handleMilestonesNavigation = () => {
-        props.history.push('/milestones')
+        closeSidebar()
+        history.push('/milestone-board')
     }
 
-    const handleBlogsNavigation = () => {
-        props.history.push('/blogs')
+    const handleStartupNavigation = () => {
+        closeSidebar()
+        history.push('/')
     }
 
-    const handleAirtableNavigate = () => {
-        props.history.push('/air-table')
+    const handleRegisterNavigation = () => {
+        closeSidebar()
+        history.push('/register')
     }
+
+    const handleLogout = () => {
+        dispatch(actionCreators.removeUser())
+        history.push('/')
+    }
+
 
 
     return (
-        <div className="sidebar-container">
-            <div className="profile-container">
+        <div className="sidebar-overlay">
+            <div className="sidebar-container">
+                <div className="profile-container">
                 <div>
-                    <h2>StartHub Africa</h2>
                     <div className="email-row">
-                        <div className="online-icon" />
-                        <h3>{email}</h3>
+                        <div className="online-icon"><h1>{username.slice(0,1)}</h1></div>
+                        <div>
+                            <p>Welcome,</p>
+                            <h3>{username}</h3>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <NotificationsIcon className="icon" style={{ fontSize: '30px' }} />
-                </div>
             </div>
-            <Menu
-                style={{ width: '100%', background: 'none' }}
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                mode="inline"
+            {admin ?
+                <Menu
+                style={{ width: '100%', background: 'none', marginTop:'1rem' }}
             >
-                <Menu.Item onClick={handleCarlenderNavigation} key="1">Carlender</Menu.Item>
-                <SubMenu key="sub2" icon={<EditOutlined />} title="Track">
-                    <Menu.Item onClick={handleTodosNavigation} key="2">Tasks</Menu.Item>
-                    <Menu.Item onClick={handleMilestonesNavigation} key="3">Milestones</Menu.Item>
-                </SubMenu>
-                <Menu.Item onClick={handleCanvasNavigation} key="8">Lean Canvas</Menu.Item>
-                <SubMenu key="sub3" icon={<AccountBookOutlined />} title="Learn">
-                    <Menu.Item onClick={handleBlogsNavigation} key="5">Blogs</Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub4" icon={<LineChartOutlined />} title="Dashboard">
-                    <Menu.Item onClick={handleDashboardNavigation} key="7">Graphs</Menu.Item>
-                </SubMenu>
+                <div className="links-row"><h5 onClick={handleStartupNavigation}>Startups</h5></div>
+                <div className="links-row" onClick={handleRegisterNavigation}><h5>Register Startups</h5></div>
+            </Menu> :
+            <Menu
+                style={{ width: '100%', background: 'none', marginTop:'1rem' }}
+            >
+                <div className="links-row"><h5 onClick={handleCarlenderNavigation}>Schedule Meeting</h5></div>
+                <div className="links-row" onClick={handleDashboardNavigation}><h5>Dashboard</h5></div>
+                <div className="links-row"><h5 onClick={handleTodosNavigation}>Todos</h5></div>
+                <div className="links-row"><h5 onClick={handleCanvasNavigation}>Lean Canvas</h5></div>
+                <div className="links-row"><h5 onClick={handleMilestonesNavigation}>Milestones</h5></div>
             </Menu>
+            }
             <div className="logout-container" onClick={handleLogout}>
-                <button>Logout</button>
+                <button onClick={handleLogout}>Logout</button>
                 <ExitToAppIcon className="icon" style={{ fontSize: '14px' }} />
             </div>
+            </div>
+            <div className="close-sidebar" onClick={closeSidebar}/>
         </div>
     )
 }

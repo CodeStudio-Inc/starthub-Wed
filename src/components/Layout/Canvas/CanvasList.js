@@ -11,6 +11,7 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
     const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
 
+
     return (
         <Droppable droppableId={String(listId)}>
             {provided => (
@@ -47,7 +48,7 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
                             cardIndex={c.cardIndex}
                             listId={listId}
                             index={index}
-                            object={c}
+                            card={c}
                             open={open}
                             setActiveCard={setActiveCard}
                         />
