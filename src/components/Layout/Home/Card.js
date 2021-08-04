@@ -25,7 +25,7 @@ const Card = (props) => {
     
     const todoLists = lists && lists.filter(el => el.boardId === boardId)
     const expire = useSelector(state => state.auth.tokenExpiration)
-    console.log(todoLists, lists)
+    // console.log(todoLists, lists)
 
 
     const dispatch = useDispatch()

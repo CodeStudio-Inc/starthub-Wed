@@ -13,13 +13,14 @@ const Home = (props) => {
     const [open, setOpen] = useState(false)
     const [boardName, setName] = useState('')
     const [visible, setVisible] = useState(false)
+    const [boardId, setBoardId] = useState('')
 
     const Boards = useSelector(state => state.requests.boards)
     const admin = useSelector(state => state.auth.admin)
     const users = useSelector(state => state.admin.users)
     const loading = useSelector(state => state.requests.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
-    // console.log(expire,'ff')
+    // console.log(boardId,'ff')
 
     const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
     const filtereUsers = users.filter(el => el.admin === false)
@@ -43,6 +44,7 @@ const Home = (props) => {
             dispatch(actionCreators.removeUser())
             props.history.push('/')
     }
+
 
 
     let empty_array = null
@@ -98,7 +100,7 @@ const Home = (props) => {
                                     className="board1-card"
                                 >
                                     <div className="boards-inner-row">
-                                        {visible ? null : 
+                                        {visible && boardId === board._id ? null : 
                                         <h3
                                         onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
                                         if (res.success === true) {
@@ -108,7 +110,7 @@ const Home = (props) => {
                                             {board.name}
                                         </h3>
                                         }
-                                        {visible ?
+                                        {visible && boardId === board._id ?
                                             <div className="edit-card-row2">
                                                 <input
                                                     placeholder="Enter Card Title"
@@ -129,7 +131,13 @@ const Home = (props) => {
                                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
                                             </div>
                                             : null}
-                                        {visible ? null : <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" />}
+                                        {visible && boardId === board._id ? null : 
+                                        <EditIcon 
+                                            className="edit-icon" fontSize="small" 
+                                            onClick={() => {
+                                                setBoardId(board._id)
+                                                setVisible(true)
+                                            }}/>}
                                     </div>     
 
                                 </div>
