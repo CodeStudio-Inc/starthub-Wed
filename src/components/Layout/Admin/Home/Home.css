@@ -611,4 +611,7 @@
 	.boards-row {
 		flex-direction: column;
 	}
+	.edit-card {
+		width: 70% !important;
+	}
 }

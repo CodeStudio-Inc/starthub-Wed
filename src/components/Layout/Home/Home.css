@@ -746,3 +746,12 @@
 .highlighted {
 	background: olive;
 }
+
+@media screen and (max-width: 768px) {
+	.boards-row {
+		flex-direction: column;
+	}
+	.edit-card {
+		width: 70% !important;
+	}
+}
