@@ -188,6 +188,7 @@ const Canvas = (props) => {
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
                             />
+                            <div className="canvas-separator"/>
                                 <CanvasList
                                 key={metrics && metrics._id}
                                 listId={metrics && metrics._id}
@@ -235,6 +236,7 @@ const Canvas = (props) => {
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
                             />
+                            <div className="canvas-separator"/>
                                 <CanvasList
                                 key={channels && channels._id}
                                 listId={channels && channels._id}
