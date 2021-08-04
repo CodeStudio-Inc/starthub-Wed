@@ -95,7 +95,7 @@ const Sidebar = ({history, closeSidebar}) => {
             {admin ? null : <a href={link} target="blank"><button className="report-sidebar">Report</button></a>}
             <div className="logout-container" onClick={handleLogout}>
                 <button onClick={handleLogout}>Logout</button>
-                <ExitToAppIcon className="icon" style={{ fontSize: '14px' }} />
+                <ExitToAppIcon  style={{ fontSize: '14px',color:'#dfa126' }} />
             </div>
             </div>
             <div className="close-sidebar" onClick={closeSidebar}/>

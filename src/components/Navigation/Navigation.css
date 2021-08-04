@@ -47,9 +47,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	width: 95%;
-	border-radius: 5px;
+	width: 100%;
 	margin-top: 1rem;
+	padding: 0.5rem;
+	border-bottom: 1px solid #dfa126;
 }
 
 .profile-container h2 {
@@ -100,9 +101,6 @@
 	margin: 0;
 }
 
-.icon {
-	color: #69191b;
-}
 
 .sidebar-links {
 	display: flex;
@@ -153,14 +151,11 @@
 }
 
 .logout-container {
-	position: absolute;
-	bottom: 0;
 	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-top: 1px solid #dfa126;
-	height: 40px;
+	margin-top: 5rem;
 }
 
 .logout-container button {
@@ -168,7 +163,6 @@
 	background: none;
 	outline: none;
 	color: #dfa126;
-	/* margin-right: 0.5rem; */
 	font-size: 14px;
 }
 
