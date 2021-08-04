@@ -142,7 +142,7 @@
 	width: 100% !important;
 	padding: 1rem;
 	min-height: 700px;
-	background: #dfa126;
+	/* background: #dfa126; */
 }
 
 .todo-row {
