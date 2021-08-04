@@ -16,6 +16,7 @@ const Sidebar = ({history, closeSidebar}) => {
 
     const username = useSelector(state => state.auth.username)
     const admin = useSelector(state => state.auth.admin)
+    const link = useSelector(state => state.auth.link)
 
 
     const handleTodosNavigation = () => {
@@ -91,6 +92,7 @@ const Sidebar = ({history, closeSidebar}) => {
                 <div className="links-row"><h5 onClick={handleMilestonesNavigation}>Milestones</h5></div>
             </Menu>
             }
+            {admin ? null : <a href={link} target="blank"><button className="report-sidebar">Report</button></a>}
             <div className="logout-container" onClick={handleLogout}>
                 <button onClick={handleLogout}>Logout</button>
                 <ExitToAppIcon className="icon" style={{ fontSize: '14px' }} />

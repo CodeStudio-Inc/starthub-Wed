@@ -234,6 +234,16 @@
 	cursor: pointer;
 }
 
+.report-sidebar {
+	border: none;
+	outline: none;
+	width: 100px;
+	background: #dfa126;
+	color: #fff;
+	border-radius: 20px;
+	margin-top: 1rem;
+}
+
 .report {
 	border: none;
 	outline: none;
