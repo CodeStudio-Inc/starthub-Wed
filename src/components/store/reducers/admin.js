@@ -6,6 +6,7 @@ const initialState = {
     boards: [],
     lists: [],
     cards: [],
+    metrics:[],
     loading: false
 }
 
@@ -39,6 +40,12 @@ const requests = (state = initialState, action) => {
             return updateObject(state, {
                 loading: false,
                 cards: action.data
+            })
+
+        case actions.SET_ADMIN_METRICS_DATA:
+            return updateObject(state, {
+                loading: false,
+                metrics: action.data
             })
 
 

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../../store/actionCreators'
 import svg from '../../../../assets/images/spinner.svg'
+import Dashboard from './Dashboard'
+import ModalUI from '../../../ModalUI'
 
 import './Home.css'
 const Home = (props) => {
@@ -11,8 +13,12 @@ const Home = (props) => {
 
     const boards = useSelector(state => state.admin.boards)
     const loading = useSelector(state => state.admin.loading)
+    const expire = useSelector(state => state.auth.tokenExpiration)
+
     const userId = props.location.state.data._id
     const username = props.location.state.data.username
+    const base_key = props.location.state.data.base_key
+    // console.log(data)
 
     const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
 
@@ -20,21 +26,21 @@ const Home = (props) => {
 
     const dispatch = useDispatch()
 
+    const current_date = Date.now()
+
+
     useEffect(() => {
+        if(current_date >= expire) {
+           return setOpen(true)
+        }
         dispatch(actionCreators.getAdminBoard(userId,()=>{}))
+        dispatch(actionCreators.getAdminMetricsData(base_key))
         // dispatch(actionCreators.getUsers())
     }, [])
 
-    const createBoard = () => {
-        dispatch(actionCreators.createBoard(name, (res) => {
-            if (res.success === true) {
-                setOpen(false)
-                setBoardName('')
-                setTimeout(() => {
-                    dispatch(actionCreators.getBoards())
-                }, 2000)
-            }
-        }))
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            props.history.push('/')
     }
 
     let canvas_array = []
@@ -77,11 +83,18 @@ const Home = (props) => {
 
     return (
         <div className="main-container">
+            {open ? <ModalUI>
+                <div className="edit-card">
+                    <h5>Session timeout please login again</h5>
+                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+                </div>
+            </ModalUI>: null}
             <div className="boards-right-column">
                 <div className="boards-right-column-content">
                     {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
                         <div className="boards">
-                            <div className="boards-name">
+                            <div className="boards-column">
+                                <div className="boards-name">
                                 <h2>{username} Todos</h2>
                             </div>
                             <div className="boards-row">
@@ -141,6 +154,14 @@ const Home = (props) => {
                         </div>
                         ))}
                         </div>
+                            </div>
+                            <div className="boards-separator"/>
+                            <div className="metrics-column">
+                                <div className="metrics-header">
+                                    <h3>{username} Metrics Statistics</h3>
+                                </div>
+                                <Dashboard/>
+                            </div>
                         </div>
                     }
                 </div>

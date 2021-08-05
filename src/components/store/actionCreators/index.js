@@ -24,5 +24,5 @@ export {
     cardIndexUpdate
 } from './requests'
 
-export { getUsers, getAdminBoard, getAdminLists, getAdminCards} from './admin'
+export { getUsers, getAdminBoard, getAdminLists, getAdminCards, getAdminMetricsData} from './admin'
 

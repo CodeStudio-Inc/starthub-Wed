@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import ModalUI from '../../ModalUI'
+
 import CloseIcon from '@material-ui/icons/Close'
 import moment from 'moment'
 import { Line } from 'react-chartjs-2'
-import * as actionCreators from '../../store/actionCreators'
-import svg from '../../../assets/images/spinner.svg'
+import * as actionCreators from '../../../store/actionCreators'
 
 import './Dashboard.css'
 
@@ -13,24 +12,10 @@ const Dashboard = (props) => {
 
     const [open, setOpen] = useState(false)
     const [show, setShow] = useState(false)
-    const [metricsData, setMetricsData] = useState([])
 
-    const loading = useSelector(state => state.requests.loading)
-    const expire = useSelector(state => state.auth.tokenExpiration)
-    const metrics = useSelector(state => state.requests.metrics)
+    const metrics = useSelector(state => state.admin.metrics)
+    // console.log(data)
 
-    const current_date = Date.now()
-
-    useEffect(() => {
-        if(current_date >= expire) {
-           return setOpen(true)
-        }
-        dispatch(actionCreators.getMetricsData())
-    }, [])
-    const handleLogoutClick = () => {
-            dispatch(actionCreators.removeUser())
-            props.history.push('/')
-    }
     
     const dispatch = useDispatch()
 
@@ -169,64 +154,41 @@ const Dashboard = (props) => {
 
 
     return (
-        <div className="main-container">
-            {show ? <ModalUI>
-                <div className="edit-card">
-                    <h5>Session timeout please login again</h5>
-                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
-                </div>
-            </ModalUI>: null}
-            {open ? <ModalUI setOpen={setOpen}>
-                <div className="modal-row">
-                    <CloseIcon onClick={() => setOpen(false)} className="close-icon" style={{ fontSize: '30px' }} />
-                </div>
-                <iframe class="airtable-embed" src="https://airtable.com/embed/shrS6aSAZIgqjP1g0?backgroundColor=green" frameborder="0" onmousewheel="" width="100%" height="95%" ></iframe>
-            </ModalUI> : null}
-            <div className="right-column-overview">
-                <div className="overview-header-main">
-                </div>
-                <div className="revenue-row">
-                    <div className="graph-row">
-                    <div className="revenue">
+        <div className="dashboard">
+                    {line_graph1.datasets[0].data[0] === undefined ? null : <div className="revenue">
                         <h3>{keysArray[1] && keysArray[1].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph1}
                             width={100}
                             height={30}
                         />
-                    </div>
+                    </div>}
 
-                    <div className="revenue">
+                    {line_graph2.datasets[0].data[0] === undefined ? null : <div className="revenue">
                         <h3>{keysArray[2] && keysArray[2].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph2}
                             width={100}
                             height={30}
                         />
-                    </div>
-                    </div>
-
-                    <div className="graph-row">
-                    <div className="revenue">
+                    </div>}
+                    {line_graph3.datasets[0].data[0] === undefined ? null : <div className="revenue">
                         <h3>{keysArray[3] && keysArray[3].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph3}
                             width={100}
                             height={30}
                         />
-                    </div>
+                    </div>}
 
-                    <div className="revenue">
+                    {line_graph4.datasets[0].data[0] === undefined ? null : <div className="revenue">
                         <h3>{keysArray[4] && keysArray[4].split('-').splice(1)}</h3>
-                        {line_graph4.datasets[0].data[0] === undefined ? null : <Line
+                         <Line
                             data={line_graph4}
                             width={100}
                             height={30}
-                        />}
-                    </div>
-                    </div>
-
-                    <div className="graph-row">
+                        />
+                    </div>}
                     {line_graph5.datasets[0].data[0] === undefined ? null :<div className="revenue">
                         <h3>{keysArray[5] && keysArray[5].split('-').splice(1)}</h3>
                          <Line
@@ -245,9 +207,7 @@ const Dashboard = (props) => {
                         
                         />
                     </div>}
-                    </div>
 
-                    <div className="graph-row">
                     {line_graph7.datasets[0].data[0] === undefined ? null : <div className="revenue">
                         <h3>{keysArray[7] && keysArray[7].split('-').splice(1)}</h3>
                         <Line
@@ -256,20 +216,6 @@ const Dashboard = (props) => {
                             height={30}
                         />
                     </div>}
-
-                    <div className="revenue" style={{visibility:'hidden'}}>
-                        <Line
-                            data={line_graph6}
-                            width={100}
-                            height={30}
-                        
-                        />
-                    </div>
-                    </div>
-
-
-                </div>
-            </div>
         </div>
     )
 }

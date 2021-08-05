@@ -1,6 +1,6 @@
 import * as actions from '../actions'
 import axios from 'axios'
-
+import Airtable from 'airtable'
 
 export const loadAction = () => {
     return {
@@ -32,6 +32,13 @@ export const setLists = (data) => {
 export const setCards = (data) => {
     return {
         type: actions.SET_ADMIN_CARDS,
+        data
+    }
+}
+
+export const setAdminMetricsData = (data) => {
+    return {
+        type: actions.SET_ADMIN_METRICS_DATA,
         data
     }
 }
@@ -123,5 +130,24 @@ export const getAdminCards = (userId, boardId) => {
             .catch(error => {
                 console.log(error)
             })
+    }
+}
+
+export const getAdminMetricsData = (baseId) => {
+    return (dispatch) => {
+
+        dispatch(loadAction())
+        const key = process.env.REACT_APP_API_KEY
+        var base = new Airtable({apiKey: key}).base(baseId)
+
+        base('Metrics').select({
+        maxRecords: 20
+        }).eachPage(function page(records, fetchNextPage) {
+            dispatch(setAdminMetricsData(records))
+            fetchNextPage();
+
+        }, function done(err) {
+        if (err) { console.error(err); return }
+        })
     }
 }
