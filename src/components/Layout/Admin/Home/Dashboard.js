@@ -14,13 +14,13 @@ const Dashboard = (props) => {
     const [show, setShow] = useState(false)
 
     const metrics = useSelector(state => state.admin.metrics)
-    // console.log(data)
+    // console.log(metrics)
 
     
     const dispatch = useDispatch()
 
 
-    const metricsFilter = metrics.map(el => el.fields)
+    const metricsFilter = metrics && metrics.map(el => el.fields)
     // console.log(metricsFilter)
     // const date = moment(new Date().toISOString()).format("YYYY-DD-MM")
 
@@ -148,9 +148,6 @@ const Dashboard = (props) => {
             }
         ]
     }
-
-
-        
 
 
     return (
