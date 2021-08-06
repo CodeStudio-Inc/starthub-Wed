@@ -19,7 +19,7 @@ const Home = (props) => {
     const userId = props.location.state.data._id
     const username = props.location.state.data.username
     const base_key = props.location.state.data.base_key
-    // console.log(data)
+    console.log(metrics,'metrics')
 
     const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
 
@@ -161,7 +161,7 @@ const Home = (props) => {
                                 <div className="metrics-header">
                                     <h3>{username} Metrics Statistics</h3>
                                 </div>
-                                <Dashboard metrics={metrics} />
+                                {/* <Dashboard metrics={metrics} /> */}
                                 {/* <h3 onClick={() => props.history.push('/admin/dasboard',{data: base_key})}>See metric</h3> */}
                             </div>
                         </div>
