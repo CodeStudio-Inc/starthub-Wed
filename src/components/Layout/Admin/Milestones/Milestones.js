@@ -90,10 +90,7 @@ const Milestones = (props) => {
                 <div className="cards-right-column-content">
                     <div className="boards-header">
                         <h2>{boardName}</h2>
-                        <div className="edit-row" onClick={() => props.history.goBack()}>
-                            <ArrowBackIcon  style={{ fontSize: '20px', color:'#dfa126' }} />
-                            <h5>Board</h5>
-                        </div>
+                        <ArrowBackIcon className="back-icon"  style={{ fontSize: '20px', color:'#dfa126' }} onClick={() => props.history.goBack()} />
                     </div>
                     {dragdropLoading ? <Loader/> : null}
                         <div className="statement-row">

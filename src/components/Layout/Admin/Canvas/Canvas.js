@@ -100,10 +100,7 @@ const Canvas = (props) => {
                 <div className="cards-right-column-content">
                     <div className="boards-header">
                         <h2>{boardName}</h2>
-                        <div className="edit-row" onClick={() => props.history.goBack()}>
-                        <ArrowBackIcon className="close" style={{ fontSize: '20px', color:'#dfa126' }} />
-                            <h5>Board</h5>
-                        </div>
+                        <ArrowBackIcon className="back-icon"  style={{ fontSize: '20px', color:'#dfa126' }} onClick={() => props.history.goBack()} />
                     </div>
                     <DragDropContext onDragEnd={onDragEnd}>
                         <div className="canvas-main">

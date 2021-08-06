@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actionCreators from '../../../store/actionCreators'
 import svg from '../../../../assets/images/spinner.svg'
-import Dashboard from './Dashboard'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ModalUI from '../../../ModalUI'
 import moment from 'moment'
 import Graph from './Graph'
@@ -21,7 +21,7 @@ const Home = (props) => {
     const userId = props.location.state.data._id
     const username = props.location.state.data.username
     const base_key = props.location.state.data.base_key
-    console.log(metrics,'metrics')
+    // console.log(metrics,'metrics')
 
     const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
 
@@ -212,6 +212,10 @@ const Home = (props) => {
             </ModalUI>: null}
             <div className="boards-right-column">
                 <div className="boards-right-column-content">
+                    <div className="admin-home-header">
+                        {/* <h4 onClick={() => props.history.goBack()}>Back</h4> */}
+                        <ArrowBackIcon className="back-icon"  style={{ fontSize: '20px', color:'#dfa126' }} onClick={() => props.history.goBack()} />
+                    </div>
                     {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
                         <div className="boards">
                             <div className="boards-column">
@@ -282,7 +286,12 @@ const Home = (props) => {
                                     <h3>{username} Metrics Statistics</h3>
                                 </div>
                                 <div className="dashboard">
-                                    <Graph graph={line_graph2} key={keysArray[1]}/>
+                                    <Graph graph={line_graph2} object_key={keysArray[2]}/>
+                                    <Graph graph={line_graph3} object_key={keysArray[3]}/>
+                                    <Graph graph={line_graph4} object_key={keysArray[4]}/>
+                                    <Graph graph={line_graph5} object_key={keysArray[5]}/>
+                                    <Graph graph={line_graph6} object_key={keysArray[6]}/>
+                                    <Graph graph={line_graph7} object_key={keysArray[7]}/>
                                 </div>
                                 {/* <Dashboard metrics={metrics} /> */}
                                 {/* <h3 onClick={() => props.history.push('/admin/dashboard',{data: base_key})}>See metric</h3> */}

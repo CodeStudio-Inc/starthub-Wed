@@ -69,6 +69,35 @@
 	margin-bottom: 1rem;
 }
 
+.form-row {
+	display: flex;
+	border-radius: 10px;
+	width: 95%;
+	align-items: center;
+	justify-content: space-between;
+	border: 1px solid #69191a85;
+	overflow: hidden;
+	margin-bottom: 1rem;
+}
+
+.form-row input {
+	outline: none;
+	border: none;
+	transition: 0.5s ease-in-out;
+	padding-left: 5px;
+	height: 40px !important;
+	margin-bottom: 0px !important;
+	width: 90%;
+}
+
+.form-row input:focus {
+	box-shadow: none;
+}
+
+.visible-icon:hover {
+	cursor: pointer;
+}
+
 .auth-card button {
 	outline: none;
 	border: none;

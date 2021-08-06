@@ -79,10 +79,10 @@ const Milestones = (props) => {
         <DragDropContext onDragEnd={onDragEnd}>
                 <div className="boards-header">
                     <h2>{boardName}</h2>
-                    <div className="edit-row" onClick={() => props.history.goBack()}>
-                        <ArrowBackIcon  style={{ fontSize: '20px', color:'#dfa126' }} />
+                    {/* <div className="edit-row" onClick={() => props.history.goBack()}>
                         <h5>Boards</h5>
-                    </div>
+                    </div> */}
+                        <ArrowBackIcon className="back-icon"  style={{ fontSize: '20px', color:'#dfa126' }} onClick={() => props.history.goBack()} />
                 </div>
                 <div className="todo-row">
             {show ? <ModalUI>
