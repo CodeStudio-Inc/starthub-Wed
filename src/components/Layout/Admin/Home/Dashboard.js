@@ -6,13 +6,17 @@ import * as actionCreators from '../../../store/actionCreators'
 
 import './Dashboard.css'
 
-const Dashboard = (props) => {
+const Dashboard = ({metrics}) => {
 
     const [open, setOpen] = useState(false)
     const [show, setShow] = useState(false)
 
-    const metrics = useSelector(state => state.admin.metrics)
+    // const metrics = useSelector(state => state.admin.metrics)
     console.log(metrics)
+
+    useEffect(() => {
+        // dispatch(actionCreators.getAdminMetricsData(base_key))
+    },[])
 
     
     const dispatch = useDispatch()

@@ -14,6 +14,7 @@ const Home = (props) => {
     const boards = useSelector(state => state.admin.boards)
     const loading = useSelector(state => state.admin.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
+    const metrics = useSelector(state => state.admin.metrics)
 
     const userId = props.location.state.data._id
     const username = props.location.state.data.username
@@ -160,7 +161,8 @@ const Home = (props) => {
                                 <div className="metrics-header">
                                     <h3>{username} Metrics Statistics</h3>
                                 </div>
-                                <Dashboard/>
+                                <Dashboard metrics={metrics} />
+                                {/* <h3 onClick={() => props.history.push('/admin/dasboard',{data: base_key})}>See metric</h3> */}
                             </div>
                         </div>
                     }
