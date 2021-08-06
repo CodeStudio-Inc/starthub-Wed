@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import CloseIcon from '@material-ui/icons/Close'
 import moment from 'moment'
 import { Line } from 'react-chartjs-2'
 import * as actionCreators from '../../../store/actionCreators'
@@ -14,7 +12,7 @@ const Dashboard = (props) => {
     const [show, setShow] = useState(false)
 
     const metrics = useSelector(state => state.admin.metrics)
-    // console.log(metrics)
+    console.log(metrics)
 
     
     const dispatch = useDispatch()
@@ -31,14 +29,14 @@ const Dashboard = (props) => {
 
     keysArray = Object.keys(metricsFilter[0] || []).sort()     
      
-    const graph1 = metrics.map(el => el.fields[keysArray[0]] )
-    const graph2 = metrics.map(el => el.fields[keysArray[1]] )
-    const graph3 = metrics.map(el => el.fields[keysArray[2]] )
-    const graph4 = metrics.map(el => el.fields[keysArray[3]] )
-    const graph5 = metrics.map(el => el.fields[keysArray[4]] )
-    const graph6 = metrics.map(el => el.fields[keysArray[5]] )
-    const graph7 = metrics.map(el => el.fields[keysArray[6]] )
-    const graph8 = metrics.map(el => el.fields[keysArray[7]] )
+    const graph1 = metrics.map(el => el.fields[keysArray && keysArray[0]] )
+    const graph2 = metrics.map(el => el.fields[keysArray && keysArray[1]] )
+    const graph3 = metrics.map(el => el.fields[keysArray && keysArray[2]] )
+    const graph4 = metrics.map(el => el.fields[keysArray && keysArray[3]] )
+    const graph5 = metrics.map(el => el.fields[keysArray && keysArray[4]] )
+    const graph6 = metrics.map(el => el.fields[keysArray && keysArray[5]] )
+    const graph7 = metrics.map(el => el.fields[keysArray && keysArray[6]] )
+    const graph8 = metrics.map(el => el.fields[keysArray && keysArray[7]] )
 
     const mon = metrics.map(el => el.fields['A-Month'] )
 
