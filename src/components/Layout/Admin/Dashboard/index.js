@@ -5,11 +5,7 @@ import { Line } from 'react-chartjs-2'
 import * as actionCreators from '../../../store/actionCreators'
 
 import './Dashboard.css'
-
 const Dashboard = (props) => {
-
-    const [open, setOpen] = useState(false)
-    const [show, setShow] = useState(false)
 
     const base_key = props.location.state.data.base_key
 
@@ -143,8 +139,7 @@ const Dashboard = (props) => {
         ]
     }
 
-
-    return (
+    return(
         <div className="dashboard">
                     {line_graph1.datasets[0].data[0] === undefined ? null : <div className="revenue">
                         <h3>{keysArray[1] && keysArray[1].split('-').splice(1)}</h3>
@@ -212,9 +207,3 @@ const Dashboard = (props) => {
 }
 
 export default Dashboard
-
-// options={{
-//     maintainAspectRatio: false,
-//     responsive: true
-
-// }}

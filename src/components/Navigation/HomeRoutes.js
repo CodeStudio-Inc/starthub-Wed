@@ -21,6 +21,7 @@ import AdminMilestones from '../Layout/Admin/Milestones/Milestones'
 import AdminCanvas from '../Layout/Admin/Canvas/Canvas'
 import AdminTodo from '../Layout/Admin/Todos/Todo'
 import AdminDashboard from '../Layout/Admin/Home/Dashboard'
+import AdminDash from '../Layout/Admin/Dashboard/'
 import Register from '../Layout/Admin/Register'
 import Navbar from './Navbar'
 
@@ -49,7 +50,7 @@ const HomeRoutes = () => {
                 <Route path="/admin/milestones" component={AdminMilestones} />
                 <Route path="/admin/canvas" component={AdminCanvas} />
                 <Route path="/admin/todo" component={AdminTodo} />
-                <Route path="/admin/dashboard" component={AdminDashboard} />
+                <Route path="/admin/dashboard" component={AdminDash} />
                 <Route path="/register" component={Register} />
             </Switch>
         </BrowserRouter>

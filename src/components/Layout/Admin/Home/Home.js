@@ -4,6 +4,8 @@ import * as actionCreators from '../../../store/actionCreators'
 import svg from '../../../../assets/images/spinner.svg'
 import Dashboard from './Dashboard'
 import ModalUI from '../../../ModalUI'
+import moment from 'moment'
+import Graph from './Graph'
 
 import './Home.css'
 const Home = (props) => {
@@ -36,7 +38,6 @@ const Home = (props) => {
         }
         dispatch(actionCreators.getAdminBoard(userId,()=>{}))
         dispatch(actionCreators.getAdminMetricsData(base_key))
-        // dispatch(actionCreators.getUsers())
     }, [])
 
     const handleLogoutClick = () => {
@@ -46,7 +47,6 @@ const Home = (props) => {
 
     let canvas_array = []
     let milestone_array = []
-    // console.log(canvas_array,'rf')
     
     boards.forEach(element => {
         if(element.name === 'Lean Canvas') canvas_array.push(element)
@@ -80,6 +80,126 @@ const Home = (props) => {
         )
     }
 
+
+
+    const metricsFilter = metrics && metrics.map(el => el.fields)
+
+
+    let keysArray = []
+
+    keysArray = Object.keys(metricsFilter[0] || []).sort()     
+     
+    const graph1 = metrics.map(el => el.fields[keysArray && keysArray[0]] )
+    const graph2 = metrics.map(el => el.fields[keysArray && keysArray[1]] )
+    const graph3 = metrics.map(el => el.fields[keysArray && keysArray[2]] )
+    const graph4 = metrics.map(el => el.fields[keysArray && keysArray[3]] )
+    const graph5 = metrics.map(el => el.fields[keysArray && keysArray[4]] )
+    const graph6 = metrics.map(el => el.fields[keysArray && keysArray[5]] )
+    const graph7 = metrics.map(el => el.fields[keysArray && keysArray[6]] )
+    const graph8 = metrics.map(el => el.fields[keysArray && keysArray[7]] )
+
+    const mon = metrics.map(el => el.fields['A-Month'] )
+
+
+    let months = []
+
+    for(let month of graph1) {
+        months.push(moment(month).format("MMM"))
+    }
+
+
+    
+
+    const line_graph1 = {
+        labels: months,
+        datasets: [
+            {
+                label: keysArray[1] && keysArray[1].split('-').splice(1),
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data:graph2
+            }
+        ]
+    }
+
+    const line_graph2 = {
+        labels: months,
+        datasets: [
+            {
+                label: keysArray[2] && keysArray[2].split('-').splice(1),
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data:graph3
+            }
+        ]
+    }
+
+    const line_graph3 = {
+        labels: months,
+        datasets: [
+            {
+                label: keysArray[3] && keysArray[3].split('-').splice(1),
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data:graph4
+            }
+        ]
+    }
+
+    const line_graph4 = {
+        labels: months,
+        datasets: [
+            {
+                label: keysArray[4] && keysArray[4].split('-').splice(1),
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data:graph5
+            }
+        ]
+    }
+
+    const line_graph5 = {
+        labels: months,
+        datasets: [
+            {
+                label: keysArray[5] && keysArray[5].split('-').splice(1),
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data:graph6
+            }
+        ]
+    }
+
+    const line_graph6 = {
+        labels: months,
+        datasets: [
+            {
+                label: keysArray[6] && keysArray[6].split('-').splice(1),
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data:graph7
+            }
+        ]
+    }
+
+    const line_graph7 = {
+        labels: months,
+        datasets: [
+            {
+                label: keysArray[7] && keysArray[7].split('-').splice(1),
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data:graph8
+            }
+        ]
+    }
 
 
     return (
@@ -161,8 +281,11 @@ const Home = (props) => {
                                 <div className="metrics-header">
                                     <h3>{username} Metrics Statistics</h3>
                                 </div>
+                                <div className="dashboard">
+                                    <Graph graph={line_graph2} key={keysArray[1]}/>
+                                </div>
                                 {/* <Dashboard metrics={metrics} /> */}
-                                {/* <h3 onClick={() => props.history.push('/admin/dasboard',{data: base_key})}>See metric</h3> */}
+                                {/* <h3 onClick={() => props.history.push('/admin/dashboard',{data: base_key})}>See metric</h3> */}
                             </div>
                         </div>
                     }
