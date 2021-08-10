@@ -677,8 +677,9 @@ export const getMetricsData = () => {
         var base = new Airtable({apiKey: key}).base(baseId)
 
         base('Metrics').select({
-        maxRecords: 20
+        maxRecords: 100
         }).eachPage(function page(records, fetchNextPage) {
+            // console.log(records,'metrics')
             dispatch(setMetricsData(records))
             fetchNextPage();
 

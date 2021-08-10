@@ -141,7 +141,7 @@ const Canvas = (props) => {
                 </div>
             </ModalUI> : null}
             <div className="right-column-canvas-content">
-                <div className="cards-right-column-content">
+                <div className="canvas-right-column-content">
                     <div className="boards-header">
                         <h2>{boardName}</h2>
                         <div className="edit-row" onClick={() => props.history.goBack()}>

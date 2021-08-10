@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import moment from 'moment'
 import { Line } from 'react-chartjs-2'
 import * as actionCreators from '../../store/actionCreators'
-import svg from '../../../assets/images/spinner.svg'
+import {janstartDate,janendDate} from './dates'
 
 import './Dashboard.css'
 
@@ -36,41 +36,43 @@ const Dashboard = (props) => {
 
 
     const metricsFilter = metrics.map(el => el.fields)
-    // console.log(metricsFilter)
-    // const date = moment(new Date().toISOString()).format("YYYY-DD-MM")
 
-    // const metricsSort = metricsFilter.sort((a,b) => moment(a['A-Month'])-moment(b['A-Month']))
+    let sortedMetrics = []
+
+
+    metrics.forEach(element => {
+        if(moment(element.fields['A-Month']).format('MMM') === 'Jan')  sortedMetrics.push({...element, monthIndex: 1})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Feb')  sortedMetrics.push({...element, monthIndex: 2})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Mar')  sortedMetrics.push({...element, monthIndex: 3})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Apr')  sortedMetrics.push({...element, monthIndex: 4})
+        if(moment(element.fields['A-Month']).format('MMM') === 'May')  sortedMetrics.push({...element, monthIndex: 5})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Jun')  sortedMetrics.push({...element, monthIndex: 6})
+    });
+    
+     sortedMetrics.sort((a,b) => a.monthIndex-b.monthIndex)
 
 
     let keysArray = []
 
-    keysArray = Object.keys(metricsFilter[0] || []).sort()     
+    keysArray = Object.keys(metricsFilter[0] || []).sort()  
+    
      
-    const graph1 = metrics.map(el => el.fields[keysArray[0]] )
-    const graph2 = metrics.map(el => el.fields[keysArray[1]] )
-    const graph3 = metrics.map(el => el.fields[keysArray[2]] )
-    const graph4 = metrics.map(el => el.fields[keysArray[3]] )
-    const graph5 = metrics.map(el => el.fields[keysArray[4]] )
-    const graph6 = metrics.map(el => el.fields[keysArray[5]] )
-    const graph7 = metrics.map(el => el.fields[keysArray[6]] )
-    const graph8 = metrics.map(el => el.fields[keysArray[7]] )
-
-    const mon = metrics.map(el => el.fields['A-Month'] )
+    const graph1 = sortedMetrics.map(el => el.fields[keysArray[0]] )
+    const graph2 = sortedMetrics.map(el => el.fields[keysArray[1]] )
+    const graph3 = sortedMetrics.map(el => el.fields[keysArray[2]] )
+    const graph4 = sortedMetrics.map(el => el.fields[keysArray[3]] )
+    const graph5 = sortedMetrics.map(el => el.fields[keysArray[4]] )
+    const graph6 = sortedMetrics.map(el => el.fields[keysArray[5]] )
+    const graph7 = sortedMetrics.map(el => el.fields[keysArray[6]] )
+    const graph8 = sortedMetrics.map(el => el.fields[keysArray[7]] )
 
 
     let months = []
-
-    // graph1.sort((a,b) => moment(a)-moment(b))
 
     for(let month of graph1) {
         months.push(moment(month).format("MMM"))
     }
 
-//     keysArray.sort(function(a,b) {
-//     return b.split(" ").length - a.split(" ").length;
-// })
-    
-    // console.log(months,graph2)
     
 
     const line_graph1 = {
@@ -212,7 +214,7 @@ const Dashboard = (props) => {
                         <Line
                             data={line_graph3}
                             width={100}
-                            height={30}
+                            height={20}
                         />
                     </div>
 

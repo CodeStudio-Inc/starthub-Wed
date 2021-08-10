@@ -26,21 +26,34 @@ const Dashboard = (props) => {
 
     const metricsFilter = metrics && metrics.map(el => el.fields)
 
+    let sortedMetrics = []
+
+
+    metrics.forEach(element => {
+        if(moment(element.fields['A-Month']).format('MMM') === 'Jan')  sortedMetrics.push({...element, monthIndex: 1})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Feb')  sortedMetrics.push({...element, monthIndex: 2})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Mar')  sortedMetrics.push({...element, monthIndex: 3})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Apr')  sortedMetrics.push({...element, monthIndex: 4})
+        if(moment(element.fields['A-Month']).format('MMM') === 'May')  sortedMetrics.push({...element, monthIndex: 5})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Jun')  sortedMetrics.push({...element, monthIndex: 6})
+    });
+    
+     sortedMetrics.sort((a,b) => a.monthIndex-b.monthIndex)
+
 
     let keysArray = []
 
     keysArray = Object.keys(metricsFilter[0] || []).sort()     
      
-    const graph1 = metrics.map(el => el.fields[keysArray && keysArray[0]] )
-    const graph2 = metrics.map(el => el.fields[keysArray && keysArray[1]] )
-    const graph3 = metrics.map(el => el.fields[keysArray && keysArray[2]] )
-    const graph4 = metrics.map(el => el.fields[keysArray && keysArray[3]] )
-    const graph5 = metrics.map(el => el.fields[keysArray && keysArray[4]] )
-    const graph6 = metrics.map(el => el.fields[keysArray && keysArray[5]] )
-    const graph7 = metrics.map(el => el.fields[keysArray && keysArray[6]] )
-    const graph8 = metrics.map(el => el.fields[keysArray && keysArray[7]] )
+    const graph1 = sortedMetrics.map(el => el.fields[keysArray && keysArray[0]] )
+    const graph2 = sortedMetrics.map(el => el.fields[keysArray && keysArray[1]] )
+    const graph3 = sortedMetrics.map(el => el.fields[keysArray && keysArray[2]] )
+    const graph4 = sortedMetrics.map(el => el.fields[keysArray && keysArray[3]] )
+    const graph5 = sortedMetrics.map(el => el.fields[keysArray && keysArray[4]] )
+    const graph6 = sortedMetrics.map(el => el.fields[keysArray && keysArray[5]] )
+    const graph7 = sortedMetrics.map(el => el.fields[keysArray && keysArray[6]] )
+    const graph8 = sortedMetrics.map(el => el.fields[keysArray && keysArray[7]] )
 
-    const mon = metrics.map(el => el.fields['A-Month'] )
 
 
     let months = []
