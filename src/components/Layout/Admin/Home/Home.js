@@ -143,7 +143,19 @@ const Home = (props) => {
                 backgroundColor: '#dfa126',
                 borderColor: '#222323',
                 borderWidth: 1,
-                data:graph3
+                data:graph3,
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                        label: function(tooltipItem) {
+                                return tooltipItem.yLabel;
+                        }
+                        }
+                    }
+                }
             }
         ]
     }
@@ -156,7 +168,14 @@ const Home = (props) => {
                 backgroundColor: '#dfa126',
                 borderColor: '#222323',
                 borderWidth: 1,
-                data:graph4
+                data:graph4,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
             }
         ]
     }
@@ -169,7 +188,14 @@ const Home = (props) => {
                 backgroundColor: '#dfa126',
                 borderColor: '#222323',
                 borderWidth: 1,
-                data:graph5
+                data:graph5,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
             }
         ]
     }

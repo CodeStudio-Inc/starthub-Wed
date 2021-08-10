@@ -4,6 +4,9 @@ body {
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: auto;
+    -ms-overflow-style: none; /* IE 11 */
+    scrollbar-width: none; /* Firefox 64 */
 }
 
 code {
@@ -16,4 +19,8 @@ code {
 }
 ::-webkit-scrollbar {
     display: none;
+}
+
+html {
+scrollbar-width: none;
 }
