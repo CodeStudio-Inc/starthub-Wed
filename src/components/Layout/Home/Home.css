@@ -30,7 +30,7 @@
 
 .right-column-content {
 	width: 100% !important;
-	background: #69191b !important;
+	background: #eee !important;
 	height: 100vh;
 }
 
@@ -152,7 +152,7 @@
 	width: 100% !important;
 	padding: 1rem;
 	min-height: 700px;
-	background: #69191b;
+	background: #eee;
 }
 
 .list-container {
@@ -229,7 +229,7 @@
 .add-list {
 	outline: none;
 	border: none;
-	background: #dfa126 !important;
+	background: rgba(0, 0, 0, 0.3) !important;
 	padding: 0.4rem !important;
 	width: 250px !important;
 	border-radius: 2px;
@@ -549,7 +549,7 @@
 	border-radius: 5px;
 	box-sizing: border-box;
 	margin-right: 0.5rem;
-	background: #dfa126;
+	background: #fff;
 }
 
 
@@ -561,7 +561,7 @@
 	overflow: hidden;
 	width: 100%;
 	cursor: grab;
-	background: rgb(250, 229, 171) !important;
+	background: rgba(253, 232, 176, 0.418) !important;
 	box-sizing: border-box;
 	height: 100%;
 }
@@ -580,7 +580,7 @@
 	margin-bottom: 0.5rem;
 	width: 100%;
 	cursor: grab;
-	background: rgb(250, 229, 171) !important;
+	background: rgba(253, 232, 176, 0.418) !important;
 	box-sizing: border-box;
 	height: 100%;
 	-webkit-user-drag: none !important;

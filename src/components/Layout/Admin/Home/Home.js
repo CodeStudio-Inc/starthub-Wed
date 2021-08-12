@@ -265,7 +265,7 @@ const Home = (props) => {
                             {filteredBoards.map((board, index) => (
                                 <div
                                     key={index}
-                                    className="board-card"
+                                    className="admin-board-card"
                                     onClick={() => dispatch(actionCreators.getAdminLists(userId,board._id, (res) => {
                                         if (res.success === true) {
                                             props.history.push('/admin/todo', { data: board })
@@ -285,7 +285,7 @@ const Home = (props) => {
                             {canvas_array.map((canvas, index) => (
                             <div
                                 key={index}
-                                className="board-card"
+                                className="admin-board-card"
                                 onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
                                     if (res.success === true) {
                                         props.history.push('/admin/canvas', { data: canvas })
@@ -305,7 +305,7 @@ const Home = (props) => {
                             {milestone_array.map((milestone, index) => (
                             <div
                                 key={index}
-                                className="board-card"
+                                className="admin-board-card"
                                 onClick={() => dispatch(actionCreators.getListsOnBoard( (res) => {
                                     if (res.success === true) {
                                         props.history.push('/admin/milestones', { data: milestone })

@@ -77,7 +77,9 @@
 	justify-content: space-between;
 	border: 1px solid #69191a85;
 	overflow: hidden;
+	transition: 0.5s ease-in-out;
 	margin-bottom: 1rem;
+
 }
 
 .form-row input {
@@ -94,6 +96,10 @@
 	box-shadow: none;
 }
 
+.form-row:hover {
+	box-shadow: 1px 1px 10px #69191a4f;
+}
+
 .visible-icon:hover {
 	cursor: pointer;
 }
@@ -105,7 +111,7 @@
 	height: 40px;
 	border-radius: 10px;
 	background-color: #dfa126;
-	color: #fff;
+	color: rgb(250, 245, 245);
 	transition: 0.5s ease-in-out;
 }
 
