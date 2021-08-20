@@ -26,7 +26,7 @@ const Milestones = (props) => {
     const dragdropLoading = useSelector(state => state.requests.loading)
 
     const todoLists = lists.filter(el => el.creator === creator)
-    // console.log(lists)
+    console.log(boardId,'gg')
 
     const dispatch = useDispatch()
 
@@ -103,7 +103,7 @@ const Milestones = (props) => {
                     setActiveCard={setActiveCard}
                 />
             ))}
-            {admin ? null : <input
+            <input
                 className="add-list"
                 placeholder="+ Add New list"
                 value={listName}
@@ -116,7 +116,7 @@ const Milestones = (props) => {
                                 }))
                             }
                         }}
-            />}
+            />
         </div>
 
         </DragDropContext>

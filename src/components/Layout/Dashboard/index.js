@@ -57,12 +57,11 @@ const Dashboard = (props) => {
     });
     
      sortedMetrics.sort((a,b) => a.monthIndex-b.monthIndex)
+     
+     let keysArray = []
 
-
-    let keysArray = []
-
-    keysArray = Object.keys(metricsFilter[0] || []).sort()  
-    
+     keysArray = Object.keys(metricsFilter[0] || []).sort()  
+     
      
     const graph1 = sortedMetrics.map(el => el.fields[keysArray[0]] )
     const graph2 = sortedMetrics.map(el => el.fields[keysArray[1]] )
@@ -72,8 +71,9 @@ const Dashboard = (props) => {
     const graph6 = sortedMetrics.map(el => el.fields[keysArray[5]] )
     const graph7 = sortedMetrics.map(el => el.fields[keysArray[6]] )
     const graph8 = sortedMetrics.map(el => el.fields[keysArray[7]] )
-
-
+    
+    
+    console.log(graph1)
     let months = []
 
     for(let month of graph1) {

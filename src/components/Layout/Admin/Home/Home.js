@@ -94,6 +94,12 @@ const Home = (props) => {
         if(moment(element.fields['A-Month']).format('MMM') === 'Apr')  sortedMetrics.push({...element, monthIndex: 4})
         if(moment(element.fields['A-Month']).format('MMM') === 'May')  sortedMetrics.push({...element, monthIndex: 5})
         if(moment(element.fields['A-Month']).format('MMM') === 'Jun')  sortedMetrics.push({...element, monthIndex: 6})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Jul')  sortedMetrics.push({...element, monthIndex: 7})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Aug')  sortedMetrics.push({...element, monthIndex: 8})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Sep')  sortedMetrics.push({...element, monthIndex: 9})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Oct')  sortedMetrics.push({...element, monthIndex: 10})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Nov')  sortedMetrics.push({...element, monthIndex: 11})
+        if(moment(element.fields['A-Month']).format('MMM') === 'Dec')  sortedMetrics.push({...element, monthIndex: 12})
     });
     
      sortedMetrics.sort((a,b) => a.monthIndex-b.monthIndex)
@@ -276,6 +282,24 @@ const Home = (props) => {
 
                                 </div>
                             ))}
+                            <input
+                                className="admin-add-list"
+                                placeholder="+ Add New Board"
+                                value={name}
+                                onChange={(e) => setBoardName(e.target.value)}
+                                onKeyUp={(e) => {
+                                            if (e.key === 'Enter' && name) {
+                                                dispatch(actionCreators.createBoard( name, (res) => {
+                                                if (res.success === true) {
+                                                    setBoardName('')
+                                                    setTimeout(() => {
+                                                        dispatch(actionCreators.getBoards())
+                                                    }, 2000)
+                                                }
+                                            }))
+                                            }
+                                        }}
+                            />
                             </div>
                         <div className="boards-name">
                                 <h2>{username} Lean Canvas</h2>

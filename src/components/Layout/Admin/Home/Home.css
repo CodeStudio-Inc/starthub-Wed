@@ -160,12 +160,16 @@
 	height: 60px;
 	margin-right: 1rem;
 	padding-left: 5px;
-	padding-top: 10px;
+	padding: 0.5rem;
 	background: #fbf2e1;
 	border-radius: 5px;
 	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-	width: 250px;
+	width: 150px;
 	margin-bottom: 1rem;
+}
+
+.admin-board-card h3 {
+	font-size: 16px;
 }
 
 .admin-board-card:hover {
@@ -210,18 +214,18 @@
 	opacity: 1; /* Firefox */
 }
 
-.add-list {
+.admin-add-list {
 	outline: none;
 	border: none;
 	background: rgba(0, 0, 0, 0.3);
 	padding: 0.2rem;
-	width: 200px;
+	width: 150px;
 	border-radius: 2px;
 	transition: 0.5s ease-in-out;
 	color: #eee;
 }
 
-.add-list:focus {
+.admin-add-list:focus {
 	background: rgba(0, 0, 0, 0.5);
 }
 
