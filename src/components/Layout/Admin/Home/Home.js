@@ -284,7 +284,7 @@ const Home = (props) => {
 
                                 </div>
                             ))}
-                            <input
+                            {/* <input
                                 className="admin-add-list"
                                 placeholder="+ Add New Board"
                                 value={name}
@@ -299,7 +299,7 @@ const Home = (props) => {
                                             }))
                                             }
                                         }}
-                            />
+                            /> */}
                             </div>
                         <div className="boards-name">
                                 <h2>{username} Lean Canvas</h2>

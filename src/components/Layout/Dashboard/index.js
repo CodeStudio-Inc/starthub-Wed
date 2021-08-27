@@ -174,9 +174,6 @@ const Dashboard = (props) => {
     }
 
 
-        
-
-
     return (
         <div className="main-container">
             {show ? <ModalUI>

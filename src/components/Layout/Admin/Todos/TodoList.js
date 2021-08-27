@@ -72,7 +72,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                             : null}
                         {/* {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />} */}
                     </div>
-                    <div className="add-card">
+                    {/* <div className="add-card">
                             <input
                                 placeholder="Type.."
                                 value={cardName}
@@ -86,7 +86,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                     }
                                 }}
                             />
-                    </div>
+                    </div> */}
                     {cards && cards.map((c,index) => (
                         <TodoCard
                             key={c.dateCreated}
