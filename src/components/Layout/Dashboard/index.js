@@ -73,7 +73,7 @@ const Dashboard = (props) => {
     const graph8 = sortedMetrics.map(el => el.fields[keysArray[7]] )
     
     
-    console.log(graph1)
+    // console.log(graph1)
     let months = []
 
     for(let month of graph1) {

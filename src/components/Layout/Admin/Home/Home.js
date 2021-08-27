@@ -36,9 +36,11 @@ const Home = (props) => {
         if(current_date >= expire) {
            return setOpen(true)
         }
-        dispatch(actionCreators.getAdminBoard(userId,()=>{}))
+        getBoards()
         dispatch(actionCreators.getAdminMetricsData(base_key))
     }, [])
+
+    const getBoards = () => {dispatch(actionCreators.getAdminBoard(userId,()=>{}))}
 
     const handleLogoutClick = () => {
             dispatch(actionCreators.removeUser())
@@ -292,9 +294,7 @@ const Home = (props) => {
                                                 dispatch(actionCreators.createBoard( name, (res) => {
                                                 if (res.success === true) {
                                                     setBoardName('')
-                                                    setTimeout(() => {
-                                                        dispatch(actionCreators.getBoards())
-                                                    }, 2000)
+                                                    getBoards()
                                                 }
                                             }))
                                             }

@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import {Droppable} from 'react-beautiful-dnd'
 import TodoCard from './TodoCard'
 import CloseIcon from '@material-ui/icons/Close'
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@material-ui/icons/Delete'
 import Loader from '../../../ModalUI/Loader'
 import * as actionCreators from '../../../store/actionCreators'
 import ListModal from '../../../ModalUI/ListModal'
@@ -19,7 +19,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
     const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
 
-    console.log(cardName)
+    // console.log(cardName)
 
     return (
         <div className="list-container">
@@ -73,19 +73,19 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                         {/* {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />} */}
                     </div>
                     <div className="add-card">
-                            {admin ? null : <input
+                            <input
                                 placeholder="Type.."
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onKeyUp={(e) => {
                                     if (e.key === 'Enter' && cardName) {
-                                        dispatch(actionCreators.createCard( listId, cardName,(res)=>{
+                                        dispatch(actionCreators.createAdminCard( listId, cardName,(res)=>{
                                             setCardName('')
                                             if(res.success) callback()
                                         }))
                                     }
                                 }}
-                            />}
+                            />
                     </div>
                     {cards && cards.map((c,index) => (
                         <TodoCard

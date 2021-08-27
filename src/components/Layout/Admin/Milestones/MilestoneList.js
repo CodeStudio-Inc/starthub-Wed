@@ -47,19 +47,19 @@ const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveC
                         {/* {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '25px' }} />} */}
                     </div>
                     <div className="add-card">
-                            {admin ? null : <input
+                            <input
                                 placeholder="Type.."
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onKeyUp={(e) => {
                                     if (e.key === 'Enter' && cardName) {
-                                        dispatch(actionCreators.createCard( listId, cardName,(res)=>{
+                                        dispatch(actionCreators.createAdminCard( listId, cardName,(res)=>{
                                             setCardName('')
                                             if(res.success) callback()
                                         }))
                                     }
                                 }}
-                            />}
+                            />
                     </div>
                     {cards && cards.map((c,index) => (
                         <MilestoneCard

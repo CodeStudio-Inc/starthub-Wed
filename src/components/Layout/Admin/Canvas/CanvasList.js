@@ -25,19 +25,19 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
                         <MoreHorizIcon onClick={() => alert('Still Under Development')} className="close" style={{ fontSize: '25px',visibility:'hidden' }} />
                     </div>
                     <div className="add-card">
-                            {admin ? null : <input
+                            <input
                                 placeholder="Type.."
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onKeyUp={(e) => {
                                     if (e.key === 'Enter' && cardName) {
-                                        dispatch(actionCreators.createCard( listId, cardName,(res)=>{
+                                        dispatch(actionCreators.createAdminCard( listId, cardName,(res)=>{
                                             setCardName('')
                                             if(res.success) callback()
                                         }))
                                     }
                                 }}
-                            />}
+                            />
                     </div>
                     {cards && cards.map((c,index) => (
                         <CanvasCard

@@ -18,7 +18,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
     const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
 
-    console.log(cardName)
+    // console.log(cardName)
 
     return (
         <div className="list-container">

@@ -8,6 +8,12 @@ export const loadAction = () => {
     }
 }
 
+export const stopLoader = () => {
+    return {
+        type: actions.STOP_LOADER
+    }
+}
+
 export const setUsers = (data) => {
     return {
         type: actions.SET_ADMIN_USER,
@@ -101,7 +107,8 @@ export const getAdminLists = (userId, boardId,callback) => {
             }
         })
             .then(res => {
-                // console.log(res)
+                // console.log(res,'ff')
+                dispatch(stopLoader())
                 dispatch(setLists(res.data.lists))
                 callback({ success: true, res: res })
             })

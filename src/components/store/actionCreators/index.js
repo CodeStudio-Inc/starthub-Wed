@@ -8,6 +8,7 @@ export {
     createBoard,
     createList,
     createCard,
+    createAdminCard,
     getCanvasBoard,
     getMilestonesBoard,
     postBlog,

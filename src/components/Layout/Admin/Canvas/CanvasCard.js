@@ -41,7 +41,7 @@ export const CanvasCard = ({cardId, text, index,listId,cardIndex, setActiveCard}
         //                 provided.draggableProps.style
         //             )}
         //         >
-                    <div className="canvas-draggable">
+                    <div className="canvas-admin-draggable">
                         {visible ? null : <p>{text}</p>}
                         {visible ?
                             <div className="edit-card-row2">

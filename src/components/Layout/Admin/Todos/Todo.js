@@ -4,6 +4,7 @@ import * as actionCreators from '../../../store/actionCreators'
 import {DragDropContext} from 'react-beautiful-dnd'
 import TodoList from './TodoList'
 import ModalUI from '../../../ModalUI'
+import Loader from '../../../ModalUI/Loader'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 const Milestones = (props) => {
@@ -24,9 +25,10 @@ const Milestones = (props) => {
     const expire = useSelector(state => state.auth.tokenExpiration)
     const admin = useSelector(state => state.auth.admin)
     const dragdropLoading = useSelector(state => state.requests.loading)
+    // console.log(dragdropLoading)
 
-    const todoLists = lists.filter(el => el.creator === creator)
-    console.log(boardId,'gg')
+    lists.filter(el => el.creator === creator || el.creator === '610da0a97a707c2bacf695d3' || el.creator === '610d180215fa3323e44593a9' || el.creator === '60d477d35fbd800004c84f7c' || el.creator === '611e1c76e1c6042cb8c5d4fa')
+    // console.log(lists,'gg')
 
     const dispatch = useDispatch()
 
@@ -46,10 +48,10 @@ const Milestones = (props) => {
 
     const openEditModal = () => setOpen(true)
 
-    const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
+    const getLists = () => dispatch(actionCreators.getAdminLists(creator,boardId,()=>{}))
 
-    const statements = todoLists.filter(el => el.name.includes('Statement'))
-    const Milestones = todoLists.filter(el => el.name.includes('Milestone'))
+    const statements = lists.filter(el => el.name.includes('Statement'))
+    const Milestones = lists.filter(el => el.name.includes('Milestone'))
     // console.log("object", Milestones)
 
     const onDragEnd = (result) => {
@@ -66,8 +68,8 @@ const Milestones = (props) => {
                     draggableId
                 ))
 
-                const newDestList = todoLists.find(el => el._id === destination.droppableId)
-                const newSrcList = todoLists.find(el => el._id === source.droppableId)
+                const newDestList = lists.find(el => el._id === destination.droppableId)
+                const newSrcList = lists.find(el => el._id === source.droppableId)
 
                 dispatch(actionCreators.cardIndexUpdate(source.droppableId, destination.droppableId,newSrcList, newDestList, () => {
                     getLists()
@@ -85,13 +87,14 @@ const Milestones = (props) => {
                         <ArrowBackIcon className="back-icon"  style={{ fontSize: '20px', color:'#dfa126' }} onClick={() => props.history.goBack()} />
                 </div>
                 <div className="todo-row">
+                    {dragdropLoading ? <Loader/> : null}
             {show ? <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>: null}
-            {todoLists && todoLists.map(l => (
+            {lists && lists.map(l => (
                 <TodoList
                     key={l._id}
                     listId={l._id}

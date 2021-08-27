@@ -18,6 +18,11 @@ const requests = (state = initialState, action) => {
                 loading: true
             })
 
+        case actions.STOP_LOADER:
+        return updateObject(state, {
+            loading: false
+        })
+
         case actions.SET_ADMIN_USER:
             return updateObject(state, {
                 loading: false,

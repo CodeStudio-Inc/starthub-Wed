@@ -24,7 +24,7 @@ const Canvas = (props) => {
     const lists = useSelector(state => state.admin.lists)
     const expire = useSelector(state => state.auth.tokenExpiration)
 
-    console.log(lists)
+    // console.log(lists)
     const boardName = props.location.state.data.name
     const boardId = props.location.state.data._id
     const creator = props.location.state.data.creator
@@ -52,7 +52,7 @@ const Canvas = (props) => {
            return setShow(true)
         }
         getLists()
-        dispatch(actionCreators.getAdminLists(creator,boardId,() => { }))
+        
     }, [])
 
     const handleLogoutClick = () => {
@@ -60,7 +60,7 @@ const Canvas = (props) => {
             props.history.push('/')
     }
 
-    const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
+    const getLists = () => dispatch(actionCreators.getAdminLists(creator,boardId,() => { }))
 
     const openEditModal = () => setOpen(true)
 

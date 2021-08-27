@@ -593,6 +593,28 @@
 	font-weight: 400 !important;
 }
 
+.canvas-admin-draggable {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px;
+	margin-bottom: 0.5rem;
+	width: 95%;
+	cursor: grab;
+	background: rgba(253, 232, 176, 0.418) !important;
+	box-sizing: border-box;
+	min-height: 50px;
+	height: 15%;
+	-webkit-user-drag: none !important;
+	user-select: none;
+}
+
+.canvas-admin-draggable p {
+	color: rgba(0, 0, 0, 0.8) !important;
+	font-size: 14px !important;
+	font-weight: 400 !important;
+}
+
 .dragging {
 	background: #5c420d;
 	box-shadow: 1px, 1px, 5px rgba(0, 0, 0, 0.1);

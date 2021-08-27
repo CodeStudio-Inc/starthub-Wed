@@ -266,7 +266,7 @@ export const createMilestoneBoard = (callback) => {
 export const createBoard = (name, callback) => {
     return (dispatch, getState) => {
 
-        dispatch(loadAction())
+        // dispatch(loadAction())
 
         const token = getState().auth.token
 
@@ -283,7 +283,7 @@ export const createBoard = (name, callback) => {
         })
             .then(res => {
                 // console.log(res)
-                dispatch(stopLoader())
+                // dispatch(stopLoader())
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -304,6 +304,42 @@ export const createList = (id, name, callback) => {
         }
 
         axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(stopLoader())
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+}
+
+export const createAdminCard = (listId, name, callback) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token;
+        const lists = getState().admin.lists
+        let cardIndex;
+
+        const list = lists.find(l => l._id === listId);
+
+        if(list.cards.length === 0) cardIndex = 0;
+        if(list.cards.length > 0) cardIndex = parseInt(list.cards.length)
+        const data = {
+           cardIndex, name,listId, description: '', dueDate: ''
+        }
+
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card`, data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -484,7 +520,7 @@ export const getBoards = () => {
             }
         })
             .then(res => {
-
+                dispatch(stopLoader())
                 dispatch(setBoards(res.data.boards))
             })
             .catch(error => {

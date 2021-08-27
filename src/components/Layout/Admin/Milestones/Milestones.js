@@ -39,7 +39,6 @@ const Milestones = (props) => {
            return setOpen(true)
         }
         getLists()
-        dispatch(actionCreators.getAdminLists(creator,boardId,() => { }))
     }, [])
 
     const handleLogoutClick = () => {
@@ -49,7 +48,7 @@ const Milestones = (props) => {
 
     const openEditModal = () => setOpen(true)
 
-    const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
+    const getLists = () => dispatch(actionCreators.getAdminLists(creator,boardId,() => { }))
 
     const statements = todoLists.filter(el => el.name.includes('Statement'))
     const Milestones = todoLists.filter(el => el.name.includes('Milestone'))
