@@ -20,10 +20,11 @@ const Home = (props) => {
     const users = useSelector(state => state.admin.users)
     const loading = useSelector(state => state.requests.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
-    // console.log(boardId,'ff')
+    const username = useSelector(state => state.auth.username)
 
-    const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
+    const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones' && el.startup === username)
     const filtereUsers = users.filter(el => el.admin === false)
+    // console.log(filtereBoards)
     
     
     const dispatch = useDispatch()
@@ -139,7 +140,7 @@ const Home = (props) => {
                                                 setVisible(true)
                                             }}/>}
                                     </div>     
-
+                                    {board.mentor ? <h6>Created by {board.mentor}</h6> : null}
                                 </div>
                             ))}
                             <input
@@ -149,7 +150,7 @@ const Home = (props) => {
                                 onChange={(e) => setBoardName(e.target.value)}
                                 onKeyUp={(e) => {
                                             if (e.key === 'Enter' && name) {
-                                                dispatch(actionCreators.createBoard( name, (res) => {
+                                                dispatch(actionCreators.createBoard( name, username, (res) => {
                                                 if (res.success === true) {
                                                     setBoardName('')
                                                     setTimeout(() => {

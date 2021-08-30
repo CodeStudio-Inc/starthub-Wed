@@ -111,6 +111,12 @@
 	cursor: pointer;
 }
 
+.board1-card h6 {
+	color: rgba(0, 0, 0, 0.5);
+	font-size: 12px;
+	font-weight: 400;
+}
+
 .statement-row {
 	display: flex;
 	align-items: flex-start;

@@ -263,7 +263,7 @@ export const createMilestoneBoard = (callback) => {
     }
 }
 
-export const createBoard = (name, callback) => {
+export const createAdminBoard = (name, startup, mentor, callback) => {
     return (dispatch, getState) => {
 
         // dispatch(loadAction())
@@ -271,8 +271,44 @@ export const createBoard = (name, callback) => {
         const token = getState().auth.token
 
         const data = {
-            name
+            name,
+            startup,
+            mentor
         }
+
+        console.log(data)
+
+        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/board', data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                // dispatch(stopLoader())
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const createBoard = (name, startup, callback) => {
+    return (dispatch, getState) => {
+
+        // dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        const data = {
+            name,
+            startup
+        }
+
+        console.log(data)
 
         axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/board', data, {
             headers: {

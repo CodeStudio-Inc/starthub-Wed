@@ -17,15 +17,17 @@ const Home = (props) => {
     const loading = useSelector(state => state.admin.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
     const metrics = useSelector(state => state.admin.metrics)
+    const mentor = useSelector(state => state.auth.username)
+    // console.log(mentor)
 
     const userId = props.location.state.data._id
     const username = props.location.state.data.username
     const base_key = props.location.state.data.base_key
-    // console.log(metrics,'metrics')
+    // console.log(username,'metrics')
 
-    const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones')
+    const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones' && el.startup === username )
 
-    // console.log(userId,'rf')
+    // console.log(filteredBoards,'rf')
 
     const dispatch = useDispatch()
 
@@ -284,14 +286,14 @@ const Home = (props) => {
 
                                 </div>
                             ))}
-                            {/* <input
+                            <input
                                 className="admin-add-list"
                                 placeholder="+ Add New Board"
                                 value={name}
                                 onChange={(e) => setBoardName(e.target.value)}
                                 onKeyUp={(e) => {
                                             if (e.key === 'Enter' && name) {
-                                                dispatch(actionCreators.createBoard( name, (res) => {
+                                                dispatch(actionCreators.createAdminBoard( name, username, mentor, (res) => {
                                                 if (res.success === true) {
                                                     setBoardName('')
                                                     getBoards()
@@ -299,7 +301,7 @@ const Home = (props) => {
                                             }))
                                             }
                                         }}
-                            /> */}
+                            />
                             </div>
                         <div className="boards-name">
                                 <h2>{username} Lean Canvas</h2>

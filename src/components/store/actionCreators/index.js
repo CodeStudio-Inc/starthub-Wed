@@ -6,6 +6,7 @@ export {
     getCardsOnBoard,
     getMetricsData,
     createBoard,
+    createAdminBoard,
     createList,
     createCard,
     createAdminCard,
