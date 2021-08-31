@@ -39,7 +39,7 @@ const Home = (props) => {
         dispatch(actionCreators.getBoards())
         dispatch(actionCreators.getUsers())
     }, [])
-
+    
 
     const handleLogoutClick = () => {
             dispatch(actionCreators.removeUser())

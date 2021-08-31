@@ -249,6 +249,8 @@ const Home = (props) => {
         ]
     }
 
+    
+
 
     return (
         <div className="main-container">
@@ -282,7 +284,8 @@ const Home = (props) => {
                                         }
                                     }))}
                                 >
-                                    <h3>{board.name}</h3>
+                                    {board.name.length > 17 ? <h6>{board.name}</h6> : <h4>{board.name}</h4>}
+                                    
 
                                 </div>
                             ))}
@@ -318,7 +321,7 @@ const Home = (props) => {
                                     }
                                 }))}
                             >
-                                    <h3>{ canvas.name}</h3>
+                                    <h4>{ canvas.name}</h4>
 
                         </div>
                         ))}
@@ -338,7 +341,7 @@ const Home = (props) => {
                                     }
                                 }))}
                             >
-                                    <h3>{ milestone.name}</h3>
+                                    <h4>{ milestone.name}</h4>
 
                         </div>
                         ))}
