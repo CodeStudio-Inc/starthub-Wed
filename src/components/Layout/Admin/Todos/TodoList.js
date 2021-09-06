@@ -19,7 +19,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
     const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
 
-    // console.log(cardName)
+    // console.log(visible)
 
     return (
         <div className="list-container">
@@ -59,20 +59,19 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                     onKeyUp={(e) => {
                                         if (e.key === 'Enter' && listName) {
                                             dispatch(actionCreators.updateList(listId,listName,()=>{
-                                            dispatch(actionCreators.getListsOnBoard(()=>{
+                                                callback()
                                                 setVisible(false)
-                                            }))
                                         } ))
                                         }
                                     }}
                                 />
                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '20px' }} />
-                                <DeleteIcon onClick={() => setDeleteModal(true)} className="close" style={{ fontSize: '20px' }} />
+                                {/* <DeleteIcon onClick={() => setDeleteModal(true)} className="close" style={{ fontSize: '20px' }} /> */}
                             </div>
                             : null}
-                        {/* {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />} */}
+                        {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />}
                     </div>
-                    {/* <div className="add-card">
+                    <div className="add-card">
                             <input
                                 placeholder="Type.."
                                 value={cardName}
@@ -86,7 +85,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                     }
                                 }}
                             />
-                    </div> */}
+                    </div>
                     {cards && cards.map((c,index) => (
                         <TodoCard
                             key={c.dateCreated}
@@ -96,6 +95,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                             listId={listId}
                             index={index}
                             open={open}
+                            callback={callback}
                             setActiveCard={setActiveCard}
                         />
                     ))}

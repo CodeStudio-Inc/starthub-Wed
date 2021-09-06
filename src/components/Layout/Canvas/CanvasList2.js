@@ -48,6 +48,7 @@ const CanvasList2 = ({listId,listNumber, title, cards,boardId,callback, open, se
                             index={index}
                             object={c}
                             open={open}
+                            callback={callback}
                             setActiveCard={setActiveCard}
                         />
                     ))}

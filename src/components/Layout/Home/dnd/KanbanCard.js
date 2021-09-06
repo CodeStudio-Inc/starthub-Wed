@@ -4,8 +4,9 @@ import {Draggable} from 'react-beautiful-dnd'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
 import * as actionCreators from '../../../store/actionCreators'
+import DeleteIcon from '@material-ui/icons/Delete'
 
-export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId}) => {
+export const KanbanCard = ({cardId, text, index,cardIndex,callback, setActiveCard, listId}) => {
 
     const [cardName, setCardName] = useState('')
     const [visible, setVisible] = useState(false)
@@ -62,6 +63,17 @@ export const KanbanCard = ({cardId, text, index,cardIndex, setActiveCard, listId
                                     }}
                                 />
                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
+                                <DeleteIcon 
+                                className="close" style={{ fontSize: '20px' }}
+                                onClick={() => dispatch(actionCreators.deleteCard(listId,cardIndex,(res) => 
+                                { 
+                                    callback() 
+                                    if(res.success) 
+                                    {
+                                        setVisible(false)
+                                    }
+                                    }))
+                                }  />
                             </div>
                             : null}
                         {visible ? null : <div className="icon-row">

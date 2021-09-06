@@ -93,6 +93,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                             text={c.name}
                             cardIndex={c.cardIndex}
                             listId={listId}
+                            callback={callback}
                             index={index}
                             open={open}
                             setActiveCard={setActiveCard}

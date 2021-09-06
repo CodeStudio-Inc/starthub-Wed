@@ -249,9 +249,6 @@ const Home = (props) => {
         ]
     }
 
-    
-
-
     return (
         <div className="main-container">
             {open ? <ModalUI>

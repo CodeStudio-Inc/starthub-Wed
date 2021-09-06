@@ -558,7 +558,6 @@
 	background: #fff;
 }
 
-
 .draggable {
 	display: flex;
 	align-items: center;
@@ -566,16 +565,17 @@
 	padding: 5px;
 	overflow: hidden;
 	width: 100%;
+	margin-bottom: 0.5rem;
 	cursor: grab;
-	background: rgba(253, 232, 176, 0.418) !important;
+	background: rgba(253, 232, 176, 0.418);
 	box-sizing: border-box;
 	height: 100%;
 }
 
 .draggable p {
-	color: rgba(0, 0, 0, 0.8) !important;
-	font-size: 14px !important;
-	font-weight: 400 !important;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 12px;
+	font-weight: 500;
 }
 
 .canvas-draggable {
@@ -583,14 +583,13 @@
 	align-items: center;
 	justify-content: space-between;
 	padding: 5px;
-	margin-bottom: 0.5rem;
+	overflow: hidden;
 	width: 100%;
+	margin-bottom: 0.5rem;
 	cursor: grab;
-	background: rgba(253, 232, 176, 0.418) !important;
+	background: rgba(253, 232, 176, 0.418);
 	box-sizing: border-box;
 	height: 100%;
-	-webkit-user-drag: none !important;
-	user-select: none;
 }
 
 .canvas-draggable p {

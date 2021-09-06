@@ -160,7 +160,7 @@
 
 .drop-down-modal {
 	position: absolute;
-	transform: translatey(30%) !important;
+	transform: translatey(28%) !important;
 	display: flex;
 	align-items: flex-start;
 	justify-content: flex-start;

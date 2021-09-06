@@ -538,12 +538,11 @@
 	padding: 5px;
 	overflow: hidden;
 	width: 100%;
-	/* border-radius: 3px; */
+	margin-bottom: 0.5rem;
 	cursor: grab;
-	background: rgb(255, 255, 255);
+	background: rgba(253, 232, 176, 0.418);
 	box-sizing: border-box;
 	height: 100%;
-	/* margin-bottom: 1rem; */
 }
 
 .draggable p {

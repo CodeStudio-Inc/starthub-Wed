@@ -70,6 +70,7 @@ const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveC
                             listId={listId}
                             index={index}
                             open={open}
+                            callback={callback}
                             setActiveCard={setActiveCard}
                         />
                     ))}

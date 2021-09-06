@@ -46,7 +46,7 @@ const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveC
                             : null}
                         {/* {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '25px' }} />} */}
                     </div>
-                    {/* <div className="add-card">
+                    <div className="add-card">
                             <input
                                 placeholder="Type.."
                                 value={cardName}
@@ -60,7 +60,7 @@ const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveC
                                     }
                                 }}
                             />
-                    </div> */}
+                    </div>
                     {cards && cards.map((c,index) => (
                         <MilestoneCard
                             key={c.dateCreated}
@@ -70,6 +70,7 @@ const MilestoneList = ({listId, title, cards,boardId, callback, open, setActiveC
                             listId={listId}
                             index={index}
                             open={open}
+                            callback={callback}
                             setActiveCard={setActiveCard}
                         />
                     ))}

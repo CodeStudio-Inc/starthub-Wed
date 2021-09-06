@@ -693,12 +693,16 @@ export const getMilestonesBoard = () => {
     }
 }
 
-export const deleteCard = (id) => {
+export const deleteCard = (listId, cardIndex, callback) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/${id}`, {
+        const data = {
+            cardIndex
+        }
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/delete/${listId}`,data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -706,8 +710,11 @@ export const deleteCard = (id) => {
             }
         })
             .then(res => {
+                callback({ success: true, res: res })
                 // console.log(res)
-                dispatch(deleteCardAction(id))
+                // dispatch(setLists(res.data.list))
+                // dispatch(setCanvasLists(res.data.list))
+                // dispatch(setMilestoneLists(res.data.list))
             })
             .catch(error => {
                 console.log(error)

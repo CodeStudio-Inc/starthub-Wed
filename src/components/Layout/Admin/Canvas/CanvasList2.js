@@ -25,7 +25,7 @@ const CanvasList2 = ({listId,listNumber, title, cards,boardId,callback, open, se
                         <h6>{listNumber}</h6>
                         <MoreHorizIcon className="close" style={{ fontSize: '25px', visibility:'hidden' }} />
                     </div>
-                    {/* <div className="add-card">
+                    <div className="add-card">
                             <input
                                 placeholder="Type.."
                                 value={cardName}
@@ -39,7 +39,7 @@ const CanvasList2 = ({listId,listNumber, title, cards,boardId,callback, open, se
                                     }
                                 }}
                             />
-                    </div> */}
+                    </div>
                     {cards && cards.map((c,index) => (
                         <CanvasCard
                             key={c.dateCreated}
@@ -48,6 +48,7 @@ const CanvasList2 = ({listId,listNumber, title, cards,boardId,callback, open, se
                             index={index}
                             object={c}
                             open={open}
+                            callback={callback}
                             setActiveCard={setActiveCard}
                         />
                     ))}

@@ -50,6 +50,7 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
                             index={index}
                             card={c}
                             open={open}
+                            callback={callback}
                             setActiveCard={setActiveCard}
                         />
                     ))}

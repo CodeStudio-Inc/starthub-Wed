@@ -35,6 +35,7 @@ const SignUp = (props) => {
         { id: '8', value: 'WAGE Spices', link: 'https://airtable.com/shrzXfvNSq8KQR3Zv', key:'apps7QYiTB1PUEnNV' },
         { id: '9', value: 'Isharc', link: 'https://airtable.com/shr47nlDolKpj03Hv', key:'appNClAqhvh57qFEJ' },
         { id: '10', value: 'Economic Misfit', link: 'https://airtable.com/shrdriyhRdFT3nOjo', key:'appXH1YhoI4ll5sxT'  },
+        { id: '11', value: 'Tech Rafiki', link: 'https://airtable.com/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  },
     ]
 
 
