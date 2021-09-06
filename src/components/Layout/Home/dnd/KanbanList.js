@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import {Droppable} from 'react-beautiful-dnd'
 import KanbanCard from './KanbanCard'
 import CloseIcon from '@material-ui/icons/Close'
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@material-ui/icons/Delete'
 import Loader from '../../../ModalUI/Loader'
 import * as actionCreators from '../../../store/actionCreators'
 

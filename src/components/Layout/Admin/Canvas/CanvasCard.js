@@ -43,7 +43,7 @@ export const CanvasCard = ({cardId, text, index,listId,cardIndex,callback, setAc
         //             )}
         //         >
                     <div className="canvas-admin-draggable">
-                        {visible ? null : <p>{text}</p>}
+                        {visible ? null : <span className="span-text">{text.length > 100 ? <h6>{text}</h6>: <h5>{text}</h5>}</span>}
                         {visible ?
                             <div className="edit-card-row2">
                                 <input

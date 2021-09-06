@@ -608,7 +608,7 @@
 	cursor: grab;
 	background: rgba(253, 232, 176, 0.418) !important;
 	box-sizing: border-box;
-	min-height: 50px;
+	min-height: 100px;
 	height: 15%;
 	-webkit-user-drag: none !important;
 	user-select: none;
@@ -618,6 +618,15 @@
 	color: rgba(0, 0, 0, 0.8) !important;
 	font-size: 14px !important;
 	font-weight: 400 !important;
+}
+
+.span-text h5 {
+	font-weight: normal;
+}
+
+.span-text h6 {
+	font-weight: normal;
+	
 }
 
 .dragging {
