@@ -319,6 +319,7 @@ export const createBoard = (name, startup, callback) => {
         })
             .then(res => {
                 // console.log(res)
+                dispatch(setBoards(res.data.boards))
                 // dispatch(stopLoader())
                 callback({ success: true, res: res })
             })
@@ -349,6 +350,7 @@ export const createList = (id, name, callback) => {
             .then(res => {
                 // console.log(res)
                 dispatch(stopLoader())
+                dispatch(setLists(res.data.lists))
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -445,7 +447,7 @@ export const updateList = (id, name, callback) => {
             }
         })
             .then(res => {
-                // console.log(res)
+                dispatch(setLists(res.data.lists))
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -457,7 +459,7 @@ export const updateList = (id, name, callback) => {
 export const updateBoard = (id, name, callback) => {
     return (dispatch, getState) => {
 
-        dispatch(loadAction())
+        // dispatch(loadAction())
         const token = getState().auth.token
 
         const data = {
@@ -471,9 +473,10 @@ export const updateBoard = (id, name, callback) => {
             }
         })
             .then(res => {
-                // console.log(res)
+                // console.log(res.data)
                 callback({ success: true, res: res })
-                dispatch(stopLoader())
+                dispatch(setBoards(res.data.boards))
+                // dispatch(stopLoader())
 
             })
             .catch(error => {
@@ -499,6 +502,7 @@ export const updateCard = (id, cardIndex, name, callback) => {
         })
             .then(res => {
                 // console.log(res)
+                dispatch(setLists(res.data.lists))
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -710,6 +714,7 @@ export const deleteCard = (listId, cardIndex, callback) => {
             }
         })
             .then(res => {
+                dispatch(setLists(res.data.lists))
                 callback({ success: true, res: res })
                 // console.log(res)
                 // dispatch(setLists(res.data.list))
@@ -768,25 +773,26 @@ export const getMetricsData = () => {
     }
 }
 
-export const archiveCard = (id) => {
+export const archiveList = (id,callback) => {
     return (dispatch, getState) => {
-        dispatch(loadAction())
+        // dispatch(loadAction())
         const token = getState().auth.token
         
         const data = {
             archive: true
         }
 
-        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/archive/${id}`,data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/archive/${id}`,data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
-                Authorization: token
+                Authorization: token,
             }
         })
             .then(res => {
-                // console.log(res)
-                dispatch(deleteCardAction(id))
+                // console.log(res.data)
+                dispatch(setLists(res.data.lists))
+                callback({ success: true, res: res })
             })
             .catch(error => {
                 console.log(error)
@@ -794,16 +800,16 @@ export const archiveCard = (id) => {
     }
 }
 
-export const archiveList = (id) => {
+export const unarchiveList = (id,callback) => {
     return (dispatch, getState) => {
-        dispatch(loadAction())
+        // dispatch(loadAction())
         const token = getState().auth.token
-
+        
         const data = {
             archive: true
         }
 
-        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/archive/${id}`, data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/restore-list/${id}`,data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -811,14 +817,72 @@ export const archiveList = (id) => {
             }
         })
             .then(res => {
-                // console.log(res)
-                dispatch(deleteListAction(id))
+                // console.log(res.data)
+                dispatch(setLists(res.data.lists))
+                callback({ success: true, res: res })
             })
             .catch(error => {
                 console.log(error)
             })
     }
 }
+
+
+
+export const archiveBoard = (id,callback) => {
+    return (dispatch, getState) => {
+        // dispatch(loadAction())
+        const token = getState().auth.token
+        
+        const data = {
+            archive: true
+        }
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/archive/${id}`,data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res.data)
+                dispatch(setBoards(res.data.boards))
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const unarchiveBoard = (id,callback) => {
+    return (dispatch, getState) => {
+        // dispatch(loadAction())
+        const token = getState().auth.token
+        
+        const data = {
+            archive: true
+        }
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/restore-board/${id}`,data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res.data)
+                dispatch(setBoards(res.data.boards))
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
 
 
 

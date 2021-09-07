@@ -20,8 +20,10 @@ export {
     updateCard,
     createCanvasBoard,
     createMilestoneBoard,
-    archiveCard,
+    archiveBoard,
+    unarchiveBoard,
     archiveList,
+    unarchiveList,
     dragCardWithInList,
     cardIndexUpdate
 } from './requests'

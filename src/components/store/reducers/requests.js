@@ -6,6 +6,7 @@ const initialState = {
     expense: [],
     metrics: [],
     boards: [],
+    on_create_boards:[],
     lists: [],
     all_lists: [],
     canvas_lists: [],

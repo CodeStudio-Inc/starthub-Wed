@@ -5,6 +5,9 @@ import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Cards from './Cards'
+import ArchiveIcon from '@material-ui/icons/Archive'
+import UnarchiveIcon from '@material-ui/icons/Unarchive'
+import moment from 'moment'
 
 
 
@@ -13,6 +16,7 @@ const Card = (props) => {
 
     const [listName, setListName] = useState('')
     const [show, setShow] = useState(false)
+    const [archive, setArchive] = useState(false)
     const [open, setOpen] = useState(false)
     const [cardName, setCardName] = useState('')
     const [activeListId, setActiveListId] = useState(null)
@@ -23,7 +27,8 @@ const Card = (props) => {
     const lists = useSelector(state => state.requests.lists)
     // console.log(lists, 'lists')
     
-    const todoLists = lists && lists.filter(el => el.boardId === boardId)
+    const todoLists = lists && lists.filter(el => el.boardId === boardId && el.archive === false)
+    const archivedtodoLists = lists && lists.filter(el => el.boardId === boardId && el.archive === true)
     const expire = useSelector(state => state.auth.tokenExpiration)
     // console.log(todoLists)
 
@@ -60,32 +65,48 @@ const Card = (props) => {
 
     return (
         <div className="main-container">
+            {archive ? 
+                <ModalUI>
+                     <div className="archive">
+                            <div className="archive-header">
+                                <h4>Archived Lists</h4>
+                            </div>
+                        {archivedtodoLists.map(list => (
+                            <div style={{width:'100%'}}>
+                                <div className="archive-row">
+                                    <div style={{display:'flex',alignItems:'center', justifyContent:'center'}}>
+                                        <UnarchiveIcon  className="close" style={{ fontSize: '25px' }} />
+                                        <h5>{list.name}</h5>
+                                    </div>
+                                    <h5> created {moment(list.dateCreated).fromNow()}</h5>
+                                    <button
+                                        onClick={() => dispatch(actionCreators.unarchiveList(list._id, (res) => {
+                                            if(res.success) setArchive(false)
+                                        }))}
+                                    >Restore List</button>
+                                </div>
+                                <div className="archive-separator"/>
+                            </div>
+                        ))}
+                        <button onClick={() => setArchive(false)}>Exit</button>
+                    </div>
+                </ModalUI>
+            : null}
             {show ? <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>: null}
-            {open ? <ModalUI setOpen={setOpen}>
-                <div className="create-board-column">
-                    <div className="close-row">
-                        <p>Create List</p>
-                        <CloseIcon onClick={() => setOpen(false)} className="close" style={{ fontSize: '20px' }} />
-                    </div>
-                    <div className="create-board-row">
-                        <input
-                            type="text"
-                            value={listName}
-                            placeholder="List Name"
-                            onChange={(e) => setListName(e.target.value)}
-                        />
-                        <button onClick={createList}>Create</button>
-                    </div>
-                </div>
-            </ModalUI> : null}
             <div className="right-column-content">
                 <div className="boards-header">
                     <h2>{boardName}</h2>
+                    {archivedtodoLists.length > 0 ?
+                            <div className="icon-header"  onClick={() => setArchive(true)}>
+                                 <ArchiveIcon className="close" style={{ fontSize: '25px' }} />
+                                 <p>Archive</p>
+                            </div>
+                        : null}
                     <div className="edit-row" onClick={() => props.history.goBack()}>
                         <ArrowBackIcon  style={{ fontSize: '20px', color:'#dfa126' }} />
                         <h5>Boards</h5>

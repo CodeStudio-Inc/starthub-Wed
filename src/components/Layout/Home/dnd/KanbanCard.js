@@ -54,10 +54,8 @@ export const KanbanCard = ({cardId, text, index,cardIndex,callback, setActiveCar
                                     onChange={(e) => setCardName(e.target.value)}
                                     onKeyUp={(e) => {
                                         if (e.key === 'Enter' && cardName) {
-                                            dispatch(actionCreators.updateCard(listId,cardIndex,cardName,()=>{
-                                            dispatch(actionCreators.getListsOnBoard(()=>{
-                                                setVisible(false)
-                                            }))
+                                            dispatch(actionCreators.updateCard(listId,cardIndex,cardName,(res)=>{
+                                                if(res.success) setVisible(false)
                                         } ))
                                         }
                                     }}
@@ -66,12 +64,8 @@ export const KanbanCard = ({cardId, text, index,cardIndex,callback, setActiveCar
                                 <DeleteIcon 
                                 className="close" style={{ fontSize: '20px' }}
                                 onClick={() => dispatch(actionCreators.deleteCard(listId,cardIndex,(res) => 
-                                { 
-                                    callback() 
-                                    if(res.success) 
-                                    {
-                                        setVisible(false)
-                                    }
+                                    { 
+                                    if(res.success) setVisible(false)
                                     }))
                                 }  />
                             </div>

@@ -57,16 +57,19 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                     onChange={(e) => setListName(e.target.value)}
                                     onKeyUp={(e) => {
                                         if (e.key === 'Enter' && listName) {
-                                            dispatch(actionCreators.updateList(listId,listName,()=>{
-                                            dispatch(actionCreators.getListsOnBoard(()=>{
-                                                setVisible(false)
-                                            }))
+                                            dispatch(actionCreators.updateList(listId,listName,(res)=>{
+                                                if(res.success) setVisible(false)
                                         } ))
                                         }
                                     }}
                                 />
                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '20px' }} />
-                                <DeleteIcon onClick={() => setDeleteModal(true)} className="close" style={{ fontSize: '20px' }} />
+                                <DeleteIcon 
+                                    onClick={() => dispatch(actionCreators.archiveList(listId,(res)=>{
+                                                    if(res.success) setVisible(false)
+                                        } ))} 
+                                    className="close" style={{ fontSize: '20px' }} 
+                                />
                             </div>
                             : null}
                         {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />}
@@ -79,8 +82,10 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                 onKeyUp={(e) => {
                                     if (e.key === 'Enter' && cardName) {
                                         dispatch(actionCreators.createCard( listId, cardName,(res)=>{
-                                            setCardName('')
-                                            if(res.success) callback()
+                                            if(res.success) {
+                                                callback()
+                                                setCardName('')
+                                            }
                                         }))
                                     }
                                 }}
