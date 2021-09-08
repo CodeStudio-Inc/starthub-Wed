@@ -5,15 +5,14 @@ import {Droppable} from 'react-beautiful-dnd'
 import KanbanCard from './KanbanCard'
 import CloseIcon from '@material-ui/icons/Close'
 import DeleteIcon from '@material-ui/icons/Delete'
-import Loader from '../../../ModalUI/Loader'
 import * as actionCreators from '../../../store/actionCreators'
 
-const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
+
+const KanbanList = ({listId, title, cards,boardId,archivedtodoLists, callback, open, setActiveCard,archive,setArchive}) => {
 
     const [cardName, setCardName] = useState('')
     const [listName, setListName] = useState('')
     const [visible, setVisible] = useState(false)
-    const [deleteModal, setDeleteModal] = useState(false)
 
     const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
@@ -22,24 +21,6 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
 
     return (
         <div className="list-container">
-             {deleteModal ?
-                <Loader>
-                    <div className="caution-container">
-                        <p>Deleting List will delete cards on the list as well, Are you sure you want to delete the list?</p>
-                        <div className="caution-btn">
-                            <button onClick={() => {
-                                setDeleteModal(false)
-                                setVisible(false)
-                            }}>No</button>
-                            <button onClick={() => dispatch(actionCreators.deleteList(listId, (res) => {
-                                setDeleteModal(false)
-                                if(res.success) callback()
-                            }))}>Yes</button>
-                        </div>
-                    </div>
-                </Loader>
-                : null
-            }
             <Droppable droppableId={String(listId)}>
             {provided => (
                 <div

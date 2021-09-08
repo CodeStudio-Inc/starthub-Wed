@@ -14,6 +14,7 @@ export {
     getMilestonesBoard,
     postBlog,
     deleteCard,
+    deleteBoard,
     deleteList,
     updateList,
     updateBoard,

@@ -13,7 +13,7 @@ import svg from '../../../assets/images/spinner.svg'
 import moment from 'moment'
 
 import './Home.css'
- const Cards = ({ todoLists, boardId, history, getLists}) => {
+ const Cards = ({ todoLists,archivedtodoLists, boardId, history, getLists,archive,setArchive}) => {
      
      const [cardName, setCardName] = useState('')
      const [cardDescription, setCardDescription] = useState('')
@@ -93,6 +93,9 @@ import './Home.css'
                     callback={getLists}
                     open={openEditModal}
                     setActiveCard={setActiveCard}
+                    archivedtodoLists={archivedtodoLists}
+                    setArchive={setArchive}
+                    archive={archive}
                 />
             ))}
             {admin ? null : <input

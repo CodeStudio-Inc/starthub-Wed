@@ -19,9 +19,12 @@ const Home = (props) => {
     const [boardName, setName] = useState('')
     const [visible, setVisible] = useState(false)
     const [boardId, setBoardId] = useState('')
+    const [deleteError, setDeleteError] = useState('')
 
     const Boards = useSelector(state => state.requests.boards)
     const admin = useSelector(state => state.auth.admin)
+    const userId = useSelector(state => state.auth.userId)
+    const lists = useSelector(state => state.requests.lists)
     const users = useSelector(state => state.admin.users)
     const loading = useSelector(state => state.requests.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
@@ -30,7 +33,7 @@ const Home = (props) => {
     const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones' && el.startup === username && el.archive === false)
     const archivedBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones' && el.startup === username && el.archive === true)
     const filtereUsers = users.filter(el => el.admin === false)
-    // console.log(Boards)
+    // console.log(userId)
     
     
     const dispatch = useDispatch()
@@ -44,6 +47,8 @@ const Home = (props) => {
         }
         dispatch(actionCreators.getBoards())
         dispatch(actionCreators.getUsers())
+        dispatch(actionCreators.getListsOnBoard(()=>{}))
+        setDeleteError()
     }, [])
     
 
@@ -68,21 +73,40 @@ const Home = (props) => {
                 <ModalUI>
                      <div className="archive">
                             <div className="archive-header">
-                                <h4>Archived Boards</h4>
+                                {deleteError ? <h3>{deleteError}</h3> : <h3>Archived Boards</h3>}
                             </div>
                         {archivedBoards.map(board => (
                             <div style={{width:'100%'}}>
                                 <div className="archive-row">
                                     <div style={{display:'flex',alignItems:'center', justifyContent:'center'}}>
                                         <UnarchiveIcon  className="close" style={{ fontSize: '25px' }} />
-                                        <h5>{board.name}</h5>
+                                        <h4>{board.name}</h4>
                                     </div>
-                                    <h5> created {moment(board.dateCreated).fromNow()}</h5>
+                                    <p> created {moment(board.dateCreated).fromNow()}</p>
                                     <button
                                         onClick={() => dispatch(actionCreators.unarchiveBoard(board._id, (res) => {
                                             if(res.success) setArchive(false)
                                         }))}
                                     >Restore board</button>
+                                    {board.creator === userId ? 
+                                    <button
+                                        className="delete-button"
+                                        onClick={() => {
+                                            let boardLists = lists && lists.filter(el => el.boardId === board._id)
+                                            if(boardLists.length === 0){
+                                                dispatch(actionCreators.deleteBoard(board._id,(res) => {
+                                            if(res.success) {
+                                                setArchive(false)
+                                                setDeleteError('')
+                                            }
+                                            }))
+                                            }
+                                            if( boardLists.length > 0) setDeleteError('First delete the lists on the board please!')
+                                        }}
+                                    >
+                                        Permanently Delete List
+                                    </button>
+                                    : null}
                                 </div>
                                 <div className="archive-separator"/>
                             </div>

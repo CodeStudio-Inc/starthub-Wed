@@ -727,10 +727,30 @@ export const deleteCard = (listId, cardIndex, callback) => {
     }
 }
 
+export const deleteBoard = (id,callback) => {
+    return (dispatch, getState) => {
+        const token = getState().auth.token
+
+        axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/${id}`, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setBoards(res.data.boards))
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
 export const deleteList = (id,callback) => {
     return (dispatch, getState) => {
-
-        dispatch(loadAction())
         const token = getState().auth.token
 
         axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, {
@@ -742,9 +762,8 @@ export const deleteList = (id,callback) => {
         })
             .then(res => {
                 // console.log(res)
-                dispatch(deleteListAction(id))
+                dispatch(setLists(res.data.lists))
                 callback({ success: true, res: res })
-                dispatch(stopLoader())
             })
             .catch(error => {
                 console.log(error)
@@ -826,8 +845,6 @@ export const unarchiveList = (id,callback) => {
             })
     }
 }
-
-
 
 export const archiveBoard = (id,callback) => {
     return (dispatch, getState) => {

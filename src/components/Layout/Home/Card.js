@@ -8,9 +8,6 @@ import Cards from './Cards'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import moment from 'moment'
-
-
-
 import './Home.css'
 const Card = (props) => {
 
@@ -23,14 +20,13 @@ const Card = (props) => {
 
     const boardName = props.location.state.data.name
     const boardId = props.location.state.data._id
+    const userId = useSelector(state => state.auth.userId)
     const loading = useSelector(state => state.requests.loading)
     const lists = useSelector(state => state.requests.lists)
-    // console.log(lists, 'lists')
     
     const todoLists = lists && lists.filter(el => el.boardId === boardId && el.archive === false)
     const archivedtodoLists = lists && lists.filter(el => el.boardId === boardId && el.archive === true)
     const expire = useSelector(state => state.auth.tokenExpiration)
-    // console.log(todoLists)
 
 
     const dispatch = useDispatch()
@@ -69,21 +65,31 @@ const Card = (props) => {
                 <ModalUI>
                      <div className="archive">
                             <div className="archive-header">
-                                <h4>Archived Lists</h4>
+                                <h3>Archived Lists</h3>
                             </div>
                         {archivedtodoLists.map(list => (
                             <div style={{width:'100%'}}>
                                 <div className="archive-row">
                                     <div style={{display:'flex',alignItems:'center', justifyContent:'center'}}>
                                         <UnarchiveIcon  className="close" style={{ fontSize: '25px' }} />
-                                        <h5>{list.name}</h5>
+                                        <h4>{list.name}</h4>
                                     </div>
-                                    <h5> created {moment(list.dateCreated).fromNow()}</h5>
+                                    <p> created {moment(list.dateCreated).fromNow()}</p>
                                     <button
                                         onClick={() => dispatch(actionCreators.unarchiveList(list._id, (res) => {
                                             if(res.success) setArchive(false)
                                         }))}
-                                    >Restore List</button>
+                                    >Restore list</button>
+                                    {list.creator === userId ? 
+                                    <button
+                                        className="delete-button"
+                                        onClick={() => dispatch(actionCreators.deleteList(list._id,(res) => {
+                                            if(res.success) setArchive(false)
+                                        }))}
+                                    >
+                                        Permanently Delete List
+                                    </button> 
+                                    : null}
                                 </div>
                                 <div className="archive-separator"/>
                             </div>
@@ -103,7 +109,7 @@ const Card = (props) => {
                     <h2>{boardName}</h2>
                     {archivedtodoLists.length > 0 ?
                             <div className="icon-header"  onClick={() => setArchive(true)}>
-                                 <ArchiveIcon className="close" style={{ fontSize: '25px' }} />
+                                 <ArchiveIcon onClick={() => setArchive(true)} className="close" style={{ fontSize: '25px' }} />
                                  <p>Archive</p>
                             </div>
                         : null}
@@ -114,8 +120,11 @@ const Card = (props) => {
                 </div>
                 <Cards
                     todoLists={todoLists}
+                    archivedtodoLists={archivedtodoLists}
                     boardId={boardId}
                     getLists={getListsOnBoard}
+                    setArchive={setArchive}
+                    archive={archive}
                 />
 
             </div>
