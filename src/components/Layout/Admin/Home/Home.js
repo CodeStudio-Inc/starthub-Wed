@@ -6,28 +6,43 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ModalUI from '../../../ModalUI'
 import moment from 'moment'
 import Graph from './Graph'
+import DeleteIcon from '@material-ui/icons/Delete'
+import ArchiveIcon from '@material-ui/icons/Archive'
+import UnarchiveIcon from '@material-ui/icons/Unarchive'
 
 import './Home.css'
 const Home = (props) => {
 
     const [name, setBoardName] = useState('')
     const [open, setOpen] = useState(false)
+    const [archive, setArchive] = useState(false)
+    const [boardName, setName] = useState('')
+    const [visible, setVisible] = useState(false)
+    const [boardId, setBoardId] = useState('')
+    const [deleteError, setDeleteError] = useState('')
 
     const boards = useSelector(state => state.admin.boards)
     const loading = useSelector(state => state.admin.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
     const metrics = useSelector(state => state.admin.metrics)
+    const lists = useSelector(state => state.admin.lists)
+    const userId = useSelector(state => state.auth.userId)
     const mentor = useSelector(state => state.auth.username)
     // console.log(mentor)
 
-    const userId = props.location.state.data._id
+    const startId = props.location.state.data._id
     const username = props.location.state.data.username
     const base_key = props.location.state.data.base_key
     // console.log(username,'metrics')
 
-    const filteredBoards = boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones' && el.startup === username )
+    const page = 'Todo'
+    const leanpage = 'Lean Canvas'
+    const milestonepage = 'Milestone'
 
-    // console.log(filteredBoards,'rf')
+    const filteredBoards = boards.filter(el => el.boardType === page && el.startup === username && el.archive === false )
+    const archivedBoards = boards.filter(el => el.boardType === page && el.startup === username && el.archive === true )
+
+    // console.log(boards,'rf')
 
     const dispatch = useDispatch()
 
@@ -42,7 +57,7 @@ const Home = (props) => {
         dispatch(actionCreators.getAdminMetricsData(base_key))
     }, [])
 
-    const getBoards = () => {dispatch(actionCreators.getAdminBoard(userId,()=>{}))}
+    const getBoards = () => {dispatch(actionCreators.getAdminBoard(startId,()=>{}))}
 
     const handleLogoutClick = () => {
             dispatch(actionCreators.removeUser())
@@ -53,11 +68,11 @@ const Home = (props) => {
     let milestone_array = []
     
     boards.forEach(element => {
-        if(element.name === 'Lean Canvas') canvas_array.push(element)
+        if(element.boardType === leanpage) canvas_array.push(element)
     });
 
     boards.forEach(element => {
-        if(element.name === 'Milestones') milestone_array.push(element)
+        if(element.boardType === milestonepage) milestone_array.push(element)
     });
 
     let empty_array = null
@@ -251,6 +266,52 @@ const Home = (props) => {
 
     return (
         <div className="main-container">
+            {archive ? 
+                <ModalUI>
+                     <div className="archive">
+                            <div className="archive-header">
+                                {deleteError ? <h3>{deleteError}</h3> : <h3>Archived Boards</h3>}
+                            </div>
+                        {archivedBoards.map(board => (
+                            <div style={{width:'100%'}}>
+                                <div className="archive-row">
+                                    <div style={{display:'flex',alignItems:'center', justifyContent:'center'}}>
+                                        <UnarchiveIcon  className="close" style={{ fontSize: '25px' }} />
+                                        <h4>{board.name}</h4>
+                                    </div>
+                                    <p> created {moment(board.dateCreated).fromNow()}</p>
+                                    <button
+                                        onClick={() => dispatch(actionCreators.unarchiveAdminBoard(board._id,startId, (res) => {
+                                            if(res.success) setArchive(false)
+                                        }))}
+                                    >Restore board</button>
+                                    {board.creator === userId ? 
+                                    <button
+                                        className="delete-button"
+                                        onClick={() => {
+                                            let boardLists = lists && lists.filter(el => el.boardId === board._id)
+                                            if(boardLists.length === 0){
+                                                dispatch(actionCreators.deleteBoard(board._id,(res) => {
+                                            if(res.success) {
+                                                setArchive(false)
+                                                setDeleteError('')
+                                            }
+                                            }))
+                                            }
+                                            if( boardLists.length > 0) setDeleteError('First delete the lists on the board please!')
+                                        }}
+                                    >
+                                        Permanently Delete Board
+                                    </button>
+                                    : null}
+                                </div>
+                                <div className="archive-separator"/>
+                            </div>
+                        ))}
+                        <button onClick={() => setArchive(false)}>Exit</button>
+                    </div>
+                </ModalUI>
+            : null}
             {open ? <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>
@@ -268,20 +329,46 @@ const Home = (props) => {
                             <div className="boards-column">
                                 <div className="boards-name">
                                 <h2>{username} Todos</h2>
-                            </div>
+                                {archivedBoards.length > 0 ?
+                                    <div className="icon-header"  onClick={() => setArchive(true)}>
+                                            <ArchiveIcon className="close" style={{ fontSize: '25px' }} />
+                                            <p>Archive</p>
+                                    </div>
+                                : null}
+                                </div>
                             <div className="boards-row">
                             {empty_array}
                             {filteredBoards.map((board, index) => (
                                 <div
                                     key={index}
                                     className="admin-board-card"
-                                    onClick={() => dispatch(actionCreators.getAdminLists(userId,board._id, (res) => {
-                                        if (res.success === true) {
-                                            props.history.push('/admin/todo', { data: board })
-                                        }
-                                    }))}
                                 >
-                                    {board.name.length > 17 ? <h6>{board.name}</h6> : <h4>{board.name}</h4>}
+                                    <div className="boards-inner-row">
+                                        {board.name.length > 17 ? 
+                                        <h5
+                                            onClick={() => dispatch(actionCreators.getAdminLists(startId,board._id, (res) => {
+                                                if (res.success === true) {
+                                                    props.history.push('/admin/todo', { data: board })
+                                                }
+                                            }))}
+                                        >{board.name}</h5> 
+                                        : 
+                                        <h4
+                                            onClick={() => dispatch(actionCreators.getAdminLists(startId,board._id, (res) => {
+                                            if (res.success === true) {
+                                                props.history.push('/admin/todo', { data: board })
+                                            }
+                                        }))}
+                                        >{board.name}</h4>}
+                                        <DeleteIcon 
+                                                className="delete-admin-icon" style={{fontSize:'14px'}} 
+                                                onClick={() => dispatch(actionCreators.archiveAdminBoard(board._id,startId,(res)=>{
+                                                    if(res.success) {
+                                                        console.log('Starthub')
+                                                    }
+                                                }))}  
+                                                />
+                                    </div>
                                     
 
                                 </div>
@@ -318,7 +405,7 @@ const Home = (props) => {
                                     }
                                 }))}
                             >
-                                    <h4>{ canvas.name}</h4>
+                                {canvas.name.length > 17 ? <h5>{canvas.name}</h5> : <h4>{canvas.name}</h4>}
 
                         </div>
                         ))}

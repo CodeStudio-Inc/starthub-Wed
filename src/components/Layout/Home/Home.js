@@ -30,8 +30,10 @@ const Home = (props) => {
     const expire = useSelector(state => state.auth.tokenExpiration)
     const username = useSelector(state => state.auth.username)
 
-    const filtereBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones' && el.startup === username && el.archive === false)
-    const archivedBoards = Boards.filter(el => el.name !== 'Lean Canvas' && el.name !== 'Milestones' && el.startup === username && el.archive === true)
+    const page = 'Todo'
+
+    const filtereBoards = Boards.filter(el => el.boardType === page  && el.startup === username && el.archive === false)
+    const archivedBoards = Boards.filter(el => el.boardType === page && el.startup === username && el.archive === true)
     const filtereUsers = users.filter(el => el.admin === false)
     // console.log(userId)
     
@@ -104,7 +106,7 @@ const Home = (props) => {
                                             if( boardLists.length > 0) setDeleteError('First delete the lists on the board please!')
                                         }}
                                     >
-                                        Permanently Delete List
+                                        Permanently Delete Board
                                     </button>
                                     : null}
                                 </div>
@@ -223,7 +225,7 @@ const Home = (props) => {
                                 onChange={(e) => setBoardName(e.target.value)}
                                 onKeyUp={(e) => {
                                             if (e.key === 'Enter' && name) {
-                                                dispatch(actionCreators.createBoard( name, username, (res) => {
+                                                dispatch(actionCreators.createBoard( name, username,page, (res) => {
                                                 if (res.success) setBoardName('')
                                             }))
                                             }

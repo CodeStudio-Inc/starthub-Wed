@@ -24,22 +24,23 @@ const Canvas = (props) => {
     const lists = useSelector(state => state.requests.canvas_lists)
     const expire = useSelector(state => state.auth.tokenExpiration)
 
-    // console.log(lists)
     const boardName = props.location.state.data.name
     const boardId = props.location.state.data._id
+    
+    const lst = lists.filter(el => el.boardId === boardId)
 
-    const problem = lists.find(el => el.name === 'Problem')
-    const solution = lists.find(el => el.name === 'Solution')
-    const metrics = lists.find(el => el.name === 'Key Metrics')
-    const proposition = lists.find(el => el.name === 'Unique Value Proposition')
-    const advantage = lists.find(el => el.name === 'Unfair Advantage')
-    const channels = lists.find(el => el.name === 'Channels')
-    const segments = lists.find(el => el.name === 'Customer Segments')
-    const revenue = lists.find(el => el.name === 'Revenue Streams')
-    const cost = lists.find(el => el.name === 'Cost Structure')
-    const alternatives = lists.find(el => el.name === 'Existing Alternatives')
-    const concept = lists.find(el => el.name === 'High-Level Concept')
-    const adoptors = lists.find(el => el.name === 'Early Adopters')
+    const problem = lst.find(el => el.name === 'Problem')
+    const solution = lst.find(el => el.name === 'Solution')
+    const metrics = lst.find(el => el.name === 'Key Metrics')
+    const proposition = lst.find(el => el.name === 'Unique Value Proposition')
+    const advantage = lst.find(el => el.name === 'Unfair Advantage')
+    const channels = lst.find(el => el.name === 'Channels')
+    const segments = lst.find(el => el.name === 'Customer Segments')
+    const revenue = lst.find(el => el.name === 'Revenue Streams')
+    const cost = lst.find(el => el.name === 'Cost Structure')
+    const alternatives = lst.find(el => el.name === 'Existing Alternatives')
+    const concept = lst.find(el => el.name === 'High-Level Concept')
+    const adoptors = lst.find(el => el.name === 'Early Adopters')
     
     // console.log(props, 'ff')
 

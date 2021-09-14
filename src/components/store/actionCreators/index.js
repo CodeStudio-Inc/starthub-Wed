@@ -8,6 +8,7 @@ export {
     createBoard,
     createAdminBoard,
     createList,
+    createCanvasLists,
     createCard,
     createAdminCard,
     getCanvasBoard,
@@ -29,5 +30,13 @@ export {
     cardIndexUpdate
 } from './requests'
 
-export { getUsers, getAdminBoard, getAdminLists, getAdminCards, getAdminMetricsData} from './admin'
+export { 
+    getUsers, 
+    getAdminBoard, 
+    getAdminLists, 
+    getAdminCards, 
+    getAdminMetricsData,
+    archiveAdminBoard,
+    unarchiveAdminBoard
+} from './admin'
 

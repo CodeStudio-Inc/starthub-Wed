@@ -169,26 +169,26 @@ export const dragCardWithInList = (
     }
 }
 
-export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,callback ) => {
+export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, callback) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
         let lists = [...getState().requests.lists]
 
         let sourceCards, destinationCards = [];
-        
-        if(sourceId === destinationId) {
-            sourceCards = [...sourceList.cards.map((l ,index) => ({...l, cardIndex: index}))]
+
+        if (sourceId === destinationId) {
+            sourceCards = [...sourceList.cards.map((l, index) => ({ ...l, cardIndex: index }))]
         }
-        
-        if(sourceId !== destinationId){
-            sourceCards = [...sourceList.cards.map((l ,index) => ({...l, cardIndex: index}))]
-            destinationCards = [...DestList.cards.map((l ,index) => ({...l, cardIndex: index}))]
-            console.log(sourceCards ,destinationCards,'lists')
+
+        if (sourceId !== destinationId) {
+            sourceCards = [...sourceList.cards.map((l, index) => ({ ...l, cardIndex: index }))]
+            destinationCards = [...DestList.cards.map((l, index) => ({ ...l, cardIndex: index }))]
+            console.log(sourceCards, destinationCards, 'lists')
         }
 
         const token = getState().auth.token
 
-        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/list/updateIndexes', {sourceId, destinationId, sourceCards, destinationCards}, {
+        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/list/updateIndexes', { sourceId, destinationId, sourceCards, destinationCards }, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -196,7 +196,7 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,ca
             }
         })
             .then(res => {
-                console.log(res,'fsd')
+                console.log(res, 'fsd')
                 callback()
             })
             .catch(err => {
@@ -296,7 +296,7 @@ export const createAdminBoard = (name, startup, mentor, callback) => {
     }
 }
 
-export const createBoard = (name, startup, callback) => {
+export const createBoard = (name, startup, boardType, callback) => {
     return (dispatch, getState) => {
 
         // dispatch(loadAction())
@@ -305,7 +305,8 @@ export const createBoard = (name, startup, callback) => {
 
         const data = {
             name,
-            startup
+            startup,
+            boardType
         }
 
         console.log(data)
@@ -360,6 +361,37 @@ export const createList = (id, name, callback) => {
     }
 }
 
+export const createCanvasLists = (id, callback) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        const data = {
+            name: ''
+        }
+
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/create-canvas/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(stopLoader())
+                dispatch(setLists(res.data.lists))
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+}
+
 export const createAdminCard = (listId, name, callback) => {
     return (dispatch, getState) => {
 
@@ -371,10 +403,10 @@ export const createAdminCard = (listId, name, callback) => {
 
         const list = lists.find(l => l._id === listId);
 
-        if(list.cards.length === 0) cardIndex = 0;
-        if(list.cards.length > 0) cardIndex = parseInt(list.cards.length)
+        if (list.cards.length === 0) cardIndex = 0;
+        if (list.cards.length > 0) cardIndex = parseInt(list.cards.length)
         const data = {
-           cardIndex, name,listId, description: '', dueDate: ''
+            cardIndex, name, listId, description: '', dueDate: ''
         }
 
         axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card`, data, {
@@ -407,10 +439,10 @@ export const createCard = (listId, name, callback) => {
 
         const list = lists.find(l => l._id === listId);
 
-        if(list.cards.length === 0) cardIndex = 0;
-        if(list.cards.length > 0) cardIndex = parseInt(list.cards.length)
+        if (list.cards.length === 0) cardIndex = 0;
+        if (list.cards.length > 0) cardIndex = parseInt(list.cards.length)
         const data = {
-           cardIndex, name,listId, description: '', dueDate: ''
+            cardIndex, name, listId, description: '', dueDate: ''
         }
 
         axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card`, data, {
@@ -569,7 +601,7 @@ export const getBoards = () => {
     }
 }
 
-export const getListsOnBoard = ( callback) => {
+export const getListsOnBoard = (callback) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
         const token = getState().auth.token
@@ -706,7 +738,7 @@ export const deleteCard = (listId, cardIndex, callback) => {
             cardIndex
         }
 
-        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/delete/${listId}`,data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/delete/${listId}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -727,7 +759,7 @@ export const deleteCard = (listId, cardIndex, callback) => {
     }
 }
 
-export const deleteBoard = (id,callback) => {
+export const deleteBoard = (id, callback) => {
     return (dispatch, getState) => {
         const token = getState().auth.token
 
@@ -749,7 +781,7 @@ export const deleteBoard = (id,callback) => {
     }
 }
 
-export const deleteList = (id,callback) => {
+export const deleteList = (id, callback) => {
     return (dispatch, getState) => {
         const token = getState().auth.token
 
@@ -774,34 +806,34 @@ export const deleteList = (id,callback) => {
 export const getMetricsData = () => {
     return (dispatch, getState) => {
 
-        dispatch(loadAction())
+        // dispatch(loadAction())
         const baseId = getState().auth.base_key
         const key = process.env.REACT_APP_API_KEY
-        var base = new Airtable({apiKey: key}).base(baseId)
+        var base = new Airtable({ apiKey: key }).base(baseId)
 
         base('Metrics').select({
-        maxRecords: 100
+            maxRecords: 100
         }).eachPage(function page(records, fetchNextPage) {
             // console.log(records,'metrics')
             dispatch(setMetricsData(records))
             fetchNextPage();
 
         }, function done(err) {
-        if (err) { console.error(err); return }
+            if (err) { console.error(err); return }
         })
     }
 }
 
-export const archiveList = (id,callback) => {
+export const archiveList = (id, callback) => {
     return (dispatch, getState) => {
         // dispatch(loadAction())
         const token = getState().auth.token
-        
+
         const data = {
             archive: true
         }
 
-        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/archive/${id}`,data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/archive/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -819,16 +851,16 @@ export const archiveList = (id,callback) => {
     }
 }
 
-export const unarchiveList = (id,callback) => {
+export const unarchiveList = (id, callback) => {
     return (dispatch, getState) => {
         // dispatch(loadAction())
         const token = getState().auth.token
-        
+
         const data = {
             archive: true
         }
 
-        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/restore-list/${id}`,data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/restore-list/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -846,16 +878,16 @@ export const unarchiveList = (id,callback) => {
     }
 }
 
-export const archiveBoard = (id,callback) => {
+export const archiveBoard = (id, callback) => {
     return (dispatch, getState) => {
         // dispatch(loadAction())
         const token = getState().auth.token
-        
+
         const data = {
             archive: true
         }
 
-        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/archive/${id}`,data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/archive/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -873,16 +905,16 @@ export const archiveBoard = (id,callback) => {
     }
 }
 
-export const unarchiveBoard = (id,callback) => {
+export const unarchiveBoard = (id, callback) => {
     return (dispatch, getState) => {
         // dispatch(loadAction())
         const token = getState().auth.token
-        
+
         const data = {
             archive: true
         }
 
-        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/restore-board/${id}`,data, {
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/restore-board/${id}`, data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
