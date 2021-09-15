@@ -212,3 +212,59 @@ export const unarchiveAdminBoard = (id,userId, callback) => {
             })
     }
 }
+
+export const archiveAdminList = (id,userId,boardId, callback) => {
+    return (dispatch, getState) => {
+        // dispatch(loadAction())
+        const token = getState().auth.token
+
+        const data = {
+            userId: userId,
+            boardId: boardId
+        }
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/admin/admin-list/archive/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res.data.lists)
+                dispatch(setLists(res.data.lists))
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const unarchiveAdminList = (id,userId,boardId, callback) => {
+    return (dispatch, getState) => {
+        // dispatch(loadAction())
+        const token = getState().auth.token
+
+        const data = {
+            userId: userId,
+            boardId: boardId
+        }
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/admin/admin-list/restore-list/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res.data)
+                dispatch(setLists(res.data.lists))
+                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}

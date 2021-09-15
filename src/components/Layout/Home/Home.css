@@ -52,7 +52,7 @@
 }
 
 .archive button:focus {
-	background: rgb(62, 180, 62);
+	background: #4c6439;
 	color: #fff;
 }
 
@@ -112,7 +112,7 @@
 .archive-row button {
 	outline: none;
 	background: none;
-	color: rgb(62, 180, 62);
+	color: #4c6439;
 	border-radius: 5px;
 }
 

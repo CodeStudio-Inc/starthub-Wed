@@ -9,7 +9,7 @@ import Loader from '../../../ModalUI/Loader'
 import * as actionCreators from '../../../store/actionCreators'
 import ListModal from '../../../ModalUI/ListModal'
 
-const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard}) => {
+const KanbanList = ({listId, title, cards,boardId, callback,userId, open, setActiveCard}) => {
 
     const [cardName, setCardName] = useState('')
     const [listName, setListName] = useState('')
@@ -19,7 +19,7 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
     const admin = useSelector(state => state.auth.admin)
     const dispatch = useDispatch()
 
-    // console.log(visible)
+    // console.log(listId)
 
     return (
         <div className="list-container">
@@ -66,7 +66,12 @@ const KanbanList = ({listId, title, cards,boardId, callback, open, setActiveCard
                                     }}
                                 />
                                 <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '20px' }} />
-                                {/* <DeleteIcon onClick={() => setDeleteModal(true)} className="close" style={{ fontSize: '20px' }} /> */}
+                                <DeleteIcon
+                                onClick={() => dispatch(actionCreators.archiveAdminList(listId,userId,boardId,(res)=>{
+                                                    if(res.success) setVisible(false)
+                                        } ))} 
+                                 className="close" style={{ fontSize: '20px' }} 
+                                 />
                             </div>
                             : null}
                         {visible? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />}

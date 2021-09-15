@@ -345,13 +345,13 @@ const Home = (props) => {
                                 >
                                     <div className="boards-inner-row">
                                         {board.name.length > 17 ? 
-                                        <h5
+                                        <h6
                                             onClick={() => dispatch(actionCreators.getAdminLists(startId,board._id, (res) => {
                                                 if (res.success === true) {
                                                     props.history.push('/admin/todo', { data: board })
                                                 }
                                             }))}
-                                        >{board.name}</h5> 
+                                        >{board.name}</h6> 
                                         : 
                                         <h4
                                             onClick={() => dispatch(actionCreators.getAdminLists(startId,board._id, (res) => {
@@ -405,7 +405,7 @@ const Home = (props) => {
                                     }
                                 }))}
                             >
-                                {canvas.name.length > 17 ? <h5>{canvas.name}</h5> : <h4>{canvas.name}</h4>}
+                                {canvas.name.length > 17 ? <h6>{canvas.name}</h6> : <h4>{canvas.name}</h4>}
 
                         </div>
                         ))}

@@ -37,6 +37,8 @@ export {
     getAdminCards, 
     getAdminMetricsData,
     archiveAdminBoard,
-    unarchiveAdminBoard
+    unarchiveAdminBoard,
+    archiveAdminList,
+    unarchiveAdminList
 } from './admin'
 

@@ -841,7 +841,7 @@ export const archiveList = (id, callback) => {
             }
         })
             .then(res => {
-                // console.log(res.data)
+                console.log(res.data.lists,'ll')
                 dispatch(setLists(res.data.lists))
                 callback({ success: true, res: res })
             })

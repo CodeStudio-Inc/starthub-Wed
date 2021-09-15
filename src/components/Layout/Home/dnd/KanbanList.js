@@ -8,7 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import * as actionCreators from '../../../store/actionCreators'
 
 
-const KanbanList = ({listId, title, cards,boardId,archivedtodoLists, callback, open, setActiveCard,archive,setArchive}) => {
+const KanbanList = ({listId, title, cards, callback, open, setActiveCard}) => {
 
     const [cardName, setCardName] = useState('')
     const [listName, setListName] = useState('')
