@@ -33,12 +33,9 @@
 	width: 100%;
 	display: flex;
 	align-items: center;
-	/* justify-content: center; */
 	min-height: 200px;
 	height: 100%;
-	/* border: 1px solid rgba(0, 0, 0, 0.2); */
 	flex-direction: column;
-	overflow-y: scroll;
 	background-color: #fff;
 }
 
@@ -62,7 +59,6 @@
 	flex-direction: column;
 	background-color: #fff;
 	margin-bottom: 1rem;
-	overflow-y: scroll;
 }
 
 .canvas-list-list3 button {
@@ -73,6 +69,16 @@
 	border-radius: 10px;
 	margin-bottom: 1rem;
 	background: rgba(0, 0, 0, 0.2);
+}
+
+.canvas-scroll {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	min-height: 200px;
+	height: 100%;
+	flex-direction: column;
+	overflow-y: scroll;
 }
 
 .canvas-separator {

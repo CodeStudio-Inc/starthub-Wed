@@ -39,7 +39,8 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
                                 }}
                             />
                     </div>
-                    {cards && cards.map((c,index) => (
+                    <div className="canvas-scroll">
+                        {cards && cards.map((c,index) => (
                         <CanvasCard
                             key={c.dateCreated}
                             cardId={c.dateCreated}
@@ -53,6 +54,7 @@ const CanvasList = ({listId, title,listNumber, cards,boardId, callback, open, se
                             setActiveCard={setActiveCard}
                         />
                     ))}
+                    </div>
                     {provided.placeholder}
                 </div>
             )}
