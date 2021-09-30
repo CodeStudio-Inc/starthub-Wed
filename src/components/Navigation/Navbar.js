@@ -22,7 +22,7 @@ const Navbar = (props) => {
             { id: 3, title: "Lean Canvas", route: "/canvas-board" },
             { id: 4, title: "Todos", route: "/" },
             { id: 5, title: "Milestones", route: "/milestone-board" },
-            // { id: 6, title: "Strategies", route: "/strategies-board" }
+            { id: 6, title: "Diagnostics", route: "/diagnostics" }
         ]
     })
 
