@@ -1,6 +1,10 @@
 import React,{useState} from 'react'
 import {FormikConfig, FormikValues, Formik, FormikHelpers, Form} from 'formik'
 import FormNavigation from './FormNavigation'
+import Stepper from '@mui/material/Stepper'
+import StepButton from '@mui/material/StepButton'
+import Step from '@mui/material/Step'
+import StepLabel from '@mui/material/StepLabel'
 
 interface Props extends FormikConfig<FormikValues> {
     children: React.ReactNode
@@ -27,6 +31,10 @@ const MultipleStepForm = ({children, initialValues, onSubmit}: Props) => {
         setSnapshot(values)
     }
 
+     const handleStep = (step: number) => () => {
+        setStepNumber(step);
+    }
+
     const handleSubmit = async (values: FormikValues, actions: FormikHelpers<FormikValues>) => {
         
         if(step.props.onSubmit) {
@@ -50,6 +58,17 @@ const MultipleStepForm = ({children, initialValues, onSubmit}: Props) => {
             >
                 {(formik) => 
                     <Form>
+                        <Stepper activeStep={stepNumber} alternativeLabel>
+                            {steps.map((currentStep, index) => {
+                                const label = currentStep.props.stepName
+
+                                return (
+                                    <Step key={label}>
+                                        <StepButton color="inherit" onClick={handleStep(index)}>{label}</StepButton>
+                                    </Step>
+                                )
+                            })}
+                        </Stepper>
                         {step}
                         <FormNavigation 
                         isLastStep={isLastStep} 

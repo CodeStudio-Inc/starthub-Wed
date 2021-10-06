@@ -9,9 +9,9 @@ interface Props {
 
 const FormNavigation = (props: Props) => {
     return (
-        <div>
+        <div className="nav-btn">
             {props.hasPrevious && 
-                <button onClick={props.onBackClick}>Back</button>
+                <button type="button" onClick={props.onBackClick}>Back</button>
             }
             <button type='submit'>{props.isLastStep ? 'Submit' : 'Next'}</button>
         </div>

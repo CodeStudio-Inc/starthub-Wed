@@ -34,7 +34,7 @@ export const setNewLists = (data) => {
         data: data
     }
 }
-
+ 
 export const setMilestoneLists = (data) => {
     return {
         type: actions.SET_MILESTONE_LISTS,
@@ -111,6 +111,55 @@ export const setMetricsData = (data) => {
     return {
         type: actions.SET_METRICS_DATA,
         data
+    }
+}
+
+export const setTeamsValue = (value) => {
+    return {
+        type: actions.SET_TEAMS_VALUE,
+        value
+    }
+}
+
+export const setVisionValue = (value) => {
+    return {
+        type: actions.SET_VISION_VALUE,
+        value
+    }
+}
+
+export const setPropositionValue = (value) => {
+    return {
+        type: actions.SET_PROPOSITION_VALUE,
+        value
+    }
+}
+
+export const setProductValue = (value) => {
+    return {
+        type: actions.SET_PRODUCT_VALUE,
+        value
+    }
+}
+
+export const setMarketValue = (value) => {
+    return {
+        type: actions.SET_MARKET_VALUE,
+        value
+    }
+}
+
+export const setBusinessValue = (value) => {
+    return {
+        type: actions.SET_BUSINESS_VALUE,
+        value
+    }
+}
+
+export const setInvestmentValue = (value) => {
+    return {
+        type: actions.SET_INVESTMENT_VALUE,
+        value
     }
 }
 

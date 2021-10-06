@@ -6,6 +6,13 @@ const initialState = {
     expense: [],
     metrics: [],
     boards: [],
+    teams:0,
+    vision:0,
+    proposition:0,
+    product:0,
+    market:0,
+    business:0,
+    investment:0,
     on_create_boards:[],
     lists: [],
     all_lists: [],
@@ -43,6 +50,41 @@ const requests = (state = initialState, action) => {
         case actions.SET_AIRTABLE_DATA:
             return updateObject(state, {
                 data: action.data
+            })
+        
+        case actions.SET_TEAMS_VALUE:
+            return updateObject(state, {
+                teams: action.value
+            })
+
+        case actions.SET_VISION_VALUE:
+            return updateObject(state, {
+                vision: action.value
+            })
+        
+        case actions.SET_PROPOSITION_VALUE:
+            return updateObject(state, {
+                proposition: action.value
+            })
+
+        case actions.SET_PRODUCT_VALUE:
+            return updateObject(state, {
+                product: action.value
+            })
+
+        case actions.SET_MARKET_VALUE:
+            return updateObject(state, {
+                market: action.value
+            })
+
+        case actions.SET_BUSINESS_VALUE:
+            return updateObject(state, {
+                business: action.value
+            })
+
+        case actions.SET_INVESTMENT_VALUE:
+            return updateObject(state, {
+                investment: action.value
             })
 
         case actions.SET_EXPENSE_DATA:

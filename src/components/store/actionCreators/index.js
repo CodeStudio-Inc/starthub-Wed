@@ -27,7 +27,14 @@ export {
     archiveList,
     unarchiveList,
     dragCardWithInList,
-    cardIndexUpdate
+    cardIndexUpdate,
+    setTeamsValue,
+    setVisionValue,
+    setPropositionValue,
+    setProductValue,
+    setMarketValue,
+    setBusinessValue,
+    setInvestmentValue
 } from './requests'
 
 export { 
