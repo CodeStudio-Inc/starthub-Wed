@@ -41,7 +41,8 @@ const Register = (props) => {
         { id: '10', value: 'Grab Gas', link: 'https://airtable.com/shrA1l6DuXXqURJq5', key:'appBSbKZsl25qlcNM'  },
         { id: '10', value: 'Figurines', link: 'https://airtable.com/shrdDhapsg4GoHEBU', key:'appB7nXdkzqsLZ9vh'  },
         { id: '10', value: 'Qiribu', link: 'https://airtable.com/shrUFVM2sXsFLQ1H2', key:'appwJOpJwLfq68Dyi'  },
-        { id: '11', value: 'Tech Rafiki', link: 'https://airtable.com/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  }
+        { id: '11', value: 'Tech Rafiki', link: 'https://airtable.com/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  },
+        { id: '11', value: 'Devine Renewable Energy', link: 'https://airtable.com/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  }
     ]
 
 

@@ -6,6 +6,7 @@ const initialState = {
     expense: [],
     metrics: [],
     boards: [],
+    values:[],
     teams:0,
     vision:0,
     proposition:0,
@@ -50,6 +51,11 @@ const requests = (state = initialState, action) => {
         case actions.SET_AIRTABLE_DATA:
             return updateObject(state, {
                 data: action.data
+            })
+
+        case actions.SET_VALUE:
+            return updateObject(state, {
+                values: action.value
             })
         
         case actions.SET_TEAMS_VALUE:

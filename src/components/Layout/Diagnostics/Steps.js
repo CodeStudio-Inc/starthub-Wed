@@ -52,31 +52,31 @@ export const vision = [
     label: 'We have no Vision',
   },
   {
-    value: 15,
+    value: 14.28,
     label: 'The problem We are solving is; frequent, popular among many, urgent, required, expensive for people',
   },
   {
-    value: 30,
+    value: 28.56,
     label: 'We have the vision to solve the problem and execute on it',
   },
   {
-    value: 45,
+    value: 42.84,
     label: 'We can explain how this solution will improve the industry',
   },
   {
-    value: 60,
+    value: 57.12,
     label: 'We know why and how our vision offers customers more value than the existing solution',
   },
   {
-    value: 75,
+    value: 71.4,
     label: 'We have evidence that our solution solves the customers problems from first sales',
   },
   {
-    value: 90,
+    value: 85.68,
     label: 'We have early adopters who retain and LOVE our solution',
   },
   {
-    value: 100,
+    value: 99.96,
     label: 'Our vision is realized with early adopters and we are entering mass market',
   }
 ];
@@ -87,27 +87,27 @@ export const proposition = [
     label:'We have no Value Proposition'
   },
   {
-    value: 15,
+    value: 16.66,
     label: 'We have a hypothesis how to solve the customer problem.',
   },
   {
-    value: 30,
+    value: 33.32,
     label: 'Potential customers have validated our problem hypothesis',
   },
   {
-    value: 45,
+    value: 49.98,
     label: 'First sales at a sustainable price validate the value hypothesis',
   },
   {
-    value: 60,
+    value: 66.64,
     label: 'Customer feedback shows that our solution is better than others',
   },
   {
-    value: 75,
+    value: 83.3,
     label: 'Our initial target customers love the product and keep using it',
   },
   {
-    value: 90,
+    value: 99.96,
     label: 'We’re selling beyond our initial target customers. ',
   }
 ];
@@ -118,35 +118,35 @@ export const product = [
     label:'We have no Product'
   },
   {
-    value: 11,
+    value: 12.5,
     label: 'We have evidence that users would use our product and what the key benefits are',
   },
   {
-    value: 22,
+    value: 25,
     label: 'We have a specifications document and maximum 1-month plan to launch an MVP',
   },
   {
-    value: 33,
+    value: 37.5,
     label: 'The key features of the MVP have validated customer needs and solves their problems',
   },
   {
-    value: 44,
+    value: 50,
     label: 'We have defined and are tracking key metrics to measure product usage and success',
   },
   {
-    value: 55,
+    value: 62.5,
     label: 'We have a detailed understanding of the user journey of our product',
   },
   {
-    value: 66,
+    value: 75,
     label: 'We have a scalable product/production infrastructure and processes for continuous product development',
   },
   {
-    value: 77,
+    value: 87.5,
     label: 'We have processes to improve the product based on user feedback',
   },
   {
-    value: 88,
+    value: 100,
     label: 'We have a well designed user experience that is much better than what is on the market',
   }
 ];
@@ -157,35 +157,35 @@ export const market = [
     label:'We have no Market'
   },
   {
-    value: 12,
+    value: 12.5,
     label: 'We know who our specific early adopters are and have an understanding of the "early majority" market',
   },
   {
-    value: 24,
+    value: 25,
     label: 'We know out Total adressable market size',
   },
   {
-    value: 36,
+    value: 37.5,
     label: 'We understand applicable regulations & have a strategy for compliance.',
   },
   {
-    value: 48,
+    value: 50,
     label: 'Initial Sales provide evidence that our solution is of value',
   },
   {
-    value: 60,
+    value: 62.5,
     label: 'We know the various customer segments and we have tailored our value proposition to each one  of them',
   },
   {
-    value: 72,
+    value: 75,
     label: 'We are selling our product(s) through multiple channels and to multiple customer segments',
   },
   {
-    value: 84,
+    value: 87.5,
     label: 'We are still addressing a large multimillion dollar market ahead of us with the current solution',
   },
   {
-    value: 96,
+    value: 100,
     label: 'We are still addressing a large multimillion dollar market ahead of us with the current solution',
   }
 ];
@@ -196,35 +196,35 @@ export const business = [
     label:'We have no Business Modal'
   },
   {
-    value: 12,
+    value: 12.5,
     label: 'We have evaluated several business model ideas and picked the most promising one',
   },
   {
-    value: 24,
+    value: 25,
     label: 'We have outlined a detailed business model hypothesis including quantitative revenue streams and cost structure',
   },
   {
-    value: 36,
+    value: 37.5,
     label: 'Customer interactions support our pricing and revenue model',
   },
   {
-    value: 48,
+    value: 50,
     label: 'We know our unit economics and cost structure by heart and are aware of industry standards',
   },
   {
-    value: 60,
+    value: 62.5,
     label: 'We have a financial model and a strategy to hit the projections',
   },
   {
-    value: 72,
+    value: 75,
     label: 'Our actual revenues and cost structure support future profitability',
   },
   {
-    value: 84,
+    value: 87.5,
     label: 'Our customer acquisition costs are going down and Lifetime value of customers is going up',
   },
   {
-    value: 96,
+    value: 100,
     label: 'We grow rapidly based on positive unit economics and a sustainable financial structure',
   }
 ];
@@ -235,35 +235,35 @@ export const investment = [
     label:'We have no Investment & Exit'
   },
   {
-    value: 12,
+    value: 12.5,
     label: 'We have invested time or money into the company and are committed to bootstrapping as long as it makes sense',
   },
   {
-    value: 24,
+    value: 25,
     label: 'We have gathered first capital from the team, friends, family, or startup support organizations',
   },
   {
-    value: 36,
+    value: 37.5,
     label: 'We understand our capital needs to build a product that early adopters love and use',
   },
   {
-    value: 48,
+    value: 50,
     label: 'We understand how different types of capital work and which are the most relevant to our company journey',
   },
   {
-    value: 60,
+    value: 62.5,
     label: 'We have a plan how to raise the capital we need and a clear idea when and where to get it from',
   },
   {
-    value: 72,
+    value: 75,
     label: 'We have data and structures in place that investors require before investing',
   },
   {
-    value: 84,
+    value: 87.5,
     label: 'We have the necessary capital to achieve our growth plans',
   },
   {
-    value: 96,
+    value: 100,
     label: 'We have a realistic and clear way to run or sell the company in a financially viable way',
   }
 ];

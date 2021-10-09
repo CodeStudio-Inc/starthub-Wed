@@ -34,7 +34,9 @@ export {
     setProductValue,
     setMarketValue,
     setBusinessValue,
-    setInvestmentValue
+    setInvestmentValue,
+    addValues,
+    getValues
 } from './requests'
 
 export { 

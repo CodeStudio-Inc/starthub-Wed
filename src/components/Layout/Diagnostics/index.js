@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import {useDispatch, useSelector} from  'react-redux'
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
@@ -22,15 +22,14 @@ import './Diagnostics.css'
      const [teamsHeader, setTeamsHeader] = useState('')
      const [teamsDesc, setTeamsDesc] = useState('')
 
-     const teamsvalue = useSelector(state => state.requests.teams)
-     const visionvalue = useSelector(state => state.requests.vision)
-     const propositionvalue = useSelector(state => state.requests.proposition)
-     const productvalue = useSelector(state => state.requests.product)
-     const marketvalue = useSelector(state => state.requests.market)
-     const businessvalue = useSelector(state => state.requests.business)
-     const investmentvalue = useSelector(state => state.requests.investment)
+     const userId = useSelector(state => state.auth.userId)
+     const _value = useSelector(state => state.requests.values)
 
      const dispatch = useDispatch()
+
+     useEffect(() =>{
+         dispatch(actionCreators.getValues())
+     },[])
 
     const handleTeamsOnChange = (e) => {
         setTeamsValue(e.target.value)
@@ -50,7 +49,6 @@ import './Diagnostics.css'
         }
     }
 
-    console.log(teamsValue)
 
     const handleVisionOnChange = (e) => {
         setVisionValue(e.target.value)
@@ -82,9 +80,21 @@ import './Diagnostics.css'
         dispatch(actionCreators.setInvestmentValue(investmentValue))
     }
 
-    
-    
+    const handleStepsSubmit = () => {
+        dispatch(actionCreators.addValues(teamsValue, visionValue, propositionValue, productValue, marketValue, businessValue, investmentValue, (res) => {
+            if(res.success) {
+                dispatch(actionCreators.getValues())
+                alert('Thank you, You have done a Great Job here')
+            } 
+        }))
+    }
 
+    // console.log(userId)
+    
+    const filter_value = _value.filter(e => e.creator === userId)
+    
+    // console.log(_value)
+    const last_value = filter_value && filter_value.slice(-1).pop()
 
     return (
         <div className="main">
@@ -92,12 +102,15 @@ import './Diagnostics.css'
             <h2>Business Diagnostics</h2>
             <MultipleStepForm
                 initialValues={{
-                    name:'Hello world',
-                    date:'30/09/2021'
+                    teams: teams,
+                    vision: vision,
+                    proposition: proposition,
+                    product: product,
+                    market: market,
+                    business: business,
+                    investment: investment
                 }}
-                onSubmit={values => {
-                    alert('Thank You!, You have done a great Job')
-                }}
+                onSubmit={handleStepsSubmit}
             >
                 <FormStep 
                 stepName="Team"
@@ -115,7 +128,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={teamsvalue}
+                                defaultValue={last_value && last_value.teams}
                                 marks={teams}
                                 onChange={handleTeamsOnChange}
                             />
@@ -130,7 +143,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={visionvalue}
+                                defaultValue={last_value && last_value.vision}
                                 marks={vision}
                                 onChange={handleVisionOnChange}
                             />
@@ -145,7 +158,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={propositionvalue}
+                                defaultValue={last_value && last_value.proposition}
                                 marks={proposition}
                                 onChange={handlePropositionOnChange}
                             />
@@ -160,7 +173,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={productvalue}
+                                defaultValue={last_value && last_value.product}
                                 marks={product}
                                 onChange={handleProductOnChange}
                             />
@@ -175,7 +188,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={marketvalue}
+                                defaultValue={last_value && last_value.market}
                                 marks={market}
                                 onChange={handleMarketOnChange}
                             />
@@ -190,7 +203,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={businessvalue}
+                                defaultValue={last_value && last_value.business}
                                 marks={business}
                                 onChange={handleBusinessOnChange}
                             />
@@ -205,7 +218,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={investmentvalue}
+                                defaultValue={last_value && last_value.investment}
                                 marks={investment}
                                 onChange={handleInvestmentOnChange}
                             />
@@ -214,12 +227,12 @@ import './Diagnostics.css'
                 </FormStep>
             </MultipleStepForm>
             </div>
-            <div className="description">
+            {/* <div className="description">
                 <div className="description-header">
                     <h3>{teamsHeader}</h3>
                 </div>
                 <h5>{teamsDesc}</h5>
-            </div>
+            </div> */}
         </div>
     )
 }

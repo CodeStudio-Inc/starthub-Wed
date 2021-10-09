@@ -4,7 +4,6 @@ import FormNavigation from './FormNavigation'
 import Stepper from '@mui/material/Stepper'
 import StepButton from '@mui/material/StepButton'
 import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
 
 interface Props extends FormikConfig<FormikValues> {
     children: React.ReactNode

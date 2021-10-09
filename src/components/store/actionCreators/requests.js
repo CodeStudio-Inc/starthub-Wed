@@ -114,6 +114,13 @@ export const setMetricsData = (data) => {
     }
 }
 
+export const setValue = (value) => {
+    return {
+        type: actions.SET_VALUE,
+        value
+    }
+}
+
 export const setTeamsValue = (value) => {
     return {
         type: actions.SET_TEAMS_VALUE,
@@ -978,6 +985,60 @@ export const unarchiveBoard = (id, callback) => {
             .catch(error => {
                 console.log(error)
             })
+    }
+}
+
+export const addValues  = (teams,vision,proposition,product,market,business,investment, callback) => {
+    return (dispatch,getState) => {
+
+        const token = getState().auth.token
+
+        const data = {
+            teams,
+            vision,
+            proposition,
+            product,
+            market,
+            business,
+            investment
+        }
+
+        axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/value', data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+        .then(res => {
+            callback({ success: true, res: res })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+}
+
+export const getValues  = () => {
+    return (dispatch,getState) => {
+
+        const token = getState().auth.token
+
+
+        axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/values', {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+        .then(res => {
+            // console.log(res.data.scalevalues)
+            dispatch(setValue(res.data.scalevalues))
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 }
 
