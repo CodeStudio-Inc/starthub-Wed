@@ -91,7 +91,7 @@ import './Diagnostics.css'
 
     // console.log(userId)
     
-    const filter_value = _value.filter(e => e.creator === userId)
+    const filter_value = _value && _value.filter(e => e.creator === userId)
     
     // console.log(_value)
     const last_value = filter_value && filter_value.slice(-1).pop()
