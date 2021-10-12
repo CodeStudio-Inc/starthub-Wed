@@ -6,7 +6,7 @@ export const teams = [
   },
   {
     value: 10,
-    label: 'We have more than two skilled, smart and committed people',
+    label: 'We have atleast two skilled, smart and committed people',
   },
   {
     value: 20,
@@ -157,35 +157,31 @@ export const market = [
     label:'We have no Market'
   },
   {
-    value: 12.5,
+    value: 14.28,
     label: 'We know who our specific early adopters are and have an understanding of the "early majority" market',
   },
   {
-    value: 25,
+    value: 28.56,
     label: 'We know out Total adressable market size',
   },
   {
-    value: 37.5,
+    value: 42.84,
     label: 'We understand applicable regulations & have a strategy for compliance.',
   },
   {
-    value: 50,
+    value: 57.12,
     label: 'Initial Sales provide evidence that our solution is of value',
   },
   {
-    value: 62.5,
+    value: 71.4,
     label: 'We know the various customer segments and we have tailored our value proposition to each one  of them',
   },
   {
-    value: 75,
+    value: 85.68,
     label: 'We are selling our product(s) through multiple channels and to multiple customer segments',
   },
   {
-    value: 87.5,
-    label: 'We are still addressing a large multimillion dollar market ahead of us with the current solution',
-  },
-  {
-    value: 100,
+    value: 99.96,
     label: 'We are still addressing a large multimillion dollar market ahead of us with the current solution',
   }
 ];

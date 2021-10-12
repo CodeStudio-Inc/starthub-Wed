@@ -22,6 +22,9 @@ import './Diagnostics.css'
      const [teamsHeader, setTeamsHeader] = useState('')
      const [teamsDesc, setTeamsDesc] = useState('')
 
+     console.log(teamsValue)
+ 
+
      const userId = useSelector(state => state.auth.userId)
      const _value = useSelector(state => state.requests.values)
 
@@ -128,7 +131,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={last_value && last_value.teams}
+                                defaultValue={teamsValue > 0 ? teamsValue : last_value && last_value.teams}
                                 marks={teams}
                                 onChange={handleTeamsOnChange}
                             />
@@ -143,7 +146,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={last_value && last_value.vision}
+                                defaultValue={visionValue > 0 ? visionValue : last_value && last_value.vision}
                                 marks={vision}
                                 onChange={handleVisionOnChange}
                             />
@@ -158,7 +161,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={last_value && last_value.proposition}
+                                defaultValue={propositionValue > 0 ? propositionValue : last_value && last_value.proposition}
                                 marks={proposition}
                                 onChange={handlePropositionOnChange}
                             />
@@ -173,7 +176,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={last_value && last_value.product}
+                                defaultValue={productValue > 0 ? productValue : last_value && last_value.product}
                                 marks={product}
                                 onChange={handleProductOnChange}
                             />
@@ -188,7 +191,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={last_value && last_value.market}
+                                defaultValue={marketValue > 0 ? marketValue : last_value && last_value.market}
                                 marks={market}
                                 onChange={handleMarketOnChange}
                             />
@@ -203,7 +206,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={last_value && last_value.business}
+                                defaultValue={businessValue > 0 ? businessValue : last_value && last_value.business}
                                 marks={business}
                                 onChange={handleBusinessOnChange}
                             />
@@ -218,7 +221,7 @@ import './Diagnostics.css'
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
-                                defaultValue={last_value && last_value.investment}
+                                defaultValue={investmentValue > 0 ? investmentValue : last_value && last_value.investment}
                                 marks={investment}
                                 onChange={handleInvestmentOnChange}
                             />

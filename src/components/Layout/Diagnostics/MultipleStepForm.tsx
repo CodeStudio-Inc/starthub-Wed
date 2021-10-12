@@ -6,10 +6,10 @@ import StepButton from '@mui/material/StepButton'
 import Step from '@mui/material/Step'
 
 interface Props extends FormikConfig<FormikValues> {
-    children: React.ReactNode
+    children: React.ReactNode,
 }
 
-const MultipleStepForm = ({children, initialValues, onSubmit}: Props) => {
+const MultipleStepForm = ({children, initialValues, onSubmit }: Props) => {
 
     const [stepNumber, setStepNumber] = useState(0)
     const steps = React.Children.toArray(children) as React.ReactElement[]

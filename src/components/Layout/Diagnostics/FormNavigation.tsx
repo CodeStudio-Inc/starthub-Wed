@@ -1,5 +1,8 @@
 import { FormikValues } from 'formik'
 import React from 'react'
+import {useSelector} from 'react-redux'
+import svg from '../../../assets/images/spinner.svg'
+
 
 interface Props {
     hasPrevious?: boolean,
@@ -8,6 +11,8 @@ interface Props {
 }
 
 const FormNavigation = (props: Props) => {
+
+
     return (
         <div className="nav-btn">
             {props.hasPrevious && 

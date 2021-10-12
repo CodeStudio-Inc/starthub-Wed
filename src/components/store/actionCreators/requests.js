@@ -990,6 +990,7 @@ export const unarchiveBoard = (id, callback) => {
 
 export const addValues  = (teams,vision,proposition,product,market,business,investment, callback) => {
     return (dispatch,getState) => {
+        dispatch(loadAction())
 
         const token = getState().auth.token
 
@@ -1011,6 +1012,7 @@ export const addValues  = (teams,vision,proposition,product,market,business,inve
             }
         })
         .then(res => {
+            dispatch(stopLoader())
             callback({ success: true, res: res })
         })
         .catch(error => {
