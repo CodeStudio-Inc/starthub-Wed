@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
-const Keyresult = ({k, state, setState, dispatch, actionCreators}) => {
+const Keyresult = ({k, state, setState, dispatch, actionCreators, svg, loading}) => {
 
     // console.log(state)
 
@@ -50,7 +50,7 @@ const Keyresult = ({k, state, setState, dispatch, actionCreators}) => {
                 </div>
                 <button 
                 onClick={() => {
-                    dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess, (res) => {
+                    dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
                         if(res.success) {
                             seteditkeyResult(false)
                             setState({
@@ -62,6 +62,7 @@ const Keyresult = ({k, state, setState, dispatch, actionCreators}) => {
                 }}
                 >save</button>
                  {editkeyResult ? <button onClick={() => seteditkeyResult(false)}>Cancel</button> : null}
+                 {loading ? <img src={svg} style={{ width:"30px", height:"30px"}} /> : null}
             </div> : null}
         </div>
     )

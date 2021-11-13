@@ -1178,6 +1178,8 @@ export const addObjective = (id, description,callback) => {
 export const getObjective = () => {
     return(dispatch, getState) => {
 
+            dispatch(loadAction())
+
             const token = getState().auth.token
 
             axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/objectives', {
@@ -1188,7 +1190,8 @@ export const getObjective = () => {
             }
         })
         .then(res => {
-            console.log(res)
+            // console.log(res)
+            dispatch(stopLoader())
             dispatch(setBlogs(res.data.objs))
         })
         .catch(error => {
@@ -1260,7 +1263,7 @@ export const addkeyResult = (description, measureOfSuccess,objId,callback) => {
     }
 }
 
-export const editkeyResult = (id, description, measureOfSuccess, callback) => {
+export const editkeyResult = (id, description, measureOfSuccess,dateCreated, callback) => {
     return(dispatch, getState) => {
 
         dispatch(loadAction())
@@ -1269,7 +1272,8 @@ export const editkeyResult = (id, description, measureOfSuccess, callback) => {
 
         const data = {
             description,
-            measureOfSuccess
+            measureOfSuccess,
+            dateCreated
         }
 
             axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/keyresult/${id}`, data, {

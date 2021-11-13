@@ -67,6 +67,8 @@ const Objective = ({objectives, svg, keyresults}) =>  {
                         {obj && obj.keyresults.map(k => (
                             <Keyresult 
                                 k={k}
+                                svg={svg}
+                                loading={loading}
                                 state={state}
                                 setState={setState}
                                 dispatch={dispatch}

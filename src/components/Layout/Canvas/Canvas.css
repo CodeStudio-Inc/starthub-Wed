@@ -205,7 +205,7 @@
 }
 
 .edit-icon {
-	color: #69191b;
+	color: rgba(0, 0, 0, 0.2);
 }
 
 .edit-icon:hover {
@@ -216,12 +216,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	opacity: 0;
 }
 
-.icon-row:hover {
-	opacity: 2;
-}
 
 .canvas-list-card-row button {
 	height: 23px;

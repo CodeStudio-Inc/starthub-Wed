@@ -11,7 +11,7 @@ const Diagnostics = ({last_value}) => {
                         <h3>Teams</h3>
                         </div>
                         <div className="value-row-right">
-                            <Box sx={{ width: '100%' }}>
+                            <Box sx={{ width: '90%' }}>
                             <ProgressBar 
                                 completed={last_value && last_value.teams} 
                                 bgColor="#4c6439" 
@@ -28,7 +28,7 @@ const Diagnostics = ({last_value}) => {
                             <h3>Vision</h3>
                         </div>
                         <div className="value-row-right">   
-                            <Box sx={{ width: '100%' }}>
+                            <Box sx={{ width: '90%' }}>
                                 <ProgressBar 
                                     completed={last_value && last_value.vision} 
                                     bgColor="#4c6439" 
@@ -45,7 +45,7 @@ const Diagnostics = ({last_value}) => {
                             <h3>Proposition</h3>
                         </div>
                         <div  className="value-row-right">
-                            <Box sx={{ width: '100%' }}>
+                            <Box sx={{ width: '90%' }}>
                                 <ProgressBar 
                                     completed={last_value && last_value.proposition} 
                                     bgColor="#4c6439" 
@@ -62,7 +62,7 @@ const Diagnostics = ({last_value}) => {
                             <h3>Product</h3>
                         </div>
                         <div className="value-row-right">
-                            <Box sx={{ width: '100%' }}>
+                            <Box sx={{ width: '90%' }}>
                                 <ProgressBar 
                                     completed={last_value && last_value.product} 
                                     bgColor="#4c6439" 
@@ -79,7 +79,7 @@ const Diagnostics = ({last_value}) => {
                             <h3>Market</h3>
                         </div>
                         <div className="value-row-right">
-                        <Box sx={{ width: '100%' }}>
+                        <Box sx={{ width: '90%' }}>
                             <ProgressBar 
                                 completed={last_value && last_value.market} 
                                 bgColor="#4c6439" 
@@ -96,7 +96,7 @@ const Diagnostics = ({last_value}) => {
                         <h3>Business</h3>
                         </div>
                         <div className="value-row-right">
-                        <Box sx={{ width: '100%' }}>
+                        <Box sx={{ width: '90%' }}>
                             <ProgressBar 
                                 completed={last_value && last_value.business} 
                                 bgColor="#4c6439" 
@@ -113,7 +113,7 @@ const Diagnostics = ({last_value}) => {
                         <h3>Investment</h3>
                         </div>
                         <div className="value-row-right">
-                        <Box sx={{ width: '100%' }}>
+                        <Box sx={{ width: '90%' }}>
                             <ProgressBar 
                                 completed={last_value && last_value.investment} 
                                 bgColor="#4c6439" 

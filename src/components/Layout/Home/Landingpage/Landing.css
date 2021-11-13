@@ -194,7 +194,7 @@
 .objective-card {
     display: flex;
     align-items: flex-start;
-    padding: 0.2rem;
+    padding-left: 0.3rem;
     background: #fff;
     width:250px;
 }
@@ -331,13 +331,14 @@
 .value-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 95%;
+    justify-content: space-between;
+    width: 100%;
     margin: 0.3rem;
 }
 
 .value-row-left {
     width: 30%;
+    margin-right: 0.5rem;
 }
 
 .value-row-left h3 {

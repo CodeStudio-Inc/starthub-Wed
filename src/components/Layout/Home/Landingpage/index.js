@@ -51,6 +51,7 @@ const Landing = (props) => {
         getBoards()
         getLists()
         getStatements()
+        getObjectives()
     },[])
 
     const dispatch = useDispatch()
@@ -58,6 +59,7 @@ const Landing = (props) => {
     const getBoards = () => dispatch(actionCreators.getBoards())
     const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
     const getStatements = () => dispatch(actionCreators.getStatement())
+    const getObjectives = () => dispatch(actionCreators.getObjective())
 
     const openEditModal = () => setOpen(true)
     const openModal = () => setModal(true)
@@ -209,7 +211,7 @@ const Landing = (props) => {
                     </div>
                 </DragDropContext>
                 <div className="objective-bg">
-                    <Objective objectives={filteredObjs} keyresults={objectives.keyresults} svg={svg}/>
+                    {loading ? <img src={svg} style={{ width:"30px", height:"30px"}} /> : <Objective objectives={filteredObjs} keyresults={objectives.keyresults} svg={svg}/>}
                     {filteredObjs && filteredObjs.length === 3 ? null : <div className="add-objective">
                         <AddBoxIcon onClick={() => setobjModal(true)} className="add-obj-icon" style={{ fontSize: '35px'}} />
                         <p onClick={() => setobjModal(true)}>Add new Objective</p>
