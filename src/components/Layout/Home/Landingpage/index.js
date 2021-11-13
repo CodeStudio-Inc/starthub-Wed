@@ -66,8 +66,8 @@ const Landing = (props) => {
     const new_lists = lists.filter(el => el.creator === userId)
     Boards.filter(el => el.creator === userId)
     const current_board = Boards && Boards.slice(-1).pop()
-    const filteredObjs = objectives.filter(el => el.boardId === current_board._id )
-    const filteredStatements = statements.filter(el => el.boardId === current_board._id )
+    const filteredObjs = objectives && objectives.filter(el => el.boardId === current_board._id )
+    const filteredStatements = statements && statements.filter(el => el.boardId === current_board._id )
     // console.log(statements,'llll')
 
     const todoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === false)
