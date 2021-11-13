@@ -36,7 +36,15 @@ export {
     setBusinessValue,
     setInvestmentValue,
     addValues,
-    getValues
+    getValues,
+    addStatement,
+    getStatement,
+    addObjective,
+    getObjective,
+    addkeyResult,
+    editStatement,
+    editObjective,
+    editkeyResult
 } from './requests'
 
 export { 

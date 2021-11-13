@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import moment from 'moment'
+import LandingPage from './Landingpage'
 
 import './Home.css'
 const Home = (props) => {
@@ -20,7 +21,7 @@ const Home = (props) => {
     const [visible, setVisible] = useState(false)
     const [boardId, setBoardId] = useState('')
     const [deleteError, setDeleteError] = useState('')
-
+    
     const Boards = useSelector(state => state.requests.boards)
     const admin = useSelector(state => state.auth.admin)
     const userId = useSelector(state => state.auth.userId)
@@ -53,13 +54,11 @@ const Home = (props) => {
         setDeleteError()
     }, [])
     
-
+    
     const handleLogoutClick = () => {
             dispatch(actionCreators.removeUser())
             props.history.push('/')
     }
-
-
 
     let empty_array = null
 

@@ -7,6 +7,9 @@ const initialState = {
     metrics: [],
     boards: [],
     values:[],
+    statements:[],
+    // objectives:[],
+    // obj:'',
     teams:0,
     vision:0,
     proposition:0,
@@ -116,7 +119,17 @@ const requests = (state = initialState, action) => {
                 lists: action.data
             })
 
+        case actions.SET_STATEMENTS:
+            return updateObject(state, {
+                loading: false,
+                statements: action.data
+            })
 
+        case actions.SET_OBJECTIVES:
+            return updateObject(state, {
+                loading: false,
+                objectives: action.data
+            })
 
         case actions.SET_CANVAS_LISTS:
             return updateObject(state, {

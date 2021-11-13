@@ -25,13 +25,15 @@ import Diagnostics from '../Layout/Diagnostics'
 import AdminDash from '../Layout/Admin/Dashboard/'
 import Register from '../Layout/Admin/Register'
 import Navbar from './Navbar'
+import LandingPage from '../Layout/Home/Landingpage'
 
 const HomeRoutes = () => {
     return (
         <BrowserRouter>
             <Navbar />
             <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/home" component={Home} />
                 <Route path="/cards" component={Cards} />
                 <Route path="/canvas" component={Canvas} />
                 <Route path="/milestones" component={Milestones} />

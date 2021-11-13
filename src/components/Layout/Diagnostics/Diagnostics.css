@@ -7,8 +7,19 @@
     height: 100vh;
 }
 
+.diagnostics-menu {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width:  100%;
+    max-width: 1150px;
+    left: 10%;
+    /* top:10px; */
+}
+
 .steps {
-	width: 65%;
+	width: 85%;
 	display: flex;
 	align-items: center;
     flex-direction: column;

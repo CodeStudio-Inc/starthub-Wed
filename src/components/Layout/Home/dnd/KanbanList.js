@@ -57,7 +57,7 @@ const KanbanList = ({listId, title, cards, callback, open, setActiveCard}) => {
                     </div>
                     <div className="add-card">
                             {admin ? null : <input
-                                placeholder="Type.."
+                                placeholder="Add Card"
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onKeyUp={(e) => {

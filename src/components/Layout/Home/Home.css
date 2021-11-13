@@ -510,8 +510,6 @@
 	background: rgba(0, 0, 0, 0.5);;
 }
 
-
-
 .edit-row {
 	display: flex;
 	align-items: center;
@@ -649,7 +647,7 @@
 	border-radius: 5px;
 	box-sizing: border-box;
 	margin-right: 0.5rem;
-	background: #fff;
+	background: #eee;
 }
 
 .draggable {
@@ -661,7 +659,7 @@
 	width: 100%;
 	margin-bottom: 0.5rem;
 	cursor: grab;
-	background: rgba(253, 232, 176, 0.418);
+	background: #fff !important;
 	box-sizing: border-box;
 	height: 100%;
 }

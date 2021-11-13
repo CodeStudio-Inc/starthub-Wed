@@ -7,30 +7,45 @@ import { DownOutlined, UserOutlined } from '@ant-design/icons'
 import * as actionCreators from '../store/actionCreators'
 import MenuIcon from '@material-ui/icons/Menu'
 import Sidebar from './Sidebar'
+import ScheduleIcon from '@mui/icons-material/Schedule'
+import ListAltIcon from '@mui/icons-material/ListAlt'
+import BarChartIcon from '@mui/icons-material/BarChart'
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard'
+import BuildIcon from '@mui/icons-material/Build'
 
 import './Navigation.css'
 const Navbar = (props) => {
 
+    const Boards = useSelector(state => state.requests.boards)
+    const startup = useSelector(state => state.auth.username)
+    const users = useSelector(state => state.admin.users)
+
     const [visibleLogout, setVisisbleLogout] = useState(false)
     const [openSidebar, setopenSidebar] = useState(false)
+
+    const page = 'Todo'
+
+    const filtereBoards = Boards.filter(el => el.boardType === page  && el.startup === startup && el.archive === false)
+    const filtereUsers = users.filter(el => el.admin === false)
+    // console.log(filtereBoards,'ghj')
 
     const [appState, setAppState] = useState({
         actionObject: null,
         objects: [
-            { id: 1, title: "Schedule Meeting", route: "/carlender" },
-            { id: 2, title: "Dashboard", route: "/overview" },
-            { id: 3, title: "Lean Canvas", route: "/canvas-board" },
-            { id: 4, title: "Todos", route: "/" },
-            { id: 5, title: "Milestones", route: "/milestone-board" },
-            { id: 6, title: "Diagnostics", route: "/diagnostics" }
+            // { id: 1, title: "Schedule", route: "/carlender", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            // { id: 2, title: "Metrics", route: "/overview", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            // { id: 3, title: "Lean Canvas", route: "/canvas-board", icon:<DeveloperBoardIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 4, title: "Todos", route: "/", icon:<ListAltIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            // { id: 5, title: "Milestones", route: "/milestone-board", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 6, title: "Diagnostics", route: "/diagnostics", icon:<BuildIcon className="link-icon" style={{ fontSize: '25px' }}/> }
         ]
     })
 
     const [adminAppState, setAdminAppState] = useState({
         actionObject: null,
         objects: [
-            { id: 1, title: "Startups", route: "/" },
-            { id: 2, title: "Register Startup", route: "/register" }
+            { id: 1, title: "Startups", route: "/", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 2, title: "Register Startup", route: "/register", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> }
         ]
     })
 
@@ -93,7 +108,16 @@ const Navbar = (props) => {
         <div className="nav-container">
             {openSidebar ? <Sidebar closeSidebar={closeSidebar}/> : null}
             <div className="nav-row">
-                <img src={logo} />
+                <div className="profile-pic">
+                    <div className="avatar">
+                        <img src={logo} />
+                    </div>
+                    <div className="profile">
+                    <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottomCenter" icon={<UserOutlined />}>
+                        <p>{username}</p>
+                    </Dropdown.Button>
+                    </div>
+                </div>
                 {admin ? 
                 <div className="admin-links">
                 {adminAppState.objects.map((element, index) => (
@@ -105,25 +129,28 @@ const Navbar = (props) => {
                             props.history.push(element.route)
                         }}
                     >
+                        {element.icon}
                         <h4>{element.title}</h4>
                     </div>
                 ))
-                }
+            }
                 {/* <h4>Lean Canvas</h4>
                 <h4>Dashboard</h4>
-                <h4>Learn</h4> */}
+            <h4>Learn</h4> */}
             </div>
             :
             <div className="links">
+                <h3>Menu</h3>
                     {appState.objects.map((element, index) => (
                         <div
-                            key={index}
-                            className={toggleActiveStyle(index)}
-                            onClick={() => {
-                                toggleActive(index)
-                                props.history.push(element.route)
-                            }}
+                        key={index}
+                        className={toggleActiveStyle(index)}
+                        onClick={() => {
+                            toggleActive(index)
+                            props.history.push(element.route)
+                        }}
                         >
+                            {element.icon}
                             <h4>{element.title}</h4>
                         </div>
                     ))
@@ -133,12 +160,38 @@ const Navbar = (props) => {
                     <h4>Learn</h4> */}
                 </div>    
             }
-                {admin ? null : <a href={link} target="blank"><button className="report">Report</button></a>}
-                <div className="profile">
+            <div className="link-separator"/>
+            {admin ? null : <a href={link} target="blank"><button className="report">Report Metrics</button></a>}
+            {/* {admin ? 
+            <div className="nav-boards">
+                <h3>Boards</h3>
+                <div className="nav-board-row">
+                    {filtereUsers.map(u => (
+                        <div className="nav-board">
+                            <p>{u.username}</p>
+                        </div>
+                    )
+                    )}
+                </div>
+            </div> 
+            :
+            <div className="nav-boards">
+                <h3>Boards</h3>
+                <div className="nav-board-row">
+                    {filtereBoards.map(b => (
+                        <div className="nav-board">
+                            <p>{b.name}</p>
+                        </div>
+                    )
+                    )}
+                </div>
+            </div>
+            } */}
+                {/* <div className="profile">
                     <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottomCenter" icon={<UserOutlined />}>
                         <p>{username}</p>
                     </Dropdown.Button>
-                </div>
+                </div> */}
                 <div className="menu-container">
                     <MenuIcon onClick={() => setopenSidebar(true)}  className="menu" style={{ fontSize: '40px' }} />
                 </div>

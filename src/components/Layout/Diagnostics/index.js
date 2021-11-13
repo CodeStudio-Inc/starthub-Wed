@@ -1,12 +1,12 @@
 import React,{useState, useEffect} from 'react'
-import {useDispatch, useSelector} from  'react-redux'
-import Stack from '@mui/material/Stack';
-import Slider from '@mui/material/Slider';
-import {Formik, Form} from 'formik'
+import {useDispatch, useSelector} from 'react-redux'
+import Stack from '@mui/material/Stack'
+import Slider from '@mui/material/Slider'
 import MultipleStepForm from './MultipleStepForm'
 import { FormStep } from './MultipleStepForm'
 import {teams, vision, proposition, product, market, business, investment} from './Steps'
 import * as actionCreators from '../../store/actionCreators'
+import svg from '../../../assets/images/spinner.svg'
 
 import './Diagnostics.css'
  const Diagnostics = () => {
@@ -22,11 +22,12 @@ import './Diagnostics.css'
      const [teamsHeader, setTeamsHeader] = useState('')
      const [teamsDesc, setTeamsDesc] = useState('')
 
-     console.log(teamsValue)
- 
-
+     
+     
      const userId = useSelector(state => state.auth.userId)
      const _value = useSelector(state => state.requests.values)
+     const loading = useSelector(state => state.requests.loading)
+    //   console.log(_value)
 
      const dispatch = useDispatch()
 
@@ -96,11 +97,12 @@ import './Diagnostics.css'
     
     const filter_value = _value && _value.filter(e => e.creator === userId)
     
-    // console.log(_value)
+    // console.log(filter_value)
     const last_value = filter_value && filter_value.slice(-1).pop()
 
     return (
         <div className="main">
+            <div className="diagnostics-menu">
             <div className="steps">
             <h2>Business Diagnostics</h2>
             <MultipleStepForm
@@ -120,14 +122,6 @@ import './Diagnostics.css'
                 onSubmit={() => console.log('Step 1 submit')}
                 >
                     <div className="step">
-                        {/* <div className="step-row">
-                            <input type="radio" />
-                            <p>We have more than two skilled, smart and committed people</p>
-                        </div>
-                        <div className="step-row">
-                            <input type="radio" />
-                            <p>Our Healthy Team Dynamics allows Ownership</p>
-                        </div> */}
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
                             <Slider
                                 orientation="vertical"
@@ -170,7 +164,7 @@ import './Diagnostics.css'
                 </FormStep>
                 <FormStep 
                 stepName="Product"
-                onSubmit={() => console.log('Step 1 subit')}
+                onSubmit={() => console.log('Step 1 submit')}
                 >
                     <div className="step">
                         <Stack  sx={{ height: 300 }} spacing={1} direction="row">
@@ -229,6 +223,8 @@ import './Diagnostics.css'
                     </div>
                 </FormStep>
             </MultipleStepForm>
+            {loading ? <span><img src={svg} style={{ width:"30px", height:"30px"}}/></span> : null }
+            </div>
             </div>
             {/* <div className="description">
                 <div className="description-header">

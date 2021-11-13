@@ -47,16 +47,16 @@ const Card = (props) => {
     
     const getListsOnBoard = () => dispatch(actionCreators.getListsOnBoard( () => { }))
 
-    const createList = () => {
-        dispatch(actionCreators.createList(boardId, listName, (res) => {
-            if (res.success === true) {
-                setOpen(false)
-                setTimeout(() => {
-                    dispatch(actionCreators.getListsOnBoard(boardId))
-                }, 2000)
-            }
-        }))
-    }
+    // const createList = () => {
+    //     dispatch(actionCreators.createList(boardId, listName, (res) => {
+    //         if (res.success === true) {
+    //             setOpen(false)
+    //             setTimeout(() => {
+    //                 dispatch(actionCreators.getListsOnBoard(boardId))
+    //             }, 2000)
+    //         }
+    //     }))
+    // }
 
 
     return (
