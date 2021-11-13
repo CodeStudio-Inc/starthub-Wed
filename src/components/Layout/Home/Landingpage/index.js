@@ -211,7 +211,7 @@ const Landing = (props) => {
                     </div>
                 </DragDropContext>
                 <div className="objective-bg">
-                    {loading ? <img src={svg} style={{ width:"30px", height:"30px"}} /> : <Objective objectives={filteredObjs} keyresults={objectives.keyresults} svg={svg}/>}
+                    <Objective objectives={filteredObjs} keyresults={objectives.keyresults} svg={svg}/>
                     {filteredObjs && filteredObjs.length === 3 ? null : <div className="add-objective">
                         <AddBoxIcon onClick={() => setobjModal(true)} className="add-obj-icon" style={{ fontSize: '35px'}} />
                         <p onClick={() => setobjModal(true)}>Add new Objective</p>
