@@ -4,13 +4,18 @@ import Slider from '@mui/material/Slider'
 import EditIcon from '@mui/icons-material/Edit'
 import CancelIcon from '@mui/icons-material/Cancel'
 
-const Keyresult = ({k, state, setState, dispatch, actionCreators, svg, loading}) => {
+const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
 
     // console.log(state)
 
     const [editkeyResult, seteditkeyResult] = useState(false)
     const [activekeyResult, setactiveKeyresult] = useState('')
+    const [state, setState] = useState({
+        keyresult: k.description,
+        measureOfSuccess: 0,
+    })
     const [progress, setProgress] = useState(false)
+    const [message, setMessage] = useState(false)
 
     // console.log(activekeyResult,k.objId, loading)
 
@@ -21,25 +26,32 @@ const Keyresult = ({k, state, setState, dispatch, actionCreators, svg, loading})
                 <div className="objective-card">
                     {editkeyResult && activekeyResult === k.objId ? null : <p>{k.description}</p>}
                     {editkeyResult && activekeyResult === k.objId ?
-                        <textarea
-                        type="text"
-                        placeholder="Enter Key result"
-                        value={state.keyresult}
-                        onChange={(e) => setState({ ...state, keyresult: e.target.value })}
-                        onKeyUp={(e) => {
-                                if (e.key === 'Enter' && state.keyresult) {
-                                    dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
-                                        if(res.success) {
-                                            seteditkeyResult(false)
-                                            setState({
-                                                keyresult:'',
-                                                measureOfSuccess:''
-                                            })
-                                        }
-                                    }))
-                                    }
-                                }}
-                    /> : null}
+                        <div style={{width:'100%'}}>
+                            <textarea
+                                type="text"
+                                placeholder="Enter Key result"
+                                value={state.keyresult}
+                                onChange={(e) => setState({ ...state, keyresult: e.target.value })}
+                                onFocus={() => setMessage('Press enter to save')}
+                                onKeyUp={(e) => {
+                                        if (e.key === 'Enter' && state.keyresult) {
+                                            dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
+                                                if(res.success) {
+                                                    seteditkeyResult(false)
+                                                    setMessage('')
+                                                    setactiveKeyresult(k.objId)
+                                                    setState({
+                                                        keyresult:'',
+                                                        measureOfSuccess:''
+                                                    })
+                                                }
+                                            }))
+                                            }
+                                        }}
+                            /> 
+                            {loading && activekeyResult === k.objId ? <p style={{color:'#dfa126'}}>Saving please wait...</p>  : <p style={{color:'#dfa126'}}>{message}</p>}
+                        </div>
+                    : null}
                     {editkeyResult && activekeyResult === k.objId ? null :
                         <EditIcon 
                         className="edit-stmt-icon" 

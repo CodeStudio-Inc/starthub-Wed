@@ -192,7 +192,7 @@ export const setStatememnts = (data) => {
 }
 
 export const setObjectives = (data) => {
-    console.log(data,'kk')
+    console.log(data,'reducers')
     return {
         type: actions.SET_OBJECTIVES,
         data
@@ -1163,8 +1163,8 @@ export const addObjective = (id, description,callback) => {
             }
         })
         .then(res => {
-            // console.log(res.data.objs)
-            dispatch(setBlogs(res.data.objs))
+            console.log(res.data.objs)
+            dispatch(setObjectives(res.data.objs))
             callback({ success: true, res: res })
             dispatch(stopLoader())
         })
@@ -1190,9 +1190,9 @@ export const getObjective = () => {
             }
         })
         .then(res => {
-            // console.log(res)
+            console.log(res.data.objs)
             dispatch(stopLoader())
-            dispatch(setBlogs(res.data.objs))
+            dispatch(setObjectives(res.data.objs))
         })
         .catch(error => {
             console.log(error)
@@ -1221,7 +1221,7 @@ export const editObjective = (id,description, callback) => {
         })
         .then(res => {
             console.log(res)
-            dispatch(setBlogs(res.data.objs))
+            dispatch(setObjectives(res.data.objs))
             callback({ success: true, res: res })
             dispatch(stopLoader())
         })
@@ -1252,8 +1252,8 @@ export const addkeyResult = (description, measureOfSuccess,objId,callback) => {
             }
         })
         .then(res => {
-            // console.log(res)
-            dispatch(setBlogs(res.data.objs))
+            console.log(res)
+            dispatch(setObjectives(res.data.objs))
             callback({ success: true, res: res })
             dispatch(stopLoader())
         })
@@ -1285,7 +1285,7 @@ export const editkeyResult = (id, description, measureOfSuccess,dateCreated, cal
         })
         .then(res => {
             console.log(res)
-            dispatch(setBlogs(res.data.objs))
+            dispatch(setObjectives(res.data.objs))
             callback({ success: true, res: res })
             dispatch(stopLoader())
         })

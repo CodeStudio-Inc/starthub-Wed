@@ -33,14 +33,14 @@ const Landing = (props) => {
     const userId = useSelector(state => state.auth.userId)
     const _value = useSelector(state => state.requests.values)
     const statements = useSelector(state => state.requests.statements)
-    const objectives = useSelector(state => state.requests.blogs)
+    const objectives = useSelector(state => state.requests.objectives)
     const loading = useSelector(state => state.requests.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
 
      const filter_value = _value && _value.filter(e => e.creator === userId)
     
      const last_value = filter_value && filter_value.slice(-1).pop()
-    //  console.log(userId,'jj')
+    //  console.log(statements,'jj',objectives)
 
     const current_date = Date.now()
 
@@ -70,12 +70,12 @@ const Landing = (props) => {
     const current_board = Boards && Boards.slice(-1).pop()
     const filteredObjs = objectives && objectives.filter(el => el.boardId === current_board._id )
     const filteredStatements = statements && statements.filter(el => el.boardId === current_board._id )
-    // console.log(statements,'llll')
+    // console.log(objectives,'llll')
 
     const todoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === false)
     const archivedtodoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === true)
     // console.log(current_board._id,'kk')
-    // console.log(todoLists)
+    // console.log(loading)
 
     const onDragEnd = (result) => {
             const { destination, source, draggableId } = result

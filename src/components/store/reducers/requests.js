@@ -8,7 +8,7 @@ const initialState = {
     boards: [],
     values:[],
     statements:[],
-    // objectives:[],
+    objectives:[],
     // obj:'',
     teams:0,
     vision:0,

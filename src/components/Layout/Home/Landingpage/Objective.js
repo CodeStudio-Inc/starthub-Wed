@@ -13,18 +13,22 @@ const Objective = ({objectives, svg, keyresults}) =>  {
     const [addkeyResult,setaddkeyResult] = useState(false)
     const [editObjective, seteditObjetive] = useState(false)
     const [activeObj,setactiveObj] = useState('')
+    const [currentobjEdit,setcurrentobjEdit] = useState('')
 
     const loading = useSelector(state => state.requests.loading)
 
     const [state, setState] = useState({
         keyresult:'',
-        measureOfSuccess: 0,
-        objective:''
+        measureOfSuccess: 0
+    })
+
+    const [objstate, setObjstate] = useState({
+        objective: '' 
     })
 
     const dispatch = useDispatch()
 
-    // console.log(state.measureOfSuccess)
+    // console.log(objstate.objective)
 
 
     return (
@@ -39,14 +43,15 @@ const Objective = ({objectives, svg, keyresults}) =>  {
                             <input
                                 type="text"
                                 placeholder="Enter new Objective"
-                                value={state.objective}
-                                onChange={(e) => setState({ ...state, objective: e.target.value })}
+                                value={objstate.objective}
+                                onFocus={() => setObjstate({objective: obj.description})}
+                                onChange={(e) => setObjstate({ ...objstate, objective: e.target.value })}
                                 onKeyUp={(e) => {
-                                    if (e.key === 'Enter' && state.objective) {
-                                        dispatch(actionCreators.editObjective(obj._id, state.objective, (res) => {
+                                    if (e.key === 'Enter' && objstate.objective) {
+                                        dispatch(actionCreators.editObjective(obj._id, objstate.objective, (res) => {
                                             if(res.success) {
                                                 seteditObjetive(false)
-                                                setState({
+                                                setObjstate({
                                                     objective:''
                                                 })
                                             }
