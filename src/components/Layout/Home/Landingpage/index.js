@@ -129,14 +129,14 @@ const Landing = (props) => {
 
     return (
     <div className="landing-container">
-        {expireTime ? 
+        {/* {expireTime ? 
             <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>
-            : null}
+            : null} */}
         {objModal ? 
             <ModalUI>
                 <div className="create-modal">
@@ -210,13 +210,11 @@ const Landing = (props) => {
                         ))}
                     </div>
                 </DragDropContext>
-                <div className="objective-bg">
                     <Objective objectives={filteredObjs} keyresults={objectives.keyresults} svg={svg}/>
                     {filteredObjs && filteredObjs.length === 3 ? null : <div className="add-objective">
-                        <AddBoxIcon onClick={() => setobjModal(true)} className="add-obj-icon" style={{ fontSize: '35px'}} />
-                        <p onClick={() => setobjModal(true)}>Add new Objective</p>
+                        <AddBoxIcon onClick={() => setobjModal(true)} className="add-obj-icon" style={{ fontSize: '60px'}} />
+                        <p onClick={() => setobjModal(true)}>Click to add new Objective</p>
                     </div>}
-                </div>
             </div>
             <div className="landing-menu-right">
             <div className="vision-statements">

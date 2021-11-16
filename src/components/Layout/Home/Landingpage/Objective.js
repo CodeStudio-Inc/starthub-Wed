@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import CancelIcon from '@mui/icons-material/Cancel'
 import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'
+import Addkeyresult from './Addkeyresult'
 
 const Objective = ({objectives, svg, keyresults}) =>  {
 
@@ -23,11 +24,11 @@ const Objective = ({objectives, svg, keyresults}) =>  {
 
     const dispatch = useDispatch()
 
-    // console.log(state)
+    // console.log(state.measureOfSuccess)
 
 
     return (
-        <div style={{width:'100%'}}>
+        <div  className="objective-bg">
             {objectives && objectives.map((obj, index) => (
                 <div key={index} className="objective">
                     <div className="objective-header">
@@ -79,42 +80,15 @@ const Objective = ({objectives, svg, keyresults}) =>  {
                             <Keyresult keyresults={k} objId={obj._id}/>
                         ))} */}
                     {addkeyResult && obj._id === activeObj ? 
-                    <div key={obj._id} className="objective-row">
-                        <div className="objective-column">
-                            <p><span style={{color:'red'}}>*</span>Required</p>
-                            <input
-                                type="text"
-                                placeholder="Enter Key result"
-                                value={state.keyresult}
-                                onChange={(e) => setState({ ...state, keyresult: e.target.value })}
-                            />
-                        </div>
-                        <div className="objective-column">
-                                <p><span style={{color:'red'}}>*</span>Required</p>
-                            <div className="objective-slider-row">
-                                <Box sx={{ width: 200 }}>
-                                <Slider
-                                    defaultValue={state.measureOfSuccess}
-                                    onChange={(e) => setState({ ...state, measureOfSuccess: e.target.value })}
-                                />
-                                </Box>
-                                <h4>{state.measureOfSuccess}%</h4>
-                            </div>
-                        </div>
-                        <button 
-                        onClick={() => {
-                            dispatch(actionCreators.addkeyResult(state.keyresult, state.measureOfSuccess, obj._id, (res) => {
-                                if(res.success) {
-                                    setaddkeyResult(false)
-                                    setState({
-                                        keyresult:'',
-                                        measureOfSuccess:''
-                                    })
-                                }
-                            }))
-                        }}
-                        >save</button>
-                    </div> : null }
+                    <Addkeyresult
+                        obj={obj}
+                        state={state}
+                        dispatch={dispatch}
+                        actionCreators={actionCreators}
+                        setState={setState}
+                        setaddkeyResult={setaddkeyResult}
+                    />
+                     : null }
                     {addkeyResult ? null : <button 
                     onClick={() => {
                         setactiveObj(obj._id)

@@ -1,33 +1,97 @@
 import React,{useState} from 'react'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
+import EditIcon from '@mui/icons-material/Edit'
+import CancelIcon from '@mui/icons-material/Cancel'
 
 const Keyresult = ({k, state, setState, dispatch, actionCreators, svg, loading}) => {
 
     // console.log(state)
 
     const [editkeyResult, seteditkeyResult] = useState(false)
+    const [activekeyResult, setactiveKeyresult] = useState('')
+    const [progress, setProgress] = useState(false)
+
+    // console.log(activekeyResult,k.objId, loading)
 
     return (
         <div style={{width:'100%'}}>
-            {editkeyResult ? null :
             <div key={k.objId} className="objective-row">
                 <p>Key Result</p>
                 <div className="objective-card">
-                    <p>{k.description}</p>
+                    {editkeyResult && activekeyResult === k.objId ? null : <p>{k.description}</p>}
+                    {editkeyResult && activekeyResult === k.objId ?
+                        <textarea
+                        type="text"
+                        placeholder="Enter Key result"
+                        value={state.keyresult}
+                        onChange={(e) => setState({ ...state, keyresult: e.target.value })}
+                        onKeyUp={(e) => {
+                                if (e.key === 'Enter' && state.keyresult) {
+                                    dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
+                                        if(res.success) {
+                                            seteditkeyResult(false)
+                                            setState({
+                                                keyresult:'',
+                                                measureOfSuccess:''
+                                            })
+                                        }
+                                    }))
+                                    }
+                                }}
+                    /> : null}
+                    {editkeyResult && activekeyResult === k.objId ? null :
+                        <EditIcon 
+                        className="edit-stmt-icon" 
+                        style={{ fontSize: '20px'}} 
+                        onClick={() => {
+                            setactiveKeyresult(k.objId)
+                            seteditkeyResult(true)
+                        }} 
+                    />}
+                    {editkeyResult && activekeyResult === k.objId ?
+                        <CancelIcon 
+                        className="edit-stmt-icon" 
+                        style={{ fontSize: '20px'}} 
+                        onClick={() => seteditkeyResult(false)}
+                        /> : null}
                 </div>
                 <div className="objective-slider-row">
                     <Box sx={{ width: 200 }}>
                     <Slider
                         defaultValue={k.measureOfSuccess}
+                        onChange={(e) => {
+                            setState({ ...state, measureOfSuccess: e.target.value })
+                            setactiveKeyresult(k.objId)
+                            setProgress(true)
+                        }}
                     />
                     </Box>
-                    <h4>{k.measureOfSuccess}%</h4>
+                    {progress && activekeyResult === k.objId ? null : <h4>{k.measureOfSuccess}%</h4>}
+                    {progress && activekeyResult === k.objId ?  <h4>{state.measureOfSuccess}%</h4> : null}
                 </div>
-                <button onClick={() => seteditkeyResult(true)}>edit</button>
-            </div>}
-            { editkeyResult ? <div className="objective-row">
+                {progress && activekeyResult === k.objId  ? 
+                    <button 
+                    onClick={() => {
+                        dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
+                            if(res.success) {
+                                setProgress(false)
+                                setactiveKeyresult(k.objId)
+                                setState({
+                                    keyresult:'',
+                                    measureOfSuccess:''
+                                })
+                            }
+                        }))
+                    }}
+                >
+                    {loading && activekeyResult === k.objId ? 'Saving' : 'save progress' }
+                </button> : null}
+                {/* {loading && activekeyResult === k.objId  ? <img src={svg} style={{ width:"30px", height:"30px"}} /> : null} */}
+            </div>
+            {/* <div className="objective-row">
                 <div className="objective-column">
+                    <h3>KeyResult</h3>
                     <p><span style={{color:'red'}}>*</span>Required</p>
                     <input
                         type="text"
@@ -37,6 +101,7 @@ const Keyresult = ({k, state, setState, dispatch, actionCreators, svg, loading})
                     />
                 </div>
                 <div className="objective-column">
+                    <h3>Measure of success</h3>
                         <p><span style={{color:'red'}}>*</span>Required</p>
                     <div className="objective-slider-row">
                         <Box sx={{ width: 200 }}>
@@ -63,7 +128,7 @@ const Keyresult = ({k, state, setState, dispatch, actionCreators, svg, loading})
                 >save</button>
                  {editkeyResult ? <button onClick={() => seteditkeyResult(false)}>Cancel</button> : null}
                  {loading ? <img src={svg} style={{ width:"30px", height:"30px"}} /> : null}
-            </div> : null}
+            </div> */}
         </div>
     )
 }
