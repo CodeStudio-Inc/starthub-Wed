@@ -223,7 +223,7 @@ const Landing = (props) => {
                     <h3>Have you set a Vision and Mission Statement yet?</h3>
                     <button className="vision-btn" onClick={openModal}>Click here to create one</button>
                 </div>}
-                <Diagnostics last_value={last_value}/>
+                <Diagnostics last_value={last_value && last_value}/>
             </div>
             </div>
         </div>
