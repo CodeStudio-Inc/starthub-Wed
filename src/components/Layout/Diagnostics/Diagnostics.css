@@ -12,9 +12,9 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    width:  100%;
-    max-width: 1150px;
-    left: 10%;
+    width:  85%;
+    /* max-width: 1150px; */
+    left: 15%;
     /* top:10px; */
 }
 

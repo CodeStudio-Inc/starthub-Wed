@@ -9,8 +9,8 @@ import * as actionCreators from '../../..//store/actionCreators'
     const [vision,setVision] = useState(false)
     const [mission,setMission] = useState(false)
     const [state, setState] = useState({
-        _vision: '',
-        _mission: ''
+        _vision: statements[0].vision,
+        _mission: statements[0].mission
     })
 
     const _statements = useSelector(state => state.requests.statements)

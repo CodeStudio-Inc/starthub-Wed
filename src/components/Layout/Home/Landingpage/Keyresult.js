@@ -69,7 +69,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                         /> : null}
                 </div>
                 <div className="objective-slider-row">
-                    <Box sx={{ width: 200 }}>
+                    <Box sx={{ width: 150 }}>
                     <Slider
                         defaultValue={k.measureOfSuccess}
                         onChange={(e) => {

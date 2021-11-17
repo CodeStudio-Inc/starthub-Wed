@@ -11,23 +11,27 @@ import svg from '../../../assets/images/spinner.svg'
 import './Diagnostics.css'
  const Diagnostics = () => {
 
-     const [teamsValue, setTeamsValue] = useState(0)
-     const [visionValue, setVisionValue] = useState(0)
-     const [propositionValue, setPropositionValue] = useState(0)
-     const [productValue, setProductValue] = useState(0)
-     const [marketValue, setMarketValue] = useState(0)
-     const [businessValue, setBusinessValue] = useState(0)
-     const [investmentValue, setInvestmentValue] = useState(0)
+     const userId = useSelector(state => state.auth.userId)
+     const _value = useSelector(state => state.requests.values)
+     const loading = useSelector(state => state.requests.loading)
+
+     const filter_value = _value && _value.filter(e => e.creator === userId)
+     const last_value = filter_value && filter_value.slice(-1).pop()
+    //   console.log(_value)
+
+     const [teamsValue, setTeamsValue] = useState(last_value.teams)
+     const [visionValue, setVisionValue] = useState(last_value.vision)
+     const [propositionValue, setPropositionValue] = useState(last_value.proposition)
+     const [productValue, setProductValue] = useState(last_value.product)
+     const [marketValue, setMarketValue] = useState(last_value.market)
+     const [businessValue, setBusinessValue] = useState(last_value.business)
+     const [investmentValue, setInvestmentValue] = useState(last_value.investment)
 
      const [teamsHeader, setTeamsHeader] = useState('')
      const [teamsDesc, setTeamsDesc] = useState('')
 
      
      
-     const userId = useSelector(state => state.auth.userId)
-     const _value = useSelector(state => state.requests.values)
-     const loading = useSelector(state => state.requests.loading)
-    //   console.log(_value)
 
      const dispatch = useDispatch()
 
@@ -41,7 +45,7 @@ import './Diagnostics.css'
 
         if(teamsValue === 10) {
             setTeamsHeader('How sure are you that your team members are commited')
-            setTeamsDesc('Your Team players are commited if;')
+            setTeamsDesc('Your Team players are commited if')
         }
         if(teamsValue === 20) {
             setTeamsHeader('Teams Level 2 Header')
@@ -93,12 +97,6 @@ import './Diagnostics.css'
         }))
     }
 
-    // console.log(userId)
-    
-    const filter_value = _value && _value.filter(e => e.creator === userId)
-    
-    // console.log(filter_value)
-    const last_value = filter_value && filter_value.slice(-1).pop()
 
     return (
         <div className="main">

@@ -192,7 +192,6 @@ export const setStatememnts = (data) => {
 }
 
 export const setObjectives = (data) => {
-    console.log(data,'reducers')
     return {
         type: actions.SET_OBJECTIVES,
         data
@@ -1190,7 +1189,7 @@ export const getObjective = () => {
             }
         })
         .then(res => {
-            console.log(res.data.objs)
+            // console.log(res.data.objs)
             dispatch(stopLoader())
             dispatch(setObjectives(res.data.objs))
         })
@@ -1252,7 +1251,7 @@ export const addkeyResult = (description, measureOfSuccess,objId,callback) => {
             }
         })
         .then(res => {
-            console.log(res)
+            // console.log(res)
             dispatch(setObjectives(res.data.objs))
             callback({ success: true, res: res })
             dispatch(stopLoader())

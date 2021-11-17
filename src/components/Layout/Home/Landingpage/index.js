@@ -129,14 +129,14 @@ const Landing = (props) => {
 
     return (
     <div className="landing-container">
-        {/* {expireTime ? 
+        {expireTime ? 
             <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>
-            : null} */}
+            : null}
         {objModal ? 
             <ModalUI>
                 <div className="create-modal">
