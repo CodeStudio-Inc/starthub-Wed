@@ -37,11 +37,17 @@ const Objective = ({objectives, svg, keyresults}) =>  {
                 <div key={index} className="objective">
                     <div className="objective-header">
                         <p>Objective {index >= 0 ? index + 1 : null}</p>
-                        <DeleteIcon  
+                        {loading && obj._id === activeObj ? 
+                        <img src={svg} style={{ width:"30px", height:"30px"}}/> :
+                            <DeleteIcon  
                             className="edit-stmt-icon" 
                             style={{ fontSize: '20px'}} 
-                            onClick={() => dispatch(actionCreators.deleteObjective(obj._id))}
+                            onClick={() => {
+                                setactiveObj(obj._id)
+                                dispatch(actionCreators.deleteObjective(obj._id))
+                            }}
                         />
+                        }
                     </div>
                         <div className="objective-description">
                             {editObjective && obj._id === activeObj ? 
