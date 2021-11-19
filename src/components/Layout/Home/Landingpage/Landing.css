@@ -12,10 +12,8 @@
     align-items: flex-start;
     justify-content: space-between;
     width:  85%;
-    /* max-width: 1150px; */
     padding: 0.5rem;
     left: 15%;
-    /* top:10px; */
 }
 
 .landing-menu-left {
@@ -125,9 +123,9 @@
 
 .objective-header {
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 95%;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .objective-header p {
@@ -241,7 +239,7 @@
 	width: 100%;
     background: #fff;
     padding: 0.5rem;
-    min-height: 550px;
+    min-height: 500px;
     height: 100%;
 }
 

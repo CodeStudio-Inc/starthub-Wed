@@ -1162,7 +1162,7 @@ export const addObjective = (id, description,callback) => {
             }
         })
         .then(res => {
-            console.log(res.data.objs)
+            // console.log(res.data.objs)
             dispatch(setObjectives(res.data.objs))
             callback({ success: true, res: res })
             dispatch(stopLoader())
@@ -1219,7 +1219,7 @@ export const editObjective = (id,description, callback) => {
             }
         })
         .then(res => {
-            console.log(res)
+            // console.log(res)
             dispatch(setObjectives(res.data.objs))
             callback({ success: true, res: res })
             dispatch(stopLoader())
@@ -1227,6 +1227,32 @@ export const editObjective = (id,description, callback) => {
         .catch(error => {
             console.log(error)
         })
+    }
+}
+
+export const deleteObjective = (id) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/objective/${id}`, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                // callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 }
 

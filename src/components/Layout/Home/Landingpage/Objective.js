@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 import EditIcon from '@mui/icons-material/Edit'
 import CancelIcon from '@mui/icons-material/Cancel'
+import DeleteIcon from '@material-ui/icons/Delete'
 import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'
 import Addkeyresult from './Addkeyresult'
@@ -30,13 +31,17 @@ const Objective = ({objectives, svg, keyresults}) =>  {
 
     // console.log(objstate.objective)
 
-
     return (
         <div  className="objective-bg">
             {objectives && objectives.map((obj, index) => (
                 <div key={index} className="objective">
                     <div className="objective-header">
                         <p>Objective {index >= 0 ? index + 1 : null}</p>
+                        <DeleteIcon  
+                            className="edit-stmt-icon" 
+                            style={{ fontSize: '20px'}} 
+                            onClick={() => dispatch(actionCreators.deleteObjective(obj._id))}
+                        />
                     </div>
                         <div className="objective-description">
                             {editObjective && obj._id === activeObj ? 

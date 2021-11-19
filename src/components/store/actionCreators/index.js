@@ -41,6 +41,7 @@ export {
     getStatement,
     addObjective,
     getObjective,
+    deleteObjective,
     addkeyResult,
     editStatement,
     editObjective,

@@ -6,9 +6,6 @@
 	background: #eee;
 }
 
-.left-column {
-	width: 15%;
-}
 
 .boards-right-column {
 	width: 95%;
@@ -655,7 +652,6 @@
 	align-items: center;
 	justify-content: space-between;
 	padding: 5px;
-	overflow: hidden;
 	width: 100%;
 	margin-bottom: 0.5rem;
 	cursor: grab;
@@ -670,12 +666,13 @@
 	font-weight: 500;
 }
 
+
 .canvas-draggable {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding: 5px;
-	overflow: hidden;
+	/* overflow: hidden; */
 	width: 100%;
 	margin-bottom: 0.5rem;
 	cursor: grab;

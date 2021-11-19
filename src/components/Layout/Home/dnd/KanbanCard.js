@@ -45,7 +45,7 @@ export const KanbanCard = ({cardId, text, index,cardIndex,callback, setActiveCar
                     )}
                 >
                     <div className="draggable">
-                        {visible ? null : <p>{text}</p>}
+                        {visible ? null :  <p>{text}</p>}
                         {visible ?
                             <div className="edit-card-row2">
                                 <input
