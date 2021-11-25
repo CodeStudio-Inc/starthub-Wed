@@ -34,7 +34,7 @@ const Navbar = (props) => {
         objects: [
             // { id: 1, title: "Schedule", route: "/carlender", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             // { id: 2, title: "Metrics", route: "/overview", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            // { id: 3, title: "Lean Canvas", route: "/canvas-board", icon:<DeveloperBoardIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 3, title: "Lean Canvas", route: "/canvas-board", icon:<DeveloperBoardIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 4, title: "Todos", route: "/", icon:<ListAltIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             // { id: 5, title: "Milestones", route: "/milestone-board", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 6, title: "Diagnostics", route: "/diagnostics", icon:<BuildIcon className="link-icon" style={{ fontSize: '25px' }}/> }
@@ -44,8 +44,8 @@ const Navbar = (props) => {
     const [adminAppState, setAdminAppState] = useState({
         actionObject: null,
         objects: [
-            { id: 1, title: "Startups", route: "/", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            { id: 2, title: "Register Startup", route: "/register", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> }
+            { id: 1, title: "Dashboard", route: "/", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> }
+            // { id: 2, title: "Register Startup", route: "/register", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> }
         ]
     })
 
@@ -54,7 +54,11 @@ const Navbar = (props) => {
     const username = useSelector(state => state.auth.username)
     const admin = useSelector(state => state.auth.admin)
     const link = useSelector(state => state.auth.link)
+    const userId = useSelector(state => state.auth.userId)
     // console.log(key,'hello')
+
+    const lean_check = Boards && Boards.filter(el => el.creator === userId && el.boardType === 'Lean Canvas')
+    // console.log(lean_check)
 
 
     const handleLogoutClick = e => {
@@ -150,8 +154,8 @@ const Navbar = (props) => {
                             props.history.push(element.route)
                         }}
                         >
-                            {element.icon}
-                            <h4>{element.title}</h4>
+                            {element.title === 'Lean Canvas' && lean_check.length === 0 ? null : element.icon}
+                            <h4>{element.title === 'Lean Canvas' && lean_check.length === 0 ? null : element.title}</h4>
                         </div>
                     ))
                     }

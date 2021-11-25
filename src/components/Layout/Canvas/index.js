@@ -10,6 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import moment from 'moment'
+import Loader from '../../ModalUI/Loader'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
 
@@ -23,7 +24,9 @@ const Home = (props) => {
     const [archive, setArchive] = useState(false)
     const [deleteError, setDeleteError] = useState('')
     const [boardId, setBoardId] = useState('')
-    const [boardName, setName] = useState('')
+    const [boardName, setName] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [activeCard, setActiveCard] = useState({})
 
     const Boards = useSelector(state => state.requests.boards)
     const userId = useSelector(state => state.auth.userId)
@@ -31,14 +34,52 @@ const Home = (props) => {
     const lists = useSelector(state => state.requests.canvas_lists)
     const username = useSelector(state => state.auth.username)
 
-    const loading = useSelector(state => state.requests.loading)
+    const dragdropLoading = useSelector(state => state.requests.loading)
 
     const page = 'Lean Canvas'
 
-    const filtereBoards = Boards.filter(el => el.boardType === page  && el.startup === username && el.archive === false)
+    const filtereBoards = Boards.filter(el => el.boardType === page  && el.archive === false)
     const archivedBoards = Boards.filter(el => el.boardType === page && el.startup === username && el.archive === true)
     const expire = useSelector(state => state.auth.tokenExpiration)
     // console.log(filtereBoards)
+
+    let current_lean_canvas,
+        lst,
+        problem,
+        solution,
+        metrics,
+        proposition,
+        advantage,
+        channels,
+        segments,
+        revenue,
+        cost,
+        alternatives,
+        concept,
+        adoptors
+
+        
+
+    // const emptyboardarrayCheck = () => {
+        // if(filtereBoards && filtereBoards.length === 0) return setName(true)
+        current_lean_canvas = filtereBoards && filtereBoards.slice(-1).pop()
+        lst = lists && lists.filter(el => el.boardId === current_lean_canvas._id)
+        
+        problem = lst.find(el => el.name === 'Problem')
+        solution = lst.find(el => el.name === 'Solution')
+        metrics = lst.find(el => el.name === 'Key Metrics')
+        proposition = lst.find(el => el.name === 'Unique Value Proposition')
+        advantage = lst.find(el => el.name === 'Unfair Advantage')
+        channels = lst.find(el => el.name === 'Channels')
+        segments = lst.find(el => el.name === 'Customer Segments')
+        revenue = lst.find(el => el.name === 'Revenue Streams')
+        cost = lst.find(el => el.name === 'Cost Structure')
+        alternatives = lst.find(el => el.name === 'Existing Alternatives')
+        concept = lst.find(el => el.name === 'High-Level Concept')
+        adoptors = lst.find(el => el.name === 'Early Adopters')
+    // } 
+    console.log(lst)
+
 
     const dispatch = useDispatch()
 
@@ -50,9 +91,13 @@ const Home = (props) => {
         }
         dispatch(actionCreators.getBoards())
         getLists()
+        // emptyboardarrayCheck()
     }, [])
 
+
     const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
+
+    const openEditModal = () => setOpen(true)
 
     const handleLogoutClick = () => {
             dispatch(actionCreators.removeUser())
@@ -137,74 +182,73 @@ const Home = (props) => {
                 </div>
             </ModalUI>: null}
             <div className="canvas-landing-menu">
-                <div className="canvases">
-                </div>    
-                    <DragDropContext onDragEnd={onDragEnd}>
+                {/* <div className="canvases">
+                </div>     */}
+                    {boardName ? <h1>Your Account has no Lean Canvas, Please contact your Mentor</h1> : <DragDropContext onDragEnd={onDragEnd}>
                         <div className="canvas-main">
-                            {/* {dragdropLoading ? <Loader/> : null} */}
+                            {dragdropLoading ? <Loader/> : null}
                         <div className="canvas-main-row">
                             <div className="canvas-list-list">
                                 <CanvasList
-                                // key={problem && problem._id}
-                                // listId={problem && problem._id}
-                                // listNumber={problem && problem.listNumber}
-                                // title={problem && problem.name}
-                                // cards={problem && problem.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={problem && problem._id}
+                                listId={problem && problem._id}
+                                listNumber={problem && problem.listNumber}
+                                title={problem && problem.name}
+                                cards={problem && problem.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
                                 <CanvasList
-                                // key={alternatives && alternatives._id}
-                                // listId={alternatives && alternatives._id}
-                                // title={alternatives && alternatives.name}
-                                // cards={alternatives && alternatives.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={alternatives && alternatives._id}
+                                listId={alternatives && alternatives._id}
+                                title={alternatives && alternatives.name}
+                                cards={alternatives && alternatives.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
                             </div>
                             <div className="canvas-list-list">
                                 <CanvasList
-                                // key={solution && solution._id}
-                                // listId={solution && solution._id}
-                                // listNumber={solution && solution.listNumber}
-                                // title={solution && solution.name}
-                                // cards={solution && solution.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={solution && solution._id}
+                                listId={solution && solution._id}
+                                listNumber={solution && solution.listNumber}
+                                title={solution && solution.name}
+                                cards={solution && solution.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
                             <div className="canvas-separator"/>
                                 <CanvasList
-                                // key={metrics && metrics._id}
-                                // listId={metrics && metrics._id}
-                                // listNumber={metrics && metrics.listNumber}
-                                // title={metrics && metrics.name}
-                                // cards={metrics && metrics.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={metrics && metrics._id}
+                                listId={metrics && metrics._id}
+                                listNumber={metrics && metrics.listNumber}
+                                title={metrics && metrics.name}
+                                cards={metrics && metrics.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
                             </div>
                             <div className="canvas-list-list">
                             <CanvasList
-                                // key={proposition && proposition._id}
-                                // listId={proposition && proposition._id}
-                                // listNumber={proposition && proposition.listNumber}
-                                // title={proposition && proposition.name}
-                                // cards={proposition && proposition.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={proposition && proposition._id}
+                                listId={proposition && proposition._id}
+                                listNumber={proposition && proposition.listNumber}
+                                title={proposition && proposition.name}
+                                cards={proposition && proposition.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
-                            </div>
-                            {/* <CanvasList
+                            <CanvasList
                                 key={concept && concept._id}
                                 listId={concept && concept._id}
                                 title={concept && concept.name}
@@ -213,53 +257,54 @@ const Home = (props) => {
                                 callback={getLists}
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
-                            /> */}
-                            <div className="canvas-list-list">
-                                <CanvasList
-                                // key={advantage && advantage._id}
-                                // listId={advantage && advantage._id}
-                                // listNumber={advantage && advantage.listNumber}
-                                // title={advantage && advantage.name}
-                                // cards={advantage && advantage.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
-                            />
-                            <div className="canvas-separator"/>
-                                <CanvasList
-                                // key={channels && channels._id}
-                                // listId={channels && channels._id}
-                                // listNumber={channels && channels.listNumber}
-                                // title={channels && channels.name}
-                                // cards={channels && channels.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
                             />
                             </div>
                             <div className="canvas-list-list">
                                 <CanvasList
-                                // key={segments && segments._id}
-                                // listId={segments && segments._id}
-                                // listNumber={segments && segments.listNumber}
-                                // title={segments && segments.name}
-                                // cards={segments && segments.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={advantage && advantage._id}
+                                listId={advantage && advantage._id}
+                                listNumber={advantage && advantage.listNumber}
+                                title={advantage && advantage.name}
+                                cards={advantage && advantage.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
+                            />
+                            <div className="canvas-separator"/>
+                                <CanvasList
+                                key={channels && channels._id}
+                                listId={channels && channels._id}
+                                listNumber={channels && channels.listNumber}
+                                title={channels && channels.name}
+                                cards={channels && channels.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
+                            />
+                            </div>
+                            <div className="canvas-list-list">
+                                <CanvasList
+                                key={segments && segments._id}
+                                listId={segments && segments._id}
+                                listNumber={segments && segments.listNumber}
+                                title={segments && segments.name}
+                                cards={segments && segments.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
                             <CanvasList
-                                // key={adoptors && adoptors._id}
-                                // listId={adoptors && adoptors._id}
-                                // title={adoptors && adoptors.name}
-                                // cards={adoptors && adoptors.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={adoptors && adoptors._id}
+                                listId={adoptors && adoptors._id}
+                                title={adoptors && adoptors.name}
+                                cards={adoptors && adoptors.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
                             </div>
                         </div>
@@ -267,32 +312,32 @@ const Home = (props) => {
                 
                         <div className="canvas-main-row">
                             <CanvasList2
-                                // key={cost && cost._id}
-                                // listId={cost && cost._id}
-                                // listNumber={cost && cost.listNumber}
-                                // title={cost && cost.name}
-                                // cards={cost && cost.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={cost && cost._id}
+                                listId={cost && cost._id}
+                                listNumber={cost && cost.listNumber}
+                                title={cost && cost.name}
+                                cards={cost && cost.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
                             <CanvasList2
-                                // key={revenue && revenue._id}
-                                // listId={revenue && revenue._id}
-                                // listNumber={revenue && revenue.listNumber}
-                                // title={revenue && revenue.name}
-                                // cards={revenue && revenue.cards}
-                                // boardId={boardId}
-                                // callback={getLists}
-                                // open={openEditModal}
-                                // setActiveCard={setActiveCard}
+                                key={revenue && revenue._id}
+                                listId={revenue && revenue._id}
+                                listNumber={revenue && revenue.listNumber}
+                                title={revenue && revenue.name}
+                                cards={revenue && revenue.cards}
+                                boardId={boardId}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
                             />
                         </div>
                     
 
                     </div>
-                    </DragDropContext>
+                    </DragDropContext>}
             </div>
             {/* <div className="boards-right-column">
                 <div className="boards-right-column-content">

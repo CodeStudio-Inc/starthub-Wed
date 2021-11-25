@@ -281,6 +281,7 @@
 
 .admin-links h4 {
 	font-weight: lighter;
+	margin-top: 0.5rem;
 }
 
 .admin-links h4:hover {

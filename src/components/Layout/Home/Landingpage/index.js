@@ -10,6 +10,7 @@ import Objective from './Objective'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import Diagnostics from './Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
+import AdminLandingPage from './AdminLandingPage'
 
 import './Landing.css'
 const Landing = (props) => {
@@ -35,9 +36,11 @@ const Landing = (props) => {
     const statements = useSelector(state => state.requests.statements)
     const objectives = useSelector(state => state.requests.objectives)
     const loading = useSelector(state => state.requests.loading)
+    const users = useSelector(state => state.admin.users)
     const expire = useSelector(state => state.auth.tokenExpiration)
 
      const filter_value = _value && _value.filter(e => e.creator === userId)
+     const filtereUsers = users.filter(el => el.admin === false)
     
      const last_value = filter_value && filter_value.slice(-1).pop()
     //  console.log(statements,'jj',objectives)
@@ -52,6 +55,7 @@ const Landing = (props) => {
         getLists()
         getStatements()
         getObjectives()
+        getUsers()
     },[])
 
     const dispatch = useDispatch()
@@ -60,21 +64,23 @@ const Landing = (props) => {
     const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
     const getStatements = () => dispatch(actionCreators.getStatement())
     const getObjectives = () => dispatch(actionCreators.getObjective())
+    const getUsers = () => dispatch(actionCreators.getUsers())
 
     const openEditModal = () => setOpen(true)
     const openModal = () => setModal(true)
 
     
     const new_lists = lists.filter(el => el.creator === userId)
-    Boards.filter(el => el.creator === userId)
-    const current_board = Boards && Boards.slice(-1).pop()
-    const filteredObjs = objectives && objectives.filter(el => el.boardId === current_board._id )
-    const filteredStatements = statements && statements.filter(el => el.boardId === current_board._id )
-    // console.log(objectives,'llll')
+    const _boards = Boards.filter(el => el.creator === userId && el.boardType !== 'Lean Canvas')
+    const current_board = _boards && _boards.slice(-1).pop()
+    const current_boardID = current_board && current_board._id
+    const filteredObjs = objectives && objectives.filter(el => el.boardId ===  current_boardID )
+    const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
+    // console.log(current_board,'llll')
 
-    const todoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === false)
-    const archivedtodoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === true)
-    // console.log(current_board._id,'kk')
+    const todoLists = lists && lists.filter(el => el.boardId ===  current_boardID && el.archive === false)
+    // const archivedtodoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === true)
+    // console.log(lists,'kk')
     // console.log(loading)
 
     const onDragEnd = (result) => {
@@ -189,6 +195,7 @@ const Landing = (props) => {
             </div>
         </ModalUI>: null
         }
+        {/* <AdminLandingPage startups={filtereUsers}/> */}
         <div className="landing-menu">
             <div className="landing-menu-left">
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -203,7 +210,7 @@ const Landing = (props) => {
                                 callback={getLists}
                                 open={openEditModal}
                                 setActiveCard={setActiveCard}
-                                archivedtodoLists={archivedtodoLists}
+                                // archivedtodoLists={archivedtodoLists}
                                 setArchive={setArchive}
                                 archive={archive}
                             />
