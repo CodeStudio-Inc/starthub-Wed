@@ -108,13 +108,13 @@
 }
 
 .admin-startup-card h2 {
+    cursor: pointer;
     color: #fff;
     font-size: 40px;
     margin: 0;
 }
 
-.admin-startup-card:hover {
-    cursor: pointer;
+.admin-startup-card:hover { 
     width: 105px;
     height: 105px;
 }

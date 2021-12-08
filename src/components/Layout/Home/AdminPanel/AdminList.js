@@ -2,10 +2,11 @@ import React,{useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import EditIcon from '@material-ui/icons/Edit'
 import {Droppable} from 'react-beautiful-dnd'
-import KanbanCard from './KanbanCard'
+import KanbanCard from './AdminCard'
 import CloseIcon from '@material-ui/icons/Close'
 import DeleteIcon from '@material-ui/icons/Delete'
 import * as actionCreators from '../../../store/actionCreators'
+
 
 
 const KanbanList = ({listId, title, cards, callback, open, setActiveCard}) => {
@@ -53,7 +54,7 @@ const KanbanList = ({listId, title, cards, callback, open, setActiveCard}) => {
                                 />
                             </div>
                             : null}
-                        {visible ? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />}
+                        {/* {visible ? null : <EditIcon onClick={() => setVisible(true)} className="close" style={{ fontSize: '20px' }} />} */}
                     </div>
                     <div className="add-card">
                             {admin ? null : <input

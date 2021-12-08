@@ -28,6 +28,20 @@ export const setBoards = (data) => {
     }
 }
 
+export const setStatememnts = (data) => {
+    return {
+        type: actions.SET_ADMIN_STATEMENTS,
+        data
+    }
+}
+
+export const setObjectives = (data) => {
+    return {
+        type: actions.SET_ADMIN_OBJECTIVES,
+        data
+    }
+}
+
 export const setLists = (data) => {
     return {
         type: actions.SET_ADMIN_LISTS,
@@ -71,7 +85,7 @@ export const getUsers = () => {
     }
 }
 
-export const getAdminBoard = (userId, callback) => {
+export const getAdminBoard = (userId) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
         const token = getState().auth.token
@@ -84,9 +98,8 @@ export const getAdminBoard = (userId, callback) => {
             }
         })
             .then(res => {
-                // console.log(res)
+                // console.log(res.data.boards,'req')
                 dispatch(setBoards(res.data.boards))
-                callback({ success: true, res: res })
             })
             .catch(error => {
                 console.log(error)
@@ -94,8 +107,9 @@ export const getAdminBoard = (userId, callback) => {
     }
 }
 
-export const getAdminLists = (userId, boardId,callback) => {
+export const getAdminLists = (userId, boardId) => {
     return (dispatch, getState) => {
+        // console.log(boardId,'board')
         dispatch(loadAction())
         const token = getState().auth.token
 
@@ -107,10 +121,53 @@ export const getAdminLists = (userId, boardId,callback) => {
             }
         })
             .then(res => {
-                // console.log(res,'ff')
+                // console.log(res.data.lists,'ff')
                 dispatch(stopLoader())
                 dispatch(setLists(res.data.lists))
-                callback({ success: true, res: res })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const getAdminStatements = (userId) => {
+    return (dispatch, getState) => {
+        dispatch(loadAction())
+        const token = getState().auth.token
+
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/statements/${userId}`, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setStatememnts(res.data.statements))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const getAdminObjectives = (userId) => {
+    return (dispatch, getState) => {
+        dispatch(loadAction())
+        const token = getState().auth.token
+
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/objectives/${userId}`, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
             })
             .catch(error => {
                 console.log(error)

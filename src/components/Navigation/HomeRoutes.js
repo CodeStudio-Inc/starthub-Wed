@@ -26,6 +26,7 @@ import AdminDash from '../Layout/Admin/Dashboard/'
 import Register from '../Layout/Admin/Register'
 import Navbar from './Navbar'
 import LandingPage from '../Layout/Home/Landingpage'
+import AdminPanel from '../Layout/Home/AdminPanel'
 
 const HomeRoutes = () => {
     return (
@@ -33,6 +34,7 @@ const HomeRoutes = () => {
             <Navbar />
             <Switch>
                 <Route exact path="/" component={LandingPage} />
+                <Route exact path="/admin" component={AdminPanel} />
                 <Route exact path="/home" component={Home} />
                 <Route path="/cards" component={Cards} />
                 <Route path="/canvas" component={Canvas} />

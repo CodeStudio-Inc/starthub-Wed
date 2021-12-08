@@ -5,6 +5,8 @@ const initialState = {
     users: [],
     boards: [],
     lists: [],
+    statements: [],
+    objectives: [],
     cards: [],
     metrics:[],
     loading: false
@@ -39,6 +41,18 @@ const requests = (state = initialState, action) => {
             return updateObject(state, {
                 loading: false,
                 lists: action.data
+            })
+
+        case actions.SET_ADMIN_STATEMENTS:
+            return updateObject(state, {
+                loading: false,
+                statements: action.data
+            })
+
+        case actions.SET_ADMIN_OBJECTIVES:
+            return updateObject(state, {
+                loading: false,
+                objectives: action.data
             })
 
         case actions.SET_ADMIN_CARDS:

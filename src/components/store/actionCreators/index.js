@@ -57,6 +57,8 @@ export {
     archiveAdminBoard,
     unarchiveAdminBoard,
     archiveAdminList,
-    unarchiveAdminList
+    unarchiveAdminList,
+    getAdminStatements,
+    getAdminObjectives
 } from './admin'
 

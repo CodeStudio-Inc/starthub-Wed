@@ -1,7 +1,7 @@
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add'
 
-const AdminLandingPage = ({startups}) => {
+const AdminLandingPage = ({startups, adminNavigate}) => {
 
     return (
         <div className="admin-menu">
@@ -28,7 +28,7 @@ const AdminLandingPage = ({startups}) => {
                     {startups.map(s => (
                         <div className="admin-startup-card-column">
                             <div className="admin-startup-card">
-                                <h2>{s.username.substring(0,2)}</h2>
+                                <h2 onClick={()=> adminNavigate(s)}>{s.username.substring(0,2)}</h2>
                             </div>
                             <h3>{s.username.length > 10 ? s.username.substring(0,10) + '..' : s.username}</h3>
                         </div>

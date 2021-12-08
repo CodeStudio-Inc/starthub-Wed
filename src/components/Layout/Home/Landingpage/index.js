@@ -71,6 +71,7 @@ const Landing = (props) => {
 
     const openEditModal = () => setOpen(true)
     const openModal = () => setModal(true)
+    const adminNavigate = (data) => props.history.push('/admin',{data:data})
 
     
     const new_lists = lists.filter(el => el.creator === userId)
@@ -79,7 +80,7 @@ const Landing = (props) => {
     const current_boardID = current_board && current_board._id
     const filteredObjs = objectives && objectives.filter(el => el.boardId ===  current_boardID )
     const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
-    // console.log(current_board,'llll')
+    // console.log(_boards,'llll')
 
     const todoLists = lists && lists.filter(el => el.boardId ===  current_boardID && el.archive === false)
     // const archivedtodoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === true)
@@ -198,7 +199,7 @@ const Landing = (props) => {
             </div>
         </ModalUI>: null
         }
-        {admin ? <AdminLandingPage startups={filtereUsers}/> : 
+        {admin ? <AdminLandingPage startups={filtereUsers} adminNavigate={adminNavigate}/> : 
         <div className="landing-menu">
             <div className="landing-menu-left">
                 <DragDropContext onDragEnd={onDragEnd}>
