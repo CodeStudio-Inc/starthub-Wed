@@ -23,6 +23,7 @@ const AdminPanel = (props) => {
     const [objModal, setobjModal] = useState(false)
 
     const startupId = props.location.state.data._id
+    const username = props.location.state.data.username
     // console.log(startupId)
 
     const lists = useSelector(state => state.admin.lists)
@@ -113,6 +114,7 @@ const AdminPanel = (props) => {
             : null}
             <div className="landing-menu">
                 <div className="landing-menu-left">
+                    <h2>{username.toUpperCase()}</h2>
                     <DragDropContext onDragEnd={onDragEnd}>
                         <div className="landing-scroll">
                             {loading ? 

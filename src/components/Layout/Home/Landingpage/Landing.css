@@ -151,6 +151,10 @@
     overflow-y: scroll;
 }
 
+.landing-menu-left h2 {
+    color: #dfa126;
+}
+
 .landing-menu-right {
     display: flex;
     align-items: center;
