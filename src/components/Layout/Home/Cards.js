@@ -21,10 +21,9 @@ import './Home.css'
      const [open, setOpen] = useState(false)
      const [visible, setVisible] = useState(false)
      const [activeCard, setActiveCard] = useState({})
-    //  console.log(activeCard.object,'ll')
-
-    const expire = useSelector(state => state.auth.tokenExpiration)
-    const dragdropLoading = useSelector(state => state.requests.loading)
+     
+     const expire = useSelector(state => state.auth.tokenExpiration)
+     const dragdropLoading = useSelector(state => state.requests.loading)
 
     //  const description = activeCard.object.description
     //  const date = activeCard.object.dateCreated
@@ -96,6 +95,7 @@ import './Home.css'
                     archivedtodoLists={archivedtodoLists}
                     setArchive={setArchive}
                     archive={archive}
+                    svg={svg}
                 />
             ))}
             {admin ? null : <input

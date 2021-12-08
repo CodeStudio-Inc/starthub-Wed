@@ -11,6 +11,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox'
 import Diagnostics from './Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
 import AdminLandingPage from './AdminLandingPage'
+import { List  } from 'react-content-loader'
 
 import './Landing.css'
 const Landing = (props) => {
@@ -35,6 +36,7 @@ const Landing = (props) => {
     const _value = useSelector(state => state.requests.values)
     const statements = useSelector(state => state.requests.statements)
     const objectives = useSelector(state => state.requests.objectives)
+    const listLoader = useSelector(state => state.requests.loading)
     const loading = useSelector(state => state.requests.loading)
     const users = useSelector(state => state.admin.users)
     const expire = useSelector(state => state.auth.tokenExpiration)
@@ -200,21 +202,28 @@ const Landing = (props) => {
             <div className="landing-menu-left">
                 <DragDropContext onDragEnd={onDragEnd}>
                     <div className="landing-scroll">
+                        
+                        {listLoader ? 
+                            <List  />
+                        :
+                        <div style={{width:'100%', display:'flex', alignItems:'flex-start'}}>
                         {todoLists && todoLists.map(l => (
                             <KanbanList
-                                key={l._id}
-                                listId={l._id}
-                                title={l.name}
-                                cards={l.cards}
-                                boardId={current_board._id}
-                                callback={getLists}
-                                open={openEditModal}
-                                setActiveCard={setActiveCard}
-                                // archivedtodoLists={archivedtodoLists}
-                                setArchive={setArchive}
-                                archive={archive}
+                            key={l._id}
+                            listId={l._id}
+                            title={l.name}
+                            cards={l.cards}
+                            boardId={current_board._id}
+                            callback={getLists}
+                            open={openEditModal}
+                            setActiveCard={setActiveCard}
+                            // archivedtodoLists={archivedtodoLists}
+                            setArchive={setArchive}
+                            archive={archive}
                             />
-                        ))}
+                            ))}
+                        </div>
+                        }
                     </div>
                 </DragDropContext>
                     <Objective objectives={filteredObjs} keyresults={objectives.keyresults} svg={svg}/>

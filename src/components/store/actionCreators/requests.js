@@ -205,7 +205,7 @@ export const dragWithListAction = (
     droppableIndexEnd,
     draggableId
 ) => {
-    console.log(droppableIdStart)
+    // console.log(droppableIdStart)
     return {
         type: actions.DRAG_WITHIN_LIST,
         droppableIdStart,
@@ -241,7 +241,7 @@ export const dragCardWithInList = (
 
 export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, callback) => {
     return (dispatch, getState) => {
-        dispatch(loadAction())
+        // dispatch(loadAction())
         let lists = [...getState().requests.lists]
 
         let sourceCards, destinationCards = [];
@@ -253,7 +253,7 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, c
         if (sourceId !== destinationId) {
             sourceCards = [...sourceList.cards.map((l, index) => ({ ...l, cardIndex: index }))]
             destinationCards = [...DestList.cards.map((l, index) => ({ ...l, cardIndex: index }))]
-            console.log(sourceCards, destinationCards, 'lists')
+            // console.log(sourceCards, destinationCards, 'lists')
         }
 
         const token = getState().auth.token
@@ -266,7 +266,8 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, c
             }
         })
             .then(res => {
-                console.log(res, 'fsd')
+                // console.log(res.data, 'fsd')
+                dispatch(setLists(res.data.lists))
                 callback()
             })
             .catch(err => {
@@ -501,7 +502,7 @@ export const createAdminCard = (listId, name, callback) => {
 export const createCard = (listId, name, callback) => {
     return (dispatch, getState) => {
 
-        dispatch(loadAction())
+        // dispatch(loadAction())
 
         const token = getState().auth.token;
         const lists = getState().requests.lists
@@ -523,8 +524,8 @@ export const createCard = (listId, name, callback) => {
             }
         })
             .then(res => {
-                // console.log(res)
-                dispatch(stopLoader())
+                console.log(res)
+                // dispatch(stopLoader())
                 callback({ success: true, res: res })
             })
             .catch(error => {
@@ -673,7 +674,7 @@ export const getBoards = () => {
 
 export const getListsOnBoard = (callback) => {
     return (dispatch, getState) => {
-        dispatch(loadAction())
+        // dispatch(loadAction())
         const token = getState().auth.token
 
         axios.get(`https://starthubafrica-api.el.r.appspot.com/catalyzer/lists`, {
@@ -818,6 +819,7 @@ export const deleteCard = (listId, cardIndex, callback) => {
             .then(res => {
                 dispatch(setLists(res.data.lists))
                 callback({ success: true, res: res })
+                dispatch(stopLoader())
                 // console.log(res)
                 // dispatch(setLists(res.data.list))
                 // dispatch(setCanvasLists(res.data.list))
