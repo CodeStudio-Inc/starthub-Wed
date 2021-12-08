@@ -36,7 +36,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                     }
                     <div className="admin-startup-card-column">
                         <div className="add-startup">
-                            <AddIcon className="create-icon" style={{ fontSize: '40px', color:'rgba(0,0,0,0.3)' }}/>
+                            <AddIcon className="create-icon" onClick={() => alert('coming soon!')} style={{ fontSize: '40px', color:'rgba(0,0,0,0.3)' }}/>
                         </div>
                         <h3>Add startup</h3>
                     </div>

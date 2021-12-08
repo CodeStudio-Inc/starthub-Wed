@@ -137,7 +137,7 @@ const AdminPanel = (props) => {
                             </div>}
                         </div>
                     </DragDropContext>
-                        <Objective objectives={filteredObjs} keyresults={objectives.keyresults} svg={svg}/>
+                        <Objective objectives={filteredObjs} keyresults={objectives && objectives.keyresults} svg={svg}/>
                         {/* {filteredObjs && filteredObjs.length === 3 ? null : <div className="add-objective">
                             <AddBoxIcon onClick={() => setobjModal(true)} className="add-obj-icon" style={{ fontSize: '60px'}} />
                             <p >Click to add new Objective</p>
