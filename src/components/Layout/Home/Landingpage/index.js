@@ -40,6 +40,7 @@ const Landing = (props) => {
     const loading = useSelector(state => state.requests.loading)
     const users = useSelector(state => state.admin.users)
     const expire = useSelector(state => state.auth.tokenExpiration)
+    const admin = useSelector(state => state.auth.admin)
 
      const filter_value = _value && _value.filter(e => e.creator === userId)
      const filtereUsers = users.filter(el => el.admin === false)
@@ -197,7 +198,7 @@ const Landing = (props) => {
             </div>
         </ModalUI>: null
         }
-        {/* <AdminLandingPage startups={filtereUsers}/> */}
+        {admin ? <AdminLandingPage startups={filtereUsers}/> : 
         <div className="landing-menu">
             <div className="landing-menu-left">
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -242,7 +243,7 @@ const Landing = (props) => {
                 <Diagnostics last_value={last_value && last_value}/>
             </div>
             </div>
-        </div>
+        </div>}
     </div>
 )
 }
