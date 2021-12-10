@@ -68,7 +68,8 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                         onClick={() => seteditkeyResult(false)}
                         /> : null}
                 </div>
-                <div className="objective-slider-row">
+                <div className="slider-column">
+                    <div className="objective-slider-row">
                     <Box sx={{ width: 150 }}>
                     <Slider
                         defaultValue={k.measureOfSuccess}
@@ -81,10 +82,10 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     </Box>
                     {progress && activekeyResult === k.objId ? null : <h4>{k.measureOfSuccess}%</h4>}
                     {progress && activekeyResult === k.objId ?  <h4>{state.measureOfSuccess}%</h4> : null}
-                </div>
-                {progress && activekeyResult === k.objId  ? 
+                    </div>
+                    {progress && activekeyResult === k.objId  ? 
                     <button 
-                    onClick={() => {
+                        onClick={() => {
                         dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
                             if(res.success) {
                                 setProgress(false)
@@ -96,9 +97,11 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                             }
                         }))
                     }}
-                >
+                    >
                     {loading && activekeyResult === k.objId ? 'Saving' : 'save progress' }
-                </button> : null}
+                    </button> 
+                    : null}
+                </div>
                 {/* {loading && activekeyResult === k.objId  ? <img src={svg} style={{ width:"30px", height:"30px"}} /> : null} */}
             </div>
             {/* <div className="objective-row">

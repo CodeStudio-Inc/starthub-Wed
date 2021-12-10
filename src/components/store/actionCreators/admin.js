@@ -107,13 +107,13 @@ export const getAdminBoard = (userId) => {
     }
 }
 
-export const getAdminLists = (userId, boardId) => {
+export const getAdminLists = (userId) => {
     return (dispatch, getState) => {
         // console.log(boardId,'board')
         dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/lists/${userId}/${boardId}`, {
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/lists/${userId}`, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',

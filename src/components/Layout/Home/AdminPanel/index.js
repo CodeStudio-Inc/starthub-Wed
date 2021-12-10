@@ -13,6 +13,7 @@ import svg from '../../../../assets/images/spinner.svg'
 import { List  } from 'react-content-loader'
 
 import '../Landingpage/Landing.css'
+import { style } from '@mui/system'
 const AdminPanel = (props) => {
 
     const [open, setOpen] = useState(false)
@@ -24,6 +25,7 @@ const AdminPanel = (props) => {
 
     const startupId = props.location.state.data._id
     const username = props.location.state.data.username
+    const category = props.location.state.data.category
     // console.log(startupId)
 
     const lists = useSelector(state => state.admin.lists)
@@ -66,13 +68,13 @@ const AdminPanel = (props) => {
     const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
     
     const getBoards = () => dispatch(actionCreators.getAdminBoard(startupId))
-    const getLists = () => dispatch(actionCreators.getAdminLists(startupId, current_boardID ))
+    const getLists = () => dispatch(actionCreators.getAdminLists(startupId ))
     const getStatements = () => dispatch(actionCreators.getAdminStatements(startupId))
     const getObjectives = () => dispatch(actionCreators.getAdminObjectives(startupId))
     
     const todoLists = lists && lists.filter(el => el.creator === startupId && el.boardId ===  current_boardID && el.archive === false)
-    // console.log(current_board,'llll')
-    // console.log(current_boardID,'bbb')
+    // console.log(startupId,'llll')
+    // console.log(todoLists,'bbb')
 
 
     const onDragEnd = (result) => {
@@ -113,7 +115,7 @@ const AdminPanel = (props) => {
             </ModalUI>
             : null}
             <div className="landing-menu">
-                <div className="landing-menu-left">
+                <div className={category === 'internal' ? 'extra' : 'landing-menu-left'}>
                     <h2>{username.toUpperCase()}</h2>
                     <DragDropContext onDragEnd={onDragEnd}>
                         <div className="landing-scroll">
@@ -143,16 +145,13 @@ const AdminPanel = (props) => {
                             <p >Click to add new Objective</p>
                         </div>} */}
                 </div>
-                <div className="landing-menu-right">
+                {category === 'internal' ? null : <div className="landing-menu-right">
                 <div className="vision-statements">
                     {filteredStatements && filteredStatements.length > 0 ? <Statements svg={svg} statements={filteredStatements}/> :
-                    <div className="vision-mission">
-                        <h3>Have you set a Vision and Mission Statement yet?</h3>
-                        <button className="vision-btn">Click here to create one</button>
-                    </div>}
-                    <Diagnostics last_value={last_value && last_value}/>
+                    null}
+                    {category === 'internal' ? null : <Diagnostics last_value={last_value && last_value}/>}
                 </div>
-                </div>
+                </div>}
             </div>
         </div>
     )

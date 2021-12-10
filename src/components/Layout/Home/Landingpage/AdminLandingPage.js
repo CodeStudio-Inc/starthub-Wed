@@ -3,6 +3,11 @@ import AddIcon from '@mui/icons-material/Add'
 
 const AdminLandingPage = ({startups, adminNavigate}) => {
 
+    const internal = startups.filter(el => el.category === 'internal')
+    const catalyzer = startups.filter(el => el.category === 'catalyzer')
+    const academy = startups.filter(el => el.category === 'academy')
+    // console.log(academy,'ll')
+
     return (
         <div className="admin-menu">
             <div className="admin-menu-content">
@@ -24,10 +29,62 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 <div className="admin-header">
                     <h2>Catalyzer Startup Data Tracking</h2>
                 </div>
+                <div className="admin-header">
+                    <h3>Internal</h3>
+                </div>
+                <div className="admin-header">
+                    <div className="separate"></div>
+                </div>
                 <div className="admin-card-row">
-                    {startups.map(s => (
+                    {internal.map(s => (
                         <div className="admin-startup-card-column">
                             <div className="admin-startup-card">
+                                <h2 onClick={()=> adminNavigate(s)}>{s.username.substring(0,2)}</h2>
+                            </div>
+                            <h3>{s.username.length > 10 ? s.username.substring(0,10) + '..' : s.username}</h3>
+                        </div>
+                    ))
+                    }
+                    <div className="admin-startup-card-column">
+                        <div className="add-startup">
+                            <AddIcon className="create-icon" onClick={() => alert('coming soon!')} style={{ fontSize: '40px', color:'rgba(0,0,0,0.3)' }}/>
+                        </div>
+                        <h3>Add startup</h3>
+                    </div>
+                </div>
+                <div className="admin-header">
+                    <h3>Catalyzer</h3>
+                </div>
+                <div className="admin-header">
+                    <div className="separate"></div>
+                </div>
+                <div className="admin-card-row">
+                    {catalyzer.map(s => (
+                        <div className="admin-startup-card-column">
+                            <div className="admin-catalyzer-card">
+                                <h2 onClick={()=> adminNavigate(s)}>{s.username.substring(0,2)}</h2>
+                            </div>
+                            <h3>{s.username.length > 10 ? s.username.substring(0,10) + '..' : s.username}</h3>
+                        </div>
+                    ))
+                    }
+                    <div className="admin-startup-card-column">
+                        <div className="add-startup">
+                            <AddIcon className="create-icon" onClick={() => alert('coming soon!')} style={{ fontSize: '40px', color:'rgba(0,0,0,0.3)' }}/>
+                        </div>
+                        <h3>Add startup</h3>
+                    </div>
+                </div>
+                <div className="admin-header">
+                    <h3>Academy</h3>
+                </div>
+                <div className="admin-header">
+                    <div className="separate"></div>
+                </div>
+                <div className="admin-card-row">
+                    {academy.map(s => (
+                        <div className="admin-startup-card-column">
+                            <div className="admin-academy-card">
                                 <h2 onClick={()=> adminNavigate(s)}>{s.username.substring(0,2)}</h2>
                             </div>
                             <h3>{s.username.length > 10 ? s.username.substring(0,10) + '..' : s.username}</h3>

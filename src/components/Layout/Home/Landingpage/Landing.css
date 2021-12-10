@@ -61,6 +61,11 @@
     color: rgba(0, 0, 0, 0.4);
 }
 
+.admin-header h3 {
+    color: rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+}
+
 .admin-row {
     display: flex;
     align-items: center;
@@ -119,6 +124,69 @@
     height: 105px;
 }
 
+.admin-catalyzer-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    transition: 0.5s ease-in-out;
+    margin-right: 1rem;
+    background: #1D976C; 
+    background: -webkit-linear-gradient(to top, #1D976C,#24be5d); 
+    background: linear-gradient(to top, #1D976C,#24be5d); 
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.admin-catalyzer-card h2 {
+    cursor: pointer;
+    color: #fff;
+    font-size: 40px;
+    margin: 0;
+}
+
+.admin-catalyzer-card:hover { 
+    width: 105px;
+    height: 105px;
+}
+
+.separate {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.admin-academy-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    transition: 0.5s ease-in-out;
+    margin-right: 1rem;
+    background: #EB3349; 
+    background: -webkit-linear-gradient(to top, #EB3349, #F45C43); 
+    background: linear-gradient(to top, #EB3349, #F45C43);
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.admin-academy-card h2 {
+    cursor: pointer;
+    color: #fff;
+    font-size: 40px;
+    margin: 0;
+}
+
+.admin-academy-card:hover { 
+    width: 105px;
+    height: 105px;
+}
+
 .admin-startup-card-column {
     display: flex;
     align-items: center;
@@ -149,6 +217,21 @@
     padding: 0.3rem;
     margin-right: 0.1rem;
     overflow-y: scroll;
+}
+
+.extra {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    padding: 0.3rem;
+    margin-right: 0.1rem;
+    overflow-y: scroll;
+}
+
+.extra h2 {
+    color: #dfa126;   
 }
 
 .landing-menu-left h2 {
@@ -358,6 +441,12 @@
 
 .objective-slider-row h4 {
     margin-left: 0.5rem;
+}
+
+.slider-column {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 .landing-scroll {

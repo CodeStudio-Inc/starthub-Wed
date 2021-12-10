@@ -1311,7 +1311,7 @@ export const editkeyResult = (id, description, measureOfSuccess,dateCreated, cal
             }
         })
         .then(res => {
-            console.log(res)
+            // console.log(res)
             dispatch(setObjectives(res.data.objs))
             callback({ success: true, res: res })
             dispatch(stopLoader())
