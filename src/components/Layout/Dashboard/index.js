@@ -18,6 +18,7 @@ const Dashboard = (props) => {
     const loading = useSelector(state => state.requests.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
     const metrics = useSelector(state => state.requests.metrics)
+    const category = useSelector(state => state.auth.category)
 
     const current_date = Date.now()
 
@@ -175,7 +176,7 @@ const Dashboard = (props) => {
 
 
     return (
-        <div className="main-container">
+        <div className="dash-container">
             {show ? <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>
@@ -188,9 +189,12 @@ const Dashboard = (props) => {
                 </div>
                 <iframe class="airtable-embed" src="https://airtable.com/embed/shrS6aSAZIgqjP1g0?backgroundColor=green" frameborder="0" onmousewheel="" width="100%" height="95%" ></iframe>
             </ModalUI> : null}
-            <div className="right-column-overview">
-                <div className="overview-header-main">
-                </div>
+            {category === 'academy' || category === 'internal' ? 
+            <div className="dash-menu">
+                <h1>You have no Metrics data registered</h1>
+            </div> 
+            : 
+            <div className="dash-menu">
                 <div className="revenue-row">
                     <div className="graph-row">
                     <div className="revenue">
@@ -275,7 +279,7 @@ const Dashboard = (props) => {
 
 
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }

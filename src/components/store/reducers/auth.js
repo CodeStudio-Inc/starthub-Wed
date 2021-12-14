@@ -9,6 +9,7 @@ const initialState = {
     link:'',
     email: '',
     token: '',
+    category:'',
     tokenExpiration:'',
     admin:null,
     loading: false,
@@ -33,6 +34,7 @@ const auth = (state = initialState, action) => {
                 base_key: action.base_key,
                 link: action.link,
                 email: action.email,
+                category: action.category,
                 token: action.token,
                 tokenExpiration: action.tokenExpiration,
                 authenticated: true

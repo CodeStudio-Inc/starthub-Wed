@@ -78,7 +78,7 @@ const Home = (props) => {
         concept = lst.find(el => el.name === 'High-Level Concept')
         adoptors = lst.find(el => el.name === 'Early Adopters')
     // } 
-    console.log(lst)
+    // console.log(lst)
 
 
     const dispatch = useDispatch()

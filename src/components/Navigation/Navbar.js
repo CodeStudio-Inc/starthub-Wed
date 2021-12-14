@@ -33,7 +33,7 @@ const Navbar = (props) => {
         actionObject: null,
         objects: [
             // { id: 1, title: "Schedule", route: "/carlender", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            // { id: 2, title: "Metrics", route: "/overview", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 2, title: "Metrics", route: "/overview", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 3, title: "Lean Canvas", route: "/canvas-board", icon:<DeveloperBoardIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 4, title: "Todos", route: "/", icon:<ListAltIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             // { id: 5, title: "Milestones", route: "/milestone-board", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },

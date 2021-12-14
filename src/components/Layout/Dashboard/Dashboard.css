@@ -1,3 +1,23 @@
+.dash-container {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	background: #eee;
+    height: 100vh;
+} 
+
+.dash-menu {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width:  85%;
+    height: 100vh;
+    padding: 0.5rem;
+    left: 17%;
+    overflow-y: scroll;
+}
+
 .main-container-table {
   width: 100%;
   display: flex;
