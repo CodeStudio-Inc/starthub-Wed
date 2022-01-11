@@ -72,7 +72,7 @@ export const KanbanCard = ({cardId, text, index,cardIndex,callback, setActiveCar
                             </div>
                             : null}
                         {visible ? null : <div className="icon-row">
-                            <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" />
+                            {/* <EditIcon onClick={() => setVisible(true)}  className="edit-icon" fontSize="small" /> */}
                         </div>}
                     </div>
         //         </div>

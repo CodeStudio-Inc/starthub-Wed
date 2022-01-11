@@ -14,7 +14,7 @@ const Dashboard = (props) => {
     const base_key = props.location.state.data.base_key
 
     const metrics = useSelector(state => state.admin.metrics)
-    console.log(base_key)
+    // console.log(base_key)
 
     useEffect(() => {
         dispatch(actionCreators.getAdminMetricsData(base_key))

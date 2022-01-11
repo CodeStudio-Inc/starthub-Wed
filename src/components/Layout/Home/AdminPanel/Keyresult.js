@@ -52,7 +52,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                             {loading && activekeyResult === k.objId ? <p style={{color:'#dfa126'}}>Saving please wait...</p>  : <p style={{color:'#dfa126'}}>{message}</p>}
                         </div>
                     : null}
-                    {editkeyResult && activekeyResult === k.objId ? null :
+                    {/* {editkeyResult && activekeyResult === k.objId ? null :
                         <EditIcon 
                         className="edit-stmt-icon" 
                         style={{ fontSize: '20px'}} 
@@ -60,7 +60,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                             setactiveKeyresult(k.objId)
                             seteditkeyResult(true)
                         }} 
-                    />}
+                    />} */}
                     {editkeyResult && activekeyResult === k.objId ?
                         <CancelIcon 
                         className="edit-stmt-icon" 

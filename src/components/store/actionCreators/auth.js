@@ -58,16 +58,17 @@ export const login = (email, password,callback) => {
 }
 
 
-export const signUp = (username, base_key,link, email, password,callback) => {
+export const signUp = (username, email, category, password, base_key, link) => {
     return dispatch => {
         dispatch(loaderAction())
 
         const data = {
             username,
+            email,
+            category,
+            password,
             base_key,
             link,
-            email,
-            password
         }
 
         axios.put('https://starthubafrica-api.el.r.appspot.com/auth/signup', data,
@@ -80,12 +81,12 @@ export const signUp = (username, base_key,link, email, password,callback) => {
             }
         )
             .then(res => {
-                callback({ success: true, res: res })
-                // console.log(res,'response')
+                // callback({ success: true, res: res })
+                console.log(res,'response')
                 // dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email, res.data.token))
             })
             .catch(error => {
-                callback({ success: false, res: error })
+                // callback({ success: false, res: error })
                 console.log(error)
             })
     }

@@ -1,3 +1,7 @@
+::placeholder  {
+  color: rgba(0, 0, 0, 0.3);
+}
+
 .landing-container {
 	width: 100%;
 	display: flex;
@@ -12,7 +16,6 @@
     align-items: flex-start;
     justify-content: space-between;
     width:  85%;
-    padding: 0.5rem;
     left: 15%;
 }
 
@@ -215,6 +218,7 @@
     width: 70%;
     height: 100vh;
     padding: 0.3rem;
+    margin-top: 3rem;
     margin-right: 0.1rem;
     overflow-y: scroll;
 }
@@ -234,9 +238,6 @@
     color: #dfa126;   
 }
 
-.landing-menu-left h2 {
-    color: #dfa126;
-}
 
 .landing-menu-right {
     display: flex;
@@ -258,6 +259,7 @@
     width: 100%;
     background: #fff;
     margin-top: 1rem;
+    margin-bottom: 3rem;
     padding:0.5rem;
 }
 
@@ -644,6 +646,132 @@
 .create-form button:focus {
     background: #4d1214;
 }
+
+.admin-links1 {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 20%;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.admin-links1 h4 {
+	margin-top: 0.5rem;
+}
+
+.admin-links1-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.admin-links1-row img {
+    width: 150px;
+    height: 150px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    left: 15%;
+    z-index: 100;
+    height: 40px;
+    width: calc(60% - 2px);
+    background: #fff;
+}
+
+.admin-nav h2 {
+    color: #dfa126;
+}
+
+.admin-nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 35%;
+    margin-right: 5rem;
+}
+
+.admin-nav-links p {
+    font-weight: lighter;
+    font-size: 16px;
+    margin: 0;
+    color: #dfa126;
+}
+
+.admin-nav-links p:hover {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.register-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    flex-direction: column;
+    background: #fff;
+}
+
+.register-form-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    padding: 5px;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.register-form h3 {
+    color: #dfa126;
+}
+
+.register-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    flex-direction: column;
+}
+
+.register-form-container input {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    height: 30px;
+    width: 70%;
+    padding-left: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.register-form-container button {
+    outline: none;
+    border: 1px solid #dfa126;
+    margin-bottom: 1rem;
+    color: #dfa126;
+    background: none;
+    transition: 1s ease-in-out;
+}
+
+.register-form-container button:hover {
+    cursor: pointer;
+    background: #dfa126;
+    color: #fff;
+}
+
+.register-form-container-icon:hover {
+cursor: pointer;
+}
+
 
 /* @media screen and (max-width: 768px) {
 	.auth-card {

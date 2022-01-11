@@ -1,43 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import ModalUI from '../../ModalUI'
-import CloseIcon from '@material-ui/icons/Close'
+import React,{useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import moment from 'moment'
 import { Line } from 'react-chartjs-2'
-import * as actionCreators from '../../store/actionCreators'
+import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded'
+import * as actionCreators from '.././../../store/actionCreators'
 
-import './Dashboard.css'
-const Dashboard = (props) => {
-
-    const [open, setOpen] = useState(false)
-    const [show, setShow] = useState(false)
-    const [metricsData, setMetricsData] = useState([])
-
-    const loading = useSelector(state => state.requests.loading)
-    const expire = useSelector(state => state.auth.tokenExpiration)
-    const metrics = useSelector(state => state.requests.metrics)
-    const category = useSelector(state => state.auth.category)
-
-    const current_date = Date.now()
-
-    useEffect(() => {
-        if(current_date >= expire) {
-           return setOpen(true)
-        }
-        dispatch(actionCreators.getMetricsData())
-    }, [])
-    const handleLogoutClick = () => {
-            dispatch(actionCreators.removeUser())
-            props.history.push('/')
-    }
+import './Admin.css'
+const AdminMetrics = (props) => {
     
+    
+    const metrics = useSelector(state => state.admin.metrics)
+    const base_key = props.location.state.key
+    const username = props.location.state.user
+    const startupId = props.location.state.userId
+    const userId = props.location.state.userId
     const dispatch = useDispatch()
+    
+    
+    useEffect(()=>{
+        dispatch(actionCreators.getAdminMetricsData(base_key))
+    },[])
+    
+    const metricsFilter = metrics && metrics.map(el => el.fields)
 
-
-    const metricsFilter = metrics.map(el => el.fields)
-
-    let sortedMetrics = []
-
+    let keysArray, sortedMetrics = []
 
     metrics.forEach(element => {
         if(moment(element.fields['A-Month']).format('MMM') === 'Jan')  sortedMetrics.push({...element, monthIndex: 1})
@@ -52,34 +38,32 @@ const Dashboard = (props) => {
         if(moment(element.fields['A-Month']).format('MMM') === 'Oct')  sortedMetrics.push({...element, monthIndex: 10})
         if(moment(element.fields['A-Month']).format('MMM') === 'Nov')  sortedMetrics.push({...element, monthIndex: 11})
         if(moment(element.fields['A-Month']).format('MMM') === 'Dec')  sortedMetrics.push({...element, monthIndex: 12})
-        
-    });
-    
-     sortedMetrics.sort((a,b) => a.monthIndex-b.monthIndex)
-     
-     let keysArray = []
+    })
 
-     keysArray = Object.keys(metricsFilter[0] || []).sort()  
+    sortedMetrics.sort((a,b) => a.monthIndex-b.monthIndex)
+
+    // console.log(sortedMetrics)
+
+    keysArray = Object.keys(metricsFilter[0] || []).sort()     
      
-     
-    const graph1 = sortedMetrics.map(el => el.fields[keysArray[0]] )
-    const graph2 = sortedMetrics.map(el => el.fields[keysArray[1]] )
-    const graph3 = sortedMetrics.map(el => el.fields[keysArray[2]] )
-    const graph4 = sortedMetrics.map(el => el.fields[keysArray[3]] )
-    const graph5 = sortedMetrics.map(el => el.fields[keysArray[4]] )
-    const graph6 = sortedMetrics.map(el => el.fields[keysArray[5]] )
-    const graph7 = sortedMetrics.map(el => el.fields[keysArray[6]] )
-    const graph8 = sortedMetrics.map(el => el.fields[keysArray[7]] )
-    
-    
-    // console.log(graph1)
+    const graph1 = sortedMetrics.map(el => el.fields[keysArray && keysArray[0]] )
+    const graph2 = sortedMetrics.map(el => el.fields[keysArray && keysArray[1]] )
+    const graph3 = sortedMetrics.map(el => el.fields[keysArray && keysArray[2]] )
+    const graph4 = sortedMetrics.map(el => el.fields[keysArray && keysArray[3]] )
+    const graph5 = sortedMetrics.map(el => el.fields[keysArray && keysArray[4]] )
+    const graph6 = sortedMetrics.map(el => el.fields[keysArray && keysArray[5]] )
+    const graph7 = sortedMetrics.map(el => el.fields[keysArray && keysArray[6]] )
+    const graph8 = sortedMetrics.map(el => el.fields[keysArray && keysArray[7]] )
+
+    const mon = metrics.map(el => el.fields['A-Month'] )
+
+
     let months = []
 
     for(let month of graph1) {
         months.push(moment(month).format("MMM"))
     }
-
-    
+ 
 
     const line_graph1 = {
         labels: months,
@@ -174,27 +158,24 @@ const Dashboard = (props) => {
 
 
     return (
-        <div className="dash-container">
-            {show ? <ModalUI>
-                <div className="edit-card">
-                    <h5>Session timeout please login again</h5>
-                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
+        <div className="admin-main">
+                <div className="admin-navbar">
+                    <h2>{username.toUpperCase()}</h2>
+                    <div className="admin-navbar-links">
+                        <p onClick={() => props.history.push('/admin-canvas',{userId: startupId, user: username,key: base_key })}>Lean canvas</p>
+                        <p onClick={() => props.history.push('/')}>Dashboard</p>
+                        <div className="admin-icon-row">
+                            <KeyboardBackspaceRoundedIcon 
+                            className="admin-navbar-icon"
+                            onClick={() => props.history.goBack()} 
+                            style={{ fontSize: '25px', color:'#dfa126' }} 
+                            />
+                            <h4 onClick={() => props.history.goBack()}>back</h4>
+                        </div>
+                    </div>
                 </div>
-            </ModalUI>: null}
-            {open ? <ModalUI setOpen={setOpen}>
-                <div className="modal-row">
-                    <CloseIcon onClick={() => setOpen(false)} className="close-icon" style={{ fontSize: '30px' }} />
-                </div>
-                <iframe class="airtable-embed" src="https://airtable.com/embed/shrS6aSAZIgqjP1g0?backgroundColor=green" frameborder="0" onmousewheel="" width="100%" height="95%" ></iframe>
-            </ModalUI> : null}
-            {category === 'academy' || category === 'internal' ? 
-            <div className="dash-menu">
-                <h1>You have no Metrics data registered</h1>
-            </div> 
-            : 
-            <div className="dash-menu">
-                <div className="revenue-row">
-                    <div className="graph-row">
+            <div className="admin">
+                <div className="rev-row">
                     <div className="revenue">
                         <h3>{keysArray[1] && keysArray[1].split('-').splice(1)}</h3>
                         <Line
@@ -203,7 +184,6 @@ const Dashboard = (props) => {
                             height={30}
                         />
                     </div>
-
                     <div className="revenue">
                         <h3>{keysArray[2] && keysArray[2].split('-').splice(1)}</h3>
                         <Line
@@ -212,29 +192,30 @@ const Dashboard = (props) => {
                             height={30}
                         />
                     </div>
-                    </div>
-
-                    <div className="graph-row">
+                </div>
+   
+                <div className="rev-row">
+                    {line_graph3.datasets[0].data[0] === undefined ? null : 
                     <div className="revenue">
                         <h3>{keysArray[3] && keysArray[3].split('-').splice(1)}</h3>
                         <Line
                             data={line_graph3}
                             width={100}
-                            height={20}
+                            height={30}
                         />
-                    </div>
-
+                    </div>}
+                    {line_graph4.datasets[0].data[0] === undefined ? null :
                     <div className="revenue">
                         <h3>{keysArray[4] && keysArray[4].split('-').splice(1)}</h3>
-                        {line_graph4.datasets[0].data[0] === undefined ? null : <Line
+                         <Line
                             data={line_graph4}
                             width={100}
                             height={30}
-                        />}
-                    </div>
-                    </div>
+                        />
+                    </div>}
+                </div>
 
-                    <div className="graph-row">
+                <div className="rev-row">
                     {line_graph5.datasets[0].data[0] === undefined ? null :
                     <div className="revenue">
                         <h3>{keysArray[5] && keysArray[5].split('-').splice(1)}</h3>
@@ -244,7 +225,6 @@ const Dashboard = (props) => {
                             height={30}
                         />
                     </div>}
-
                     {line_graph6.datasets[0].data[0] === undefined ? null : 
                     <div className="revenue">
                         <h3>{keysArray[6] && keysArray[6].split('-').splice(1)}</h3>
@@ -255,9 +235,9 @@ const Dashboard = (props) => {
                         
                         />
                     </div>}
-                    </div>
+                </div>
 
-                    <div className="graph-row">
+                <div className="rev-row">
                     {line_graph7.datasets[0].data[0] === undefined ? null : 
                     <div className="revenue">
                         <h3>{keysArray[7] && keysArray[7].split('-').splice(1)}</h3>
@@ -267,26 +247,17 @@ const Dashboard = (props) => {
                             height={30}
                         />
                     </div>}
-
                     <div className="revenue" style={{visibility:'hidden'}}>
                         <Line
-                            data={line_graph6}
+                            data={line_graph2}
                             width={100}
                             height={30}
-                        
                         />
                     </div>
-                    </div>
                 </div>
-            </div>}
+            </div>
         </div>
     )
 }
 
-export default Dashboard
-
-// options={{
-//     maintainAspectRatio: false,
-//     responsive: true
-
-// }}
+export default AdminMetrics

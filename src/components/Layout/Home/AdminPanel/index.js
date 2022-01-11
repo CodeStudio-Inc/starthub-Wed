@@ -3,17 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import KanbanList from './AdminList'
 import { DragDropContext} from 'react-beautiful-dnd'
 import * as actionCreators from '../../../store/actionCreators'
-import ModalUI from '../../../ModalUI' 
-import CloseIcon from '@mui/icons-material/Close'
-import AddBoxIcon from '@mui/icons-material/AddBox'
-import Objective from '../Landingpage/Objective'
-import Statements from '../Landingpage/Statements'
+import ModalUI from '../../../ModalUI'
+import Objective from './AdminObjective'
+import Statements from './AdminStatement'
 import Diagnostics from '../Landingpage/Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
+import lean from '../../../../assets/images/lean.png'
+import metrics from '../../../../assets/images/metrics.png'
 import { List  } from 'react-content-loader'
 
 import '../Landingpage/Landing.css'
-import { style } from '@mui/system'
 const AdminPanel = (props) => {
 
     const [open, setOpen] = useState(false)
@@ -26,7 +25,8 @@ const AdminPanel = (props) => {
     const startupId = props.location.state.data._id
     const username = props.location.state.data.username
     const category = props.location.state.data.category
-    // console.log(startupId)
+    const base_key = props.location.state.data.base_key
+    // console.log(props)
 
     const lists = useSelector(state => state.admin.lists)
     const Boards = useSelector(state => state.admin.boards)
@@ -104,6 +104,7 @@ const AdminPanel = (props) => {
             props.history.push('/')
     }
 
+
     return (
         <div className="landing-container">
             {expireTime ? 
@@ -114,9 +115,19 @@ const AdminPanel = (props) => {
                 </div>
             </ModalUI>
             : null}
+            {category === 'internal' ? null :
+            <div className="admin-nav">
+                <h2>{username.toUpperCase()}</h2>
+                {category === 'academy' ? null :
+                <div className="admin-nav-links">
+                    <p onClick={() => props.history.push('/admin-canvas',{userId: startupId, user: username,key: base_key })}>Lean canvas</p>
+                    <p onClick={() => props.history.push('/admin-metrics',{key: base_key, user: username, userId: startupId})}>Metrics</p>
+                    <p onClick={() => props.history.push('/')}>Dashboard</p>
+                </div>
+                }
+            </div>}
             <div className="landing-menu">
                 <div className={category === 'internal' ? 'extra' : 'landing-menu-left'}>
-                    <h2>{username.toUpperCase()}</h2>
                     <DragDropContext onDragEnd={onDragEnd}>
                         <div className="landing-scroll">
                             {loading ? 
@@ -145,12 +156,20 @@ const AdminPanel = (props) => {
                             <p >Click to add new Objective</p>
                         </div>} */}
                 </div>
-                {category === 'internal' ? null : <div className="landing-menu-right">
+                {category === 'internal' ? null : 
+                <div className="landing-menu-right">
                 <div className="vision-statements">
                     {filteredStatements && filteredStatements.length > 0 ? <Statements svg={svg} statements={filteredStatements}/> :
                     null}
                     {category === 'internal' ? null : <Diagnostics last_value={last_value && last_value}/>}
                 </div>
+                    {/* <div className="admin-links1">
+                        <h4>Loan Payment</h4>
+                    </div> */}
+                    {/* <div className="admin-links1-row">
+                        <img src={lean}/>
+                        <img src={metrics}/>
+                    </div> */}
                 </div>}
             </div>
         </div>

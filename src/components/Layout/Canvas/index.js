@@ -184,7 +184,8 @@ const Home = (props) => {
             <div className="canvas-landing-menu">
                 {/* <div className="canvases">
                 </div>     */}
-                    {boardName ? <h1>Your Account has no Lean Canvas, Please contact your Mentor</h1> : <DragDropContext onDragEnd={onDragEnd}>
+                    {boardName ? <h1>Your Account has no Lean Canvas, Please contact your Mentor</h1> : 
+                    <DragDropContext onDragEnd={onDragEnd}>
                         <div className="canvas-main">
                             {dragdropLoading ? <Loader/> : null}
                         <div className="canvas-main-row">
@@ -336,96 +337,9 @@ const Home = (props) => {
                         </div>
                     
 
-                    </div>
+                        </div>
                     </DragDropContext>}
             </div>
-            {/* <div className="boards-right-column">
-                <div className="boards-right-column-content">
-                    <div className="boards-header">
-                        <h2>Lean Canvas</h2>
-                        {archivedBoards.length > 0 ?
-                            <div className="icon-header"  onClick={() => setArchive(true)}>
-                                 <ArchiveIcon className="close" style={{ fontSize: '25px' }} />
-                                 <p>Archive</p>
-                            </div>
-                        : null}
-                    </div>
-                    {loading ? <img src={svg} style={{width:'30px',height:'30px'}}/> :
-                        <div className="boards-row">
-                            {filtereBoards.map((board, index) => (
-                                <div
-                                    key={index}
-                                    className="board-card"
-                                >
-                                    <div className="boards-inner-row">
-                                        {visible && boardId === board._id ? null : 
-                                            <h3
-                                            onClick={() => dispatch(actionCreators.createCanvasLists(board._id, (res) => {
-                                                if (res.success) {
-                                                    props.history.push('/canvas', { data: board })
-                                                }
-                                            }))} >
-                                                {board.name}
-                                            </h3>
-                                        }
-                                        {visible && boardId === board._id ?
-                                        <div className="edit-card-row2">
-                                            <input
-                                                placeholder="Enter Card Title"
-                                                value={boardName}
-                                                onChange={(e) => setName(e.target.value)}
-                                                onKeyUp={(e) => {
-                                                    if (e.key === 'Enter') {
-                                                    dispatch(actionCreators.updateBoard(board._id, boardName, (res) => {
-                                                    if(res.success) {
-                                                        setVisible(false)
-                                                        setName('')
-                                                    }
-                                                }))
-                                                    }
-                                                }}
-                                            />
-                                            <CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
-                                            <DeleteIcon 
-                                            className="close" style={{ fontSize: '25px' }} 
-                                            onClick={() => dispatch(actionCreators.archiveBoard(board._id,(res)=>{
-                                                if(res.success) {
-                                                    setVisible(false)
-                                                    setName('')
-                                                }
-                                            }))}  
-                                            />
-                                        </div>
-                                        : null}
-                                        {visible && boardId === board._id ? null : 
-                                        <EditIcon 
-                                            className="edit-icon" fontSize="small" 
-                                            onClick={() => {
-                                                setBoardId(board._id)
-                                                setVisible(true)
-                                            }}/>}
-                                    </div>
-                                </div>
-                                
-                            ))}
-                            <input
-                                className="add-canvas"
-                                placeholder="+ Add New Canvas"
-                                value={name}
-                                onChange={(e) => setBoardName(e.target.value)}
-                                onKeyUp={(e) => {
-                                            if (e.key === 'Enter') {
-                                                dispatch(actionCreators.createBoard(name,username,page,(res) => {
-                                                if (res.success) setBoardName('')
-                                            }))
-                                            }
-                                        }}
-                            />
-                        </div>
-                    }
-                   
-                </div>
-            </div> */}
         </div>
     )
 }

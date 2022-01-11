@@ -20,6 +20,8 @@ const Navbar = (props) => {
     const startup = useSelector(state => state.auth.username)
     const users = useSelector(state => state.admin.users)
 
+    const category = useSelector(state => state.auth.category)
+
     const [visibleLogout, setVisisbleLogout] = useState(false)
     const [openSidebar, setopenSidebar] = useState(false)
 
@@ -154,7 +156,7 @@ const Navbar = (props) => {
                             props.history.push(element.route)
                         }}
                         >
-                            {element.title === 'Lean Canvas' && lean_check.length === 0 ? null : element.icon}
+                            {element.title === 'Lean Canvas' && lean_check.length === 0  ?  null : element.icon}
                             <h4>{element.title === 'Lean Canvas' && lean_check.length === 0 ? null : element.title}</h4>
                         </div>
                     ))
