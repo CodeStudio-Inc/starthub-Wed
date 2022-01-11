@@ -5,6 +5,7 @@ import ModalUI from '../../../ModalUI'
 import CloseIcon from '@mui/icons-material/Close'
 import Register from '../AdminPanel/Register'
 import * as actionCreators from '../../../store/actionCreators'
+import moment from 'moment'
 
 const AdminLandingPage = ({startups, adminNavigate}) => {
 
@@ -23,9 +24,19 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const internal = startups.filter(el => el.category === 'internal')
     const catalyzer = startups.filter(el => el.category === 'catalyzer')
     const academy = startups.filter(el => el.category === 'academy')
-    // console.log(state,'ll')
+    const users = useSelector(state => state.admin.users)
+    console.log(users,'ll')
 
     const dispatch = useDispatch()
+
+    const current_date = moment(Date()).format('MMM YYYY')
+    const enrolledUsers = users.filter(e => moment(e.dateCreated).format('MMM YYYY') === current_date)
+
+    useEffect(() => {
+        getUser()
+    },[])
+    
+    const getUser = () => dispatch(actionCreators.getUsers())
 
     const signUpInternal = () => {
         dispatch(actionCreators.signUp(state.username, state.email,'internal', state.password))
@@ -145,10 +156,14 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 </div>
                 <div className="admin-row">
                     <div className="admin-stat-card">
-                        <h3>Total Startups</h3>
+                        <h3>Total Users</h3>
+                        <h1>{users.length}</h1>
+                        <h5>Registered Teams</h5>
                     </div>
                     <div className="admin-stat-card">
                         <h3>Enrolled this Month</h3>
+                        <h1>{enrolledUsers.length}</h1>
+                        <h5>Teams enrolled this month</h5>
                     </div>
                     <div className="admin-stat-card">
                         <h3>User Activity</h3>
