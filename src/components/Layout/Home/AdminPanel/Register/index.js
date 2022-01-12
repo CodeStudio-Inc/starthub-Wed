@@ -7,14 +7,6 @@ import CloseIcon from '@mui/icons-material/Close'
 import './reg.css'
 const Register = ({signup,state,setState,setCatalyzer}) => {
 
-    // const [state, setState] = useState({
-    //     username: '',
-    //     base_key: '',
-    //     link: '',
-    //     email: '',
-    //     password: '',
-    //     message: ''
-    // })
 
     const [visible, setVisible] = useState(false)
 

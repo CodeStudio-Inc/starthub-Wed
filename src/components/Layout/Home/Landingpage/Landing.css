@@ -92,9 +92,9 @@
 .admin-stat {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
     flex-direction: column;
     width: 25%;
+    height: 150px;
     padding: 0.5rem;
     box-sizing: border-box;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
