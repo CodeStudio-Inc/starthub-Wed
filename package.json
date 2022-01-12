@@ -22,6 +22,7 @@
     "dotenv": "^10.0.0",
     "firebase": "^8.4.2",
     "formik": "^2.2.9",
+    "localbase": "^0.7.5",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",

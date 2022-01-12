@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import Register from '../AdminPanel/Register'
 import * as actionCreators from '../../../store/actionCreators'
 import moment from 'moment'
+import { Progress } from 'antd'
 
 const AdminLandingPage = ({startups, adminNavigate}) => {
 
@@ -25,7 +26,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const catalyzer = startups.filter(el => el.category === 'catalyzer')
     const academy = startups.filter(el => el.category === 'academy')
     const users = useSelector(state => state.admin.users)
-    console.log(users,'ll')
+    // console.log(users,'ll')
 
     const dispatch = useDispatch()
 
@@ -155,17 +156,33 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                     <h5>Welcome to starthub dashboard</h5>
                 </div>
                 <div className="admin-row">
-                    <div className="admin-stat-card">
-                        <h3>Total Users</h3>
+                    <div className="admin-stat">
+                        <h3>Total number of registered users</h3>
                         <h1>{users.length}</h1>
-                        <h5>Registered Teams</h5>
+                        <h5>Percentage of total users</h5>
+                        <div style={{width: "250px"}}>
+                            <Progress 
+                                percent={((users.length/100) * 100).toFixed(0)} 
+                                size="small" 
+                                strokeColor="#F2994A"
+                                trailColor="rgba(0,0,0,0.1)"
+                                />
+                        </div>
                     </div>
-                    <div className="admin-stat-card">
-                        <h3>Enrolled this Month</h3>
+                    <div className="admin-stat">
+                        <h3>Teams enrolled this month</h3>
                         <h1>{enrolledUsers.length}</h1>
-                        <h5>Teams enrolled this month</h5>
+                        <h5>Percentage of month enrollment</h5>
+                        <div style={{width: "250px"}}>
+                            <Progress 
+                                percent={((enrolledUsers.length/100) * 100).toFixed(0)} 
+                                size="small"  
+                                strokeColor="#F2994A"
+                                trailColor="rgba(0,0,0,0.1)"
+                                />
+                        </div>
                     </div>
-                    <div className="admin-stat-card">
+                    <div className="admin-stat">
                         <h3>User Activity</h3>
                     </div>
                 </div>

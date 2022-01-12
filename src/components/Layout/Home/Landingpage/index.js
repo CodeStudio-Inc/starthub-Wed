@@ -12,6 +12,7 @@ import Diagnostics from './Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
 import AdminLandingPage from './AdminLandingPage'
 import { List  } from 'react-content-loader'
+import Localbase from 'localbase'
 
 import './Landing.css'
 const Landing = (props) => {
@@ -62,6 +63,7 @@ const Landing = (props) => {
     },[])
 
     const dispatch = useDispatch()
+    const db = new Localbase('db')
 
     const getBoards = () => dispatch(actionCreators.getBoards())
     const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
@@ -201,7 +203,7 @@ const Landing = (props) => {
         }
         {admin ? <AdminLandingPage startups={filtereUsers} adminNavigate={adminNavigate}/> : 
         <div className="landing-menu">
-            <div className="landing-menu-left">
+            <div className="landing-menu-left-1">
                 <DragDropContext onDragEnd={onDragEnd}>
                     <div className="landing-scroll">
                         

@@ -121,8 +121,8 @@ const AdminPanel = (props) => {
                 {category === 'academy' ? null :
                 <div className="admin-nav-links">
                     <p onClick={() => props.history.push('/admin-canvas',{userId: startupId, user: username,key: base_key })}>Lean canvas</p>
-                    <p onClick={() => props.history.push('/admin-metrics',{key: base_key, user: username, userId: startupId})}>Metrics</p>
-                    <p onClick={() => props.history.push('/')}>Dashboard</p>
+                    <p onClick={() => props.history.push('/admin-metrics',{key: base_key, user: username, userId: startupId})}>Dashboard</p>
+                    <p onClick={() => props.history.push('/')}>Startups</p>
                 </div>
                 }
             </div>}

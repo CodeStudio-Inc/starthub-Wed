@@ -163,7 +163,7 @@ const AdminMetrics = (props) => {
                     <h2>{username.toUpperCase()}</h2>
                     <div className="admin-navbar-links">
                         <p onClick={() => props.history.push('/admin-canvas',{userId: startupId, user: username,key: base_key })}>Lean canvas</p>
-                        <p onClick={() => props.history.push('/')}>Dashboard</p>
+                        <p onClick={() => props.history.push('/')}>Startups</p>
                         <div className="admin-icon-row">
                             <KeyboardBackspaceRoundedIcon 
                             className="admin-navbar-icon"
