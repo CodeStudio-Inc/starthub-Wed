@@ -7,12 +7,15 @@ import Register from '../AdminPanel/Register'
 import * as actionCreators from '../../../store/actionCreators'
 import moment from 'moment'
 import { Progress } from 'antd'
+import Localbase from 'localbase'
+import { Line } from 'react-chartjs-2'
 
 const AdminLandingPage = ({startups, adminNavigate}) => {
 
     const [int, setInternal] = useState(false)
     const [cat, setCatalyzer] = useState(false)
     const [acad, setAcademy] = useState(false)
+    const [docs, setDocs] = useState([])
     const [state, setState] = useState({
         username:'',
         email:'',
@@ -29,13 +32,44 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     // console.log(users,'ll')
 
     const dispatch = useDispatch()
+    let db = new Localbase('db')
+    db.config.debug = false
 
     const current_date = moment(Date()).format('MMM YYYY')
     const enrolledUsers = users.filter(e => moment(e.dateCreated).format('MMM YYYY') === current_date)
 
     useEffect(() => {
         getUser()
+        getPosts()
     },[])
+
+    const getPosts = () => {
+        db.collection('User_Activity').get().then(res => {
+            setDocs(res)
+            // console.log('object',res)
+        })
+    }
+
+    const dates = docs.map(el => moment(el.date).format('MMM'))
+    const Jan = docs.filter(el => moment(el.date).format('MMM') === 'Jan').length
+    const Feb = docs.filter(el => moment(el.date).format('MMM') === 'Feb').length
+    const Mar = docs.filter(el => moment(el.date).format('MMM') === 'Mar').length
+    const Apr = docs.filter(el => moment(el.date).format('MMM') === 'Apr').length
+    const May = docs.filter(el => moment(el.date).format('MMM') === 'May').length
+    const Jun = docs.filter(el => moment(el.date).format('MMM') === 'Jun').length
+
+    const data = {
+        labels: dates,
+        datasets: [
+            {
+                label: 'User Activity',
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data:[Jan,Feb,Mar,Apr,May,Jun]
+            }
+        ]
+    }
     
     const getUser = () => dispatch(actionCreators.getUsers())
 
@@ -184,6 +218,11 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                     </div>
                     <div className="admin-stat">
                         <h3>User Activity</h3>
+                        <Line
+                            data={data}
+                            width={100}
+                            height={50}
+                        />
                     </div>
                 </div>
                 <div className="admin-header">

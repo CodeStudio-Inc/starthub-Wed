@@ -12,7 +12,7 @@ import Diagnostics from './Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
 import AdminLandingPage from './AdminLandingPage'
 import { List  } from 'react-content-loader'
-import Localbase from 'localbase'
+
 
 import './Landing.css'
 const Landing = (props) => {
@@ -34,6 +34,8 @@ const Landing = (props) => {
     const lists = useSelector(state => state.requests.lists)
     const Boards = useSelector(state => state.requests.boards)
     const userId = useSelector(state => state.auth.userId)
+    const username = useSelector(state => state.auth.username)
+    const email = useSelector(state => state.auth.email)
     const _value = useSelector(state => state.requests.values)
     const statements = useSelector(state => state.requests.statements)
     const objectives = useSelector(state => state.requests.objectives)
@@ -47,7 +49,7 @@ const Landing = (props) => {
      const filtereUsers = users.filter(el => el.admin === false)
     
      const last_value = filter_value && filter_value.slice(-1).pop()
-    //  console.log(statements,'jj',objectives)
+    //  console.log(userId,'jj',username,'ll',email)
 
     const current_date = Date.now()
 
@@ -63,7 +65,7 @@ const Landing = (props) => {
     },[])
 
     const dispatch = useDispatch()
-    const db = new Localbase('db')
+    
 
     const getBoards = () => dispatch(actionCreators.getBoards())
     const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
@@ -88,6 +90,8 @@ const Landing = (props) => {
     // const archivedtodoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === true)
     // console.log(lists,'kk')
     // console.log(loading)
+
+    
 
     const onDragEnd = (result) => {
             const { destination, source, draggableId } = result
@@ -245,6 +249,10 @@ const Landing = (props) => {
                 </div>}
                 <Diagnostics last_value={last_value && last_value}/>
             </div>
+                {/* <button onClick={post}>db</button>
+                <div>
+                    {docs.map(e => <p>{e.name}</p>)}
+                </div> */}
             </div>
         </div>}
     </div>

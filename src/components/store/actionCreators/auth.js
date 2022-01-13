@@ -1,5 +1,9 @@
 import * as actions from '../actions'
 import axios from 'axios'
+import Localbase from 'localbase'
+import moment from 'moment'
+
+let db = new Localbase('db')
 
 export const loaderAction = () => {
     return {
@@ -49,6 +53,14 @@ export const login = (email, password,callback) => {
             })
             .then(res => {
                 dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email,res.data.category, res.data.token, res.data.tokenExpiration))
+                if(res.data.category === 'catalyzer') {
+                        db.collection('User_Activity').add({
+                            userId: res.data.userId,
+                            username: res.data.username,
+                            email: res.data.email,
+                            date: moment(Date.now()).format('DDD MMM YYYY')
+                        })
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -56,7 +68,7 @@ export const login = (email, password,callback) => {
             })
     }
 }
-
+ 
 
 export const signUp = (username, email, category, password, base_key, link) => {
     return dispatch => {
