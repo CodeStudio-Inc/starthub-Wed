@@ -51,13 +51,16 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     }
 
     const dates = docs.map(el => moment(el.date).format('MMM'))
-    const jan = docs.filter(el => moment(el.date).format('MMM') === 'Jan')
+    
+    const Jan = docs.filter(el => moment(el.date).format('MMM') === 'Jan').length
     const Feb = docs.filter(el => moment(el.date).format('MMM') === 'Feb').length
     const Mar = docs.filter(el => moment(el.date).format('MMM') === 'Mar').length
     const Apr = docs.filter(el => moment(el.date).format('MMM') === 'Apr').length
     const May = docs.filter(el => moment(el.date).format('MMM') === 'May').length
     const Jun = docs.filter(el => moment(el.date).format('MMM') === 'Jun').length
 
+    let values = [Jan, Feb, Apr, Mar, Apr, May, Jun]
+    
     const data = {
         labels: dates,
         datasets: [
@@ -66,7 +69,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 backgroundColor: '#dfa126',
                 borderColor: '#222323',
                 borderWidth: 1,
-                data:[jan.length,Feb,Mar,Apr,May,Jun]
+                data: values
             }
         ]
     }
