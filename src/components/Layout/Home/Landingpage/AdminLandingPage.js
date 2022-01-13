@@ -68,7 +68,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 backgroundColor: '#dfa126',
                 borderColor: '#222323',
                 borderWidth: 1,
-                data:[Jan,Feb,Mar,Apr,May,Jun]
+                data:[Jan && Jan,Feb,Mar,Apr,May,Jun]
             }
         ]
     }
