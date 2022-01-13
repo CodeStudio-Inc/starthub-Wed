@@ -51,14 +51,12 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     }
 
     const dates = docs.map(el => moment(el.date).format('MMM'))
-    const Jan = docs && docs.filter(el => moment(el.date).format('MMM') === 'Jan').length
-    const Feb = docs && docs.filter(el => moment(el.date).format('MMM') === 'Feb').length
-    const Mar = docs && docs.filter(el => moment(el.date).format('MMM') === 'Mar').length
-    const Apr = docs && docs.filter(el => moment(el.date).format('MMM') === 'Apr').length
-    const May = docs && docs.filter(el => moment(el.date).format('MMM') === 'May').length
-    const Jun = docs && docs.filter(el => moment(el.date).format('MMM') === 'Jun').length
-
-    console.log(Jan,'jan', Feb)
+    const jan = docs.filter(el => moment(el.date).format('MMM') === 'Jan')
+    const Feb = docs.filter(el => moment(el.date).format('MMM') === 'Feb').length
+    const Mar = docs.filter(el => moment(el.date).format('MMM') === 'Mar').length
+    const Apr = docs.filter(el => moment(el.date).format('MMM') === 'Apr').length
+    const May = docs.filter(el => moment(el.date).format('MMM') === 'May').length
+    const Jun = docs.filter(el => moment(el.date).format('MMM') === 'Jun').length
 
     const data = {
         labels: dates,
@@ -68,7 +66,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 backgroundColor: '#dfa126',
                 borderColor: '#222323',
                 borderWidth: 1,
-                data:[Jan && Jan,Feb,Mar,Apr,May,Jun]
+                data:[jan.length,Feb,Mar,Apr,May,Jun]
             }
         ]
     }
