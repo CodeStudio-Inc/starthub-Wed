@@ -58,6 +58,8 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const May = docs && docs.filter(el => moment(el.date).format('MMM') === 'May').length
     const Jun = docs && docs.filter(el => moment(el.date).format('MMM') === 'Jun').length
 
+    console.log(Jan,'jan', Feb)
+
     const data = {
         labels: dates,
         datasets: [
