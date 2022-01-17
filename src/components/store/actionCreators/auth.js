@@ -4,6 +4,7 @@ import Localbase from 'localbase'
 import moment from 'moment'
 
 let db = new Localbase('db')
+db.config.debug = false
 
 export const loaderAction = () => {
     return {
@@ -58,7 +59,7 @@ export const login = (email, password,callback) => {
                             userId: res.data.userId,
                             username: res.data.username,
                             email: res.data.email,
-                            date: moment(Date.now()).format('DDD MMM YYYY')
+                            date: Date()
                         })
                 }
             })

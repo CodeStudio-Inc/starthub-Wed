@@ -9,12 +9,14 @@ import moment from 'moment'
 import { Progress } from 'antd'
 import Localbase from 'localbase'
 import { Line } from 'react-chartjs-2'
+import { Table } from 'antd'
 
 const AdminLandingPage = ({startups, adminNavigate}) => {
 
     const [int, setInternal] = useState(false)
     const [cat, setCatalyzer] = useState(false)
     const [acad, setAcademy] = useState(false)
+    const [view, setView] = useState(false)
     const [docs, setDocs] = useState([])
     const [state, setState] = useState({
         username:'',
@@ -50,19 +52,31 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
         })
     }
 
-    const dates = docs.map(el => moment(el.date).format('MMM'))
-    
-    const Jan = docs.filter(el => moment(el.date).format('MMM') === 'Jan').length
-    const Feb = docs.filter(el => moment(el.date).format('MMM') === 'Feb').length
-    const Mar = docs.filter(el => moment(el.date).format('MMM') === 'Mar').length
-    const Apr = docs.filter(el => moment(el.date).format('MMM') === 'Apr').length
-    const May = docs.filter(el => moment(el.date).format('MMM') === 'May').length
-    const Jun = docs.filter(el => moment(el.date).format('MMM') === 'Jun').length
+    const week1End = 7
+    const week2End = 15
+    const week3End = 23
+    const week4End = 31
+    console.log(docs)
 
-    let values = [Jan, Feb, Apr, Mar, Apr, May, Jun]
-    console.log(values)
+    let dates = []
+
+    docs.forEach(element => {
+        dates.push({day: parseInt(moment(element.date).format('DDD'))})
+    });
+
+    // console.log(dates)
+
+    const Week1 = dates.filter(el => el.day <= week1End).length
+    const Week2 = dates.filter(el => el.day > week1End && el.day < week2End).length
+    const Week3 = dates.filter(el => el.day > week2End && el.day < week3End).length
+    const Week4 = dates.filter(el => el.day > week3End && el.day < week4End).length
+    // const Jun = docs.filter(el => moment(el.date).format('DDD') === 'Jun').length
+    console.log(Week4)
+
+    let values = [Week1, Week2, Week3, Week4]
+    let labels = ['Week1', 'week2', 'week3', 'week4']
     const data = {
-        labels: dates,
+        labels: labels,
         datasets: [
             {
                 label: 'User Activity',
@@ -71,8 +85,46 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 borderWidth: 1,
                 data: values
             }
-        ]
+        ],
+        options: {
+                scales: {
+                    yAxes: [{
+                    ticks: {
+                        precision: 0
+                    }
+                    }]
+                }
+                }
     }
+
+    const columns = [
+        {
+            title: 'Startup',
+            dataIndex:'startup',
+            key:'startup',
+            align:'left'
+        },
+        {
+            title: 'Email',
+            dataIndex:'email',
+            key:'email',
+            align:'left'
+        },
+        {
+            title: 'Date',
+            dataIndex:'date',
+            key:'date',
+            align:'left'
+        }
+    ]
+
+    const table_data = [...docs.map(r => 
+        ({...r,
+            startup: r.username,
+            email: r.email,
+            date: moment(r.date).fromNow()
+        })
+        )]
     
     const getUser = () => dispatch(actionCreators.getUsers())
 
@@ -187,6 +239,24 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                         setCatalyzer={setCatalyzer}/>
                 </ModalUI>
             : null}
+            {view ? <ModalUI>
+                <div className="view-container">
+                    <div className="register-form-nav">
+                        <h3>LoggedIn users this Week</h3>
+                        <CloseIcon 
+                            className="register-form-container-icon"
+                            style={{ fontSize: '25px', color:'rgba(0,0,0,0.3)'}}
+                            onClick={() => setView(false)}
+                        />
+                    </div>
+                        <Table
+                            columns={columns}
+                            dataSource={table_data}
+                            style={{width:'100%'}} 
+                            pagination={false}
+                        />
+                </div>
+            </ModalUI> : null}
             <div className="admin-menu-content">
                 <div className="admin-header">
                     <h1>StartHub</h1>
@@ -219,7 +289,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                                 />
                         </div>
                     </div>
-                    <div className="admin-stat">
+                    <div className="admin-user-activity" onClick={() => setView(true)}>
                         <h3>User Activity</h3>
                         <Line
                             data={data}

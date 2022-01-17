@@ -123,6 +123,25 @@
     margin: 0;
 }
 
+.admin-user-activity {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 25%;
+    height: 180px;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);   
+}
+
+.admin-user-activity h3 {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.admin-user-activity:hover {
+    cursor: pointer;
+}
 
 .admin-startup-card {
     display: flex;
@@ -749,6 +768,15 @@
     color: rgba(0, 0, 0, 0.3);
 }
 
+.view-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 60%;
+    background: #fff;
+    height: 100px;
+}
+
 .register-form {
     display: flex;
     align-items: center;
@@ -767,6 +795,10 @@
     padding: 5px;
     margin-bottom: 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.register-form-nav h3 {
+    color: #dfa126;  
 }
 
 .register-form h3 {
