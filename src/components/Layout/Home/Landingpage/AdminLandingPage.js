@@ -56,7 +56,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const week2End = 15
     const week3End = 23
     const week4End = 31
-    console.log(docs)
+    // console.log(docs)
 
     let dates = []
 
@@ -71,7 +71,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const Week3 = dates.filter(el => el.day > week2End && el.day < week3End).length
     const Week4 = dates.filter(el => el.day > week3End && el.day < week4End).length
     // const Jun = docs.filter(el => moment(el.date).format('DDD') === 'Jun').length
-    console.log(Week4)
+    // console.log(Week4)
 
     let values = [Week1, Week2, Week3, Week4]
     let labels = ['Week1', 'week2', 'week3', 'week4']
