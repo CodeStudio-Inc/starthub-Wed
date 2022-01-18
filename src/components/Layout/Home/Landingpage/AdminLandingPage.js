@@ -52,6 +52,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
         })
     }
 
+
     const week1End = 7
     const week2End = 15
     const week3End = 23

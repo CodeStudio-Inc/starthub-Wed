@@ -17,6 +17,7 @@ const Dashboard = (props) => {
     const expire = useSelector(state => state.auth.tokenExpiration)
     const metrics = useSelector(state => state.requests.metrics)
     const category = useSelector(state => state.auth.category)
+    const link = useSelector(state => state.auth.link)
 
     const current_date = Date.now()
 
@@ -72,7 +73,6 @@ const Dashboard = (props) => {
     const graph8 = sortedMetrics.map(el => el.fields[keysArray[7]] )
     
     
-    // console.log(graph1)
     let months = []
 
     for(let month of graph1) {
@@ -172,6 +172,7 @@ const Dashboard = (props) => {
         ]
     }
 
+    console.log(link)
 
     return (
         <div className="dash-container">
@@ -181,12 +182,12 @@ const Dashboard = (props) => {
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>: null}
-            {open ? <ModalUI setOpen={setOpen}>
+            {/* {open ? <ModalUI setOpen={setOpen}>
                 <div className="modal-row">
                     <CloseIcon onClick={() => setOpen(false)} className="close-icon" style={{ fontSize: '30px' }} />
                 </div>
                 <iframe class="airtable-embed" src="https://airtable.com/embed/shrS6aSAZIgqjP1g0?backgroundColor=green" frameborder="0" onmousewheel="" width="100%" height="95%" ></iframe>
-            </ModalUI> : null}
+            </ModalUI> : null} */}
             {category === 'academy' || category === 'internal' ? 
             <div className="dash-menu">
                 <h1>You have no Metrics data registered</h1>
@@ -194,44 +195,49 @@ const Dashboard = (props) => {
             : 
             <div className="dash-menu">
                 <div className="revenue-row">
+                    <iframe src={link} frameborder="0" onmousewheel="" width="100%" height="533"></iframe>
                     <div className="graph-row">
+                    {line_graph1.datasets[0].data[0] === undefined ? null :
                     <div className="revenue">
                         <h3>{keysArray[1] && keysArray[1].split('-').splice(1)}</h3>
-                        <Line
+                         <Line
                             data={line_graph1}
                             width={100}
                             height={30}
                         />
-                    </div>
+                    </div>}
 
+                    {line_graph2.datasets[0].data[0] === undefined ? null :
                     <div className="revenue">
                         <h3>{keysArray[2] && keysArray[2].split('-').splice(1)}</h3>
-                        <Line
+                         <Line
                             data={line_graph2}
                             width={100}
                             height={30}
                         />
-                    </div>
+                    </div>}
                     </div>
 
                     <div className="graph-row">
+                    {line_graph3.datasets[0].data[0] === undefined ? null :
                     <div className="revenue">
                         <h3>{keysArray[3] && keysArray[3].split('-').splice(1)}</h3>
-                        <Line
+                         <Line
                             data={line_graph3}
                             width={100}
-                            height={20}
+                            height={30}
                         />
-                    </div>
+                    </div>}
 
+                    {line_graph4.datasets[0].data[0] === undefined ? null :
                     <div className="revenue">
                         <h3>{keysArray[4] && keysArray[4].split('-').splice(1)}</h3>
-                        {line_graph4.datasets[0].data[0] === undefined ? null : <Line
+                         <Line
                             data={line_graph4}
                             width={100}
                             height={30}
-                        />}
-                    </div>
+                        />
+                    </div>}
                     </div>
 
                     <div className="graph-row">
@@ -278,7 +284,8 @@ const Dashboard = (props) => {
                     </div>
                     </div>
                 </div>
-            </div>}
+            </div>
+            }
         </div>
     )
 }

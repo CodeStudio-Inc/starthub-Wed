@@ -175,7 +175,9 @@ const AdminMetrics = (props) => {
                     </div>
                 </div>
             <div className="admin">
+            {line_graph1.datasets[0].data[0] === undefined ? <h1>User has no Metrics Data Recorded</h1> : null}
                 <div className="rev-row">
+                    {line_graph1.datasets[0].data[0] === undefined ? null : 
                     <div className="revenue">
                         <h3>{keysArray[1] && keysArray[1].split('-').splice(1)}</h3>
                         <Line
@@ -183,7 +185,8 @@ const AdminMetrics = (props) => {
                             width={100}
                             height={30}
                         />
-                    </div>
+                    </div>}
+                    {line_graph2.datasets[0].data[0] === undefined ? null : 
                     <div className="revenue">
                         <h3>{keysArray[2] && keysArray[2].split('-').splice(1)}</h3>
                         <Line
@@ -191,7 +194,7 @@ const AdminMetrics = (props) => {
                             width={100}
                             height={30}
                         />
-                    </div>
+                    </div>}
                 </div>
    
                 <div className="rev-row">

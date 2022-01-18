@@ -6,6 +6,10 @@
   height: 100vh;
 } 
 
+.admin h1 {
+  font-weight: lighter;
+}
+
 .admin {
     position: relative;
     display: flex;
