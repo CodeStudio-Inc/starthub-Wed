@@ -31,7 +31,11 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const catalyzer = startups.filter(el => el.category === 'catalyzer')
     const academy = startups.filter(el => el.category === 'academy')
     const users = useSelector(state => state.admin.users)
-    // console.log(users,'ll')
+    const users_activity = useSelector(state => state.auth.user_activity)
+    // console.log(users_activity);
+
+    // let names = Array.from(users, ({user_activity}) => user_activity)
+    // console.log(names)
 
     const dispatch = useDispatch()
     let db = new Localbase('db')
@@ -43,6 +47,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     useEffect(() => {
         getUser()
         getPosts()
+        getUserActivity()
     },[])
 
     const getPosts = () => {
@@ -52,6 +57,8 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
         })
     }
 
+    const getUserActivity = () => dispatch(actionCreators.getUserActivity())
+
 
     const week1End = 7
     const week2End = 15
@@ -59,10 +66,16 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const week4End = 31
     // console.log(docs)
 
+    // let dates = []
+
+    // docs.forEach(element => {
+    //     dates.push({day: parseInt(moment(element.date).format('DDD'))})
+    // });
+
     let dates = []
 
-    docs.forEach(element => {
-        dates.push({day: parseInt(moment(element.date).format('DDD'))})
+    users_activity && users_activity.forEach(element => {
+        dates.push({day: parseInt(moment(element.date).format('DD'))})
     });
 
     // console.log(dates)
@@ -119,13 +132,13 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
         }
     ]
 
-    const table_data = [...docs.map(r => 
-        ({...r,
-            startup: r.username,
-            email: r.email,
-            date: moment(r.date).fromNow()
-        })
-        )]
+    // const table_data = [...users_activity.map(r => 
+    //     ({...r,
+    //         username: r && r.username,
+    //         email: r.email,
+    //         date: moment(r.date).fromNow()
+    //     })
+    //     )]
     
     const getUser = () => dispatch(actionCreators.getUsers())
 
@@ -252,7 +265,13 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                     </div>
                         <Table
                             columns={columns}
-                            dataSource={table_data}
+                            dataSource={[...users_activity.map(r => 
+                                        ({...r,
+                                            startup: r.username,
+                                            email: r.email,
+                                            date: moment(r.date).fromNow()
+                                        })
+                                        )]}
                             style={{width:'100%'}} 
                             pagination={false}
                         />

@@ -4,7 +4,9 @@ import './Styles.css'
 const index = (props) => {
     return (
         <div className="modal-container">
-            {props.children}
+            <div className="modal-inner-container">
+                {props.children}
+            </div>
         </div>
     )
 }

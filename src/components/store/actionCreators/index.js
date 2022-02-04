@@ -1,4 +1,4 @@
-export { signUp, login, removeUser } from './auth'
+export { signUp, login, removeUser, userActivity, getUserActivity } from './auth'
 export {
     getBlogs,
     getBoards,

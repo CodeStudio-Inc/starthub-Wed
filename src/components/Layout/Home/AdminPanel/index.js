@@ -73,7 +73,7 @@ const AdminPanel = (props) => {
     const getObjectives = () => dispatch(actionCreators.getAdminObjectives(startupId))
     
     const todoLists = lists && lists.filter(el => el.creator === startupId && el.boardId ===  current_boardID && el.archive === false)
-    // console.log(startupId,'llll')
+    // console.log(Boards,'llll')
     // console.log(todoLists,'bbb')
 
 

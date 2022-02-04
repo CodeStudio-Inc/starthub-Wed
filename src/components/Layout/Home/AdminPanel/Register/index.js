@@ -36,7 +36,7 @@ const Register = ({signup,state,setState,setCatalyzer}) => {
         { id: '10', value: 'Qiribu', link: 'https://airtable.com/shrUFVM2sXsFLQ1H2', key:'appwJOpJwLfq68Dyi'  },
         { id: '11', value: 'Tech Rafiki', link: 'https://airtable.com/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  },
         { id: '11', value: 'Devine Renewable Energy', link: 'https://airtable.com/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  },
-        { id: '12', value: 'Testing', link: 'test', key:'test'  }
+        { id: '12', value: 'Onestope', link: 'https://airtable.com/embed/shrIGEjXV6FA6Lb9Z', key:'appSO1UwT3GeD1Nbf'  }
     ]
 
     const handleSignUp = () => {

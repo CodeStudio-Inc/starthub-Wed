@@ -172,7 +172,7 @@ const Dashboard = (props) => {
         ]
     }
 
-    console.log(link)
+    // console.log(link)
 
     return (
         <div className="dash-container">

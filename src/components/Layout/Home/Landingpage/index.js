@@ -35,6 +35,7 @@ const Landing = (props) => {
     const Boards = useSelector(state => state.requests.boards)
     const userId = useSelector(state => state.auth.userId)
     const username = useSelector(state => state.auth.username)
+    const category = useSelector(state => state.auth.category)
     const email = useSelector(state => state.auth.email)
     const _value = useSelector(state => state.requests.values)
     const statements = useSelector(state => state.requests.statements)
@@ -48,12 +49,15 @@ const Landing = (props) => {
      const filter_value = _value && _value.filter(e => e.creator === userId)
      const filtereUsers = users.filter(el => el.admin === false)
     
-     const last_value = filter_value && filter_value.slice(-1).pop()
-    //  console.log(userId,'jj',username,'ll',email)
+    const last_value = filter_value && filter_value.slice(-1).pop()
+    //  console.log(category,'jj')
 
     const current_date = Date.now()
 
     useEffect(() => {
+        if(category === 'catalyzer') {
+            userActivity()
+        }
         if(current_date >= expire) {
            return setexpireTime(true)
         }
@@ -72,6 +76,7 @@ const Landing = (props) => {
     const getStatements = () => dispatch(actionCreators.getStatement())
     const getObjectives = () => dispatch(actionCreators.getObjective())
     const getUsers = () => dispatch(actionCreators.getUsers())
+    const userActivity = () => dispatch(actionCreators.userActivity(email,username,userId))
 
     const openEditModal = () => setOpen(true)
     const openModal = () => setModal(true)

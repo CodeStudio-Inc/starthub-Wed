@@ -1,0 +1,121 @@
+.loans-main {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	background: #eee;
+    height: 100vh;
+    overflow-y: scroll;
+} 
+
+.loans-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width:  85%;
+    left: 15%;
+    margin-top: 1rem;
+    height: 100vh;
+}
+
+.loans-form {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 90%;
+    background: #fff;
+    margin-bottom: 1rem;
+}
+
+.loans-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 95%;
+    padding: 0.5rem;
+}
+
+.loan-form {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 40%;
+}
+
+.loan-form input {
+    border: none;
+    outline: none;
+    width: 95%;
+    height: 40px;
+    background: #eee;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.loan-form select {
+    border: none;
+    outline: none;
+    width: 95%;
+    height: 40px;
+    background: #eee;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.loan-form textarea {
+    border: none;
+    outline: none;
+    width: 95%;
+    height: 100px;
+    background: #eee;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.loans-form h2 {
+    color: rgba(0,0,0,0.7);
+}
+
+
+.amount-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 70%;
+}
+
+.amount-row input {
+    border: none;
+    outline: none;
+    width: 85%;
+    height: 40px;
+    background: #eee;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.amount-row h2 {
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 0.5rem;
+}
+
+
+
+.loan-overview {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 60%;
+}
+
+.loan-separator {
+    width: 50%;
+    height: 1px;
+    margin-bottom: 1rem;
+    background: rgba(0,0,0,0.1);
+}

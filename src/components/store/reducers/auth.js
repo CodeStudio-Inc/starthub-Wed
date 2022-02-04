@@ -11,6 +11,7 @@ const initialState = {
     token: '',
     category:'',
     tokenExpiration:'',
+    user_activity: [],
     admin:null,
     loading: false,
     authenticated: false,
@@ -38,6 +39,12 @@ const auth = (state = initialState, action) => {
                 token: action.token,
                 tokenExpiration: action.tokenExpiration,
                 authenticated: true
+            })
+
+        case actions.SET_USER_ACTIVITY:
+            return updateObject(state, {
+                loading: false,
+                user_activity: action.data
             })
 
         case actions.REMOVE_USER:

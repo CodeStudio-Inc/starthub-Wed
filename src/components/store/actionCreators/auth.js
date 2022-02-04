@@ -1,10 +1,6 @@
 import * as actions from '../actions'
 import axios from 'axios'
-import Localbase from 'localbase'
-import moment from 'moment'
 
-let db = new Localbase('db')
-db.config.debug = false
 
 export const loaderAction = () => {
     return {
@@ -27,13 +23,18 @@ export const setUser = (admin,userId, username, base_key, link, email,category, 
     }
 }
 
+export const setUserActivity = (data) => {
+    return {
+        type: actions.SET_USER_ACTIVITY,
+        data
+    }
+}
 
 export const removeUser = () => {
     return {
         type: actions.REMOVE_USER
     }
 }
-
 
 export const login = (email, password,callback) => {
     return dispatch => {
@@ -54,14 +55,6 @@ export const login = (email, password,callback) => {
             })
             .then(res => {
                 dispatch(setUser(res.data.admin, res.data.userId, res.data.username, res.data.base_key, res.data.link, res.data.email,res.data.category, res.data.token, res.data.tokenExpiration))
-                if(res.data.category === 'catalyzer') {
-                        db.collection('User_Activity').add({
-                            userId: res.data.userId,
-                            username: res.data.username,
-                            email: res.data.email,
-                            date: Date()
-                        })
-                }
             })
             .catch(error => {
                 console.log(error)
@@ -69,8 +62,53 @@ export const login = (email, password,callback) => {
             })
     }
 }
- 
 
+export const userActivity = (email,username,userId) => {
+    return dispatch => {
+        dispatch(loaderAction())
+
+        const data = {
+            email,
+            username,
+            userId
+        }
+
+        axios.post('https://starthubafrica-api.el.r.appspot.com/admin/user-activity', data,
+            {
+                headers:
+                {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => {
+                dispatch(setUserActivity(res.data.user_activity))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const getUserActivity = () => {
+    return dispatch => {
+
+        axios.get('https://starthubafrica-api.el.r.appspot.com/admin/user-activities', {
+            headers: 
+            {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+                dispatch(setUserActivity(res.data.user_activity))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+ 
 export const signUp = (username, email, category, password, base_key, link) => {
     return dispatch => {
         dispatch(loaderAction())

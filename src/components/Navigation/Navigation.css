@@ -133,13 +133,15 @@
 	padding-left: 0.5rem;
 	width: 160px;
 	height: 30px;
-	transition: 1s ease-in-out;
+	transition: 0.5s ease-in-out;
 	margin-bottom: 0.5rem;
 }
+
 
 .link-box h4 {
 	color: rgba(0, 0, 0, 0.4);
 	font-weight: 400;
+	margin: 0;
 }
 .inactive {
 	color: rgba(0, 0, 0, 0.4);

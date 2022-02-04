@@ -12,6 +12,8 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard'
 import BuildIcon from '@mui/icons-material/Build'
+import LocalAtmIcon from '@mui/icons-material/LocalAtm'
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 
 import './Navigation.css'
 const Navbar = (props) => {
@@ -46,8 +48,9 @@ const Navbar = (props) => {
     const [adminAppState, setAdminAppState] = useState({
         actionObject: null,
         objects: [
-            { id: 1, title: "Dashboard", route: "/", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> }
-            // { id: 2, title: "Register Startup", route: "/register", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> }
+            { id: 1, title: "Dashboard", route: "/", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 2, title: "Loans", route: "/loans", icon:<LocalAtmIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 2, title: "Revenue Share", route: "/revenue-share", icon:<AccountBalanceWalletIcon className="link-icon" style={{ fontSize: '25px' }}/> }
         ]
     })
 
@@ -125,7 +128,7 @@ const Navbar = (props) => {
                     </div>
                 </div>
                 {admin ? 
-                <div className="admin-links">
+                <div className="links">
                 {adminAppState.objects.map((element, index) => (
                     <div
                         key={index}

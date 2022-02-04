@@ -28,21 +28,22 @@ const Register = (props) => {
     },[])
 
     const selectValues = [
-        { id: '1', value: 'OnScore Africa', link: 'https://airtable.com/shrS60MIjPY7P7Kjm', key:'appANh1i0ahXP7AGU' },
-        { id: '2', value: 'Solfix', link: 'https://airtable.com/shrFcv5412RcqTY12', key:'appbpvHcj2Q15vNzy' },
-        { id: '3', value: 'Rada Safaris', link: 'https://airtable.com/shr2GR4P4oXwe5cAe', key:'appoRLGhKdUVYK1NM' },
-        { id: '4', value: 'Zetu Africa', link: 'https://airtable.com/shrRhXagaPU7aODbM', key:'apphw40UWLjnJPjZ3' },
-        { id: '5', value: 'Social Clark', link: 'https://airtable.com/shrVhqMWFeuR74ptl', key:'appgl1zZt7ywDcV0b' },
-        { id: '6', value: 'Inove Labs', link: 'https://airtable.com/shrIl79SiMwDDGzOC', key:'appbmvwW0TZ28Sa6b' },
-        { id: '7', value: 'OMNI Gym', link: 'https://airtable.com/shrzeSKqTNbM0e7cu', key:'appQ04g5RD4qDczpq' },
-        { id: '8', value: 'WAGE Spices', link: 'https://airtable.com/shrzXfvNSq8KQR3Zv', key:'apps7QYiTB1PUEnNV' },
-        { id: '9', value: 'Isharc', link: 'https://airtable.com/shr47nlDolKpj03Hv', key:'appNClAqhvh57qFEJ' },
-        { id: '10', value: 'Economic Misfit', link: 'https://airtable.com/shrdriyhRdFT3nOjo', key:'appXH1YhoI4ll5sxT'  },
-        { id: '10', value: 'Grab Gas', link: 'https://airtable.com/shrA1l6DuXXqURJq5', key:'appBSbKZsl25qlcNM'  },
-        { id: '10', value: 'Figurines', link: 'https://airtable.com/shrdDhapsg4GoHEBU', key:'appB7nXdkzqsLZ9vh'  },
-        { id: '10', value: 'Qiribu', link: 'https://airtable.com/shrUFVM2sXsFLQ1H2', key:'appwJOpJwLfq68Dyi'  },
-        { id: '11', value: 'Tech Rafiki', link: 'https://airtable.com/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  },
-        { id: '11', value: 'Devine Renewable Energy', link: 'https://airtable.com/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  }
+        { id: '1', value: 'OnScore Africa', link: 'https://airtable.com/embed/shrS60MIjPY7P7Kjm', key:'appANh1i0ahXP7AGU' },
+        { id: '2', value: 'Solfix', link: 'https://airtable.com/embed/shrFcv5412RcqTY12', key:'appbpvHcj2Q15vNzy' },
+        { id: '3', value: 'Rada Safaris', link: 'https://airtable.com/embed/shr2GR4P4oXwe5cAe', key:'appoRLGhKdUVYK1NM' },
+        { id: '4', value: 'Zetu Africa', link: 'https://airtable.com/embed/shrRhXagaPU7aODbM', key:'apphw40UWLjnJPjZ3' },
+        { id: '5', value: 'Social Clark', link: 'https://airtable.com/embed/shrVhqMWFeuR74ptl', key:'appgl1zZt7ywDcV0b' },
+        { id: '6', value: 'Inove Labs', link: 'https://airtable.com/embed/shrIl79SiMwDDGzOC', key:'appbmvwW0TZ28Sa6b' },
+        { id: '7', value: 'OMNI Gym', link: 'https://airtable.com/embed/shrzeSKqTNbM0e7cu', key:'appQ04g5RD4qDczpq' },
+        { id: '8', value: 'WAGE Spices', link: 'https://airtable.com/embed/shrzXfvNSq8KQR3Zv', key:'apps7QYiTB1PUEnNV' },
+        { id: '9', value: 'Isharc', link: 'https://airtable.com/embed/shr47nlDolKpj03Hv', key:'appNClAqhvh57qFEJ' },
+        { id: '10', value: 'Economic Misfit', link: 'https://airtable.com/embed/shrdriyhRdFT3nOjo', key:'appXH1YhoI4ll5sxT'  },
+        { id: '10', value: 'Grab Gas', link: 'https://airtable.com/embed/shrA1l6DuXXqURJq5', key:'appBSbKZsl25qlcNM'  },
+        { id: '10', value: 'Figurines', link: 'https://airtable.com/embed/shrdDhapsg4GoHEBU', key:'appB7nXdkzqsLZ9vh'  },
+        { id: '10', value: 'Qiribu', link: 'https://airtable.com/embed/shrUFVM2sXsFLQ1H2', key:'appwJOpJwLfq68Dyi'  },
+        { id: '11', value: 'Tech Rafiki', link: 'https://airtable.com/embed/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  },
+        { id: '11', value: 'Devine Renewable Energy', link: 'https://airtable.com/embed/shrEut5jM1Ukl4KO6', key:'appoXAPWZMqkdEb8Y'  }
+        
     ]
 
 
