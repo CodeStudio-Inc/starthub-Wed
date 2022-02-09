@@ -126,7 +126,7 @@ const RevenueShare = () => {
                                 columns={columns}
                                 dataSource={[...revShares.map(r => 
                                         ({...r,
-                                            key: r._id,
+                                            key: r && r._id,
                                             startup: r && r.startup,
                                             amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                                             date: r.date,

@@ -277,7 +277,7 @@ const Flatrate = () => {
                                     columns={columns}
                                     dataSource={[...loans.map(r => 
                                         ({...r,
-                                            key: r._id,
+                                            key: r && r._id,
                                             startup: r && r.startup,
                                             amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                                             duration: r.duration,
