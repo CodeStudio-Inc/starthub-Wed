@@ -49,8 +49,7 @@ const Navbar = (props) => {
         actionObject: null,
         objects: [
             { id: 1, title: "Dashboard", route: "/", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            { id: 2, title: "Loans", route: "/loans", icon:<LocalAtmIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            { id: 2, title: "Revenue Share", route: "/revenue-share", icon:<AccountBalanceWalletIcon className="link-icon" style={{ fontSize: '25px' }}/> }
+            { id: 2, title: "Loans", route: "/loans", icon:<LocalAtmIcon className="link-icon" style={{ fontSize: '25px' }}/> }
         ]
     })
 

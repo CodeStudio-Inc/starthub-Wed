@@ -17,7 +17,6 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const [cat, setCatalyzer] = useState(false)
     const [acad, setAcademy] = useState(false)
     const [view, setView] = useState(false)
-    const [docs, setDocs] = useState([])
     const [state, setState] = useState({
         username:'',
         email:'',
@@ -46,16 +45,9 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
 
     useEffect(() => {
         getUser()
-        getPosts()
         getUserActivity()
     },[])
 
-    const getPosts = () => {
-        db.collection('User_Activity').get().then(res => {
-            setDocs(res)
-            // console.log('object',res)
-        })
-    }
 
     const getUserActivity = () => dispatch(actionCreators.getUserActivity())
 
@@ -64,13 +56,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const week2End = 15
     const week3End = 23
     const week4End = 31
-    // console.log(docs)
-
-    // let dates = []
-
-    // docs.forEach(element => {
-    //     dates.push({day: parseInt(moment(element.date).format('DDD'))})
-    // });
+    
 
     let dates = []
 
@@ -84,8 +70,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const Week2 = dates.filter(el => el.day > week1End && el.day < week2End).length
     const Week3 = dates.filter(el => el.day > week2End && el.day < week3End).length
     const Week4 = dates.filter(el => el.day > week3End && el.day < week4End).length
-    // const Jun = docs.filter(el => moment(el.date).format('DDD') === 'Jun').length
-    // console.log(Week4)
+    
 
     let values = [Week1, Week2, Week3, Week4]
     let labels = ['Week1', 'week2', 'week3', 'week4']
@@ -329,7 +314,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 </div>
                 <div className="admin-card-row">
                     {internal.map(s => (
-                        <div className="admin-startup-card-column">
+                        <div className="admin-startup-card-column" key={s._id}>
                             <div className="admin-startup-card">
                                 <h2 onClick={()=> adminNavigate(s)}>{s.username.substring(0,2)}</h2>
                             </div>
@@ -352,7 +337,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 </div>
                 <div className="admin-card-row">
                     {catalyzer.map(s => (
-                        <div className="admin-startup-card-column">
+                        <div className="admin-startup-card-column" key={s._id}>
                             <div className="admin-catalyzer-card">
                                 <h2 onClick={()=> adminNavigate(s)}>{s.username.substring(0,2)}</h2>
                             </div>
@@ -375,7 +360,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 </div>
                 <div className="admin-card-row">
                     {academy.map(s => (
-                        <div className="admin-startup-card-column">
+                        <div className="admin-startup-card-column" key={s._id}>
                             <div className="admin-academy-card">
                                 <h2 onClick={()=> adminNavigate(s)}>{s.username.substring(0,2)}</h2>
                             </div>

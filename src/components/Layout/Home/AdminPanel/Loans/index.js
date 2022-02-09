@@ -1,197 +1,61 @@
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import { Table } from 'antd'
+import {useSelector, useDispatch} from 'react-redux'
+import { Tabs } from 'antd'
+import Flatrate from './Flatrate'
+import RevenueShare from './RevenueShare'
+import ReducingBalance from './ReducingBalance'
+import ModalUI from '../../../../ModalUI'
+import * as actionCreators from '../../../../store/actionCreators'
 
-import './Loans.css'
-const Loans = () => {
+const { TabPane } = Tabs
 
-    const [state, setState] = React.useState({
-        amount:'',
-        date:'',
-        startup:'',
-        comment:'',
-        interestRate:'',
-        duration:'',
-        grace_period:'',
-        p_amount:'',
-        p_date:'',
-        p_startup:'',
-        p_comment:''
-    })
+const Loans = (props) => {
 
-    const users = useSelector(state => state.admin.users)
+    const [expireTime, setexpireTime] = React.useState(false)
 
-    const catalyzer = users.filter(user => user.category === 'catalyzer')
-    const username = Array.from(catalyzer, ({username}) => username)
-    // console.log(state)
+    const expire = useSelector(state => state.auth.tokenExpiration)
 
-    const columns = [
-        {
-            title: 'Startup Name',
-            dataIndex:'startup',
-            key:'startup',
-            align:'left'
-        },
-        {
-            title: 'Total Loan amount(UGX)',
-            dataIndex:'email',
-            key:'email',
-            align:'left'
-        },
-        {
-            title: 'Of Loans',
-            dataIndex:'date',
-            key:'date',
-            align:'left'
-        },
-        {
-            title: 'Total Repayments',
-            dataIndex:'date',
-            key:'date',
-            align:'left'
-        },
-        {
-            title: 'Outstanding Repayments',
-            dataIndex:'date',
-            key:'date',
-            align:'left'
-        },
-        {
-            title: 'comment',
-            dataIndex:'date',
-            key:'date',
-            align:'left'
+    const dispatch = useDispatch()
+
+    const current_date = Date.now()
+
+    const handleLogoutClick = () => {
+            dispatch(actionCreators.removeUser())
+            props.history.push('/')
+    }
+
+    React.useEffect(() => {
+        if(current_date >= expire) {
+           return setexpireTime(true)
         }
-    ]
+    },[])
 
-    return (
-        <div className="loans-main">
-            <div className="loans-container">
-                <div className="loans-form">
-                    <div className="loans-row">
-                        <div className="loan-form">
-                            <h2>Add New Loan</h2>
-                            <div className="loan-separator"/>
-                            <div className="amount-row">
-                                <input 
-                                type="text" 
-                                required="required"
-                                placeholder="Amount"
-                                value={state.amount}
-                                onChange={(e) => setState({ ...state, amount: e.target.value}) }
-                                />
-                                <h2>Shs</h2>
-                            </div>
-                            <div className="amount-row">
-                                <input 
-                                type="date"
-                                value={state.date}
-                                onChange={(e) => setState({ ...state, date: e.target.value}) }
-                                />
-                            </div>
-                            <input
-                                type="text"
-                                required="required"
-                                placeholder="Interest Rate"
-                                value={state.interestRate}
-                                onChange={(e) => setState({ ...state, interestRate: e.target.value}) }
-                            />
-                            <input
-                                type="text"
-                                required="required"
-                                placeholder="Duration"
-                                value={state.duration}
-                                onChange={(e) => setState({ ...state, duration: e.target.value}) }
-                            />
-                            <input
-                                type="text"
-                                required="required"
-                                placeholder="Grace period"
-                                value={state.grace_period}
-                                onChange={(e) => setState({ ...state, grace_period: e.target.value}) }
-                            />
-                            <select
-                                value={state.startup}
-                                onChange={(e) => setState({ ...state, startup: e.target.value}) }
-                            >
-                                <option value="" disabled selected>Select Startup</option>
-                                <option value={username[0]}>Qiribu</option>
-                                <option value={username[1]}>Inove Labs</option>
-                                <option value={username[2]}>Isharc</option>
-                                <option value={username[3]}>Social Clark</option>
-                                <option value={username[4]}>Figurines</option>
-                                <option value={username[5]}>Rada Safaris</option>
-                                <option value={username[6]}>Zetu Africa</option>
-                                <option value={username[7]}>OMNI Gym</option>
-                                <option value={username[8]}>Economic Misfit</option>
-                                <option value={username[9]}>Solfix</option>
-                                <option value={username[10]}>Grab Gas</option>
-                                <option value={username[11]}>OnScore Africa</option>
-                                <option value={username[12]}>WAGE Spices</option>
-                                <option value={username[13]}>Divine Renewable Energy</option>
-                            </select>
-                            <textarea
-                                placeholder='Comment'
-                                value={state.comment}
-                                onChange={(e) => setState({ ...state, comment: e.target.value}) }
-                            />
-                            <h2>Loan Payment</h2>
-                            <div className="loan-separator"/>
-                            <div className="amount-row">
-                                <input 
-                                type="text" 
-                                placeholder="Amount"
-                                value={state.p_amount}
-                                onChange={(e) => setState({ ...state, p_amount: e.target.value}) }
-                                />
-                                <h2>Shs</h2>
-                            </div>
-                            <div className="amount-row">
-                                <input 
-                                type="date"
-                                value={state.p_date}
-                                onChange={(e) => setState({ ...state, p_date: e.target.value}) }
-                                />
-                            </div>
-                            <select
-                                value={state.p_startup}
-                                onChange={(e) => setState({ ...state, p_startup: e.target.value}) }
-                            >
-                                <option value="" disabled selected>Select Startup</option>
-                                <option value={username[0]}>Qiribu</option>
-                                <option value={username[1]}>Inove Labs</option>
-                                <option value={username[2]}>Isharc</option>
-                                <option value={username[3]}>Social Clark</option>
-                                <option value={username[4]}>Figurines</option>
-                                <option value={username[5]}>Rada Safaris</option>
-                                <option value={username[6]}>Zetu Africa</option>
-                                <option value={username[7]}>OMNI Gym</option>
-                                <option value={username[8]}>Economic Misfit</option>
-                                <option value={username[9]}>Solfix</option>
-                                <option value={username[10]}>Grab Gas</option>
-                                <option value={username[11]}>OnScore Africa</option>
-                                <option value={username[12]}>WAGE Spices</option>
-                                <option value={username[13]}>Divine Renewable Energy</option>
-                            </select>
-                            <textarea
-                                placeholder='Comment'
-                                value={state.p_comment}
-                                onChange={(e) => setState({ ...state, p_comment: e.target.value}) }
-                            />
+  return (
+            <Tabs 
+                style={{width:'95%',position:'relative', left:'15%', overflowY:'scroll', height:'100vh'}}
+                defaultActiveKey="1" 
+                centered 
+                tabBarStyle={{ color:'#dfa126'}}
+            >
+                {expireTime ? 
+                    <ModalUI>
+                        <div className="edit-card">
+                            <h5>Session timeout please login again</h5>
+                            <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                         </div>
-                        <div className="loan-overview">
-                            <h2>Loans Table</h2>
-                            <div className="loan-separator"/>
-                                <Table
-                                    columns={columns}
-                                    pagination={false}
-                                />
-                        </div>
-                    </div>
-                </div>
-            </div>  
-        </div>
-    )
+                    </ModalUI>
+                : null}
+                <TabPane tab="Flate Rate" key="1">
+                    <Flatrate/>
+                </TabPane>
+                <TabPane tab="Reducing Balance" key="2">
+                    <ReducingBalance/>
+                </TabPane>
+                <TabPane tab="Revenue Share" key="3">
+                    <RevenueShare/>
+                </TabPane>
+            </Tabs>
+  )
 }
 
 export default Loans

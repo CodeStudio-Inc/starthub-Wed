@@ -15,7 +15,6 @@ import AdminPanel from '../Layout/Home/AdminPanel'
 import AdminCanvas from '../Layout/Home/AdminPanel/AdminCanvas'
 import AdminMetrics from '../Layout/Home/AdminPanel/AdminMetrics'
 import Loans from '../Layout/Home/AdminPanel/Loans'
-import RevenueShare from '../Layout/Home/AdminPanel/RevenueShare'
 
 const HomeRoutes = () => {
     return (
@@ -36,7 +35,6 @@ const HomeRoutes = () => {
                 <Route path="/diagnostics" component={Diagnostics} />
                 <Route path="/register" component={Register} />
                 <Route path="/loans" component={Loans} />
-                <Route path="/revenue-share" component={RevenueShare} />
             </Switch>
         </BrowserRouter>
     )

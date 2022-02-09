@@ -652,7 +652,7 @@ export const postBlog = (blogTitle, subTitle, quote, description, imageUrl, blog
 
 export const getBoards = () => {
     return (dispatch, getState) => {
-        dispatch(loadAction())
+        // dispatch(loadAction())
         const token = getState().auth.token
 
         axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/boards', {
@@ -663,7 +663,7 @@ export const getBoards = () => {
             }
         })
             .then(res => {
-                dispatch(stopLoader())
+                // dispatch(stopLoader())
                 dispatch(setBoards(res.data.boards))
             })
             .catch(error => {
