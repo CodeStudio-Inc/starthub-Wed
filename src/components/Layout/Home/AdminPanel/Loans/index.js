@@ -15,7 +15,10 @@ const Loans = (props) => {
 
     const expire = useSelector(state => state.auth.tokenExpiration)
     const loans = useSelector(state => state.admin.loans)
-    console.log(loans,'ll')
+    
+    const _loans = loans && loans 
+    console.log(_loans,'ll')
+
     const dispatch = useDispatch()
 
     const current_date = Date.now()
