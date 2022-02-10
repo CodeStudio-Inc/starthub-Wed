@@ -12,8 +12,8 @@ const Login = (props) => {
     const [type, setType] = useState('password')
 
     const [state, setState] = useState({
-        email: 'tugumeandrew@starthubafrica.org',
-        password: 'CatalyzerAdmin!',
+        email: '',
+        password: '',
         message: ''
     })
 
