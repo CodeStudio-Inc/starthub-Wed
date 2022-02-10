@@ -7,7 +7,7 @@ import Repayments from './Repayments'
 import { Spin } from 'antd'
 
 import './Loans.css'
-const Flatrate = () => {
+const Flatrate = ({loans}) => {
 
     const [state, setState] = useState({
         amount:'',
@@ -32,17 +32,15 @@ const Flatrate = () => {
     const [error2, setError2] = useState('')
 
     const users = useSelector(state => state.admin.users)
-    const loans = useSelector(state => state.admin.loans)
     const loading = useSelector(state => state.admin.loading)
 
     const catalyzer = users.filter(user => user.category === 'catalyzer')
     const username = Array.from(catalyzer, ({username}) => username)
-    console.log(loans, 'loan')
+    // console.log(loans, 'loan')
     // console.log(state, 'state')
  
     // console.log(state.expected_payment,'flatrate')
 
-    const _loans = loans && loans
 
     const dispatch = useDispatch()
 
@@ -265,17 +263,17 @@ const Flatrate = () => {
                                 <Table
                                     style={{width:'100%'}}
                                     columns={columns}
-                                    // dataSource={[..._loans.map(r => 
-                                    //     ({...r,
-                                    //         key:  r._id,
-                                    //         startup: r.startup,
-                                    //         amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                                    //         duration: r.duration,
-                                    //         expected_payment: r.expected_payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                                    //         comment: r.comment,
-                                    //         date: r.date
-                                    //     })
-                                    //     )]}
+                                    dataSource={[...loans.map(r => 
+                                        ({...r,
+                                            key:  r._id,
+                                            startup: r.startup,
+                                            amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                                            duration: r.duration,
+                                            expected_payment: r.expected_payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                                            comment: r.comment,
+                                            date: r.date
+                                        })
+                                        )]}
                                     onRow={(record, rowIndex) => {
                                         return {
                                             onClick: () => {

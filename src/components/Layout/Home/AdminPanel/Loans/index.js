@@ -17,7 +17,7 @@ const Loans = (props) => {
     const loans = useSelector(state => state.admin.loans)
     
     const _loans = loans && loans 
-    console.log(_loans,'ll')
+    // console.log(_loans,'ll')
 
     const dispatch = useDispatch()
 
@@ -55,7 +55,7 @@ const Loans = (props) => {
                     </ModalUI>
                 : null}
                 <TabPane tab="Flate Rate" key="1">
-                    <Flatrate/>
+                    <Flatrate loans={_loans}/>
                 </TabPane>
                 <TabPane tab="Reducing Balance" key="2">
                     <ReducingBalance/>
