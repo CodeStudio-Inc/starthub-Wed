@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { Table } from 'antd'
 import * as actionCreators from '../../../../store/actionCreators'
@@ -9,7 +9,7 @@ import { Spin } from 'antd'
 import './Loans.css'
 const Flatrate = () => {
 
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         amount:'',
         date:'',
         startup:'',
@@ -24,12 +24,12 @@ const Flatrate = () => {
         p_comment:''
     })
 
-    const [makePayment, setMakePayment] = React.useState(false)
-    const [showReceipt, setShowReceipt] = React.useState(false)
-    const [rowModal, setRowModal] = React.useState(false)
-    const [rowdata, setRowData] = React.useState(false)
-    const [error, setError] = React.useState('')
-    const [error2, setError2] = React.useState('')
+    const [makePayment, setMakePayment] = useState(false)
+    const [showReceipt, setShowReceipt] = useState(false)
+    const [rowModal, setRowModal] = useState(false)
+    const [rowdata, setRowData] = useState(false)
+    const [error, setError] = useState('')
+    const [error2, setError2] = useState('')
 
     const users = useSelector(state => state.admin.users)
     const loans = useSelector(state => state.admin.loans)
@@ -46,7 +46,7 @@ const Flatrate = () => {
 
     const dispatch = useDispatch()
 
-    React.useEffect(() => {
+    useEffect(() => {
         getLoans()
     },[])
 

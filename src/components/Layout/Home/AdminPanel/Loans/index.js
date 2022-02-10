@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { Tabs } from 'antd'
 import Flatrate from './Flatrate'
@@ -11,7 +11,7 @@ const { TabPane } = Tabs
 
 const Loans = (props) => {
 
-    const [expireTime, setexpireTime] = React.useState(false)
+    const [expireTime, setexpireTime] = useState(false)
 
     const expire = useSelector(state => state.auth.tokenExpiration)
     const loans = useSelector(state => state.admin.loans)
@@ -28,7 +28,7 @@ const Loans = (props) => {
             props.history.push('/')
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if(current_date >= expire) {
            return setexpireTime(true)
         }

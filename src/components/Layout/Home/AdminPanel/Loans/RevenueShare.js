@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { Table } from 'antd'
 import * as actionCreators from '../../../../store/actionCreators'
@@ -7,7 +7,7 @@ import { Spin } from 'antd'
 import './Loans.css'
 const RevenueShare = () => {
 
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         amount:'',
         date:'',
         startup:'',
@@ -30,7 +30,7 @@ const RevenueShare = () => {
 
     const addRevShare = () => dispatch(actionCreators.addRevenueShare(state.amount, state.startup, state.date, state.comment))
 
-    React.useEffect(() => {
+    useEffect(() => {
         getRevShares()
     },[])
 
