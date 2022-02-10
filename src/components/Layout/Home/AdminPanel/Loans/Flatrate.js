@@ -97,7 +97,7 @@ const Flatrate = ({loans}) => {
     const closeRowModal = () => setRowModal(false)
 
     const addLoanPayment = () => {
-        if(!state.p_amount && !state.p_date && !state.p_startup) return setError('All Fields are required')
+        if(!state.p_amount && !state.p_date && !state.p_startup) return setError2('All Fields are required')
         dispatch(actionCreators.addLoanPayment(
             state.p_amount,
             state.p_date,
