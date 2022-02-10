@@ -20,7 +20,9 @@ const RevenueShare = () => {
 
     const catalyzer = users.filter(user => user.category === 'catalyzer')
     const username = Array.from(catalyzer, ({username}) => username)
-    // console.log(revShares)
+    console.log(revShares,'revShares')
+
+    const _revShares = revShares && revShares
 
     const dispatch = useDispatch()
 
@@ -124,7 +126,7 @@ const RevenueShare = () => {
                             <Table
                                 style={{width:'100%'}}
                                 columns={columns}
-                                dataSource={[...revShares.map(r => 
+                                dataSource={[..._revShares.map(r => 
                                         ({...r,
                                             key: r._id,
                                             startup: r.startup,

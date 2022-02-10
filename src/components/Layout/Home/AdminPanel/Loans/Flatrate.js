@@ -37,10 +37,12 @@ const Flatrate = () => {
 
     const catalyzer = users.filter(user => user.category === 'catalyzer')
     const username = Array.from(catalyzer, ({username}) => username)
-    // console.log(rowdata, 'loan')
+    console.log(loans, 'loan')
     // console.log(state, 'state')
  
     // console.log(state.expected_payment,'flatrate')
+
+    const _loans = loans && loans
 
     const dispatch = useDispatch()
 
@@ -263,7 +265,7 @@ const Flatrate = () => {
                                 <Table
                                     style={{width:'100%'}}
                                     columns={columns}
-                                    dataSource={[...loans.map(r => 
+                                    dataSource={[..._loans.map(r => 
                                         ({...r,
                                             key:  r._id,
                                             startup: r.startup,
