@@ -33,12 +33,8 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const users_activity = useSelector(state => state.auth.user_activity)
     // console.log(users_activity);
 
-    // let names = Array.from(users, ({user_activity}) => user_activity)
-    // console.log(names)
 
     const dispatch = useDispatch()
-    let db = new Localbase('db')
-    db.config.debug = false
 
     const current_date = moment(Date()).format('MMM YYYY')
     const enrolledUsers = users.filter(e => moment(e.dateCreated).format('MMM YYYY') === current_date)
@@ -117,13 +113,6 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
         }
     ]
 
-    // const table_data = [...users_activity.map(r => 
-    //     ({...r,
-    //         username: r && r.username,
-    //         email: r.email,
-    //         date: moment(r.date).fromNow()
-    //     })
-    //     )]
     
     const getUser = () => dispatch(actionCreators.getUsers())
 
@@ -252,6 +241,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                             columns={columns}
                             dataSource={[...users_activity.map(r => 
                                         ({...r,
+                                            key: r._id,
                                             startup: r.username,
                                             email: r.email,
                                             date: moment(r.date).fromNow()

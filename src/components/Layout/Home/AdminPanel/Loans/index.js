@@ -19,6 +19,9 @@ const Loans = (props) => {
 
     const current_date = Date.now()
 
+    const getLoans = () => dispatch(actionCreators.getLoans())
+    const getRevShares = () => dispatch(actionCreators.getRevenueShares())
+
     const handleLogoutClick = () => {
             dispatch(actionCreators.removeUser())
             props.history.push('/')

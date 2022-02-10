@@ -48,7 +48,7 @@ const Flatrate = () => {
         getLoans()
     },[])
 
-    let flatrate, new_loans 
+    let flatrate 
 
     
     const checkDurationValue = ({target: {value: duration}}) => {
@@ -133,18 +133,6 @@ const Flatrate = () => {
             key:'duration',
             align:'left'
         },
-        // {
-        //     title: 'Number of Loans',
-        //     dataIndex:'loanstotal',
-        //     key:'loanstotal',
-        //     align:'left'
-        // },
-        // {
-        //     title: 'Total Repayments',
-        //     dataIndex:'repaymenttotal',
-        //     key:'repaymenttotal',
-        //     align:'left'
-        // },
         {
             title: 'Outstanding Balance',
             dataIndex:'expected_payment',
@@ -277,12 +265,10 @@ const Flatrate = () => {
                                     columns={columns}
                                     dataSource={[...loans.map(r => 
                                         ({...r,
-                                            key: r && r._id,
-                                            startup: r && r.startup,
+                                            key:  r._id,
+                                            startup: r.startup,
                                             amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                                             duration: r.duration,
-                                            // loanstotal: 4,
-                                            // repaymenttotal: 2000,
                                             expected_payment: r.expected_payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                                             comment: r.comment,
                                             date: r.date
