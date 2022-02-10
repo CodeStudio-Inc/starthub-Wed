@@ -424,7 +424,7 @@ export const getLoans = () => {
             }
         })
             .then(res => {
-                // console.log(res)
+                console.log(res,'loans data')
                 // dispatch(stopLoader())
                 dispatch(setLoans(res.data.loans))
             })
@@ -480,7 +480,7 @@ export const getRevenueShares = () => {
             }
         })
             .then(res => {
-                // console.log(res)
+                console.log(res,'revShare')
                 // dispatch(stopLoader())
                 dispatch(setRevShare(res.data.revShares))
             })

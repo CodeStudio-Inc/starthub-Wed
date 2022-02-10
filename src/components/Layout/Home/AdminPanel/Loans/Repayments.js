@@ -9,7 +9,7 @@ const Repayments = ({state,rowdata,closeRowModal,setState,addLoanPayment,error})
     const loans = useSelector(state => state.admin.loans)
     // console.log(rowdata)
 
-    const repaymentsArray = rowdata.payments
+    const repaymentsArray = rowdata && rowdata.payments
     let repaymenttotal = Array.from(repaymentsArray,({amount}) => parseInt(amount)).reduce((a,b) => a + b, 0)
     const totalLoans = loans.filter(el => el.startup === rowdata.startup).length
     // console.log(totalLoans,'amount')

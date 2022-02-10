@@ -265,17 +265,17 @@ const Flatrate = () => {
                                 <Table
                                     style={{width:'100%'}}
                                     columns={columns}
-                                    dataSource={[..._loans.map(r => 
-                                        ({...r,
-                                            key:  r._id,
-                                            startup: r.startup,
-                                            amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                                            duration: r.duration,
-                                            expected_payment: r.expected_payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                                            comment: r.comment,
-                                            date: r.date
-                                        })
-                                        )]}
+                                    // dataSource={[..._loans.map(r => 
+                                    //     ({...r,
+                                    //         key:  r._id,
+                                    //         startup: r.startup,
+                                    //         amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                                    //         duration: r.duration,
+                                    //         expected_payment: r.expected_payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                                    //         comment: r.comment,
+                                    //         date: r.date
+                                    //     })
+                                    //     )]}
                                     onRow={(record, rowIndex) => {
                                         return {
                                             onClick: () => {
