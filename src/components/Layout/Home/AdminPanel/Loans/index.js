@@ -14,7 +14,8 @@ const Loans = (props) => {
     const [expireTime, setexpireTime] = React.useState(false)
 
     const expire = useSelector(state => state.auth.tokenExpiration)
-
+    const loans = useSelector(state => state.admin.loans)
+    console.log(loans,'ll')
     const dispatch = useDispatch()
 
     const current_date = Date.now()
@@ -31,6 +32,8 @@ const Loans = (props) => {
         if(current_date >= expire) {
            return setexpireTime(true)
         }
+        getLoans()
+        getRevShares()
     },[])
 
   return (
