@@ -69,7 +69,7 @@ const Flatrate = ({loans}) => {
 
 
     const addLoan = () => {
-        if(!state.amount && !state.duration && ! state.startup && !state.date) return setError('All Fields are required')
+        if(!state.amount && !state.duration && !state.startup && !state.date) return setError('All Fields are required')
         dispatch(actionCreators.addLoan(
             state.amount,
             state.date,
