@@ -6,7 +6,7 @@ import CanvasList2 from './AdminCanvasList2'
 import moment from 'moment'
 import * as actionCreators from '../../../store/actionCreators'
 import Loader from '../../../ModalUI/Loader'
-import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded'
+import KeyboardBackspaceRoundedIcon from '@material-ui/icons/KeyboardBackspace'
 
 import '../../Canvas/Canvas.css'
 import './Admin.css'

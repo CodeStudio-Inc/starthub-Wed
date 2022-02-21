@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actionCreators from '../../../../store/actionCreators'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import CloseIcon from '@mui/icons-material/Close'
+import CloseIcon from '@material-ui/icons/Close'
 
 import './reg.css'
 const Register = ({signup,state,setState,setCatalyzer}) => {

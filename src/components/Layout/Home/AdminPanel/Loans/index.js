@@ -46,14 +46,14 @@ const Loans = (props) => {
                 centered 
                 tabBarStyle={{ color:'#dfa126'}}
             >
-                {expireTime ? 
+                {/* {expireTime ? 
                     <ModalUI>
                         <div className="edit-card">
                             <h5>Session timeout please login again</h5>
                             <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                         </div>
                     </ModalUI>
-                : null}
+                : null} */}
                 <TabPane tab="Flate Rate" key="1">
                     <Flatrate loans={_loans}/>
                 </TabPane>

@@ -4,10 +4,10 @@ import KanbanList from '../dnd/KanbanList'
 import { DragDropContext} from 'react-beautiful-dnd'
 import * as actionCreators from '../../../store/actionCreators'
 import ModalUI from "../../../ModalUI"
-import CloseIcon from '@mui/icons-material/Close'
+import CloseIcon from '@material-ui/icons/Close'
 import Statements from './Statements'
 import Objective from './Objective'
-import AddBoxIcon from '@mui/icons-material/AddBox'
+import AddBoxIcon from '@material-ui/icons/AddBox'
 import Diagnostics from './Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
 import AdminLandingPage from './AdminLandingPage'
@@ -150,14 +150,14 @@ const Landing = (props) => {
 
     return (
     <div className="landing-container">
-        {expireTime ? 
+        {/* {expireTime ? 
             <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>
-            : null}
+            : null} */}
         {objModal ? 
             <ModalUI>
                 <div className="create-modal">

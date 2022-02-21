@@ -1,7 +1,6 @@
 import React,{useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import EditIcon from '@mui/icons-material/Edit'
-import CancelIcon from '@mui/icons-material/Cancel'
+import CancelIcon from '@material-ui/icons/Cancel'
 import DeleteIcon from '@material-ui/icons/Delete'
 import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'

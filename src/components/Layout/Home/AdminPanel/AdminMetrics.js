@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import moment from 'moment'
 import { Line } from 'react-chartjs-2'
-import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded'
+import KeyboardBackspaceRoundedIcon from '@material-ui/icons/KeyboardBackspace'
 import * as actionCreators from '.././../../store/actionCreators'
 
 import './Admin.css'

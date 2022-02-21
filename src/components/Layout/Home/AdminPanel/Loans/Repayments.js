@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import {useSelector} from 'react-redux'
-import CloseIcon from '@mui/icons-material/Close'
+import CloseIcon from '@material-ui/icons/Close'
 import { Spin } from 'antd'
 
 const Repayments = ({state,rowdata,closeRowModal,setState,addLoanPayment,error}) =>  {

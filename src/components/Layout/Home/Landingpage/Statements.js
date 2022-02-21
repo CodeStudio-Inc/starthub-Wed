@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import EditIcon from '@mui/icons-material/Edit'
-import CancelIcon from '@mui/icons-material/Cancel'
+import EditIcon from '@material-ui/icons/Edit'
+import CancelIcon from '@material-ui/icons/Cancel'
 import * as actionCreators from '../../..//store/actionCreators'
 
  const Statements = ({statements, svg}) => {

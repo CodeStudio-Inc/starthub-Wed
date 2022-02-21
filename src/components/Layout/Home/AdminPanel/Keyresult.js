@@ -1,8 +1,7 @@
 import React,{useState} from 'react'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
-import EditIcon from '@mui/icons-material/Edit'
-import CancelIcon from '@mui/icons-material/Cancel'
+import CancelIcon from '@material-ui/icons/Cancel'
 
 const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
 
