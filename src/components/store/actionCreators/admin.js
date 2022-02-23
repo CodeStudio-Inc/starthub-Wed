@@ -340,7 +340,7 @@ export const unarchiveAdminList = (id,userId,boardId, callback) => {
     }
 }
 
-export const addLoan = (amount,date,duration,startup,comment,interestRate,grace_period,expected_payment) => {
+export const addFlate = (amount, date, duration, startup, comment, interestRate, grace_period, expected_payment, loanType) => {
     return (dispatch, getState) => {
             
          dispatch(loadAction())
@@ -355,10 +355,11 @@ export const addLoan = (amount,date,duration,startup,comment,interestRate,grace_
                 comment,
                 interestRate,
                 grace_period,
-                expected_payment
+                expected_payment,
+                loanType
             }
 
-            axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/loan`,data, {
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/flatrate`,data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -366,7 +367,7 @@ export const addLoan = (amount,date,duration,startup,comment,interestRate,grace_
             }
         })
         .then(res => {
-            // console.log(res.data.loans)
+            // console.log(res.data.loans)s
             dispatch(stopLoader())
             dispatch(setLoans(res.data.loans))
         })
@@ -377,7 +378,7 @@ export const addLoan = (amount,date,duration,startup,comment,interestRate,grace_
     }
 }
 
-export const addLoanPayment = (amount,date,startup,comment,loanId) => {
+export const addFlateratePayment = (amount,date,startup,comment,loanId) => {
     return (dispatch, getState) => {
             
          dispatch(loadAction())
@@ -411,12 +412,12 @@ export const addLoanPayment = (amount,date,startup,comment,loanId) => {
     }
 }
 
-export const getLoans = () => {
+export const getFlate = () => {
     return (dispatch, getState) => {
         // dispatch(loadAction())
         const token = getState().auth.token
 
-        axios.get('https://starthubafrica-api.el.r.appspot.com/admin/loans', {
+        axios.get('https://starthubafrica-api.el.r.appspot.com/admin/flatrate', {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',

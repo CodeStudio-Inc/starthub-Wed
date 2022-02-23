@@ -23,7 +23,7 @@ const Loans = (props) => {
 
     const current_date = Date.now()
 
-    const getLoans = () => dispatch(actionCreators.getLoans())
+    const getLoans = () => dispatch(actionCreators.getFlate())
     const getRevShares = () => dispatch(actionCreators.getRevenueShares())
 
     const handleLogoutClick = () => {
@@ -55,7 +55,7 @@ const Loans = (props) => {
                     </ModalUI>
                 : null} */}
                 <TabPane tab="Flate Rate" key="1">
-                    <Flatrate loans={_loans}/>
+                <Flatrate props={props} loans={_loans}/>
                 </TabPane>
                 <TabPane tab="Reducing Balance" key="2">
                     <ReducingBalance/>

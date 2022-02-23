@@ -60,9 +60,9 @@ export {
     unarchiveAdminList,
     getAdminStatements,
     getAdminObjectives,
-    addLoan,
-    addLoanPayment,
-    getLoans,
+    addFlate,
+    addFlateratePayment,
+    getFlate,
     addRevenueShare,
     getRevenueShares
 } from './admin'

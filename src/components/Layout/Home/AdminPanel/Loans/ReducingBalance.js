@@ -25,8 +25,6 @@ const ReducingBalance = () => {
 
     const [makePayment, setMakePayment] = useState(false)
     const [showReceipt, setShowReceipt] = useState(false)
-    const [rowModal, setRowModal] = useState(false)
-    const [rowdata, setRowData] = useState(false)
     const [error, setError] = useState('')
 
     const users = useSelector(state => state.admin.users)
@@ -42,47 +40,9 @@ const ReducingBalance = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        getLoans()
     },[])
 
-    let flatrate, new_loans 
-    
-    const checkDurationValue = ({target: {value: duration}}) => {
-        flatrate = parseInt(state.amount) + (parseInt(state.amount) * 0.01 * duration) 
-        if(duration <= 12) {
-            setState(r => ({ 
-                ...r, 
-                duration,
-                interestRate: '1%',
-                grace_period: '3 months',
-                expected_payment: flatrate
-            }))
-            setShowReceipt(true)
-        }
-    }
 
-    const getLoans = () => dispatch(actionCreators.getLoans())
-
-
-    const addLoan = () => {
-        if(!state.amount && !state.duration && ! state.startup && !state.date) return setError('All Fields are required')
-        dispatch(actionCreators.addLoan(
-            state.amount,
-            state.date,
-            state.duration,
-            state.startup,
-            state.comment,
-            state.interestRate,
-            state.grace_period,
-            state.expected_payment
-            ))
-            setError('')
-    }
-
-    const openRowModal = () => setRowModal(true)
-    const closeRowModal = () => setRowModal(false)
-
-    const addLoanPayment = () => dispatch(actionCreators.addLoanPayment(state.amount,state.date,state.startup,state.comment,))
 
     const columns = [
         {
@@ -137,18 +97,6 @@ const ReducingBalance = () => {
 
     return (
         <div className="loans-main">
-            {rowModal ? 
-            <ModalUI>
-                <Repayments 
-                state={state}
-                setState={setState}
-                username={username}
-                rowdata={rowdata}
-                closeRowModal={closeRowModal}
-                />
-            </ModalUI>
-            : null
-            }
                 <div className="loans-form">
                         <div className="loan-form">
                             <h2>LongTerm Loan</h2>

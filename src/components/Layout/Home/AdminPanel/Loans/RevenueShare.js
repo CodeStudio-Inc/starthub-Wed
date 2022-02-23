@@ -16,7 +16,7 @@ const RevenueShare = () => {
 
     const users = useSelector(state => state.admin.users)
     const revShares = useSelector(state => state.admin.revShares)
-    const loading = useSelector(state => state.admin.loading)
+    const loading = useSelector(state => state.admin.loader)
 
     const catalyzer = users.filter(user => user.category === 'catalyzer')
     const username = Array.from(catalyzer, ({username}) => username)

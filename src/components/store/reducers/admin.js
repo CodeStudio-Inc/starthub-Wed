@@ -11,7 +11,8 @@ const initialState = {
     loans: [],
     revShares: [],
     metrics:[],
-    loading: false
+    loading: false,
+    loader: false,
 }
 
 const requests = (state = initialState, action) => {
@@ -19,12 +20,14 @@ const requests = (state = initialState, action) => {
 
         case actions.LOADER_ACTION:
             return updateObject(state, {
-                loading: true
+                loading: true,
+                loader:true,
             })
 
         case actions.STOP_LOADER:
         return updateObject(state, {
-            loading: false
+            loading: false,
+            loader:false,
         })
 
         case actions.SET_ADMIN_USER:
@@ -59,11 +62,13 @@ const requests = (state = initialState, action) => {
 
         case actions.SET_LOANS:
             return updateObject(state, {
+                loader: false,
                 loans: action.data
             })
 
         case actions.SET_REVSHARE:
             return updateObject(state, {
+                loader: false,
                 revShares: action.data
             })
 

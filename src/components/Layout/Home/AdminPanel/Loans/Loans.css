@@ -1,20 +1,20 @@
 .tab-container {
-    width: 100%;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	background: #eee;
-    height: 100vh;
-    overflow-y: scroll;
+	height: 100vh;
+	overflow-y: scroll;
 }
 
 .tab-main {
-    position: relative;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width:  85%;
-    left: 15%;
-    height: 100vh;
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 85%;
+	left: 15%;
+	height: 100vh;
 }
 
 .loans-main {
@@ -22,309 +22,329 @@
 	display: flex;
 	align-items: flex-start;
 	/* background: #eee; */
-    height: 100vh;
-    /* overflow-y: scroll; */
-} 
+	height: 100vh;
+	/* overflow-y: scroll; */
+}
+
+.flatrate-menu {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 85%;
+	padding: 0.5rem;
+	left: 15%;
+	/* margin-top: 1rem; */
+}
+
+.flatrate-content {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 100%;
+	height: 100vh;
+	/* padding: 0.3rem; */
+	/* margin-right: 0.1rem; */
+	overflow-y: scroll;
+}
 
 .loans-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width:  85%;
-    left: 15%;
-    height: 100vh;
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 85%;
+	left: 15%;
+	height: 100vh;
 }
 
 .loans-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 90%;
-    background: #fff;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 90%;
+	background: #fff;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 .loans-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    width: 95%;
-    padding: 0.5rem;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	width: 95%;
+	padding: 0.5rem;
 }
 
 .row-child {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    width: 50%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	width: 50%;
 }
 
 .loan-form {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 90%;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 90%;
 }
 
 .loan-form input {
-    border: none;
-    outline: none;
-    width: 95%;
-    height: 40px;
-    background: #eee;
-    padding-left: 5px;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
+	border: none;
+	outline: none;
+	width: 95%;
+	height: 40px;
+	background: #eee;
+	padding-left: 5px;
+	border-radius: 5px;
+	margin-bottom: 0.5rem;
 }
 
 .loan-form select {
-    border: none;
-    outline: none;
-    width: 85%;
-    height: 40px;
-    background: #eee;
-    padding-left: 5px;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
+	border: none;
+	outline: none;
+	width: 85%;
+	height: 40px;
+	background: #eee;
+	padding-left: 5px;
+	border-radius: 5px;
+	margin-bottom: 0.5rem;
 }
 
 .loan-form textarea {
-    border: none;
-    outline: none;
-    width: 85%;
-    height: 100px;
-    background: #eee;
-    padding-left: 5px;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
+	border: none;
+	outline: none;
+	width: 85%;
+	height: 100px;
+	background: #eee;
+	padding-left: 5px;
+	border-radius: 5px;
+	margin-bottom: 0.5rem;
 }
 
 .loan-form p {
-    color: red;
+	color: red;
 }
 
 .loans-form h2 {
-    color: rgba(0,0,0,0.7);
+	color: rgba(0, 0, 0, 0.7);
 }
 
 .loan-form button {
-    border: none;
-    outline: none;
-    background: #dfa126;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    height: 30px;
-    border-radius: 2px;
-    transition: 0.5s ease-in-out;
+	border: none;
+	outline: none;
+	background: #dfa126;
+	color: #fff;
+	margin-bottom: 0.5rem;
+	height: 30px;
+	border-radius: 2px;
+	transition: 0.5s ease-in-out;
 }
 
 .loan-form button:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .loan-form button:focus {
-    background: #cf8e0a;
+	background: #cf8e0a;
 }
 
-
 .amount-row {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
 }
 
 .amount-row input {
-    border: none;
-    outline: none;
-    width: 60%;
-    height: 40px;
-    background: #eee;
-    padding-left: 5px;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
+	border: none;
+	outline: none;
+	width: 60%;
+	height: 40px;
+	background: #eee;
+	padding-left: 5px;
+	border-radius: 5px;
+	margin-bottom: 0.5rem;
 }
 
 .amount-row h4 {
-    font-weight: 500;
-    font-size: 15px;
-    margin-left: 0.5rem;
+	font-weight: 500;
+	font-size: 15px;
+	margin-left: 0.5rem;
 }
 
-
-
 .loan-overview {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 90%;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 90%;
 }
 
 .loan-separator {
-    width: 100%;
-    height: 1px;
-    margin-bottom: 1rem;
-    background: rgba(0,0,0,0.1);
+	width: 100%;
+	height: 1px;
+	margin-bottom: 1rem;
+	background: rgba(0, 0, 0, 0.1);
 }
 
 .loans-separator {
-    width: 90%;
-    height: 1px;
-    margin-bottom: 1rem;
-    background: rgba(0,0,0,0.1);
+	width: 90%;
+	height: 1px;
+	margin-bottom: 1rem;
+	background: rgba(0, 0, 0, 0.1);
 }
 
 .loader-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .receipt {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    flex-direction: column;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	width: 100%;
+	flex-direction: column;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
 }
 
 .receipt h3 {
-    font-weight: 400;
-    color: rgba(0,0,0,0.7);
+	font-weight: 400;
+	color: rgba(0, 0, 0, 0.7);
 }
 
 .receipt-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .receipt-row h3 {
-    color: rgba(0,0,0,0.5);
-    font-weight: 400;
+	color: rgba(0, 0, 0, 0.5);
+	font-weight: 400;
 }
 
 .receipt-row h4 {
-    margin-left: 0.3rem;
+	margin-left: 0.3rem;
 }
 
 .row-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    flex-direction: column;
-    background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 60%;
+	flex-direction: column;
+	background: #fff;
 }
 
 .row-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 5px;
-    height: 30px;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 5px;
+	height: 30px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .row-main {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 95%;
-    padding: 0.5rem;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	width: 95%;
+	padding: 0.5rem;
 }
 
 .row-left {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    width: 50%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	width: 50%;
 }
 
 .inner-row-left-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 90%;
 }
 
 .inner-row-left-title h2 {
-    font-weight: 400;
+	font-weight: 400;
 }
 
 .inner-row-left-title h4 {
-    font-weight: 400;
+	font-weight: 400;
 }
 
 .inner-row-left {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 90%;
 }
 
 .inner-row-left h3 {
-    font-weight: 400;
+	font-weight: 400;
 }
 
 .inner-row-left h4 {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .row-right {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    width: 50%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	width: 50%;
 }
 
 .row-right select {
-    border: none;
-    outline: none;
-    width: 85%;
-    height: 40px;
-    background: #eee;
-    padding-left: 5px;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
+	border: none;
+	outline: none;
+	width: 85%;
+	height: 40px;
+	background: #eee;
+	padding-left: 5px;
+	border-radius: 5px;
+	margin-bottom: 0.5rem;
 }
 
 .row-right textarea {
-    border: none;
-    outline: none;
-    width: 85%;
-    height: 100px;
-    background: #eee;
-    padding-left: 5px;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
+	border: none;
+	outline: none;
+	width: 85%;
+	height: 100px;
+	background: #eee;
+	padding-left: 5px;
+	border-radius: 5px;
+	margin-bottom: 0.5rem;
 }
 
 .row-right button {
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #dfa126;
-    height: 30px;
-    border-radius: 2px;
-    margin-bottom: 0.5rem;
-    transition: 0.5s ease-in-out;
+	border: none;
+	outline: none;
+	color: #fff;
+	background: #dfa126;
+	height: 30px;
+	border-radius: 2px;
+	margin-bottom: 0.5rem;
+	transition: 0.5s ease-in-out;
 }
 
 .row-right button:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .row-right button:focus {
-    background: #cf8e0a;
+	background: #cf8e0a;
 }
