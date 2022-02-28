@@ -9,6 +9,7 @@ const initialState = {
     objectives: [],
     cards: [],
     loans: [],
+    rb_loans: [],
     revShares: [],
     metrics:[],
     loading: false,
@@ -64,6 +65,12 @@ const requests = (state = initialState, action) => {
             return updateObject(state, {
                 loader: false,
                 loans: action.data
+            })
+
+        case actions.SET_RB_LOANS:
+            return updateObject(state, {
+                loader: false,
+                rb_loans: action.data
             })
 
         case actions.SET_REVSHARE:

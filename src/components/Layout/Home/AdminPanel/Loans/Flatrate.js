@@ -1,12 +1,11 @@
 import React,{useEffect,useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import { isInteger } from 'formik'
 import { Table } from 'antd'
 import * as actionCreators from '../../../../store/actionCreators'
 import { Spin } from 'antd'
 
 import './Loans.css'
-import { isInteger } from 'formik'
-import moment from 'moment'
 const Flatrate = ({loans ,props}) => {
 
     const [state, setState] = useState({
@@ -27,14 +26,12 @@ const Flatrate = ({loans ,props}) => {
 
     const [showReceipt, setShowReceipt] = useState(false)
     const [error, setError] = useState('')
-    const [error2, setError2] = useState('')
 
     const users = useSelector(state => state.admin.users)
     const loading = useSelector(state => state.admin.loader)
 
     const catalyzer = users.filter(user => user.category === 'catalyzer')
     const username = Array.from(catalyzer, ({username}) => username)
-    console.log(loans, 'mine')
     // console.log(state, 'state')
  
     // console.log(state.expected_payment,'flatrate')
@@ -43,7 +40,6 @@ const Flatrate = ({loans ,props}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // getLoans()
     },[])
 
     let flatrate 
@@ -61,8 +57,6 @@ const Flatrate = ({loans ,props}) => {
             setShowReceipt(true)
         }
     }
-
-    // const getLoans = () => dispatch(actionCreators.getFlate())
 
     const emptyFieldsCheck = state.amount !== '' && state.duration !== '' && state.grace_period !== '' && state.startup !== '' && state.date !== ''
 
@@ -102,9 +96,9 @@ const Flatrate = ({loans ,props}) => {
             align:'left'
         },
         {
-            title: 'Loan Type',
-            dataIndex:'loanType',
-            key:'loanType',
+            title: 'Total Of Loans',
+            dataIndex:'loanTotal',
+            key:'loanTotal',
             align:'left'
         },
         {
@@ -117,12 +111,6 @@ const Flatrate = ({loans ,props}) => {
             title: 'No. Of Payments',
             dataIndex:'payments',
             key:'payments',
-            align:'left'
-        },
-        {
-            title: 'Date',
-            dataIndex:'date',
-            key:'date',
             align:'left'
         }
     ]
@@ -171,6 +159,7 @@ const Flatrate = ({loans ,props}) => {
                                 <input
                                     type="number"
                                     min="0"
+                                    max="3"
                                     required="required"
                                     placeholder="Grace Period"
                                     value={state.grace_period}
@@ -248,10 +237,9 @@ const Flatrate = ({loans ,props}) => {
                                     ({...r,
                                         key:  r._id,
                                         startup: r.startup,
-                                        loanType: r.loanType,
+                                        loanTotal: r.totalLoans,
                                         loans: r.loans && r.loans.length,
-                                        payments: r.payments && r.payments.length,
-                                        date: moment(r.dateCreated).format('DD-MM-YYYY')
+                                        payments: r.payments && r.payments.length
                                     })
                                     )]}
                                 onRow={(record, rowIndex) => {

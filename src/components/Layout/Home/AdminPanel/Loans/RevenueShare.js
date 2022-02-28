@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import { isInteger } from 'formik'
 import { Table } from 'antd'
 import * as actionCreators from '../../../../store/actionCreators'
 import { Spin } from 'antd'
@@ -13,6 +14,7 @@ const RevenueShare = () => {
         startup:'',
         comment:''
     })
+    const [error, setError] = useState('')
 
     const users = useSelector(state => state.admin.users)
     const revShares = useSelector(state => state.admin.revShares)
@@ -28,7 +30,17 @@ const RevenueShare = () => {
 
     const getRevShares = () => dispatch(actionCreators.getRevenueShares())
 
-    const addRevShare = () => dispatch(actionCreators.addRevenueShare(state.amount, state.startup, state.date, state.comment))
+    const addRevShare = () => {
+        dispatch(actionCreators.addRevenueShare(state.amount, state.startup, state.date, state.comment))
+        setState({
+            amount: '',
+            date: '',
+            startup: '',
+            comment: ''
+        })
+    }
+
+    const emptyFieldsCheck = state.amount !== ''  && state.startup !== '' && state.date !== ''
 
     useEffect(() => {
         getRevShares()
@@ -71,19 +83,23 @@ const RevenueShare = () => {
                         <div className="row-child">
                             <div className="amount-row">
                             <input 
-                            type="text" 
-                            required="required"
-                            placeholder="Amount"
-                            value={state.amount}
-                            onChange={(e) => setState({ ...state, amount: e.target.value}) }
+                                type="text" 
+                                required="required"
+                                placeholder="Amount"
+                                value={state.amount}
+                                onChange={(e) => {
+                                    if (!isInteger(state.amount)) setError('Enter amount in UGX shillings')
+                                    if (isInteger(state.amount)) setError('')
+                                    setState({ ...state, amount: e.target.value })
+                                }}
                             />
                             <h2>Shs</h2>
                             </div>
                             <div className="amount-row">
                                 <input 
-                                type="date"
-                                value={state.date}
-                                onChange={(e) => setState({ ...state, date: e.target.value}) }
+                                    type="date"
+                                    value={state.date}
+                                    onChange={(e) => setState({ ...state, date: e.target.value}) }
                                 />
                             </div>
                         </div>
@@ -113,12 +129,21 @@ const RevenueShare = () => {
                             value={state.comment}
                             onChange={(e) => setState({ ...state, comment: e.target.value}) }
                         />
-                        <div className="loader-row">
-                            <button onClick={addRevShare}>Add Revenue</button>
+                        <div className="loader-row"><button
+                                style={{
+                                    background: emptyFieldsCheck ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+                                    color: emptyFieldsCheck ? '#fff' : 'rgba(0,0,0,0.4)'
+                                }}
+                                onClick={addRevShare}
+                                disabled={emptyFieldsCheck ? false : true}
+                            >
+                                Add Revenue
+                            </button>
                             {loading ? <Spin tip="Loading..."/> : null}
                         </div>
                         </div>
                     </div>
+                    {error ? <p>{error}</p> : null}
                     </div>
                     <div className="loan-overview">
                         <h2>Loans Overview</h2>

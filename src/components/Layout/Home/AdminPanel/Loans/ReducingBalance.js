@@ -1,41 +1,36 @@
 import React,{useState,useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { Table } from 'antd'
+import { isInteger } from 'formik'
 import * as actionCreators from '../../../../store/actionCreators'
 import ModalUI from '../../../../ModalUI'
 import Repayments from './Repayments'
+import { Spin } from 'antd'
 
 import './Loans.css'
-const ReducingBalance = () => {
+const ReducingBalance = ({props,loans}) => {
 
     const [state, setState] = useState({
         amount:'',
+        loanType: 'Long Term',
         date:'',
         startup:'',
         comment:'',
-        interestRate:'',
+        interest:'',
+        interestRate:'1.5%',
         duration: '',
-        grace_period:'',
-        expected_payment: '',
-        p_amount:'',
-        p_date:'',
-        p_startup:'',
-        p_comment:''
+        grace_period:''
     })
 
-    const [makePayment, setMakePayment] = useState(false)
     const [showReceipt, setShowReceipt] = useState(false)
     const [error, setError] = useState('')
 
     const users = useSelector(state => state.admin.users)
-    const loans = useSelector(state => state.admin.loans)
+    const loading = useSelector(state => state.admin.loader)
 
     const catalyzer = users.filter(user => user.category === 'catalyzer')
     const username = Array.from(catalyzer, ({username}) => username)
-    // console.log(rowdata, 'loan')
-    // console.log(state, 'state')
- 
-    // console.log(state.expected_payment,'flatrate')
+    // console.log(loans, 'loan')
 
     const dispatch = useDispatch()
 
@@ -43,174 +38,200 @@ const ReducingBalance = () => {
     },[])
 
 
+    const emptyFieldsCheck = state.amount !== '' && state.duration !== '' && state.grace_period !== '' && state.startup !== '' && state.date !== ''
+
+    const addLoan = () => {
+
+        dispatch(actionCreators.addReducingBalance(
+            state.amount,
+            state.date,
+            state.duration,
+            state.startup,
+            state.comment,
+            state.interestRate,
+            state.grace_period,
+            state.loanType
+        ))
+        setError('')
+        setState({
+            amount: '',
+            date: '',
+            duration: '',
+            startup: '',
+            comment: '',
+            interestRate: '',
+            grace_period: '',
+            interest:''
+        })
+        setShowReceipt(false)
+    }
 
     const columns = [
         {
             title: 'Startup Name',
-            dataIndex:'startup',
-            key:'startup',
-            align:'left'
+            dataIndex: 'startup',
+            key: 'startup',
+            align: 'left'
         },
         {
-            title: 'Loan amount(UGX)',
-            dataIndex:'amount',
-            key:'amount',
-            align:'left'
+            title: 'Total Of Loans',
+            dataIndex: 'loanTotal',
+            key: 'loanTotal',
+            align: 'left'
         },
         {
-            title: 'Duration(Months)',
-            dataIndex:'duration',
-            key:'duration',
-            align:'left'
-        },
-        // {
-        //     title: 'Number of Loans',
-        //     dataIndex:'loanstotal',
-        //     key:'loanstotal',
-        //     align:'left'
-        // },
-        // {
-        //     title: 'Total Repayments',
-        //     dataIndex:'repaymenttotal',
-        //     key:'repaymenttotal',
-        //     align:'left'
-        // },
-        {
-            title: 'Outstanding Balance',
-            dataIndex:'expected_payment',
-            key:'expected_payment',
-            align:'left'
+            title: 'No. Of Loans',
+            dataIndex: 'loans',
+            key: 'loans',
+            align: 'left'
         },
         {
-            title: 'comment',
-            dataIndex:'comment',
-            key:'comment',
-            align:'left'
-        },
-        {
-            title: 'Date',
-            dataIndex:'date',
-            key:'date',
-            align:'left'
-        },
+            title: 'No. Of Payments',
+            dataIndex: 'payments',
+            key: 'payments',
+            align: 'left'
+        }
     ]
 
     return (
         <div className="loans-main">
                 <div className="loans-form">
-                        <div className="loan-form">
-                            <h2>LongTerm Loan</h2>
-                            {/* <div className="loan-separator"/>
-                            <div className="loans-row">
-                                <div className="row-child">
-                                    <div className="amount-row">
-                                    <input 
+                    <div className="loan-form">
+                        <h2>LongTerm Loan</h2>
+                        <div className="loan-separator"/>
+                        <div className="loans-row">
+                            <div className="row-child">
+                                <div className="amount-row">
+                                <input 
                                     type="text" 
                                     required="required"
                                     placeholder="Amount"
                                     value={state.amount}
-                                    onChange={(e) => setState({ ...state, amount: e.target.value}) }
-                                    />
-                                    <h4>Shs</h4>
-                                    </div>
-                                    <div className="amount-row">
-                                        <input 
+                                    onChange={(e) => {
+                                        if (!isInteger(state.amount)) setError('Enter amount in UGX shillings')
+                                        if (isInteger(state.amount)) setError('')
+                                        setState({ ...state, amount: e.target.value })
+                                    }}
+                                />
+                                <h4>Shs</h4>
+                                </div>
+                                <div className="amount-row">
+                                    <input 
                                         type="date"
                                         value={state.date}
-                                        onChange={(e) => setState({ ...state, date: e.target.value}) }
-                                        />
-                                    </div>
-                                    <div className="amount-row">
-                                        <input
+                                        onChange={(e) => {
+                                            setState({
+                                                ...state,
+                                                date: e.target.value,
+                                                interest: state.amount * 0.015
+                                            })
+                                            setShowReceipt(true)
+                                        }}
+                                    />
+                                </div>
+                                <div className="amount-row">
+                                    <input
                                         type="number"
-                                        min="0"
+                                        min="13"
+                                        max="25"
                                         required="required"
                                         placeholder="Duration"
                                         value={state.duration}
-                                        onChange={checkDurationValue}
-                                        />
-                                        <h4>Months</h4>
-                                    </div>
-                                </div>
-                                <div className="row-child">
-                                    <select
-                                        value={state.startup}
-                                        onChange={(e) => setState({ ...state, startup: e.target.value}) }
-                                    >
-                                        <option value="" disabled selected>Select Startup</option>
-                                        <option value={username[0]}>Qiribu</option>
-                                        <option value={username[1]}>Inove Labs</option>
-                                        <option value={username[2]}>Isharc</option>
-                                        <option value={username[3]}>Social Clark</option>
-                                        <option value={username[4]}>Figurines</option>
-                                        <option value={username[5]}>Rada Safaris</option>
-                                        <option value={username[6]}>Zetu Africa</option>
-                                        <option value={username[7]}>OMNI Gym</option>
-                                        <option value={username[8]}>Economic Misfit</option>
-                                        <option value={username[9]}>Solfix</option>
-                                        <option value={username[10]}>Grab Gas</option>
-                                        <option value={username[11]}>OnScore Africa</option>
-                                        <option value={username[12]}>WAGE Spices</option>
-                                        <option value={username[13]}>Divine Renewable Energy</option>
-                                    </select>
-                                    <textarea
-                                        placeholder='Comment'
-                                        value={state.comment}
-                                        onChange={(e) => setState({ ...state, comment: e.target.value}) }
+                                        onChange={(e) => setState({ ...state, duration: e.target.value })}
                                     />
+                                    <h4>Months</h4>
+                                </div>
+                                <div className="amount-row">
+                                    <input
+                                        type="number"
+                                        min="5"
+                                        required="required"
+                                        placeholder="Grace Period"
+                                        value={state.grace_period}
+                                        onChange={(e) => setState({ ...state, grace_period: e.target.value })}
+                                    />
+                                <h4>Months</h4>
                                 </div>
                             </div>
-                            {error ? <p>{error}</p> : null}
-                            {showReceipt ? 
-                                <div className="receipt">
-                                <h3>Flat Rate</h3>
-                                <div className="loan-separator"/>
-                                    <div className="receipt-row">
-                                        <h3>Interest Rate :</h3>
-                                        <h4>{state.interestRate}</h4>
-                                    </div>
-                                    <div className="receipt-row">
-                                        <h3>Grace Period :</h3>
-                                        <h4>{state.grace_period}</h4>
-                                    </div>
-                                    <div className="receipt-row">
-                                        <h3>Expected Payment :</h3>
-                                        <h4>{state.expected_payment}</h4>
-                                    </div>
-                                <div className="loan-separator"/>
-                                </div>
-                                : null
-                            }
-                             <button onClick={addLoan}>Add Loan</button> */}
+                            <div className="row-child">
+                                <select
+                                    value={state.startup}
+                                    onChange={(e) => setState({ ...state, startup: e.target.value}) }
+                                >
+                                    <option value="" disabled selected>Select Startup</option>
+                                    <option value={username[0]}>Qiribu</option>
+                                    <option value={username[1]}>Inove Labs</option>
+                                    <option value={username[2]}>Isharc</option>
+                                    <option value={username[3]}>Social Clark</option>
+                                    <option value={username[4]}>Figurines</option>
+                                    <option value={username[5]}>Rada Safaris</option>
+                                    <option value={username[6]}>Zetu Africa</option>
+                                    <option value={username[7]}>OMNI Gym</option>
+                                    <option value={username[8]}>Economic Misfit</option>
+                                    <option value={username[9]}>Solfix</option>
+                                    <option value={username[10]}>Grab Gas</option>
+                                    <option value={username[11]}>OnScore Africa</option>
+                                    <option value={username[12]}>WAGE Spices</option>
+                                    <option value={username[13]}>Divine Renewable Energy</option>
+                                </select>
+                                <textarea
+                                    placeholder='Comment'
+                                    value={state.comment}
+                                    onChange={(e) => setState({ ...state, comment: e.target.value}) }
+                                />
+                            </div>
                         </div>
-                        <div className="loan-overview">
-                            {/* <h2>Loans Table</h2>
+                        {error ? <p>{error}</p> : null}
+                        {showReceipt ? 
+                            <div className="receipt">
+                            <h3>Interest of the month</h3>
                             <div className="loan-separator"/>
-                                <Table
-                                    style={{width:'100%'}}
-                                    columns={columns}
-                                    dataSource={[...loans.map(r => 
-                                        ({...r,
-                                            key: r._id,
-                                            startup: r && r.startup,
-                                            amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                                            duration: r.duration,
-                                            expected_payment: r.expected_payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                                            comment: r.comment,
-                                            date: r.date
-                                        })
-                                        )]}
-                                    onRow={(record, rowIndex) => {
-                                        return {
-                                            onClick: () => {
-                                                openRowModal()
-                                                setRowData(record)
-                                        }       
-                                        }
-                                    }}
-                                    pagination={false}
-                                /> */}
-                        </div>
+                                <div className="receipt-row">
+                                    <h3>Shs </h3>
+                                <h4>{state.interest.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h4>
+                                </div>
+                            <div className="loan-separator"/>
+                            </div>
+                            : null
+                        }
+                <div className="loader-row">
+                    <button
+                        style={{
+                            background: emptyFieldsCheck ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+                            color: emptyFieldsCheck ? '#fff' : 'rgba(0,0,0,0.4)'
+                        }}
+                        disabled={emptyFieldsCheck ? false : true}
+                        onClick={addLoan}
+                    >
+                        Add Loan
+                    </button>
+                    {loading ? <Spin tip="Loading..." /> : null}
+                </div>
+                    </div>
+                    <div className="loan-overview">
+                        <h2>Loans Table</h2>
+                        <div className="loan-separator"/>
+                            <Table
+                                style={{width:'100%'}}
+                                columns={columns}
+                                dataSource={[...loans.map(r =>
+                                ({
+                                    ...r,
+                                    key: r._id,
+                                    startup: r.startup,
+                                    loanTotal: r.totalLoans,
+                                    loans: r.loans && r.loans.length,
+                                    payments: r.payments && r.payments.length
+                                })
+                            )]} 
+                            onRow={(record, rowIndex) => {
+                                return {
+                                    onClick: () => props.history.push('/pay-rb-loan', { loan: record })
+                                }
+                            }}
+                                pagination={false}
+                            />
+                    </div>
                 </div> 
         </div>
     )

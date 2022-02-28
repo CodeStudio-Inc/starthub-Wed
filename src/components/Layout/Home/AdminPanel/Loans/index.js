@@ -15,15 +15,17 @@ const Loans = (props) => {
 
     const expire = useSelector(state => state.auth.tokenExpiration)
     const loans = useSelector(state => state.admin.loans)
+    const rb_loans = useSelector(state => state.admin.rb_loans)
     
-    const _loans = loans && loans 
-    // console.log(_loans,'ll')
-
+    const _loans = loans && loans
+    const __loans = rb_loans && rb_loans 
+    
     const dispatch = useDispatch()
-
+    
     const current_date = Date.now()
 
     const getLoans = () => dispatch(actionCreators.getFlate())
+    const getRBLoans = () => dispatch(actionCreators.getReducingBalance())
     const getRevShares = () => dispatch(actionCreators.getRevenueShares())
 
     const handleLogoutClick = () => {
@@ -32,10 +34,12 @@ const Loans = (props) => {
     }
 
     useEffect(() => {
-        if(current_date >= expire) {
+        
+        if (current_date >= expire) {
            return setexpireTime(true)
         }
         getLoans()
+        getRBLoans()
         getRevShares()
     },[])
 
@@ -46,19 +50,19 @@ const Loans = (props) => {
                 centered 
                 tabBarStyle={{ color:'#dfa126'}}
             >
-                {/* {expireTime ? 
+                {expireTime ? 
                     <ModalUI>
                         <div className="edit-card">
                             <h5>Session timeout please login again</h5>
                             <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                         </div>
                     </ModalUI>
-                : null} */}
+                : null}
                 <TabPane tab="Flate Rate" key="1">
-                <Flatrate props={props} loans={_loans}/>
+                    <Flatrate props={props} loans={_loans}/>
                 </TabPane>
                 <TabPane tab="Reducing Balance" key="2">
-                    <ReducingBalance/>
+                    <ReducingBalance props={props} loans={__loans}/>
                 </TabPane>
                 <TabPane tab="Revenue Share" key="3">
                     <RevenueShare/>

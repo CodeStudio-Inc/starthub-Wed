@@ -48,5 +48,6 @@ export const SET_ADMIN_OBJECTIVES = 'SET_ADMIN_OBJECTIVES'
 export const SET_USER_ACTIVITY = "SET_USER_ACTIVITY"
 
 export const SET_LOANS = "SET_LOANS"
+export const SET_RB_LOANS = "SET_RB_LOANS"
 
 export const SET_REVSHARE = "SET_REVSHARE"

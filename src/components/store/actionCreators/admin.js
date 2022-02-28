@@ -63,6 +63,13 @@ export const setLoans = (data) => {
     }
 }
 
+export const setRBLoans = (data) => {
+    return {
+        type: actions.SET_RB_LOANS,
+        data
+    }
+}
+
 export const setRevShare = (data) => {
     return {
         type: actions.SET_REVSHARE,
@@ -378,7 +385,7 @@ export const addFlate = (amount, date, duration, startup, comment, interestRate,
     }
 }
 
-export const addFlateratePayment = (amount,date,startup,comment,loanId) => {
+export const addFlateratePayment = (amount, date, startup, comment, loanId, paidLoanId) => {
     return (dispatch, getState) => {
             
          dispatch(loadAction())
@@ -390,10 +397,10 @@ export const addFlateratePayment = (amount,date,startup,comment,loanId) => {
                 date,
                 startup,
                 comment,
-                loanId
+                paidLoanId
             }
 
-            axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/payment`,data, {
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/fr-payment/${loanId}`,data, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -401,7 +408,7 @@ export const addFlateratePayment = (amount,date,startup,comment,loanId) => {
             }
         })
         .then(res => {
-            // console.log(res.data.loans)
+            // console.log(res)
             dispatch(stopLoader())
             dispatch(setLoans(res.data.loans))
         })
@@ -428,6 +435,99 @@ export const getFlate = () => {
                 // console.log(res,'loans data')
                 // dispatch(stopLoader())
                 dispatch(setLoans(res.data.loans))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const addReducingBalance = (amount, date, duration, startup, comment, interestRate, grace_period, loanType) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        const data = {
+            amount,
+            date,
+            duration,
+            startup,
+            comment,
+            interestRate,
+            grace_period,
+            loanType
+        }
+
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/reducing-balance`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res.data.loans)s
+                dispatch(stopLoader())
+                dispatch(setRBLoans(res.data.loans))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+}
+
+export const addRBPayment = (installAmount, date, comment, loanId, paidLoanId) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        const data = {
+            installAmount,
+            date,
+            comment,
+            paidLoanId
+        }
+
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/rb-payment/${loanId}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(stopLoader())
+                dispatch(setRBLoans(res.data.loans))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+}
+
+export const getReducingBalance = () => {
+    return (dispatch, getState) => {
+        // dispatch(loadAction())
+        const token = getState().auth.token
+
+        axios.get('https://starthubafrica-api.el.r.appspot.com/admin/reducing-balance', {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res,'loans data')
+                // dispatch(stopLoader())
+                dispatch(setRBLoans(res.data.loans))
             })
             .catch(error => {
                 console.log(error)

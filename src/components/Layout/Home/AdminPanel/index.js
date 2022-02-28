@@ -45,7 +45,7 @@ const AdminPanel = (props) => {
     const current_date = Date.now()
 
     useEffect(() => {
-        if(current_date >= expire) {
+        if (current_date >= expire) {
            return setexpireTime(true)
         }
         getBoards()
@@ -107,14 +107,14 @@ const AdminPanel = (props) => {
 
     return (
         <div className="landing-container">
-            {/* {expireTime ? 
+            {expireTime ? 
             <ModalUI>
                 <div className="edit-card">
                     <h5>Session timeout please login again</h5>
                     <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
                 </div>
             </ModalUI>
-            : null} */}
+            : null}
             {category === 'internal' ? null :
             <div className="admin-nav">
                 <h2>{username.toUpperCase()}</h2>

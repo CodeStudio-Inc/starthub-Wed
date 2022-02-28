@@ -59,6 +59,17 @@
 	height: 100vh;
 }
 
+.loan-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 80%;
+}
+
+.loan-header button:hover {
+	cursor: pointer;
+}
+
 .loans-form {
 	display: flex;
 	align-items: center;
@@ -90,7 +101,7 @@
 	display: flex;
 	align-items: flex-start;
 	flex-direction: column;
-	width: 90%;
+	width: 95%;
 }
 
 .loan-form input {
@@ -181,7 +192,7 @@
 	display: flex;
 	align-items: flex-start;
 	flex-direction: column;
-	width: 90%;
+	width: 95%;
 }
 
 .loan-separator {
@@ -233,6 +244,8 @@
 
 .receipt-row h4 {
 	margin-left: 0.3rem;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .row-container {
@@ -347,4 +360,22 @@
 
 .row-right button:focus {
 	background: #cf8e0a;
+}
+
+.payments-button {
+	outline: none;
+	border: 0.5px solid #dfa126;
+	color: #dfa126;
+	background: none;
+	transition: 0.5s ease-in-out;
+}
+
+.payments-button:hover {
+	cursor: pointer;
+}
+
+.payments-button:focus {
+	background: #dfa126;
+	color: #fff;
+	border: none;
 }

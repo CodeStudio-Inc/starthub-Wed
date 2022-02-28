@@ -63,6 +63,9 @@ export {
     addFlate,
     addFlateratePayment,
     getFlate,
+    addReducingBalance,
+    addRBPayment,
+    getReducingBalance,
     addRevenueShare,
     getRevenueShares
 } from './admin'
