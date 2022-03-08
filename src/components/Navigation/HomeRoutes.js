@@ -8,7 +8,6 @@ import TimothySchedule from '../Layout/Carlender/TimothySchedule'
 import Dashboard from '../Layout/Dashboard'
 import CanvasHome from '../Layout/Canvas'
 import Diagnostics from '../Layout/Diagnostics'
-import Register from '../Layout/Admin/Register'
 import Navbar from './Navbar'
 import LandingPage from '../Layout/Home/Landingpage'
 import AdminPanel from '../Layout/Home/AdminPanel'
@@ -35,7 +34,6 @@ const HomeRoutes = () => {
                 <Route path="/carlender" component={Carlender} />
                 <Route path="/canvas-board" component={CanvasHome} />
                 <Route path="/diagnostics" component={Diagnostics} />
-                <Route path="/register" component={Register} />
                 <Route path="/loans" component={Loans} />
                 <Route path="/pay-loan" component={FlatrateLoanDetails} />
                 <Route path="/pay-rb-loan" component={RBLoanDetails} />

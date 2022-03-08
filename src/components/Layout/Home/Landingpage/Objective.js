@@ -7,7 +7,7 @@ import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'
 import Addkeyresult from './Addkeyresult'
 
-const Objective = ({objectives, svg, keyresults}) =>  {
+const Objective = ({objectives, svg}) =>  {
 
     const [addkeyResult,setaddkeyResult] = useState(false)
     const [editObjective, seteditObjetive] = useState(false)

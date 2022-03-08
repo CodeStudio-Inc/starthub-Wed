@@ -12,7 +12,7 @@ import Diagnostics from './Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
 import AdminLandingPage from './AdminLandingPage'
 import { List  } from 'react-content-loader'
-
+import QuotaTabs from './QuotaTabs'
 
 import './Landing.css'
 const Landing = (props) => {
@@ -27,7 +27,8 @@ const Landing = (props) => {
     const [state, setState] = useState({
         vision: '',
         mission: '',
-        objective:''
+        objective:'',
+        quarter:''
     })
 
 
@@ -50,7 +51,7 @@ const Landing = (props) => {
      const filtereUsers = users.filter(el => el.admin === false)
     
     const last_value = filter_value && filter_value.slice(-1).pop()
-    //  console.log(category,'jj')
+    // console.log(objectives,'jj')
 
     const current_date = Date.now()
 
@@ -87,9 +88,12 @@ const Landing = (props) => {
     const _boards = Boards.filter(el => el.creator === userId && el.boardType !== 'Lean Canvas')
     const current_board = _boards && _boards.slice(-1).pop()
     const current_boardID = current_board && current_board._id
-    const filteredObjs = objectives && objectives.filter(el => el.boardId ===  current_boardID )
     const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
-    // console.log(_boards,'llll')
+    const quarter1 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 1)
+    const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2)
+    const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3)
+    const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4)
+    // console.log(quarter4,'llll')
 
     const todoLists = lists && lists.filter(el => el.boardId ===  current_boardID && el.archive === false)
     // const archivedtodoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === true)
@@ -137,12 +141,15 @@ const Landing = (props) => {
         }))
     }
 
+    const checkInput = state.objective !== '' && state.quarter
+
     const addObjective = () => {
-        dispatch(actionCreators.addObjective(current_board._id,state.objective, (res) => {
+        dispatch(actionCreators.addObjective(current_board._id,state.objective,state.quarter, (res) => {
             if(res.success) {
                 setobjModal(false)
                 setState({
-                    objective: ''
+                    objective: '',
+                    quarter:''
                 })
             }
         }))
@@ -176,7 +183,24 @@ const Landing = (props) => {
                             value={state.objective}
                             onChange={(e) => setState({ ...state, objective: e.target.value })}
                         />
-                        <button onClick={addObjective}>{loading ? <img src={svg} style={{ width:"30px", height:"30px"}}/> : 'Save'}</button>
+                        <input
+                            type="number"
+                            min="0"
+                            max="4"
+                            placeholder="Quarter"
+                            value={state.quarter}
+                            onChange={(e) => setState({ ...state, quarter: e.target.value })}
+                        />
+                            <button 
+                                onClick={addObjective} 
+                                style={{
+                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+                                }}
+                                disabled={checkInput ? false : true}
+                                >
+                                    {loading ? <img src={svg} style={{ width:"30px", height:"30px"}}/> : 'Save'}
+                            </button>
                     </div>
                 </div>
             </ModalUI>
@@ -212,41 +236,57 @@ const Landing = (props) => {
         }
         {admin ? <AdminLandingPage startups={filtereUsers} adminNavigate={adminNavigate}/> : 
         <div className="landing-menu">
-            <div className="landing-menu-left-1">
-                <DragDropContext onDragEnd={onDragEnd}>
+            {/* <div className="landing-menu-left-1"> */}
+                {/* <DragDropContext onDragEnd={onDragEnd}>
                     <div className="landing-scroll">
-                        
-                        {listLoader ? 
-                            <List  />
-                        :
-                        <div style={{width:'100%', display:'flex', alignItems:'flex-start'}}>
-                        {todoLists && todoLists.map(l => (
-                            <KanbanList
-                            key={l._id}
-                            listId={l._id}
-                            title={l.name}
-                            cards={l.cards}
-                            boardId={current_board._id}
-                            callback={getLists}
-                            open={openEditModal}
-                            setActiveCard={setActiveCard}
-                            // archivedtodoLists={archivedtodoLists}
-                            setArchive={setArchive}
-                            archive={archive}
-                            />
-                            ))}
-                        </div>
+
+                        {listLoader ?
+                            <List />
+                            :
+                            <div style={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}>
+                                {todoLists && todoLists.map(l => (
+                                    <KanbanList
+                                        key={l._id}
+                                        listId={l._id}
+                                        title={l.name}
+                                        cards={l.cards}
+                                        boardId={current_board._id}
+                                        callback={getLists}
+                                        open={openEditModal}
+                                        setActiveCard={setActiveCard}
+                                        setArchive={setArchive}
+                                        archive={archive}
+                                    />
+                                ))}
+                            </div>
                         }
                     </div>
-                </DragDropContext>
-                    <Objective objectives={filteredObjs} keyresults={objectives && objectives.keyresults} svg={svg}/>
-                    {/* {filteredObjs && filteredObjs.length === 3 ? null :  */}
+                </DragDropContext> */}
+                    <QuotaTabs
+                        todoLists={todoLists}
+                        current_board={current_board}
+                        onDragEnd={onDragEnd}
+                        getLists={getLists}
+                        openEditModal={openEditModal}
+                        setActiveCard={setActiveCard}
+                        setArchive={setArchive}
+                        archive={archive}
+                        listLoader={listLoader}
+                        quarter1={quarter1}
+                        quarter2={quarter2}
+                        quarter3={quarter3}
+                        quarter4={quarter4}
+                        svg={svg}
+                        openobjModal={() => setobjModal(true)}
+                    />
+                    {/* <Objective objectives={filteredObjs} keyresults={objectives && objectives.keyresults} svg={svg}/>
+                    {filteredObjs && filteredObjs.length === 3 ? null : 
                     <div className="add-objective">
                         <AddBoxIcon onClick={() => setobjModal(true)} className="add-obj-icon" style={{ fontSize: '60px'}} />
                         <p onClick={() => setobjModal(true)}>Click to add new Objective</p>
                     </div>
-                    {/* } */}
-            </div>
+                    } */}
+            {/* </div> */}
             <div className="landing-menu-right">
             <div className="vision-statements">
                 {filteredStatements && filteredStatements.length > 0 ? <Statements svg={svg} statements={filteredStatements}/> :
@@ -256,10 +296,6 @@ const Landing = (props) => {
                 </div>}
                 <Diagnostics last_value={last_value && last_value}/>
             </div>
-                {/* <button onClick={post}>db</button>
-                <div>
-                    {docs.map(e => <p>{e.name}</p>)}
-                </div> */}
             </div>
         </div>}
     </div>

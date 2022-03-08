@@ -880,6 +880,7 @@ export const getMetricsData = () => {
 
         // dispatch(loadAction())
         const baseId = getState().auth.base_key
+        console.log(baseId)
         const key = process.env.REACT_APP_API_KEY
         var base = new Airtable({ apiKey: key }).base(baseId)
 
@@ -1145,7 +1146,7 @@ export const editStatement = (id, vision, mission, callback) => {
     }
 }
 
-export const addObjective = (id, description,callback) => {
+export const addObjective = (id, description,quarter,callback) => {
     return(dispatch, getState) => {
 
             dispatch(loadAction())
@@ -1153,7 +1154,8 @@ export const addObjective = (id, description,callback) => {
             const token = getState().auth.token
 
             const data = {
-                description
+                description,
+                quarter
             }
 
             axios.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/objective/${id}`,data, {
