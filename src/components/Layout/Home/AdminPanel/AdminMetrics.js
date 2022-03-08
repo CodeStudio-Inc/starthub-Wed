@@ -42,20 +42,14 @@ const AdminMetrics = (props) => {
 
     sortedMetrics.sort((a,b) => a.monthIndex-b.monthIndex)
 
+    const rev = sortedMetrics.map(el => el.fields['B-Revenue (UGX)'])
+    const expense = sortedMetrics.map(el => el.fields['C-Monthly Expenses (UGX)'])
+
     // console.log(sortedMetrics)
 
     keysArray = Object.keys(metricsFilter[0] || []).sort()     
      
     const graph1 = sortedMetrics.map(el => el.fields[keysArray && keysArray[0]] )
-    const graph2 = sortedMetrics.map(el => el.fields[keysArray && keysArray[1]] )
-    const graph3 = sortedMetrics.map(el => el.fields[keysArray && keysArray[2]] )
-    const graph4 = sortedMetrics.map(el => el.fields[keysArray && keysArray[3]] )
-    const graph5 = sortedMetrics.map(el => el.fields[keysArray && keysArray[4]] )
-    const graph6 = sortedMetrics.map(el => el.fields[keysArray && keysArray[5]] )
-    const graph7 = sortedMetrics.map(el => el.fields[keysArray && keysArray[6]] )
-    const graph8 = sortedMetrics.map(el => el.fields[keysArray && keysArray[7]] )
-
-    const mon = metrics.map(el => el.fields['A-Month'] )
 
 
     let months = []
@@ -63,98 +57,33 @@ const AdminMetrics = (props) => {
     for(let month of graph1) {
         months.push(moment(month).format("MMM"))
     }
+
+    const Revenue = {
+        labels: months,
+        datasets: [
+            {
+                label: 'Revenue (UGX)',
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data: rev
+            }
+        ]
+    }
+
+    const Expense = {
+        labels: months,
+        datasets: [
+            {
+                label: 'Monthly Expenses (UGX)',
+                backgroundColor: '#dfa126',
+                borderColor: '#222323',
+                borderWidth: 1,
+                data: expense
+            }
+        ]
+    }
  
-
-    const line_graph1 = {
-        labels: months,
-        datasets: [
-            {
-                label: keysArray[1] && keysArray[1].split('-').splice(1),
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data:graph2
-            }
-        ]
-    }
-
-    const line_graph2 = {
-        labels: months,
-        datasets: [
-            {
-                label: keysArray[2] && keysArray[2].split('-').splice(1),
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data:graph3
-            }
-        ]
-    }
-
-    const line_graph3 = {
-        labels: months,
-        datasets: [
-            {
-                label: keysArray[3] && keysArray[3].split('-').splice(1),
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data:graph4
-            }
-        ]
-    }
-
-    const line_graph4 = {
-        labels: months,
-        datasets: [
-            {
-                label: keysArray[4] && keysArray[4].split('-').splice(1),
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data:graph5
-            }
-        ]
-    }
-
-    const line_graph5 = {
-        labels: months,
-        datasets: [
-            {
-                label: keysArray[5] && keysArray[5].split('-').splice(1),
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data:graph6
-            }
-        ]
-    }
-
-    const line_graph6 = {
-        labels: months,
-        datasets: [
-            {
-                label: keysArray[6] && keysArray[6].split('-').splice(1),
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data:graph7
-            }
-        ]
-    }
-
-    const line_graph7 = {
-        labels: months,
-        datasets: [
-            {
-                label: keysArray[7] && keysArray[7].split('-').splice(1),
-                backgroundColor: '#dfa126',
-                borderColor: '#222323',
-                borderWidth: 1,
-                data:graph8
-            }
-        ]
-    }
 
 
     return (
@@ -175,84 +104,20 @@ const AdminMetrics = (props) => {
                     </div>
                 </div>
             <div className="admin">
-            {line_graph1.datasets[0].data[0] === undefined ? <h1>User has no Metrics Data Recorded</h1> : null}
-                <div className="rev-row">
-                    {line_graph1.datasets[0].data[0] === undefined ? null : 
+                {Revenue.datasets[0].data[0] === undefined ? <h1>User has no Metrics Data Recorded</h1> : null}
+                <div className="rev-row"> 
                     <div className="revenue">
-                        <h3>{keysArray[1] && keysArray[1].split('-').splice(1)}</h3>
+                        <h3>Revenue</h3>
                         <Line
-                            data={line_graph1}
+                            data={Revenue}
                             width={100}
                             height={30}
                         />
-                    </div>}
-                    {line_graph2.datasets[0].data[0] === undefined ? null : 
+                    </div>
                     <div className="revenue">
-                        <h3>{keysArray[2] && keysArray[2].split('-').splice(1)}</h3>
+                        <h3>Expense</h3>
                         <Line
-                            data={line_graph2}
-                            width={100}
-                            height={30}
-                        />
-                    </div>}
-                </div>
-   
-                <div className="rev-row">
-                    {line_graph3.datasets[0].data[0] === undefined ? null : 
-                    <div className="revenue">
-                        <h3>{keysArray[3] && keysArray[3].split('-').splice(1)}</h3>
-                        <Line
-                            data={line_graph3}
-                            width={100}
-                            height={30}
-                        />
-                    </div>}
-                    {line_graph4.datasets[0].data[0] === undefined ? null :
-                    <div className="revenue">
-                        <h3>{keysArray[4] && keysArray[4].split('-').splice(1)}</h3>
-                         <Line
-                            data={line_graph4}
-                            width={100}
-                            height={30}
-                        />
-                    </div>}
-                </div>
-
-                <div className="rev-row">
-                    {line_graph5.datasets[0].data[0] === undefined ? null :
-                    <div className="revenue">
-                        <h3>{keysArray[5] && keysArray[5].split('-').splice(1)}</h3>
-                         <Line
-                            data={line_graph5}
-                            width={100}
-                            height={30}
-                        />
-                    </div>}
-                    {line_graph6.datasets[0].data[0] === undefined ? null : 
-                    <div className="revenue">
-                        <h3>{keysArray[6] && keysArray[6].split('-').splice(1)}</h3>
-                        <Line
-                            data={line_graph6}
-                            width={100}
-                            height={30}
-                        
-                        />
-                    </div>}
-                </div>
-
-                <div className="rev-row">
-                    {line_graph7.datasets[0].data[0] === undefined ? null : 
-                    <div className="revenue">
-                        <h3>{keysArray[7] && keysArray[7].split('-').splice(1)}</h3>
-                        <Line
-                            data={line_graph7}
-                            width={100}
-                            height={30}
-                        />
-                    </div>}
-                    <div className="revenue" style={{visibility:'hidden'}}>
-                        <Line
-                            data={line_graph2}
+                            data={Expense}
                             width={100}
                             height={30}
                         />

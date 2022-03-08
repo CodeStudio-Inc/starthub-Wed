@@ -880,7 +880,6 @@ export const getMetricsData = () => {
 
         // dispatch(loadAction())
         const baseId = getState().auth.base_key
-        console.log(baseId)
         const key = process.env.REACT_APP_API_KEY
         var base = new Airtable({ apiKey: key }).base(baseId)
 
