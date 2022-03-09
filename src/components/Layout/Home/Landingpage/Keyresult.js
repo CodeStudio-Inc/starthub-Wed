@@ -9,6 +9,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
     // console.log(state)
 
     const [editkeyResult, seteditkeyResult] = useState(false)
+    const [btn, setBtn] = useState(false)
     const [activekeyResult, setactiveKeyresult] = useState('')
     const [state, setState] = useState({
         keyresult: k.description,
@@ -32,24 +33,30 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                                 placeholder="Enter Key result"
                                 value={state.keyresult}
                                 onChange={(e) => setState({ ...state, keyresult: e.target.value })}
-                                onFocus={() => setMessage('Press enter to save')}
-                                onKeyUp={(e) => {
-                                        if (e.key === 'Enter' && state.keyresult) {
-                                            dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
-                                                if(res.success) {
-                                                    seteditkeyResult(false)
-                                                    setMessage('')
-                                                    setactiveKeyresult(k.objId)
-                                                    setState({
-                                                        keyresult:'',
-                                                        measureOfSuccess:''
-                                                    })
-                                                }
-                                            }))
-                                            }
-                                        }}
+                                onFocus={() => setBtn(true)}
                             /> 
-                            {loading && activekeyResult === k.objId ? <p style={{color:'#dfa126'}}>Saving please wait...</p>  : <p style={{color:'#dfa126'}}>{message}</p>}
+                            {btn ?
+                            <button
+                                onClick={() => {
+                                    if (state.keyresult) {
+                                        setBtn(false)
+                                        dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess, k.dateCreated, (res) => {
+                                            if (res.success) {
+                                                seteditkeyResult(false)
+                                                setactiveKeyresult(k.objId)
+                                                setState({
+                                                    keyresult: '',
+                                                    measureOfSuccess: ''
+                                                })
+                                            }
+                                        }))
+                                    }
+                                }}
+                            >
+                                Save
+                            </button> : null
+                            }
+                            {loading && activekeyResult === k.objId ? <p style={{color:'#dfa126'}}>Saving please wait...</p>  : null}
                         </div>
                     : null}
                     {editkeyResult && activekeyResult === k.objId ? null :
