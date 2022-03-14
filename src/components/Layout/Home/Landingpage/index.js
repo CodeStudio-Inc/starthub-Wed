@@ -54,7 +54,7 @@ const Landing = (props) => {
      const filtereUsers = users.filter(el => el.admin === false)
     
     const last_value = filter_value && filter_value.slice(-1).pop()
-    // console.log(objectives,'jj')
+    // console.log(state.quarter,'jj')
 
     const current_date = Date.now()
 
@@ -70,6 +70,7 @@ const Landing = (props) => {
         getStatements()
         getObjectives()
         getUsers()
+        getValues()
     },[])
 
     const dispatch = useDispatch()
@@ -81,6 +82,7 @@ const Landing = (props) => {
     const getObjectives = () => dispatch(actionCreators.getObjective())
     const getUsers = () => dispatch(actionCreators.getUsers())
     const userActivity = () => dispatch(actionCreators.userActivity(email,username,userId))
+    const getValues = () => dispatch(actionCreators.getValues())
 
     const openEditModal = () => setOpen(true)
     const openModal = () => setModal(true)
@@ -194,14 +196,11 @@ const Landing = (props) => {
                             placeholder="Enter objective name"
                             value={state.objective}
                             onChange={(e) => setState({ ...state, objective: e.target.value })}
-                        />
-                        <input
-                            type="number"
-                            min="1"
-                            max="1"
-                            placeholder="Quarter"
-                            value={state.quarter}
-                            onChange={(e) => setState({ ...state, quarter: e.target.value })}
+                            onFocus={() => {
+                                setState({
+                                    quarter: 1
+                                })
+                            }}
                         />
                             <button 
                                 onClick={addObjective} 
@@ -240,14 +239,11 @@ const Landing = (props) => {
                                 placeholder="Enter objective name"
                                 value={state.objective}
                                 onChange={(e) => setState({ ...state, objective: e.target.value })}
-                            />
-                            <input
-                                type="number"
-                                min="2"
-                                max="2"
-                                placeholder="Quarter"
-                                value={state.quarter}
-                                onChange={(e) => setState({ ...state, quarter: e.target.value })}
+                                onFocus={() => {
+                                    setState({
+                                        quarter: 2
+                                    })
+                                }}
                             />
                             <button
                                 onClick={addObjective}
@@ -286,14 +282,11 @@ const Landing = (props) => {
                                 placeholder="Enter objective name"
                                 value={state.objective}
                                 onChange={(e) => setState({ ...state, objective: e.target.value })}
-                            />
-                            <input
-                                type="number"
-                                min="3"
-                                max="3"
-                                placeholder="Quarter"
-                                value={state.quarter}
-                                onChange={(e) => setState({ ...state, quarter: e.target.value })}
+                                onFocus={() => {
+                                    setState({
+                                        quarter: 3
+                                    })
+                                }}
                             />
                             <button
                                 onClick={addObjective}
@@ -332,14 +325,11 @@ const Landing = (props) => {
                                 placeholder="Enter objective name"
                                 value={state.objective}
                                 onChange={(e) => setState({ ...state, objective: e.target.value })}
-                            />
-                            <input
-                                type="number"
-                                min="4"
-                                max="4"
-                                placeholder="Quarter"
-                                value={state.quarter}
-                                onChange={(e) => setState({ ...state, quarter: e.target.value })}
+                                onFocus={() => {
+                                    setState({
+                                        quarter: 4
+                                    })
+                                }}
                             />
                             <button
                                 onClick={addObjective}
