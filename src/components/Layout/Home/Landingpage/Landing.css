@@ -397,19 +397,39 @@
 .objective-description {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	margin-bottom: 0.5rem;
+	width: 100%;
 }
 
-.objective-description h2 {
+.objective-description-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.objective-description-row h2 {
 	margin: 0;
 }
 
-.objective-description input {
+.objective-description-row input {
 	outline: none;
 	border: none;
 	height: 30px;
 	background: #c0c0c0;
+}
+
+.objective-description-row h4 {
+	margin: 0;
+	color: rgba(0, 0, 0, 0.5);
+	font-weight: 600;
+}
+
+.objective-description-row p {
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0.5rem;
+	color: rgba(0, 0, 0, 0.3);
 }
 
 .objective-header-card {

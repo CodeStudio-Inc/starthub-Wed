@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ModalUI from '../../ModalUI'
 import CloseIcon from '@material-ui/icons/Close'
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh'
 import moment from 'moment'
 import { Line } from 'react-chartjs-2'
 import * as actionCreators from '../../store/actionCreators'
@@ -12,7 +13,8 @@ const Dashboard = (props) => {
     const [open, setOpen] = useState(false)
     const [show, setShow] = useState(false)
     const [metricsData, setMetricsData] = useState([])
-    const [startMonth,setStartMonth] = useState(0)
+    const [startMonth, setStartMonth] = useState(0)
+    const [revAlert, setRevAlert] = useState('')
 
     const loading = useSelector(state => state.requests.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
@@ -24,10 +26,11 @@ const Dashboard = (props) => {
     const current_year = new Date().getFullYear()
     const previous_year = new Date().getFullYear() - 1
 
-    let current_month
-    // result = 10
+    let current_month, previous_month
 
-    current_month = new Date().getMonth()
+    current_month = new Date().getMonth() + 1
+    previous_month = (new Date().getMonth() + 1) - 1
+    // console.log(previous_month)
     
     const checkMonth = (month) => {
         let result = month - 6
@@ -37,7 +40,6 @@ const Dashboard = (props) => {
         setStartMonth(result)
     }
     
-
     let metricsOfCurrentYr = metrics.filter(el => moment(el.fields['A-Month']).format('YYYY') === current_year.toString())
     const metricsOfPreviousYr = metrics.filter(el => moment(el.fields['A-Month']).format('YYYY') === previous_year.toString())
 
@@ -64,11 +66,15 @@ const Dashboard = (props) => {
     })
 
     const sixMonthsMetrics = metricsOfCurrentYr.filter(el => moment(el.fields['A-Month']).format('MM') >= startMonth.toString() || moment(el.fields['A-Month']).format('MM') <= current_month.toString())
-    // console.log(sixMonthsMetrics)
-    // console.log(moment('2021-10-31').format('DD MM YYYY'))
+
+    const monthlyRevenueCheck = () => {
+       let revenue =  metricsOfCurrentYr.filter(el => new Date(el.fields['A-Month']).getMonth() + 1 === previous_month)
+        if (revenue === undefined || revenue.length == 0) setRevAlert('Revenue for last month was not entered, please add revenue')
+    }
 
     useEffect(() => {
         checkMonth(current_month)
+        monthlyRevenueCheck()
         if(current_date >= expire) {
            return setOpen(true)
         }
@@ -163,6 +169,12 @@ const Dashboard = (props) => {
             : 
             <div className="dash-menu">
                 <div className="revenue-row">
+                {revAlert ? <div className="alert-message">
+                    <PriorityHighIcon
+                                style={{ fontSize: '25px', color:'#69191b' }}
+                    />
+                    <p>{revAlert}</p>
+                </div> : null}
                     <div className="graph-row">
                     <div className="revenue">
                         <h3>Revenue</h3>

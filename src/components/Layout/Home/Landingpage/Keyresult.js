@@ -22,7 +22,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
 
     return (
         <div style={{width:'100%'}}>
-            <div key={k.objId} className="objective-row">
+            <div key={k._id} className="objective-row">
                 <p>Key Result</p>
                 <div className="objective-card">
                     {editkeyResult && activekeyResult === k.objId ? null : <p>{k.description}</p>}

@@ -10,7 +10,7 @@ import Addkeyresult from './Addkeyresult'
 const Objective = ({objectives, svg}) =>  {
 
     const [addkeyResult,setaddkeyResult] = useState(false)
-    const [editObjective, seteditObjetive] = useState(false)
+    const [editObjective, setEditObjective] = useState(false)
     const [activeObj,setactiveObj] = useState('')
     const [currentobjEdit,setcurrentobjEdit] = useState('')
 
@@ -27,12 +27,12 @@ const Objective = ({objectives, svg}) =>  {
 
     const dispatch = useDispatch()
 
-    // console.log(objstate.objective)
+    // console.log(objectives)
 
     return (
         <div  className="objective-bg">
             {objectives && objectives.map((obj, index) => (
-                <div key={index} className="objective">
+                <div key={obj._id} className="objective">
                     <div className="objective-header">
                         <p>Objective {index >= 0 ? index + 1 : null}</p>
                         {loading && obj._id === activeObj ? 
@@ -48,6 +48,7 @@ const Objective = ({objectives, svg}) =>  {
                         }
                     </div>
                         <div className="objective-description">
+                        <div className="objective-description-row">
                             {editObjective && obj._id === activeObj ? 
                             <input
                                 type="text"
@@ -59,7 +60,7 @@ const Objective = ({objectives, svg}) =>  {
                                     if (e.key === 'Enter' && objstate.objective) {
                                         dispatch(actionCreators.editObjective(obj._id, objstate.objective, (res) => {
                                             if(res.success) {
-                                                seteditObjetive(false)
+                                                setEditObjective(false)
                                                 setObjstate({
                                                     objective:''
                                                 })
@@ -73,11 +74,16 @@ const Objective = ({objectives, svg}) =>  {
                                 className="edit-stmt-icon" style={{ fontSize: '20px'}} 
                                 onClick={() => {
                                     setactiveObj(obj._id)
-                                    seteditObjetive(true)
+                                    setEditObjective(true)
                                 }} 
                             />}
-                            {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => seteditObjetive(false)} className="edit-stmt-icon" style={{ fontSize: '20px'}} /> : null}
+                            {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => setEditObjective(false)} className="edit-stmt-icon" style={{ fontSize: '20px'}} /> : null}
                             {loading && obj._id === activeObj ? <img src={svg} style={{ width:"30px", height:"30px"}}/> : null}
+                            </div>
+                        <div className="objective-description-row">
+                            <h4>{obj.objPercentage}%</h4>
+                            <p>objective score</p>
+                        </div>
                         </div>
                         {obj && obj.keyresults.map(k => (
                             <Keyresult 
