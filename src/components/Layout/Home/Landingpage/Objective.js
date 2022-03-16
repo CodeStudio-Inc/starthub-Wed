@@ -82,7 +82,7 @@ const Objective = ({objectives, svg}) =>  {
                             </div>
                         <div className="objective-description-row">
                             <h4>{obj.objPercentage}%</h4>
-                            <p>objective score</p>
+                            <p>covered</p>
                         </div>
                         </div>
                         {obj && obj.keyresults.map(k => (

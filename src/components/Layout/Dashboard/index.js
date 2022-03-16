@@ -69,7 +69,8 @@ const Dashboard = (props) => {
 
     const monthlyRevenueCheck = () => {
        let revenue =  metricsOfCurrentYr.filter(el => new Date(el.fields['A-Month']).getMonth() + 1 === previous_month)
-        if (revenue === undefined || revenue.length == 0) setRevAlert('Revenue for last month was not entered, please add revenue')
+        if (revenue === undefined || revenue.length === 0) setRevAlert('Revenue for last month was not entered, please add revenue')
+        // console.log(revenue)
     }
 
     useEffect(() => {
@@ -124,6 +125,7 @@ const Dashboard = (props) => {
     for(let month of graph1) {
         months.push(moment(month).format("MMM"))
     }
+
 
 
     const Revenue = {
