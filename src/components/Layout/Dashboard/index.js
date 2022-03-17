@@ -14,7 +14,6 @@ const Dashboard = (props) => {
     const [show, setShow] = useState(false)
     const [metricsData, setMetricsData] = useState([])
     const [startMonth, setStartMonth] = useState(0)
-    const [revAlert, setRevAlert] = useState('')
 
     const loading = useSelector(state => state.requests.loading)
     const expire = useSelector(state => state.auth.tokenExpiration)
@@ -67,15 +66,40 @@ const Dashboard = (props) => {
 
     const sixMonthsMetrics = metricsOfCurrentYr.filter(el => moment(el.fields['A-Month']).format('MM') >= startMonth.toString() || moment(el.fields['A-Month']).format('MM') <= current_month.toString())
 
-    const monthlyRevenueCheck = () => {
-       let revenue =  metricsOfCurrentYr.filter(el => new Date(el.fields['A-Month']).getMonth() + 1 === previous_month)
-        if (revenue === undefined || revenue.length === 0) setRevAlert('Revenue for last month was not entered, please add revenue')
-        // console.log(revenue)
-    }
+
+    let new_metrics = []
+
+    
+
+    sixMonthsMetrics.forEach(element => {
+        if (moment(element.fields['A-Month']).format('MM') === '01' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 1, month: `Jan${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '02' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 2, month: `Feb${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '03' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 3, month: `Mar${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '04' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 4, month: `Apr${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '05' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 5, month: `May${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '06' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 6, month: `Jun${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '07' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 7, month: `Jul${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '08' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 8, month: `Aug${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '09' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 9, month: `Sep${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '10' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 10, month: `Oct${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '11' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 11, month: `Nov${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '12' && moment(element.fields['A-Month']).format('YYYY') === previous_year.toString()) new_metrics.push({ ...element, index: 12, month: `Dec${previous_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '01' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({ ...element, index: 13, month: `Jan${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '02' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 14, month: `Feb${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '03' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 15, month: `Mar${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '04' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 16, month: `Apr${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '05' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 17, month: `May${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '06' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 18, month: `Jun${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '07' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 19, month: `Jul${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '08' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 20, month: `Aug${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '09' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 21, month: `Sep${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '10' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 22, month: `Oct${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '11' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 23, month: `Nov${current_year.toString()}` })
+        if (moment(element.fields['A-Month']).format('MM') === '12' && moment(element.fields['A-Month']).format('YYYY') === current_year.toString()) new_metrics.push({...element, index: 24, month: `Dec${current_year.toString()}` })
+    })
 
     useEffect(() => {
         checkMonth(current_month)
-        monthlyRevenueCheck()
         if(current_date >= expire) {
            return setOpen(true)
         }
@@ -88,48 +112,18 @@ const Dashboard = (props) => {
     
     const dispatch = useDispatch()
 
-
-    let sortedMetrics = []
-
-
-    sixMonthsMetrics.forEach(element => {
-        if(moment(element.fields['A-Month']).format('MMM') === 'Jan')  sortedMetrics.push({...element, monthIndex: 1})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Feb')  sortedMetrics.push({...element, monthIndex: 2})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Mar')  sortedMetrics.push({...element, monthIndex: 3})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Apr')  sortedMetrics.push({...element, monthIndex: 4})
-        if(moment(element.fields['A-Month']).format('MMM') === 'May')  sortedMetrics.push({...element, monthIndex: 5})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Jun')  sortedMetrics.push({...element, monthIndex: 6})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Jul')  sortedMetrics.push({...element, monthIndex: 7})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Aug')  sortedMetrics.push({...element, monthIndex: 8})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Sep')  sortedMetrics.push({...element, monthIndex: 9})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Oct')  sortedMetrics.push({...element, monthIndex: 10})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Nov')  sortedMetrics.push({...element, monthIndex: 11})
-        if(moment(element.fields['A-Month']).format('MMM') === 'Dec')  sortedMetrics.push({...element, monthIndex: 12})
-        
-    });
     
-     sortedMetrics.sort((a,b) => a.monthIndex-b.monthIndex)
+    new_metrics.sort((a,b) => a.index-b.index)
      
-    const rev = sortedMetrics.map(el => el.fields['B-Monthly Revenue (UGX)'])
-     const expense = sortedMetrics.map(el => el.fields['C-Monthly Expenses (UGX)'])  
-     
-    const metricsFilter = metrics.map(el => el.fields)
-
-    let keysArray = []
-
-    keysArray = Object.keys(metricsFilter[0] || []).sort()
-    const graph1 = sortedMetrics.map(el => el.fields[keysArray[0]])
-    
-    let months = []
-
-    for(let month of graph1) {
-        months.push(moment(month).format("MMM"))
-    }
+    const rev = new_metrics.map(el => el.fields['B-Monthly Revenue (UGX)'])
+     const expense = new_metrics.map(el => el.fields['C-Monthly Expenses (UGX)'])
 
 
+    const month = Array.from(new_metrics, ({ month }) => month )
 
+    // console.log(kept,'month')
     const Revenue = {
-        labels: months,
+        labels: month,
         datasets: [
             {
                 label: 'Monthly Revenue (UGX)',
@@ -142,7 +136,7 @@ const Dashboard = (props) => {
     }
 
     const Expense = {
-        labels: months,
+        labels: month,
         datasets: [
             {
                 label: 'Monthly Expenses (UGX)',
@@ -171,12 +165,6 @@ const Dashboard = (props) => {
             : 
             <div className="dash-menu">
                 <div className="revenue-row">
-                {revAlert ? <div className="alert-message">
-                    <PriorityHighIcon
-                                style={{ fontSize: '25px', color:'#69191b' }}
-                    />
-                    <p>{revAlert}</p>
-                </div> : null}
                     <div className="graph-row">
                     <div className="revenue">
                         <h3>Revenue</h3>
