@@ -185,7 +185,7 @@ const Dashboard = (props) => {
                     </div>
                     </div>
 
-                        <iframe src={link} frameborder="0" onmousewheel="" width="100%" height="533"></iframe>
+                        <iframe src={link} frameborder="0" width="100%" height="1100"></iframe>
                 </div>
             </div>
             }
