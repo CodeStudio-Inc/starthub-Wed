@@ -12,6 +12,7 @@ import BarChartIcon from '@material-ui/icons/BarChart'
 import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard'
 import BuildIcon from '@material-ui/icons/Build'
 import LocalAtmIcon from '@material-ui/icons/LocalAtm'
+import NewspaperIcon from '@mui/icons-material/Newspaper'
 
 import './Navigation.css'
 const Navbar = (props) => {
@@ -38,8 +39,8 @@ const Navbar = (props) => {
             { id: 2, title: "Metrics", route: "/overview", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 3, title: "Lean Canvas", route: "/canvas-board", icon:<DeveloperBoardIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 4, title: "OKRs", route: "/", icon:<ListAltIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            // { id: 5, title: "Milestones", route: "/milestone-board", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            { id: 6, title: "Diagnostics", route: "/diagnostics", icon:<BuildIcon className="link-icon" style={{ fontSize: '25px' }}/> }
+            { id: 5, title: "Diagnostics", route: "/diagnostics", icon:<BuildIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 6, title: "Content", route: "/content", icon: <NewspaperIcon className="link-icon" style={{ fontSize: '25px' }}/> }
         ]
     })
 

@@ -1,0 +1,81 @@
+.content-container {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	background: #eee;
+	height: 100vh;
+}
+
+.content-menu {
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	width: 85%;
+	height: 100vh;
+	padding: 0.5rem;
+	left: 17%;
+	overflow-y: scroll;
+}
+
+.card-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 95%;
+}
+
+.card {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 25%;
+	height: 400px;
+	margin-right: 1rem;
+	margin-bottom: 2rem;
+	background: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.card-hide {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 25%;
+	height: 400px;
+	margin-right: 1rem;
+	margin-bottom: 2rem;
+}
+
+.card img {
+	width: 100%;
+	height: 200px;
+}
+
+.card-desc {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	padding: 10px;
+}
+
+.card-desc h3 {
+	font-weight: 600;
+}
+
+.card-desc button {
+	outline: none;
+	background: none;
+	color: #dfa126;
+	border: 1px solid #dfa126;
+}
+
+.card-desc button:hover {
+	cursor: pointer;
+}
+
+.card-desc a {
+	color: #dfa126;
+}

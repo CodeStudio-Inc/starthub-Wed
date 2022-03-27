@@ -16,6 +16,7 @@ import AdminMetrics from '../Layout/Home/AdminPanel/AdminMetrics'
 import Loans from '../Layout/Home/AdminPanel/Loans'
 import FlatrateLoanDetails from '../Layout/Home/AdminPanel/Loans/FlaterateLoanDetails'
 import RBLoanDetails from '../Layout/Home/AdminPanel/Loans/RBLoanDetails'
+import Content from '../Layout/Content'
 
 const HomeRoutes = () => {
     return (
@@ -37,6 +38,7 @@ const HomeRoutes = () => {
                 <Route path="/loans" component={Loans} />
                 <Route path="/pay-loan" component={FlatrateLoanDetails} />
                 <Route path="/pay-rb-loan" component={RBLoanDetails} />
+                <Route path="/content" component={Content} />
             </Switch>
         </BrowserRouter>
     )
