@@ -42,6 +42,13 @@ export const setObjectives = (data) => {
     }
 }
 
+export const setValues = (data) => {
+    return {
+        type: actions.SET_ADMIN_VALUES,
+        data
+    }
+}
+
 export const setLists = (data) => {
     return {
         type: actions.SET_ADMIN_LISTS,
@@ -189,6 +196,27 @@ export const getAdminObjectives = (userId) => {
             .then(res => {
                 // console.log(res)
                 dispatch(setObjectives(res.data.objs))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const getAdminValues = (userId) => {
+    return (dispatch, getState) => {
+        const token = getState().auth.token
+
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/values/${userId}`, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setValues(res.data.values))
             })
             .catch(error => {
                 console.log(error)

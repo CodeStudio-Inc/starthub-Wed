@@ -60,6 +60,7 @@ export {
     unarchiveAdminList,
     getAdminStatements,
     getAdminObjectives,
+    getAdminValues,
     addFlate,
     addFlateratePayment,
     getFlate,

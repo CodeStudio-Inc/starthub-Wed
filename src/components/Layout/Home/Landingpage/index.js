@@ -98,12 +98,9 @@ const Landing = (props) => {
     const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2)
     const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3)
     const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4)
-    // console.log(quarter4,'llll')
+    // console.log(quarter1)
 
     const todoLists = lists && lists.filter(el => el.boardId ===  current_boardID && el.archive === false)
-    // const archivedtodoLists = lists && lists.filter(el => el.boardId === current_board._id && el.archive === true)
-    // console.log(lists,'kk')
-    // console.log(loading)
 
     
 

@@ -8,8 +8,7 @@ import Objective from './AdminObjective'
 import Statements from './AdminStatement'
 import Diagnostics from '../Landingpage/Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
-import lean from '../../../../assets/images/lean.png'
-import metrics from '../../../../assets/images/metrics.png'
+import QuotaTabs from './QuotaTabs'
 import { List  } from 'react-content-loader'
 
 import '../Landingpage/Landing.css'
@@ -31,7 +30,7 @@ const AdminPanel = (props) => {
     const lists = useSelector(state => state.admin.lists)
     const Boards = useSelector(state => state.admin.boards)
     const userId = useSelector(state => state.auth.userId)
-    const _value = useSelector(state => state.requests.values)
+    const _value = useSelector(state => state.admin.values)
     const statements = useSelector(state => state.admin.statements)
     const objectives = useSelector(state => state.admin.objectives)
     const loading = useSelector(state => state.admin.loading)
@@ -52,6 +51,7 @@ const AdminPanel = (props) => {
         getLists()
         getStatements()
         getObjectives()
+        getValues()
     },[])
 
     const dispatch = useDispatch()
@@ -59,21 +59,24 @@ const AdminPanel = (props) => {
     const openEditModal = () => setOpen(true)
     const openModal = () => setModal(true)
 
-    
-    // const new_lists = lists.filter(el => el.creator === startupId)
     const _boards = Boards.filter(el => el.creator === startupId && el.boardType !== 'Lean Canvas')
     const current_board = _boards && _boards.slice(-1).pop()
     const current_boardID = current_board && current_board._id
     const filteredObjs = objectives && objectives.filter(el => el.boardId ===  current_boardID )
     const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
+    const quarter1 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 1)
+    const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2)
+    const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3)
+    const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4)
     
     const getBoards = () => dispatch(actionCreators.getAdminBoard(startupId))
     const getLists = () => dispatch(actionCreators.getAdminLists(startupId ))
     const getStatements = () => dispatch(actionCreators.getAdminStatements(startupId))
     const getObjectives = () => dispatch(actionCreators.getAdminObjectives(startupId))
+    const getValues = () => dispatch(actionCreators.getAdminValues(startupId))
     
     const todoLists = lists && lists.filter(el => el.creator === startupId && el.boardId ===  current_boardID && el.archive === false)
-    // console.log(Boards,'llll')
+    // console.log(quarter1,'llll')
     // console.log(todoLists,'bbb')
 
 
@@ -128,33 +131,21 @@ const AdminPanel = (props) => {
             </div>}
             <div className="landing-menu">
                 <div className={category === 'internal' ? 'extra' : 'landing-menu-left'}>
-                    <DragDropContext onDragEnd={onDragEnd}>
-                        <div className="landing-scroll">
-                            {loading ? 
-                            <List  /> :
-                                <div style={{width:'100%', display:'flex', alignItems:'flex-start'}}>
-                            {todoLists && todoLists.map(l => (
-                                <KanbanList
-                                    key={l._id}
-                                    listId={l._id}
-                                    title={l.name}
-                                    cards={l.cards}
-                                    boardId={current_board._id}
-                                    callback={getLists}
-                                    open={openEditModal}
-                                    setActiveCard={setActiveCard}
-                                    setArchive={setArchive}
-                                    archive={archive}
-                                />
-                            ))}
-                            </div>}
-                        </div>
-                    </DragDropContext>
-                        <Objective objectives={filteredObjs} keyresults={objectives && objectives.keyresults} svg={svg}/>
-                        {/* {filteredObjs && filteredObjs.length === 3 ? null : <div className="add-objective">
-                            <AddBoxIcon onClick={() => setobjModal(true)} className="add-obj-icon" style={{ fontSize: '60px'}} />
-                            <p >Click to add new Objective</p>
-                        </div>} */}
+                    <QuotaTabs
+                        todoLists={todoLists}
+                        current_board={current_board}
+                        onDragEnd={onDragEnd}
+                        getLists={getLists}
+                        openEditModal={openEditModal}
+                        setActiveCard={setActiveCard}
+                        setArchive={setArchive}
+                        archive={archive}
+                        quarter1={quarter1}
+                        quarter2={quarter2}
+                        quarter3={quarter3}
+                        quarter4={quarter4}
+                        svg={svg}
+                    />
                 </div>
                 {category === 'internal' ? null : 
                 <div className="landing-menu-right">
@@ -163,13 +154,6 @@ const AdminPanel = (props) => {
                     null}
                     {category === 'internal' ? null : <Diagnostics last_value={last_value && last_value}/>}
                 </div>
-                    {/* <div className="admin-links1">
-                        <h4>Loan Payment</h4>
-                    </div> */}
-                    {/* <div className="admin-links1-row">
-                        <img src={lean}/>
-                        <img src={metrics}/>
-                    </div> */}
                 </div>}
             </div>
         </div>

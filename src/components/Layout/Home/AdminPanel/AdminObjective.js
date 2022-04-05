@@ -78,6 +78,10 @@ const AdminObjective = ({objectives, svg, keyresults}) =>  {
                             />} */}
                             {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => seteditObjetive(false)} className="edit-stmt-icon" style={{ fontSize: '20px'}} /> : null}
                             {loading && obj._id === activeObj ? <img src={svg} style={{ width:"30px", height:"30px"}}/> : null}
+                        <div className="objective-description-row">
+                            <h4>{obj.objPercentage}%</h4>
+                            <p>covered</p>
+                        </div>
                         </div>
                         {obj && obj.keyresults.map(k => (
                             <Keyresult 

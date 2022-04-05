@@ -6,7 +6,6 @@
 	background: #eee;
 }
 
-
 .boards-right-column {
 	width: 95%;
 	display: flex;
@@ -196,7 +195,7 @@
 	margin-bottom: 1rem;
 }
 
-.board1-card h3:hover{
+.board1-card h3:hover {
 	cursor: pointer;
 }
 
@@ -271,7 +270,6 @@
 	width: 40%;
 	padding: 0.5rem;
 	background: #fff;
-	
 }
 
 .caution-container p {
@@ -286,8 +284,7 @@
 	justify-content: center;
 }
 
-
-.caution-btn button{
+.caution-btn button {
 	width: 50px;
 	outline: none;
 	border: 1px solid #69191b;
@@ -311,14 +308,12 @@
 	width: 200px;
 	border-radius: 2px;
 	transition: 0.5s ease-in-out;
-	color:black;
+	color: black;
 	height: 50px;
 }
 
-
 .add-canvas:focus {
-	background: rgba(0, 0, 0, 0.3
-	);
+	background: rgba(0, 0, 0, 0.3);
 }
 
 .add-list {
@@ -393,7 +388,6 @@
 	justify-content: space-between;
 	/* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
 }
-
 
 .boards-header h2 {
 	color: #dfa126 !important;
@@ -497,14 +491,14 @@
 	padding-left: 5px;
 	height: 25px;
 	border-radius: 2px;
-	background: rgba(0, 0, 0, 0.3);;
+	background: rgba(0, 0, 0, 0.3);
 	transition: 0.5s ease-in-out;
 	width: 95%;
 }
 
 .add-card input:focus {
 	color: #fff;
-	background: rgba(0, 0, 0, 0.5);;
+	background: rgba(0, 0, 0, 0.5);
 }
 
 .edit-row {
@@ -632,7 +626,6 @@
 	height: 100px;
 }
 
-
 .list {
 	display: flex;
 	align-items: flex-start !important;
@@ -657,7 +650,8 @@
 	cursor: grab;
 	background: #fff !important;
 	box-sizing: border-box;
-	height: 100%;
+	min-height: 100px;
+	/* height: 100%; */
 }
 
 .draggable p {
@@ -665,7 +659,6 @@
 	font-size: 12px;
 	font-weight: 500;
 }
-
 
 .canvas-draggable {
 	display: flex;
@@ -678,7 +671,8 @@
 	cursor: grab;
 	background: #fff;
 	box-sizing: border-box;
-	height: 100%;
+	/* height: 100%; */
+	min-height: 100px;
 }
 
 .canvas-draggable p {
@@ -715,7 +709,6 @@
 
 .span-text h6 {
 	font-weight: normal;
-	
 }
 
 .dragging {
@@ -777,7 +770,7 @@
 .edit-card-row2 input {
 	outline: none;
 	border: none;
-	transition:0.5s ease-in-out;
+	transition: 0.5s ease-in-out;
 	background-color: rgba(0, 0, 0, 0.3);
 	padding: 0.2rem;
 	margin-right: 0.2rem;
@@ -838,7 +831,7 @@
 	margin-right: 0.5rem;
 }
 
-.desc-text  {
+.desc-text {
 	font-weight: bold;
 }
 
@@ -882,5 +875,5 @@
 	}
 	.canvas-draggable p {
 		font-size: 12px !important;
-}
+	}
 }

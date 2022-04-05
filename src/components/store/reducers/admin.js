@@ -7,6 +7,7 @@ const initialState = {
     lists: [],
     statements: [],
     objectives: [],
+    values: [],
     cards: [],
     loans: [],
     rb_loans: [],
@@ -54,6 +55,11 @@ const requests = (state = initialState, action) => {
         case actions.SET_ADMIN_OBJECTIVES:
             return updateObject(state, {
                 objectives: action.data
+            })
+
+        case actions.SET_ADMIN_VALUES:
+            return updateObject(state, {
+                values: action.data
             })
 
         case actions.SET_ADMIN_CARDS:
