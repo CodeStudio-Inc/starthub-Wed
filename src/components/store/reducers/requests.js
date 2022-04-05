@@ -109,13 +109,11 @@ const requests = (state = initialState, action) => {
 
         case actions.SET_BOARDS:
             return updateObject(state, {
-                loading: false,
                 boards: action.data
             })
 
         case actions.SET_LISTS:
             return updateObject(state, {
-                loading: false,
                 lists: action.data
             })
 
@@ -234,8 +232,7 @@ const requests = (state = initialState, action) => {
                 droppableIdEnd: action.droppableIdEnd,
                 droppableIndexStart: action.droppableIndexStart,
                 droppableIndexEnd: action.droppableIndexEnd,
-                draggableId: action.draggableId,
-                loading: false 
+                draggableId: action.draggableId
             })
 
             case actions.SET_NEW_LISTS:

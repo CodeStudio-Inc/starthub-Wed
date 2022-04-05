@@ -38,27 +38,22 @@ const QuotaTabs = ({
           <TabPane tab="Todos" key="1"> 
               <DragDropContext onDragEnd={onDragEnd}>
                   <div className="landing-scroll">
-
-                      {listLoader ?
-                          <List />
-                          :
-                          <div style={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}>
-                              {todoLists && todoLists.map(l => (
-                                  <KanbanList
-                                      key={l._id}
-                                      listId={l._id}
-                                      title={l.name}
-                                      cards={l.cards}
-                                      boardId={current_board._id}
-                                      callback={getLists}
-                                      open={openEditModal}
-                                      setActiveCard={setActiveCard}
-                                      setArchive={setArchive}
-                                      archive={archive}
-                                  />
-                              ))}
-                          </div>
-                      }
+                    <div style={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}>
+                        {todoLists && todoLists.map(l => (
+                            <KanbanList
+                                key={l._id}
+                                listId={l._id}
+                                title={l.name}
+                                cards={l.cards}
+                                boardId={current_board._id}
+                                callback={getLists}
+                                open={openEditModal}
+                                setActiveCard={setActiveCard}
+                                setArchive={setArchive}
+                                archive={archive}
+                            />
+                        ))}
+                    </div>
                   </div>
               </DragDropContext>
           </TabPane>
