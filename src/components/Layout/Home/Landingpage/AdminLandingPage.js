@@ -7,7 +7,6 @@ import Register from '../AdminPanel/Register'
 import * as actionCreators from '../../../store/actionCreators'
 import moment from 'moment'
 import { Progress } from 'antd'
-import Localbase from 'localbase'
 import { Line } from 'react-chartjs-2'
 import { Table } from 'antd'
 
@@ -16,7 +15,6 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
     const [int, setInternal] = useState(false)
     const [cat, setCatalyzer] = useState(false)
     const [acad, setAcademy] = useState(false)
-    const [view, setView] = useState(false)
     const [state, setState] = useState({
         username:'',
         email:'',
@@ -91,29 +89,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                 }
                 }
     }
-
-    const columns = [
-        {
-            title: 'Startup',
-            dataIndex:'startup',
-            key:'startup',
-            align:'left'
-        },
-        {
-            title: 'Email',
-            dataIndex:'email',
-            key:'email',
-            align:'left'
-        },
-        {
-            title: 'Date',
-            dataIndex:'date',
-            key:'date',
-            align:'left'
-        }
-    ]
-
-    
+ 
     const getUser = () => dispatch(actionCreators.getUsers())
 
     const signUpInternal = () => {
@@ -227,31 +203,6 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                         setCatalyzer={setCatalyzer}/>
                 </ModalUI>
             : null}
-            {view ? <ModalUI>
-                <div className="view-container">
-                    <div className="register-form-nav">
-                        <h3>LoggedIn users this Week</h3>
-                        <CloseIcon 
-                            className="register-form-container-icon"
-                            style={{ fontSize: '25px', color:'rgba(0,0,0,0.3)'}}
-                            onClick={() => setView(false)}
-                        />
-                    </div>
-                        <Table
-                            columns={columns}
-                            dataSource={[...users_activity.map(r => 
-                                        ({...r,
-                                            key: r._id,
-                                            startup: r.username,
-                                            email: r.email,
-                                            date: moment(r.date).fromNow()
-                                        })
-                                        )]}
-                            style={{width:'100%'}} 
-                            pagination={false}
-                        />
-                </div>
-            </ModalUI> : null}
             <div className="admin-menu-content">
                 <div className="admin-header">
                     <h1>StartHub</h1>
@@ -284,7 +235,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                                 />
                         </div>
                     </div>
-                    <div className="admin-user-activity" onClick={() => setView(true)}>
+                    <div className="admin-user-activity">
                         <h3>User Activity</h3>
                         <Line
                             data={data}

@@ -3,114 +3,114 @@
 	display: flex;
 	align-items: flex-start;
 	background: #eee;
-  height: 100vh;
-} 
+	height: 100vh;
+}
 
 .admin h1 {
-  font-weight: lighter;
+	font-weight: lighter;
 }
 
 .admin {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-    width:  85%;
-    left: 15%;
-    margin-top: 2.5rem;
-    height: 100vh;
-    overflow-y: scroll;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+	width: 85%;
+	left: 15%;
+	margin-top: 2.5rem;
+	height: 100vh;
+	overflow-y: scroll;
 }
 
 .admin-canvas-landing-menu {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-	  flex-direction: column;
-    justify-content: space-between;
-    margin-top: 3rem;
-    width:  85%;
-    padding: 0.5rem;
-    left: 15%;
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-top: 3rem;
+	width: 85%;
+	padding: 0.5rem;
+	left: 15%;
 }
 
 .admin-navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    top: 0;
-    left: 15%;
-    z-index: 100;
-    height: 40px;
-    width: 85%;
-    background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: absolute;
+	top: 0;
+	left: 15%;
+	z-index: 100;
+	height: 40px;
+	width: 85%;
+	background: #fff;
 }
 
 .admin-navbar h2 {
-    color: #dfa126;
+	color: #dfa126;
 }
 
 .admin-navbar-links {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 25%;
-    margin-right: 5rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 25%;
+	margin-right: 5rem;
 }
 
 .admin-navbar-links p {
-    font-weight: lighter;
-    font-size: 16px;
-    margin: 0;
-    color: #dfa126;
+	font-weight: lighter;
+	font-size: 16px;
+	margin: 0;
+	color: #dfa126;
 }
 
 .admin-navbar-links p:hover {
-    cursor: pointer;
-    color: rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+	color: rgba(0, 0, 0, 0.3);
 }
 
 .admin-icon-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .admin-icon-row h4 {
-  color: #dfa126;
-  margin: 0;
-  margin-left: 0.1rem;
+	color: #dfa126;
+	margin: 0;
+	margin-left: 0.1rem;
 }
 
 .admin-icon-row h4:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .admin-navbar-icon:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .rev-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 95%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 95%;
 }
 
 .revenue {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 1rem;
-  background: #fff;
-  width: 80%;
-  height: 100%;
-  padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 1rem;
+	background: #fff;
+	width: 80%;
+	height: 100%;
+	padding: 10px;
 }
 
 .revenue h3 {
-  font-weight: bold;
+	font-weight: bold;
 }

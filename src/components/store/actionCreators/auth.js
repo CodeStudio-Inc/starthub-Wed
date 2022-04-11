@@ -90,14 +90,67 @@ export const userActivity = (email,username,userId) => {
     }
 }
 
+export const addLatestRevenuePayment = () => {
+    return (dispatch,getState) => {
+        const token = getState().auth.token
+
+        const data = {
+            date: ''
+        }
+
+        axios.post('https://starthubafrica-api.el.r.appspot.com/admin/user-activity', data,
+            {
+                headers: {
+                    ContentType: 'Application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: token
+                }
+            })
+            .then(res => {
+                dispatch(setUserActivity(res.data.user_activity))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const addLatestRevenueSubmission = () => {
+    return (dispatch, getState) => {
+
+        const token = getState().auth.token
+
+        const data = {
+            date: ''
+        }
+
+        axios.post('https://starthubafrica-api.el.r.appspot.com/admin/user-activity', data,
+            {
+                headers: {
+                    ContentType: 'Application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: token
+                }
+            })
+            .then(res => {
+                dispatch(setUserActivity(res.data.user_activity))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
 export const getUserActivity = () => {
-    return dispatch => {
+    return (dispatch, getState) => {
+
+        const token = getState().auth.token
 
         axios.get('https://starthubafrica-api.el.r.appspot.com/admin/user-activities', {
-            headers: 
-            {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json'
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
             }
         })
         .then(res => {
