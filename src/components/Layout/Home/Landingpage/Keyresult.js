@@ -6,19 +6,19 @@ import CancelIcon from '@material-ui/icons/Cancel'
 
 const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
 
-    // console.log(state)
+    // console.log(k)
 
     const [editkeyResult, seteditkeyResult] = useState(false)
     const [btn, setBtn] = useState(false)
     const [activekeyResult, setactiveKeyresult] = useState('')
     const [state, setState] = useState({
         keyresult: k.description,
-        measureOfSuccess: 0,
+        measureOfSuccess: '',
     })
     const [progress, setProgress] = useState(false)
     const [message, setMessage] = useState(false)
 
-    // console.log(activekeyResult,k.objId, loading)
+    // console.log(state.measureOfSuccess.toString())
 
     return (
         <div style={{width:'100%'}}>
@@ -80,6 +80,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     <Box sx={{ width: 150 }}>
                     <Slider
                         defaultValue={k.measureOfSuccess}
+                        valueLabelDisplay="auto"
                         onChange={(e) => {
                             setState({ ...state, measureOfSuccess: e.target.value })
                             setactiveKeyresult(k.objId)
@@ -93,7 +94,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     {progress && activekeyResult === k.objId  ? 
                     <button 
                         onClick={() => {
-                        dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
+                        dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess.toString(),k.dateCreated, (res) => {
                             if(res.success) {
                                 setProgress(false)
                                 setactiveKeyresult(k.objId)

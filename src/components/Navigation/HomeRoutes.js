@@ -18,6 +18,7 @@ import FlatrateLoanDetails from '../Layout/Home/AdminPanel/Loans/FlaterateLoanDe
 import RBLoanDetails from '../Layout/Home/AdminPanel/Loans/RBLoanDetails'
 import Content from '../Layout/Content'
 import UserActivity from '../Layout/Home/AdminPanel/UserActivity'
+import Revenues from '../Layout/Home/AdminPanel/Revenues'
 
 const HomeRoutes = () => {
     return (
@@ -41,6 +42,7 @@ const HomeRoutes = () => {
                 <Route path="/pay-rb-loan" component={RBLoanDetails} />
                 <Route path="/content" component={Content} />
                 <Route path="/user-activity" component={UserActivity} />
+                <Route path="/revenues" component={Revenues} />
             </Switch>
         </BrowserRouter>
     )

@@ -8,7 +8,7 @@ import './Activity.css'
 const UserActivity = () => {
 
     const users_activity = useSelector(state => state.auth.user_activity)
-    console.log(users_activity)
+    // console.log(users_activity)
 
     const dispatch = useDispatch()
 

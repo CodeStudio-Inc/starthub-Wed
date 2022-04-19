@@ -90,15 +90,15 @@ export const userActivity = (email,username,userId) => {
     }
 }
 
-export const addLatestRevenuePayment = () => {
+export const addLatestRevenuePayment = (startup) => {
     return (dispatch,getState) => {
         const token = getState().auth.token
 
         const data = {
-            date: ''
+            date: startup
         }
 
-        axios.post('https://starthubafrica-api.el.r.appspot.com/admin/user-activity', data,
+        axios.post('https://starthubafrica-api.el.r.appspot.com/admin/revenue-payment', data,
             {
                 headers: {
                     ContentType: 'Application/json',
@@ -107,6 +107,7 @@ export const addLatestRevenuePayment = () => {
                 }
             })
             .then(res => {
+                console.log(res)
                 dispatch(setUserActivity(res.data.user_activity))
             })
             .catch(error => {
@@ -115,16 +116,16 @@ export const addLatestRevenuePayment = () => {
     }
 }
 
-export const addLatestRevenueSubmission = () => {
+export const addLatestRevenueSubmission = (startup) => {
     return (dispatch, getState) => {
 
         const token = getState().auth.token
 
         const data = {
-            date: ''
+            date: startup
         }
 
-        axios.post('https://starthubafrica-api.el.r.appspot.com/admin/user-activity', data,
+        axios.post('https://starthubafrica-api.el.r.appspot.com/admin/revenue-submission', data,
             {
                 headers: {
                     ContentType: 'Application/json',

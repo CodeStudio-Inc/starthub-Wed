@@ -31,7 +31,9 @@ const RevenueShare = () => {
     const getRevShares = () => dispatch(actionCreators.getRevenueShares())
 
     const addRevShare = () => {
-        dispatch(actionCreators.addRevenueShare(state.amount, state.startup, state.date, state.comment))
+        dispatch(actionCreators.addRevenueShare(state.amount, state.startup, state.date, state.comment,(res) => {
+            if (res.success) dispatch(actionCreators.addLatestRevenuePayment(state.startup))
+        }))
         setState({
             amount: '',
             date: '',

@@ -650,13 +650,13 @@
 	cursor: grab;
 	background: #fff !important;
 	box-sizing: border-box;
-	min-height: 100px;
+	min-height: 80px;
 	/* height: 100%; */
 }
 
 .draggable p {
 	color: rgba(0, 0, 0, 0.6);
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: 500;
 }
 

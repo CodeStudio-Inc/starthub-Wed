@@ -1,0 +1,24 @@
+.rev-main {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	background: #eee;
+	height: 100vh;
+}
+
+.rev h1 {
+	font-weight: lighter;
+}
+
+.rev {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+	width: 85%;
+	left: 15%;
+	margin-top: 2.5rem;
+	height: 100vh;
+	overflow-y: scroll;
+}

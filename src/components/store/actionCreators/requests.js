@@ -524,7 +524,7 @@ export const createCard = (listId, name, callback) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 // dispatch(stopLoader())
                 callback({ success: true, res: res })
             })

@@ -1,4 +1,12 @@
-export { signUp, login, removeUser, userActivity, getUserActivity } from './auth'
+export { 
+    signUp, 
+    login, 
+    removeUser, 
+    userActivity, 
+    getUserActivity, 
+    addLatestRevenuePayment, 
+    addLatestRevenueSubmission
+} from './auth'
 export {
     getBlogs,
     getBoards,

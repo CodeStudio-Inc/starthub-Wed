@@ -254,7 +254,7 @@ export const getAdminMetricsData = (baseId) => {
         var base = new Airtable({apiKey: key}).base(baseId)
 
         base('Metrics').select({
-        maxRecords: 20
+        maxRecords: 100
         }).eachPage(function page(records, fetchNextPage) {
             dispatch(setAdminMetricsData(records))
             fetchNextPage();
@@ -563,7 +563,7 @@ export const getReducingBalance = () => {
     }
 }
 
-export const addRevenueShare = (amount,startup,date,comment) => {
+export const addRevenueShare = (amount,startup,date,comment,callback) => {
     return (dispatch, getState) => {
             
          dispatch(loadAction())
@@ -586,11 +586,13 @@ export const addRevenueShare = (amount,startup,date,comment) => {
         })
         .then(res => {
             // console.log(res.data.loans)
+            callback({ success: true })
             dispatch(stopLoader())
             dispatch(setRevShare(res.data.revShares))
         })
         .catch(error => {
             console.log(error)
+            callback({ success: true, error: error })
         })
 
     }

@@ -21,15 +21,17 @@ const Dashboard = (props) => {
     const category = useSelector(state => state.auth.category)
     const link = useSelector(state => state.auth.link)
 
+    
     const current_date = Date.now()
     const current_year = new Date().getFullYear()
     const previous_year = new Date().getFullYear() - 1
-
+    
     let current_month, previous_month
-
+    
     current_month = new Date().getMonth() + 1
     previous_month = (new Date().getMonth() + 1) - 1
-    // console.log(previous_month)
+    const month_revenue = metrics.filter(e => moment(e.fields['A-Month']).format('MM') === current_month.toString() )
+    // console.log(metrics)
     
     const checkMonth = (month) => {
         let result = month - 6
@@ -182,8 +184,9 @@ const Dashboard = (props) => {
                         />
                     </div>
                     </div>
-
-                        <iframe src={link} frameborder="0" width="100%" height="1100"></iframe>
+                        <iframe src={link} frameborder="0" width="100%" height="1100">
+                            <button>submit</button>
+                        </iframe>
                 </div>
             </div>
             }
