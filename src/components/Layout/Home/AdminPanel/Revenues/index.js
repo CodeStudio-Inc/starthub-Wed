@@ -24,12 +24,12 @@ const Revenues = () =>  {
     const [record14, setRecord14] = useState([])
     const [record15, setRecord15] = useState([])
 
-    const metrics = useSelector(state => state.admin.metrics)
+    // const metrics = useSelector(state => state.admin.metrics)
     const users = useSelector(state => state.admin.users)
 
     const startups = users.filter(e => e.category === 'catalyzer')
     const base_keys = Array.from(startups, ({ base_key, username }) => ({ base_key: base_key, username: username }))
-    console.log(record8,record9,record10,record11,record12,record13,record14, record15)
+    // console.log(record8)
 
     const dispatch = useDispatch()
 
@@ -230,6 +230,29 @@ const Revenues = () =>  {
                 if (err) { console.error(err); return }
             })
     }
+
+    const record1Fields = Array.from(record1, ({ fields }) => fields)
+    const record2Fields = Array.from(record2, ({ fields}) => fields)
+    const record3Fields = Array.from(record3, ({ fields}) => fields)
+    const record4Fields = Array.from(record4, ({ fields}) => fields)
+    const record5Fields = Array.from(record5, ({ fields}) => fields)
+    const record6Fields = Array.from(record6, ({ fields}) => fields)
+    const record7Fields = Array.from(record7, ({ fields}) => fields)
+    const record8Fields = Array.from(record8, ({ fields}) => fields)
+    const record9Fields = Array.from(record9, ({ fields}) => fields)
+    const record10Fields = Array.from(record10, ({ fields}) => fields)
+    const record11Fields = Array.from(record11, ({ fields}) => fields)
+    const record12Fields = Array.from(record12, ({ fields}) => fields)
+    const record13Fields = Array.from(record13, ({ fields}) => fields)
+    const record14Fields = Array.from(record14, ({ fields }) => fields)
+    const record15Fields = Array.from(record15, ({ fields }) => fields)
+
+    let metrics = []
+
+    record1Fields.forEach(element => {
+        metrics.push({ startup: 'Qiribu', Date: element['A-Month'] })
+    });
+    console.log(metrics)
     
     useEffect(() => {
         dispatch(actionCreators.getUsers())
