@@ -16,10 +16,6 @@ const Objective = ({objectives, svg}) =>  {
 
     const loading = useSelector(state => state.requests.loading)
 
-    const [state, setState] = useState({
-        keyresult:'',
-        measureOfSuccess: 0
-    })
 
     const [objstate, setObjstate] = useState({
         objective: '' 
@@ -27,7 +23,7 @@ const Objective = ({objectives, svg}) =>  {
 
     const dispatch = useDispatch()
 
-    // console.log(objectives)
+    // console.log(objstate)
 
     return (
         <div  className="objective-bg">
@@ -42,7 +38,7 @@ const Objective = ({objectives, svg}) =>  {
                             style={{ fontSize: '20px'}} 
                             onClick={() => {
                                 setactiveObj(obj._id)
-                                dispatch(actionCreators.deleteObjective(obj._id))
+                                dispatch(actionCreators.archiveObjective(obj._id))
                             }}
                         />
                         }
@@ -81,7 +77,7 @@ const Objective = ({objectives, svg}) =>  {
                             {loading && obj._id === activeObj ? <img src={svg} style={{ width:"30px", height:"30px"}}/> : null}
                             </div>
                         <div className="objective-description-row">
-                            <h4>{obj.objPercentage}%</h4>
+                            <h4>{!obj.objPercentage ? 0 : Math.round(obj.objPercentage)}%</h4>
                             <p>covered</p>
                         </div>
                         </div>
@@ -90,22 +86,15 @@ const Objective = ({objectives, svg}) =>  {
                                 k={k}
                                 svg={svg}
                                 loading={loading}
-                                state={state}
-                                setState={setState}
                                 dispatch={dispatch}
                                 actionCreators={actionCreators}
                             />
                         ))}
-                        {/* {keyresults && keyresults.map(k => (
-                            <Keyresult keyresults={k} objId={obj._id}/>
-                        ))} */}
                     {addkeyResult && obj._id === activeObj ? 
                     <Addkeyresult
                         obj={obj}
-                        state={state}
                         dispatch={dispatch}
                         actionCreators={actionCreators}
-                        setState={setState}
                         setaddkeyResult={setaddkeyResult}
                     />
                      : null }

@@ -1,13 +1,9 @@
 import React,{useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import KanbanList from '../dnd/KanbanList'
-import { DragDropContext} from 'react-beautiful-dnd'
 import * as actionCreators from '../../../store/actionCreators'
 import ModalUI from "../../../ModalUI"
 import CloseIcon from '@material-ui/icons/Close'
 import Statements from './Statements'
-import Objective from './Objective'
-import AddBoxIcon from '@material-ui/icons/AddBox'
 import Diagnostics from './Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
 import AdminLandingPage from './AdminLandingPage'
@@ -58,6 +54,7 @@ const Landing = (props) => {
 
     const current_date = Date.now()
 
+
     useEffect(() => {
         if(category === 'catalyzer') {
             userActivity()
@@ -65,13 +62,14 @@ const Landing = (props) => {
         if(current_date >= expire) {
            return setexpireTime(true)
         }
-        getBoards()
-        getLists()
-        getStatements()
-        getObjectives()
-        getUsers()
-        getValues()
+            getBoards()
+            getLists()
+            getStatements()
+            getObjectives()
+            getUsers()
+            getValues()
     },[])
+
 
     const dispatch = useDispatch()
     
@@ -94,7 +92,7 @@ const Landing = (props) => {
     const current_board = _boards && _boards.slice(-1).pop()
     const current_boardID = current_board && current_board._id
     const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
-    const quarter1 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 1)
+    const quarter1 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 1 && el.archive === false)
     const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2)
     const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3)
     const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4)

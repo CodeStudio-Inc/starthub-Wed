@@ -4,6 +4,7 @@
 	align-items: flex-start;
 	background: #eee;
 	height: 100vh;
+	overflow-y: scroll;
 }
 
 .rev h1 {
@@ -20,5 +21,5 @@
 	left: 15%;
 	margin-top: 2.5rem;
 	height: 100vh;
-	overflow-y: scroll;
+	/* overflow-y: scroll;s */
 }

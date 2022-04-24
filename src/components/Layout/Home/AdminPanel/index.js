@@ -1,7 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import KanbanList from './AdminList'
-import { DragDropContext} from 'react-beautiful-dnd'
+import CloseIcon from '@material-ui/icons/Close'
 import * as actionCreators from '../../../store/actionCreators'
 import ModalUI from '../../../ModalUI'
 import Objective from './AdminObjective'
@@ -18,14 +17,23 @@ const AdminPanel = (props) => {
     const [expireTime, setexpireTime] = useState(false)
     const [activeCard, setActiveCard] = useState({})
     const [archive, setArchive] = useState(false)
-    const [modal, setModal] = useState(false)
-    const [objModal, setobjModal] = useState(false)
+    const [quarter1Obj, setQuarter1Obj] = useState(false)
+    const [quarter2Obj, setQuarter2Obj] = useState(false)
+    const [quarter3Obj, setQuarter3Obj] = useState(false)
+    const [quarter4Obj, setQuarter4Obj] = useState(false)
+
+    const [state, setState] = useState({
+        vision: '',
+        mission: '',
+        objective: '',
+        quarter: ''
+    })
 
     const startupId = props.location.state.data._id
     const username = props.location.state.data.username
     const category = props.location.state.data.category
     const base_key = props.location.state.data.base_key
-    // console.log(props)
+    // console.log(state)
 
     const lists = useSelector(state => state.admin.lists)
     const Boards = useSelector(state => state.admin.boards)
@@ -57,17 +65,16 @@ const AdminPanel = (props) => {
     const dispatch = useDispatch()
 
     const openEditModal = () => setOpen(true)
-    const openModal = () => setModal(true)
 
     const _boards = Boards.filter(el => el.creator === startupId && el.boardType !== 'Lean Canvas')
     const current_board = _boards && _boards.slice(-1).pop()
     const current_boardID = current_board && current_board._id
     const filteredObjs = objectives && objectives.filter(el => el.boardId ===  current_boardID )
     const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
-    const quarter1 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 1)
-    const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2)
-    const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3)
-    const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4)
+    const quarter1 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 1 && el.archive === false)
+    const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2 && el.archive === false)
+    const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3 && el.archive === false)
+    const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4 && el.archive === false)
     
     const getBoards = () => dispatch(actionCreators.getAdminBoard(startupId))
     const getLists = () => dispatch(actionCreators.getAdminLists(startupId ))
@@ -76,7 +83,7 @@ const AdminPanel = (props) => {
     const getValues = () => dispatch(actionCreators.getAdminValues(startupId))
     
     const todoLists = lists && lists.filter(el => el.creator === startupId && el.boardId ===  current_boardID && el.archive === false)
-    // console.log(quarter1,'llll')
+    // console.log(startupId,'llll')
     // console.log(todoLists,'bbb')
 
 
@@ -107,6 +114,23 @@ const AdminPanel = (props) => {
             props.history.push('/')
     }
 
+    const checkInput = state.objective !== '' && state.quarter
+
+    const addObjective = () => {
+        dispatch(actionCreators.addAdminObjectives(current_boardID, state.objective, state.quarter, startupId, (res) => {
+            if (res.success) {
+                setQuarter1Obj(false)
+                setQuarter2Obj(false)
+                setQuarter3Obj(false)
+                setQuarter4Obj(false)
+                setState({
+                    objective: '',
+                    quarter: ''
+                })
+            }
+        }))
+    }
+
 
     return (
         <div className="landing-container">
@@ -118,6 +142,178 @@ const AdminPanel = (props) => {
                 </div>
             </ModalUI>
             : null}
+            {quarter1Obj ?
+                <ModalUI>
+                    <div className="create-modal">
+                        <div className="create-header">
+                            <h3>Create Quarter 1 Objective</h3>
+                            <CloseIcon
+                                className="create-icon"
+                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+                                onClick={() => {
+                                    setQuarter1Obj(false)
+                                    setState({
+                                        objective: '',
+                                        quarter: ''
+                                    })
+                                }}
+                            />
+                        </div>
+                        <div className="create-form">
+                            <input
+                                type="text"
+                                placeholder="Enter objective name"
+                                value={state.objective}
+                                onChange={(e) => setState({ ...state, objective: e.target.value })}
+                                onFocus={() => {
+                                    setState({
+                                        quarter: 1
+                                    })
+                                }}
+                            />
+                            <button
+                                onClick={addObjective}
+                                style={{
+                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+                                }}
+                                disabled={checkInput ? false : true}
+                            >
+                                {loading ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : 'Save'}
+                            </button>
+                        </div>
+                    </div>
+                </ModalUI>
+                : null}
+            {quarter2Obj ?
+                <ModalUI>
+                    <div className="create-modal">
+                        <div className="create-header">
+                            <h3>Create Quarter 2 Objective</h3>
+                            <CloseIcon
+                                className="create-icon"
+                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+                                onClick={() => {
+                                    setQuarter2Obj(false)
+                                    setState({
+                                        objective: '',
+                                        quarter: ''
+                                    })
+                                }}
+                            />
+                        </div>
+                        <div className="create-form">
+                            <input
+                                type="text"
+                                placeholder="Enter objective name"
+                                value={state.objective}
+                                onChange={(e) => setState({ ...state, objective: e.target.value })}
+                                onFocus={() => {
+                                    setState({
+                                        quarter: 2
+                                    })
+                                }}
+                            />
+                            <button
+                                onClick={addObjective}
+                                style={{
+                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+                                }}
+                                disabled={checkInput ? false : true}
+                            >
+                                {loading ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : 'Save'}
+                            </button>
+                        </div>
+                    </div>
+                </ModalUI>
+                : null}
+            {quarter3Obj ?
+                <ModalUI>
+                    <div className="create-modal">
+                        <div className="create-header">
+                            <h3>Create Quarter 3 Objective</h3>
+                            <CloseIcon
+                                className="create-icon"
+                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+                                onClick={() => {
+                                    setQuarter3Obj(false)
+                                    setState({
+                                        objective: '',
+                                        quarter: ''
+                                    })
+                                }}
+                            />
+                        </div>
+                        <div className="create-form">
+                            <input
+                                type="text"
+                                placeholder="Enter objective name"
+                                value={state.objective}
+                                onChange={(e) => setState({ ...state, objective: e.target.value })}
+                                onFocus={() => {
+                                    setState({
+                                        quarter: 3
+                                    })
+                                }}
+                            />
+                            <button
+                                onClick={addObjective}
+                                style={{
+                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+                                }}
+                                disabled={checkInput ? false : true}
+                            >
+                                {loading ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : 'Save'}
+                            </button>
+                        </div>
+                    </div>
+                </ModalUI>
+                : null}
+            {quarter4Obj ?
+                <ModalUI>
+                    <div className="create-modal">
+                        <div className="create-header">
+                            <h3>Create Quarter 4 Objective</h3>
+                            <CloseIcon
+                                className="create-icon"
+                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+                                onClick={() => {
+                                    setQuarter4Obj(false)
+                                    setState({
+                                        objective: '',
+                                        quarter: ''
+                                    })
+                                }}
+                            />
+                        </div>
+                        <div className="create-form">
+                            <input
+                                type="text"
+                                placeholder="Enter objective name"
+                                value={state.objective}
+                                onChange={(e) => setState({ ...state, objective: e.target.value })}
+                                onFocus={() => {
+                                    setState({
+                                        quarter: 4
+                                    })
+                                }}
+                            />
+                            <button
+                                onClick={addObjective}
+                                style={{
+                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+                                }}
+                                disabled={checkInput ? false : true}
+                            >
+                                {loading ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : 'Save'}
+                            </button>
+                        </div>
+                    </div>
+                </ModalUI>
+                : null}
             {category === 'internal' ? null :
             <div className="admin-nav">
                 <h2>{username.toUpperCase()}</h2>
@@ -140,11 +336,16 @@ const AdminPanel = (props) => {
                         setActiveCard={setActiveCard}
                         setArchive={setArchive}
                         archive={archive}
+                        openQuarter1Obj={() => setQuarter1Obj(true)}
+                        openQuarter2Obj={() => setQuarter2Obj(true)}
+                        openQuarter3Obj={() => setQuarter3Obj(true)}
+                        openQuarter4Obj={() => setQuarter4Obj(true)}
                         quarter1={quarter1}
                         quarter2={quarter2}
                         quarter3={quarter3}
                         quarter4={quarter4}
                         svg={svg}
+                        startupId={startupId}
                     />
                 </div>
                 {category === 'internal' ? null : 

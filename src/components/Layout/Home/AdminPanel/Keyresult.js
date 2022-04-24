@@ -2,8 +2,9 @@ import React,{useState} from 'react'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 import CancelIcon from '@material-ui/icons/Cancel'
+import EditIcon from '@material-ui/icons/Edit'
 
-const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
+const Keyresult = ({ k, dispatch, actionCreators, svg, loading, startupId}) => {
 
     // console.log(state)
 
@@ -11,7 +12,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
     const [activekeyResult, setactiveKeyresult] = useState('')
     const [state, setState] = useState({
         keyresult: k.description,
-        measureOfSuccess: 0,
+        measureOfSuccess: '',
     })
     const [progress, setProgress] = useState(false)
     const [message, setMessage] = useState(false)
@@ -34,7 +35,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                                 onFocus={() => setMessage('Press enter to save')}
                                 onKeyUp={(e) => {
                                         if (e.key === 'Enter' && state.keyresult) {
-                                            dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
+                                            dispatch(actionCreators.editAdminkeyResult(state.keyresult, state.measureOfSuccess, k.dateCreated, k.objId, startupId, (res) => {
                                                 if(res.success) {
                                                     seteditkeyResult(false)
                                                     setMessage('')
@@ -51,7 +52,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                             {loading && activekeyResult === k.objId ? <p style={{color:'#dfa126'}}>Saving please wait...</p>  : <p style={{color:'#dfa126'}}>{message}</p>}
                         </div>
                     : null}
-                    {/* {editkeyResult && activekeyResult === k.objId ? null :
+                    {editkeyResult && activekeyResult === k.objId ? null :
                         <EditIcon 
                         className="edit-stmt-icon" 
                         style={{ fontSize: '20px'}} 
@@ -59,7 +60,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                             setactiveKeyresult(k.objId)
                             seteditkeyResult(true)
                         }} 
-                    />} */}
+                    />}
                     {editkeyResult && activekeyResult === k.objId ?
                         <CancelIcon 
                         className="edit-stmt-icon" 
@@ -72,6 +73,8 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     <Box sx={{ width: 150 }}>
                     <Slider
                         defaultValue={k.measureOfSuccess}
+                        valueLabelDisplay="auto"
+                        size='small'
                         onChange={(e) => {
                             setState({ ...state, measureOfSuccess: e.target.value })
                             setactiveKeyresult(k.objId)
@@ -81,11 +84,16 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     </Box>
                     {progress && activekeyResult === k.objId ? null : <h4>{k.measureOfSuccess}%</h4>}
                     {progress && activekeyResult === k.objId ?  <h4>{state.measureOfSuccess}%</h4> : null}
+                    <button
+                        onClick={() => {
+                                dispatch(actionCreators.deleteAdminKeyResult(k.objId, k._id, startupId))
+                        }}
+                    >Delete</button>
                     </div>
                     {progress && activekeyResult === k.objId  ? 
                     <button 
                         onClick={() => {
-                        dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess,k.dateCreated, (res) => {
+                                dispatch(actionCreators.editAdminkeyResult(state.keyresult, state.measureOfSuccess.toString(), k.dateCreated, k.objId, startupId, (res) => {
                             if(res.success) {
                                 setProgress(false)
                                 setactiveKeyresult(k.objId)

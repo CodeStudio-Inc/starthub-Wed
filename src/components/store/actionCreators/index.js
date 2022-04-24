@@ -50,10 +50,12 @@ export {
     addObjective,
     getObjective,
     deleteObjective,
+    archiveObjective,
     addkeyResult,
     editStatement,
     editObjective,
-    editkeyResult
+    editkeyResult,
+    deleteKeyResult
 } from './requests'
 
 export { 
@@ -67,7 +69,14 @@ export {
     archiveAdminList,
     unarchiveAdminList,
     getAdminStatements,
+    addAdminObjectives,
+    editAdminObjective,
     getAdminObjectives,
+    deleteAdminObjective,
+    archiveAdminObjective,
+    addAdminkeyResult,
+    editAdminkeyResult,
+    deleteAdminKeyResult,
     getAdminValues,
     addFlate,
     addFlateratePayment,

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
 
@@ -17,8 +18,6 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
     })
     const [progress, setProgress] = useState(false)
     const [message, setMessage] = useState(false)
-
-    // console.log(state.measureOfSuccess.toString())
 
     return (
         <div style={{width:'100%'}}>
@@ -79,6 +78,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     <div className="objective-slider-row">
                     <Box sx={{ width: 150 }}>
                     <Slider
+                        size='small'
                         defaultValue={k.measureOfSuccess}
                         valueLabelDisplay="auto"
                         onChange={(e) => {
@@ -90,6 +90,11 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     </Box>
                     {progress && activekeyResult === k.objId ? null : <h4>{k.measureOfSuccess}%</h4>}
                     {progress && activekeyResult === k.objId ?  <h4>{state.measureOfSuccess}%</h4> : null}
+                    <button
+                        onClick={() => {
+                                dispatch(actionCreators.deleteKeyResult(k.objId,k._id))    
+                        }}
+                    >Delete</button>
                     </div>
                     {progress && activekeyResult === k.objId  ? 
                     <button 

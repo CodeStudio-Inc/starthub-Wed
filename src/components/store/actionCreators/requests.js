@@ -1185,11 +1185,11 @@ export const getObjective = () => {
             const token = getState().auth.token
 
             axios.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/objectives', {
-            headers: {
-                ContentType: 'Application/json',
-                'Access-Control-Allow-Origin': '*',
-                Authorization: token
-            }
+                headers: {
+                    ContentType: 'Application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: token
+                }
         })
         .then(res => {
             // console.log(res.data.objs)
@@ -1259,7 +1259,37 @@ export const deleteObjective = (id) => {
     }
 }
 
-export const addkeyResult = (description, measureOfSuccess,objId,callback) => {
+export const archiveObjective = (id) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const data = {
+            archive:''
+        }
+
+        const token = getState().auth.token
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/archive-obj/${id}`,data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                // callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const addkeyResult = (description, measureOfSuccess,objId,controller,callback) => {
     return(dispatch, getState) => {
 
         dispatch(loadAction())
@@ -1273,6 +1303,7 @@ export const addkeyResult = (description, measureOfSuccess,objId,callback) => {
             }
 
             axios.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/keyresult',data, {
+            signal: controller.signal,
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -1320,6 +1351,35 @@ export const editkeyResult = (id, description, measureOfSuccess,dateCreated, cal
         .catch(error => {
             console.log(error)
         })
+    }
+}
+
+export const deleteKeyResult = (id, krId) => {
+    return (dispatch, getState) => {
+        
+        dispatch(loadAction())
+
+        const data = {
+            krId
+        }
+        const token = getState().auth.token
+
+        axios.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/keyresult/${id}/${krId}`,{
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                // callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 }
 

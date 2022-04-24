@@ -1,8 +1,27 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
-const Addkeyresult = ({obj,state, dispatch, actionCreators,setState,setaddkeyResult}) => {
+const Addkeyresult = ({obj, dispatch, actionCreators,setaddkeyResult}) => {
+
+    const [state, setState] = useState({
+        keyresult: '',
+        measureOfSuccess: 0
+    })
+
+    let controller = new AbortController()
+
+    useEffect(() => {
+     
+        return () =>  {
+            controller.abort('Aborting')
+        }
+    }, [])
+
+    // console.log(state.measureOfSuccess)
+    
+    
+
     return (
         <div key={obj._id} className="objective-row">
             <div className="objective-column">
@@ -21,8 +40,10 @@ const Addkeyresult = ({obj,state, dispatch, actionCreators,setState,setaddkeyRes
                 <div className="objective-slider-row">
                     <Box sx={{ width: 200 }}>
                     <Slider
-                        defaultValue={state.measureOfSuccess}
+                        size='small'
+                        value={state.measureOfSuccess}
                         onChange={(e) => setState({ ...state, measureOfSuccess: e.target.value })}
+                        valueLabelDisplay="auto"
                     />
                     </Box>
                     <h4>{state.measureOfSuccess}%</h4>
@@ -30,12 +51,12 @@ const Addkeyresult = ({obj,state, dispatch, actionCreators,setState,setaddkeyRes
             </div>
             <button 
             onClick={() => {
-                dispatch(actionCreators.addkeyResult(state.keyresult, state.measureOfSuccess, obj._id, (res) => {
+                dispatch(actionCreators.addkeyResult(state.keyresult, state.measureOfSuccess.toString(), obj._id, controller, (res) => {
                     if(res.success) {
                         setaddkeyResult(false)
                         setState({
                             keyresult:'',
-                            measureOfSuccess:''
+                            measureOfSuccess:0
                         })
                     }
                 }))

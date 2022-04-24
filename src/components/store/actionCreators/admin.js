@@ -181,6 +181,67 @@ export const getAdminStatements = (userId) => {
     }
 }
 
+export const addAdminObjectives = (boardId, description, quarter, startupId,callback) => {
+    return (dispatch, getState) => {
+        dispatch(loadAction())
+        const token = getState().auth.token
+
+        const data = {
+            description,
+            quarter,
+            startupId
+        }
+
+        axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/objective/${boardId}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const editAdminObjective = (id, description, startupId, callback) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        const data = {
+            description,
+            startupId
+        }
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/admin/objective/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
 export const getAdminObjectives = (userId) => {
     return (dispatch, getState) => {
         dispatch(loadAction())
@@ -196,6 +257,157 @@ export const getAdminObjectives = (userId) => {
             .then(res => {
                 // console.log(res)
                 dispatch(setObjectives(res.data.objs))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const deleteAdminObjective = (objId, startupId) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        axios.delete(`https://starthubafrica-api.el.r.appspot.com/admin/objective/${objId}/${startupId}`, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                // callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const archiveAdminObjective = (id, startupId) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const data = {
+            archive: '',
+            startupId
+        }
+
+        const token = getState().auth.token
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/admin/archive-obj/${id}`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                // callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const addAdminkeyResult = (description, measureOfSuccess, objId, startupId, controller, callback) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        const data = {
+            description,
+            measureOfSuccess,
+            objId,
+            startupId
+        }
+
+        axios.post('https://starthubafrica-api.el.r.appspot.com/admin/keyresult', data, {
+            signal: controller.signal,
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const editAdminkeyResult = (description, measureOfSuccess, dateCreated, objId, startupId, callback) => {
+    return (dispatch, getState) => {
+        console.log(dateCreated,measureOfSuccess)
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        const data = {
+            description,
+            measureOfSuccess,
+            dateCreated,
+            objId,
+            startupId
+        }
+
+        axios.put(`https://starthubafrica-api.el.r.appspot.com/admin/keyresult`, data, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                callback({ success: true, res: res })
+                dispatch(stopLoader())
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const deleteAdminKeyResult = (objId, krId, startupId) => {
+    return (dispatch, getState) => {
+
+        dispatch(loadAction())
+
+        const token = getState().auth.token
+
+        axios.delete(`https://starthubafrica-api.el.r.appspot.com/admin/keyresult/${objId}/${krId}/${startupId}`, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setObjectives(res.data.objs))
+                // callback({ success: true, res: res })
+                dispatch(stopLoader())
             })
             .catch(error => {
                 console.log(error)

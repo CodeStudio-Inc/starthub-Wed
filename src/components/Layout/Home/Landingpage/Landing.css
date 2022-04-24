@@ -320,7 +320,7 @@
 	width: 85%;
 	height: 100px;
 	margin-top: 1rem;
-	margin-bottom: 2rem;
+	margin-bottom: 4rem;
 	background: rgba(87, 84, 84, 0.26);
 	border: 2px dashed rgba(0, 0, 0, 0.4);
 }
@@ -512,6 +512,12 @@
 
 .objective-slider-row h4 {
 	margin-left: 0.5rem;
+}
+
+.objective-slider-row button {
+	border: none;
+	outline: none;
+	background: none;
 }
 
 .slider-column {

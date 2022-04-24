@@ -1,12 +1,13 @@
 import React,{useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import CancelIcon from '@material-ui/icons/Cancel'
+import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'
 import Addkeyresult from './Addkeyresult'
 
-const AdminObjective = ({objectives, svg, keyresults}) =>  {
+const AdminObjective = ({ objectives, svg, startupId}) =>  {
 
     const [addkeyResult,setaddkeyResult] = useState(false)
     const [editObjective, seteditObjetive] = useState(false)
@@ -26,7 +27,7 @@ const AdminObjective = ({objectives, svg, keyresults}) =>  {
 
     const dispatch = useDispatch()
 
-    // console.log(objstate.objective)
+    // console.log(objectives)
 
     return (
         <div  className="objective-bg">
@@ -34,52 +35,54 @@ const AdminObjective = ({objectives, svg, keyresults}) =>  {
                 <div key={index} className="objective">
                     <div className="objective-header">
                         <p>Objective {index >= 0 ? index + 1 : null}</p>
-                        {loading && obj._id === activeObj ? 
-                        <img src={svg} style={{ width:"30px", height:"30px"}}/> : null
-                        //     <DeleteIcon  
-                        //         className="edit-stmt-icon" 
-                        //         style={{ fontSize: '20px'}} 
-                        //         onClick={() => {
-                        //         setactiveObj(obj._id)
-                        //         dispatch(actionCreators.deleteObjective(obj._id))
-                        //     }}
-                        // />
+                        {loading && obj._id === activeObj ?
+                            <img src={svg} style={{ width: "30px", height: "30px" }} /> :
+                            <DeleteIcon
+                                className="edit-stmt-icon"
+                                style={{ fontSize: '20px' }}
+                                onClick={() => {
+                                    setactiveObj(obj._id)
+                                    dispatch(actionCreators.archiveAdminObjective(obj._id, startupId))
+                                }}
+                            />
                         }
                     </div>
                         <div className="objective-description">
-                            {editObjective && obj._id === activeObj ? 
-                            <input
-                                type="text"
-                                placeholder="Enter new Objective"
-                                value={objstate.objective}
-                                onFocus={() => setObjstate({objective: obj.description})}
-                                onChange={(e) => setObjstate({ ...objstate, objective: e.target.value })}
-                                onKeyUp={(e) => {
-                                    if (e.key === 'Enter' && objstate.objective) {
-                                        dispatch(actionCreators.editObjective(obj._id, objstate.objective, (res) => {
-                                            if(res.success) {
-                                                seteditObjetive(false)
-                                                setObjstate({
-                                                    objective:''
-                                                })
-                                            }
-                                        }))
+                        <div className="objective-description-row">
+                            {editObjective && obj._id === activeObj ?
+                                <input
+                                    type="text"
+                                    placeholder="Enter new Objective"
+                                    value={objstate.objective}
+                                    onFocus={() => setObjstate({ objective: obj.description })}
+                                    onChange={(e) => setObjstate({ ...objstate, objective: e.target.value })}
+                                    onKeyUp={(e) => {
+                                        if (e.key === 'Enter' && objstate.objective) {
+                                            dispatch(actionCreators.editAdminObjective(obj._id, objstate.objective, startupId, (res) => {
+                                                if (res.success) {
+                                                    seteditObjetive(false)
+                                                    setObjstate({
+                                                        objective: ''
+                                                    })
+                                                }
+                                            }))
                                         }
                                     }}
-                            /> : null}
+                                /> : null}
                             {editObjective && obj._id === activeObj ? null : <h2>{obj.description}</h2>}
-                            {/* {editObjective ? null : 
-                                <EditIcon 
-                                    className="edit-stmt-icon" style={{ fontSize: '20px'}} 
+                            {editObjective ? null :
+                                <EditIcon
+                                    className="edit-stmt-icon" style={{ fontSize: '20px' }}
                                     onClick={() => {
-                                    setactiveObj(obj._id)
-                                    seteditObjetive(true)
-                                }} 
-                            />} */}
-                            {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => seteditObjetive(false)} className="edit-stmt-icon" style={{ fontSize: '20px'}} /> : null}
-                            {loading && obj._id === activeObj ? <img src={svg} style={{ width:"30px", height:"30px"}}/> : null}
+                                        setactiveObj(obj._id)
+                                        seteditObjetive(true)
+                                    }}
+                                />}
+                            {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => seteditObjetive(false)} className="edit-stmt-icon" style={{ fontSize: '20px' }} /> : null}
+                            {loading && obj._id === activeObj ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : null}
+                        </div>    
                         <div className="objective-description-row">
-                            <h4>{obj.objPercentage}%</h4>
+                            <h4>{!obj.objPercentage ? 0 : Math.round(obj.objPercentage)}%</h4>
                             <p>covered</p>
                         </div>
                         </div>
@@ -92,6 +95,7 @@ const AdminObjective = ({objectives, svg, keyresults}) =>  {
                                 setState={setState}
                                 dispatch={dispatch}
                                 actionCreators={actionCreators}
+                                startupId={startupId}
                             />
                         ))}
                         {/* {keyresults && keyresults.map(k => (
@@ -105,6 +109,7 @@ const AdminObjective = ({objectives, svg, keyresults}) =>  {
                         actionCreators={actionCreators}
                         setState={setState}
                         setaddkeyResult={setaddkeyResult}
+                        startupId={startupId}
                     />
                      : null }
                     {addkeyResult ? null : 
