@@ -2,6 +2,7 @@ import React from 'react'
 import KanbanList from './AdminList'
 import { DragDropContext } from 'react-beautiful-dnd'
 import Objective from './AdminObjective'
+import Overview from './Overview'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import { List } from 'react-content-loader'
 import { Tabs } from 'antd'
@@ -93,6 +94,9 @@ const QuotaTabs = ({
                         <p onClick={openQuarter4Obj}>Click to add new Objective</p>
                     </div>
                 }
+            </TabPane>
+            <TabPane tab="Overview" key="6" className="tab-pane">
+                <Overview/>
             </TabPane>
         </Tabs>
     )

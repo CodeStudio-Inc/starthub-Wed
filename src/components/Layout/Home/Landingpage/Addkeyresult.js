@@ -1,8 +1,11 @@
 import React,{useState, useEffect} from 'react'
+import {useSelector} from 'react-redux'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
 const Addkeyresult = ({obj, dispatch, actionCreators,setaddkeyResult}) => {
+
+    const loading = useSelector(state => state.requests.loading)
 
     const [state, setState] = useState({
         keyresult: '',
@@ -61,7 +64,7 @@ const Addkeyresult = ({obj, dispatch, actionCreators,setaddkeyResult}) => {
                     }
                 }))
             }}
-            >save</button>
+            >{loading ? 'Saving' : 'Save'}</button>
         </div>
     )
 }

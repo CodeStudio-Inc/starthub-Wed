@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 import CancelIcon from '@material-ui/icons/Cancel'
@@ -13,11 +13,20 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading, startupId}) => {
     const [state, setState] = useState({
         keyresult: k.description,
         measureOfSuccess: '',
+        message:''
     })
     const [progress, setProgress] = useState(false)
     const [message, setMessage] = useState(false)
+    const [visible, setVisible] = useState(false)
+    const [btn, setBtn] = useState(false)
 
-    // console.log(activekeyResult,k.objId, loading)
+    useEffect(() => {
+        setState({
+            message:''
+        })
+    },[])
+
+    // console.log(state.message,'ll')
 
     return (
         <div style={{width:'100%'}}>
@@ -32,23 +41,49 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading, startupId}) => {
                                 placeholder="Enter Key result"
                                 value={state.keyresult}
                                 onChange={(e) => setState({ ...state, keyresult: e.target.value })}
-                                onFocus={() => setMessage('Press enter to save')}
-                                onKeyUp={(e) => {
-                                        if (e.key === 'Enter' && state.keyresult) {
-                                            dispatch(actionCreators.editAdminkeyResult(state.keyresult, state.measureOfSuccess, k.dateCreated, k.objId, startupId, (res) => {
-                                                if(res.success) {
+                                onFocus={() => {
+                                    setBtn(true)
+                                    setState({
+                                        keyresult: k.description
+                                    })
+                                }}
+                                // onKeyUp={(e) => {
+                                //         if (e.key === 'Enter' && state.keyresult) {
+                                //             dispatch(actionCreators.editAdminkeyResult(state.keyresult, state.measureOfSuccess, k.dateCreated, k.objId, startupId, (res) => {
+                                //                 if(res.success) {
+                                //                     seteditkeyResult(false)
+                                //                     setMessage('')
+                                //                     setactiveKeyresult(k.objId)
+                                //                     setState({
+                                //                         keyresult:'',
+                                //                         measureOfSuccess:''
+                                //                     })
+                                //                 }
+                                //             }))
+                                //             }
+                                //         }}
+                            /> 
+                            {btn ?
+                                <button
+                                    onClick={() => {
+                                        if (state.keyresult) {
+                                            setBtn(false)
+                                            dispatch(actionCreators.editAdminkeyResult(state.keyresult, state.measureOfSuccess, k.dateCreated, k.objId, startupId,  (res) => {
+                                                if (res.success) {
                                                     seteditkeyResult(false)
-                                                    setMessage('')
                                                     setactiveKeyresult(k.objId)
                                                     setState({
-                                                        keyresult:'',
-                                                        measureOfSuccess:''
+                                                        keyresult: '',
+                                                        measureOfSuccess: ''
                                                     })
                                                 }
                                             }))
-                                            }
-                                        }}
-                            /> 
+                                        }
+                                    }}
+                                >
+                                    Save
+                                </button> : null
+                            }
                             {loading && activekeyResult === k.objId ? <p style={{color:'#dfa126'}}>Saving please wait...</p>  : <p style={{color:'#dfa126'}}>{message}</p>}
                         </div>
                     : null}
@@ -84,11 +119,18 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading, startupId}) => {
                     </Box>
                     {progress && activekeyResult === k.objId ? null : <h4>{k.measureOfSuccess}%</h4>}
                     {progress && activekeyResult === k.objId ?  <h4>{state.measureOfSuccess}%</h4> : null}
-                    <button
+                    {!visible && !state.message ? <button
                         onClick={() => {
-                                dispatch(actionCreators.deleteAdminKeyResult(k.objId, k._id, startupId))
+                                setactiveKeyresult(k.objId)
+                                dispatch(actionCreators.deleteAdminKeyResult(k.objId, k._id, startupId, (res) => {
+                                    if(res.success === false){
+                                        setState({ message: 'Not Authorised to delete'})
+                                    }
+                                }))
                         }}
-                    >Delete</button>
+                        >{activekeyResult === k.objId && loading ? 'Deleting' : 'Delete'}
+                    </button> : null}
+                    <p style={{marginLeft:'5px',marginTop:'0',marginBottom:'0'}}>{state.message}</p>
                     </div>
                     {progress && activekeyResult === k.objId  ? 
                     <button 

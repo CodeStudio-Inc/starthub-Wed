@@ -93,9 +93,9 @@ const Landing = (props) => {
     const current_boardID = current_board && current_board._id
     const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
     const quarter1 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 1 && el.archive === false)
-    const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2)
-    const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3)
-    const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4)
+    const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2 && el.archive === false)
+    const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3 && el.archive === false)
+    const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4 && el.archive === false)
     // console.log(quarter1)
 
     const todoLists = lists && lists.filter(el => el.boardId ===  current_boardID && el.archive === false)

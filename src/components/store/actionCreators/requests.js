@@ -1261,7 +1261,7 @@ export const deleteObjective = (id) => {
 
 export const archiveObjective = (id) => {
     return (dispatch, getState) => {
-
+        
         dispatch(loadAction())
 
         const data = {
@@ -1278,7 +1278,7 @@ export const archiveObjective = (id) => {
             }
         })
             .then(res => {
-                // console.log(res)
+                console.log(res)
                 dispatch(setObjectives(res.data.objs))
                 // callback({ success: true, res: res })
                 dispatch(stopLoader())

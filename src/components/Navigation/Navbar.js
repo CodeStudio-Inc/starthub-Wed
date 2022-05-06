@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
-import { Menu, Dropdown } from 'antd'
+import { Menu, Dropdown, message, Space } from 'antd'
 import { DownOutlined, UserOutlined } from '@ant-design/icons'
 import * as actionCreators from '../store/actionCreators'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -115,6 +115,30 @@ const Navbar = (props) => {
         </Menu>
     );
 
+    const onClick = ({ key }) => {
+        message.info(`Click on item ${key}`);
+    };
+
+    const menu = (
+        <Menu
+            onClick={onClick}
+            items={[
+                {
+                    label: '1st menu item',
+                    key: '1',
+                },
+                {
+                    label: '2nd menu item',
+                    key: '2',
+                },
+                {
+                    label: '3rd menu item',
+                    key: '3',
+                },
+            ]}
+        />
+    );
+
     return (
         <div className="nav-container">
             {openSidebar ? <Sidebar closeSidebar={closeSidebar}/> : null}
@@ -131,6 +155,16 @@ const Navbar = (props) => {
                 </div>
                 {admin ? 
                 <div className="links">
+                    <div className='link-box active'>
+                        <Dropdown overlay={menu}>
+                            <a onClick={e => e.preventDefault()}>
+                                <h4 onClick={() => message.info('yeeyyy!')}>
+                                    Overview
+                                    <DownOutlined />
+                                </h4>
+                            </a>
+                        </Dropdown>
+                    </div>
                 {adminAppState.objects.map((element, index) => (
                     <div
                         key={index}
@@ -145,9 +179,6 @@ const Navbar = (props) => {
                     </div>
                 ))
             }
-                {/* <h4>Lean Canvas</h4>
-                <h4>Dashboard</h4>
-            <h4>Learn</h4> */}
             </div>
             :
             <div className="links">

@@ -264,7 +264,7 @@ export const getAdminObjectives = (userId) => {
     }
 }
 
-export const deleteAdminObjective = (objId, startupId) => {
+export const deleteAdminObjective = (objId, startupId, callback) => {
     return (dispatch, getState) => {
 
         dispatch(loadAction())
@@ -281,7 +281,7 @@ export const deleteAdminObjective = (objId, startupId) => {
             .then(res => {
                 // console.log(res)
                 dispatch(setObjectives(res.data.objs))
-                // callback({ success: true, res: res })
+                callback({ success: true, res: res })
                 dispatch(stopLoader())
             })
             .catch(error => {
@@ -389,7 +389,7 @@ export const editAdminkeyResult = (description, measureOfSuccess, dateCreated, o
     }
 }
 
-export const deleteAdminKeyResult = (objId, krId, startupId) => {
+export const deleteAdminKeyResult = (objId, krId, startupId, callback) => {
     return (dispatch, getState) => {
 
         dispatch(loadAction())
@@ -410,6 +410,7 @@ export const deleteAdminKeyResult = (objId, krId, startupId) => {
                 dispatch(stopLoader())
             })
             .catch(error => {
+                callback({ success: false, res: error })
                 console.log(error)
             })
     }

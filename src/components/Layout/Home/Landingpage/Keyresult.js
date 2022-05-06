@@ -15,9 +15,10 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
     const [state, setState] = useState({
         keyresult: k.description,
         measureOfSuccess: '',
+        message:''
     })
     const [progress, setProgress] = useState(false)
-    const [message, setMessage] = useState(false)
+    const [visible, setVisible] = useState(false)
 
     return (
         <div style={{width:'100%'}}>
@@ -90,11 +91,18 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     </Box>
                     {progress && activekeyResult === k.objId ? null : <h4>{k.measureOfSuccess}%</h4>}
                     {progress && activekeyResult === k.objId ?  <h4>{state.measureOfSuccess}%</h4> : null}
-                    <button
-                        onClick={() => {
-                                dispatch(actionCreators.deleteKeyResult(k.objId,k._id))    
-                        }}
-                    >Delete</button>
+                    {!visible && !state.message ? <button
+                            onClick={() => {
+                                setactiveKeyresult(k.objId)
+                                dispatch(actionCreators.deleteKeyResult(k.objId, k._id, (res) => {
+                                    if (res.success === false) {
+                                        setState({ message: 'Not Authorised to delete' })
+                                    }
+                                }))
+                            }}
+                        >{activekeyResult === k.objId && loading ? 'Deleting' : 'Delete'}
+                        </button> : null}
+                        <p style={{ marginLeft: '5px', marginTop: '0', marginBottom: '0' }}>{state.message}</p>
                     </div>
                     {progress && activekeyResult === k.objId  ? 
                     <button 
