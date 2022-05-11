@@ -72,7 +72,7 @@ const Landing = (props) => {
             getObjectives()
             getUsers()
             getValues()
-        ReactGA.pageview(window.location.pathname)
+        ReactGA.pageview(window.location.pathname + window.location.search)
         
     },[])
 
