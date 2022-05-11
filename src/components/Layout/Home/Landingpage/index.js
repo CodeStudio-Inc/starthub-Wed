@@ -9,6 +9,8 @@ import svg from '../../../../assets/images/spinner.svg'
 import AdminLandingPage from './AdminLandingPage'
 import { List  } from 'react-content-loader'
 import QuotaTabs from './QuotaTabs'
+import ReactGA from 'react-ga'
+import GAEventsTracker from '../../../Hooks/GAEventsTracker'
 
 import './Landing.css'
 const Landing = (props) => {
@@ -22,6 +24,9 @@ const Landing = (props) => {
     const [quarter2Obj, setQuarter2Obj] = useState(false)
     const [quarter3Obj, setQuarter3Obj] = useState(false)
     const [quarter4Obj, setQuarter4Obj] = useState(false)
+
+    const UseGAEventsTracker = GAEventsTracker("Objectives")
+    const UseGAEventsTracker2 = GAEventsTracker("Vision & Mission Statements")
 
     const [state, setState] = useState({
         vision: '',
@@ -53,8 +58,7 @@ const Landing = (props) => {
     // console.log(state.quarter,'jj')
 
     const current_date = Date.now()
-
-
+    
     useEffect(() => {
         if(category === 'catalyzer') {
             userActivity()
@@ -68,6 +72,8 @@ const Landing = (props) => {
             getObjectives()
             getUsers()
             getValues()
+        ReactGA.pageview(window.location.pathname)
+        
     },[])
 
 
@@ -131,6 +137,7 @@ const Landing = (props) => {
 
     const addStatement = () => {
         dispatch(actionCreators.addStatement(current_board._id,state.vision, state.mission, (res) => {
+            UseGAEventsTracker2("addStatements", state.vision)
             if(res.success) {
                 setModal(false)
                 setState({
@@ -145,6 +152,7 @@ const Landing = (props) => {
 
     const addObjective = () => {
         dispatch(actionCreators.addObjective(current_board._id,state.objective,state.quarter, (res) => {
+            UseGAEventsTracker("addObjective", state.objective)
             if(res.success) {
                 setQuarter1Obj(false)
                 setQuarter2Obj(false)

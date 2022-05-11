@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
 import * as actionCreators from '../../..//store/actionCreators'
+import GAEventsTracker from '../../../Hooks/GAEventsTracker'
 
  const Statements = ({statements, svg}) => {
 
@@ -12,6 +13,8 @@ import * as actionCreators from '../../..//store/actionCreators'
         _vision: statements[0].vision,
         _mission: statements[0].mission
     })
+
+     const UseGAEventsTracker = GAEventsTracker("Vision & Mission Statements")
 
     const _statements = useSelector(state => state.requests.statements)
     const loading = useSelector(state => state.requests.loading)
@@ -32,6 +35,7 @@ import * as actionCreators from '../../..//store/actionCreators'
                             onKeyUp={(e) => {
                                         if (e.key === 'Enter' && state._vision) {
                                             dispatch(actionCreators.editStatement(_statements[0]._id, state._vision, state._mission, (res) => {
+                                                UseGAEventsTracker("editVisionStatement", state._vision)
                                                 if(res.success) setVision(false)
                                             }))
                                         }
@@ -54,6 +58,7 @@ import * as actionCreators from '../../..//store/actionCreators'
                             onKeyUp={(e) => {
                                         if (e.key === 'Enter' && state._mission) {
                                             dispatch(actionCreators.editStatement(_statements[0]._id, state._vision, state._mission, (res) => {
+                                                UseGAEventsTracker("editMissionStatement", state._mission)
                                                 if(res.success) setMission(false)
                                             }))
                                         }

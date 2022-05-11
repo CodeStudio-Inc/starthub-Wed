@@ -10,6 +10,9 @@ import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import rootReducer from './components/store/reducers'
+import ReactGA from 'react-ga'
+
+ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID)
 
 require('./components/store/firebase')
 

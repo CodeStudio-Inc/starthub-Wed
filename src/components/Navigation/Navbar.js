@@ -15,6 +15,7 @@ import LocalAtmIcon from '@material-ui/icons/LocalAtm'
 import NewspaperIcon from '@mui/icons-material/Newspaper'
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import PaymentIcon from '@mui/icons-material/Payment'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 
 import './Navigation.css'
 const Navbar = (props) => {
@@ -37,7 +38,7 @@ const Navbar = (props) => {
     const [appState, setAppState] = useState({
         actionObject: null,
         objects: [
-            // { id: 1, title: "Schedule", route: "/carlender", icon:<ScheduleIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 1, title: "Schedule", route: "/carlender", icon: <CalendarMonthIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 2, title: "Metrics", route: "/overview", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 3, title: "Lean Canvas", route: "/canvas-board", icon:<DeveloperBoardIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 4, title: "OKRs", route: "/", icon:<ListAltIcon className="link-icon" style={{ fontSize: '25px' }}/> },

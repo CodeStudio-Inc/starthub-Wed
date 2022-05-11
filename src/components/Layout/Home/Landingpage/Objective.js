@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'
 import Addkeyresult from './Addkeyresult'
+import GAEventsTracker from '../../../Hooks/GAEventsTracker'
 
 const Objective = ({objectives, svg}) =>  {
 
@@ -15,6 +16,8 @@ const Objective = ({objectives, svg}) =>  {
     const [currentobjEdit,setcurrentobjEdit] = useState('')
 
     const loading = useSelector(state => state.requests.loading)
+
+    const UseGAEventsTracker = GAEventsTracker("Objectives")
 
 
     const [objstate, setObjstate] = useState({
@@ -55,6 +58,7 @@ const Objective = ({objectives, svg}) =>  {
                                 onKeyUp={(e) => {
                                     if (e.key === 'Enter' && objstate.objective) {
                                         dispatch(actionCreators.editObjective(obj._id, objstate.objective, (res) => {
+                                            UseGAEventsTracker("edit objective",objstate.objective)
                                             if(res.success) {
                                                 setEditObjective(false)
                                                 setObjstate({

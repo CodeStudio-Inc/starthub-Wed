@@ -5,9 +5,9 @@ import './Carlender.css'
 const AndrewSchedule = () => {
 
     return (
-        <div className="main-container">
-            <div className="right-column-carlender">
-                <InlineWidget styles={{ width: '90%', height: '90vh' }} url="https://calendly.com/atugumestarthubafrica" />
+        <div className="calendar-main">
+            <div className="calendar-container">
+                <InlineWidget styles={{ width: '90%', height: '90vh' }} url="https://calendly.com/bonyta" />
             </div>
         </div>
     )

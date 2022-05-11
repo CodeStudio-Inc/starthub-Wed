@@ -4,6 +4,8 @@ import Slider from '@mui/material/Slider'
 import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
 import DeleteIcon from '@material-ui/icons/Delete'
+import GAEventsTracker from '../../../Hooks/GAEventsTracker'
+import { message } from 'antd'
 
 const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
 
@@ -19,6 +21,8 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
     })
     const [progress, setProgress] = useState(false)
     const [visible, setVisible] = useState(false)
+
+    const UseGAEventsTracker = GAEventsTracker("Keyresults")
 
     return (
         <div style={{width:'100%'}}>
@@ -41,6 +45,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                                     if (state.keyresult) {
                                         setBtn(false)
                                         dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess, k.dateCreated, (res) => {
+                                            UseGAEventsTracker("editKeyresultDescription", state.keyresult)
                                             if (res.success) {
                                                 seteditkeyResult(false)
                                                 setactiveKeyresult(k.objId)
@@ -94,6 +99,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     {!visible && !state.message ? <button
                             onClick={() => {
                                 setactiveKeyresult(k.objId)
+                                UseGAEventsTracker("deleteKeyresult", k.description)
                                 dispatch(actionCreators.deleteKeyResult(k.objId, k._id, (res) => {
                                     if (res.success === false) {
                                         setState({ message: 'Not Authorised to delete' })
@@ -108,6 +114,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     <button 
                         onClick={() => {
                         dispatch(actionCreators.editkeyResult(k.objId, state.keyresult, state.measureOfSuccess.toString(),k.dateCreated, (res) => {
+                            UseGAEventsTracker("adjustMeasureOfKeyresultSuccess", state.measureOfSuccess)
                             if(res.success) {
                                 setProgress(false)
                                 setactiveKeyresult(k.objId)

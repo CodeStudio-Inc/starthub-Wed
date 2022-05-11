@@ -6,6 +6,7 @@ import PriorityHighIcon from '@mui/icons-material/PriorityHigh'
 import moment from 'moment'
 import { Line } from 'react-chartjs-2'
 import * as actionCreators from '../../store/actionCreators'
+import ReactGA from 'react-ga'
 
 import './Dashboard.css'
 const Dashboard = (props) => {
@@ -106,6 +107,7 @@ const Dashboard = (props) => {
            return setOpen(true)
         }
         dispatch(actionCreators.getMetricsData())
+        ReactGA.pageview(window.location.pathname)
     }, [])
     const handleLogoutClick = () => {
             dispatch(actionCreators.removeUser())

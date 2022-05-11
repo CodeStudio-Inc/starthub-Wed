@@ -13,7 +13,7 @@ import moment from 'moment'
 import Loader from '../../ModalUI/Loader'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close'
-
+import ReactGA from 'react-ga'
 
 import './Canvas.css'
 const Home = (props) => {
@@ -91,6 +91,7 @@ const Home = (props) => {
         }
         dispatch(actionCreators.getBoards())
         getLists()
+        ReactGA.pageview(window.location.pathname)
         // emptyboardarrayCheck()
     }, [])
 

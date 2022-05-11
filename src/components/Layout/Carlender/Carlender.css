@@ -1,28 +1,33 @@
-.main-container {
+.calendar-main {
   width: 100%;
   display: flex;
-  align-items: center;
-}
-
-.left-column {
-  width: 15%;
-}
-
-.right-column-carlender {
-  width: 95%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  align-items: flex-start;
   background: #eee;
   height: 100vh;
 }
 
-.right-column-carlender h2 {
-  text-align: center;
+.calendar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 85%;
+  /* height: 100vh; */
+  padding: 0.5rem;
+  left: 15%;
+  overflow-y: scroll;
 }
 
-.right-column-carlender h3 {
+
+.calendar-container  h2 {
   text-align: center;
+  margin: 0;
+}
+
+.calendar-container  h3 {
+  text-align: center;
+  margin: 0;
 }
 
 .carlender {

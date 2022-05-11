@@ -4,6 +4,7 @@ import * as actionCreators from '../../store/actionCreators'
 import logo from '../../../assets/images/logo.png'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
+import GAEventsTracker from '../../Hooks/GAEventsTracker'
 
 import './Auth.css'
 const Login = (props) => {
@@ -18,6 +19,8 @@ const Login = (props) => {
     })
 
     const loading = useSelector(state => state.auth.loading)
+
+    const UseGAEventsTracker = GAEventsTracker("User Activity")
     
     
     const dispatch = useDispatch()
@@ -27,9 +30,11 @@ const Login = (props) => {
     },[])
 
     const handleLogin = () => {
+        UseGAEventsTracker("loggedIn", new Date())
         dispatch(actionCreators.login(state.email, state.password, (res) => {
             if (res.success === false) {
                 setState({ message: 'The password is invalid or the user does not exist' })
+                window.location.reload()
             }
         }))
     }

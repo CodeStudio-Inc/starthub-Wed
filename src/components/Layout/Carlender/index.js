@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Sidebar from '../../Navigation/Sidebar'
+import ReactGA from 'react-ga'
+import bonita from '../../../assets/images/bonita.png'
 
 import './Carlender.css'
-const index = (props) => {
+const Calendar = (props) => {
+
+    useEffect(() => {
+        ReactGA.pageview(window.location.pathname)
+    },[])
 
 
     const handleAndrewNavigation = () => {
@@ -17,14 +23,14 @@ const index = (props) => {
         props.history.push('/timothy-schedule')
     }
 
-    const handleEdisonNavigation = () => {
-        props.history.push('/edison-schedule')
+    const handleBonitaNavigation = () => {
+        props.history.push('/andrew-schedule')
     }
 
 
     return (
-        <div className="main-container">
-            <div className="right-column-carlender">
+        <div className="calendar-main ">
+            <div className="calendar-container ">
                 <h2>Schedule Meetings with Mentors</h2>
                 <h3>You can also schedule meetings with the entire Team</h3>
                 <div className="schedule-card-row" >
@@ -44,26 +50,26 @@ const index = (props) => {
                             <button onClick={handleTimothyNavigation}>Schedule Meeting</button>
                         </div>
                     </div>
-                    <div className="schedule-card" onClick={handleEdisonNavigation}>
-                        <img src="https://res.cloudinary.com/dwa3soopc/image/upload/v1627298255/Starthub/Edison_h7ok8f.jpg" />
+                    <div className="schedule-card" onClick={handleAndrewNavigation}>
+                        <img src={bonita} />
                         <div className="card-txt">
-                            <h3>Edison Niwamanya</h3>
+                            <h3>Nanziri Bonita</h3>
                             <p>StartHub Africa Catalyzer Mentor</p>
-                            <button onClick={handleEdisonNavigation}>Schedule Meeting</button>
+                            <button onClick={handleAndrewNavigation}>Schedule Meeting</button>
                         </div>
                     </div>
-                    <div className="schedule-card" onClick={handleAndrewNavigation}>
+                    {/* <div className="schedule-card" onClick={handleAndrewNavigation}>
                         <img src="https://res.cloudinary.com/dwa3soopc/image/upload/v1615551884/AndrewTugume2.jpg" />
                         <div className="card-txt">
                             <h3>Andrew Tugume</h3>
                             <p>StartHub Africa Catalyzer Mentor</p>
                             <button onClick={handleAndrewNavigation}>Schedule Meeting</button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
     )
 }
 
-export default index
+export default Calendar

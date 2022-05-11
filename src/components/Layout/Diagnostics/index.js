@@ -7,6 +7,7 @@ import { FormStep } from './MultipleStepForm'
 import {teams, vision, proposition, product, market, business, investment} from './Steps'
 import * as actionCreators from '../../store/actionCreators'
 import svg from '../../../assets/images/spinner.svg'
+import ReactGA from 'react-ga'
 
 import './Diagnostics.css'
  const Diagnostics = () => {
@@ -37,6 +38,7 @@ import './Diagnostics.css'
 
      useEffect(() =>{
          dispatch(actionCreators.getValues())
+         ReactGA.pageview(window.location.pathname)
      },[])
 
     const handleTeamsOnChange = (e) => {

@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
+import GAEventsTracker from '../../../Hooks/GAEventsTracker'
 
 const Addkeyresult = ({obj, dispatch, actionCreators,setaddkeyResult}) => {
 
@@ -11,6 +12,8 @@ const Addkeyresult = ({obj, dispatch, actionCreators,setaddkeyResult}) => {
         keyresult: '',
         measureOfSuccess: 0
     })
+
+    const UseGAEventsTracker = GAEventsTracker("Keyresults")
 
     let controller = new AbortController()
 
@@ -55,6 +58,7 @@ const Addkeyresult = ({obj, dispatch, actionCreators,setaddkeyResult}) => {
             <button 
             onClick={() => {
                 dispatch(actionCreators.addkeyResult(state.keyresult, state.measureOfSuccess.toString(), obj._id, controller, (res) => {
+                    UseGAEventsTracker("addKeyresult", state.keyresult)
                     if(res.success) {
                         setaddkeyResult(false)
                         setState({

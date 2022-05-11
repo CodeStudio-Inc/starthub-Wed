@@ -833,3 +833,31 @@ export const getRevenueShares = () => {
             })
     }
 }
+
+// export const sendEmail = (email) => {
+//     return (dispatch, getState) => {
+//         console.log(email)
+//         dispatch(loadAction())
+
+//         const token = getState().auth.token
+
+//         const data = {
+//             email: 'Stuartkal@gmail.com'
+//         }
+
+//         axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/send-email`, data, {
+//             headers: {
+//                 ContentType: 'Application/json',
+//                 'Access-Control-Allow-Origin': '*',
+//                 Authorization: token
+//             }
+//         })
+//             .then(res => {
+//                 console.log(res)
+//             })
+//             .catch(error => {
+//                 console.log(error)
+//             })
+
+//     }
+// }

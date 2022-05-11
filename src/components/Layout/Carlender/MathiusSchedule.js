@@ -6,8 +6,8 @@ const MathiusSchedule = () => {
 
 
     return (
-        <div className="main-container">
-            <div className="right-column-carlender">
+        <div className="calendar-main">
+            <div className="calendar-container">
                 <InlineWidget styles={{ width: '90%', height: '90vh' }} url="https://calendly.com/m-moebius" />
             </div>
         </div>

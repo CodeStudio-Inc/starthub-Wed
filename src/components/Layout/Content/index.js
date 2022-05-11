@@ -1,10 +1,15 @@
-import React,{useRef, useState} from 'react'
+import React,{useEffect, useRef, useState} from 'react'
 import logo from '../../../assets/images/logo.png'
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft'
+import ReactGA from 'react-ga'
 
 import './Content.css'
 const Content = () =>  {
+
+    useEffect(() => {
+        ReactGA.pageview(window.location.pathname)
+    },[])
 
     const data = [
         {
