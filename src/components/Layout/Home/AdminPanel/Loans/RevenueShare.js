@@ -4,7 +4,7 @@ import { isInteger } from 'formik'
 import { message, Table } from 'antd'
 import * as actionCreators from '../../../../store/actionCreators'
 import { Spin } from 'antd'
-import emailjs from '@emailjs/browser'
+// import emailjs from '@emailjs/browser'
 import apiKeys from './emailKeys'
 
 import './Loans.css'
@@ -52,18 +52,18 @@ const RevenueShare = () => {
         getRevShares()
     },[])
 
-    const sendEmail = (e) => {
-        e.preventDefault()
-        // setLoading(true)
-        emailjs.sendForm(apiKeys.SERVICE_ID, apiKeys.TEMPLATE_ID, form.current, apiKeys.USER_ID)
-            .then((result) => {
-                message.info("Message Sent, We will get back to you shortly", result.text)
-                // setLoading(false)
-            },
-                (error) => {
-                    message.info("An error occurred, Please try again", error.text)
-                })
-    }
+    // const sendEmail = (e) => {
+    //     e.preventDefault()
+    //     // setLoading(true)
+    //     emailjs.sendForm(apiKeys.SERVICE_ID, apiKeys.TEMPLATE_ID, form.current, apiKeys.USER_ID)
+    //         .then((result) => {
+    //             message.info("Message Sent, We will get back to you shortly", result.text)
+    //             // setLoading(false)
+    //         },
+    //             (error) => {
+    //                 message.info("An error occurred, Please try again", error.text)
+    //             })
+    // }
 
     const columns = [
         {
@@ -97,7 +97,7 @@ const RevenueShare = () => {
                 <div className="loans-form">
                     <div className="loan-form">
                     <h2>Revenue Share</h2>
-                    <form ref={form} onSubmit={sendEmail}>
+                    {/* <form ref={form} onSubmit={sendEmail}>
                         <input
                             type="text"
                             name="Fname"
@@ -105,7 +105,7 @@ const RevenueShare = () => {
                             // hidden
                         />
                         <button>Send email</button>
-                    </form>
+                    </form> */}
                         <div className="loan-separator"/>
                     <div className="loans-row">
                         <div className="row-child">
