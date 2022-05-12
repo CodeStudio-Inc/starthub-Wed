@@ -98,7 +98,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                     {progress && activekeyResult === k.objId ?  <h4>{state.measureOfSuccess}%</h4> : null}
                     {!visible && !state.message ? <button
                             onClick={() => {
-                                setactiveKeyresult(k.objId)
+                                setactiveKeyresult(k._id)
                                 UseGAEventsTracker("deleteKeyresult", k.description)
                                 dispatch(actionCreators.deleteKeyResult(k.objId, k._id, (res) => {
                                     if (res.success === false) {
@@ -106,7 +106,7 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                                     }
                                 }))
                             }}
-                        >{activekeyResult === k.objId && loading ? 'Deleting' : 'Delete'}
+                        >{loading && activekeyResult === k._id ? 'Deleting' : 'Delete'}
                         </button> : null}
                         <p style={{ marginLeft: '5px', marginTop: '0', marginBottom: '0' }}>{state.message}</p>
                     </div>
@@ -117,7 +117,6 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
                             UseGAEventsTracker("adjustMeasureOfKeyresultSuccess", state.measureOfSuccess)
                             if(res.success) {
                                 setProgress(false)
-                                setactiveKeyresult(k.objId)
                                 setState({
                                     keyresult:'',
                                     measureOfSuccess:''

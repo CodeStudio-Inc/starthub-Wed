@@ -121,14 +121,14 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading, startupId}) => {
                     {progress && activekeyResult === k.objId ?  <h4>{state.measureOfSuccess}%</h4> : null}
                     {!visible && !state.message ? <button
                         onClick={() => {
-                                setactiveKeyresult(k.objId)
+                                setactiveKeyresult(k._id)
                                 dispatch(actionCreators.deleteAdminKeyResult(k.objId, k._id, startupId, (res) => {
                                     if(res.success === false){
                                         setState({ message: 'Not Authorised to delete'})
                                     }
                                 }))
                         }}
-                        >{activekeyResult === k.objId && loading ? 'Deleting' : 'Delete'}
+                        >{activekeyResult === k._id && loading ? 'Deleting' : 'Delete'}
                     </button> : null}
                     <p style={{marginLeft:'5px',marginTop:'0',marginBottom:'0'}}>{state.message}</p>
                     </div>
