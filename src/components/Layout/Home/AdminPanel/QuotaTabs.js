@@ -37,7 +37,7 @@ const QuotaTabs = ({
             centered
             tabBarStyle={{ color: '#dfa126' }}
         >
-            <TabPane tab="Objectives Q1" key="1">
+            <TabPane tab="Objectives Q1" key="1" className="tab-pane">
                 <Objective objectives={quarter1} startupId={startupId} svg={svg} />
                 {objectives && objectives.length === 3 ? null :
                     <div className="add-objective">
@@ -73,7 +73,7 @@ const QuotaTabs = ({
                     </div>
                 }
             </TabPane>
-            <TabPane tab="Todos" key="5" className="tab-pane">
+            <TabPane tab="Todos" key="5">
                 <DragDropContext onDragEnd={onDragEnd}>
                     <div className="landing-scroll">
                         <div style={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}>
