@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import CancelIcon from '@material-ui/icons/Cancel'
 import EditIcon from '@material-ui/icons/Edit'
+import SaveIcon from '@mui/icons-material/Save'
 import DeleteIcon from '@material-ui/icons/Delete'
 import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'
@@ -78,8 +79,24 @@ const AdminObjective = ({ objectives, svg, startupId}) =>  {
                                         seteditObjetive(true)
                                     }}
                                 />}
+                            {editObjective && obj._id === activeObj ? 
+                            <p 
+                            style={{marginRight:'5px' }}
+                            onClick={() => {
+                                if (objstate.objective) {
+                                    dispatch(actionCreators.editAdminObjective(obj._id, objstate.objective, startupId, (res) => {
+                                        if (res.success) {
+                                            seteditObjetive(false)
+                                            setObjstate({
+                                                objective: ''
+                                            })
+                                        }
+                                    }))
+                                }
+                            }}
+                            >save</p> : null}
                             {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => seteditObjetive(false)} className="edit-stmt-icon" style={{ fontSize: '20px' }} /> : null}
-                            {loading && obj._id === activeObj ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : null}
+                            {loading && obj._id === activeObj ? <p>updating...</p> : null}
                         </div>    
                         <div className="objective-description-row">
                             <h4>{!obj.objPercentage ? 0 : Math.round(obj.objPercentage)}%</h4>

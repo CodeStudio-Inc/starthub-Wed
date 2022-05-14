@@ -55,7 +55,7 @@ const Landing = (props) => {
      const filtereUsers = users.filter(el => el.admin === false)
     
     const last_value = filter_value && filter_value.slice(-1).pop()
-    // console.log(state.quarter,'jj')
+    // console.log(lists,'jj')
 
     const current_date = Date.now()
     
@@ -81,7 +81,7 @@ const Landing = (props) => {
     
 
     const getBoards = () => dispatch(actionCreators.getBoards())
-    const getLists = () => dispatch(actionCreators.getListsOnBoard( () => { }))
+    const getLists = () => dispatch(actionCreators.getListsOnBoard())
     const getStatements = () => dispatch(actionCreators.getStatement())
     const getObjectives = () => dispatch(actionCreators.getObjective())
     const getUsers = () => dispatch(actionCreators.getUsers())
@@ -93,7 +93,7 @@ const Landing = (props) => {
     const adminNavigate = (data) => props.history.push('/admin',{data:data})
 
     
-    const new_lists = lists.filter(el => el.creator === userId)
+    const new_lists = lists && lists.filter(el => el.creator === userId)
     const _boards = Boards.filter(el => el.creator === userId && el.boardType !== 'Lean Canvas')
     const current_board = _boards && _boards.slice(-1).pop()
     const current_boardID = current_board && current_board._id
@@ -102,7 +102,7 @@ const Landing = (props) => {
     const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2 && el.archive === false)
     const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3 && el.archive === false)
     const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4 && el.archive === false)
-    // console.log(quarter1)
+    // console.log(new_lists)
 
     const todoLists = lists && lists.filter(el => el.boardId ===  current_boardID && el.archive === false)
 
@@ -125,9 +125,9 @@ const Landing = (props) => {
                 const newDestList = todoLists.find(el => el._id === destination.droppableId)
                 const newSrcList = todoLists.find(el => el._id === source.droppableId)
 
-                dispatch(actionCreators.cardIndexUpdate(source.droppableId, destination.droppableId,newSrcList, newDestList, () => {
-                    getLists()
-                } ))
+                dispatch(actionCreators.cardIndexUpdate(source.droppableId, destination.droppableId,newSrcList, newDestList,(res) => {
+                    if(res.succes) getLists()
+                }))
      }
 
      const handleLogoutClick = () => {

@@ -37,7 +37,43 @@ const QuotaTabs = ({
             centered
             tabBarStyle={{ color: '#dfa126' }}
         >
-            <TabPane tab="Todos" key="1">
+            <TabPane tab="Objectives Q1" key="1">
+                <Objective objectives={quarter1} startupId={startupId} svg={svg} />
+                {objectives && objectives.length === 3 ? null :
+                    <div className="add-objective">
+                        <AddBoxIcon onClick={openQuarter1Obj} className="add-obj-icon" style={{ fontSize: '60px' }} />
+                        <p onClick={openQuarter1Obj}>Click to add new Objective</p>
+                    </div>
+                }
+            </TabPane>
+            <TabPane tab="Objectives Q2" key="2" className="tab-pane">
+                <Objective objectives={quarter2} startupId={startupId} svg={svg} />
+                {objectives && objectives.length === 3 ? null :
+                    <div className="add-objective">
+                        <AddBoxIcon onClick={openQuarter2Obj} className="add-obj-icon" style={{ fontSize: '60px' }} />
+                        <p onClick={openQuarter2Obj}>Click to add new Objective</p>
+                    </div>
+                }
+            </TabPane>
+            <TabPane tab="Objectives Q3" key="3" className="tab-pane">
+                <Objective objectives={quarter3} startupId={startupId} svg={svg} />
+                {objectives && objectives.length === 3 ? null :
+                    <div className="add-objective">
+                        <AddBoxIcon onClick={openQuarter3Obj} className="add-obj-icon" style={{ fontSize: '60px' }} />
+                        <p onClick={openQuarter3Obj}>Click to add new Objective</p>
+                    </div>
+                }
+            </TabPane>
+            <TabPane tab="Objectives Q4" key="4" className="tab-pane">
+                <Objective objectives={quarter4} startupId={startupId} svg={svg} />
+                {objectives && objectives.length === 3 ? null :
+                    <div className="add-objective">
+                        <AddBoxIcon onClick={openQuarter4Obj} className="add-obj-icon" style={{ fontSize: '60px' }} />
+                        <p onClick={openQuarter4Obj}>Click to add new Objective</p>
+                    </div>
+                }
+            </TabPane>
+            <TabPane tab="Todos" key="5" className="tab-pane">
                 <DragDropContext onDragEnd={onDragEnd}>
                     <div className="landing-scroll">
                         <div style={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}>
@@ -58,45 +94,6 @@ const QuotaTabs = ({
                         </div>
                     </div>
                 </DragDropContext>
-            </TabPane>
-            <TabPane tab="Objectives Q1" key="2" className="tab-pane">
-                <Objective objectives={quarter1} startupId={startupId} svg={svg} />
-                {objectives && objectives.length === 3 ? null :
-                    <div className="add-objective">
-                        <AddBoxIcon onClick={openQuarter1Obj} className="add-obj-icon" style={{ fontSize: '60px' }} />
-                        <p onClick={openQuarter1Obj}>Click to add new Objective</p>
-                    </div>
-                }
-            </TabPane>
-            <TabPane tab="Objectives Q2" key="3" className="tab-pane">
-                <Objective objectives={quarter2} startupId={startupId} svg={svg} />
-                {objectives && objectives.length === 3 ? null :
-                    <div className="add-objective">
-                        <AddBoxIcon onClick={openQuarter2Obj} className="add-obj-icon" style={{ fontSize: '60px' }} />
-                        <p onClick={openQuarter2Obj}>Click to add new Objective</p>
-                    </div>
-                }
-            </TabPane>
-            <TabPane tab="Objectives Q3" key="4" className="tab-pane">
-                <Objective objectives={quarter3} startupId={startupId} svg={svg} />
-                {objectives && objectives.length === 3 ? null :
-                    <div className="add-objective">
-                        <AddBoxIcon onClick={openQuarter3Obj} className="add-obj-icon" style={{ fontSize: '60px' }} />
-                        <p onClick={openQuarter3Obj}>Click to add new Objective</p>
-                    </div>
-                }
-            </TabPane>
-            <TabPane tab="Objectives Q4" key="5" className="tab-pane">
-                <Objective objectives={quarter4} startupId={startupId} svg={svg} />
-                {objectives && objectives.length === 3 ? null :
-                    <div className="add-objective">
-                        <AddBoxIcon onClick={openQuarter4Obj} className="add-obj-icon" style={{ fontSize: '60px' }} />
-                        <p onClick={openQuarter4Obj}>Click to add new Objective</p>
-                    </div>
-                }
-            </TabPane>
-            <TabPane tab="Overview" key="6" className="tab-pane">
-                <Overview/>
             </TabPane>
         </Tabs>
     )

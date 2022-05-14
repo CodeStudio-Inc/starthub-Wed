@@ -221,7 +221,7 @@ const requests = (state = initialState, action) => {
                 const listEndIndex = stateLists.findIndex(list => dest === list._id)
                  stateLists[listEndIndex].cards.splice(eIndx, 0, card)
                 // lists = [...state.lists.map(list => dest === list._id ? ({...list, cards: destCards}) :list)]
-                console.log('Lists---', lists)
+                // console.log('Lists---', lists)
                     lists = stateLists;
 
             }

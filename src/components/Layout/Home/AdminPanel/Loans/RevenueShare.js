@@ -65,6 +65,7 @@ const RevenueShare = () => {
     //             })
     // }
 
+
     const columns = [
         {
             title: 'Startup Name',
@@ -104,8 +105,8 @@ const RevenueShare = () => {
                             // value="Kalema"
                             // hidden
                         />
-                        <button>Send email</button>
                     </form> */}
+                    {/* <button onClick={sendEmail}>Send email</button> */}
                         <div className="loan-separator"/>
                     <div className="loans-row">
                         <div className="row-child">

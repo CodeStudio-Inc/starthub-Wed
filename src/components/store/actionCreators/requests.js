@@ -239,7 +239,7 @@ export const dragCardWithInList = (
     }
 }
 
-export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, callback) => {
+export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList,callback) => {
     return (dispatch, getState) => {
         // dispatch(loadAction())
         let lists = [...getState().requests.lists]
@@ -266,9 +266,9 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, c
             }
         })
             .then(res => {
-                // console.log(res.data, 'fsd')
-                dispatch(setLists(res.data.lists))
-                callback()
+                // console.log(res.data.lists, 'fsd')
+                // dispatch(setLists(res.data.lists))
+                callback({ success: true, res: res })
             })
             .catch(err => {
                 console.log(err)
@@ -672,7 +672,7 @@ export const getBoards = () => {
     }
 }
 
-export const getListsOnBoard = (callback) => {
+export const getListsOnBoard = () => {
     return (dispatch, getState) => {
         // dispatch(loadAction())
         const token = getState().auth.token
@@ -689,7 +689,6 @@ export const getListsOnBoard = (callback) => {
                 dispatch(setLists(res.data.list))
                 dispatch(setCanvasLists(res.data.list))
                 dispatch(setMilestoneLists(res.data.list))
-                callback({ success: true, res: res })
             })
             .catch(error => {
                 console.log(error)

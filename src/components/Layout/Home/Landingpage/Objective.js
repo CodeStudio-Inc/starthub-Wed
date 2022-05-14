@@ -77,8 +77,25 @@ const Objective = ({objectives, svg}) =>  {
                                     setEditObjective(true)
                                 }} 
                             />}
-                            {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => setEditObjective(false)} className="edit-stmt-icon" style={{ fontSize: '20px'}} /> : null}
-                            {loading && obj._id === activeObj ? <img src={svg} style={{ width:"30px", height:"30px"}}/> : null}
+                            {editObjective && obj._id === activeObj ? 
+                                <p
+                                    style={{ marginRight: '5px' }}
+                                    onClick={() => {
+                                        if (objstate.objective) {
+                                            dispatch(actionCreators.editObjective(obj._id, objstate.objective, (res) => {
+                                                UseGAEventsTracker("edit objective", objstate.objective)
+                                                if (res.success) {
+                                                    setEditObjective(false)
+                                                    setObjstate({
+                                                        objective: ''
+                                                    })
+                                                }
+                                            }))
+                                        }
+                                    }}
+                                >save</p> : null}
+                            {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => setEditObjective(false)} className="edit-stmt-icon" style={{ fontSize: '20px' }} /> : null}
+                            {loading && obj._id === activeObj ? <p style={{ color: '#dfa126' }}>updating...</p> : null}
                             </div>
                         <div className="objective-description-row">
                             <h4>{!obj.objPercentage ? 0 : Math.round(obj.objPercentage)}%</h4>

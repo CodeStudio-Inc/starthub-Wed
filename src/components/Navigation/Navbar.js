@@ -38,10 +38,10 @@ const Navbar = (props) => {
     const [appState, setAppState] = useState({
         actionObject: null,
         objects: [
+            { id: 4, title: "OKRs", route: "/", icon:<ListAltIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 3, title: "Lean Canvas", route: "/canvas-board", icon:<DeveloperBoardIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 1, title: "Schedule", route: "/carlender", icon: <CalendarMonthIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 2, title: "Metrics", route: "/overview", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            { id: 3, title: "Lean Canvas", route: "/canvas-board", icon:<DeveloperBoardIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            { id: 4, title: "OKRs", route: "/", icon:<ListAltIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 5, title: "Diagnostics", route: "/diagnostics", icon:<BuildIcon className="link-icon" style={{ fontSize: '25px' }}/> },
             { id: 6, title: "Content", route: "/content", icon: <NewspaperIcon className="link-icon" style={{ fontSize: '25px' }}/> }
         ]

@@ -35,29 +35,7 @@ const QuotaTabs = ({
           centered
           tabBarStyle={{ color: '#dfa126' }}
       >
-          <TabPane tab="Todos" key="1"> 
-              <DragDropContext onDragEnd={onDragEnd}>
-                  <div className="landing-scroll">
-                    <div style={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}>
-                        {todoLists && todoLists.map(l => (
-                            <KanbanList
-                                key={l._id}
-                                listId={l._id}
-                                title={l.name}
-                                cards={l.cards}
-                                boardId={current_board._id}
-                                callback={getLists}
-                                open={openEditModal}
-                                setActiveCard={setActiveCard}
-                                setArchive={setArchive}
-                                archive={archive}
-                            />
-                        ))}
-                    </div>
-                  </div>
-              </DragDropContext>
-          </TabPane>
-          <TabPane tab="Objectives Q1" key="2" className="tab-pane">
+          <TabPane tab="Objectives Q1" key="1"> 
               <Objective objectives={quarter1} svg={svg} /> 
               {objectives && objectives.length === 3 ? null :
                   <div className="add-objective">
@@ -66,7 +44,7 @@ const QuotaTabs = ({
                   </div>
               }
           </TabPane>
-          <TabPane tab="Objectives Q2" key="3" className="tab-pane">
+          <TabPane tab="Objectives Q2" key="2" className="tab-pane">
               <Objective objectives={quarter2} svg={svg} /> 
               {objectives && objectives.length === 3 ? null :
                   <div className="add-objective">
@@ -75,7 +53,7 @@ const QuotaTabs = ({
                   </div>
               }
           </TabPane>
-          <TabPane tab="Objectives Q3" key="4" className="tab-pane">
+          <TabPane tab="Objectives Q3" key="3" className="tab-pane">
               <Objective objectives={quarter3} svg={svg} /> 
               {objectives && objectives.length === 3 ? null :
                   <div className="add-objective">
@@ -84,7 +62,7 @@ const QuotaTabs = ({
                   </div>
               }
           </TabPane>
-          <TabPane tab="Objectives Q4" key="5" className="tab-pane">
+          <TabPane tab="Objectives Q4" key="4" className="tab-pane">
               <Objective objectives={quarter4} svg={svg} /> 
               {objectives && objectives.length === 3 ? null :
                   <div className="add-objective">
@@ -92,6 +70,28 @@ const QuotaTabs = ({
                       <p onClick={openQuarter4Obj}>Click to add new Objective</p>
                   </div>
               }
+          </TabPane>
+          <TabPane tab="Todos" key="5" className="tab-pane">
+              <DragDropContext onDragEnd={onDragEnd}>
+                  <div className="landing-scroll">
+                      <div style={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}>
+                          {todoLists && todoLists.map(l => (
+                              <KanbanList
+                                  key={l._id}
+                                  listId={l._id}
+                                  title={l.name}
+                                  cards={l.cards}
+                                  boardId={current_board._id}
+                                  callback={getLists}
+                                  open={openEditModal}
+                                  setActiveCard={setActiveCard}
+                                  setArchive={setArchive}
+                                  archive={archive}
+                              />
+                          ))}
+                      </div>
+                  </div>
+              </DragDropContext>
           </TabPane>
       </Tabs>
   )

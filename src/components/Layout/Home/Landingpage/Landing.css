@@ -520,6 +520,15 @@
 	background: none;
 }
 
+.objective-description-row p {
+	color:#dfa126;
+}
+
+.objective-description-row p:hover {
+	cursor: pointer;
+	color: #fed197;
+}
+
 .slider-column {
 	display: flex;
 	align-items: flex-start;
