@@ -72,6 +72,7 @@ export {
     addAdminObjectives,
     editAdminObjective,
     getAdminObjectives,
+    getAllObjectives,
     deleteAdminObjective,
     archiveAdminObjective,
     addAdminkeyResult,

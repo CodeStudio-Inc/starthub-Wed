@@ -137,12 +137,22 @@
 	margin-bottom: 0.5rem;
 }
 
-
 .link-box h4 {
 	color: rgba(0, 0, 0, 0.4);
 	font-weight: 400;
 	margin: 0;
 }
+
+.link-box h3 {
+	color: rgba(0, 0, 0, 0.4);
+	font-weight: 400;
+	margin: 0;
+}
+
+.active:focus h3 {
+	color: #dfa126;
+}
+
 .inactive {
 	color: rgba(0, 0, 0, 0.4);
 }

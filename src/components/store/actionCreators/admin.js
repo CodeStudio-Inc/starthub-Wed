@@ -42,6 +42,13 @@ export const setObjectives = (data) => {
     }
 }
 
+export const setAllObjectives = (data) => {
+    return {
+        type: actions.SET_ALL_OBJECTIVES,
+        data
+    }
+}
+
 export const setValues = (data) => {
     return {
         type: actions.SET_ADMIN_VALUES,
@@ -244,7 +251,7 @@ export const editAdminObjective = (id, description, startupId, callback) => {
 
 export const getAdminObjectives = (userId) => {
     return (dispatch, getState) => {
-        dispatch(loadAction())
+        // dispatch(loadAction())
         const token = getState().auth.token
 
         axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/objectives/${userId}`, {
@@ -257,6 +264,28 @@ export const getAdminObjectives = (userId) => {
             .then(res => {
                 // console.log(res)
                 dispatch(setObjectives(res.data.objs))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const getAllObjectives = () => {
+    return (dispatch, getState) => {
+        // dispatch(loadAction())
+        const token = getState().auth.token
+
+        axios.get(`https://starthubafrica-api.el.r.appspot.com/admin/objectives`, {
+            headers: {
+                ContentType: 'Application/json',
+                'Access-Control-Allow-Origin': '*',
+                Authorization: token
+            }
+        })
+            .then(res => {
+                // console.log(res)
+                dispatch(setAllObjectives(res.data.objs))
             })
             .catch(error => {
                 console.log(error)

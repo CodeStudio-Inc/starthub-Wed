@@ -14,25 +14,19 @@ import BuildIcon from '@material-ui/icons/Build'
 import LocalAtmIcon from '@material-ui/icons/LocalAtm'
 import NewspaperIcon from '@mui/icons-material/Newspaper'
 import EventNoteIcon from '@mui/icons-material/EventNote'
-import PaymentIcon from '@mui/icons-material/Payment'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import AnalyticsIcon from '@mui/icons-material/Analytics'
+import GroupsIcon from '@mui/icons-material/Groups'
 
 import './Navigation.css'
 const Navbar = (props) => {
 
     const Boards = useSelector(state => state.requests.boards)
-    const startup = useSelector(state => state.auth.username)
-    const users = useSelector(state => state.admin.users)
 
-    const category = useSelector(state => state.auth.category)
 
     const [visibleLogout, setVisisbleLogout] = useState(false)
     const [openSidebar, setopenSidebar] = useState(false)
 
-    const page = 'Todo'
-
-    const filtereBoards = Boards.filter(el => el.boardType === page  && el.startup === startup && el.archive === false)
-    const filtereUsers = users.filter(el => el.admin === false)
     // console.log(filtereBoards,'ghj')
 
     const [appState, setAppState] = useState({
@@ -50,10 +44,11 @@ const Navbar = (props) => {
     const [adminAppState, setAdminAppState] = useState({
         actionObject: null,
         objects: [
-            { id: 1, title: "Dashboard", route: "/", icon:<BarChartIcon className="link-icon" style={{ fontSize: '25px' }}/> },
-            { id: 2, title: "Loans", route: "/loans", icon: <LocalAtmIcon className="link-icon" style={{ fontSize: '25px' }} /> },
-            { id: 2, title: "User Activity", route: "/user-activity", icon: <EventNoteIcon className="link-icon" style={{ fontSize: '25px' }} /> },
-            { id: 2, title: "Revenues", route: "/revenues", icon: <PaymentIcon className="link-icon" style={{ fontSize: '25px' }} /> }
+            { id: 1, title: "Startups", route: "/", icon: <GroupsIcon className="link-icon" style={{ fontSize: '25px' }}/> },
+            { id: 2, title: "Overview", route: "/okr-overview", icon: <AnalyticsIcon className="link-icon" style={{ fontSize: '25px' }} /> },
+            { id: 3, title: "Loans", route: "/loans", icon: <LocalAtmIcon className="link-icon" style={{ fontSize: '25px' }} /> },
+            { id: 4, title: "User Activity", route: "/user-activity", icon: <EventNoteIcon className="link-icon" style={{ fontSize: '25px' }} /> },
+            // { id: 2, title: "Revenues", route: "/revenues", icon: <PaymentIcon className="link-icon" style={{ fontSize: '25px' }} /> }
         ]
     })
 
@@ -116,30 +111,6 @@ const Navbar = (props) => {
         </Menu>
     );
 
-    const onClick = ({ key }) => {
-        message.info(`Click on item ${key}`);
-    };
-
-    const menu = (
-        <Menu
-            onClick={onClick}
-            items={[
-                {
-                    label: '1st menu item',
-                    key: '1',
-                },
-                {
-                    label: '2nd menu item',
-                    key: '2',
-                },
-                {
-                    label: '3rd menu item',
-                    key: '3',
-                },
-            ]}
-        />
-    );
-
     return (
         <div className="nav-container">
             {openSidebar ? <Sidebar closeSidebar={closeSidebar}/> : null}
@@ -156,16 +127,6 @@ const Navbar = (props) => {
                 </div>
                 {admin ? 
                 <div className="links">
-                    <div className='link-box active'>
-                        <Dropdown overlay={menu}>
-                            <a onClick={e => e.preventDefault()}>
-                                <h4 onClick={() => message.info('yeeyyy!')}>
-                                    Overview
-                                    <DownOutlined />
-                                </h4>
-                            </a>
-                        </Dropdown>
-                    </div>
                 {adminAppState.objects.map((element, index) => (
                     <div
                         key={index}
@@ -198,43 +159,10 @@ const Navbar = (props) => {
                         </div>
                     ))
                     }
-                    {/* <h4>Lean Canvas</h4>
-                    <h4>Dashboard</h4>
-                    <h4>Learn</h4> */}
                 </div>    
             }
             <div className="link-separator"/>
             {admin ? null : <a href={link} target="blank"><button className="report">Report Metrics</button></a>}
-            {/* {admin ? 
-            <div className="nav-boards">
-                <h3>Boards</h3>
-                <div className="nav-board-row">
-                    {filtereUsers.map(u => (
-                        <div className="nav-board">
-                            <p>{u.username}</p>
-                        </div>
-                    )
-                    )}
-                </div>
-            </div> 
-            :
-            <div className="nav-boards">
-                <h3>Boards</h3>
-                <div className="nav-board-row">
-                    {filtereBoards.map(b => (
-                        <div className="nav-board">
-                            <p>{b.name}</p>
-                        </div>
-                    )
-                    )}
-                </div>
-            </div>
-            } */}
-                {/* <div className="profile">
-                    <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottomCenter" icon={<UserOutlined />}>
-                        <p>{username}</p>
-                    </Dropdown.Button>
-                </div> */}
                 <div className="menu-container">
                     <MenuIcon onClick={() => setopenSidebar(true)}  className="menu" style={{ fontSize: '40px' }} />
                 </div>

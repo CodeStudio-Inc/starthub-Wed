@@ -19,6 +19,7 @@ import RBLoanDetails from '../Layout/Home/AdminPanel/Loans/RBLoanDetails'
 import Content from '../Layout/Content'
 import UserActivity from '../Layout/Home/AdminPanel/UserActivity'
 import Revenues from '../Layout/Home/AdminPanel/Revenues'
+import Overview from '../Layout/Home/AdminPanel/Overview'
 
 const HomeRoutes = () => {
     return (
@@ -43,6 +44,7 @@ const HomeRoutes = () => {
                 <Route path="/content" component={Content} />
                 <Route path="/user-activity" component={UserActivity} />
                 <Route path="/revenues" component={Revenues} />
+                <Route path="/okr-overview" component={Overview} />
             </Switch>
         </BrowserRouter>
     )
