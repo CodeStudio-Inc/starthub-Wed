@@ -48,8 +48,8 @@ const Overview = () => {
 
     //Qiribu overview data filter
     
-    const percentages = Array.from(qiribu, ({ objPercentage }) => objPercentage)
-    const qiribuOverallTotal = percentages.reduce((a, b) => a + b, 0)
+    const percentages = Array.from(qiribu && qiribu, ({ objPercentage }) => objPercentage)
+    const qiribuOverallTotal = percentages && percentages.reduce((a, b) => a + b, 0)
     const qiribuOverallAverage = qiribuOverallTotal / qiribu.length 
 
     console.log(qiribuOverallTotal, qiribuOverallAverage, percentages, qiribu,'lll')    
