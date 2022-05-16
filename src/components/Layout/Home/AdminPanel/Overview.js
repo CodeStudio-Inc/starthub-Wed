@@ -52,18 +52,20 @@ const Overview = () => {
     const qiribuOverallTotal = percentages && percentages.reduce((a, b) => a + b, 0)
     const qiribuOverallAverage = qiribuOverallTotal / qiribu.length 
 
-    console.log(qiribuOverallTotal, qiribuOverallAverage, percentages, qiribu,'lll')    
-    const QiribuQ1 = qiribu.filter(e => e.quarter === 1)
-    const QiribuQ1Average = Array.from(QiribuQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ1.length
+    const overrallPercentage = qiribu.map(e => e.objPercentage).reduce((a, b) => a + b, 0) / qiribu.length
 
-    const QiribuQ2 = qiribu.filter(e => e.quarter === 2)
-    const QiribuQ2Average = Array.from(QiribuQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ2.length
+    console.log(Math.round(overrallPercentage),'lll')    
+    // const QiribuQ1 = qiribu.filter(e => e.quarter === 1)
+    // const QiribuQ1Average = Array.from(QiribuQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ1.length
 
-    const QiribuQ3 = qiribu.filter(e => e.quarter === 3)
-    const QiribuQ3Average = Array.from(QiribuQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ3.length
+    // const QiribuQ2 = qiribu.filter(e => e.quarter === 2)
+    // const QiribuQ2Average = Array.from(QiribuQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ2.length
 
-    const QiribuQ4 = qiribu.filter(e => e.quarter === 4)
-    const QiribuQ4Average = Array.from(QiribuQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ4.length
+    // const QiribuQ3 = qiribu.filter(e => e.quarter === 3)
+    // const QiribuQ3Average = Array.from(QiribuQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ3.length
+
+    // const QiribuQ4 = qiribu.filter(e => e.quarter === 4)
+    // const QiribuQ4Average = Array.from(QiribuQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ4.length
 
     //InoveLabs overview data filter
     // const inoveLabsOverallAverage = Array.from(inoveLabs, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / inoveLabs.length
@@ -251,11 +253,11 @@ const Overview = () => {
             <div className="admin-overview">
                 <div className="admin-overview-row">
                     <Qiribu
-                        overrall={qiribuOverallAverage}
-                        Q1={QiribuQ1Average}
-                        Q2={QiribuQ2Average}
-                        Q3={QiribuQ3Average}
-                        Q4={QiribuQ4Average}
+                        overrall={overrallPercentage}
+                        // Q1={QiribuQ1Average}
+                        // Q2={QiribuQ2Average}
+                        // Q3={QiribuQ3Average}
+                        // Q4={QiribuQ4Average}
                         username={catalyzer[0].username}
                     />
                     {/* <InoveLabs
