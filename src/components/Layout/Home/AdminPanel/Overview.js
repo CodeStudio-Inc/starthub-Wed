@@ -52,9 +52,9 @@ const Overview = () => {
     // const qiribuOverallTotal = percentages && percentages.reduce((a, b) => a + b, 0)
     // const qiribuOverallAverage = qiribuOverallTotal / qiribu.length 
 
-    const overrallPercentage = qiribu.map(e => e.objPercentage).reduce((a, b) => a + b, 0) / qiribu.length
+    const overrallPercentage = qiribu && qiribu.map(e => e.objPercentage).reduce((a, b) => a + b, 0) / qiribu.length
 
-    console.log(Math.round(overrallPercentage),'lll')    
+    // console.log(Math.round(overrallPercentage),'lll')    
     // const QiribuQ1 = qiribu.filter(e => e.quarter === 1)
     // const QiribuQ1Average = Array.from(QiribuQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ1.length
 
