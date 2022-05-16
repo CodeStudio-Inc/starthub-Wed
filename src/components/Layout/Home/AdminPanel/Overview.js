@@ -47,315 +47,308 @@ const Overview = () => {
     const fastMere = all_objectives && all_objectives.filter(e => e.creator === catalyzer[15]._id)
 
     //Qiribu overview data filter
+    const qiribuOverrallPercentage = qiribu && qiribu.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / qiribu.length
     
-    // const percentages = Array.from(qiribu && qiribu, ({ objPercentage }) => objPercentage)
-    // const qiribuOverallTotal = percentages && percentages.reduce((a, b) => a + b, 0)
-    // const qiribuOverallAverage = qiribuOverallTotal / qiribu.length 
+    const QiribuQ1 = qiribu.filter(e => e.quarter === 1)
+    const QiribuQ1Percentage = QiribuQ1 && QiribuQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / QiribuQ1.length
 
-    const overrallPercentage = qiribu && qiribu.map(e => e.objPercentage).reduce((a, b) => a + b, 0) / qiribu.length
+    const QiribuQ2 = qiribu.filter(e => e.quarter === 2)
+    const QiribuQ2Percentage = QiribuQ2 && QiribuQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / QiribuQ2.length
 
-    // console.log(Math.round(overrallPercentage),'lll')    
-    // const QiribuQ1 = qiribu.filter(e => e.quarter === 1)
-    // const QiribuQ1Average = Array.from(QiribuQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ1.length
+    const QiribuQ3 = qiribu.filter(e => e.quarter === 3)
+    const QiribuQ3Percentage = QiribuQ3 && QiribuQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / QiribuQ3.length
 
-    // const QiribuQ2 = qiribu.filter(e => e.quarter === 2)
-    // const QiribuQ2Average = Array.from(QiribuQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ2.length
-
-    // const QiribuQ3 = qiribu.filter(e => e.quarter === 3)
-    // const QiribuQ3Average = Array.from(QiribuQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ3.length
-
-    // const QiribuQ4 = qiribu.filter(e => e.quarter === 4)
-    // const QiribuQ4Average = Array.from(QiribuQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ4.length
+    const QiribuQ4 = qiribu.filter(e => e.quarter === 4)
+    const QiribuQ4Percentage = QiribuQ4 && QiribuQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / QiribuQ4.length
 
     //InoveLabs overview data filter
-    // const inoveLabsOverallAverage = Array.from(inoveLabs, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / inoveLabs.length
-
-    // const inoveLabsQ1 = inoveLabs.filter(e => e.quarter === 1)
-    // const inoveLabsQ1Average = Array.from(inoveLabsQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / inoveLabsQ1.length
-
-    // const inoveLabsQ2 = inoveLabs.filter(e => e.quarter === 2)
-    // const inoveLabsQ2Average = Array.from(inoveLabsQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / inoveLabsQ2.length
-
-    // const inoveLabsQ3 = inoveLabs.filter(e => e.quarter === 3)
-    // const inoveLabsQ3Average = Array.from(inoveLabsQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / inoveLabsQ3.length
-
-    // const inoveLabsQ4 = inoveLabs.filter(e => e.quarter === 4)
-    // const inoveLabsQ4Average = Array.from(inoveLabsQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / inoveLabsQ4.length
-
-    //Isharc overview data filter
-    // const isharcOverallAverage = Array.from(isharc, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / isharc.length
-
-    // const isharcQ1 = isharc.filter(e => e.quarter === 1)
-    // const isharcQ1Average = Array.from(isharcQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / isharcQ1.length
-
-    // const isharcQ2 = isharc.filter(e => e.quarter === 2)
-    // const isharcQ2Average = Array.from(isharcQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / isharcQ2.length
-
-    // const isharcQ3 = isharc.filter(e => e.quarter === 3)
-    // const isharcQ3Average = Array.from(isharcQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / isharcQ3.length
-
-    // const isharcQ4 = isharc.filter(e => e.quarter === 4)
-    // const isharcQ4Average = Array.from(isharcQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / isharcQ4.length
-
-    //SocialClark overview data filter
-    // const socialClarkOverallAverage = Array.from(socialClark, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / socialClark.length
-
-    // const socialClarkQ1 = socialClark.filter(e => e.quarter === 1)
-    // const socialClarkQ1Average = Array.from(socialClarkQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / socialClarkQ1.length
-
-    // const socialClarkQ2 = socialClark.filter(e => e.quarter === 2)
-    // const socialClarkQ2Average = Array.from(socialClarkQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / socialClarkQ2.length
-
-    // const socialClarkQ3 = socialClark.filter(e => e.quarter === 3)
-    // const socialClarkQ3Average = Array.from(socialClarkQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / socialClarkQ3.length
-
-    // const socialClarkQ4 = socialClark.filter(e => e.quarter === 4)
-    // const socialClarkQ4Average = Array.from(socialClarkQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / socialClarkQ4.length
-
-    //Figurines overview data filter
-    // const figurinesOverallAverage = Array.from(figurines, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / figurines.length
-
-    // const figurinesQ1 = figurines.filter(e => e.quarter === 1)
-    // const figurinesQ1Average = Array.from(figurinesQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / figurinesQ1.length
-
-    // const figurinesQ2 = figurines.filter(e => e.quarter === 2)
-    // const figurinesQ2Average = Array.from(figurinesQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / figurinesQ2.length
-
-    // const figurinesQ3 = figurines.filter(e => e.quarter === 3)
-    // const figurinesQ3Average = Array.from(figurinesQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / figurinesQ3.length
-
-    // const figurinesQ4 = figurines.filter(e => e.quarter === 4)
-    // const figurinesQ4Average = Array.from(figurinesQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / figurinesQ4.length
-
-    //RadaSafaris overview data filter
-    // const radaSafarisOverallAverage = Array.from(radaSafaris, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / radaSafaris.length
-
-    // const radaSafarisQ1 = radaSafaris.filter(e => e.quarter === 1)
-    // const radaSafarisQ1Average = Array.from(radaSafarisQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / radaSafarisQ1.length
-
-    // const radaSafarisQ2 = radaSafaris.filter(e => e.quarter === 2)
-    // const radaSafarisQ2Average = Array.from(radaSafarisQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / radaSafarisQ2.length
-
-    // const radaSafarisQ3 = radaSafaris.filter(e => e.quarter === 3)
-    // const radaSafarisQ3Average = Array.from(radaSafarisQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / radaSafarisQ3.length
-
-    // const radaSafarisQ4 = radaSafaris.filter(e => e.quarter === 4)
-    // const radaSafarisQ4Average = Array.from(radaSafarisQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / radaSafarisQ4.length
-
-    //ZetuAfrica overview data filter
-    // const zetuAfricaOverallAverage = Array.from(zetuAfrica, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / zetuAfrica.length
-
-    // const zetuAfricaQ1 = zetuAfrica.filter(e => e.quarter === 1)
-    // const zetuAfricaQ1Average = Array.from(zetuAfricaQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / zetuAfricaQ1.length
-
-    // const zetuAfricaQ2 = zetuAfrica.filter(e => e.quarter === 2)
-    // const zetuAfricaQ2Average = Array.from(zetuAfricaQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / zetuAfricaQ2.length
-
-    // const zetuAfricaQ3 = zetuAfrica.filter(e => e.quarter === 3)
-    // const zetuAfricaQ3Average = Array.from(zetuAfricaQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / zetuAfricaQ3.length
-
-    // const zetuAfricaQ4 = zetuAfrica.filter(e => e.quarter === 4)
-    // const zetuAfricaQ4Average = Array.from(zetuAfricaQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / zetuAfricaQ4.length
-
-    //OmniGym overview data filter
-    // const omniGymOverallAverage = Array.from(omniGym, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / omniGym.length
-
-    // const omniGymQ1 = omniGym.filter(e => e.quarter === 1)
-    // const omniGymQ1Average = Array.from(omniGymQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / omniGymQ1.length
-
-    // const omniGymQ2 = omniGym.filter(e => e.quarter === 2)
-    // const omniGymQ2Average = Array.from(omniGymQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / omniGymQ2.length
-
-    // const omniGymQ3 = omniGym.filter(e => e.quarter === 3)
-    // const omniGymQ3Average = Array.from(omniGymQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / omniGymQ3.length
-
-    // const omniGymQ4 = omniGym.filter(e => e.quarter === 4)
-    // const omniGymQ4Average = Array.from(omniGymQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / omniGymQ4.length
-
-    //Solfix overview data filter
-    // const solfixOverallAverage = Array.from(solfix, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / solfix.length
-
-    // const solfixQ1 = solfix.filter(e => e.quarter === 1)
-    // const solfixQ1Average = Array.from(solfixQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / solfixQ1.length
-
-    // const solfixQ2 = solfix.filter(e => e.quarter === 2)
-    // const solfixQ2Average = Array.from(solfixQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / solfixQ2.length
-
-    // const solfixQ3 = solfix.filter(e => e.quarter === 3)
-    // const solfixQ3Average = Array.from(solfixQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / solfixQ3.length
-
-    // const solfixQ4 = solfix.filter(e => e.quarter === 4)
-    // const solfixQ4Average = Array.from(solfixQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / solfixQ4.length
-
-    //GrabGas overview data filter
-    // const grabGasOverallAverage = Array.from(grabGas, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / grabGas.length
-
-    // const grabGasQ1 = grabGas.filter(e => e.quarter === 1)
-    // const grabGasQ1Average = Array.from(grabGasQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / grabGasQ1.length
-
-    // const grabGasQ2 = grabGas.filter(e => e.quarter === 2)
-    // const grabGasQ2Average = Array.from(grabGasQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / grabGasQ2.length
-
-    // const grabGasQ3 = grabGas.filter(e => e.quarter === 3)
-    // const grabGasQ3Average = Array.from(grabGasQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / grabGasQ3.length
-
-    // const grabGasQ4 = grabGas.filter(e => e.quarter === 4)
-    // const grabGasQ4Average = Array.from(grabGasQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / grabGasQ4.length
+    const inoveLabsOverrallPercentage = inoveLabs && inoveLabs.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / inoveLabs.length
     
-    //Devine overview data filter
-    // const devineOverallAverage = Array.from(devine, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / devine.length
+    const inoveLabsQ1 = inoveLabs.filter(e => e.quarter === 1)
+    const inoveLabsQ1Percentage = inoveLabsQ1 && inoveLabsQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / inoveLabsQ1.length
 
-    // const devineQ1 = devine.filter(e => e.quarter === 1)
-    // const devineQ1Average = Array.from(devineQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / devineQ1.length
+    const inoveLabsQ2 = inoveLabs.filter(e => e.quarter === 2)
+    const inoveLabsQ2Percentage = inoveLabsQ2 && inoveLabsQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / inoveLabsQ2.length
 
-    // const devineQ2 = devine.filter(e => e.quarter === 2)
-    // const devineQ2Average = Array.from(devineQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / devineQ2.length
+    const inoveLabsQ3 = inoveLabs.filter(e => e.quarter === 3)
+    const inoveLabsQ3Percentage = inoveLabsQ3 && inoveLabsQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / inoveLabsQ3.length
 
-    // const devineQ3 = devine.filter(e => e.quarter === 3)
-    // const devineQ3Average = Array.from(devineQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / devineQ3.length
+    const inoveLabsQ4 = inoveLabs.filter(e => e.quarter === 4)
+    const inoveLabsQ4Percentage = inoveLabsQ4 && inoveLabsQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / inoveLabsQ4.length
 
-    // const devineQ4 = devine.filter(e => e.quarter === 4)
-    // const devineQ4Average = Array.from(devineQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / devineQ4.length
+    // Isharc overview data filter
+    const isharcOverrallPercentage = isharc && isharc.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / isharc.length
 
-    //Onetope overview data filter
-    // const onetopeOverallAverage = Array.from(onetope, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / onetope.length
+    const isharcQ1 = isharc.filter(e => e.quarter === 1)
+    const isharcQ1Percentage = isharcQ1 && isharcQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / isharcQ1.length
 
-    // const onetopeQ1 = onetope.filter(e => e.quarter === 1)
-    // const onetopeQ1Average = Array.from(onetopeQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / onetopeQ1.length
+    const isharcQ2 = isharc.filter(e => e.quarter === 2)
+    const isharcQ2Percentage = isharcQ2 && isharcQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / isharcQ2.length
 
-    // const onetopeQ2 = onetope.filter(e => e.quarter === 2)
-    // const onetopeQ2Average = Array.from(onetopeQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / onetopeQ2.length
+    const isharcQ3 = isharc.filter(e => e.quarter === 3)
+    const isharcQ3Percentage = isharcQ3 && isharcQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / isharcQ3.length
 
-    // const onetopeQ3 = onetope.filter(e => e.quarter === 3)
-    // const onetopeQ3Average = Array.from(onetopeQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / onetopeQ3.length
+    const isharcQ4 = isharc.filter(e => e.quarter === 4)
+    const isharcQ4Percentage = isharcQ4 && isharcQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / isharcQ4.length
 
-    // const onetopeQ4 = onetope.filter(e => e.quarter === 4)
-    // const onetopeQ4Average = Array.from(onetopeQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / onetopeQ4.length
+    // SocialClark overview data filter
+    const socialClarkOverrallPercentage = socialClark && socialClark.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / socialClark.length
 
-    //FastMere overview data filter
-    // const fastMereOverallAverage = Array.from(fastMere, ({ objPercentage }) => Math.round(!objPercentage ? 0 : objPercentage)).reduce((a, b) => a + b, 0) / fastMere.length
+    const socialClarkQ1 = socialClark.filter(e => e.quarter === 1)
+    const socialClarkQ1Percentage = socialClarkQ1 && socialClarkQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / socialClarkQ1.length
 
-    // const fastMereQ1 = fastMere.filter(e => e.quarter === 1)
-    // const fastMereQ1Average = Array.from(fastMereQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / fastMereQ1.length
+    const socialClarkQ2 = socialClark.filter(e => e.quarter === 2)
+    const socialClarkQ2Percentage = socialClarkQ2 && socialClarkQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / socialClarkQ2.length
 
-    // const fastMereQ2 = fastMere.filter(e => e.quarter === 2)
-    // const fastMereQ2Average = Array.from(fastMereQ2, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / fastMereQ2.length
+    const socialClarkQ3 = socialClark.filter(e => e.quarter === 3)
+    const socialClarkQ3Percentage = socialClarkQ3 && socialClarkQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / socialClarkQ3.length
 
-    // const fastMereQ3 = fastMere.filter(e => e.quarter === 3)
-    // const fastMereQ3Average = Array.from(fastMereQ3, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / fastMereQ3.length
+    const socialClarkQ4 = socialClark.filter(e => e.quarter === 4)
+    const socialClarkQ4Percentage = socialClarkQ4 && socialClarkQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / socialClarkQ4.length
 
-    // const fastMereQ4 = fastMere.filter(e => e.quarter === 4)
-    // const fastMereQ4Average = Array.from(fastMereQ4, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / fastMereQ4.length
-    
-    // console.log(omniGymOverallAverage)
+    // Figurines overview data filter
+    const figurinesOverrallPercentage = figurines && figurines.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / figurines.length
+
+    const figurinesQ1 = figurines.filter(e => e.quarter === 1)
+    const figurinesQ1Percentage = figurinesQ1 && figurinesQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / figurinesQ1.length
+
+    const figurinesQ2 = figurines.filter(e => e.quarter === 2)
+    const figurinesQ2Percentage = figurinesQ2 && figurinesQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / figurinesQ2.length 
+
+    const figurinesQ3 = figurines.filter(e => e.quarter === 3)
+    const figurinesQ3Percentage = figurinesQ3 && figurinesQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / figurinesQ3.length
+
+    const figurinesQ4 = figurines.filter(e => e.quarter === 4)
+    const figurinesQ4Percentage = figurinesQ4 && figurinesQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / figurinesQ4.length
+
+    // RadaSafaris overview data filter
+    const radaSafarisOverrallPercentage = radaSafaris && radaSafaris.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / radaSafaris.length
+
+    const radaSafarisQ1 = radaSafaris.filter(e => e.quarter === 1)
+    const radaSafarisQ1Percentage = radaSafarisQ1 && radaSafarisQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / radaSafarisQ1.length
+
+    const radaSafarisQ2 = radaSafaris.filter(e => e.quarter === 2)
+    const radaSafarisQ2Percentage = radaSafarisQ2 && radaSafarisQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / radaSafarisQ2.length
+
+    const radaSafarisQ3 = radaSafaris.filter(e => e.quarter === 3)
+    const radaSafarisQ3Percentage = radaSafarisQ3 && radaSafarisQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / radaSafarisQ3.length
+
+    const radaSafarisQ4 = radaSafaris.filter(e => e.quarter === 4)
+    const radaSafarisQ4Percentage = radaSafarisQ4 && radaSafarisQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / radaSafarisQ4.length
+
+    // ZetuAfrica overview data filter
+    const zetuAfricaOverrallPercentage = zetuAfrica && zetuAfrica.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / zetuAfrica.length
+
+    const zetuAfricaQ1 = zetuAfrica.filter(e => e.quarter === 1)
+    const zetuAfricaQ1Percentage = zetuAfricaQ1 && zetuAfricaQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / zetuAfricaQ1.length
+
+    const zetuAfricaQ2 = zetuAfrica.filter(e => e.quarter === 2)
+    const zetuAfricaQ2Percentage = zetuAfricaQ2 && zetuAfricaQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / zetuAfricaQ2.length
+
+    const zetuAfricaQ3 = zetuAfrica.filter(e => e.quarter === 3)
+    const zetuAfricaQ3Percentage = zetuAfricaQ3 && zetuAfricaQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / zetuAfricaQ3.length
+
+    const zetuAfricaQ4 = zetuAfrica.filter(e => e.quarter === 4)
+    const zetuAfricaQ4Percentage = zetuAfricaQ4 && zetuAfricaQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / zetuAfricaQ4.length
+
+    // OmniGym overview data filter
+    const omniGymOverrallPercentage = omniGym && omniGym.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / omniGym.length
+
+    const omniGymQ1 = omniGym.filter(e => e.quarter === 1)
+    const omniGymQ1Percentage = omniGymQ1 && omniGymQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / omniGymQ1.length
+
+    const omniGymQ2 = omniGym.filter(e => e.quarter === 2)
+    const omniGymQ2Percentage = omniGymQ2 && omniGymQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / omniGymQ2.length
+
+    const omniGymQ3 = omniGym.filter(e => e.quarter === 3)
+    const omniGymQ3Percentage = omniGymQ3 && omniGymQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / omniGymQ3.length
+
+    const omniGymQ4 = omniGym.filter(e => e.quarter === 4)
+    const omniGymQ4Percentage = omniGymQ4 && omniGymQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / omniGymQ4.length
+
+    // Solfix overview data filter
+    const solfixOverrallPercentage = solfix && solfix.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / solfix.length
+
+    const solfixQ1 = solfix.filter(e => e.quarter === 1)
+    const solfixQ1Percentage = solfixQ1 && solfixQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / solfixQ1.length
+
+    const solfixQ2 = solfix.filter(e => e.quarter === 2)
+    const solfixQ2Percentage = solfixQ2 && solfixQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / solfixQ2.length
+
+    const solfixQ3 = solfix.filter(e => e.quarter === 3)
+    const solfixQ3Percentage = solfixQ3 && solfixQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / solfixQ3.length
+
+    const solfixQ4 = solfix.filter(e => e.quarter === 4)
+    const solfixQ4Percentage = solfixQ4 && solfixQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / solfixQ4.length
+
+    // GrabGas overview data filter
+    const grabGasOverrallPercentage = grabGas && grabGas.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / grabGas.length
+
+    const grabGasQ1 = grabGas.filter(e => e.quarter === 1)
+    const grabGasQ1Percentage = grabGasQ1 && grabGasQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / grabGasQ1.length
+
+    const grabGasQ2 = grabGas.filter(e => e.quarter === 2)
+    const grabGasQ2Percentage = grabGasQ2 && grabGasQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / grabGasQ2.length
+
+    const grabGasQ3 = grabGas.filter(e => e.quarter === 3)
+    const grabGasQ3Percentage = grabGasQ3 && grabGasQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / grabGasQ3.length
+
+    const grabGasQ4 = grabGas.filter(e => e.quarter === 4)
+    const grabGasQ4Percentage = grabGasQ4 && grabGasQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / grabGasQ4.length
+
+    // Devine overview data filter
+    const devineOverrallPercentage = devine && devine.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / devine.length
+
+    const devineQ1 = devine.filter(e => e.quarter === 1)
+    const devineQ1Percentage = devineQ1 && devineQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / devineQ1.length
+
+    const devineQ2 = devine.filter(e => e.quarter === 2)
+    const devineQ2Percentage = devineQ2 && devineQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / devineQ2.length
+
+    const devineQ3 = devine.filter(e => e.quarter === 3)
+    const devineQ3Percentage = devineQ3 && devineQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / devineQ3.length
+
+    const devineQ4 = devine.filter(e => e.quarter === 4)
+    const devineQ4Percentage = devineQ4 && devineQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / devineQ4.length
+
+    // Onetope overview data filter
+    const onetopeOverrallPercentage = onetope && onetope.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / onetope.length
+
+    const onetopeQ1 = onetope.filter(e => e.quarter === 1)
+    const onetopeQ1Percentage = onetopeQ1 && onetopeQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / onetopeQ1.length
+
+    const onetopeQ2 = onetope.filter(e => e.quarter === 2)
+    const onetopeQ2Percentage = onetopeQ2 && onetopeQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / onetopeQ2.length
+
+    const onetopeQ3 = onetope.filter(e => e.quarter === 3)
+    const onetopeQ3Percentage = onetopeQ3 && onetopeQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / onetopeQ3.length
+
+    const onetopeQ4 = onetope.filter(e => e.quarter === 4)
+    const onetopeQ4Percentage = onetopeQ4 && onetopeQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / onetopeQ4.length
+
+    // FastMere overview data filter
+    const fastMereOverrallPercentage = fastMere && fastMere.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / fastMere.length
+
+    const fastMereQ1 = fastMere.filter(e => e.quarter === 1)
+    const fastMereQ1Percentage = fastMereQ1 && fastMereQ1.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / fastMereQ1.length
+
+    const fastMereQ2 = fastMere.filter(e => e.quarter === 2)
+    const fastMereQ2Percentage = fastMereQ2 && fastMereQ2.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / fastMereQ2.length
+
+    const fastMereQ3 = fastMere.filter(e => e.quarter === 3)
+    const fastMereQ3Percentage = fastMereQ3 && fastMereQ3.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / fastMereQ3.length
+
+    const fastMereQ4 = fastMere.filter(e => e.quarter === 4)
+    const fastMereQ4Percentage = fastMereQ4 && fastMereQ4.map(e => !e.objPercentage ? 0 : e.objPercentage).reduce((a, b) => a + b, 0) / fastMereQ4.length
+
     return (
         <div className="admin-main">
             <div className="admin-overview">
                 <div className="admin-overview-row">
                     <Qiribu
-                        overrall={overrallPercentage}
-                        // Q1={QiribuQ1Average}
-                        // Q2={QiribuQ2Average}
-                        // Q3={QiribuQ3Average}
-                        // Q4={QiribuQ4Average}
+                        overrall={qiribuOverrallPercentage}
+                        Q1={QiribuQ1Percentage}
+                        Q2={QiribuQ2Percentage}
+                        Q3={QiribuQ3Percentage}
+                        Q4={QiribuQ4Percentage}
                         username={catalyzer[0].username}
                     />
-                    {/* <InoveLabs
-                        overrall={inoveLabsOverallAverage}
-                        Q1={inoveLabsQ1Average}
-                        Q2={inoveLabsQ2Average}
-                        Q3={inoveLabsQ3Average}
-                        Q4={inoveLabsQ4Average}
+                    <InoveLabs
+                        overrall={inoveLabsOverrallPercentage}
+                        Q1={inoveLabsQ1Percentage}
+                        Q2={inoveLabsQ2Percentage}
+                        Q3={inoveLabsQ3Percentage}
+                        Q4={inoveLabsQ4Percentage}
                         username={catalyzer[1].username}
                     />
                     <Isharc
-                        overrall={isharcOverallAverage}
-                        Q1={isharcQ1Average}
-                        Q2={isharcQ2Average}
-                        Q3={isharcQ3Average}
-                        Q4={isharcQ4Average}
+                        overrall={isharcOverrallPercentage}
+                        Q1={isharcQ1Percentage}
+                        Q2={isharcQ2Percentage}
+                        Q3={isharcQ3Percentage}
+                        Q4={isharcQ4Percentage}
                         username={catalyzer[2].username}
                     />
                     <SocialClark
-                        overrall={socialClarkOverallAverage}
-                        Q1={socialClarkQ1Average}
-                        Q2={socialClarkQ2Average}
-                        Q3={socialClarkQ3Average}
-                        Q4={socialClarkQ4Average}
+                        overrall={socialClarkOverrallPercentage}
+                        Q1={socialClarkQ1Percentage}
+                        Q2={socialClarkQ2Percentage}
+                        Q3={socialClarkQ3Percentage}
+                        Q4={socialClarkQ4Percentage}
                         username={catalyzer[3].username}
                     />
                     <Figurines
-                        overrall={figurinesOverallAverage}
-                        Q1={figurinesQ1Average}
-                        Q2={figurinesQ2Average}
-                        Q3={figurinesQ3Average}
-                        Q4={figurinesQ4Average}
+                        overrall={figurinesOverrallPercentage}
+                        Q1={figurinesQ1Percentage}
+                        Q2={figurinesQ2Percentage}
+                        Q3={figurinesQ3Percentage}
+                        Q4={figurinesQ4Percentage}
                         username={catalyzer[4].username}
                     />
                     <RadaSafaris
-                        overrall={radaSafarisOverallAverage}
-                        Q1={radaSafarisQ1Average}
-                        Q2={radaSafarisQ2Average}
-                        Q3={radaSafarisQ3Average}
-                        Q4={radaSafarisQ4Average}
+                        overrall={radaSafarisOverrallPercentage}
+                        Q1={radaSafarisQ1Percentage}
+                        Q2={radaSafarisQ2Percentage}
+                        Q3={radaSafarisQ3Percentage}
+                        Q4={radaSafarisQ4Percentage}
                         username={catalyzer[5].username}
                     />
                     <ZetuAfrica
-                        overrall={zetuAfricaOverallAverage}
-                        Q1={zetuAfricaQ1Average}
-                        Q2={zetuAfricaQ2Average}
-                        Q3={zetuAfricaQ3Average}
-                        Q4={zetuAfricaQ4Average}
+                        overrall={zetuAfricaOverrallPercentage}
+                        Q1={zetuAfricaQ1Percentage}
+                        Q2={zetuAfricaQ2Percentage}
+                        Q3={zetuAfricaQ3Percentage}
+                        Q4={zetuAfricaQ4Percentage}
                         username={catalyzer[6].username}
                     />
                     <OminGym
-                        overrall={omniGymOverallAverage}
-                        Q1={omniGymQ1Average}
-                        Q2={omniGymQ2Average}
-                        Q3={omniGymQ3Average}
-                        Q4={omniGymQ4Average}
+                        overrall={omniGymOverrallPercentage}
+                        Q1={omniGymQ1Percentage}
+                        Q2={omniGymQ2Percentage}
+                        Q3={omniGymQ3Percentage}
+                        Q4={omniGymQ4Percentage}
                         username={catalyzer[7].username}
                     />
                     <Solfix
-                        overrall={solfixOverallAverage}
-                        Q1={solfixQ1Average}
-                        Q2={solfixQ2Average}
-                        Q3={solfixQ3Average}
-                        Q4={solfixQ4Average}
+                        overrall={solfixOverrallPercentage}
+                        Q1={solfixQ1Percentage}
+                        Q2={solfixQ2Percentage}
+                        Q3={solfixQ3Percentage}
+                        Q4={solfixQ4Percentage}
                         username={catalyzer[9].username}
                     />
                     <GrabGas
-                        overrall={grabGasOverallAverage}
-                        Q1={grabGasQ1Average}
-                        Q2={grabGasQ2Average}
-                        Q3={grabGasQ3Average}
-                        Q4={grabGasQ4Average}
+                        overrall={grabGasOverrallPercentage}
+                        Q1={grabGasQ1Percentage}
+                        Q2={grabGasQ2Percentage}
+                        Q3={grabGasQ3Percentage}
+                        Q4={grabGasQ4Percentage}
                         username={catalyzer[10].username}
                     />
                     <Devine
-                        overrall={devineOverallAverage}
-                        Q1={devineQ1Average}
-                        Q2={devineQ2Average}
-                        Q3={devineQ3Average}
-                        Q4={devineQ4Average}
+                        overrall={devineOverrallPercentage}
+                        Q1={devineQ1Percentage}
+                        Q2={devineQ2Percentage}
+                        Q3={devineQ3Percentage}
+                        Q4={devineQ4Percentage}
                         username={catalyzer[13].username}
                     />
                     <Onestope
-                        overrall={onetopeOverallAverage}
-                        Q1={onetopeQ1Average}
-                        Q2={onetopeQ2Average}
-                        Q3={onetopeQ3Average}
-                        Q4={onetopeQ4Average}
+                        overrall={onetopeOverrallPercentage}
+                        Q1={onetopeQ1Percentage}
+                        Q2={onetopeQ2Percentage}
+                        Q3={onetopeQ3Percentage}
+                        Q4={onetopeQ4Percentage}
                         username={catalyzer[14].username}
                     />
                     <Fastmere
-                        overrall={fastMereOverallAverage}
-                        Q1={fastMereQ1Average}
-                        Q2={fastMereQ2Average}
-                        Q3={fastMereQ3Average}
-                        Q4={fastMereQ4Average}
+                        overrall={fastMereOverrallPercentage}
+                        Q1={fastMereQ1Percentage}
+                        Q2={fastMereQ2Percentage}
+                        Q3={fastMereQ3Percentage}
+                        Q4={fastMereQ4Percentage}
                         username={catalyzer[15].username}
-                    /> */}
+                    />
                 </div>
            </div>
         </div>

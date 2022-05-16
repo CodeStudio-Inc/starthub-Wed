@@ -120,7 +120,7 @@ const Navbar = (props) => {
                         <img src={logo} />
                     </div>
                     <div className="profile">
-                    <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottomCenter" icon={<UserOutlined />}>
+                    <Dropdown.Button overlay={logout} onVisibleChange={handleLogoutChange} placement="bottom" icon={<UserOutlined />}>
                         <p>{username}</p>
                     </Dropdown.Button>
                     </div>
