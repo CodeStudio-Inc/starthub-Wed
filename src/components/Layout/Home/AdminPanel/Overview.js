@@ -47,10 +47,10 @@ const Overview = () => {
     const fastMere = all_objectives && all_objectives.filter(e => e.creator === catalyzer[15]._id)
 
     //Qiribu overview data filter
-    const qiribuOverallTotal = Array.from(qiribu, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0)
+    const qiribuOverallTotal = Array.from(qiribu, ({ objPercentage }) => objPercentage).reduce((a, b) => a + b, 0)
     const qiribuOverallAverage = qiribuOverallTotal / qiribu.length 
 
-    console.log(qiribuOverallTotal, qiribuOverallAverage)    
+    console.log(qiribuOverallTotal, qiribuOverallAverage, qiribu)    
     const QiribuQ1 = qiribu.filter(e => e.quarter === 1)
     const QiribuQ1Average = Array.from(QiribuQ1, ({ objPercentage }) => Math.round(objPercentage)).reduce((a, b) => a + b, 0) / QiribuQ1.length
 
