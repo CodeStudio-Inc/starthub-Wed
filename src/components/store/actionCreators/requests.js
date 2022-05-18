@@ -1232,7 +1232,7 @@ export const editObjective = (id,description, callback) => {
     }
 }
 
-export const deleteObjective = (id) => {
+export const deleteObjective = (id, callback) => {
     return (dispatch, getState) => {
 
         dispatch(loadAction())
@@ -1249,7 +1249,7 @@ export const deleteObjective = (id) => {
             .then(res => {
                 // console.log(res)
                 dispatch(setObjectives(res.data.objs))
-                // callback({ success: true, res: res })
+                callback({ success: true, res: res })
                 dispatch(stopLoader())
             })
             .catch(error => {
@@ -1258,7 +1258,7 @@ export const deleteObjective = (id) => {
     }
 }
 
-export const archiveObjective = (id) => {
+export const archiveObjective = (id, callback) => {
     return (dispatch, getState) => {
         
         dispatch(loadAction())
@@ -1277,9 +1277,9 @@ export const archiveObjective = (id) => {
             }
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 dispatch(setObjectives(res.data.objs))
-                // callback({ success: true, res: res })
+                callback({ success: true, res: res })
                 dispatch(stopLoader())
             })
             .catch(error => {

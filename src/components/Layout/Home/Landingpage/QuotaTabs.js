@@ -13,9 +13,6 @@ const QuotaTabs = ({
     onDragEnd,
     getLists,
     openEditModal,
-    setActiveCard,
-    setArchive,
-    archive,
     listLoader,
     objectives, 
     quarter1,
@@ -84,9 +81,6 @@ const QuotaTabs = ({
                                   boardId={current_board._id}
                                   callback={getLists}
                                   open={openEditModal}
-                                  setActiveCard={setActiveCard}
-                                  setArchive={setArchive}
-                                  archive={archive}
                               />
                           ))}
                       </div>

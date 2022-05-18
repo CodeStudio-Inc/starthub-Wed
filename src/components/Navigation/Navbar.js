@@ -22,12 +22,12 @@ import './Navigation.css'
 const Navbar = (props) => {
 
     const Boards = useSelector(state => state.requests.boards)
+    const { category } = useSelector(state => state.auth)
 
 
     const [visibleLogout, setVisisbleLogout] = useState(false)
     const [openSidebar, setopenSidebar] = useState(false)
 
-    // console.log(filtereBoards,'ghj')
 
     const [appState, setAppState] = useState({
         actionObject: null,
@@ -151,11 +151,18 @@ const Navbar = (props) => {
                         className={toggleActiveStyle(index)}
                         onClick={() => {
                             toggleActive(index)
-                            props.history.push(element.route)
+                            if (element.title === 'Lean Canvas' && category === 'internal') return message.info(`${username} has no Lean Canvas`)
+                            if (element.title === 'Metrics' && category === 'internal') return message.info(`${username} has no Metrics Data`)
+                            if (element.title === 'Metrics' && category === 'academy') return message.info(`${username} has no Metrics Data`)
+                            if (element.title === 'Content' && category === 'internal') return message.info('Still under Development, Cheers!!')
+                            if (element.title === 'Content' && category === 'catalyzer') return message.info('Still under Development, Cheers!!')
+                            if (element.title === 'Content' && category === 'academy') return message.info('Still under Development, Cheers!!')
+                                 props.history.push(element.route)
+                            
                         }}
                         >
-                            {element.title === 'Lean Canvas' && lean_check.length === 0  ?  null : element.icon}
-                            <h4>{element.title === 'Lean Canvas' && lean_check.length === 0 ? null : element.title}</h4>
+                            {element.icon}
+                            <h4>{element.title}</h4>
                         </div>
                     ))
                     }

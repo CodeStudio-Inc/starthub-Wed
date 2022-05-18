@@ -195,6 +195,11 @@
 	color: rgba(0, 0, 0, 0.5);
 }
 
+.quarter-card p {
+	margin: 0;
+	color: rgb(46, 196, 46);
+}
+
 .quarter-separator {
 	height: 100%;
 	width: 1px;

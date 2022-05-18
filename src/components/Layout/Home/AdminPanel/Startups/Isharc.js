@@ -1,7 +1,18 @@
 import React from 'react'
 import { Progress } from 'antd'
 
-const Isharc = ({ overrall, Q1, Q2, Q3, Q4, username }) => {
+const Isharc = ({ 
+    overrall, 
+    Q1, 
+    Q2, 
+    Q3, 
+    Q4, 
+    username,
+    Q1update,
+    Q2update,
+    Q3update,
+    Q4update
+ }) => {
     return (
         <div className="overview-card">
             <div className="card-header">
@@ -34,6 +45,7 @@ const Isharc = ({ overrall, Q1, Q2, Q3, Q4, username }) => {
                         percent={Math.round(Q1)}
                         format={percent => percent < 100 ? `${percent}% covered` : `Done`}
                     />
+                    {Q1update === 0 ? null : <p>{Q1update === 1 ? `${Q1update} change made` : `${Q1update} changes made`}</p>}
                 </div>
                 <div className="quarter-separator" />
                 <div className="quarter-card">
@@ -48,6 +60,7 @@ const Isharc = ({ overrall, Q1, Q2, Q3, Q4, username }) => {
                         percent={Math.round(Q2)}
                         format={percent => percent < 100 ? `${percent}% covered` : `Done`}
                     />
+                    {Q2update === 0 ? null : <p>{Q2update === 1 ? `${Q2update} change made` : `${Q2update} changes made`}</p>}
                 </div>
                 <div className="quarter-separator" />
                 <div className="quarter-card">
@@ -62,6 +75,7 @@ const Isharc = ({ overrall, Q1, Q2, Q3, Q4, username }) => {
                         percent={Math.round(Q3)}
                         format={percent => percent < 100 ? `${percent}% covered` : `Done`}
                     />
+                    {Q3update === 0 ? null : <p>{Q3update === 1 ? `${Q3update} change made` : `${Q3update} changes made`}</p>}
                 </div>
                 <div className="quarter-separator" />
                 <div className="quarter-card">
@@ -76,6 +90,7 @@ const Isharc = ({ overrall, Q1, Q2, Q3, Q4, username }) => {
                         percent={Math.round(Q4)}
                         format={percent => percent < 100 ? `${percent}% covered` : `Done`}
                     />
+                    {Q4update === 0 ? null : <p>{Q4update === 1 ? `${Q4update} change made` : `${Q4update} changes made`}</p>}
                 </div>
             </div>
         </div>

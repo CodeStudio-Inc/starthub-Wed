@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
-import DeleteIcon from '@material-ui/icons/Delete'
+import ArchiveIcon from '@mui/icons-material/Archive'
 import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'
 import Addkeyresult from './Addkeyresult'
@@ -36,7 +36,7 @@ const Objective = ({objectives, svg}) =>  {
                         <p>Objective {index >= 0 ? index + 1 : null}</p>
                         {loading && obj._id === activeObj ? 
                         <img src={svg} style={{ width:"30px", height:"30px"}}/> :
-                            <DeleteIcon  
+                            <ArchiveIcon  
                             className="edit-stmt-icon" 
                             style={{ fontSize: '20px'}} 
                             onClick={() => {
@@ -99,7 +99,7 @@ const Objective = ({objectives, svg}) =>  {
                             </div>
                         <div className="objective-description-row">
                             <h4>{!obj.objPercentage ? 0 : Math.round(obj.objPercentage)}%</h4>
-                            <p>covered</p>
+                            <h5>covered</h5>
                         </div>
                         </div>
                         {obj && obj.keyresults.map(k => (

@@ -7,7 +7,7 @@ import * as actionCreators from '../../../store/actionCreators'
 import DeleteIcon from '@material-ui/icons/Delete'
 import svg from '../../../../assets/images/spinner.svg'
 
-export const KanbanCard = ({cardId, text, index,cardIndex,callback, setActiveCard, listId}) => {
+export const KanbanCard = ({cardId, text, index,cardIndex, listId}) => {
 
     const [cardName, setCardName] = useState('')
     const [visible, setVisible] = useState(false)

@@ -10,6 +10,7 @@ import svg from '../../../assets/images/spinner.svg'
 import ReactGA from 'react-ga'
 
 import './Diagnostics.css'
+import { message } from 'antd'
  const Diagnostics = () => {
 
      const userId = useSelector(state => state.auth.userId)
@@ -94,7 +95,7 @@ import './Diagnostics.css'
         dispatch(actionCreators.addValues(teamsValue, visionValue, propositionValue, productValue, marketValue, businessValue, investmentValue, (res) => {
             if(res.success) {
                 dispatch(actionCreators.getValues())
-                alert('Thank you, You have done a Great Job here')
+                message.info('Thank you, You have done a Great Job, Cheers!!')
             } 
         }))
     }

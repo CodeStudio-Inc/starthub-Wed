@@ -345,7 +345,7 @@
 }
 
 .edit-stmt-icon {
-	color: rgba(0, 0, 0, 0.2);
+	color: rgba(0, 0, 0, 0.3);
 }
 
 .edit-stmt-icon:hover {
@@ -447,8 +447,9 @@
 	width: 100%;
 	margin-bottom: 0.5rem;
 	padding: 0.5rem;
-	border-top: 1px solid rgba(0, 0, 0, 0.1);
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
+		box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .objective-row p {
@@ -521,12 +522,19 @@
 }
 
 .objective-description-row p {
-	color:#dfa126;
+	color:rgba(0, 0, 0, 0.4);
 }
 
 .objective-description-row p:hover {
 	cursor: pointer;
 	color: #fed197;
+}
+
+.objective-description-row h5 {
+	margin: 0;
+	font-size: 14px;
+	margin-left: 0.3rem;
+	color: rgba(0, 0, 0, 0.4);
 }
 
 .slider-column {
@@ -873,6 +881,88 @@
 
 .register-form-container-icon:hover {
 	cursor: pointer;
+}
+
+.archive-modal {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 40%;
+	background: #fff;
+}
+
+.archive-modal h2 {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.archive-modal h3 {
+	color: #dfa126
+}
+
+.archive-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	width: 100%;
+}
+
+.archive-container table {
+	width: 100%;
+}
+
+.archive-container tr {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.archive-container tr h3 {
+	font-weight: bold;
+	color: rgba(0, 0, 0, 0.8);
+}
+
+.archive-container td {
+	padding: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.archive-container td button {
+	outline: none;
+	background: none;
+	border: 1px solid #dfa126;
+	color: #ecbf66;
+}
+
+.archive-container td button:hover {
+	cursor: pointer;
+}
+
+
+.archive-btn {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 50px;
+	background: #28282be3;
+	border: none;
+	outline: none;
+	color: #fff;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	width: 110px;
+	height: 35px;
+	transition: 1s ease-in-out;
+}
+
+.archive-btn h3 {
+	margin: 0;
+	color: #fff;
+}
+
+.archive-btn:hover {
+	cursor: pointer;
+	background: #28282b;
 }
 
 /* @media screen and (max-width: 768px) {
