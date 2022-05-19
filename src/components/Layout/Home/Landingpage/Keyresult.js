@@ -5,11 +5,13 @@ import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
 import DeleteIcon from '@material-ui/icons/Delete'
 import GAEventsTracker from '../../../Hooks/GAEventsTracker'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import WatchLaterIcon from '@mui/icons-material/WatchLater'
 import { message } from 'antd'
 
 const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
 
-    // console.log(k)
+    console.log(k)
 
     const [editkeyResult, seteditkeyResult] = useState(false)
     const [btn, setBtn] = useState(false)
@@ -25,8 +27,11 @@ const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
     const UseGAEventsTracker = GAEventsTracker("Keyresults")
 
     return (
-        <div style={{width:'100%'}}>
-            <div key={k._id} className="objective-row">
+        <div className="objective-row">
+            {k.measureOfSuccess === '100' ? 
+            <CheckCircleIcon style={{ color: 'rgb(46, 196, 46)', fontSize: '20px' }} /> : 
+            <WatchLaterIcon style={{ color: 'red', fontSize: '20px' }} />}
+            <div key={k._id} className="objective-inner-row">
                 <p>Key Result</p>
                 <div className="objective-card">
                     {editkeyResult && activekeyResult === k.objId ? null : <p>{k.description}</p>}

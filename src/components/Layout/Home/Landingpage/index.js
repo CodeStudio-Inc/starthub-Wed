@@ -219,7 +219,6 @@ const Landing = (props) => {
                                                         btnId: 1
                                                     })
                                                     dispatch(actionCreators.archiveObjective(a._id, (res) => {
-                                                        console.log(res)
                                                         if (res.succes) {
                                                             setActiveRow({
                                                                 rowId: '',

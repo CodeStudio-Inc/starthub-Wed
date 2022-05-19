@@ -3,6 +3,8 @@ import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 import CancelIcon from '@material-ui/icons/Cancel'
 import EditIcon from '@material-ui/icons/Edit'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import WatchLaterIcon from '@mui/icons-material/WatchLater'
 
 const Keyresult = ({ k, dispatch, actionCreators, svg, loading, startupId}) => {
 
@@ -29,8 +31,11 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading, startupId}) => {
     // console.log(state.message,'ll')
 
     return (
-        <div style={{width:'100%'}}>
-            <div key={k.objId} className="objective-row">
+        <div className="objective-row">
+            {k.measureOfSuccess === '100' ? 
+            <CheckCircleIcon style={{ color: 'rgb(46, 196, 46)', fontSize: '20px' }} /> : 
+            <WatchLaterIcon style={{ color: 'red', fontSize: '20px' }} />}
+            <div key={k.objId} className="objective-inner-row">
                 <p>Key Result</p>
                 <div className="objective-card">
                     {editkeyResult && activekeyResult === k.objId ? null : <p>{k.description}</p>}

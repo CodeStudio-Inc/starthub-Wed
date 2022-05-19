@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import CancelIcon from '@material-ui/icons/Cancel'
 import EditIcon from '@material-ui/icons/Edit'
-import SaveIcon from '@mui/icons-material/Save'
+import ArchiveIcon from '@mui/icons-material/Archive'
 import DeleteIcon from '@material-ui/icons/Delete'
 import * as actionCreators from '../../../store/actionCreators'
 import Keyresult from './Keyresult'
@@ -38,12 +38,12 @@ const AdminObjective = ({ objectives, svg, startupId}) =>  {
                         <p>Objective {index >= 0 ? index + 1 : null}</p>
                         {loading && obj._id === activeObj ?
                             <img src={svg} style={{ width: "30px", height: "30px" }} /> :
-                            <DeleteIcon
+                            <ArchiveIcon
                                 className="edit-stmt-icon"
-                                style={{ fontSize: '20px' }}
+                                style={{ fontSize: '20px', color: '#28282be3' }}
                                 onClick={() => {
                                     setactiveObj(obj._id)
-                                    dispatch(actionCreators.archiveAdminObjective(obj._id, startupId))
+                                    dispatch(actionCreators.archiveAdminObjective(obj._id, startupId,() => {}))
                                 }}
                             />
                         }
@@ -73,7 +73,7 @@ const AdminObjective = ({ objectives, svg, startupId}) =>  {
                             {editObjective && obj._id === activeObj ? null : <h2>{obj.description}</h2>}
                             {editObjective ? null :
                                 <EditIcon
-                                    className="edit-stmt-icon" style={{ fontSize: '20px' }}
+                                    className="edit-stmt-icon" style={{ fontSize: '20px', color:'#28282be3' }}
                                     onClick={() => {
                                         setactiveObj(obj._id)
                                         seteditObjetive(true)
@@ -96,7 +96,7 @@ const AdminObjective = ({ objectives, svg, startupId}) =>  {
                             }}
                             >save</p> : null}
                             {editObjective && obj._id === activeObj ? <CancelIcon onClick={() => seteditObjetive(false)} className="edit-stmt-icon" style={{ fontSize: '20px' }} /> : null}
-                            {loading && obj._id === activeObj ? <p>updating...</p> : null}
+                            {loading && obj._id === activeObj ? <p style={{ color: '#dfa126' }}>updating...</p> : null}
                         </div>    
                         <div className="objective-description-row">
                             <h4>{!obj.objPercentage ? 0 : Math.round(obj.objPercentage)}%</h4>

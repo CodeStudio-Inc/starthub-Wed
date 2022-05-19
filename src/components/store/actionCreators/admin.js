@@ -293,14 +293,14 @@ export const getAllObjectives = () => {
     }
 }
 
-export const deleteAdminObjective = (objId, startupId, callback) => {
+export const deleteAdminObjective = (id, startupId, callback) => {
     return (dispatch, getState) => {
 
         dispatch(loadAction())
 
         const token = getState().auth.token
 
-        axios.delete(`https://starthubafrica-api.el.r.appspot.com/admin/objective/${objId}/${startupId}`, {
+        axios.delete(`https://starthubafrica-api.el.r.appspot.com/admin/objective/${id}/${startupId}`, {
             headers: {
                 ContentType: 'Application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -319,7 +319,7 @@ export const deleteAdminObjective = (objId, startupId, callback) => {
     }
 }
 
-export const archiveAdminObjective = (id, startupId) => {
+export const archiveAdminObjective = (id, startupId, callback) => {
     return (dispatch, getState) => {
 
         dispatch(loadAction())
@@ -341,7 +341,7 @@ export const archiveAdminObjective = (id, startupId) => {
             .then(res => {
                 // console.log(res)
                 dispatch(setObjectives(res.data.objs))
-                // callback({ success: true, res: res })
+                callback({ success: true, res: res })
                 dispatch(stopLoader())
             })
             .catch(error => {

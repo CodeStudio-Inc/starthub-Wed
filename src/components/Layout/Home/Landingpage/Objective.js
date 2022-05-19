@@ -38,7 +38,7 @@ const Objective = ({objectives, svg}) =>  {
                         <img src={svg} style={{ width:"30px", height:"30px"}}/> :
                             <ArchiveIcon  
                             className="edit-stmt-icon" 
-                            style={{ fontSize: '20px'}} 
+                                style={{ fontSize: '20px', color:'#28282be3'}} 
                             onClick={() => {
                                 setactiveObj(obj._id)
                                 dispatch(actionCreators.archiveObjective(obj._id))

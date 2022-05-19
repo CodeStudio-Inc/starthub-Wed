@@ -9,13 +9,18 @@ import Diagnostics from '../Landingpage/Diagnostics'
 import svg from '../../../../assets/images/spinner.svg'
 import QuotaTabs from './QuotaTabs'
 import { List  } from 'react-content-loader'
+import ArchiveIcon from '@mui/icons-material/Archive'
+import moment from 'moment'
 
 import '../Landingpage/Landing.css'
 const AdminPanel = (props) => {
 
     const [open, setOpen] = useState(false)
     const [expireTime, setexpireTime] = useState(false)
-    const [activeCard, setActiveCard] = useState({})
+    const [activeRow, setActiveRow] = useState({
+        rowId: '',
+        btnId: 0
+    })
     const [archive, setArchive] = useState(false)
     const [quarter1Obj, setQuarter1Obj] = useState(false)
     const [quarter2Obj, setQuarter2Obj] = useState(false)
@@ -33,7 +38,7 @@ const AdminPanel = (props) => {
     const username = props.location.state.data.username
     const category = props.location.state.data.category
     const base_key = props.location.state.data.base_key
-    // console.log(state)
+    // console.log(username)
 
     const lists = useSelector(state => state.admin.lists)
     const Boards = useSelector(state => state.admin.boards)
@@ -75,6 +80,8 @@ const AdminPanel = (props) => {
     const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2 && el.archive === false)
     const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3 && el.archive === false)
     const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4 && el.archive === false)
+
+    const archived = objectives && objectives.filter(el => el.boardId === current_boardID && el.archive === true)
     
     const getBoards = () => dispatch(actionCreators.getAdminBoard(startupId))
     const getLists = () => dispatch(actionCreators.getAdminLists(startupId ))
@@ -142,6 +149,85 @@ const AdminPanel = (props) => {
                 </div>
             </ModalUI>
             : null}
+            {archive ?
+                <ModalUI>
+                    <div className="archive-modal">
+                        <div className="create-header">
+                            <h3>Archive</h3>
+                            <CloseIcon
+                                className="create-icon"
+                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+                                onClick={() => setArchive(false)}
+                            />
+                        </div>
+                        {archived.length === 0 ? <h2>No Archived Records</h2>
+                            : <div className="archive-container">
+                                <table>
+                                    <tr>
+                                        <td><h3>Objective</h3></td>
+                                        <td><h3>Quarter</h3></td>
+                                        <td><h3>Created</h3></td>
+                                    </tr>
+                                    {archived.map(a => (
+                                        <tr>
+                                            <td>{a.description}</td>
+                                            <td>{a.quarter}</td>
+                                            <td>{moment(a.createdAt).fromNow()}</td>
+                                            <td
+                                                style={{
+                                                    textAlign: 'center'
+                                                }}>
+                                                {a._id === activeRow.rowId && activeRow.btnId === 1 && loading ?
+                                                    <p style={{ color: '#dfa126', margin: '0' }}>Restoring...</p> :
+                                                    <button
+                                                        onClick={() => {
+                                                            setActiveRow({
+                                                                rowId: a._id,
+                                                                btnId: 1
+                                                            })
+                                                            dispatch(actionCreators.archiveAdminObjective(a._id, startupId,(res) => {
+                                                                if (res.succes) {
+                                                                    setActiveRow({
+                                                                        rowId: '',
+                                                                        btnId: 0
+                                                                    })
+                                                                }
+                                                            })
+                                                            )
+                                                        }}>
+                                                        restore
+                                                    </button>}
+                                            </td>
+                                            <td
+                                                style={{ textAlign: 'center' }}
+                                            >
+                                                {a._id === activeRow.rowId && activeRow.btnId === 2 && loading ?
+                                                    <p style={{ color: '#dfa126', margin: '0' }}>Deleting...</p> :
+                                                    <button
+                                                        onClick={() => {
+                                                            setActiveRow({
+                                                                rowId: a._id,
+                                                                btnId: 2
+                                                            })
+                                                            dispatch(actionCreators.deleteAdminObjective(a._id, startupId, (res) => {
+                                                                if (res.succes) {
+                                                                    setActiveRow({
+                                                                        rowId: '',
+                                                                        btnId: 0
+                                                                    })
+                                                                }
+                                                            }))
+                                                        }}>
+                                                        delete
+                                                    </button>}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </table>
+                            </div>}
+                    </div>
+                </ModalUI>
+                : null}
             {quarter1Obj ?
                 <ModalUI>
                     <div className="create-modal">
@@ -333,9 +419,6 @@ const AdminPanel = (props) => {
                         onDragEnd={onDragEnd}
                         getLists={getLists}
                         openEditModal={openEditModal}
-                        setActiveCard={setActiveCard}
-                        setArchive={setArchive}
-                        archive={archive}
                         openQuarter1Obj={() => setQuarter1Obj(true)}
                         openQuarter2Obj={() => setQuarter2Obj(true)}
                         openQuarter3Obj={() => setQuarter3Obj(true)}
@@ -347,6 +430,12 @@ const AdminPanel = (props) => {
                         svg={svg}
                         startupId={startupId}
                     />
+                    {archived.length > 0 ?
+                        <div onClick={() => setArchive(true)} className="archive-btn">
+                            <ArchiveIcon onClick={() => setArchive(true)} style={{ marginRight: '5px' }} />
+                            <h3>Archive</h3>
+                        </div>
+                        : null}
                 </div>
                 {category === 'internal' ? null : 
                 <div className="landing-menu-right">

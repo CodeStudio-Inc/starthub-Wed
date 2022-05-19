@@ -444,12 +444,21 @@
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
+	flex-direction: column;
 	width: 100%;
 	margin-bottom: 0.5rem;
 	padding: 0.5rem;
 	box-sizing: border-box;
-		box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+.objective-inner-row {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .objective-row p {
@@ -780,7 +789,7 @@
 	position: absolute;
 	top: 0;
 	left: 15%;
-	z-index: 100;
+	z-index: 90;
 	height: 40px;
 	width: calc(60% - 100px);
 	background: #fff;
@@ -944,6 +953,7 @@
 	align-items: center;
 	justify-content: center;
 	top: 50px;
+	left: 0;
 	background: #28282be3;
 	border: none;
 	outline: none;
@@ -963,6 +973,12 @@
 .archive-btn:hover {
 	cursor: pointer;
 	background: #28282b;
+}
+
+.complete-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 /* @media screen and (max-width: 768px) {
