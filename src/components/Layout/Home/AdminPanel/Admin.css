@@ -129,11 +129,12 @@
 
 .admin-overview-row {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	align-items: flex-start;
+	justify-content: center;
 	flex-direction: column;
 	width: 95%;
 	margin-top: 1rem;
+	/* overflow: hidden; */
 }
 
 .overview-card {

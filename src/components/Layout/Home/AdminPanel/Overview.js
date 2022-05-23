@@ -3,19 +3,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import * as actionCreators from '../../../store/actionCreators'
 import { Progress } from 'antd'
 import ModalUI from '../../../ModalUI'
-import Qiribu from './Startups/Qiribu'
-import InoveLabs from './Startups/InoveLabs'
-import Isharc from './Startups/Isharc'
-import SocialClark from './Startups/SocialClark'
-import Figurines from './Startups/Figurines'
-import RadaSafaris from './Startups/RadaSafaris'
-import ZetuAfrica from './Startups/ZetuAfrica'
-import OminGym from './Startups/OmniGym'
-import Solfix from './Startups/Solfix'
-import GrabGas from './Startups/GrabGas'
-import Devine from './Startups/Devine'
-import Onestope from './Startups/Onestope'
-import Fastmere from './Startups/Fastmere'
+import {Table} from 'antd'
 
 import './Admin.css'
 const Overview = (props) => {
@@ -363,6 +351,362 @@ const Overview = (props) => {
     const fastMereQ4Changes = fastMereQ4.flatMap(({ keyresults }) => keyresults).filter(e => e.update === true).length
     const fastMereQ4Complete = fastMereQ4.flatMap(({ keyresults }) => keyresults).filter(e => e.measureOfSuccess === '100').length
 
+    const table_data = [
+        {
+            id: catalyzer[0]._id,
+            username: catalyzer[0].username,
+            overrall: qiribuOverrallPercentage,
+            q1Percentage: QiribuQ1Percentage ,
+            q2Percentage: QiribuQ2Percentage,
+            q3Percentage: QiribuQ3Percentage ,
+            q4Percentage: QiribuQ4Percentage,
+            Q1update: !QiribuQ1Percentage ? 0 : QiribuQ1Percentage, 
+            Q2update: !QiribuQ2Percentage ? 0 : QiribuQ2Percentage,
+            Q3update: !QiribuQ3Percentage ? 0 : QiribuQ3Percentage,
+            Q4update: !QiribuQ4Percentage ? 0 : QiribuQ4Percentage,
+            Q1complete: qiribuQ1Complete,
+            Q2complete: qiribuQ2Complete,
+            Q3complete: qiribuQ3Complete,
+            Q4complete: qiribuQ4Complete,
+        },
+        {
+            id: catalyzer[1]._id,
+            username: catalyzer[1].username,
+            overrall: inoveLabsOverrallPercentage,
+            q1Percentage: inoveLabsQ1Percentage,
+            q2Percentage: inoveLabsQ2Percentage,
+            q3Percentage: inoveLabsQ3Percentage,
+            q4Percentage: inoveLabsQ4Percentage,
+            Q1update: !inoveLabsQ1Percentage ? 0 : inoveLabsQ1Percentage,
+            Q2update: !inoveLabsQ2Percentage ? 0 : inoveLabsQ2Percentage,
+            Q3update: !inoveLabsQ3Percentage ? 0 : inoveLabsQ3Percentage,
+            Q4update: !inoveLabsQ4Percentage ? 0 : inoveLabsQ4Percentage,
+            Q1complete: inoveLabsQ1Complete,
+            Q2complete: inoveLabsQ2Complete,
+            Q3complete: inoveLabsQ3Complete,
+            Q4complete: inoveLabsQ4Complete,
+        },
+        {
+            id: catalyzer[2]._id,
+            username: catalyzer[2].username,
+            overrall: isharcOverrallPercentage,
+            q1Percentage: isharcQ1Percentage,
+            q2Percentage: isharcQ2Percentage,
+            q3Percentage: isharcQ3Percentage,
+            q4Percentage: isharcQ4Percentage,
+            Q1update: !isharcQ1Percentage ? 0 : isharcQ1Percentage,
+            Q2update: !isharcQ2Percentage ? 0 : isharcQ2Percentage,
+            Q3update: !isharcQ3Percentage ? 0 : isharcQ3Percentage,
+            Q4update: !isharcQ4Percentage ? 0 : isharcQ4Percentage,
+            Q1complete: isharcQ1Complete,
+            Q2complete: isharcQ2Complete,
+            Q3complete: isharcQ3Complete,
+            Q4complete: isharcQ4Complete,
+        },
+        {
+            id: catalyzer[3]._id,
+            username: catalyzer[3].username,
+            overrall: socialClarkOverrallPercentage,
+            q1Percentage: socialClarkQ1Percentage,
+            q2Percentage: socialClarkQ2Percentage,
+            q3Percentage: socialClarkQ3Percentage,
+            q4Percentage: socialClarkQ4Percentage,
+            Q1update: !socialClarkQ1Percentage ? 0 : socialClarkQ1Percentage,
+            Q2update: !socialClarkQ2Percentage ? 0 : socialClarkQ2Percentage,
+            Q3update: !socialClarkQ3Percentage ? 0 : socialClarkQ3Percentage,
+            Q4update: !socialClarkQ4Percentage ? 0 : socialClarkQ4Percentage,
+            Q1complete: socialClarkQ1Complete,
+            Q2complete: socialClarkQ2Complete,
+            Q3complete: socialClarkQ3Complete,
+            Q4complete: socialClarkQ4Complete,
+        },
+        {
+            id: catalyzer[4]._id,
+            username: catalyzer[4].username,
+            overrall: figurinesOverrallPercentage,
+            q1Percentage: figurinesQ1Percentage,
+            q2Percentage: figurinesQ2Percentage,
+            q3Percentage: figurinesQ3Percentage,
+            q4Percentage: figurinesQ4Percentage,
+            Q1update: !figurinesQ1Percentage ? 0 : figurinesQ1Percentage,
+            Q2update: !figurinesQ2Percentage ? 0 : figurinesQ2Percentage,
+            Q3update: !figurinesQ3Percentage ? 0 : figurinesQ3Percentage,
+            Q4update: !figurinesQ4Percentage ? 0 : figurinesQ4Percentage,
+            Q1complete: figurinesQ1Complete,
+            Q2complete: figurinesQ2Complete,
+            Q3complete: figurinesQ3Complete,
+            Q4complete: figurinesQ4Complete,
+        },
+        {
+            id: catalyzer[5]._id,
+            username: catalyzer[5].username,
+            overrall: radaSafarisOverrallPercentage,
+            q1Percentage: radaSafarisQ1Percentage,
+            q2Percentage: radaSafarisQ2Percentage,
+            q3Percentage: radaSafarisQ3Percentage,
+            q4Percentage: radaSafarisQ4Percentage,
+            Q1update: !radaSafarisQ1Percentage ? 0 : radaSafarisQ1Percentage,
+            Q2update: !radaSafarisQ2Percentage ? 0 : radaSafarisQ2Percentage,
+            Q3update: !radaSafarisQ3Percentage ? 0 : radaSafarisQ3Percentage,
+            Q4update: !radaSafarisQ4Percentage ? 0 : radaSafarisQ4Percentage,
+            Q1complete: radaSafarisQ1Complete,
+            Q2complete: radaSafarisQ2Complete,
+            Q3complete: radaSafarisQ3Complete,
+            Q4complete: radaSafarisQ4Complete,
+        },
+        {
+            id: catalyzer[6]._id,
+            username: catalyzer[6].username,
+            overrall: zetuAfricaOverrallPercentage,
+            q1Percentage: zetuAfricaQ1Percentage,
+            q2Percentage: zetuAfricaQ2Percentage,
+            q3Percentage: zetuAfricaQ3Percentage,
+            q4Percentage: zetuAfricaQ4Percentage,
+            Q1update: !zetuAfricaQ1Percentage ? 0 : zetuAfricaQ1Percentage,
+            Q2update: !zetuAfricaQ2Percentage ? 0 : zetuAfricaQ2Percentage,
+            Q3update: !zetuAfricaQ3Percentage ? 0 : zetuAfricaQ3Percentage,
+            Q4update: !zetuAfricaQ4Percentage ? 0 : zetuAfricaQ4Percentage,
+            Q1complete: zetuAfricaQ1Complete,
+            Q2complete: zetuAfricaQ2Complete,
+            Q3complete: zetuAfricaQ3Complete,
+            Q4complete: zetuAfricaQ4Complete,
+        },
+        {
+            id: catalyzer[7]._id,
+            username: catalyzer[7].username,
+            overrall: omniGymOverrallPercentage,
+            q1Percentage: omniGymQ1Percentage,
+            q2Percentage: omniGymQ2Percentage,
+            q3Percentage: omniGymQ3Percentage,
+            q4Percentage: omniGymQ4Percentage,
+            Q1update: !omniGymQ1Percentage ? 0 : omniGymQ1Percentage,
+            Q2update: !omniGymQ2Percentage ? 0 : omniGymQ2Percentage,
+            Q3update: !omniGymQ3Percentage ? 0 : omniGymQ3Percentage,
+            Q4update: !omniGymQ4Percentage ? 0 : omniGymQ4Percentage,
+            Q1complete: omniGymQ1Complete,
+            Q2complete: omniGymQ2Complete,
+            Q3complete: omniGymQ3Complete,
+            Q4complete: omniGymQ4Complete,
+        },
+        {
+            id: catalyzer[9]._id,
+            username: catalyzer[9].username,
+            overrall: solfixOverrallPercentage,
+            q1Percentage: solfixQ1Percentage,
+            q2Percentage: solfixQ2Percentage,
+            q3Percentage: solfixQ3Percentage,
+            q4Percentage: solfixQ4Percentage,
+            Q1update: !solfixQ1Percentage ? 0 : solfixQ1Percentage,
+            Q2update: !solfixQ2Percentage ? 0 : solfixQ2Percentage,
+            Q3update: !solfixQ3Percentage ? 0 : solfixQ3Percentage,
+            Q4update: !solfixQ4Percentage ? 0 : solfixQ4Percentage,
+            Q1complete: solfixQ1Complete,
+            Q2complete: solfixQ2Complete,
+            Q3complete: solfixQ3Complete,
+            Q4complete: solfixQ4Complete,
+        },
+        {
+            id: catalyzer[10]._id,
+            username: catalyzer[10].username,
+            overrall: grabGasOverrallPercentage,
+            q1Percentage: grabGasQ1Percentage,
+            q2Percentage: grabGasQ2Percentage,
+            q3Percentage: grabGasQ3Percentage,
+            q4Percentage: grabGasQ4Percentage,
+            Q1update: !grabGasQ1Percentage ? 0 : grabGasQ1Percentage,
+            Q2update: !grabGasQ2Percentage ? 0 : grabGasQ2Percentage,
+            Q3update: !grabGasQ3Percentage ? 0 : grabGasQ3Percentage,
+            Q4update: !grabGasQ4Percentage ? 0 : grabGasQ4Percentage,
+            Q1complete: grabGasQ1Complete,
+            Q2complete: grabGasQ2Complete,
+            Q3complete: grabGasQ3Complete,
+            Q4complete: grabGasQ4Complete,
+        },
+        {
+            id: catalyzer[13]._id,
+            username: catalyzer[13].username,
+            overrall: devineOverrallPercentage,
+            q1Percentage: devineQ1Percentage,
+            q2Percentage: devineQ2Percentage,
+            q3Percentage: devineQ3Percentage,
+            q4Percentage: devineQ4Percentage,
+            Q1update: !devineQ1Percentage ? 0 : devineQ1Percentage,
+            Q2update: !devineQ2Percentage ? 0 : devineQ2Percentage,
+            Q3update: !devineQ3Percentage ? 0 : devineQ3Percentage,
+            Q4update: !devineQ4Percentage ? 0 : devineQ4Percentage,
+            Q1complete: devineQ1Complete,
+            Q2complete: devineQ2Complete,
+            Q3complete: devineQ3Complete,
+            Q4complete: devineQ4Complete,
+        },
+        {
+            id: catalyzer[14]._id,
+            username: catalyzer[14].username,
+            overrall: onetopeOverrallPercentage,
+            q1Percentage: onetopeQ1Percentage,
+            q2Percentage: onetopeQ2Percentage,
+            q3Percentage: onetopeQ3Percentage,
+            q4Percentage: onetopeQ4Percentage,
+            Q1update: !onetopeQ1Percentage ? 0 : onetopeQ1Percentage,
+            Q2update: !onetopeQ2Percentage ? 0 : onetopeQ2Percentage,
+            Q3update: !onetopeQ3Percentage ? 0 : onetopeQ3Percentage,
+            Q4update: !onetopeQ4Percentage ? 0 : onetopeQ4Percentage,
+            Q1complete: onetopeQ1Complete,
+            Q2complete: onetopeQ2Complete,
+            Q3complete: onetopeQ3Complete,
+            Q4complete: onetopeQ4Complete,
+        },
+        {
+            id: catalyzer[15]._id,
+            username: catalyzer[15].username,
+            overrall: fastMereOverrallPercentage,
+            q1Percentage: fastMereQ1Percentage,
+            q2Percentage: fastMereQ2Percentage,
+            q3Percentage: fastMereQ3Percentage,
+            q4Percentage: fastMereQ4Percentage,
+            Q1update: !fastMereQ1Percentage ? 0 : fastMereQ1Percentage,
+            Q2update: !fastMereQ2Percentage ? 0 : fastMereQ2Percentage,
+            Q3update: !fastMereQ3Percentage ? 0 : fastMereQ3Percentage,
+            Q4update: !fastMereQ4Percentage ? 0 : fastMereQ4Percentage,
+            Q1complete: fastMereQ1Complete,
+            Q2complete: fastMereQ2Complete,
+            Q3complete: fastMereQ3Complete,
+            Q4complete: fastMereQ4Complete,
+        }
+    ]
+
+    const Text = ({text}) => {
+        return (
+            <span
+                style={{
+                    background: 'rgba(232, 15, 15, 0.431)',
+                    padding: '5px',
+                    borderRadius: '5px'
+                }}>
+                <text style = {{ color: 'red' }}>{text}</text>
+            </span>
+        )
+    }
+
+    const Text2 = ({ r, text1, text2 }) => {
+        return (
+            <span
+                style={{
+                    background: r > 0 && r < 100 ? 'rgba(248, 215, 3, 0.488)' : 'rgba(51, 202, 51, 0.437)',
+                    padding: '5px',
+                    borderRadius: '5px'
+                }}>
+                <text 
+                style={{ color: r > 0 && r < 100 ? 'orange' : 'green' }}>
+                    {r > 0 && r < 100 ? text1 : text2}
+                </text>
+            </span>
+        )
+    }
+
+    const table_columns = [
+        {
+            title: 'Startup',
+            dataIndex: 'username',
+            key: 'username',
+            align: 'left'
+        },
+        {
+            title: 'Overall Progress %',
+            dataIndex: 'overrall',
+            key: 'overrall',
+            align: 'left'
+        },
+        {
+            title: 'Q1 Overall %',
+            dataIndex: 'q1Percentage',
+            key: 'q1Percentage',
+            align: 'left'
+        },
+        {
+            title: 'Q2 Overall %',
+            dataIndex: 'q2Percentage',
+            key: 'q2Percentage',
+            align: 'left'
+        },
+        {
+            title: 'Q3 Overall %',
+            dataIndex: 'q3Percentage',
+            key: 'q3Percentage',
+            align: 'left'
+        },
+        {
+            title: 'Q4 Overall %',
+            dataIndex: 'q4Percentage',
+            key: 'q4Percentage',
+            align: 'left'
+        },
+        {
+            title: 'Q1 Complete OKRs',
+            dataIndex: 'Q1complete',
+            key: 'Q1complete',
+            align: 'left'
+        },
+        {
+            title: 'Q2 Complete OKRs',
+            dataIndex: 'Q2complete',
+            key: 'Q2complete',
+            align: 'left'
+        },
+        {
+            title: 'Q3 Complete OKRs',
+            dataIndex: 'Q3complete',
+            key: 'Q3complete',
+            align: 'left'
+        },
+        {
+            title: 'Q4 Complete OKRs',
+            dataIndex: 'Q4complete',
+            key: 'Q4complete',
+            align: 'left'
+        },
+        {
+            title: 'Q1 Status',
+            dataIndex: 'Q1update',
+            key: 'Q1update',
+            align: 'left',
+            render: (r) => {
+                if (r === 0) return <Text text='inactive' />
+                if (r > 0 && r <= 100) return <Text2 r={r} text1='active' text2='complete' />
+            }
+        },
+        {
+            title: 'Q2 Status',
+            dataIndex: 'Q2update',
+            key: 'Q2update',
+            align: 'left',
+            render: (r) => {
+                if (r === 0) return <Text text='inactive' />
+                if (r > 0 && r <= 100) return <Text2 r={r} text1='active' text2='complete' />
+            }
+        },
+        {
+            title: 'Q3 Status',
+            dataIndex: 'Q3update',
+            key: 'Q3update',
+            align: 'left',
+            render: (r) => {
+                if (r === 0) return <Text text='inactive' />
+                if (r > 0 && r <= 100) return <Text2 r={r} text1='active' text2='complete' />
+            }
+        },
+        {
+            title: 'Q4 Status',
+            dataIndex: 'Q4update',
+            key: 'Q4update',
+            align: 'left',
+            render: (r) => {
+                if (r === 0) return <Text text='inactive' />
+                if (r > 0 && r <= 100) return <Text2 r={r} text1='active' text2='complete' />
+            }
+        },
+    ]
+
     return (
         <div className="admin-main">
             {expireTime ?
@@ -375,213 +719,30 @@ const Overview = (props) => {
                 : null}
             <div className="admin-overview">
                 <div className="admin-overview-row">
-                    <Qiribu
-                        overrall={qiribuOverrallPercentage}
-                        Q1={QiribuQ1Percentage}
-                        Q2={QiribuQ2Percentage}
-                        Q3={QiribuQ3Percentage}
-                        Q4={QiribuQ4Percentage}
-                        username={catalyzer[0].username}
-                        Q1update={qiribuQ1Changes}
-                        Q2update={qiribuQ2Changes}
-                        Q3update={qiribuQ3Changes}
-                        Q4update={qiribuQ4Changes}
-                        Q1complete={qiribuQ1Complete}
-                        Q2complete={qiribuQ2Complete}
-                        Q3complete={qiribuQ3Complete}
-                        Q4complete={qiribuQ4Complete}
-                    />
-                    <InoveLabs
-                        overrall={inoveLabsOverrallPercentage}
-                        Q1={inoveLabsQ1Percentage}
-                        Q2={inoveLabsQ2Percentage}
-                        Q3={inoveLabsQ3Percentage}
-                        Q4={inoveLabsQ4Percentage}
-                        username={catalyzer[1].username}
-                        Q1update={inoveLabsQ1Changes}
-                        Q2update={inoveLabsQ2Changes}
-                        Q3update={inoveLabsQ3Changes}
-                        Q4update={inoveLabsQ4Changes}
-                        Q1complete={inoveLabsQ1Complete}
-                        Q2complete={inoveLabsQ2Complete}
-                        Q3complete={inoveLabsQ3Complete}
-                        Q4complete={inoveLabsQ4Complete}
-                    />
-                    <Isharc
-                        overrall={isharcOverrallPercentage}
-                        Q1={isharcQ1Percentage}
-                        Q2={isharcQ2Percentage}
-                        Q3={isharcQ3Percentage}
-                        Q4={isharcQ4Percentage}
-                        username={catalyzer[2].username}
-                        Q1update={isharcQ1Changes}
-                        Q2update={isharcQ2Changes}
-                        Q3update={isharcQ3Changes}
-                        Q4update={isharcQ4Changes}
-                        Q1complete={isharcQ1Complete}
-                        Q2complete={isharcQ2Complete}
-                        Q3complete={isharcQ3Complete}
-                        Q4complete={isharcQ4Complete}
-                    />
-                    <SocialClark
-                        overrall={socialClarkOverrallPercentage}
-                        Q1={socialClarkQ1Percentage}
-                        Q2={socialClarkQ2Percentage}
-                        Q3={socialClarkQ3Percentage}
-                        Q4={socialClarkQ4Percentage}
-                        username={catalyzer[3].username}
-                        Q1update={socialClarkQ1Changes}
-                        Q2update={socialClarkQ2Changes}
-                        Q3update={socialClarkQ3Changes}
-                        Q4update={socialClarkQ4Changes}
-                        Q1complete={socialClarkQ1Complete}
-                        Q2complete={socialClarkQ2Complete}
-                        Q3complete={socialClarkQ3Complete}
-                        Q4complete={socialClarkQ4Complete}
-                    />
-                    <Figurines
-                        overrall={figurinesOverrallPercentage}
-                        Q1={figurinesQ1Percentage}
-                        Q2={figurinesQ2Percentage}
-                        Q3={figurinesQ3Percentage}
-                        Q4={figurinesQ4Percentage}
-                        username={catalyzer[4].username}
-                        Q1update={figurinesQ1Changes}
-                        Q2update={figurinesQ2Changes}
-                        Q3update={figurinesQ3Changes}
-                        Q4update={figurinesQ4Changes}
-                        Q1complete={figurinesQ1Complete}
-                        Q2complete={figurinesQ2Complete}
-                        Q3complete={figurinesQ3Complete}
-                        Q4complete={figurinesQ4Complete}
-                    />
-                    <RadaSafaris
-                        overrall={radaSafarisOverrallPercentage}
-                        Q1={radaSafarisQ1Percentage}
-                        Q2={radaSafarisQ2Percentage}
-                        Q3={radaSafarisQ3Percentage}
-                        Q4={radaSafarisQ4Percentage}
-                        username={catalyzer[5].username}
-                        Q1update={radaSafarisQ1Changes}
-                        Q2update={radaSafarisQ2Changes}
-                        Q3update={radaSafarisQ3Changes}
-                        Q4update={radaSafarisQ4Changes}
-                        Q1complete={radaSafarisQ1Complete}
-                        Q2complete={radaSafarisQ2Complete}
-                        Q3complete={radaSafarisQ3Complete}
-                        Q4complete={radaSafarisQ4Complete}
-                    />
-                    <ZetuAfrica
-                        overrall={zetuAfricaOverrallPercentage}
-                        Q1={zetuAfricaQ1Percentage}
-                        Q2={zetuAfricaQ2Percentage}
-                        Q3={zetuAfricaQ3Percentage}
-                        Q4={zetuAfricaQ4Percentage}
-                        username={catalyzer[6].username}
-                        Q1update={zetuAfricaQ1Changes}
-                        Q2update={zetuAfricaQ2Changes}
-                        Q3update={zetuAfricaQ3Changes}
-                        Q4update={zetuAfricaQ4Changes}
-                        Q1complete={zetuAfricaQ1Complete}
-                        Q2complete={zetuAfricaQ2Complete}
-                        Q3complete={zetuAfricaQ3Complete}
-                        Q4complete={zetuAfricaQ4Complete}
-                    />
-                    <OminGym
-                        overrall={omniGymOverrallPercentage}
-                        Q1={omniGymQ1Percentage}
-                        Q2={omniGymQ2Percentage}
-                        Q3={omniGymQ3Percentage}
-                        Q4={omniGymQ4Percentage}
-                        username={catalyzer[7].username}
-                        Q1update={omniGymQ1Changes}
-                        Q2update={omniGymQ2Changes}
-                        Q3update={omniGymQ3Changes}
-                        Q4update={omniGymQ4Changes}
-                        Q1complete={omniGymQ1Complete}
-                        Q2complete={omniGymQ2Complete}
-                        Q3complete={omniGymQ3Complete}
-                        Q4complete={omniGymQ4Complete}
-                    />
-                    <Solfix
-                        overrall={solfixOverrallPercentage}
-                        Q1={solfixQ1Percentage}
-                        Q2={solfixQ2Percentage}
-                        Q3={solfixQ3Percentage}
-                        Q4={solfixQ4Percentage}
-                        username={catalyzer[9].username}
-                        Q1update={solfixQ1Changes}
-                        Q2update={solfixQ2Changes}
-                        Q3update={solfixQ3Changes}
-                        Q4update={solfixQ4Changes}
-                        Q1complete={solfixQ1Complete}
-                        Q2complete={solfixQ2Complete}
-                        Q3complete={solfixQ3Complete}
-                        Q4complete={solfixQ4Complete}
-                    />
-                    <GrabGas
-                        overrall={grabGasOverrallPercentage}
-                        Q1={grabGasQ1Percentage}
-                        Q2={grabGasQ2Percentage}
-                        Q3={grabGasQ3Percentage}
-                        Q4={grabGasQ4Percentage}
-                        username={catalyzer[10].username}
-                        Q1update={grabGasQ1Changes}
-                        Q2update={grabGasQ2Changes}
-                        Q3update={grabGasQ3Changes}
-                        Q4update={grabGasQ4Changes}
-                        Q1complete={grabGasQ1Complete}
-                        Q2complete={grabGasQ2Complete}
-                        Q3complete={grabGasQ3Complete}
-                        Q4complete={grabGasQ4Complete}
-                    />
-                    <Devine
-                        overrall={devineOverrallPercentage}
-                        Q1={devineQ1Percentage}
-                        Q2={devineQ2Percentage}
-                        Q3={devineQ3Percentage}
-                        Q4={devineQ4Percentage}
-                        username={catalyzer[13].username}
-                        Q1update={devineQ1Changes}
-                        Q2update={devineQ2Changes}
-                        Q3update={devineQ3Changes}
-                        Q4update={devineQ4Changes}
-                        Q1complete={devineQ1Complete}
-                        Q2complete={devineQ2Complete}
-                        Q3complete={devineQ3Complete}
-                        Q4complete={devineQ4Complete}
-                    />
-                    <Onestope
-                        overrall={onetopeOverrallPercentage}
-                        Q1={onetopeQ1Percentage}
-                        Q2={onetopeQ2Percentage}
-                        Q3={onetopeQ3Percentage}
-                        Q4={onetopeQ4Percentage}
-                        username={catalyzer[14].username}
-                        Q1update={onetopeQ1Changes}
-                        Q2update={onetopeQ2Changes}
-                        Q3update={onetopeQ3Changes}
-                        Q4update={onetopeQ4Changes}
-                        Q1complete={onetopeQ1Complete}
-                        Q2complete={onetopeQ2Complete}
-                        Q3complete={onetopeQ3Complete}
-                        Q4complete={onetopeQ4Complete}
-                    />
-                    <Fastmere
-                        overrall={fastMereOverrallPercentage}
-                        Q1={fastMereQ1Percentage}
-                        Q2={fastMereQ2Percentage}
-                        Q3={fastMereQ3Percentage}
-                        Q4={fastMereQ4Percentage}
-                        username={catalyzer[15].username}
-                        Q1update={fastMereQ1Changes}
-                        Q2update={fastMereQ2Changes}
-                        Q3update={fastMereQ3Changes}
-                        Q4update={fastMereQ4Changes}
-                        Q1complete={fastMereQ1Complete}
-                        Q2complete={fastMereQ2Complete}
-                        Q3complete={fastMereQ3Complete}
-                        Q4complete={fastMereQ4Complete}
+                    <Table
+                        columns={table_columns}
+                        dataSource={[...table_data.map(r =>
+                        ({
+                            ...r,
+                            key: r.id,
+                            username: r.username,
+                            overrall: !r.overrall ? '0' : Math.round(r.overrall),
+                            q1Percentage: !r.q1Percentage ? '0' : Math.round(r.q1Percentage),
+                            q2Percentage: !r.q2Percentage ? '0' : Math.round(r.q2Percentage),
+                            q3Percentage: !r.q3Percentage ? '0' : Math.round(r.q3Percentage),
+                            q4Percentage: !r.q4Percentage ? '0' : Math.round(r.q4Percentage),
+                            Q1update: Math.round(r.Q1update),
+                            Q1complete: r.Q1complete,
+                            Q2complete: r.Q2complete,
+                            Q3complete: r.Q3complete,
+                            Q4complete: r.Q4complete,
+                            Q2update: r.Q2update,
+                            Q3update: r.Q3update,
+                            Q4update: r.Q4update,
+                        })
+                        )]}
+                        style={{ width: '100%', marginTop: '1rem', marginBottom:'2rem' }}
+                        pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
                     />
                 </div>
            </div>

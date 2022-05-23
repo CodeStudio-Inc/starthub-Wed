@@ -11,7 +11,7 @@ import { message } from 'antd'
 
 const Keyresult = ({k, dispatch, actionCreators, svg, loading}) => {
 
-    console.log(k)
+    // console.log(k)
 
     const [editkeyResult, seteditkeyResult] = useState(false)
     const [btn, setBtn] = useState(false)
