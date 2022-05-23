@@ -1,7 +1,7 @@
 .admin-main {
 	width: 100%;
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	background: #eee;
 	height: 100vh;
 }
@@ -134,75 +134,5 @@
 	flex-direction: column;
 	width: 95%;
 	margin-top: 1rem;
-	/* overflow: hidden; */
 }
 
-.overview-card {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	flex-direction: column;
-	width: 100%;
-	background: #fff;
-	padding: 10px;
-	margin-bottom: 1rem;
-}
-
-.card-header {
-	display: flex;
-	align-items: flex-start;
-	width: 100%;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.card-header h2 {
-	color: #dfa126;
-	margin: 0;
-}
-
-.overall-row {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 90%;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-}
-
-.overall-row h4 {
-	margin: 0;
-	color: rgba(0, 0, 0, 0.5);
-}
-
-.overall-row h2 {
-	margin: 0;
-	font-weight: bold;
-}
-
-.progress {
-	width: 84%;
-}
-
-.quarter-card {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	width: 30%;
-	height: 100%;
-}
-
-.quarter-card h3 {
-	color: rgba(0, 0, 0, 0.5);
-}
-
-.quarter-card p {
-	margin: 0;
-	color: #4c6439;
-}
-
-.quarter-separator {
-	height: 100%;
-	width: 1px;
-	background: rgba(0, 0, 0, 0.1);
-}
