@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import AddIcon from '@material-ui/icons/Add'
 import ModalUI from '../../../ModalUI'
@@ -6,9 +6,10 @@ import CloseIcon from '@material-ui/icons/Close'
 import Register from '../AdminPanel/Register'
 import * as actionCreators from '../../../store/actionCreators'
 import moment from 'moment'
-import { Progress } from 'antd'
+import { Progress, message } from 'antd'
 import { Line } from 'react-chartjs-2'
-import { Table } from 'antd'
+import emailjs from '@emailjs/browser'
+import apiKeys from '../AdminPanel/Loans/emailKeys'
 
 const AdminLandingPage = ({startups, adminNavigate}) => {
 
@@ -33,6 +34,8 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
 
 
     const dispatch = useDispatch()
+
+    const form = useRef()
 
     const current_date = moment(Date()).format('MMM YYYY')
     const enrolledUsers = users.filter(e => moment(e.dateCreated).format('MMM YYYY') === current_date)
@@ -124,6 +127,19 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
             base_key:'',
             link:''
         })
+    }
+
+    const sendEmail = (e) => {
+        e.preventDefault()
+        // setLoading(true)
+        emailjs.sendForm(apiKeys.SERVICE_ID, apiKeys.TEMPLATE_ID, form.current, apiKeys.USER_ID)
+            .then((result) => {
+                message.info("Message Sent, We will get back to you shortly", result.text)
+                // setLoading(false)
+            },
+                (error) => {
+                    message.info("An error occurred, Please try again", error.text)
+                })
     }
 
     return (
@@ -222,7 +238,15 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                                 />
                         </div>
                     </div>
-                    <div className="admin-stat">
+                    <div onClick={sendEmail} className="admin-stat">
+                        <form ref={form} onSubmit={sendEmail}>
+                            <input
+                                type="text"
+                                name="Fname"
+                                value="Business People"
+                                hidden
+                            />
+                        </form>
                         <h3>Teams enrolled this month</h3>
                         <h1>{enrolledUsers.length}</h1>
                         <h5>Percentage of month enrollment</h5>
