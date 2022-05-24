@@ -37,20 +37,20 @@ const UserActivity = () => {
       key: 'loginDate',
       align: 'left'
     }
-    ,
-    {
-      title: 'Last Revenue Payment',
-      dataIndex: 'revenueDate',
-      key: 'revenueDate',
-      align: 'left'
-    }
-    ,
-    {
-      title: 'Last Revenue Submission',
-      dataIndex: 'submissionDate',
-      key: 'submissionDate',
-      align: 'left'
-    }
+    // ,
+    // {
+    //   title: 'Last Revenue Payment',
+    //   dataIndex: 'revenueDate',
+    //   key: 'revenueDate',
+    //   align: 'left'
+    // }
+    // ,
+    // {
+    //   title: 'Last Revenue Submission',
+    //   dataIndex: 'submissionDate',
+    //   key: 'submissionDate',
+    //   align: 'left'
+    // }
   ]
 
   return (
@@ -64,13 +64,13 @@ const UserActivity = () => {
             key: r._id,
             startup: r.username,
             email: r.email,
-            loginDate: moment(r.date).format('DD.MM.YYYY, h:mm:ss a'),
-            revenueDate: r.revenuePayment ? moment(r.revenuePayment).format('DD.MM.YYYY, h:mm:ss a') : 'No payment made yet',
-            submissionDate: r.revenueSubmission ? moment(r.revenueSubmission).format('DD.MM.YYYY, h:mm:ss a') : 'No revenue submitted yet',
+            loginDate: moment(r.date).format('DD.MM.YYYY, h:mm:ss a')
+            // revenueDate: r.revenuePayment ? moment(r.revenuePayment).format('DD.MM.YYYY, h:mm:ss a') : 'No payment made yet',
+            // submissionDate: r.revenueSubmission ? moment(r.revenueSubmission).format('DD.MM.YYYY, h:mm:ss a') : 'No revenue submitted yet',
           })
           )]}
           style={{ width: '75%' }}
-          pagination={false}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
         />
       </div>
     </div>
