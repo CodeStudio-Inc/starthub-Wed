@@ -6,10 +6,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import Register from '../AdminPanel/Register'
 import * as actionCreators from '../../../store/actionCreators'
 import moment from 'moment'
-import { Progress, message } from 'antd'
+import { Progress } from 'antd'
 import { Line } from 'react-chartjs-2'
-import emailjs from '@emailjs/browser'
-import apiKeys from '../AdminPanel/Loans/emailKeys'
 
 const AdminLandingPage = ({startups, adminNavigate}) => {
 
@@ -34,8 +32,6 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
 
 
     const dispatch = useDispatch()
-
-    const form = useRef()
 
     const current_date = moment(Date()).format('MMM YYYY')
     const enrolledUsers = users.filter(e => moment(e.dateCreated).format('MMM YYYY') === current_date)
@@ -129,18 +125,7 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
         })
     }
 
-    const sendEmail = (e) => {
-        e.preventDefault()
-        // setLoading(true)
-        emailjs.sendForm(apiKeys.SERVICE_ID, apiKeys.TEMPLATE_ID, form.current, apiKeys.USER_ID)
-            .then((result) => {
-                message.info("Message Sent, We will get back to you shortly", result.text)
-                // setLoading(false)
-            },
-                (error) => {
-                    message.info("An error occurred, Please try again", error.text)
-                })
-    }
+    const sendEmail = () => dispatch(actionCreators.sendEmail())
 
     return (
         <div className="admin-menu">
@@ -239,14 +224,6 @@ const AdminLandingPage = ({startups, adminNavigate}) => {
                         </div>
                     </div>
                     <div onClick={sendEmail} className="admin-stat">
-                        <form ref={form} onSubmit={sendEmail}>
-                            <input
-                                type="text"
-                                name="Fname"
-                                value="Business People"
-                                hidden
-                            />
-                        </form>
                         <h3>Teams enrolled this month</h3>
                         <h1>{enrolledUsers.length}</h1>
                         <h5>Percentage of month enrollment</h5>

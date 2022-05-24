@@ -863,30 +863,29 @@ export const getRevenueShares = () => {
     }
 }
 
-// export const sendEmail = (email) => {
-//     return (dispatch, getState) => {
-//         console.log(email)
-//         dispatch(loadAction())
+export const sendEmail = () => {
+    return (dispatch) => {
+        // dispatch(loadAction())
 
-//         const token = getState().auth.token
+        const data = {
+            service_id: process.env.REACT_APP_SERVICE_ID,
+            template_id: process.env.REACT_APP_TEMPLATE_ID,
+            user_id: process.env.REACT_APP_USER_ID,
+            template_params: {
+                'Fname': 'Business Men & Women',
+                'notes': 'Due to your busy schedules, this is a reminder email from Starthub Africa, for you to submit your monthly revenue payments before the end of the month'
+            }
+        };
 
-//         const data = {
-//             email: 'Stuartkal@gmail.com'
-//         }
+        axios.post('https://api.emailjs.com/api/v1.0/email/send', data, {
+            contentType: 'application/json'
+        })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(error => {
+                console.log(error)
+            })
 
-//         axios.post(`https://starthubafrica-api.el.r.appspot.com/admin/send-email`, data, {
-//             headers: {
-//                 ContentType: 'Application/json',
-//                 'Access-Control-Allow-Origin': '*',
-//                 Authorization: token
-//             }
-//         })
-//             .then(res => {
-//                 console.log(res)
-//             })
-//             .catch(error => {
-//                 console.log(error)
-//             })
-
-//     }
-// }
+    }
+}

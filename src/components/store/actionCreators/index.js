@@ -86,6 +86,7 @@ export {
     addRBPayment,
     getReducingBalance,
     addRevenueShare,
-    getRevenueShares
+    getRevenueShares,
+    sendEmail
 } from './admin'
 
