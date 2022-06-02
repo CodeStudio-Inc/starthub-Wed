@@ -881,7 +881,7 @@ export const sendEmail = () => {
             contentType: 'application/json'
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
             })
             .catch(error => {
                 console.log(error)
