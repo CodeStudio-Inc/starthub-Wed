@@ -211,6 +211,12 @@ const Navbar = (props) => {
 										return message.info('Still under Development, Cheers!!');
 									if (element.title === 'Content' && category === 'academy')
 										return message.info('Still under Development, Cheers!!');
+									if (element.title === 'Content' && category === 'dskills')
+										return message.info('Still under Development, Cheers!!');
+									if (element.title === 'Metrics' && category === 'dskills')
+										return message.info(`${username} has no Metrics Data`);
+									if (element.title === 'Schedule' && category === 'dskills')
+										return message.info('No Mentors available');
 									props.history.push(element.route);
 								}}
 							>
