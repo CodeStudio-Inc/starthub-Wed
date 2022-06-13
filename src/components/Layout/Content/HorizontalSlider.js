@@ -1,59 +1,34 @@
-import React,{useRef} from 'react'
+import React, { useRef } from 'react';
 
 const HorizontalSlider = () => {
+	const ref = useRef(null);
 
-  const ref = useRef(null)
+	console.log(ref);
 
-  console.log(ref)
+	const scroll = (scrollOffset) => {
+		ref.current.scrollLeft += scrollOffset;
+	};
 
-  const scroll = (scrollOffset) => {
-    ref.current.scrollLeft += scrollOffset;
-  }
-    
-  return (
-    <div className="scroll-main">
-      <div className="scroll-container" ref={ref}>
-        {/* <button onClick={() => scroll(-50)}>LEFT</button> */}
-        <div className="scroll-content2">
+	return (
+		<div className="scroll-main">
+			<div className="scroll-container" ref={ref}>
+				{/* <button onClick={() => scroll(-50)}>LEFT</button> */}
+				<div className="scroll-content2" />
+				<div className="scroll-content" />
+				<div className="scroll-content2" />
+				<div className="scroll-content" />
+				<div className="scroll-content2" />
+				<div className="scroll-content" />
+				<div className="scroll-content2" />
+				<div className="scroll-content" />
+				<div className="scroll-content2" />
+				<div className="scroll-content2" />
+				<div className="scroll-content2" />
+				<div className="scroll-content2" />
+				<button onClick={() => scroll(50)}>RIGHT</button>
+			</div>
+		</div>
+	);
+};
 
-        </div>
-        <div className="scroll-content">
-
-        </div>
-        <div className="scroll-content2">
-
-        </div>
-        <div className="scroll-content">
-
-        </div>
-        <div className="scroll-content2">
-
-        </div>
-        <div className="scroll-content">
-
-        </div>
-        <div className="scroll-content2">
-
-        </div>
-        <div className="scroll-content">
-
-        </div>
-        <div className="scroll-content2">
-
-        </div>
-        <div className="scroll-content2">
-
-        </div>
-        <div className="scroll-content2">
-
-        </div>
-        <div className="scroll-content2">
-
-        </div>
-        <button onClick={() => scroll(50)}>RIGHT</button>
-      </div>
-    </div>
-  )
-}
-
-export default HorizontalSlider
+export default HorizontalSlider;

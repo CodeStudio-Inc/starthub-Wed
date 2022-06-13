@@ -614,7 +614,7 @@
 
 .close {
 	cursor: pointer;
-	color: #69191b !important;
+	color: #28282be3 !important;
 }
 
 .create-board-column {
@@ -779,6 +779,18 @@
 
 .edit-card-row2 input:focus {
 	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.edit-card-row2 textarea {
+	border: none;
+	outline: none;
+	background: #eee;
+	padding-left: 0.5rem;
+	height: 100px;
+}
+
+.edit-card-row2 textarea:focus {
+	cursor: text;
 }
 
 .edit-card-icon {

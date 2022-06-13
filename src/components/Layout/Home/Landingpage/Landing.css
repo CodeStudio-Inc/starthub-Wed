@@ -897,7 +897,7 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	width: 40%;
+	width: 50%;
 	background: #fff;
 }
 
@@ -943,6 +943,18 @@
 }
 
 .archive-container td button:hover {
+	cursor: pointer;
+}
+
+.restore-btn {
+	outline: none;
+	border: 1px solid #dfa126;
+	margin-bottom: 1rem;
+	color: #dfa126;
+	background: none;
+}
+
+.restore-btn:hover {
 	cursor: pointer;
 }
 
