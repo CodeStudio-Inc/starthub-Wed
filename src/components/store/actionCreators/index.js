@@ -22,6 +22,7 @@ export {
 	getCanvasBoard,
 	getMilestonesBoard,
 	postBlog,
+	postView,
 	deleteCard,
 	archiveCard,
 	deleteBoard,
@@ -88,5 +89,7 @@ export {
 	getReducingBalance,
 	addRevenueShare,
 	getRevenueShares,
+	addAuthor,
+	getAuthors,
 	sendEmail
 } from './admin';

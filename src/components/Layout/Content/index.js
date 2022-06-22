@@ -1,324 +1,218 @@
 import React, { useEffect, useRef, useState } from 'react';
-import logo from '../../../assets/images/logo.png';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import { useSelector, useDispatch } from 'react-redux';
 import ReactGA from 'react-ga';
+import ModalUI from '../../ModalUI/BlogModal';
+import moment from 'moment';
+import {
+	FacebookShareButton,
+	FacebookIcon,
+	LinkedinShareButton,
+	LinkedinIcon,
+	TwitterShareButton,
+	TwitterIcon,
+	WhatsappShareButton,
+	WhatsappIcon
+} from 'react-share';
+import * as actionCreators from '../../store/actionCreators';
+import ContentColumn from './ContentColumn';
 
 import './Content.css';
-const Content = () => {
+const Content = (props) => {
 	useEffect(() => {
 		ReactGA.pageview(window.location.pathname);
+		getBlogs();
 	}, []);
 
-	const data = [
-		{
-			id: 1,
-			image: 'https://commonwealthtca.com/wp-content/uploads/2020/09/legal.jpg',
-			header: 'Short notes on IP and patents for startups',
-			author: 'Mathias',
-			link: 'http://192.168.8.102/index.php/2022/03/16/patents/'
-		},
-		{
-			id: 2,
-			image:
-				'https://moneyinc.com/wp-content/uploads/2019/05/What-is-the-difference-between-revenue-and-profit-04-min2-1024x569-750x417.png',
-			header: 'Become Rolex-profitable! ',
-			author: 'Mathias',
-			link: 'http://192.168.8.102/index.php/2022/03/16/patents/'
-		},
-		{
-			id: 3,
-			image: 'https://www.erp-information.com/wp-content/uploads/2021/01/Priority-control-new.jpg',
-			header: 'What is Prioritization',
-			author: 'Andrew',
-			link: 'http://192.168.8.102/index.php/2022/03/16/patents/'
-		},
-		{
-			id: 4,
-			image:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Business_Model_Canvas.png/1200px-Business_Model_Canvas.png',
-			header: 'What is a business model?',
-			author: 'Bonita',
-			link: 'http://192.168.8.102/index.php/2022/03/16/patents/'
-		},
-		{
-			id: 5,
-			image: 'https://myfunkytravel.com/wp-content/uploads/2017/05/vietnam-bargaining.jpg',
-			header: 'THE ART OF BARGAINING AND NEGOTIATING ',
-			author: 'Timm',
-			link: 'http://192.168.8.102/index.php/2022/03/16/patents/'
-		},
-		{
-			id: 6,
-			image: 'https://myfunkytravel.com/wp-content/uploads/2017/05/vietnam-bargaining.jpg',
-			header: 'THE ART OF BARGAINING AND NEGOTIATING ',
-			author: 'Timm',
-			link: 'http://192.168.8.102/index.php/2022/03/16/patents/'
-		},
-		{
-			id: 7,
-			image: 'https://myfunkytravel.com/wp-content/uploads/2017/05/vietnam-bargaining.jpg',
-			header: 'THE ART OF BARGAINING AND NEGOTIATING ',
-			author: 'Timm',
-			link: 'http://192.168.8.102/index.php/2022/03/16/patents/'
-		}
-	];
-
+	const { blogs } = useSelector((state) => state.requests);
+	const [ blogData, setBlogData ] = useState({
+		blog: {},
+		modal: false
+	});
 	const [ visible1, setVisible1 ] = useState(false);
 	const [ visible2, setVisible2 ] = useState(false);
 	const [ visible3, setVisible3 ] = useState(false);
 	const [ visible4, setVisible4 ] = useState(false);
 	const [ visible5, setVisible5 ] = useState(false);
+	const [ visible6, setVisible6 ] = useState(false);
+	const [ visible7, setVisible7 ] = useState(false);
+	const [ visible8, setVisible8 ] = useState(false);
+	const [ visible9, setVisible9 ] = useState(false);
+	const [ visible10, setVisible10 ] = useState(false);
+
+	const Legal = blogs && blogs.filter((e) => e.category === 'Legal & Admin');
+	const Business = blogs && blogs.filter((e) => e.category === 'Business Modelling');
+	const strategy = blogs && blogs.filter((e) => e.category === 'Journey & strategy');
+	const Product = blogs && blogs.filter((e) => e.category === 'Building Product');
+	const Investment = blogs && blogs.filter((e) => e.category === 'Financing and Investment');
+	const Marketing = blogs && blogs.filter((e) => e.category === 'Growth, Marketing, and Sales');
+	const Management = blogs && blogs.filter((e) => e.category === 'Admin, Operations, and Management');
+	const organization = blogs && blogs.filter((e) => e.category === 'Team, Culture, and organization');
+	const Design = blogs && blogs.filter((e) => e.category === 'Design and user interaction');
+	const Psychology = blogs && blogs.filter((e) => e.category === 'Psychology, Habits, and Behaviour');
+
+	const related_blogs = blogs && blogs.filter((e) => e.category === blogData.blog.category);
+
+	const dispatch = useDispatch();
+
+	function createMarkup() {
+		return { __html: blogData.blog.article };
+	}
+
+	const getBlogs = () => dispatch(actionCreators.getBlogs());
 
 	const ref1 = useRef(null);
 	const ref2 = useRef(null);
 	const ref3 = useRef(null);
 	const ref4 = useRef(null);
 	const ref5 = useRef(null);
-
-	const scroll1 = (scrollOffset) => {
-		ref1.current.scrollLeft += scrollOffset;
-		if ((ref1.current.scrollLeft += scrollOffset) >= 300) setVisible1(true);
-		if ((ref1.current.scrollLeft += scrollOffset) <= 10) setVisible1(false);
-	};
-
-	const scroll2 = (scrollOffset) => {
-		ref2.current.scrollLeft += scrollOffset;
-		if ((ref2.current.scrollLeft += scrollOffset) >= 300) setVisible2(true);
-		if ((ref2.current.scrollLeft += scrollOffset) <= 10) setVisible2(false);
-	};
-
-	const scroll3 = (scrollOffset) => {
-		ref3.current.scrollLeft += scrollOffset;
-		if ((ref3.current.scrollLeft += scrollOffset) >= 300) setVisible3(true);
-		if ((ref3.current.scrollLeft += scrollOffset) <= 10) setVisible3(false);
-	};
-
-	const scroll4 = (scrollOffset) => {
-		ref4.current.scrollLeft += scrollOffset;
-		if ((ref4.current.scrollLeft += scrollOffset) >= 300) setVisible4(true);
-		if ((ref4.current.scrollLeft += scrollOffset) <= 10) setVisible4(false);
-	};
-
-	const scroll5 = (scrollOffset) => {
-		ref5.current.scrollLeft += scrollOffset;
-		if ((ref5.current.scrollLeft += scrollOffset) >= 300) setVisible5(true);
-		if ((ref5.current.scrollLeft += scrollOffset) <= 10) setVisible5(false);
-	};
+	const ref6 = useRef(null);
+	const ref7 = useRef(null);
+	const ref8 = useRef(null);
+	const ref9 = useRef(null);
+	const ref10 = useRef(null);
 
 	return (
 		<div id="div" className="content-container">
+			{blogData.modal ? (
+				<ModalUI>
+					<div className="blog-container">
+						<div className="blog-header">
+							<p onClick={() => setBlogData({ ...blogData, modal: false })}>close</p>
+						</div>
+						<div className="blog-main">
+							<div className="blog-content">
+								<img className="imgfeaturedimageLink" src={blogData.blog.featuredimageLink} />
+								<div className="social-content-container">
+									<div className="author-content">
+										<img src={blogData.blog.author.imageLink} />
+										<div className="author-details">
+											<h4>{blogData.blog.author.name}</h4>
+											<h5>{moment(blogData.blog.date).format('MMMM Do YYYY')}</h5>
+										</div>
+									</div>
+									<div className="social-media">
+										<FacebookShareButton url="http://localhost:3000/content">
+											<FacebookIcon logofillcolor="white" size={30} round={true} />
+										</FacebookShareButton>
+										<TwitterShareButton url="https://medium.com/@calypsobronte/installing-docker-in-kali-linux-2018-1-ef3a8ce3648">
+											<TwitterIcon logofillcolor="white" size={30} round={true} />
+										</TwitterShareButton>
+										<LinkedinShareButton url="https://medium.com/@calypsobronte/installing-docker-in-kali-linux-2018-1-ef3a8ce3648">
+											<LinkedinIcon logofillcolor="white" size={30} round={true} />
+										</LinkedinShareButton>
+										<WhatsappShareButton url="http://localhost:3000/content">
+											<WhatsappIcon logofillcolor="white" size={30} round={true} />
+										</WhatsappShareButton>
+									</div>
+								</div>
+								<h1>{blogData.blog.title}</h1>
+								<div className="html" dangerouslySetInnerHTML={createMarkup()} />
+							</div>
+							<div className="blog-sidebar">
+								<div className="blog-sidebar-main">
+									<img src={blogData.blog.author.imageLink} />
+									<h3>{blogData.blog.author.name}</h3>
+									<h5>{blogData.blog.author.bio}</h5>
+									<h4>More from {blogData.blog.category}</h4>
+									{related_blogs &&
+										related_blogs.map((rb) => (
+											<div
+												key={rb._id}
+												className="sidebar-row"
+												onClick={() => {
+													setBlogData({
+														...blogData,
+														blog: rb
+													});
+												}}
+											>
+												<div className="sidebar-author">
+													<div className="sidebar-author-row">
+														<img src={rb.author.imageLink} />
+														<p>{rb.author.name}</p>
+													</div>
+													<h3>{rb.title}</h3>
+												</div>
+												<img src={rb.featuredimageLink} />
+											</div>
+										))}
+								</div>
+							</div>
+						</div>
+					</div>
+				</ModalUI>
+			) : null}
 			<div className="content-menu">
-				<div className="scroll-column">
-					{/* <h2>Legal and Admin</h2> */}
-					<div className="scroll-row">
-						{!visible1 ? null : (
-							<ArrowCircleLeftIcon
-								onClick={() => scroll1(-50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						)}
-						<div className="scroll-container" ref={ref1}>
-							{data.map((r) => (
-								<div className="scroll-content">
-									<img src={r.image} alt="logo" />
-									<span>
-										<p>Legal and Admin</p>
-									</span>
-									<div className="scroll-content-header">
-										<h2>{r.header}</h2>
-									</div>
-									<div className="content-row">
-										<p>author</p>
-										<div className="content-row-separator" />
-										<p>02 December 2021</p>
-										<div className="content-row-separator" />
-										<p>2 min read</p>
-									</div>
-									<a href={r.link} target="_blank">
-										More
-									</a>
-								</div>
-							))}
-						</div>
-						{!visible1 ? (
-							<ArrowCircleRightIcon
-								onClick={() => scroll1(50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						) : null}
-					</div>
-				</div>
-				<div className="scroll-column">
-					{/* <h2>Business Modeling</h2> */}
-					<div className="scroll-row">
-						{!visible2 ? null : (
-							<ArrowCircleLeftIcon
-								onClick={() => scroll2(-50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						)}
-						<div className="scroll-container" ref={ref2}>
-							{data.map((r) => (
-								<div className="scroll-content" onClick={() => console.log(r)}>
-									<img src={r.image} alt="logo" />
-									<span>
-										<p>Business Modeling</p>
-									</span>
-									<div className="scroll-content-header">
-										<h2>{r.header}</h2>
-									</div>
-									<div className="content-row">
-										<p>author</p>
-										<div className="content-row-separator" />
-										<p>02 December 2021</p>
-										<div className="content-row-separator" />
-										<p>2 min read</p>
-									</div>
-									<a href={r.link} target="_blank">
-										More
-									</a>
-								</div>
-							))}
-						</div>
-						{!visible2 ? (
-							<ArrowCircleRightIcon
-								onClick={() => scroll2(50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						) : null}
-					</div>
-				</div>
-				<div className="scroll-column">
-					{/* <h2>Financing and Investment</h2> */}
-					<div className="scroll-row">
-						{!visible3 ? null : (
-							<ArrowCircleLeftIcon
-								onClick={() => scroll3(-50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						)}
-						<div className="scroll-container" ref={ref3}>
-							{data.map((r) => (
-								<div className="scroll-content">
-									<img src={r.image} alt="logo" />
-									<span>
-										<p>Financing and Investment</p>
-									</span>
-									<div className="scroll-content-header">
-										<h2>{r.header}</h2>
-									</div>
-									<div className="content-row">
-										<p>author</p>
-										<div className="content-row-separator" />
-										<p>02 December 2021</p>
-										<div className="content-row-separator" />
-										<p>2 min read</p>
-									</div>
-									<a href={r.link} target="_blank">
-										More
-									</a>
-								</div>
-							))}
-						</div>
-						{!visible3 ? (
-							<ArrowCircleRightIcon
-								onClick={() => scroll3(50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						) : null}
-					</div>
-				</div>
-				<div className="scroll-column">
-					{/* <h2>Journey and Strategy</h2> */}
-					<div className="scroll-row">
-						{!visible4 ? null : (
-							<ArrowCircleLeftIcon
-								onClick={() => scroll4(-50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						)}
-						<div className="scroll-container" ref={ref4}>
-							{data.map((r) => (
-								<div className="scroll-content">
-									<img src={r.image} alt="logo" />
-									<span>
-										<p>Journey and Strategy</p>
-									</span>
-									<div className="scroll-content-header">
-										<h2>{r.header}</h2>
-									</div>
-									<div className="content-row">
-										<p>author</p>
-										<div className="content-row-separator" />
-										<p>02 December 2021</p>
-										<div className="content-row-separator" />
-										<p>2 min read</p>
-									</div>
-									<a href={r.link} target="_blank">
-										More
-									</a>
-								</div>
-							))}
-						</div>
-						{!visible4 ? (
-							<ArrowCircleRightIcon
-								onClick={() => scroll4(50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						) : null}
-					</div>
-				</div>
-				<div className="scroll-column">
-					{/* <h2>Journey and Strategy</h2> */}
-					<div className="scroll-row">
-						{!visible5 ? null : (
-							<ArrowCircleLeftIcon
-								onClick={() => scroll5(-50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						)}
-						<div className="scroll-container" ref={ref5}>
-							{data.map((r) => (
-								<div className="scroll-content">
-									<img src={r.image} alt="logo" />
-									<span>
-										<p>Journey and Strategy</p>
-									</span>
-									<div className="scroll-content-header">
-										<h2>{r.header}</h2>
-									</div>
-									<div className="content-row">
-										<p>author</p>
-										<div className="content-row-separator" />
-										<p>02 December 2021</p>
-										<div className="content-row-separator" />
-										<p>2 min read</p>
-									</div>
-									<a href={r.link} target="_blank">
-										More
-									</a>
-								</div>
-							))}
-						</div>
-						{!visible5 ? (
-							<ArrowCircleRightIcon
-								onClick={() => scroll5(50)}
-								className="scroll-icons"
-								style={{ color: '#333', fontSize: '30px' }}
-							/>
-						) : null}
-					</div>
-				</div>
+				<ContentColumn
+					category={Legal}
+					ref={ref1}
+					visible={visible1}
+					setVisible={setVisible1}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={Business}
+					ref={ref2}
+					visible={visible2}
+					setVisible={setVisible2}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={strategy}
+					ref={ref3}
+					visible={visible3}
+					setVisible={setVisible3}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={Product}
+					ref={ref4}
+					visible={visible4}
+					setVisible={setVisible4}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={Investment}
+					ref={ref5}
+					visible={visible5}
+					setVisible={setVisible5}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={Marketing}
+					ref={ref6}
+					visible={visible6}
+					setVisible={setVisible6}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={Management}
+					ref={ref7}
+					visible={visible7}
+					setVisible={setVisible7}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={organization}
+					ref={ref8}
+					visible={visible8}
+					setVisible={setVisible8}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={Design}
+					ref={ref9}
+					visible={visible9}
+					setVisible={setVisible9}
+					setBlogData={setBlogData}
+				/>
+				<ContentColumn
+					category={Psychology}
+					ref={ref10}
+					visible={visible10}
+					setVisible={setVisible10}
+					setBlogData={setBlogData}
+				/>
 			</div>
 		</div>
 	);

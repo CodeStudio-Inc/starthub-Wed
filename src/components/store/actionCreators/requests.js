@@ -621,37 +621,21 @@ export const updateCard = (id, cardIndex, name, callback) => {
 	};
 };
 
-export const postBlog = (
-	blogTitle,
-	subTitle,
-	quote,
-	description,
-	imageUrl,
-	blogImage,
-	videoUrl,
-	category,
-	conclusion,
-	author,
-	callback
-) => {
+export const postBlog = (title, name, imageLink, bio, category, featuredimageLink, article, callback) => {
 	return (dispatch, getState) => {
+		dispatch(loadAction());
 		const token = getState().auth.token;
 
 		const data = {
-			blogTitle: blogTitle,
-			subTitle: subTitle,
-			quote: quote,
-			description: description,
-			imageUrl: imageUrl,
-			blogImage: blogImage,
-			videoUrl: videoUrl,
-			category: category,
-			conclusion: conclusion,
-			author: author
+			title,
+			author: { name: name, imageLink: imageLink, bio: bio },
+			category,
+			featuredimageLink,
+			article
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/blog', data, {
+			.post('https://starthubafrica-api.el.r.appspot.com/admin/blog', data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -659,8 +643,33 @@ export const postBlog = (
 				}
 			})
 			.then((res) => {
-				// console.log(res)
+				console.log(res);
+				dispatch(stopLoader());
 				callback({ success: true, res: res });
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+};
+
+export const postView = (id) => {
+	return (dispatch, getState) => {
+		const token = getState().auth.token;
+
+		const data = {
+			views: ''
+		};
+		axios
+			.put(`https://starthubafrica-api.el.r.appspot.com/admin/blog/${id}`, data, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// dispatch(setBlogs(res.data.articles));
 			})
 			.catch((err) => {
 				console.log(err);
@@ -744,7 +753,7 @@ export const getBlogs = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/blogs', {
+			.get('https://starthubafrica-api.el.r.appspot.com/admin/blogs', {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -752,8 +761,8 @@ export const getBlogs = () => {
 				}
 			})
 			.then((res) => {
-				dispatch(setBlogs(res.data.blogs));
-				console.log(res);
+				dispatch(setBlogs(res.data.articles));
+				// console.log(res);
 			})
 			.catch((error) => {
 				console.log(error);

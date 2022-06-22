@@ -8,6 +8,9 @@ import * as actionCreators from '../../../store/actionCreators';
 import moment from 'moment';
 import { Progress } from 'antd';
 import { Line } from 'react-chartjs-2';
+import AdminlandingNavbar from './AdminlandingNavbar';
+import TextEditor from '../../Content/TextEditor';
+import BlogModal from '../../../ModalUI/BlogModal';
 
 const AdminLandingPage = ({ startups, adminNavigate }) => {
 	const [ int, setInternal ] = useState(false);
@@ -21,6 +24,7 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 		base_key: '',
 		link: ''
 	});
+	const [ visible, setVisible ] = useState(false);
 
 	const internal = startups.filter((el) => el.category === 'internal');
 	const catalyzer = startups.filter((el) => el.category === 'catalyzer');
@@ -128,6 +132,19 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 
 	return (
 		<div className="admin-menu">
+			{visible ? (
+				<BlogModal>
+					<div className="post-blog-container ">
+						<div className="post-blog-header">
+							<h3>Write Blog</h3>
+							<p onClick={() => setVisible(false)}>Cancel</p>
+						</div>
+						<div className="post-blog-content">
+							<TextEditor />
+						</div>
+					</div>
+				</BlogModal>
+			) : null}
 			{int ? (
 				<ModalUI>
 					<div className="register-form">
@@ -209,6 +226,7 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 				</ModalUI>
 			) : null}
 			<div className="admin-menu-content">
+				<AdminlandingNavbar setVisible={setVisible} />
 				<div className="admin-header">
 					<h1>StartHub</h1>
 					<h5>Welcome to starthub dashboard</h5>
