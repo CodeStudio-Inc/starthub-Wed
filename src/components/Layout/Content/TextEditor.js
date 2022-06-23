@@ -33,8 +33,9 @@ const TextEditor = () => {
 		featuredimageLink: ''
 	});
 
+	const [ error, setError ] = useState('');
+
 	const [ profileModal, setProfileModal ] = useState(false);
-	const [ publishLoader, setPublishLoader ] = useState(false);
 	const [ dropdown, setDropdown ] = useState(false);
 	const [ message, setMessage ] = useState('');
 
@@ -55,40 +56,39 @@ const TextEditor = () => {
 		setState({ editorState: e });
 	};
 
-	const postBlog = () =>
-		setBlog({
-			category: '',
-			title: '',
-			article: '',
-			featuredimageLink: ''
-		});
-	// dispatch(
-	// 	actionCreators.postBlog(
-	// 		blog.title,
-	// 		author.name,
-	// 		author.imageLink,
-	// 		author.bio,
-	// 		blog.category,
-	// 		blog.featuredimageLink,
-	// 		draftToHtml(convertToRaw(state.editorState.getCurrentContent())),
-	// 		(res) => {
-	// 			if (res.success) {
-	// 				setPublishLoader(false);
-	// 				setAuthor({
-	// 					name: '',
-	// 					imageLink: '',
-	// 					bio: ''
-	// 				});
-	// 				setBlog({
-	// 					category: '',
-	// 					title: '',
-	// 					article: '',
-	// 					featuredimageLink: ''
-	// 				});
-	// 			}
-	// 		}
-	// 	)
-	// );
+	const postBlog = () => {
+		if (!blog.title || !author.name || !blog.category || !blog.featuredimageLink)
+			return setError('Enter all fields');
+		dispatch(
+			actionCreators.postBlog(
+				blog.title,
+				author.name,
+				author.imageLink,
+				author.bio,
+				blog.category,
+				blog.featuredimageLink,
+				draftToHtml(convertToRaw(state.editorState.getCurrentContent())),
+				(res) => {
+					if (res.success === true) {
+						setError(' ');
+						setAuthor({
+							name: '',
+							imageLink: '',
+							bio: ''
+						});
+						setBlog({
+							category: '',
+							title: '',
+							article: ''
+						});
+						setState({
+							editorState: EditorState.createEmpty()
+						});
+					}
+				}
+			)
+		);
+	};
 
 	const uploadProfile = () => {
 		document.getElementById('selectphoto').click();
@@ -102,20 +102,20 @@ const TextEditor = () => {
 	};
 
 	const addAuthor = async () => {
+		setMessage('Adding author profile...');
 		const data = new FormData();
 		data.append('file', img);
 		data.append('upload_preset', 'starthub_preset');
 		await axios
 			.post('https://api.cloudinary.com/v1_1/starthub-africa/upload', data)
 			.then((res) => {
-				setMessage('Image Uploaded Successfully');
+				setMessage('Finishing up...');
 				// console.log(res);
 
 				dispatch(
 					actionCreators.addAuthor(author.name, res.data.url, author.bio, (res) => {
 						if (res.success) {
-							setPublishLoader(false);
-							setMessage('Author Uploaded Successfully');
+							setMessage('Nice, Thank you!');
 						}
 					})
 				);
@@ -241,6 +241,7 @@ const TextEditor = () => {
 				<button disabled={loading ? true : false} onClick={postBlog}>
 					{loading ? 'Publishing...' : 'Publish'}
 				</button>
+				<h5>{error}</h5>
 			</div>
 		</div>
 	);

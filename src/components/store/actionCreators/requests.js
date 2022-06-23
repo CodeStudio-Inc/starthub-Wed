@@ -643,7 +643,7 @@ export const postBlog = (title, name, imageLink, bio, category, featuredimageLin
 				}
 			})
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				dispatch(stopLoader());
 				callback({ success: true, res: res });
 			})
@@ -658,7 +658,7 @@ export const postView = (id) => {
 		const token = getState().auth.token;
 
 		const data = {
-			views: ''
+			views: 0
 		};
 		axios
 			.put(`https://starthubafrica-api.el.r.appspot.com/admin/blog/${id}`, data, {
@@ -669,6 +669,7 @@ export const postView = (id) => {
 				}
 			})
 			.then((res) => {
+				// console.log(res);
 				// dispatch(setBlogs(res.data.articles));
 			})
 			.catch((err) => {

@@ -91,16 +91,16 @@ const Content = (props) => {
 										</div>
 									</div>
 									<div className="social-media">
-										<FacebookShareButton url="http://localhost:3000/content">
+										<FacebookShareButton url="https://www.starthubafrica.com/content">
 											<FacebookIcon logofillcolor="white" size={30} round={true} />
 										</FacebookShareButton>
-										<TwitterShareButton url="https://medium.com/@calypsobronte/installing-docker-in-kali-linux-2018-1-ef3a8ce3648">
+										<TwitterShareButton url="https://www.starthubafrica.com/content">
 											<TwitterIcon logofillcolor="white" size={30} round={true} />
 										</TwitterShareButton>
-										<LinkedinShareButton url="https://medium.com/@calypsobronte/installing-docker-in-kali-linux-2018-1-ef3a8ce3648">
+										<LinkedinShareButton url="https://www.starthubafrica.com/content">
 											<LinkedinIcon logofillcolor="white" size={30} round={true} />
 										</LinkedinShareButton>
-										<WhatsappShareButton url="http://localhost:3000/content">
+										<WhatsappShareButton url="https://www.starthubafrica.com/content">
 											<WhatsappIcon logofillcolor="white" size={30} round={true} />
 										</WhatsappShareButton>
 									</div>

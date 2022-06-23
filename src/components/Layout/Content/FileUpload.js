@@ -10,6 +10,7 @@ const FileUpload = ({ blog, setBlog }) => {
 	});
 	const [ uploadLoader, setUploadLoader ] = useState('');
 	const [ error, setError ] = useState('');
+	const [ upload, setUpload ] = useState(false);
 
 	// console.log(uploadLoader);
 
@@ -25,17 +26,21 @@ const FileUpload = ({ blog, setBlog }) => {
 		});
 	};
 
-	const uploadImage = () => {
+	const uploadImage = async () => {
 		if (!image) return setError('Add image please');
-		setUploadLoader('Uploading...');
+		setUpload(true);
 		const data = new FormData();
 		data.append('file', image);
 		data.append('upload_preset', 'starthub_preset');
-		axios
+		await axios
 			.post('https://api.cloudinary.com/v1_1/starthub-africa/upload', data)
 			.then((res) => {
 				setBlog({ ...blog, featuredimageLink: res.data.url });
 				setUploadLoader('Image Uploaded Successfully');
+				setUpload(false);
+				setPreview({
+					previewing: ''
+				});
 				setError('');
 				// console.log(res.data.url);
 			})
@@ -61,7 +66,7 @@ const FileUpload = ({ blog, setBlog }) => {
 				<h4>{uploadLoader}</h4>
 			) : (
 				<div className="upload" onClick={uploadImage}>
-					<p>{uploadLoader ? 'Uploading...' : 'Upload Featured Image'}</p>
+					<p>{upload ? 'Uploading...' : 'Upload Featured Image'}</p>
 					<CloudUploadIcon style={{ fontSize: '30px', color: '#fff', marginLeft: '0.5rem' }} />
 				</div>
 			)}

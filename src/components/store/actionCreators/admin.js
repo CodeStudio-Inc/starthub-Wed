@@ -900,7 +900,7 @@ export const getRevenueShares = () => {
 
 export const addAuthor = (name, imageLink, bio, callback) => {
 	return (dispatch, getState) => {
-		dispatch(loadAction());
+		// dispatch(loadAction());
 
 		const token = getState().auth.token;
 
@@ -919,7 +919,7 @@ export const addAuthor = (name, imageLink, bio, callback) => {
 				}
 			})
 			.then((res) => {
-				dispatch(stopLoader());
+				// dispatch(stopLoader());
 				dispatch(setAuthor(res.data.authors));
 				callback({ success: true, res: res });
 			})
