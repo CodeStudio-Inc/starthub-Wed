@@ -205,10 +205,10 @@ const Navbar = (props) => {
 										return message.info(`${username} has no Metrics Data`);
 									if (element.title === 'Metrics' && category === 'academy')
 										return message.info(`${username} has no Metrics Data`);
-									if (element.title === 'Content' && category === 'internal')
-										return message.info('Still under Development, Cheers!!');
-									if (element.title === 'Content' && category === 'catalyzer')
-										return message.info('Still under Development, Cheers!!');
+									// if (element.title === 'Content' && category === 'internal')
+									// 	return message.info('Still under Development, Cheers!!');
+									// if (element.title === 'Content' && category === 'catalyzer')
+									// 	return message.info('Still under Development, Cheers!!');
 									if (element.title === 'Content' && category === 'academy')
 										return message.info('Still under Development, Cheers!!');
 									if (element.title === 'Content' && category === 'dskills')
