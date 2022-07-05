@@ -38,7 +38,6 @@ const TextEditor = () => {
 	const [ profileModal, setProfileModal ] = useState(false);
 	const [ dropdown, setDropdown ] = useState(false);
 	const [ message, setMessage ] = useState('');
-
 	const { authors } = useSelector((state) => state.admin);
 	const { loading } = useSelector((state) => state.requests);
 
@@ -136,6 +135,7 @@ const TextEditor = () => {
 					wrapperClassName="demo-wrapper"
 					editorClassName="demo-editor"
 					onEditorStateChange={onEditorStateChange}
+					placeholder="Type blog here..."
 				/>
 			</div>
 			<div className="text-editor-container-right">
@@ -171,16 +171,12 @@ const TextEditor = () => {
 								value={author.bio}
 								onChange={(e) => setAuthor({ ...author, bio: e.target.value })}
 							/>
-							<button onClick={addAuthor}>{message ? message : 'save'}</button>
+							<button disabled={message ? true : false} onClick={addAuthor}>
+								{message ? message : 'save'}
+							</button>
 						</div>
 					) : null}
 				</div>
-				<input
-					type="text"
-					value={blog.title}
-					placeholder="Title"
-					onChange={(e) => setBlog({ ...blog, title: e.target.value })}
-				/>
 				{!profileModal ? (
 					<div className="author-select" onClick={() => setDropdown(true)}>
 						{author.name ? <p>{author.name}</p> : <p>-select author-</p>}
@@ -222,6 +218,13 @@ const TextEditor = () => {
 						)}
 					</div>
 				) : null}
+				<FileUpload blog={blog} setBlog={setBlog} />
+				<input
+					type="text"
+					value={blog.title}
+					placeholder="Add Blog Title"
+					onChange={(e) => setBlog({ ...blog, title: e.target.value })}
+				/>
 				<select onChange={(e) => setBlog({ ...blog, category: e.target.value })}>
 					<option disabled selected>
 						-select category-
@@ -237,7 +240,6 @@ const TextEditor = () => {
 					<option value="Financing and Investment">Financing and Investment</option>
 					<option value="Psychology, Habits, and Behaviour">Psychology, Habits, and Behaviour</option>
 				</select>
-				<FileUpload blog={blog} setBlog={setBlog} />
 				<button disabled={loading ? true : false} onClick={postBlog}>
 					{loading ? 'Publishing...' : 'Publish'}
 				</button>

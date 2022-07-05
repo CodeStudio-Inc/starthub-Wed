@@ -44,8 +44,6 @@
 	flex-direction: column;
 	width: 100%;
 	height: 100vh;
-	/* padding: 0.3rem; */
-	/* margin-right: 0.1rem; */
 	overflow-y: scroll;
 }
 
@@ -63,7 +61,15 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: 80%;
+	width: 100%;
+}
+
+.loan-header h4 {
+	color: #dfa126;
+}
+
+.loan-header h4:hover {
+	cursor: pointer;
 }
 
 .loan-header button:hover {
@@ -95,6 +101,25 @@
 	justify-content: center;
 	flex-direction: column;
 	width: 50%;
+}
+
+.loan-header-hidden {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.loan-header-hidden h4 {
+	color: #dfa126;
+}
+
+.loan-header-hidden h4:hover {
+	cursor: pointer;
+}
+
+.loan-form-hidden {
+	display: none;
 }
 
 .loan-form {

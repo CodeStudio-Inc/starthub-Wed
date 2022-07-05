@@ -465,6 +465,10 @@
 	width: 70%;
 }
 
+.text-editor-container-right button {
+	padding: 5px;
+}
+
 .author-select {
 	display: flex;
 	align-items: center;
@@ -480,7 +484,7 @@
 
 .author-select-drop-down {
 	position: absolute;
-	top:165px;
+	top:144px;
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
@@ -537,6 +541,7 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	margin-top: 1rem;
 }
 
 .file-upload input {

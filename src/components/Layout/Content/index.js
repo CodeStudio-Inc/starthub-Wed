@@ -52,6 +52,8 @@ const Content = (props) => {
 
 	const related_blogs = blogs && blogs.filter((e) => e.category === blogData.blog.category);
 
+	// console.log(blogs, 'kk');
+
 	const dispatch = useDispatch();
 
 	function createMarkup() {

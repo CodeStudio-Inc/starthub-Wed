@@ -669,11 +669,12 @@ export const addFlate = (
 			interestRate,
 			grace_period,
 			expected_payment,
+			outstandingbalance: expected_payment,
 			loanType
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/flatrate`, data, {
+			.post(`http://localhost:8080/admin/flatrate`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -681,7 +682,7 @@ export const addFlate = (
 				}
 			})
 			.then((res) => {
-				// console.log(res.data.loans)s
+				// console.log(res);
 				dispatch(stopLoader());
 				dispatch(setLoans(res.data.loans));
 			})
@@ -691,7 +692,7 @@ export const addFlate = (
 	};
 };
 
-export const addFlateratePayment = (amount, date, startup, comment, loanId, paidLoanId) => {
+export const addFlateratePayment = (amount, date, startup, comment, loanId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
@@ -701,12 +702,11 @@ export const addFlateratePayment = (amount, date, startup, comment, loanId, paid
 			amount,
 			date,
 			startup,
-			comment,
-			paidLoanId
+			comment
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/fr-payment/${loanId}`, data, {
+			.post(`http://localhost:8080/admin/fr-payment/${loanId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -714,7 +714,7 @@ export const addFlateratePayment = (amount, date, startup, comment, loanId, paid
 				}
 			})
 			.then((res) => {
-				// console.log(res)
+				console.log(res);
 				dispatch(stopLoader());
 				dispatch(setLoans(res.data.loans));
 			})

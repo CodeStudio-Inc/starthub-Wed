@@ -83,12 +83,12 @@ const Navbar = (props) => {
 				route: '/okr-overview',
 				icon: <AnalyticsIcon className="link-icon" style={{ fontSize: '25px' }} />
 			},
-			// {
-			// 	id: 3,
-			// 	title: 'Investments',
-			// 	route: '/loans',
-			// 	icon: <LocalAtmIcon className="link-icon" style={{ fontSize: '25px' }} />
-			// },
+			{
+				id: 3,
+				title: 'Investments',
+				route: '/loans',
+				icon: <LocalAtmIcon className="link-icon" style={{ fontSize: '25px' }} />
+			},
 			{
 				id: 4,
 				title: 'User Activity',
