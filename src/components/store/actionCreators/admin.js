@@ -674,7 +674,7 @@ export const addFlate = (
 		};
 
 		axios
-			.post(`http://localhost:8080/admin/flatrate`, data, {
+			.post(`https://starthubafrica-api.el.r.appspot.com/admin/flatrate`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -706,7 +706,7 @@ export const addFlateratePayment = (amount, date, startup, comment, loanId) => {
 		};
 
 		axios
-			.post(`http://localhost:8080/admin/fr-payment/${loanId}`, data, {
+			.post(`https://starthubafrica-api.el.r.appspot.com/admin/fr-payment/${loanId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
