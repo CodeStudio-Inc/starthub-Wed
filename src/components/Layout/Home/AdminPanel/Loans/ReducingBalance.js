@@ -228,7 +228,7 @@ const ReducingBalance = ({ props, loans }) => {
 				<div className="loan-overview">
 					<h2>Loans Table</h2>
 					<div className="loan-separator" />
-					<Table
+					{/* <Table
 						style={{ width: '100%' }}
 						columns={columns}
 						dataSource={[
@@ -253,7 +253,7 @@ const ReducingBalance = ({ props, loans }) => {
 							showSizeChanger: true,
 							pageSizeOptions: [ '10', '20', '30' ]
 						}}
-					/>
+					/> */}
 				</div>
 			</div>
 		</div>

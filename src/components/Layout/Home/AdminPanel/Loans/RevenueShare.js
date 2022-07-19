@@ -23,7 +23,7 @@ const RevenueShare = () => {
 
 	const _revShares = revShares && revShares;
 
-	console.log(_revShares);
+	// console.log(_revShares);
 
 	const dispatch = useDispatch();
 

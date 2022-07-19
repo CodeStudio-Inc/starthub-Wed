@@ -30,7 +30,7 @@ const Flatrate = ({ loans, props }) => {
 
 	const catalyzer = users.filter((user) => user.category === 'catalyzer');
 	const username = Array.from(catalyzer, ({ username }) => username);
-	console.log(loans, 'state');
+	// console.log(loans, 'state');
 
 	// console.log(state.expected_payment, 'flatrate');
 
