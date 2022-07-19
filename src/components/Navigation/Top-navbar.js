@@ -185,7 +185,7 @@ const Topnavbar = (props) => {
 				{admin ? <h4 onClick={() => props.history.push('/okr-overview')}>Overview</h4> : null}
 				{admin ? <h4 onClick={() => props.history.push('/loans')}>Investments</h4> : null}
 				{admin ? <h4 onClick={() => props.history.push('/user-activity')}>User Activity</h4> : null}
-				{!admin ? <h4 onClick={() => props.history.push('/user-activity')}>OKRs</h4> : null}
+				{!admin ? <h4 onClick={() => props.history.push('/')}>OKRs</h4> : null}
 				{!admin ? <h4 onClick={() => props.history.push('/canvas-board')}>Lean Canvas</h4> : null}
 				{!admin ? (
 					<div onClick={() => setOpen(true)} className="rev-button">

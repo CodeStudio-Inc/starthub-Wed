@@ -247,7 +247,7 @@ const Flatrate = ({ loans, props }) => {
 								...r,
 								key: r._id,
 								startup: r.startup,
-								amount: r.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+								amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 								date: r.date,
 								outstanding: r.outstandingbalance.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 								balance: r.expected_payment.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
