@@ -229,6 +229,7 @@ const TextEditor = () => {
 					<option disabled selected>
 						-select category-
 					</option>publishLoader
+					<option value="Newsletters">Newsletters</option>
 					<option value="Legal & Admin">Legal & Admin</option>
 					<option value="Business Modelling">Business Modelling</option>
 					<option value="Journey & strategy">Journey & strategy</option>

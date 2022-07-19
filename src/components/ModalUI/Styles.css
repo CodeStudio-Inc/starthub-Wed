@@ -32,9 +32,18 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 90%;
+  height: 100vh;
+  /* background: rgba(0, 0, 0, 0.1); */
+}
+
+.loader-inner-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 6rem;
   width: 100%;
   height: 100vh;
-  background: transparent;
 }
 
 .nodrag-container {

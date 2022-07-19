@@ -189,12 +189,15 @@ const Flatrate = ({ loans, props }) => {
 								<option value={username[5]}>Rada Safaris</option>
 								<option value={username[6]}>Zetu Africa</option>
 								<option value={username[7]}>OMNI Gym</option>
-								<option value={username[8]}>Economic Misfit</option>
+								{/* <option value={username[8]}>Economic Misfit</option> */}
 								<option value={username[9]}>Solfix</option>
 								<option value={username[10]}>Grab Gas</option>
 								<option value={username[11]}>OnScore Africa</option>
 								<option value={username[12]}>WAGE Spices</option>
-								<option value={username[13]}>Divine Renewable Energy</option>
+								{/* <option value={username[13]}>Divine Renewable Energy</option> */}
+								<option value={username[14]}>Onestope</option>
+								<option value={username[16]}>Kawu</option>
+								<option value={username[17]}>Agri-Logistics</option>
 							</select>
 							<textarea
 								placeholder="Comment"

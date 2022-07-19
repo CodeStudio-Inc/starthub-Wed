@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Sidebar from '../../Navigation/Sidebar';
 import ReactGA from 'react-ga';
 import bonita from '../../../assets/images/bonita.png';
 

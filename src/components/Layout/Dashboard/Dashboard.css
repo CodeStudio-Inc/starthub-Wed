@@ -16,6 +16,7 @@
 	padding: 0.5rem;
 	left: 17%;
 	overflow-y: scroll;
+	margin-top: 1rem;
 }
 
 .alert-message {

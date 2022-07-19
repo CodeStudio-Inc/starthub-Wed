@@ -21,9 +21,7 @@
 	width: 100%;
 	display: flex;
 	align-items: flex-start;
-	/* background: #eee; */
 	height: 100vh;
-	/* overflow-y: scroll; */
 }
 
 .flatrate-menu {
@@ -35,7 +33,7 @@
 	width: 85%;
 	padding: 0.5rem;
 	left: 15%;
-	/* margin-top: 1rem; */
+	margin-top: 3rem;
 }
 
 .flatrate-content {
@@ -403,4 +401,96 @@
 	background: #dfa126;
 	color: #fff;
 	border: none;
+}
+
+.approve-column {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.approve-column button {
+	outline: none;
+	border: none;
+	background: none;
+	color: rgb(0, 136, 255);
+	margin-left: 0.5rem;
+}
+
+.approve-column div:hover {
+	cursor: pointer;
+}
+
+.approve-column h4 {
+	margin: 0;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.approve-column p {
+	margin: 0;
+	margin-left: 0.5rem;
+}
+
+.approve-modal {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	background: #eee;
+	flex-direction: column;
+	width: 30%;
+}
+
+.approve-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #dfa126;
+	margin-bottom: 1rem;
+	width: 100%;
+	height: 70px;
+}
+
+.approve-header h2 {
+	color: #fff;
+}
+
+.approved-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgb(51, 185, 38);
+	margin-bottom: 1rem;
+	width: 100%;
+	height: 70px;
+}
+
+.approved-header h2 {
+	color: #fff;
+}
+
+.approve-main {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	padding: 10px;
+	background: #fff;
+	width: 90%;
+	margin-bottom: 1rem;
+}
+
+.approve-modal-receipt {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	margin-bottom: 1rem;
+}
+
+.approve-modal h3 {
+	color: #dfa126;
+}
+
+.approve-icon:hover {
+	cursor: pointer;
 }

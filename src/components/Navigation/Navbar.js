@@ -229,7 +229,7 @@ const Navbar = (props) => {
 				<div className="link-separator" />
 				{admin ? null : (
 					<a href={link} target="blank">
-						<button className="report">Report Metrics</button>
+						<button className="report">Report Revenue</button>
 					</a>
 				)}
 				<div className="menu-container">

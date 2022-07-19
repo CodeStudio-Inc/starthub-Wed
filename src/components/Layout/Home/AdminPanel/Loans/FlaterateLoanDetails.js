@@ -83,7 +83,8 @@ const FlatrateLoanDetails = (props) => {
 					<div className={balance_check.length === 1 ? 'loan-form-hidden' : 'loan-form'}>
 						<div className="loan-header">
 							<h2>
-								Outstanding Balance <strong>{balance.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</strong>Shs
+								Outstanding Balance {' '}
+								<strong>Shs {balance.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</strong>
 							</h2>
 							<h4 onClick={() => props.history.goBack()}>Back</h4>
 						</div>
@@ -159,7 +160,11 @@ const FlatrateLoanDetails = (props) => {
 									comment: r.comment
 								}))
 							]}
-							pagination={false}
+							pagination={{
+								defaultPageSize: 10,
+								showSizeChanger: true,
+								pageSizeOptions: [ '10', '20', '30' ]
+							}}
 						/>
 					</div>
 				</div>

@@ -43,7 +43,14 @@ const Loans = (props) => {
 
 	return (
 		<Tabs
-			style={{ width: '95%', position: 'relative', left: '15%', overflowY: 'scroll', height: '100vh' }}
+			style={{
+				width: '95%',
+				position: 'relative',
+				left: '15%',
+				overflowY: 'scroll',
+				height: '100vh',
+				marginTop: '3rem'
+			}}
 			defaultActiveKey="1"
 			centered
 			tabBarStyle={{ color: '#dfa126' }}
@@ -64,7 +71,7 @@ const Loans = (props) => {
 			<TabPane tab="Reducing Balance" key="2">
 				<ReducingBalance props={props} loans={__loans} />
 			</TabPane>
-			<TabPane tab="Revenue Share" key="3">
+			<TabPane tab="Revenue Payments" key="3">
 				<RevenueShare />
 			</TabPane>
 		</Tabs>

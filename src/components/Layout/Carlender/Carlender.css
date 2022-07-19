@@ -13,7 +13,7 @@
   justify-content: center;
   flex-direction: column;
   width: 85%;
-  /* height: 100vh; */
+  margin-top: 3rem;
   padding: 0.5rem;
   left: 15%;
   overflow-y: scroll;

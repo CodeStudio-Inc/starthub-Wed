@@ -9,6 +9,7 @@ import Dashboard from '../Layout/Dashboard';
 import CanvasHome from '../Layout/Canvas';
 import Diagnostics from '../Layout/Diagnostics';
 import Navbar from './Navbar';
+import Topnavbar from './Top-navbar';
 import LandingPage from '../Layout/Home/Landingpage';
 import AdminPanel from '../Layout/Home/AdminPanel';
 import AdminCanvas from '../Layout/Home/AdminPanel/AdminCanvas';
@@ -24,6 +25,7 @@ import Overview from '../Layout/Home/AdminPanel/Overview';
 const HomeRoutes = () => {
 	return (
 		<BrowserRouter>
+			<Topnavbar />
 			<Navbar />
 			<Switch>
 				<Route exact path="/" component={LandingPage} />

@@ -89,6 +89,7 @@ export {
 	getReducingBalance,
 	addRevenueShare,
 	getRevenueShares,
+	approvePayment,
 	addAuthor,
 	getAuthors,
 	sendEmail

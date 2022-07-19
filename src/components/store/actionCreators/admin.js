@@ -766,7 +766,7 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/reducing-balance`, data, {
+			.post(`http://localhost:8080/admin/reducing-balance`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -774,7 +774,7 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 				}
 			})
 			.then((res) => {
-				// console.log(res.data.loans)s
+				// console.log(res.data);
 				dispatch(stopLoader());
 				dispatch(setRBLoans(res.data.loans));
 			})
@@ -784,7 +784,7 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 	};
 };
 
-export const addRBPayment = (installAmount, date, comment, loanId, paidLoanId) => {
+export const addRBPayment = (installAmount, date, comment, loanId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
@@ -793,12 +793,11 @@ export const addRBPayment = (installAmount, date, comment, loanId, paidLoanId) =
 		const data = {
 			installAmount,
 			date,
-			comment,
-			paidLoanId
+			comment
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/rb-payment/${loanId}`, data, {
+			.post(`http://localhost:8080/admin/rb-payment/${loanId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -806,7 +805,7 @@ export const addRBPayment = (installAmount, date, comment, loanId, paidLoanId) =
 				}
 			})
 			.then((res) => {
-				// console.log(res)
+				// console.log(res);
 				dispatch(stopLoader());
 				dispatch(setRBLoans(res.data.loans));
 			})
@@ -840,7 +839,16 @@ export const getReducingBalance = () => {
 	};
 };
 
-export const addRevenueShare = (amount, startup, date, comment, callback) => {
+export const addRevenueShare = (
+	pay_for,
+	month_of,
+	amount,
+	startup,
+	mode_of_pay,
+	transaction_code,
+	proof_of_pay,
+	callback
+) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
@@ -848,9 +856,12 @@ export const addRevenueShare = (amount, startup, date, comment, callback) => {
 
 		const data = {
 			amount,
+			month_of,
 			startup,
-			date,
-			comment
+			pay_for,
+			mode_of_pay,
+			transaction_code,
+			proof_of_pay
 		};
 
 		axios
@@ -862,7 +873,7 @@ export const addRevenueShare = (amount, startup, date, comment, callback) => {
 				}
 			})
 			.then((res) => {
-				// console.log(res.data.loans)
+				// console.log(res.data.revShares);
 				callback({ success: true });
 				dispatch(stopLoader());
 				dispatch(setRevShare(res.data.revShares));
@@ -891,6 +902,35 @@ export const getRevenueShares = () => {
 				// console.log(res,'revShare')
 				// dispatch(stopLoader())
 				dispatch(setRevShare(res.data.revShares));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const approvePayment = (id, callback) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+
+		const token = getState().auth.token;
+
+		const data = {
+			approve: ''
+		};
+
+		axios
+			.put(`https://starthubafrica-api.el.r.appspot.com/admin/approve/${id}`, data, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				dispatch(stopLoader());
+				dispatch(setRevShare(res.data.revs));
+				callback({ success: true, res: res });
 			})
 			.catch((error) => {
 				console.log(error);
