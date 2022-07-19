@@ -30,7 +30,7 @@ const Flatrate = ({ loans, props }) => {
 
 	const catalyzer = users.filter((user) => user.category === 'catalyzer');
 	const username = Array.from(catalyzer, ({ username }) => username);
-	// console.log(loans, 'state');
+	console.log(loans, 'state');
 
 	// console.log(state.expected_payment, 'flatrate');
 
@@ -239,7 +239,7 @@ const Flatrate = ({ loans, props }) => {
 				<div className="loan-overview">
 					<h2>Loans Table</h2>
 					<div className="loan-separator" />
-					<Table
+					{/* <Table
 						style={{ width: '100%' }}
 						columns={columns}
 						dataSource={[
@@ -247,7 +247,7 @@ const Flatrate = ({ loans, props }) => {
 								...r,
 								key: r._id,
 								startup: r.startup,
-								amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+								amount: r.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 								date: r.date,
 								outstanding: r.outstandingbalance.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 								balance: r.expected_payment.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -263,7 +263,7 @@ const Flatrate = ({ loans, props }) => {
 							showSizeChanger: true,
 							pageSizeOptions: [ '10', '20', '30' ]
 						}}
-					/>
+					/> */}
 				</div>
 			</div>
 		</div>
