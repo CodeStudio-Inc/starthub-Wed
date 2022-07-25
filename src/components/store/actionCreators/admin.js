@@ -712,7 +712,7 @@ export const addFlateratePayment = (loanId, amount, callback) => {
 				}
 			})
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				dispatch(stopLoader());
 				dispatch(setLoans(res.data.loans));
 				callback({ success: true, res: res });
