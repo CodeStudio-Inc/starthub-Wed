@@ -286,8 +286,8 @@ const Flatrate = ({ loans, props }) => {
 								date: r.date,
 								startup: r.startup,
 								amount: r.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-								interest: r.interest.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-								balance: r.expected_payment.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+								interest: r.interest.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+								balance: r.expected_payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 								id: r._id
 							}))
 						]}
