@@ -21,7 +21,7 @@
 	width: 100%;
 	display: flex;
 	align-items: flex-start;
-	height: 100vh;
+	justify-content: center;
 }
 
 .flatrate-menu {
@@ -492,5 +492,32 @@
 }
 
 .approve-icon:hover {
+	cursor: pointer;
+}
+
+.pay-modal {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.pay-modal input {
+	width: 140px;
+	height: 30px;
+	outline: none;
+	border: none;
+	background: #eee;
+	padding-left: 5px;
+}
+
+.pay-modal button {
+	outline: none;
+	background: none;
+	color: #dfa126;
+	border: 1px solid #dfa126;
+	margin-left: 0.5rem;
+}
+
+.pay-modal button:hover {
 	cursor: pointer;
 }

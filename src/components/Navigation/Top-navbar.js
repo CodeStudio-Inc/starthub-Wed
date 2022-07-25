@@ -23,8 +23,8 @@ const Topnavbar = (props) => {
 	const [ message, setMessage ] = React.useState('');
 	const [ img, setImg ] = React.useState('');
 
-	const { username, admin } = useSelector((state) => state.auth);
-	// console.log(username);
+	const { username, admin, category } = useSelector((state) => state.auth);
+	// console.log(category);
 
 	const dispatch = useDispatch();
 
@@ -186,7 +186,9 @@ const Topnavbar = (props) => {
 				{admin ? <h4 onClick={() => props.history.push('/loans')}>Investments</h4> : null}
 				{admin ? <h4 onClick={() => props.history.push('/user-activity')}>User Activity</h4> : null}
 				{!admin ? <h4 onClick={() => props.history.push('/')}>OKRs</h4> : null}
-				{!admin ? <h4 onClick={() => props.history.push('/canvas-board')}>Lean Canvas</h4> : null}
+				{!admin && category !== 'internal' && category !== 'dskills' ? (
+					<h4 onClick={() => props.history.push('/canvas-board')}>Lean Canvas</h4>
+				) : null}
 				{!admin ? (
 					<div onClick={() => setOpen(true)} className="rev-button">
 						<h5>Revenue Payment</h5>

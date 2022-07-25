@@ -13,6 +13,7 @@ const Flatrate = ({ loans, props }) => {
 		date: '',
 		startup: '',
 		comment: '',
+		interest: '',
 		interestRate: '',
 		duration: '',
 		grace_period: '',
@@ -23,7 +24,11 @@ const Flatrate = ({ loans, props }) => {
 		p_comment: ''
 	});
 
+	const [ amount, setAmount ] = useState('');
 	const [ showReceipt, setShowReceipt ] = useState(false);
+	const [ pay, setPay ] = useState(false);
+	const [ record, setRecord ] = useState('');
+
 	const [ error, setError ] = useState('');
 
 	const { users, loading } = useSelector((state) => state.admin);
@@ -32,20 +37,22 @@ const Flatrate = ({ loans, props }) => {
 	const username = Array.from(catalyzer, ({ username }) => username);
 	// console.log(loans, 'state');
 
-	// console.log(state.expected_payment, 'flatrate');
+	// console.log(state.interest, 'flatrate');
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {}, []);
 
-	let flatrate;
+	let flatrate, interest;
 
 	const checkDurationValue = ({ target: { value: duration } }) => {
+		interest = parseInt(state.amount) * 0.01 * duration;
 		flatrate = parseInt(state.amount) + parseInt(state.amount) * 0.01 * duration;
 		if (duration <= 12) {
 			setState((r) => ({
 				...r,
 				duration,
+				interest: interest,
 				interestRate: '1%',
 				expected_payment: flatrate
 			}));
@@ -68,6 +75,7 @@ const Flatrate = ({ loans, props }) => {
 				state.duration,
 				state.startup,
 				state.comment,
+				state.interest,
 				state.interestRate,
 				state.grace_period,
 				state.expected_payment,
@@ -81,6 +89,7 @@ const Flatrate = ({ loans, props }) => {
 			duration: '',
 			startup: '',
 			comment: '',
+			interest: '',
 			interestRate: '',
 			grace_period: '',
 			expected_payment: ''
@@ -88,6 +97,12 @@ const Flatrate = ({ loans, props }) => {
 	};
 
 	const columns = [
+		{
+			title: 'Date',
+			dataIndex: 'date',
+			key: 'date',
+			align: 'left'
+		},
 		{
 			title: 'Startup Name',
 			dataIndex: 'startup',
@@ -101,22 +116,45 @@ const Flatrate = ({ loans, props }) => {
 			align: 'left'
 		},
 		{
-			title: 'Date',
-			dataIndex: 'date',
-			key: 'date',
+			title: 'Interest',
+			dataIndex: 'interest',
+			key: 'interest',
 			align: 'left'
 		},
 		{
 			title: 'Outstanding Balance',
-			dataIndex: 'outstanding',
-			key: 'outstanding',
-			align: 'left'
-		},
-		{
-			title: 'Expected Balance',
 			dataIndex: 'balance',
 			key: 'balance',
 			align: 'left'
+		},
+		{
+			title: 'Action',
+			dataIndex: 'id',
+			key: 'id',
+			render: (r) => (
+				<div className="pay-modal">
+					{pay && record === r ? (
+						<input value={amount} placeholder="Enter Amount" onChange={(e) => setAmount(e.target.value)} />
+					) : null}
+					{!pay ? <button onClick={() => setPay(true)}>pay loan</button> : null}
+					{pay && record === r ? (
+						<button
+							onClick={() =>
+								dispatch(
+									actionCreators.addFlateratePayment(r, amount, (res) => {
+										if (res.success) {
+											setPay(false);
+											setAmount('');
+										}
+									})
+								)}
+						>
+							save
+						</button>
+					) : null}
+					{pay && record === r ? <button onClick={() => setPay(false)}>cancel</button> : null}
+				</div>
+			)
 		}
 	];
 
@@ -233,7 +271,6 @@ const Flatrate = ({ loans, props }) => {
 						>
 							Add Loan
 						</button>
-						{loading ? <Spin tip="Loading..." /> : null}
 					</div>
 				</div>
 				<div className="loan-overview">
@@ -246,16 +283,17 @@ const Flatrate = ({ loans, props }) => {
 							...loans.map((r) => ({
 								...r,
 								key: r._id,
+								date: r.date,
 								startup: r.startup,
 								amount: r.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-								date: r.date,
-								outstanding: r.outstandingbalance.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-								balance: r.expected_payment.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+								interest: r.interest.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+								balance: r.expected_payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+								id: r._id
 							}))
 						]}
 						onRow={(record, rowIndex) => {
 							return {
-								onClick: () => props.history.push('/pay-loan', { loan: record })
+								onClick: () => setRecord(record._id)
 							};
 						}}
 						pagination={{
@@ -263,6 +301,7 @@ const Flatrate = ({ loans, props }) => {
 							showSizeChanger: true,
 							pageSizeOptions: [ '10', '20', '30' ]
 						}}
+						loading={loading ? true : false}
 					/>
 				</div>
 			</div>

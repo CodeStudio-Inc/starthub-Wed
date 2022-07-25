@@ -650,6 +650,7 @@ export const addFlate = (
 	duration,
 	startup,
 	comment,
+	interest,
 	interestRate,
 	grace_period,
 	expected_payment,
@@ -666,10 +667,10 @@ export const addFlate = (
 			duration,
 			startup,
 			comment,
+			interest,
 			interestRate,
 			grace_period,
 			expected_payment,
-			outstandingbalance: expected_payment,
 			loanType
 		};
 
@@ -692,17 +693,14 @@ export const addFlate = (
 	};
 };
 
-export const addFlateratePayment = (amount, date, startup, comment, loanId) => {
+export const addFlateratePayment = (loanId, amount, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
 		const token = getState().auth.token;
 
 		const data = {
-			amount,
-			date,
-			startup,
-			comment
+			amount
 		};
 
 		axios
@@ -717,6 +715,7 @@ export const addFlateratePayment = (amount, date, startup, comment, loanId) => {
 				console.log(res);
 				dispatch(stopLoader());
 				dispatch(setLoans(res.data.loans));
+				callback({ success: true, res: res });
 			})
 			.catch((error) => {
 				console.log(error);
@@ -756,7 +755,7 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 
 		const data = {
 			amount,
-			date,
+			loan_date: date,
 			duration,
 			startup,
 			comment,
@@ -766,7 +765,7 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 		};
 
 		axios
-			.post(`http://localhost:8080/admin/reducing-balance`, data, {
+			.post(`https://starthubafrica-api.el.r.appspot.com/admin/reducing-balance`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -784,20 +783,18 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 	};
 };
 
-export const addRBPayment = (installAmount, date, comment, loanId) => {
+export const addRBPayment = (loanId, installAmount, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
 		const token = getState().auth.token;
 
 		const data = {
-			installAmount,
-			date,
-			comment
+			installAmount
 		};
 
 		axios
-			.post(`http://localhost:8080/admin/rb-payment/${loanId}`, data, {
+			.post(`https://starthubafrica-api.el.r.appspot.com/admin/rb-payment/${loanId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -808,6 +805,7 @@ export const addRBPayment = (installAmount, date, comment, loanId) => {
 				// console.log(res);
 				dispatch(stopLoader());
 				dispatch(setRBLoans(res.data.loans));
+				callback({ success: true, res: res });
 			})
 			.catch((error) => {
 				console.log(error);

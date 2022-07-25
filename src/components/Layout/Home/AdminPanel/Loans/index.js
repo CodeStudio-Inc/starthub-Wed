@@ -46,7 +46,7 @@ const Loans = (props) => {
 			style={{
 				width: '95%',
 				position: 'relative',
-				left: '15%',
+				left: '10%',
 				overflowY: 'scroll',
 				height: '100vh',
 				marginTop: '3rem'

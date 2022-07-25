@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
 import { isInteger } from 'formik';
 import * as actionCreators from '../../../../store/actionCreators';
-import { Spin } from 'antd';
+import moment from 'moment';
 
 import './Loans.css';
 const ReducingBalance = ({ props, loans }) => {
@@ -19,7 +19,11 @@ const ReducingBalance = ({ props, loans }) => {
 		grace_period: ''
 	});
 
+	const [ installAmount, setInstallAmount ] = useState('');
+	const [ record, setRecord ] = useState('');
+
 	const [ showReceipt, setShowReceipt ] = useState(false);
+	const [ pay, setPay ] = useState(false);
 	const [ error, setError ] = useState('');
 
 	const users = useSelector((state) => state.admin.users);
@@ -27,7 +31,7 @@ const ReducingBalance = ({ props, loans }) => {
 
 	const catalyzer = users.filter((user) => user.category === 'catalyzer');
 	const username = Array.from(catalyzer, ({ username }) => username);
-	// console.log(state.interest, 'loan');
+	// console.log(loans, 'loan');
 
 	const dispatch = useDispatch();
 
@@ -69,6 +73,12 @@ const ReducingBalance = ({ props, loans }) => {
 
 	const columns = [
 		{
+			title: 'Date',
+			dataIndex: 'date',
+			key: 'date',
+			align: 'left'
+		},
+		{
 			title: 'Startup',
 			dataIndex: 'startup',
 			key: 'startup',
@@ -93,16 +103,49 @@ const ReducingBalance = ({ props, loans }) => {
 			align: 'left'
 		},
 		{
-			title: 'Date',
-			dataIndex: 'date',
-			key: 'date',
+			title: 'Interest',
+			dataIndex: 'interest',
+			key: 'interest',
 			align: 'left'
 		},
 		{
-			title: 'Status',
-			dataIndex: 'status',
-			key: 'status',
+			title: 'Payment',
+			dataIndex: 'payment',
+			key: 'payment',
 			align: 'left'
+		},
+		{
+			title: 'Action',
+			dataIndex: 'id',
+			key: 'id',
+			render: (r) => (
+				<div className="pay-modal">
+					{pay && record === r ? (
+						<input
+							value={installAmount}
+							placeholder="Enter Amount"
+							onChange={(e) => setInstallAmount(e.target.value)}
+						/>
+					) : null}
+					{!pay ? <button onClick={() => setPay(true)}>pay loan</button> : null}
+					{pay && record === r ? (
+						<button
+							onClick={() =>
+								dispatch(
+									actionCreators.addRBPayment(r, installAmount, (res) => {
+										if (res.success) {
+											setPay(false);
+											setInstallAmount('');
+										}
+									})
+								)}
+						>
+							save
+						</button>
+					) : null}
+					{pay && record === r ? <button onClick={() => setPay(false)}>cancel</button> : null}
+				</div>
+			)
 		}
 	];
 
@@ -222,30 +265,30 @@ const ReducingBalance = ({ props, loans }) => {
 						>
 							Add Loan
 						</button>
-						{loading ? <Spin tip="Loading..." /> : null}
 					</div>
 				</div>
 				<div className="loan-overview">
 					<h2>Loans Table</h2>
 					<div className="loan-separator" />
-					{/* <Table
+					<Table
 						style={{ width: '100%' }}
 						columns={columns}
 						dataSource={[
 							...loans.map((r) => ({
 								...r,
 								key: r._id,
+								date: moment(r.date).format('YYYY-MM-DD'),
 								startup: r.startup,
 								amount: r.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 								outstandingPrincple: r.outstandingPrincple.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 								accruedInterest: r.accruedInterest.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-								date: r.date,
-								status: r.status
+								payment: r.payment,
+								id: r._id
 							}))
 						]}
 						onRow={(record, rowIndex) => {
 							return {
-								onClick: () => props.history.push('/pay-rb-loan', { loan: record })
+								onClick: () => setRecord(record._id)
 							};
 						}}
 						pagination={{
@@ -253,7 +296,8 @@ const ReducingBalance = ({ props, loans }) => {
 							showSizeChanger: true,
 							pageSizeOptions: [ '10', '20', '30' ]
 						}}
-					/> */}
+						loading={loading ? true : false}
+					/>
 				</div>
 			</div>
 		</div>
