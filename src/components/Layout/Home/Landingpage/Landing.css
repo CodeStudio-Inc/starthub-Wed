@@ -356,6 +356,16 @@
 	overflow-y: scroll;
 }
 
+.landing-menu-left h3 {
+	color: #dfa126;
+	margin: 0;
+	align-self: flex-start;
+}
+
+.landing-menu-left h3:hover {
+	cursor: pointer;
+}
+
 .tab-pane {
 	display: flex;
 	align-items: center;
@@ -376,6 +386,16 @@
 
 .extra h2 {
 	color: #dfa126;
+}
+
+.extra h3 {
+	color: #dfa126;
+	margin: 0;
+	align-self: flex-start;
+}
+
+.extra h3:hover {
+	cursor: pointer;
 }
 
 .landing-menu-right {

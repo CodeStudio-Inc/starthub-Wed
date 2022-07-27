@@ -17,11 +17,41 @@
 	height: 100vh;
 }
 
+.loan-tab-container {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	background: #fff;
+	height: 100vh;
+}
+
+.loan-tab-menu {
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	width: 85%;
+	left: 15%;
+	margin-top: 3rem;
+	overflow-y: scroll;
+}
+
 .loans-main {
 	width: 100%;
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
+	height: 100vh;
+}
+
+.loans-form {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 90%;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 .flatrate-menu {
@@ -72,17 +102,6 @@
 
 .loan-header button:hover {
 	cursor: pointer;
-}
-
-.loans-form {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	width: 90%;
-	background: #fff;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
 }
 
 .loans-row {

@@ -292,7 +292,7 @@ const ReducingBalance = ({ props, loans }) => {
 							};
 						}}
 						pagination={{
-							defaultPageSize: 10,
+							defaultPageSize: 4,
 							showSizeChanger: true,
 							pageSizeOptions: [ '10', '20', '30' ]
 						}}

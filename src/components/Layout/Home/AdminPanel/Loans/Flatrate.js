@@ -35,9 +35,15 @@ const Flatrate = ({ loans, props }) => {
 
 	const catalyzer = users.filter((user) => user.category === 'catalyzer');
 	const username = Array.from(catalyzer, ({ username }) => username);
-	console.log(loans, 'state');
+	// console.log(loans && loans.reverse(), 'state');
 
-	// console.log(state.interest, 'flatrate');
+	const cs = [
+		{ name: 'Stuart', age: 27, address: 'Bukoto' },
+		{ name: 'Sofie', age: 30, address: 'Namasuba' },
+		{ name: 'Susan', age: 35, address: 'United Kingdom' }
+	];
+
+	// console.log(cs.reverse(), 'flatrate');
 
 	const dispatch = useDispatch();
 
@@ -297,7 +303,7 @@ const Flatrate = ({ loans, props }) => {
 							};
 						}}
 						pagination={{
-							defaultPageSize: 10,
+							defaultPageSize: 4,
 							showSizeChanger: true,
 							pageSizeOptions: [ '10', '20', '30' ]
 						}}

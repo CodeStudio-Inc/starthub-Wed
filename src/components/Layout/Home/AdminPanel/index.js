@@ -1,453 +1,515 @@
-import React,{useEffect, useState} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import CloseIcon from '@material-ui/icons/Close'
-import * as actionCreators from '../../../store/actionCreators'
-import ModalUI from '../../../ModalUI'
-import Objective from './AdminObjective'
-import Statements from './AdminStatement'
-import Diagnostics from '../Landingpage/Diagnostics'
-import svg from '../../../../assets/images/spinner.svg'
-import QuotaTabs from './QuotaTabs'
-import { List  } from 'react-content-loader'
-import ArchiveIcon from '@mui/icons-material/Archive'
-import moment from 'moment'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import CloseIcon from '@material-ui/icons/Close';
+import * as actionCreators from '../../../store/actionCreators';
+import ModalUI from '../../../ModalUI';
+import Objective from './AdminObjective';
+import Statements from './AdminStatement';
+import Diagnostics from '../Landingpage/Diagnostics';
+import svg from '../../../../assets/images/spinner.svg';
+import QuotaTabs from './QuotaTabs';
+import { List } from 'react-content-loader';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import moment from 'moment';
 
-import '../Landingpage/Landing.css'
+import '../Landingpage/Landing.css';
 const AdminPanel = (props) => {
+	const [ open, setOpen ] = useState(false);
+	const [ expireTime, setexpireTime ] = useState(false);
+	const [ activeRow, setActiveRow ] = useState({
+		rowId: '',
+		btnId: 0
+	});
+	const [ archive, setArchive ] = useState(false);
+	const [ quarter1Obj, setQuarter1Obj ] = useState(false);
+	const [ quarter2Obj, setQuarter2Obj ] = useState(false);
+	const [ quarter3Obj, setQuarter3Obj ] = useState(false);
+	const [ quarter4Obj, setQuarter4Obj ] = useState(false);
 
-    const [open, setOpen] = useState(false)
-    const [expireTime, setexpireTime] = useState(false)
-    const [activeRow, setActiveRow] = useState({
-        rowId: '',
-        btnId: 0
-    })
-    const [archive, setArchive] = useState(false)
-    const [quarter1Obj, setQuarter1Obj] = useState(false)
-    const [quarter2Obj, setQuarter2Obj] = useState(false)
-    const [quarter3Obj, setQuarter3Obj] = useState(false)
-    const [quarter4Obj, setQuarter4Obj] = useState(false)
+	const [ state, setState ] = useState({
+		vision: '',
+		mission: '',
+		objective: '',
+		quarter: ''
+	});
 
-    const [state, setState] = useState({
-        vision: '',
-        mission: '',
-        objective: '',
-        quarter: ''
-    })
+	const startupId = props.location.state.data._id;
+	const username = props.location.state.data.username;
+	const category = props.location.state.data.category;
+	const base_key = props.location.state.data.base_key;
+	// console.log(username)
 
-    const startupId = props.location.state.data._id
-    const username = props.location.state.data.username
-    const category = props.location.state.data.category
-    const base_key = props.location.state.data.base_key
-    // console.log(username)
+	const lists = useSelector((state) => state.admin.lists);
+	const Boards = useSelector((state) => state.admin.boards);
+	const userId = useSelector((state) => state.auth.userId);
+	const _value = useSelector((state) => state.admin.values);
+	const statements = useSelector((state) => state.admin.statements);
+	const objectives = useSelector((state) => state.admin.objectives);
+	const loading = useSelector((state) => state.admin.loading);
+	const expire = useSelector((state) => state.auth.tokenExpiration);
+	const admin = useSelector((state) => state.auth.admin);
 
-    const lists = useSelector(state => state.admin.lists)
-    const Boards = useSelector(state => state.admin.boards)
-    const userId = useSelector(state => state.auth.userId)
-    const _value = useSelector(state => state.admin.values)
-    const statements = useSelector(state => state.admin.statements)
-    const objectives = useSelector(state => state.admin.objectives)
-    const loading = useSelector(state => state.admin.loading)
-    const expire = useSelector(state => state.auth.tokenExpiration)
-    const admin = useSelector(state => state.auth.admin)
+	const filter_value = _value && _value.filter((e) => e.creator === startupId);
 
-     const filter_value = _value && _value.filter(e => e.creator === startupId)
-    
-     const last_value = filter_value && filter_value.slice(-1).pop()
+	const last_value = filter_value && filter_value.slice(-1).pop();
 
-    const current_date = Date.now()
+	const current_date = Date.now();
 
-    useEffect(() => {
-        if (current_date >= expire) {
-           return setexpireTime(true)
-        }
-        getBoards()
-        getLists()
-        getStatements()
-        getObjectives()
-        getValues()
-    },[])
+	useEffect(() => {
+		if (current_date >= expire) {
+			return setexpireTime(true);
+		}
+		getBoards();
+		getLists();
+		getStatements();
+		getObjectives();
+		getValues();
+	}, []);
 
-    const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
-    const openEditModal = () => setOpen(true)
+	const openEditModal = () => setOpen(true);
 
-    const _boards = Boards.filter(el => el.creator === startupId && el.boardType !== 'Lean Canvas')
-    const current_board = _boards && _boards.slice(-1).pop()
-    const current_boardID = current_board && current_board._id
-    const filteredObjs = objectives && objectives.filter(el => el.boardId ===  current_boardID )
-    const filteredStatements = statements && statements.filter(el => el.boardId ===  current_boardID )
-    const quarter1 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 1 && el.archive === false)
-    const quarter2 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 2 && el.archive === false)
-    const quarter3 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 3 && el.archive === false)
-    const quarter4 = objectives && objectives.filter(el => el.boardId === current_boardID && el.quarter === 4 && el.archive === false)
+	const _boards = Boards.filter((el) => el.creator === startupId && el.boardType !== 'Lean Canvas');
+	const current_board = _boards && _boards.slice(-1).pop();
+	const current_boardID = current_board && current_board._id;
+	const filteredObjs = objectives && objectives.filter((el) => el.boardId === current_boardID);
+	const filteredStatements = statements && statements.filter((el) => el.boardId === current_boardID);
+	const quarter1 =
+		objectives &&
+		objectives.filter((el) => el.boardId === current_boardID && el.quarter === 1 && el.archive === false);
+	const quarter2 =
+		objectives &&
+		objectives.filter((el) => el.boardId === current_boardID && el.quarter === 2 && el.archive === false);
+	const quarter3 =
+		objectives &&
+		objectives.filter((el) => el.boardId === current_boardID && el.quarter === 3 && el.archive === false);
+	const quarter4 =
+		objectives &&
+		objectives.filter((el) => el.boardId === current_boardID && el.quarter === 4 && el.archive === false);
 
-    const archived = objectives && objectives.filter(el => el.boardId === current_boardID && el.archive === true)
-    
-    const getBoards = () => dispatch(actionCreators.getAdminBoard(startupId))
-    const getLists = () => dispatch(actionCreators.getAdminLists(startupId ))
-    const getStatements = () => dispatch(actionCreators.getAdminStatements(startupId))
-    const getObjectives = () => dispatch(actionCreators.getAdminObjectives(startupId))
-    const getValues = () => dispatch(actionCreators.getAdminValues(startupId))
-    
-    const todoLists = lists && lists.filter(el => el.creator === startupId && el.boardId ===  current_boardID && el.archive === false)
-    // console.log(startupId,'llll')
-    // console.log(todoLists,'bbb')
+	const archived = objectives && objectives.filter((el) => el.boardId === current_boardID && el.archive === true);
 
+	const getBoards = () => dispatch(actionCreators.getAdminBoard(startupId));
+	const getLists = () => dispatch(actionCreators.getAdminLists(startupId));
+	const getStatements = () => dispatch(actionCreators.getAdminStatements(startupId));
+	const getObjectives = () => dispatch(actionCreators.getAdminObjectives(startupId));
+	const getValues = () => dispatch(actionCreators.getAdminValues(startupId));
 
-    const onDragEnd = (result) => {
-            const { destination, source, draggableId } = result
-            if(!destination){
-                return
-            }
-            
-                dispatch(actionCreators.dragCardWithInList(
-                    source.droppableId,
-                    destination.droppableId,
-                    source.index,
-                    destination.index,
-                    draggableId
-                ))
+	const todoLists =
+		lists &&
+		lists.filter((el) => el.creator === startupId && el.boardId === current_boardID && el.archive === false);
+	// console.log(startupId,'llll')
+	// console.log(todoLists,'bbb')
 
-                const newDestList = todoLists.find(el => el._id === destination.droppableId)
-                const newSrcList = todoLists.find(el => el._id === source.droppableId)
+	const onDragEnd = (result) => {
+		const { destination, source, draggableId } = result;
+		if (!destination) {
+			return;
+		}
 
-                dispatch(actionCreators.cardIndexUpdate(source.droppableId, destination.droppableId,newSrcList, newDestList, () => {
-                    getLists()
-                } ))
-     }
+		dispatch(
+			actionCreators.dragCardWithInList(
+				source.droppableId,
+				destination.droppableId,
+				source.index,
+				destination.index,
+				draggableId
+			)
+		);
 
-     const handleLogoutClick = () => {
-            dispatch(actionCreators.removeUser())
-            props.history.push('/')
-    }
+		const newDestList = todoLists.find((el) => el._id === destination.droppableId);
+		const newSrcList = todoLists.find((el) => el._id === source.droppableId);
 
-    const checkInput = state.objective !== '' && state.quarter
+		dispatch(
+			actionCreators.cardIndexUpdate(source.droppableId, destination.droppableId, newSrcList, newDestList, () => {
+				getLists();
+			})
+		);
+	};
 
-    const addObjective = () => {
-        dispatch(actionCreators.addAdminObjectives(current_boardID, state.objective, state.quarter, startupId, (res) => {
-            if (res.success) {
-                setQuarter1Obj(false)
-                setQuarter2Obj(false)
-                setQuarter3Obj(false)
-                setQuarter4Obj(false)
-                setState({
-                    objective: '',
-                    quarter: ''
-                })
-            }
-        }))
-    }
+	const handleLogoutClick = () => {
+		dispatch(actionCreators.removeUser());
+		props.history.push('/');
+	};
 
+	const checkInput = state.objective !== '' && state.quarter;
 
-    return (
-        <div className="landing-container">
-            {expireTime ? 
-            <ModalUI>
-                <div className="edit-card">
-                    <h5>Session timeout please login again</h5>
-                    <button className="session-timeout" onClick={handleLogoutClick}>Login</button>
-                </div>
-            </ModalUI>
-            : null}
-            {archive ?
-                <ModalUI>
-                    <div className="archive-modal">
-                        <div className="create-header">
-                            <h3>Archive</h3>
-                            <CloseIcon
-                                className="create-icon"
-                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
-                                onClick={() => setArchive(false)}
-                            />
-                        </div>
-                        {archived.length === 0 ? <h2>No Archived Records</h2>
-                            : <div className="archive-container">
-                                <table>
-                                    <tr>
-                                        <td><h3>Objective</h3></td>
-                                        <td><h3>Quarter</h3></td>
-                                        <td><h3>Created</h3></td>
-                                    </tr>
-                                    {archived.map(a => (
-                                        <tr>
-                                            <td>{a.description}</td>
-                                            <td>{a.quarter}</td>
-                                            <td>{moment(a.createdAt).fromNow()}</td>
-                                            <td
-                                                style={{
-                                                    textAlign: 'center'
-                                                }}>
-                                                {a._id === activeRow.rowId && activeRow.btnId === 1 && loading ?
-                                                    <p style={{ color: '#dfa126', margin: '0' }}>Restoring...</p> :
-                                                    <button
-                                                        onClick={() => {
-                                                            setActiveRow({
-                                                                rowId: a._id,
-                                                                btnId: 1
-                                                            })
-                                                            dispatch(actionCreators.archiveAdminObjective(a._id, startupId,(res) => {
-                                                                if (res.succes) {
-                                                                    setActiveRow({
-                                                                        rowId: '',
-                                                                        btnId: 0
-                                                                    })
-                                                                }
-                                                            })
-                                                            )
-                                                        }}>
-                                                        restore
-                                                    </button>}
-                                            </td>
-                                            <td
-                                                style={{ textAlign: 'center' }}
-                                            >
-                                                {a._id === activeRow.rowId && activeRow.btnId === 2 && loading ?
-                                                    <p style={{ color: '#dfa126', margin: '0' }}>Deleting...</p> :
-                                                    <button
-                                                        onClick={() => {
-                                                            setActiveRow({
-                                                                rowId: a._id,
-                                                                btnId: 2
-                                                            })
-                                                            dispatch(actionCreators.deleteAdminObjective(a._id, startupId, (res) => {
-                                                                if (res.succes) {
-                                                                    setActiveRow({
-                                                                        rowId: '',
-                                                                        btnId: 0
-                                                                    })
-                                                                }
-                                                            }))
-                                                        }}>
-                                                        delete
-                                                    </button>}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </table>
-                            </div>}
-                    </div>
-                </ModalUI>
-                : null}
-            {quarter1Obj ?
-                <ModalUI>
-                    <div className="create-modal">
-                        <div className="create-header">
-                            <h3>Create Quarter 1 Objective</h3>
-                            <CloseIcon
-                                className="create-icon"
-                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
-                                onClick={() => {
-                                    setQuarter1Obj(false)
-                                    setState({
-                                        objective: '',
-                                        quarter: ''
-                                    })
-                                }}
-                            />
-                        </div>
-                        <div className="create-form">
-                            <input
-                                type="text"
-                                placeholder="Enter objective name"
-                                value={state.objective}
-                                onChange={(e) => setState({ ...state, objective: e.target.value })}
-                                onFocus={() => {
-                                    setState({
-                                        quarter: 1
-                                    })
-                                }}
-                            />
-                            <button
-                                onClick={addObjective}
-                                style={{
-                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
-                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
-                                }}
-                                disabled={checkInput ? false : true}
-                            >
-                                {loading ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : 'Save'}
-                            </button>
-                        </div>
-                    </div>
-                </ModalUI>
-                : null}
-            {quarter2Obj ?
-                <ModalUI>
-                    <div className="create-modal">
-                        <div className="create-header">
-                            <h3>Create Quarter 2 Objective</h3>
-                            <CloseIcon
-                                className="create-icon"
-                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
-                                onClick={() => {
-                                    setQuarter2Obj(false)
-                                    setState({
-                                        objective: '',
-                                        quarter: ''
-                                    })
-                                }}
-                            />
-                        </div>
-                        <div className="create-form">
-                            <input
-                                type="text"
-                                placeholder="Enter objective name"
-                                value={state.objective}
-                                onChange={(e) => setState({ ...state, objective: e.target.value })}
-                                onFocus={() => {
-                                    setState({
-                                        quarter: 2
-                                    })
-                                }}
-                            />
-                            <button
-                                onClick={addObjective}
-                                style={{
-                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
-                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
-                                }}
-                                disabled={checkInput ? false : true}
-                            >
-                                {loading ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : 'Save'}
-                            </button>
-                        </div>
-                    </div>
-                </ModalUI>
-                : null}
-            {quarter3Obj ?
-                <ModalUI>
-                    <div className="create-modal">
-                        <div className="create-header">
-                            <h3>Create Quarter 3 Objective</h3>
-                            <CloseIcon
-                                className="create-icon"
-                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
-                                onClick={() => {
-                                    setQuarter3Obj(false)
-                                    setState({
-                                        objective: '',
-                                        quarter: ''
-                                    })
-                                }}
-                            />
-                        </div>
-                        <div className="create-form">
-                            <input
-                                type="text"
-                                placeholder="Enter objective name"
-                                value={state.objective}
-                                onChange={(e) => setState({ ...state, objective: e.target.value })}
-                                onFocus={() => {
-                                    setState({
-                                        quarter: 3
-                                    })
-                                }}
-                            />
-                            <button
-                                onClick={addObjective}
-                                style={{
-                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
-                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
-                                }}
-                                disabled={checkInput ? false : true}
-                            >
-                                {loading ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : 'Save'}
-                            </button>
-                        </div>
-                    </div>
-                </ModalUI>
-                : null}
-            {quarter4Obj ?
-                <ModalUI>
-                    <div className="create-modal">
-                        <div className="create-header">
-                            <h3>Create Quarter 4 Objective</h3>
-                            <CloseIcon
-                                className="create-icon"
-                                style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
-                                onClick={() => {
-                                    setQuarter4Obj(false)
-                                    setState({
-                                        objective: '',
-                                        quarter: ''
-                                    })
-                                }}
-                            />
-                        </div>
-                        <div className="create-form">
-                            <input
-                                type="text"
-                                placeholder="Enter objective name"
-                                value={state.objective}
-                                onChange={(e) => setState({ ...state, objective: e.target.value })}
-                                onFocus={() => {
-                                    setState({
-                                        quarter: 4
-                                    })
-                                }}
-                            />
-                            <button
-                                onClick={addObjective}
-                                style={{
-                                    background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
-                                    color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
-                                }}
-                                disabled={checkInput ? false : true}
-                            >
-                                {loading ? <img src={svg} style={{ width: "30px", height: "30px" }} /> : 'Save'}
-                            </button>
-                        </div>
-                    </div>
-                </ModalUI>
-                : null}
-            {category === 'internal' ? null :
-            <div className="admin-nav">
-                <h2>{username.toUpperCase()}</h2>
-                {category === 'academy' ? null :
-                <div className="admin-nav-links">
-                    <p onClick={() => props.history.push('/admin-canvas',{userId: startupId, user: username,key: base_key })}>Lean canvas</p>
-                    <p onClick={() => props.history.push('/admin-metrics',{key: base_key, user: username, userId: startupId})}>Dashboard</p>
-                    <p onClick={() => props.history.push('/')}>Startups</p>
-                </div>
-                }
-            </div>}
-            <div className="landing-menu">
-                <div className={category === 'internal' ? 'extra' : 'landing-menu-left'}>
-                    <QuotaTabs
-                        todoLists={todoLists}
-                        current_board={current_board}
-                        onDragEnd={onDragEnd}
-                        getLists={getLists}
-                        openEditModal={openEditModal}
-                        openQuarter1Obj={() => setQuarter1Obj(true)}
-                        openQuarter2Obj={() => setQuarter2Obj(true)}
-                        openQuarter3Obj={() => setQuarter3Obj(true)}
-                        openQuarter4Obj={() => setQuarter4Obj(true)}
-                        quarter1={quarter1}
-                        quarter2={quarter2}
-                        quarter3={quarter3}
-                        quarter4={quarter4}
-                        svg={svg}
-                        startupId={startupId}
-                    />
-                    {archived.length > 0 ?
-                        <div onClick={() => setArchive(true)} className="archive-btn">
-                            <ArchiveIcon onClick={() => setArchive(true)} style={{ marginRight: '5px' }} />
-                            <h3>Archive</h3>
-                        </div>
-                        : null}
-                </div>
-                {category === 'internal' ? null : 
-                <div className="landing-menu-right">
-                <div className="vision-statements">
-                    {filteredStatements && filteredStatements.length > 0 ? <Statements svg={svg} statements={filteredStatements}/> :
-                    null}
-                    {category === 'internal' ? null : <Diagnostics last_value={last_value && last_value}/>}
-                </div>
-                </div>}
-            </div>
-        </div>
-    )
-}
+	const addObjective = () => {
+		dispatch(
+			actionCreators.addAdminObjectives(current_boardID, state.objective, state.quarter, startupId, (res) => {
+				if (res.success) {
+					setQuarter1Obj(false);
+					setQuarter2Obj(false);
+					setQuarter3Obj(false);
+					setQuarter4Obj(false);
+					setState({
+						objective: '',
+						quarter: ''
+					});
+				}
+			})
+		);
+	};
 
-export default AdminPanel
+	return (
+		<div className="landing-container">
+			{expireTime ? (
+				<ModalUI>
+					<div className="edit-card">
+						<h5>Session timeout please login again</h5>
+						<button className="session-timeout" onClick={handleLogoutClick}>
+							Login
+						</button>
+					</div>
+				</ModalUI>
+			) : null}
+			{archive ? (
+				<ModalUI>
+					<div className="archive-modal">
+						<div className="create-header">
+							<h3>Archive</h3>
+							<CloseIcon
+								className="create-icon"
+								style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+								onClick={() => setArchive(false)}
+							/>
+						</div>
+						{archived.length === 0 ? (
+							<h2>No Archived Records</h2>
+						) : (
+							<div className="archive-container">
+								<table>
+									<tr>
+										<td>
+											<h3>Objective</h3>
+										</td>
+										<td>
+											<h3>Quarter</h3>
+										</td>
+										<td>
+											<h3>Created</h3>
+										</td>
+									</tr>
+									{archived.map((a) => (
+										<tr>
+											<td>{a.description}</td>
+											<td>{a.quarter}</td>
+											<td>{moment(a.createdAt).fromNow()}</td>
+											<td
+												style={{
+													textAlign: 'center'
+												}}
+											>
+												{a._id === activeRow.rowId && activeRow.btnId === 1 && loading ? (
+													<p style={{ color: '#dfa126', margin: '0' }}>Restoring...</p>
+												) : (
+													<button
+														onClick={() => {
+															setActiveRow({
+																rowId: a._id,
+																btnId: 1
+															});
+															dispatch(
+																actionCreators.archiveAdminObjective(
+																	a._id,
+																	startupId,
+																	(res) => {
+																		if (res.succes) {
+																			setActiveRow({
+																				rowId: '',
+																				btnId: 0
+																			});
+																		}
+																	}
+																)
+															);
+														}}
+													>
+														restore
+													</button>
+												)}
+											</td>
+											<td style={{ textAlign: 'center' }}>
+												{a._id === activeRow.rowId && activeRow.btnId === 2 && loading ? (
+													<p style={{ color: '#dfa126', margin: '0' }}>Deleting...</p>
+												) : (
+													<button
+														onClick={() => {
+															setActiveRow({
+																rowId: a._id,
+																btnId: 2
+															});
+															dispatch(
+																actionCreators.deleteAdminObjective(
+																	a._id,
+																	startupId,
+																	(res) => {
+																		if (res.succes) {
+																			setActiveRow({
+																				rowId: '',
+																				btnId: 0
+																			});
+																		}
+																	}
+																)
+															);
+														}}
+													>
+														delete
+													</button>
+												)}
+											</td>
+										</tr>
+									))}
+								</table>
+							</div>
+						)}
+					</div>
+				</ModalUI>
+			) : null}
+			{quarter1Obj ? (
+				<ModalUI>
+					<div className="create-modal">
+						<div className="create-header">
+							<h3>Create Quarter 1 Objective</h3>
+							<CloseIcon
+								className="create-icon"
+								style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+								onClick={() => {
+									setQuarter1Obj(false);
+									setState({
+										objective: '',
+										quarter: ''
+									});
+								}}
+							/>
+						</div>
+						<div className="create-form">
+							<input
+								type="text"
+								placeholder="Enter objective name"
+								value={state.objective}
+								onChange={(e) => setState({ ...state, objective: e.target.value })}
+								onFocus={() => {
+									setState({
+										quarter: 1
+									});
+								}}
+							/>
+							<button
+								onClick={addObjective}
+								style={{
+									background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+									color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+								}}
+								disabled={checkInput ? false : true}
+							>
+								{loading ? <img src={svg} style={{ width: '30px', height: '30px' }} /> : 'Save'}
+							</button>
+						</div>
+					</div>
+				</ModalUI>
+			) : null}
+			{quarter2Obj ? (
+				<ModalUI>
+					<div className="create-modal">
+						<div className="create-header">
+							<h3>Create Quarter 2 Objective</h3>
+							<CloseIcon
+								className="create-icon"
+								style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+								onClick={() => {
+									setQuarter2Obj(false);
+									setState({
+										objective: '',
+										quarter: ''
+									});
+								}}
+							/>
+						</div>
+						<div className="create-form">
+							<input
+								type="text"
+								placeholder="Enter objective name"
+								value={state.objective}
+								onChange={(e) => setState({ ...state, objective: e.target.value })}
+								onFocus={() => {
+									setState({
+										quarter: 2
+									});
+								}}
+							/>
+							<button
+								onClick={addObjective}
+								style={{
+									background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+									color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+								}}
+								disabled={checkInput ? false : true}
+							>
+								{loading ? <img src={svg} style={{ width: '30px', height: '30px' }} /> : 'Save'}
+							</button>
+						</div>
+					</div>
+				</ModalUI>
+			) : null}
+			{quarter3Obj ? (
+				<ModalUI>
+					<div className="create-modal">
+						<div className="create-header">
+							<h3>Create Quarter 3 Objective</h3>
+							<CloseIcon
+								className="create-icon"
+								style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+								onClick={() => {
+									setQuarter3Obj(false);
+									setState({
+										objective: '',
+										quarter: ''
+									});
+								}}
+							/>
+						</div>
+						<div className="create-form">
+							<input
+								type="text"
+								placeholder="Enter objective name"
+								value={state.objective}
+								onChange={(e) => setState({ ...state, objective: e.target.value })}
+								onFocus={() => {
+									setState({
+										quarter: 3
+									});
+								}}
+							/>
+							<button
+								onClick={addObjective}
+								style={{
+									background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+									color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+								}}
+								disabled={checkInput ? false : true}
+							>
+								{loading ? <img src={svg} style={{ width: '30px', height: '30px' }} /> : 'Save'}
+							</button>
+						</div>
+					</div>
+				</ModalUI>
+			) : null}
+			{quarter4Obj ? (
+				<ModalUI>
+					<div className="create-modal">
+						<div className="create-header">
+							<h3>Create Quarter 4 Objective</h3>
+							<CloseIcon
+								className="create-icon"
+								style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+								onClick={() => {
+									setQuarter4Obj(false);
+									setState({
+										objective: '',
+										quarter: ''
+									});
+								}}
+							/>
+						</div>
+						<div className="create-form">
+							<input
+								type="text"
+								placeholder="Enter objective name"
+								value={state.objective}
+								onChange={(e) => setState({ ...state, objective: e.target.value })}
+								onFocus={() => {
+									setState({
+										quarter: 4
+									});
+								}}
+							/>
+							<button
+								onClick={addObjective}
+								style={{
+									background: checkInput ? '#cf8e0a' : 'rgba(0,0,0,0.2)',
+									color: checkInput ? '#fff' : 'rgba(0,0,0,0.4)'
+								}}
+								disabled={checkInput ? false : true}
+							>
+								{loading ? <img src={svg} style={{ width: '30px', height: '30px' }} /> : 'Save'}
+							</button>
+						</div>
+					</div>
+				</ModalUI>
+			) : null}
+			{category === 'internal' ? null : (
+				<div className="admin-nav">
+					<h2>{username.toUpperCase()}</h2>
+					{category === 'academy' ? null : (
+						<div className="admin-nav-links">
+							<p
+								onClick={() =>
+									props.history.push('/admin-canvas', {
+										userId: startupId,
+										user: username,
+										key: base_key
+									})}
+							>
+								Lean canvas
+							</p>
+							<p
+								onClick={() =>
+									props.history.push('/admin-metrics', {
+										key: base_key,
+										user: username,
+										userId: startupId
+									})}
+							>
+								Dashboard
+							</p>
+							<p onClick={() => props.history.push('/')}>Startups</p>
+						</div>
+					)}
+				</div>
+			)}
+			<div className="landing-menu">
+				<div className={category === 'internal' ? 'extra' : 'landing-menu-left'}>
+					<h3 onClick={() => props.history.goBack()}>Back</h3>
+					<QuotaTabs
+						todoLists={todoLists}
+						current_board={current_board}
+						onDragEnd={onDragEnd}
+						getLists={getLists}
+						openEditModal={openEditModal}
+						openQuarter1Obj={() => setQuarter1Obj(true)}
+						openQuarter2Obj={() => setQuarter2Obj(true)}
+						openQuarter3Obj={() => setQuarter3Obj(true)}
+						openQuarter4Obj={() => setQuarter4Obj(true)}
+						quarter1={quarter1}
+						quarter2={quarter2}
+						quarter3={quarter3}
+						quarter4={quarter4}
+						svg={svg}
+						startupId={startupId}
+					/>
+					{archived.length > 0 ? (
+						<div onClick={() => setArchive(true)} className="archive-btn">
+							<ArchiveIcon onClick={() => setArchive(true)} style={{ marginRight: '5px' }} />
+							<h3>Archive</h3>
+						</div>
+					) : null}
+				</div>
+				{category === 'internal' ? null : (
+					<div className="landing-menu-right">
+						<div className="vision-statements">
+							{filteredStatements && filteredStatements.length > 0 ? (
+								<Statements svg={svg} statements={filteredStatements} />
+							) : null}
+							{category === 'internal' ? null : <Diagnostics last_value={last_value && last_value} />}
+						</div>
+					</div>
+				)}
+			</div>
+		</div>
+	);
+};
+
+export default AdminPanel;

@@ -42,19 +42,7 @@ const Loans = (props) => {
 	}, []);
 
 	return (
-		<Tabs
-			style={{
-				width: '95%',
-				position: 'relative',
-				left: '10%',
-				overflowY: 'scroll',
-				height: '100vh',
-				marginTop: '3rem'
-			}}
-			defaultActiveKey="1"
-			centered
-			tabBarStyle={{ color: '#dfa126' }}
-		>
+		<div className="loan-tab-container">
 			{expireTime ? (
 				<ModalUI>
 					<div className="edit-card">
@@ -65,16 +53,25 @@ const Loans = (props) => {
 					</div>
 				</ModalUI>
 			) : null}
-			<TabPane tab="Flate Rate" key="1">
-				<Flatrate props={props} loans={_loans} />
-			</TabPane>
-			<TabPane tab="Reducing Balance" key="2">
-				<ReducingBalance props={props} loans={__loans} />
-			</TabPane>
-			<TabPane tab="Revenue Payments" key="3">
-				<RevenueShare />
-			</TabPane>
-		</Tabs>
+			<div className="loan-tab-menu">
+				<Tabs
+					style={{ width: '100%', overflowY: 'scroll', height: '100vh' }}
+					defaultActiveKey="1"
+					centered
+					tabBarStyle={{ color: '#dfa126' }}
+				>
+					<TabPane tab="Flate Rate" key="1">
+						<Flatrate props={props} loans={_loans} />
+					</TabPane>
+					<TabPane tab="Reducing Balance" key="2">
+						<ReducingBalance props={props} loans={__loans} />
+					</TabPane>
+					<TabPane tab="Revenue Payments" key="3">
+						<RevenueShare />
+					</TabPane>
+				</Tabs>
+			</div>
+		</div>
 	);
 };
 
