@@ -189,7 +189,7 @@ const Topnavbar = (props) => {
 				{!admin && category !== 'internal' && category !== 'dskills' ? (
 					<h4 onClick={() => props.history.push('/canvas-board')}>Lean Canvas</h4>
 				) : null}
-				{!admin ? (
+				{!admin && category !== 'internal' && category !== 'dskills' ? (
 					<div onClick={() => setOpen(true)} className="rev-button">
 						<h5>Revenue Payment</h5>
 					</div>

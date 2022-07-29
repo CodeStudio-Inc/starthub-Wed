@@ -747,6 +747,31 @@ export const getFlate = () => {
 	};
 };
 
+export const searchFlatrate = (startup, callback) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		axios
+			.get(`https://starthubafrica-api.el.r.appspot.com/admin/shorterm-loan?startup=${startup}`, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res.data, 'loans data');
+				dispatch(stopLoader());
+				dispatch(setLoans(res.data.loans));
+				callback({ success: true, res: res });
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
 export const addReducingBalance = (amount, date, duration, startup, comment, interestRate, grace_period, loanType) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
@@ -803,6 +828,31 @@ export const addRBPayment = (loanId, installAmount, callback) => {
 			})
 			.then((res) => {
 				// console.log(res);
+				dispatch(stopLoader());
+				dispatch(setRBLoans(res.data.loans));
+				callback({ success: true, res: res });
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const searchReducingBalance = (startup, callback) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		axios
+			.get(`https://starthubafrica-api.el.r.appspot.com/admin/longterm-loan?startup=${startup}`, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res,'loans data')
 				dispatch(stopLoader());
 				dispatch(setRBLoans(res.data.loans));
 				callback({ success: true, res: res });
@@ -929,6 +979,30 @@ export const approvePayment = (id, callback) => {
 				dispatch(stopLoader());
 				dispatch(setRevShare(res.data.revs));
 				callback({ success: true, res: res });
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const searchRevShare = (startup) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		axios
+			.get(`https://starthubafrica-api.el.r.appspot.com/admin/revenue-share?startup=${startup}`, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res,'revShare')
+				dispatch(stopLoader());
+				dispatch(setRevShare(res.data.loans));
 			})
 			.catch((error) => {
 				console.log(error);

@@ -232,9 +232,69 @@
 
 .loan-overview {
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	flex-direction: column;
 	width: 95%;
+	box-sizing: border-box;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.loan-overview-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	width: 99%;
+}
+
+.loan-overview-row h4 {
+	margin: 0;
+}
+
+.loan-overview-row button {
+	background: #dfa126;
+	border: none;
+	color: #fff;
+	outline: none;
+	transition: 1s ease-in-out;
+	height: 30px;
+}
+
+.loan-overview-row button:hover {
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.loan-overview-row input {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	outline: none;
+	margin-left: 0.5rem;
+	padding-left: 5px;
+	border-radius: 5px;
+}
+
+.loan-receipt {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 95%;
+	margin-top: 0.5rem;
+}
+
+.loan-receipt-row {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.loan-receipt-row h3 {
+	color: rgba(0, 0, 0, 0.5);
+	margin-right: 0.5rem;
+}
+
+.loan-receipt-row h2 {
+	color: #dfa126;
 }
 
 .loan-separator {

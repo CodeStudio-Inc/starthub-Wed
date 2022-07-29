@@ -15,11 +15,15 @@ const RevenueShare = () => {
 	const [ record, setRecord ] = useState({});
 	const [ open, setOpen ] = useState(false);
 	const [ error, setError ] = useState('');
+	const [ addloanmoadal, setAddloanmoadal ] = useState(false);
+	const [ state, setState ] = useState({
+		search_table: ''
+	});
 
 	const { users, revShares, loading } = useSelector((state) => state.admin);
 	const { username } = useSelector((state) => state.auth);
 	const adminUser = users.filter((user) => user.category === 'admin')[0].username;
-	console.log(record);
+	// console.log(record);
 
 	const _revShares = revShares && revShares;
 
@@ -205,7 +209,35 @@ const RevenueShare = () => {
 			<div className="loans-form">
 				<div className="loan-form" />
 				<div className="loan-overview">
-					<h2>Loans Overview</h2>
+					<div className="loan-overview-row">
+						{addloanmoadal ? (
+							<button onClick={() => setAddloanmoadal(false)}>Cancel New Loan</button>
+						) : (
+							<button
+								onClick={() => {
+									setAddloanmoadal(true);
+								}}
+							>
+								Add New Loan
+							</button>
+						)}
+						<div className="loan-receipt-row">
+							<h4>search startup:</h4>
+							<input
+								value={state.search_table}
+								onChange={(e) => setState({ ...state, search_table: e.target.value })}
+								onKeyUp={() => {
+									if (!state.search_table) {
+										dispatch(actionCreators.getReducingBalance());
+									} else {
+										setTimeout(() => {
+											dispatch(actionCreators.searchRevShare(state.search_table));
+										}, 3000);
+									}
+								}}
+							/>
+						</div>
+					</div>
 					<div className="loan-separator" />
 					<Table
 						style={{ width: '100%' }}
