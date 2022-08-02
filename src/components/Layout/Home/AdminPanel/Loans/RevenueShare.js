@@ -260,7 +260,7 @@ const RevenueShare = () => {
 							};
 						}}
 						pagination={{
-							defaultPageSize: 10,
+							defaultPageSize: 8,
 							showSizeChanger: true,
 							pageSizeOptions: [ '10', '20', '30' ]
 						}}

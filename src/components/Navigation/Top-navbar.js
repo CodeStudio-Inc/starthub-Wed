@@ -95,7 +95,7 @@ const Topnavbar = (props) => {
 							/>
 						</div>
 						<div className="nav-container-content">
-							<h2>Payment Form</h2>
+							<h2>Revenue</h2>
 							<p>
 								Payment for<strong style={{ color: 'red' }}> *</strong>
 							</p>
