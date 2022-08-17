@@ -55,7 +55,11 @@ const UserActivity = () => {
 						}))
 					]}
 					style={{ width: '75%' }}
-					pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: [ '10', '20', '30' ] }}
+					pagination={{
+						defaultPageSize: 8,
+						showSizeChanger: true,
+						pageSizeOptions: [ '10', '20', '30' ]
+					}}
 				/>
 			</div>
 		</div>

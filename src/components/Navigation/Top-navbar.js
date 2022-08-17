@@ -172,18 +172,18 @@ const Topnavbar = (props) => {
 										<option value="" disabled selected>
 											-select-
 										</option>
-										<option value="January">Jan</option>
-										<option value="Febuary">Feb</option>
-										<option value="March">Mar</option>
-										<option value="April">Apr</option>
+										<option value="January">January</option>
+										<option value="Febuary">Febuary</option>
+										<option value="March">March</option>
+										<option value="April">April</option>
 										<option value="May">May</option>
-										<option value="June">Jun</option>
-										<option value="July">Jul</option>
-										<option value="August">Aug</option>
-										<option value="September">Sep</option>
-										<option value="October">Oct</option>
-										<option value="November">Nov</option>
-										<option value="December">Dec</option>
+										<option value="June">June</option>
+										<option value="July">July</option>
+										<option value="August">August</option>
+										<option value="September">September</option>
+										<option value="October">October</option>
+										<option value="November">November</option>
+										<option value="December">December</option>
 									</select>
 									<p>
 										Amount<strong style={{ color: 'red' }}> *</strong>
@@ -209,6 +209,7 @@ const Topnavbar = (props) => {
 										</option>
 										<option value="Mobile Money">Mobile Money</option>
 										<option value="Airtel Money">Airtel Money</option>
+										<option value="Cash">Cash</option>
 										<option value="Bank">Bank</option>
 									</select>
 									<p>

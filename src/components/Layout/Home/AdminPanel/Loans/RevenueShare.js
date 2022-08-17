@@ -182,7 +182,8 @@ const RevenueShare = () => {
 									className="approve-icon"
 									style={{ fontSize: '40px', color: 'rgb(51, 185, 38)', marginBottom: '1rem' }}
 									onClick={() => {
-										if (username !== adminUser) return setError('The Accountant approves payments');
+										if (username !== adminUser)
+											return setError('Sorry, only the Accountant approves payments');
 										dispatch(
 											actionCreators.approvePayment(record._id, (res) => {
 												if (res.success) setOpen(false);
