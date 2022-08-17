@@ -1065,27 +1065,21 @@ export const getAuthors = () => {
 	};
 };
 
-export const sendEmail = () => {
+export const sendEmail = (email, startup, months, callback) => {
 	return (dispatch) => {
-		// dispatch(loadAction())
-
 		const data = {
-			service_id: process.env.REACT_APP_SERVICE_ID,
-			template_id: process.env.REACT_APP_TEMPLATE_ID,
-			user_id: process.env.REACT_APP_USER_ID,
-			template_params: {
-				Fname: 'Business Men & Women',
-				notes:
-					'Due to your busy schedules, this is a reminder email from Starthub Africa, for you to submit your monthly revenue payments before the end of the month'
-			}
+			email,
+			startup,
+			months
 		};
 
 		axios
-			.post('https://api.emailjs.com/api/v1.0/email/send', data, {
+			.post('http://localhost:8080/admin/previous-month-email', data, {
 				contentType: 'application/json'
 			})
 			.then((res) => {
-				// console.log(res)
+				console.log(res.data);
+				callback({ success: true, res: res.data.message });
 			})
 			.catch((error) => {
 				console.log(error);

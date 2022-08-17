@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import * as actionCreators from '../../../store/actionCreators';
 import ModalUI from '../../../ModalUI';
-import Objective from './AdminObjective';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Statements from './AdminStatement';
 import Diagnostics from '../Landingpage/Diagnostics';
 import svg from '../../../../assets/images/spinner.svg';
@@ -440,39 +440,39 @@ const AdminPanel = (props) => {
 					</div>
 				</ModalUI>
 			) : null}
-			{category === 'internal' ? null : (
-				<div className="admin-nav">
-					<h2>{username.toUpperCase()}</h2>
-					{category === 'academy' ? null : (
-						<div className="admin-nav-links">
-							<p
-								onClick={() =>
-									props.history.push('/admin-canvas', {
-										userId: startupId,
-										user: username,
-										key: base_key
-									})}
-							>
-								Lean canvas
-							</p>
-							<p
-								onClick={() =>
-									props.history.push('/admin-metrics', {
-										key: base_key,
-										user: username,
-										userId: startupId
-									})}
-							>
-								Dashboard
-							</p>
-							<p onClick={() => props.history.push('/')}>Startups</p>
-						</div>
-					)}
-				</div>
-			)}
 			<div className="landing-menu">
 				<div className={category === 'internal' ? 'extra' : 'landing-menu-left'}>
-					<h3 onClick={() => props.history.goBack()}>Back</h3>
+					<div className="tab-links">
+						<ArrowBackIcon
+							onClick={() => props.history.goBack()}
+							style={{ fontSize: '25px', color: 'rgba(0, 0, 0, 0.4)' }}
+							className="tab-icon"
+						/>
+						{category === 'academy' || category === 'internal' ? null : (
+							<div className="tab-links-row">
+								<h3
+									onClick={() =>
+										props.history.push('/admin-canvas', {
+											userId: startupId,
+											user: username,
+											key: base_key
+										})}
+								>
+									Lean Canvas
+								</h3>
+								<h3
+									onClick={() =>
+										props.history.push('/admin-metrics', {
+											key: base_key,
+											user: username,
+											userId: startupId
+										})}
+								>
+									Dashboard
+								</h3>
+							</div>
+						)}
+					</div>
 					<QuotaTabs
 						todoLists={todoLists}
 						current_board={current_board}

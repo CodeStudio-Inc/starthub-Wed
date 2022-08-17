@@ -231,10 +231,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: #dfa126;
 	transition: 1s;
 	padding: 7px;
-	border-radius: 10px;
+	border: 1px solid #dfa126;
 	margin-left: 1rem;
 }
 
@@ -245,8 +244,12 @@
 
 .rev-button h5 {
 	margin: 0;
-	color: #fff;
+	color: #dfa126;
 	font-size: 13px;
+}
+
+.rev-button:hover h5 {
+	color: #fff;
 }
 
 .nav-modal-container {
@@ -289,11 +292,12 @@
 
 .nav-container-content {
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
+	justify-content: center;
 	flex-direction: column;
-	width: 80%;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
+	width: 100%;
+	margin-bottom: 0.5rem;
+	padding: 10px;
 }
 
 .nav-container-content p {
@@ -303,7 +307,7 @@
 .nav-container-content select {
 	outline: none;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-	width: 100%;
+	width: 70%;
 	height: 40px;
 	margin-bottom: 0.5rem;
 	background: none;
@@ -312,8 +316,16 @@
 .nav-container-content input {
 	outline: none;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-	width: 100%;
+	width: 70%;
 	height: 40px;
+	margin-bottom: 0.5rem;
+}
+
+.nav-container-content textarea {
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	width: 70%;
+	height: 100px;
 	margin-bottom: 0.5rem;
 }
 
@@ -332,6 +344,73 @@
 	background: -webkit-linear-gradient(to bottom, #FFFFFF, #ECE9E6); 
 	background: linear-gradient(to bottom, #FFFFFF, #ECE9E6); 
 
+}
+
+.accordion {
+	display: flex;
+	align-items: center;
+	justify-content: baseline;
+	flex-direction: column;
+}
+
+.accordion-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	margin-bottom: 0.5rem;
+}
+
+.accordion-container h4 {
+	margin: 0;
+	color: rgba(0, 0, 0, 0.4);
+}
+
+.accordion-container h3 {
+	margin: 0;
+}
+
+.accordion-container input {
+	background: none;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	height: 30px;
+	width: 90px;
+	margin: 0;
+}
+
+.accordion-container select {
+	background: none;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	height: 30px;
+	width: 90px;
+	margin: 0;
+}
+
+.accordion-container button {
+	outline: none;
+	border: none;
+	background: #dfa126;
+	color: #fff;
+	width: 90px;
+	height: 30px;
+	margin: 0;
+}
+
+.accordion-container-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 35%;
+	background: #333;
+	height: 25px;
+	width: 100;
+}
+
+.accordion-container-row h3 {
+	color: #fff;
+	font-weight: bold;
 }
 
 .nav-row {

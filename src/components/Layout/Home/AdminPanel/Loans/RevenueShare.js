@@ -210,17 +210,7 @@ const RevenueShare = () => {
 				<div className="loan-form" />
 				<div className="loan-overview">
 					<div className="loan-overview-row">
-						{addloanmoadal ? (
-							<button onClick={() => setAddloanmoadal(false)}>Cancel New Loan</button>
-						) : (
-							<button
-								onClick={() => {
-									setAddloanmoadal(true);
-								}}
-							>
-								Add New Loan
-							</button>
-						)}
+						<h3 style={{ opacity: 0 }}>display none</h3>
 						<div className="loan-receipt-row">
 							<h4>search startup:</h4>
 							<input

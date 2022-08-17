@@ -52,7 +52,7 @@ const TextEditor = () => {
 	}, []);
 
 	const onEditorStateChange = (e) => {
-		setState({ editorState: e });
+		setState({ ...state, editorState: e });
 	};
 
 	const postBlog = () => {
