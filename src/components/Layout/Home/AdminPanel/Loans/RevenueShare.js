@@ -212,7 +212,7 @@ const RevenueShare = () => {
 				<div className="loan-overview">
 					<div className="loan-overview-row">
 						<h3 style={{ opacity: 0 }}>display none</h3>
-						<div className="loan-receipt-row">
+						{/* <div className="loan-receipt-row">
 							<h4>search startup:</h4>
 							<input
 								value={state.search_table}
@@ -227,7 +227,7 @@ const RevenueShare = () => {
 									}
 								}}
 							/>
-						</div>
+						</div> */}
 					</div>
 					<div className="loan-separator" />
 					<Table

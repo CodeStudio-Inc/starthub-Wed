@@ -105,6 +105,13 @@ export const setAuthor = (data) => {
 	};
 };
 
+export const setRevnue = (data) => {
+	return {
+		type: actions.SET_REVENUE,
+		data
+	};
+};
+
 export const getUsers = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
@@ -1058,6 +1065,30 @@ export const getAuthors = () => {
 				// console.log(res,'revShare')
 				// dispatch(stopLoader())
 				dispatch(setAuthor(res.data.authors));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const getRevenue = () => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		axios
+			.get('http://localhost:8080/catalyzer/revenues', {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res,'revShare')
+				dispatch(stopLoader());
+				dispatch(setRevnue(res.data.revenue));
 			})
 			.catch((error) => {
 				console.log(error);

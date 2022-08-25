@@ -17,6 +17,7 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import GroupsIcon from '@mui/icons-material/Groups';
+import PaymentIcon from '@mui/icons-material/Payment';
 
 import './Navigation.css';
 const Navbar = (props) => {
@@ -94,8 +95,13 @@ const Navbar = (props) => {
 				title: 'User Activity',
 				route: '/user-activity',
 				icon: <EventNoteIcon className="link-icon" style={{ fontSize: '25px' }} />
+			},
+			{
+				id: 2,
+				title: 'Revenue Tracking',
+				route: '/revenues',
+				icon: <PaymentIcon className="link-icon" style={{ fontSize: '25px' }} />
 			}
-			// { id: 2, title: "Revenues", route: "/revenues", icon: <PaymentIcon className="link-icon" style={{ fontSize: '25px' }} /> }
 		]
 	});
 

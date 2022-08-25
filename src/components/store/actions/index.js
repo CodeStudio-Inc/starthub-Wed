@@ -55,3 +55,5 @@ export const SET_RB_LOANS = 'SET_RB_LOANS';
 export const SET_REVSHARE = 'SET_REVSHARE';
 
 export const SET_AUTHOR = 'SET_AUTHOR';
+
+export const SET_REVENUE = 'SET_REVENUE';

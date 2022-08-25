@@ -13,6 +13,7 @@ const initialState = {
 	loans: [],
 	rb_loans: [],
 	revShares: [],
+	revenue: [],
 	authors: [],
 	metrics: [],
 	loading: false,
@@ -95,6 +96,12 @@ const requests = (state = initialState, action) => {
 			return updateObject(state, {
 				loader: false,
 				authors: action.data
+			});
+
+		case actions.SET_REVENUE:
+			return updateObject(state, {
+				loader: false,
+				revenue: action.data
 			});
 
 		case actions.SET_ADMIN_METRICS_DATA:

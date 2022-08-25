@@ -95,5 +95,6 @@ export {
 	approvePayment,
 	addAuthor,
 	getAuthors,
+	getRevenue,
 	sendEmail
 } from './admin';
