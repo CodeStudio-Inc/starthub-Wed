@@ -12,7 +12,6 @@ export {
 	getBoards,
 	getListsOnBoard,
 	getCardsOnBoard,
-	getMetricsData,
 	createBoard,
 	createAdminBoard,
 	createList,
@@ -95,6 +94,9 @@ export {
 	approvePayment,
 	addAuthor,
 	getAuthors,
+	addRevenue,
+	getStartupRevenue,
 	getRevenue,
+	getRevenueTracking,
 	sendEmail
 } from './admin';

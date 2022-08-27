@@ -107,13 +107,6 @@ export const setExpenseData = (data) => {
 	};
 };
 
-export const setMetricsData = (data) => {
-	return {
-		type: actions.SET_METRICS_DATA,
-		data
-	};
-};
-
 export const setValue = (value) => {
 	return {
 		type: actions.SET_VALUE,
@@ -932,33 +925,6 @@ export const deleteList = (id, callback) => {
 			.catch((error) => {
 				console.log(error);
 			});
-	};
-};
-
-export const getMetricsData = () => {
-	return (dispatch, getState) => {
-		// dispatch(loadAction())
-		const baseId = getState().auth.base_key;
-		const key = process.env.REACT_APP_API_KEY;
-		var base = new Airtable({ apiKey: key }).base(baseId);
-
-		base('Metrics')
-			.select({
-				maxRecords: 100
-			})
-			.eachPage(
-				function page(records, fetchNextPage) {
-					// console.log(records,'metrics')
-					dispatch(setMetricsData(records));
-					fetchNextPage();
-				},
-				function done(err) {
-					if (err) {
-						console.error(err);
-						return;
-					}
-				}
-			);
 	};
 };
 

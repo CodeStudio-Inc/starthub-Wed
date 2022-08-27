@@ -233,11 +233,6 @@ const Navbar = (props) => {
 					</div>
 				)}
 				<div className="link-separator" />
-				{admin ? null : (
-					<a href={link} target="blank">
-						<button className="report">Report Revenue</button>
-					</a>
-				)}
 				<div className="menu-container">
 					<MenuIcon onClick={() => setopenSidebar(true)} className="menu" style={{ fontSize: '40px' }} />
 				</div>

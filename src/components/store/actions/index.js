@@ -19,7 +19,6 @@ export const SET_CANVAS = 'SET_CANVAS';
 export const SET_MILESTONES = 'SET_MILESTONES';
 export const DELETE_CARD = 'DELETE_CARD';
 export const DELETE_LIST = 'DELETE_LIST';
-export const SET_METRICS_DATA = 'SET_METRICS_DATA';
 export const SET_ADMIN_METRICS_DATA = 'SET_ADMIN_METRICS_DATA';
 
 export const SET_ADMIN_USER = 'SET_ADMIN_USER';
@@ -57,3 +56,5 @@ export const SET_REVSHARE = 'SET_REVSHARE';
 export const SET_AUTHOR = 'SET_AUTHOR';
 
 export const SET_REVENUE = 'SET_REVENUE';
+
+export const SET_REVENUE_TRACKING = 'SET_REVENUE_TRACKING';

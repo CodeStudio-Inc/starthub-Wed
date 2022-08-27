@@ -6,13 +6,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import { isInteger } from 'formik';
 import axios from 'axios';
 import * as actionCreators from '../store/actionCreators';
-import { Tabs } from 'antd';
+import { Tabs, Spin } from 'antd';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import CalculateIcon from '@mui/icons-material/Calculate';
 
 import './Navigation.css';
+import { display } from '@mui/system';
+import { set } from 'react-ga';
 const { TabPane } = Tabs;
 
 const Topnavbar = (props) => {
@@ -37,7 +39,15 @@ const Topnavbar = (props) => {
 		startup: '',
 		months: []
 	});
+	const [ revState, setRevState ] = React.useState({
+		month_revenue: '',
+		month_expense: '',
+		date: '',
+		month: ''
+	});
 	const [ error, setError ] = React.useState('');
+	const [ error1, setError1 ] = React.useState('');
+	const [ error2, setError2 ] = React.useState('');
 	const [ emailMessage, setEmailMessage ] = React.useState('');
 	const [ disable, setDisable ] = React.useState(false);
 	const [ emailModal, setEmailModal ] = React.useState(false);
@@ -45,13 +55,15 @@ const Topnavbar = (props) => {
 	const [ img, setImg ] = React.useState('');
 
 	const { username, admin, category } = useSelector((state) => state.auth);
-	// console.log(emailState.months, 'interest');
+	const { loader } = useSelector((state) => state.admin);
 
 	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setImg(e.target.files[0]);
 	};
+
+	// console.log(parseInt(revState.month_revenue.replace(/,/g, '')));
 
 	const handleMultipleSelectChange = (e) => {
 		let value = Array.from(e.target.selectedOptions, (option) => option.value);
@@ -98,7 +110,7 @@ const Topnavbar = (props) => {
 					actionCreators.addRevenueShare(
 						state.pay_for,
 						state.month_of,
-						state.amount,
+						parseInt(state.amount.replace(/,/g, '')),
 						username,
 						state.mode_of_pay,
 						state.transaction_code,
@@ -126,6 +138,32 @@ const Topnavbar = (props) => {
 			});
 	};
 
+	const addRevenue = () => {
+		if (
+			revState.month_revenue === '' ||
+			revState.month_expense === '' ||
+			revState.date === '' ||
+			revState.month === ''
+		)
+			return setMessage('All fields are reequired');
+		dispatch(
+			actionCreators.addRevenue(
+				username,
+				parseInt(revState.month_revenue.replace(/,/g, '')),
+				parseInt(revState.month_expense.replace(/,/g, '')),
+				revState.date,
+				revState.month
+			)
+		);
+		setRevState({
+			month_expense: '',
+			month_revenue: '',
+			date: '',
+			month: ''
+		});
+		setMessage('');
+	};
+
 	return (
 		<div className="top-nav">
 			{open ? (
@@ -140,18 +178,126 @@ const Topnavbar = (props) => {
 						</div>
 						<Tabs
 							style={{
-								width: '100%'
+								width: '100%',
+								height: '80vh',
+								overflowY: 'scroll'
 							}}
 							defaultActiveKey="1"
 							centered
 							tabBarStyle={{ color: '#dfa126' }}
 						>
-							<TabPane tab="Revenue Payment" key="1">
+							<TabPane tab="Report Revenue" key="1">
 								<div className="nav-container-content">
-									<h2>Revenue</h2>
-									<p>
-										Payment for<strong style={{ color: 'red' }}> *</strong>
-									</p>
+									<div className="label">
+										<h1>Monthly Reporting {username}</h1>
+										<h4>
+											Needs to be done every month. You have 2 weeks for the reporting after a
+											month has passed. For example, January revenues must be reported latest by
+											14th of Feb. If you fail to report for one month, you will not be able to
+											request a loan in the next 6 months from StartHub. We will also not list you
+											for any investment matchmaking for 9 months as we do not have enough data.
+										</h4>
+									</div>
+									<div className="label">
+										<p>
+											Monthly Revenue(UGX)<strong style={{ color: 'red' }}> *</strong>
+										</p>
+										<h5>All revenues from 1st day of month to last day of the month.</h5>
+									</div>
+									<input
+										value={revState.month_revenue}
+										required="required"
+										onChange={(e) => {
+											if (!isInteger(revState.month_revenue))
+												setError1('Enter amount or "0" if no revenue generated');
+											if (isInteger(revState.month_revenue)) setError1('');
+											setRevState({ ...revState, month_revenue: e.target.value });
+										}}
+									/>
+									{error1 ? <p style={{ color: 'rgba(0,0,0,0.4)' }}>{error1}</p> : null}
+									<div className="label">
+										<p>
+											Monthly Expenses(UGX)<strong style={{ color: 'red' }}> *</strong>
+										</p>
+										<h5>All expenses from 1st day of month to last day of the month. </h5>
+									</div>
+									<input
+										value={revState.month_expense}
+										required="required"
+										onChange={(e) => {
+											if (!isInteger(revState.month_expense))
+												setError2('Enter amount or "0" if no expenses incurred');
+											if (isInteger(revState.month_expense)) setError2('');
+											setRevState({ ...revState, month_expense: e.target.value });
+										}}
+									/>
+									{error2 ? <p style={{ color: 'rgba(0,0,0,0.4)' }}>{error2}</p> : null}
+									<div className="label">
+										<p>
+											Date<strong style={{ color: 'red' }}> *</strong>
+										</p>
+										<h5>
+											Put ANY day in the month you are reporting for. Even if you report only in
+											July but for the month of June, select any date in June.
+										</h5>
+									</div>
+									<input
+										type="date"
+										required="required"
+										value={revState.date}
+										onChange={(e) => {
+											setRevState({ ...revState, date: e.target.value });
+										}}
+									/>
+									<div className="label">
+										<p>
+											Month<strong style={{ color: 'red' }}> *</strong>
+										</p>
+										<h5>Put the month of the date you selected, for better referencing</h5>
+									</div>
+									<select
+										required="required"
+										value={revState.month}
+										onChange={(e) => {
+											setRevState({ ...revState, month: e.target.value });
+										}}
+									>
+										<option value="" disabled selected>
+											-select-
+										</option>
+										<option value="January">January</option>
+										<option value="Febuary">Febuary</option>
+										<option value="March">March</option>
+										<option value="April">April</option>
+										<option value="May">May</option>
+										<option value="June">June</option>
+										<option value="July">July</option>
+										<option value="August">August</option>
+										<option value="September">September</option>
+										<option value="October">October</option>
+										<option value="November">November</option>
+										<option value="December">December</option>
+									</select>
+									<button
+										style={{ background: loader ? '#eee' : '#dfa126' }}
+										disabled={loader ? true : false}
+										onClick={addRevenue}
+									>
+										{loader ? <Spin /> : 'Submit'}
+									</button>
+									{message ? <p>{message}</p> : null}
+								</div>
+							</TabPane>
+							<TabPane tab="Revenue Payment" key="2">
+								<div className="nav-container-content">
+									<div className="label">
+										<h2>Revenue</h2>
+									</div>
+									<div className="label">
+										<p>
+											Payment for<strong style={{ color: 'red' }}> *</strong>
+										</p>
+									</div>
 									<select
 										value={state.pay_for}
 										onChange={(e) => setState({ ...state, pay_for: e.target.value })}
@@ -162,9 +308,11 @@ const Topnavbar = (props) => {
 										<option value="Loan">Loan</option>
 										<option value="Revenue share">Revenue share</option>
 									</select>
-									<p>
-										Month of<strong style={{ color: 'red' }}> *</strong>
-									</p>
+									<div className="label">
+										<p>
+											Month of<strong style={{ color: 'red' }}> *</strong>
+										</p>
+									</div>
 									<select
 										value={state.month_of}
 										onChange={(e) => setState({ ...state, month_of: e.target.value })}
@@ -185,21 +333,25 @@ const Topnavbar = (props) => {
 										<option value="November">November</option>
 										<option value="December">December</option>
 									</select>
-									<p>
-										Amount<strong style={{ color: 'red' }}> *</strong>
-									</p>
+									<div className="label">
+										<p>
+											Amount<strong style={{ color: 'red' }}> *</strong>
+										</p>
+									</div>
 									<input
 										value={state.amount}
 										onChange={(e) => {
-											if (!isInteger(state.amount)) setError('Enter amount in Shillings');
+											if (!isInteger(state.amount)) setError('Enter amount in shillings');
 											if (isInteger(state.amount)) setError('');
 											setState({ ...state, amount: e.target.value });
 										}}
 									/>
-									{error ? <p style={{ color: 'red' }}>{error}</p> : null}
-									<p>
-										Mode of payment<strong style={{ color: 'red' }}> *</strong>
-									</p>
+									{error ? <p style={{ color: 'rgba(0,0,0,0.4)' }}>{error}</p> : null}
+									<div className="label">
+										<p>
+											Mode of payment<strong style={{ color: 'red' }}> *</strong>
+										</p>
+									</div>
 									<select
 										value={state.mode_of_pay}
 										onChange={(e) => setState({ ...state, mode_of_pay: e.target.value })}
@@ -212,16 +364,20 @@ const Topnavbar = (props) => {
 										<option value="Cash">Cash</option>
 										<option value="Bank">Bank</option>
 									</select>
-									<p>
-										Transaction Code<strong style={{ color: 'red' }}> *</strong>
-									</p>
+									<div className="label">
+										<p>
+											Transaction Code<strong style={{ color: 'red' }}> *</strong>
+										</p>
+									</div>
 									<input
 										value={state.transaction_code}
 										onChange={(e) => setState({ ...state, transaction_code: e.target.value })}
 									/>
-									<p>
-										Proof of payment<strong style={{ color: 'red' }}> *</strong>
-									</p>
+									<div className="label">
+										<p>
+											Proof of payment<strong style={{ color: 'red' }}> *</strong>
+										</p>
+									</div>
 									<input style={{ border: 'none' }} type="file" onChange={handleChange} />
 									<button
 										style={{ background: disable ? '#eee' : '#dfa126' }}
@@ -233,7 +389,7 @@ const Topnavbar = (props) => {
 									{message ? <p>{message}</p> : null}
 								</div>
 							</TabPane>
-							{/* <TabPane tab="Request Loan" key="2">
+							{/* <TabPane tab="Request Loan" key="3">
 								<div className="nav-container-content">
 									<h2>Request Loan</h2>
 									<Accordion style={{ width: '70%', marginBottom: '0.5rem', background: '#eee' }}>

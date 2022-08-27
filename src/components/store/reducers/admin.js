@@ -14,6 +14,7 @@ const initialState = {
 	rb_loans: [],
 	revShares: [],
 	revenue: [],
+	revenue_tracking: [],
 	authors: [],
 	metrics: [],
 	loading: false,
@@ -102,6 +103,12 @@ const requests = (state = initialState, action) => {
 			return updateObject(state, {
 				loader: false,
 				revenue: action.data
+			});
+
+		case actions.SET_REVENUE_TRACKING:
+			return updateObject(state, {
+				loader: false,
+				revenue_tracking: action.data
 			});
 
 		case actions.SET_ADMIN_METRICS_DATA:

@@ -105,9 +105,16 @@ export const setAuthor = (data) => {
 	};
 };
 
-export const setRevnue = (data) => {
+export const setRevenue = (data) => {
 	return {
 		type: actions.SET_REVENUE,
+		data
+	};
+};
+
+export const setRevenueTracking = (data) => {
+	return {
+		type: actions.SET_REVENUE_TRACKING,
 		data
 	};
 };
@@ -1072,13 +1079,47 @@ export const getAuthors = () => {
 	};
 };
 
+export const addRevenue = (startup, month_revenue, month_expense, date, month) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+
+		const token = getState().auth.token;
+
+		const data = {
+			startup,
+			month_revenue,
+			month_expense,
+			date,
+			month
+		};
+
+		axios
+			.post(`https://starthubafrica-api.el.r.appspot.com/admin/revenue`, data, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				dispatch(stopLoader());
+				dispatch(setRevenue(res.data.revenue));
+				// console.log(res);
+				// callback({ success: true, res: res });
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
 export const getRevenue = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 		const token = getState().auth.token;
 
 		axios
-			.get('http://localhost:8080/catalyzer/revenues', {
+			.get('https://starthubafrica-api.el.r.appspot.com/admin/revenues', {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1088,7 +1129,55 @@ export const getRevenue = () => {
 			.then((res) => {
 				// console.log(res,'revShare')
 				dispatch(stopLoader());
-				dispatch(setRevnue(res.data.revenue));
+				dispatch(setRevenue(res.data.revenue));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const getStartupRevenue = () => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		axios
+			.get('https://starthubafrica-api.el.r.appspot.com/admin/revenue', {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res,'revShare')
+				dispatch(stopLoader());
+				dispatch(setRevenue(res.data.revenue));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const getRevenueTracking = () => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		axios
+			.get('http://localhost:8080/admin/rev-tracking', {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res,'revShare')
+				dispatch(stopLoader());
+				dispatch(setRevenueTracking(res.data.revenue));
 			})
 			.catch((error) => {
 				console.log(error);
