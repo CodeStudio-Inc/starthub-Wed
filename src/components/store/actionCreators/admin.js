@@ -1161,13 +1161,66 @@ export const getStartupRevenue = () => {
 	};
 };
 
+export const getStartupRevenueTracking = (creator, year, callback) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+
+		const data = {
+			creator,
+			year
+		};
+		const token = getState().auth.token;
+
+		axios
+			.post('https://starthubafrica-api.el.r.appspot.com/admin/startup-revenue', data, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res, 'revShare');
+				callback({ success: true, res: res });
+				dispatch(stopLoader());
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const searchRevenueTracking = (year) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		axios
+			.get(`https://starthubafrica-api.el.r.appspot.com/admin/rev-tracking/search?year=${year}`, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res,'revShare')
+				dispatch(stopLoader());
+				dispatch(setRevenueTracking(res.data.revenue));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
 export const getRevenueTracking = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 		const token = getState().auth.token;
 
 		axios
-			.get('http://localhost:8080/admin/rev-tracking', {
+			.get('https://starthubafrica-api.el.r.appspot.com/admin/rev-tracking', {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',

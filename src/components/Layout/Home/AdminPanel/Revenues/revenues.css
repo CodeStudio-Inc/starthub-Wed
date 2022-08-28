@@ -15,14 +15,39 @@
 	position: relative;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-start;
 	flex-direction: column;
 	width: 85%;
 	left: 15%;
-	margin-top: 5rem;
 	height: 100vh;
 	/* overflow-y: scroll;s */
 }
+
+.rev-table-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 80%;
+	margin-top: 5rem;
+	padding: 10px;
+	background: #fff;
+}
+
+.rev-table-header h2 {
+	margin: 0;
+	color: #dfa126;
+}
+
+.rev-table-header input {
+	outline: none;
+	background: none;
+	height: 30px;
+	border: 1px solid rgba(0,0,0,0.1);
+	border-radius: 5px;
+	margin-left: 0.5rem;
+	padding-left: 5px;
+}
+
 
 .rev-container {
 	display: flex;
@@ -30,4 +55,38 @@
 	justify-content: center;
 	flex-direction: column;
 	width: 100%;
+}
+
+.rev-modal-container {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	width: 70%;
+	height: 70vh;
+	background: #fff;
+}
+
+.rev-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	width: 100%;
+	height: 50px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+	padding: 5px;
+}
+
+.rev-modal-icon:hover {
+	cursor: pointer;
+}
+
+.rev-modal-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 90%;
+	overflow-y: scroll;
+	margin-top: 1rem;
 }
