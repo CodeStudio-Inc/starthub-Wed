@@ -25,8 +25,8 @@ const Dashboard = (props) => {
 
 	current_month = new Date().getMonth() + 1;
 
-	current_yr_revenue = revenue.filter((e) => moment(e.date).format('YYYY') === current_yr.toString());
-	previous_yr_revenue = revenue.filter((e) => moment(e.date).format('YYYY') === previous_yr.toString());
+	current_yr_revenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === current_yr.toString());
+	previous_yr_revenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === previous_yr.toString());
 	// console.log(current_yr_revenue);
 
 	const checkMonth = (month) => {

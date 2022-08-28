@@ -98,7 +98,7 @@ const Navbar = (props) => {
 			},
 			{
 				id: 2,
-				title: 'Revenue Tracking',
+				title: 'Revenue',
 				route: '/revenues',
 				icon: <PaymentIcon className="link-icon" style={{ fontSize: '25px' }} />
 			}
