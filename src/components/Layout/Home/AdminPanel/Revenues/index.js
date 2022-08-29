@@ -17,7 +17,6 @@ const Revenues = () => {
 	});
 	const { revenue_tracking, loading } = useSelector((state) => state.admin);
 
-	const records = record && record;
 	const rev_tracking = revenue_tracking && revenue_tracking;
 
 	const dispatch = useDispatch();
@@ -251,7 +250,7 @@ const Revenues = () => {
 							<Table
 								columns={columnz}
 								dataSource={[
-									...records.map((r) => ({
+									...record.map((r) => ({
 										...r,
 										key: r.id,
 										revenue: r.month_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),

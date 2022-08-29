@@ -1228,7 +1228,7 @@ export const getRevenueTracking = () => {
 				}
 			})
 			.then((res) => {
-				// console.log(res,'revShare')
+				console.log(res, 'revShare');
 				dispatch(stopLoader());
 				dispatch(setRevenueTracking(res.data.revenue));
 			})

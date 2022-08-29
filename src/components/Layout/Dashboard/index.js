@@ -54,89 +54,91 @@ const Dashboard = (props) => {
 
 	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
 
-	previous_yr_revenue.forEach((e) => {
-		if (moment(new Date()).format('MM') >= '07') return;
-		if (moment(new Date()).format('MM') === '01') {
-			if (moment(e.date).format('MM') >= '07') current_yr_revenue.push(e);
-		}
-		if (moment(new Date()).format('MM') === '02') {
-			if (moment(e.date).format('MM') >= '08') current_yr_revenue.push(e);
-		}
-		if (moment(new Date()).format('MM') >= '03') {
-			if (moment(e.date).format('MM') >= '09') current_yr_revenue.push(e);
-		}
-		if (moment(new Date()).format('MM') === '04') {
-			if (moment(e.date).format('MM') >= '10') current_yr_revenue.push(e);
-		}
-		if (moment(new Date()).format('MM') === '05') {
-			if (moment(e.date).format('MM') >= '11') current_yr_revenue.push(e);
-		}
-		if (moment(new Date()).format('MM') === '06') {
-			if (moment(e.date).format('MM') >= '12') current_yr_revenue.push(e);
-		}
-	});
+	previous_yr_revenue &&
+		previous_yr_revenue.forEach((e) => {
+			if (moment(new Date()).format('MM') >= '07') return;
+			if (moment(new Date()).format('MM') === '01') {
+				if (moment(e.date).format('MM') >= '07') current_yr_revenue.push(e);
+			}
+			if (moment(new Date()).format('MM') === '02') {
+				if (moment(e.date).format('MM') >= '08') current_yr_revenue.push(e);
+			}
+			if (moment(new Date()).format('MM') >= '03') {
+				if (moment(e.date).format('MM') >= '09') current_yr_revenue.push(e);
+			}
+			if (moment(new Date()).format('MM') === '04') {
+				if (moment(e.date).format('MM') >= '10') current_yr_revenue.push(e);
+			}
+			if (moment(new Date()).format('MM') === '05') {
+				if (moment(e.date).format('MM') >= '11') current_yr_revenue.push(e);
+			}
+			if (moment(new Date()).format('MM') === '06') {
+				if (moment(e.date).format('MM') >= '12') current_yr_revenue.push(e);
+			}
+		});
 
 	const zero = '0';
 	const txt1 = startMonth.toString().length === 1 ? zero.concat(startMonth.toString()) : startMonth.toString();
 	const txt2 =
 		current_month.toString().length === 1 ? zero.concat(current_month.toString()) : current_month.toString();
 
-	six_months_revenue = current_yr_revenue.filter(
-		(e) => moment(e.date).format('MM') >= txt1 && moment(e.date).format('MM') <= txt2
-	);
+	six_months_revenue =
+		current_yr_revenue &&
+		current_yr_revenue.filter((e) => moment(e.date).format('MM') >= txt1 && moment(e.date).format('MM') <= txt2);
 
 	let new_revenue = [];
 
-	six_months_revenue.forEach((e) => {
-		if (moment(e.date).format('MM') === '01' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 1, month: `Jan${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '02' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 2, month: `Feb${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '03' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 3, month: `Mar${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '04' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 4, month: `Apr${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '05' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 5, month: `May${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '06' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 6, month: `Jun${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '07' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 7, month: `Jul${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '08' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 8, month: `Aug${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '09' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 9, month: `Sep${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '10' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 10, month: `Oct${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '11' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 11, month: `Nov${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '12' && moment(e.date).format('YYYY') === previous_yr.toString())
-			new_revenue.push({ ...e, index: 12, month: `Dec${previous_yr.toString()}` });
-		if (moment(e.date).format('MM') === '01' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 13, month: `Jan${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '02' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 14, month: `Feb${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '03' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 15, month: `Mar${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '04' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 16, month: `Apr${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '05' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 17, month: `May${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '06' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 18, month: `Jun${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '07' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 19, month: `Jul${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '08' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 20, month: `Aug${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '09' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 21, month: `Sep${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '10' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 22, month: `Oct${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '11' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 23, month: `Nov${current_yr.toString()}` });
-		if (moment(e.date).format('MM') === '12' && moment(e.date).format('YYYY') === current_yr.toString())
-			new_revenue.push({ ...e, index: 24, month: `Dec${current_yr.toString()}` });
-	});
+	six_months_revenue &&
+		six_months_revenue.forEach((e) => {
+			if (moment(e.date).format('MM') === '01' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 1, month: `Jan${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '02' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 2, month: `Feb${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '03' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 3, month: `Mar${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '04' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 4, month: `Apr${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '05' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 5, month: `May${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '06' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 6, month: `Jun${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '07' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 7, month: `Jul${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '08' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 8, month: `Aug${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '09' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 9, month: `Sep${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '10' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 10, month: `Oct${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '11' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 11, month: `Nov${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '12' && moment(e.date).format('YYYY') === previous_yr.toString())
+				new_revenue.push({ ...e, index: 12, month: `Dec${previous_yr.toString()}` });
+			if (moment(e.date).format('MM') === '01' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 13, month: `Jan${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '02' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 14, month: `Feb${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '03' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 15, month: `Mar${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '04' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 16, month: `Apr${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '05' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 17, month: `May${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '06' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 18, month: `Jun${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '07' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 19, month: `Jul${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '08' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 20, month: `Aug${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '09' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 21, month: `Sep${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '10' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 22, month: `Oct${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '11' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 23, month: `Nov${current_yr.toString()}` });
+			if (moment(e.date).format('MM') === '12' && moment(e.date).format('YYYY') === current_yr.toString())
+				new_revenue.push({ ...e, index: 24, month: `Dec${current_yr.toString()}` });
+		});
 
 	new_revenue.sort((a, b) => a.index - b.index);
 	const rev = new_revenue.map((el) => el.month_revenue);
