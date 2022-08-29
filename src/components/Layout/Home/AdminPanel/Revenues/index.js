@@ -285,14 +285,14 @@ const Revenues = () => {
 				</div>
 				<Table
 					columns={columns}
-					dataSource={[
-						...rev_tracking.map((r) => ({
-							...r,
-							key: r.id,
-							startup: r.startup,
-							jan: r.jan
-						}))
-					]}
+					// dataSource={[
+					// 	...rev_tracking.map((r) => ({
+					// 		...r,
+					// 		key: r.id,
+					// 		startup: r.startup,
+					// 		jan: r.jan
+					// 	}))
+					// ]}
 					onRow={(record, rowIndex) => {
 						return {
 							onClick: () => {

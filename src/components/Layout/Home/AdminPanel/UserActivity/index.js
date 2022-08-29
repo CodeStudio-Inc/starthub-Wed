@@ -6,7 +6,7 @@ import { Table } from 'antd';
 
 import './Activity.css';
 const UserActivity = () => {
-	const users_activity = useSelector((state) => state.auth.user_activity);
+	const { users_activity } = useSelector((state) => state.auth);
 	// console.log(users_activity)
 
 	const dispatch = useDispatch();
