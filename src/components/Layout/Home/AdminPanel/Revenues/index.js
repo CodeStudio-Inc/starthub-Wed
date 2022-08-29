@@ -16,7 +16,7 @@ const Revenues = () => {
 		year: ''
 	});
 	const { revenue_tracking, loading } = useSelector((state) => state.admin);
-	console.log(revenue_tracking);
+	// console.log(revenue_tracking);
 	const rev_tracking = revenue_tracking && revenue_tracking;
 
 	const dispatch = useDispatch();
@@ -285,14 +285,25 @@ const Revenues = () => {
 				</div>
 				<Table
 					columns={columns}
-					// dataSource={[
-					// 	...rev_tracking.map((r) => ({
-					// 		...r,
-					// 		key: r.id,
-					// 		startup: r.startup,
-					// 		jan: r.jan
-					// 	}))
-					// ]}
+					dataSource={[
+						...rev_tracking.map((r) => ({
+							...r,
+							key: r.id,
+							startup: r.startup,
+							jan: r.jan,
+							feb: r.feb,
+							mar: r.mar,
+							apr: r.apr,
+							may: r.may,
+							jun: r.jun,
+							jul: r.jul,
+							aug: r.aug,
+							sep: r.sep,
+							oct: r.oct,
+							nov: r.nov,
+							dec: r.dec
+						}))
+					]}
 					onRow={(record, rowIndex) => {
 						return {
 							onClick: () => {
