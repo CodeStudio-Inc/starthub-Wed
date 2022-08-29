@@ -48,12 +48,12 @@ const Navbar = (props) => {
 				route: '/carlender',
 				icon: <CalendarMonthIcon className="link-icon" style={{ fontSize: '25px' }} />
 			},
-			// {
-			// 	id: 2,
-			// 	title: 'Metrics',
-			// 	route: '/overview',
-			// 	icon: <BarChartIcon className="link-icon" style={{ fontSize: '25px' }} />
-			// },
+			{
+				id: 2,
+				title: 'Metrics',
+				route: '/overview',
+				icon: <BarChartIcon className="link-icon" style={{ fontSize: '25px' }} />
+			},
 			{
 				id: 5,
 				title: 'Diagnostics',
@@ -95,13 +95,13 @@ const Navbar = (props) => {
 				title: 'User Activity',
 				route: '/user-activity',
 				icon: <EventNoteIcon className="link-icon" style={{ fontSize: '25px' }} />
+			},
+			{
+				id: 2,
+				title: 'Revenue',
+				route: '/revenues',
+				icon: <PaymentIcon className="link-icon" style={{ fontSize: '25px' }} />
 			}
-			// {
-			// 	id: 2,
-			// 	title: 'Revenue',
-			// 	route: '/revenues',
-			// 	icon: <PaymentIcon className="link-icon" style={{ fontSize: '25px' }} />
-			// }
 		]
 	});
 

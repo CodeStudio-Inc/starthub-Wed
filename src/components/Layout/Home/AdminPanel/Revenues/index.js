@@ -16,7 +16,7 @@ const Revenues = () => {
 		year: ''
 	});
 	const { revenue_tracking, loading } = useSelector((state) => state.admin);
-
+	console.log(revenue_tracking);
 	const rev_tracking = revenue_tracking && revenue_tracking;
 
 	const dispatch = useDispatch();
