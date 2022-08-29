@@ -318,7 +318,7 @@ const Revenues = () => {
 							}
 						};
 					}}
-					style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80%' }}
+					style={{ width: '90%' }}
 					pagination={{
 						defaultPageSize: 8,
 						showSizeChanger: true,
