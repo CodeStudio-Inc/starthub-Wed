@@ -63,7 +63,7 @@ const Topnavbar = (props) => {
 		setImg(e.target.files[0]);
 	};
 
-	// console.log(parseInt(revState.month_revenue.replace(/,/g, '')));
+	// console.log(revState.month, 'hh');
 
 	const handleMultipleSelectChange = (e) => {
 		let value = Array.from(e.target.selectedOptions, (option) => option.value);
@@ -253,7 +253,7 @@ const Topnavbar = (props) => {
 										<p>
 											Month<strong style={{ color: 'red' }}> *</strong>
 										</p>
-										<h5>Put the month of the date you selected, for better referencing</h5>
+										<h5>Put the month that you are submitting revenue for</h5>
 									</div>
 									<select
 										required="required"
@@ -265,18 +265,18 @@ const Topnavbar = (props) => {
 										<option value="" disabled selected>
 											-select-
 										</option>
-										<option value="January">January</option>
-										<option value="Febuary">Febuary</option>
-										<option value="March">March</option>
-										<option value="April">April</option>
+										<option value="Jan">January</option>
+										<option value="Feb">Febuary</option>
+										<option value="Mar">March</option>
+										<option value="Apr">April</option>
 										<option value="May">May</option>
-										<option value="June">June</option>
-										<option value="July">July</option>
-										<option value="August">August</option>
-										<option value="September">September</option>
-										<option value="October">October</option>
-										<option value="November">November</option>
-										<option value="December">December</option>
+										<option value="Jue">June</option>
+										<option value="Jul">July</option>
+										<option value="Aug">August</option>
+										<option value="Sep">September</option>
+										<option value="Oct">October</option>
+										<option value="Nov">November</option>
+										<option value="Dec">December</option>
 									</select>
 									<button
 										style={{ background: loader ? '#eee' : '#dfa126' }}
