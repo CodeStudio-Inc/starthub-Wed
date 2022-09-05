@@ -20,9 +20,9 @@
 	flex-direction: column;
 	align-items: center;
 	z-index: 1;
-	background: #ECE9E6;
-	background: -webkit-linear-gradient(to bottom, #FFFFFF, #ECE9E6); 
-	background: linear-gradient(to bottom, #FFFFFF, #ECE9E6); 
+	background: #69191a8c;
+	background: -webkit-linear-gradient(to bottom, #dfa126, #69191a8c); 
+	background: linear-gradient(to bottom, #dfa126, #69191a8c); 
 	transition: 0.5s ease-in-out;
 }
 
@@ -155,16 +155,19 @@
 	color: #dfa126;
 }
 
-.inactive {
-	color: rgba(0, 0, 0, 0.4);
+.inactive h4 {
+	color: #fff;
 }
 
 .active h4 {
 	color: #dfa126;
+	transition: 1 ease-in-out;
+	padding-left: 10px;
+	border-left: 3px solid #dfa126;
 }
 
 .link-icon {
-	color: rgba(0, 0, 0, 0.4);
+	color: #fff;
 	margin-right: 0.3rem;
 }
 
@@ -201,7 +204,9 @@
 	justify-content: center;
 	width: 100%;
 	height: 50px;
-	background: #fff;
+	background: #7e2527;
+	background: -webkit-linear-gradient(to bottom, #451e1e, #7e2527);
+	background: linear-gradient(to bottom, #451e1e, #7e2527);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -218,7 +223,7 @@
 
 .top-inner-nav h4 {
 	margin-left: 1rem;
-	color: rgba(0, 0, 0, 0.5);
+	color: #fff;
 }
 
 .top-inner-nav h4:hover {
@@ -366,9 +371,9 @@
 	top: 0;
 	z-index: 100;
 	border-right: 1px solid rgba(0, 0, 0, 0.1);
-	background: #ECE9E6;
-	background: -webkit-linear-gradient(to bottom, #FFFFFF, #ECE9E6); 
-	background: linear-gradient(to bottom, #FFFFFF, #ECE9E6); 
+	background: #7e2527;
+	background: -webkit-linear-gradient(to bottom, #451e1e, #7e2527);
+	background: linear-gradient(to bottom, #451e1e, #7e2527);
 
 }
 
@@ -459,6 +464,10 @@
 	margin-top: 0.5rem;
 }
 
+.links h3 {
+	color: #d99817;
+}
+
 .nav-boards {
 	display: flex;
 	align-items: flex-start;
@@ -510,7 +519,7 @@
 .link-separator {
 	width: 100%;
 	height: 1px;
-	background: rgba(0, 0, 0, 0.1);
+	background: #fff;
 	margin-bottom: 0.5rem;
 }
 
@@ -567,7 +576,7 @@
 	justify-content: center;
 	width: 100%;
 	height: 200px;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid #fff;
 }
 
 .avatar {

@@ -270,7 +270,7 @@ const Topnavbar = (props) => {
 										<option value="Mar">March</option>
 										<option value="Apr">April</option>
 										<option value="May">May</option>
-										<option value="Jue">June</option>
+										<option value="Jun">June</option>
 										<option value="Jul">July</option>
 										<option value="Aug">August</option>
 										<option value="Sep">September</option>
@@ -288,7 +288,7 @@ const Topnavbar = (props) => {
 									{message ? <p>{message}</p> : null}
 								</div>
 							</TabPane>
-							<TabPane tab="Revenue Payment" key="2">
+							<TabPane tab="Report Payment" key="2">
 								<div className="nav-container-content">
 									<div className="label">
 										<h2>Revenue</h2>
@@ -305,7 +305,7 @@ const Topnavbar = (props) => {
 										<option value="" disabled selected>
 											-select-
 										</option>
-										<option value="Loan">Loan</option>
+										{/* <option value="Loan">Loan</option> */}
 										<option value="Revenue share">Revenue share</option>
 									</select>
 									<div className="label">
@@ -320,18 +320,18 @@ const Topnavbar = (props) => {
 										<option value="" disabled selected>
 											-select-
 										</option>
-										<option value="January">January</option>
-										<option value="Febuary">Febuary</option>
-										<option value="March">March</option>
-										<option value="April">April</option>
+										<option value="Jan">January</option>
+										<option value="Feb">Febuary</option>
+										<option value="Mar">March</option>
+										<option value="Apr">April</option>
 										<option value="May">May</option>
-										<option value="June">June</option>
-										<option value="July">July</option>
-										<option value="August">August</option>
-										<option value="September">September</option>
-										<option value="October">October</option>
-										<option value="November">November</option>
-										<option value="December">December</option>
+										<option value="Jun">June</option>
+										<option value="Jul">July</option>
+										<option value="Aug">August</option>
+										<option value="Sep">September</option>
+										<option value="Oct">October</option>
+										<option value="Nov">November</option>
+										<option value="Dec">December</option>
 									</select>
 									<div className="label">
 										<p>

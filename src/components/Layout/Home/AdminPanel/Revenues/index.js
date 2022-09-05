@@ -6,6 +6,8 @@ import * as actionCreators from '../../../../store/actionCreators';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CloseIcon from '@mui/icons-material/Close';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PaidIcon from '@mui/icons-material/Paid';
 import ModalUI from '../../../../ModalUI';
 
 import './revenues.css';
@@ -16,7 +18,7 @@ const Revenues = () => {
 		year: ''
 	});
 	const { revenue_tracking, loading } = useSelector((state) => state.admin);
-	// console.log(revenue_tracking);
+	console.log(revenue_tracking);
 	const rev_tracking = revenue_tracking && revenue_tracking;
 
 	const dispatch = useDispatch();
@@ -53,61 +55,81 @@ const Revenues = () => {
 			align: 'left'
 		},
 		{
-			title: 'January',
+			title: 'Jan',
 			dataIndex: 'jan',
 			key: 'jan',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'Feburary',
+			title: 'Feb',
 			dataIndex: 'feb',
 			key: 'feb',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'March',
+			title: 'Mar',
 			dataIndex: 'mar',
 			key: 'mar',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'April',
+			title: 'Apr',
 			dataIndex: 'apr',
 			key: 'apr',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
@@ -118,116 +140,156 @@ const Revenues = () => {
 			key: 'may',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'June',
+			title: 'Jun',
 			dataIndex: 'jun',
 			key: 'jun',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'July',
+			title: 'Jul',
 			dataIndex: 'jul',
 			key: 'jul',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'August',
+			title: 'Aug',
 			dataIndex: 'aug',
 			key: 'aug',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'September',
+			title: 'Sep',
 			dataIndex: 'sep',
 			key: 'sep',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'October',
+			title: 'Oct',
 			dataIndex: 'oct',
 			key: 'oct',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'November',
+			title: 'Nov',
 			dataIndex: 'nov',
 			key: 'nov',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
 		},
 		{
-			title: 'December',
+			title: 'Dec',
 			dataIndex: 'dec',
 			key: 'dec',
 			align: 'left',
 			render: (r) => (
-				<span>
-					{r === false ? (
-						<CancelIcon style={{ color: '#DB4437', fontSize: '30px' }} />
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#DB4437', fontSize: '25px' }} />
 					) : (
-						<CheckCircleIcon style={{ color: '#039487', fontSize: '30px' }} />
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#DB4437', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
 					)}
 				</span>
 			)
@@ -271,7 +333,7 @@ const Revenues = () => {
 			) : null}
 			<div className="rev">
 				<div className="rev-table-header">
-					<h2>Revenue Submission Tracking</h2>
+					<h2>Revenue Reporting & Payment Overview</h2>
 					<input
 						value={state.year}
 						onChange={(e) => setState({ ...state, year: e.target.value })}

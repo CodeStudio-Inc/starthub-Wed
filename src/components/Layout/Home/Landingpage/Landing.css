@@ -758,13 +758,9 @@
 	justify-content: center;
 	flex-direction: column;
 	width: 100%;
-	background: #11998e; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to bottom, #dfa126, #ecbf66); /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(
-		to bottom,
-		#dfa126,
-		#ecbf66
-	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: #11998e; 
+	background: -webkit-linear-gradient(to bottom, #dfa126, #ecbf66);
+	background: linear-gradient(to bottom,#dfa126,#ecbf66); 
 	border-radius: 15px;
 	padding: 0.5rem;
 	margin-bottom: 0.5rem;
