@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalUI from '../../ModalUI';
-import CloseIcon from '@material-ui/icons/Close';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import { Table } from 'antd';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
 import * as actionCreators from '../../store/actionCreators';
@@ -170,6 +169,27 @@ const Dashboard = (props) => {
 		]
 	};
 
+	const columns = [
+		{
+			title: 'Monthly Revenue(UGX)',
+			dataIndex: 'revenue',
+			key: 'revenue',
+			align: 'left'
+		},
+		{
+			title: 'Monthly Expense(UGX)',
+			dataIndex: 'expense',
+			key: 'expense',
+			align: 'left'
+		},
+		{
+			title: 'Date',
+			dataIndex: 'date',
+			key: 'date',
+			align: 'left'
+		}
+	];
+
 	return (
 		<div className="dash-container">
 			{show ? (
@@ -191,15 +211,34 @@ const Dashboard = (props) => {
 					<div className="revenue-row">
 						<div className="graph-row">
 							<div className="revenue">
-								<h3>Revenue</h3>
+								<h3>Revenue for the last six months</h3>
 								<Line data={Revenue} width={100} height={30} />
 							</div>
 
 							<div className="revenue">
-								<h3>Expense</h3>
+								<h3>Expense for the last six months</h3>
 								<Line data={Expense} width={100} height={30} />
 							</div>
 						</div>
+						<h2>Reported Metrics</h2>
+						<Table
+							columns={columns}
+							dataSource={[
+								...revenue.map((r) => ({
+									...r,
+									key: r.id,
+									revenue: r.month_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+									expense: r.month_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+									date: r.date
+								}))
+							]}
+							style={{ width: '100%' }}
+							pagination={{
+								defaultPageSize: 5,
+								showSizeChanger: true,
+								pageSizeOptions: [ '10', '20', '30' ]
+							}}
+						/>
 					</div>
 				</div>
 			)}
