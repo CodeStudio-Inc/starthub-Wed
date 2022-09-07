@@ -18,7 +18,7 @@ const Revenues = () => {
 		year: ''
 	});
 	const { revenue_tracking, loading } = useSelector((state) => state.admin);
-	console.log(revenue_tracking);
+	// console.log(revenue_tracking);
 	const rev_tracking = revenue_tracking && revenue_tracking;
 
 	const year = rev_tracking.slice(-1).pop().year;

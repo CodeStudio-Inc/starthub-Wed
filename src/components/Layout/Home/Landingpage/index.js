@@ -55,7 +55,7 @@ const Landing = (props) => {
 	const filtereUsers = users.filter((el) => el.admin === false);
 
 	const last_value = filter_value && filter_value.slice(-1).pop();
-	// console.log(activeRow,'jj')
+	console.log(statements, 'jj');
 
 	const current_date = Date.now();
 

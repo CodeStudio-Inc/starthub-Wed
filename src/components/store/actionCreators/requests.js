@@ -1,6 +1,5 @@
 import * as actions from '../actions';
 import axios from 'axios';
-import Airtable from 'airtable';
 
 export const loadAction = () => {
 	return {
