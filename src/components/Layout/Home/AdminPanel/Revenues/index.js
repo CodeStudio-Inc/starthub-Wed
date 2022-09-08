@@ -347,7 +347,7 @@ const Revenues = () => {
 						}}
 					/>
 				</div>
-				<Table
+				{/* <Table
 					columns={columns}
 					dataSource={[
 						...rev_tracking.map((r) => ({
@@ -389,7 +389,7 @@ const Revenues = () => {
 						pageSizeOptions: [ '10', '20', '30' ]
 					}}
 					loading={loading ? true : false}
-				/>
+				/> */}
 			</div>
 		</div>
 	);
