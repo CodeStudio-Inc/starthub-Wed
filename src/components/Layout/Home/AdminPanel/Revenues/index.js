@@ -21,7 +21,7 @@ const Revenues = () => {
 	// console.log(revenue_tracking);
 	const rev_tracking = revenue_tracking && revenue_tracking;
 
-	const year = rev_tracking.slice(-1).pop().year;
+	// const year = rev_tracking.slice(-1).pop().year;
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -335,7 +335,7 @@ const Revenues = () => {
 			) : null}
 			<div className="rev">
 				<div className="rev-table-header">
-					<h2>Revenue Reporting & Payment Overview-{year}</h2>
+					{/* <h2>Revenue Reporting & Payment Overview-{year}</h2> */}
 					<input
 						value={state.year}
 						onChange={(e) => setState({ ...state, year: e.target.value })}
