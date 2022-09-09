@@ -14,11 +14,12 @@ import './revenues.css';
 const Revenues = () => {
 	const [ open, setOpen ] = useState(false);
 	const [ record, setRecord ] = useState([]);
+	const [ startup, setStartup ] = useState('');
 	const [ state, setState ] = useState({
 		year: ''
 	});
 	const { revenue_tracking, loading } = useSelector((state) => state.admin);
-	// console.log(revenue_tracking);
+	console.log(Array.from(record, ({ month_revenue }) => month_revenue).reduce((a, b) => a + b, 0));
 	const rev_tracking = revenue_tracking && revenue_tracking;
 
 	// const year = rev_tracking.slice(-1).pop().year;
@@ -300,40 +301,41 @@ const Revenues = () => {
 
 	return (
 		<div className="rev-main">
-			{open ? (
-				<ModalUI>
-					<div className="rev-modal-container">
-						<div className="rev-modal-header">
-							<CloseIcon
-								className="rev-modal-icon"
-								onClick={() => setOpen(false)}
-								style={{ fontSize: '20px', color: 'rgba(0,0,0, 0.3)' }}
-							/>
-						</div>
-						<div className="rev-modal-content">
-							<Table
-								columns={columnz}
-								dataSource={[
-									...record.map((r) => ({
-										...r,
-										key: r.id,
-										revenue: r.month_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-										expense: r.month_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-										date: r.date
-									}))
-								]}
-								style={{ width: '100%' }}
-								pagination={{
-									defaultPageSize: 5,
-									showSizeChanger: true,
-									pageSizeOptions: [ '10', '20', '30' ]
-								}}
-							/>
-						</div>
-					</div>
-				</ModalUI>
-			) : null}
 			<div className="rev">
+				{open ? (
+					<ModalUI>
+						<div className="rev-modal-container">
+							<div className="rev-modal-header">
+								<h2>{startup}</h2>
+								<CloseIcon
+									className="rev-modal-icon"
+									onClick={() => setOpen(false)}
+									style={{ fontSize: '20px', color: 'rgba(0,0,0, 0.3)' }}
+								/>
+							</div>
+							<div className="rev-modal-content">
+								<Table
+									columns={columnz}
+									dataSource={[
+										...record.map((r) => ({
+											...r,
+											key: r.id,
+											revenue: r.month_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+											expense: r.month_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+											date: r.date
+										}))
+									]}
+									style={{ width: '100%' }}
+									pagination={{
+										defaultPageSize: 8,
+										showSizeChanger: true,
+										pageSizeOptions: [ '10', '20', '30' ]
+									}}
+								/>
+							</div>
+						</div>
+					</ModalUI>
+				) : null}
 				<div className="rev-table-header">
 					{/* <h2>Revenue Reporting & Payment Overview-{year}</h2> */}
 					<input
@@ -371,6 +373,7 @@ const Revenues = () => {
 					onRow={(record, rowIndex) => {
 						return {
 							onClick: () => {
+								setStartup(record.startup);
 								dispatch(
 									actionCreators.getStartupRevenueTracking(record.creator, record.year, (res) => {
 										if (res.success) {
