@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tabs } from 'antd';
 import Flatrate from './Flatrate';
-import RevenueShare from './RevenueShare';
 import ReducingBalance from './ReducingBalance';
 import ModalUI from '../../../../ModalUI';
 import * as actionCreators from '../../../../store/actionCreators';
@@ -25,7 +24,6 @@ const Loans = (props) => {
 
 	const getLoans = () => dispatch(actionCreators.getFlate());
 	const getRBLoans = () => dispatch(actionCreators.getReducingBalance());
-	const getRevShares = () => dispatch(actionCreators.getRevenueShares());
 
 	const handleLogoutClick = () => {
 		dispatch(actionCreators.removeUser());
@@ -38,7 +36,6 @@ const Loans = (props) => {
 		}
 		getLoans();
 		getRBLoans();
-		getRevShares();
 	}, []);
 
 	return (
@@ -65,9 +62,6 @@ const Loans = (props) => {
 					</TabPane>
 					<TabPane tab="Reducing Balance" key="2">
 						<ReducingBalance props={props} loans={__loans} />
-					</TabPane>
-					<TabPane tab="Revenue Payments" key="3">
-						<RevenueShare />
 					</TabPane>
 				</Tabs>
 			</div>

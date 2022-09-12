@@ -238,23 +238,25 @@
 	justify-content: center;
 	transition: 1s;
 	padding: 7px;
-	border: 1px solid #dfa126;
+	background:#dfa126;
 	margin-left: 1rem;
+	border-radius: 5px;
 }
 
 .rev-button:hover {
 	cursor: pointer;
-	background: #d99817;
+	background: none;
+	border: 1px solid #dfa126;
 }
 
 .rev-button h5 {
 	margin: 0;
-	color: #dfa126;
+	color: #fff;
 	font-size: 13px;
 }
 
 .rev-button:hover h5 {
-	color: #fff;
+	color: #dfa126;
 }
 
 .nav-modal-container {

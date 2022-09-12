@@ -119,6 +119,13 @@ export const setRevenueTracking = (data) => {
 	};
 };
 
+export const setRevenueAccumulation = (data) => {
+	return {
+		type: actions.SET_REVENUE_ACCUMULATION,
+		data
+	};
+};
+
 export const getUsers = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
@@ -1231,6 +1238,30 @@ export const getRevenueTracking = () => {
 				// console.log(res, 'revShare');
 				dispatch(stopLoader());
 				dispatch(setRevenueTracking(res.data.revenue));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const getRevenueAccumulation = () => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		axios
+			.get('https://starthubafrica-api.el.r.appspot.com/admin/rev-accumulation', {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res, 'revShare');
+				dispatch(stopLoader());
+				dispatch(setRevenueAccumulation(res.data.revenue));
 			})
 			.catch((error) => {
 				console.log(error);

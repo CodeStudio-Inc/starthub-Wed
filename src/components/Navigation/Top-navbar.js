@@ -572,8 +572,8 @@ const Topnavbar = (props) => {
 				</ModalUI>
 			) : null}
 			<div className="top-inner-nav">
-				{admin ? <h4 onClick={() => props.history.push('/okr-overview')}>Overview</h4> : null}
-				{admin ? <h4 onClick={() => props.history.push('/loans')}>Investments</h4> : null}
+				{/* {admin ? <h4 onClick={() => props.history.push('/okr-overview')}>OKR Overview</h4> : null} */}
+				{/* {admin ? <h4 onClick={() => props.history.push('/loans')}>Investments</h4> : null} */}
 				{admin ? <h4 onClick={() => props.history.push('/user-activity')}>User Activity</h4> : null}
 				{admin ? <h4 onClick={() => setEmailModal(true)}>Email Reminder</h4> : null}
 				{!admin ? <h4 onClick={() => props.history.push('/')}>OKRs</h4> : null}
@@ -582,7 +582,7 @@ const Topnavbar = (props) => {
 				) : null}
 				{!admin && category !== 'internal' && category !== 'dskills' ? (
 					<div onClick={() => setOpen(true)} className="rev-button">
-						<h5>loans and revenue</h5>
+						<h5>Report revenue</h5>
 					</div>
 				) : null}
 			</div>

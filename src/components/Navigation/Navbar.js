@@ -80,7 +80,7 @@ const Navbar = (props) => {
 			},
 			{
 				id: 2,
-				title: 'Overview',
+				title: 'OKR Overview',
 				route: '/okr-overview',
 				icon: <AnalyticsIcon className="link-icon" style={{ fontSize: '25px' }} />
 			},

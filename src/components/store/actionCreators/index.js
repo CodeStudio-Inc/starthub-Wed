@@ -100,5 +100,6 @@ export {
 	getRevenueTracking,
 	getStartupRevenueTracking,
 	searchRevenueTracking,
+	getRevenueAccumulation,
 	sendEmail
 } from './admin';

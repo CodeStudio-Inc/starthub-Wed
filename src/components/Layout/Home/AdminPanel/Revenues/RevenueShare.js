@@ -10,7 +10,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-import './Loans.css';
+import './revenues.css';
 const RevenueShare = () => {
 	const [ record, setRecord ] = useState({});
 	const [ open, setOpen ] = useState(false);
@@ -30,12 +30,6 @@ const RevenueShare = () => {
 	// console.log(_revShares);
 
 	const dispatch = useDispatch();
-
-	const getRevShares = () => dispatch(actionCreators.getRevenueShares());
-
-	useEffect(() => {
-		getRevShares();
-	}, []);
 
 	const columns = [
 		{
@@ -130,7 +124,7 @@ const RevenueShare = () => {
 	];
 
 	return (
-		<div className="loans-main">
+		<div className="rev-content">
 			{open ? (
 				<ModalUI>
 					<div className="approve-modal">
@@ -207,12 +201,7 @@ const RevenueShare = () => {
 					</div>
 				</ModalUI>
 			) : null}
-			<div className="loans-form">
-				<div className="loan-form" />
-				<div className="loan-overview">
-					<div className="loan-overview-row">
-						<h3 style={{ opacity: 0 }}>display none</h3>
-						{/* <div className="loan-receipt-row">
+			{/* <div className="rev-table-header">
 							<h4>search startup:</h4>
 							<input
 								value={state.search_table}
@@ -228,37 +217,33 @@ const RevenueShare = () => {
 								}}
 							/>
 						</div> */}
-					</div>
-					<div className="loan-separator" />
-					<Table
-						style={{ width: '100%' }}
-						columns={columns}
-						dataSource={[
-							..._revShares.map((r) => ({
-								...r,
-								key: r._id,
-								startup: r.startup,
-								amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-								month: r.month_of,
-								payment: r.mode_of_pay,
-								proof: r.proof_of_pay,
-								status: r.approve
-							}))
-						]}
-						onRow={(record, rowIndex) => {
-							return {
-								onClick: () => setRecord(record)
-							};
-						}}
-						pagination={{
-							defaultPageSize: 8,
-							showSizeChanger: true,
-							pageSizeOptions: [ '10', '20', '30' ]
-						}}
-						loading={loading ? true : false}
-					/>
-				</div>
-			</div>
+			<Table
+				style={{ width: '90%' }}
+				columns={columns}
+				dataSource={[
+					..._revShares.map((r) => ({
+						...r,
+						key: r._id,
+						startup: r.startup,
+						amount: r.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+						month: r.month_of,
+						payment: r.mode_of_pay,
+						proof: r.proof_of_pay,
+						status: r.approve
+					}))
+				]}
+				onRow={(record, rowIndex) => {
+					return {
+						onClick: () => setRecord(record)
+					};
+				}}
+				pagination={{
+					defaultPageSize: 8,
+					showSizeChanger: true,
+					pageSizeOptions: [ '10', '20', '30' ]
+				}}
+				loading={loading ? true : false}
+			/>
 		</div>
 	);
 };
