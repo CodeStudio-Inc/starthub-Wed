@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Register from '../AdminPanel/Register';
 import * as actionCreators from '../../../store/actionCreators';
 import moment from 'moment';
-import { Progress } from 'antd';
+import { message, Progress } from 'antd';
 import { Line } from 'react-chartjs-2';
 import TextEditor from '../../Content/TextEditor';
 import BlogModal from '../../../ModalUI/BlogModal';
@@ -15,14 +15,14 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 	const [ int, setInternal ] = useState(false);
 	const [ cat, setCatalyzer ] = useState(false);
 	const [ acad, setAcademy ] = useState(false);
+	const [ message, setMessage ] = useState('');
 	const [ state, setState ] = useState({
 		username: '',
 		email: '',
 		category: '',
-		password: '',
-		base_key: '',
-		link: ''
+		password: ''
 	});
+	const [ emailcheck, setEmailCheck ] = React.useState('');
 	const [ visible, setVisible ] = useState(false);
 
 	const internal = startups.filter((el) => el.category === 'internal');
@@ -91,39 +91,84 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 
 	const getUser = () => dispatch(actionCreators.getUsers());
 
+	const validateEmail = (email) => {
+		return String(email)
+			.toLowerCase()
+			.match(
+				/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+			);
+	};
+
+	const handleInternalEmailChange = (e) => {
+		setState({ ...state, email: e.target.value });
+		validateEmail(state.email);
+		if (validateEmail(state.email)) setEmailCheck('');
+		if (!validateEmail(state.email)) setEmailCheck('Enter valid email');
+	};
+
+	const handleAcademyEmailChange = (e) => {
+		setState({ ...state, email: e.target.value });
+		validateEmail(state.email);
+		if (validateEmail(state.email)) setEmailCheck('');
+		if (!validateEmail(state.email)) setEmailCheck('Enter valid email');
+	};
+
+	const handleCatalyzerEmailChange = (e) => {
+		setState({ ...state, email: e.target.value });
+		validateEmail(state.email);
+		if (validateEmail(state.email)) setEmailCheck('');
+		if (!validateEmail(state.email)) setEmailCheck('Enter valid email');
+	};
+
 	const signUpInternal = () => {
-		dispatch(actionCreators.signUp(state.username, state.email, 'internal', state.password));
-		setState({
-			username: '',
-			email: '',
-			category: '',
-			password: '',
-			base_key: '',
-			link: ''
-		});
-	};
-	const signUpAcademy = () => {
-		dispatch(actionCreators.signUp(state.username, state.email, 'academy', state.password));
-		setState({
-			username: '',
-			email: '',
-			category: '',
-			password: '',
-			base_key: '',
-			link: ''
-		});
-	};
-	const signUpCatalyzer = () => {
+		if (!validateEmail(state.email) || !state.email) return setEmailCheck('Enter valid email');
+		setMessage('Adding Startup');
 		dispatch(
-			actionCreators.signUp(state.username, state.email, 'catalyzer', state.password, state.base_key, state.link)
+			actionCreators.signUp(state.username, state.email, 'internal', state.password, (res) => {
+				if (res.success) {
+					setMessage('Startup Registered Successfully');
+				}
+			})
 		);
 		setState({
 			username: '',
 			email: '',
 			category: '',
-			password: '',
-			base_key: '',
-			link: ''
+			password: ''
+		});
+	};
+	const signUpAcademy = () => {
+		if (!validateEmail(state.email) || !state.email) return setEmailCheck('Enter valid email');
+		setMessage('Adding Startup');
+		dispatch(
+			actionCreators.signUp(state.username, state.email, 'academy', state.password, (res) => {
+				if (res.success) {
+					setMessage('Startup Registered Successfully');
+				}
+			})
+		);
+		setState({
+			username: '',
+			email: '',
+			category: '',
+			password: ''
+		});
+	};
+	const signUpCatalyzer = () => {
+		if (!validateEmail(state.email) || !state.email) return setEmailCheck('Enter valid email');
+		setMessage('Adding Startup');
+		dispatch(
+			actionCreators.signUp(state.username, state.email, 'catalyzer', state.password, (res) => {
+				if (res.success) {
+					setMessage('Startup Registered Successfully');
+				}
+			})
+		);
+		setState({
+			username: '',
+			email: '',
+			category: '',
+			password: ''
 		});
 	};
 
@@ -152,7 +197,11 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 							<CloseIcon
 								className="register-form-container-icon"
 								style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
-								onClick={() => setInternal(false)}
+								onClick={() => {
+									setInternal(false);
+									setEmailCheck('');
+									setMessage('');
+								}}
 							/>
 						</div>
 						<div className="register-form-container">
@@ -161,17 +210,15 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 								value={state.username}
 								onChange={(e) => setState({ ...state, username: e.target.value })}
 							/>
-							<input
-								placeholder="Email"
-								value={state.email}
-								onChange={(e) => setState({ ...state, email: e.target.value })}
-							/>
+							<input placeholder="Email" value={state.email} onChange={handleInternalEmailChange} />
 							<input
 								placeholder="Password"
 								value={state.password}
 								onChange={(e) => setState({ ...state, password: e.target.value })}
 							/>
-							<button onClick={signUpInternal}>Sign up</button>
+							<button onClick={signUpInternal}>Add Startup</button>
+							{message ? <p style={{ color: '#f2c94c' }}>{message}</p> : null}
+							{emailcheck ? <p style={{ color: 'red' }}>{emailcheck}</p> : null}
 						</div>
 					</div>
 				</ModalUI>
@@ -184,7 +231,11 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 							<CloseIcon
 								className="register-form-container-icon"
 								style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
-								onClick={() => setAcademy(false)}
+								onClick={() => {
+									setAcademy(false);
+									setEmailCheck('');
+									setMessage('');
+								}}
 							/>
 						</div>
 						<div className="register-form-container">
@@ -193,35 +244,51 @@ const AdminLandingPage = ({ startups, adminNavigate }) => {
 								value={state.username}
 								onChange={(e) => setState({ ...state, username: e.target.value })}
 							/>
-							<input
-								placeholder="Email"
-								value={state.email}
-								onChange={(e) => setState({ ...state, email: e.target.value })}
-							/>
+							<input placeholder="Email" value={state.email} onChange={handleAcademyEmailChange} />
 							<input
 								placeholder="Password"
 								value={state.password}
 								onChange={(e) => setState({ ...state, password: e.target.value })}
 							/>
-							<button onClick={signUpAcademy}>Sign up</button>
+							<button onClick={signUpAcademy}>Add Startup</button>
+							{message ? <p style={{ color: '#f2c94c' }}>{message}</p> : null}
+							{emailcheck ? <p style={{ color: 'red' }}>{emailcheck}</p> : null}
 						</div>
 					</div>
 				</ModalUI>
 			) : null}
 			{cat ? (
 				<ModalUI>
-					<Register
-						username={state.username}
-						email={state.email}
-						category={state.category}
-						password={state.password}
-						base_key={state.base_key}
-						link={state.link}
-						state={state}
-						setState={setState}
-						signup={signUpCatalyzer}
-						setCatalyzer={setCatalyzer}
-					/>
+					<div className="register-form">
+						<div className="register-form-nav">
+							<h3>Catalyzer</h3>
+							<CloseIcon
+								className="register-form-container-icon"
+								style={{ fontSize: '25px', color: 'rgba(0,0,0,0.3)' }}
+								onClick={() => {
+									setCatalyzer(false);
+									setEmailCheck('');
+									setMessage('');
+								}}
+							/>
+						</div>
+						<div className="register-form-container">
+							<input
+								placeholder="Username"
+								value={state.username}
+								onChange={(e) => setState({ ...state, username: e.target.value })}
+							/>
+							<input placeholder="Email" value={state.email} onChange={handleCatalyzerEmailChange} />
+							<input
+								placeholder="Password"
+								value={state.password}
+								onChange={(e) => setState({ ...state, password: e.target.value })}
+							/>
+							<button onClick={signUpCatalyzer}>Add startup</button>
+							{message ? <p style={{ color: '#f2c94c' }}>{message}</p> : null}
+							{emailcheck ? <p style={{ color: 'red' }}>{emailcheck}</p> : null}
+						</div>
+					</div>
 				</ModalUI>
 			) : null}
 			<div className="admin-menu-content">

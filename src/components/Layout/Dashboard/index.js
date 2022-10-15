@@ -26,7 +26,7 @@ const Dashboard = (props) => {
 
 	current_yr_revenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === current_yr.toString());
 	previous_yr_revenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === previous_yr.toString());
-	// console.log(current_yr_revenue);
+	// console.log(Array.from(revenue, ({ month_revenue }) => month_revenue).reduce((a, b) => a + b, 0));
 
 	const checkMonth = (month) => {
 		let result = month - 6;
