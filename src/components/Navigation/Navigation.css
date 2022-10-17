@@ -312,7 +312,7 @@
 	margin: 0;
 }
 
-.nav-container-content select {
+.nav-container-select1 {
 	outline: none;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	width: 70%;
@@ -335,6 +335,16 @@
 	width: 70%;
 	height: 100px;
 	margin-bottom: 0.5rem;
+}
+
+.nav-container-select2 {
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	width: 70%;
+	height: 190px;
+	background: #69191b;
+	margin-bottom: 0.5rem;
+	background: none;
 }
 
 .label {

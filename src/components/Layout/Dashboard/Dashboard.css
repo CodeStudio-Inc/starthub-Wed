@@ -100,6 +100,59 @@
 	font-weight: bold;
 }
 
+.revenue-visuals {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 2rem;
+	background: #fff;
+	width: 100%;
+	min-height: 100% !important;
+	height: 350px !important;
+	padding: 10px;
+}
+
+.revenue-visuals h3 {
+	color: #dfa126;
+	font-weight: 400;
+}
+
+.revenue-inner-row {
+	display: flex;
+	align-items:center ;
+	justify-content: flex-start;
+	width: 60%;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.revenue-inner-column {
+	display: flex;
+	align-items:flex-start ;
+	justify-content: flex-start;
+	flex-direction: column;
+	line-height: 1.5;
+	margin-left: 1.5rem;
+}
+
+.revenue-inner-column-separator {
+	height: 1px;
+	width: 70%;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.revenue-inner-column h1 {
+	margin: 0;
+	color: #dfa126;
+}
+
+.revenue-inner-column h4 {
+	margin: 0;
+	color: #dfa126;
+	font-weight: 400;
+}
+
 .expense {
 	display: flex;
 	align-items: center;
@@ -136,7 +189,7 @@
 }
 
 .arrow-icon {
-	color: #dfa126;
+	color: AccountBalanceWalletIcon;
 }
 
 .overview-header {

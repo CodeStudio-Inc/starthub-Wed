@@ -509,7 +509,10 @@ const Topnavbar = (props) => {
 								value={emailState.email}
 								onChange={(e) => setEmailState({ ...emailState, email: e.target.value })}
 							/>
-							<select onChange={(e) => setEmailState({ ...emailState, startup: e.target.value })}>
+							<select
+								onChange={(e) => setEmailState({ ...emailState, startup: e.target.value })}
+								className="nav-container-select1"
+							>
 								<option value="" disabled selected>
 									-select startup-
 								</option>
@@ -527,7 +530,11 @@ const Topnavbar = (props) => {
 								<option value="Onestope">Onestope</option>
 								<option value="ShareCARD">ShareCARD</option>
 							</select>
-							<select multiple={true} onChange={handleMultipleSelectChange}>
+							<select
+								multiple={true}
+								onChange={handleMultipleSelectChange}
+								className="nav-container-select2"
+							>
 								<option value="" disabled selected>
 									-select months-
 								</option>
