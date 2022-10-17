@@ -58,7 +58,7 @@ const Dashboard = (props) => {
 
 	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
 
-	const percentage = 66;
+	// const percentage = 66;
 
 	previous_yr_revenue &&
 		previous_yr_revenue.forEach((e) => {
