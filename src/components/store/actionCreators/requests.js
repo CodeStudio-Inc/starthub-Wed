@@ -841,11 +841,9 @@ export const deleteCard = (listId, cardIndex, callback) => {
 				dispatch(setLists(res.data.lists));
 				callback({ success: true, res: res });
 				dispatch(stopLoader());
-				// dispatch(setLists(res.data.list))
-				// dispatch(setCanvasLists(res.data.list))
-				// dispatch(setMilestoneLists(res.data.list))
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};
@@ -1224,7 +1222,7 @@ export const getObjective = () => {
 				}
 			})
 			.then((res) => {
-				// console.log(res.data.objs)
+				console.log(res.data);
 				dispatch(stopLoader());
 				dispatch(setObjectives(res.data.objs));
 			})

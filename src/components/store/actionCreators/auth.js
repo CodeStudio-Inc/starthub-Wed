@@ -7,14 +7,18 @@ export const loaderAction = () => {
 	};
 };
 
-export const setUser = (admin, userId, username, base_key, link, email, category, token, tokenExpiration) => {
+export const stopLoader = () => {
+	return {
+		type: actions.STOP_LOADER
+	};
+};
+
+export const setUser = (admin, userId, username, email, category, token, tokenExpiration) => {
 	return {
 		type: actions.SET_USER,
 		admin,
 		userId,
 		username,
-		base_key,
-		link,
 		email,
 		category,
 		token,
@@ -52,13 +56,12 @@ export const login = (email, password, callback) => {
 				}
 			})
 			.then((res) => {
+				dispatch(stopLoader());
 				dispatch(
 					setUser(
 						res.data.admin,
 						res.data.userId,
 						res.data.username,
-						res.data.base_key,
-						res.data.link,
 						res.data.email,
 						res.data.category,
 						res.data.token,
@@ -67,6 +70,7 @@ export const login = (email, password, callback) => {
 				);
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 				callback({ success: false, error: error });
 			});
@@ -171,7 +175,7 @@ export const getUserActivity = () => {
 	};
 };
 
-export const signUp = (username, email, category, password, callback) => {
+export const signUp = (username, email, category, mentor, password, callback) => {
 	return (dispatch) => {
 		dispatch(loaderAction());
 
@@ -179,21 +183,24 @@ export const signUp = (username, email, category, password, callback) => {
 			username,
 			email,
 			category,
+			mentor,
 			password
 		};
 
 		axios
-			.put('https://starthubafrica-api.el.r.appspot.com/auth/register', data, {
+			.put('https://starthubafrica-api.el.r.appspot.com/admin/auth/register', data, {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
 					'Content-Type': 'application/json'
 				}
 			})
 			.then((res) => {
+				dispatch(stopLoader());
 				callback({ success: true });
 				console.log(res, 'response');
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				callback({ error: true });
 				console.log(error);
 			});

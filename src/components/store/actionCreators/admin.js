@@ -296,7 +296,7 @@ export const getAdminObjectives = (userId) => {
 				}
 			})
 			.then((res) => {
-				// console.log(res)
+				// console.log(res);
 				dispatch(setObjectives(res.data.objs));
 			})
 			.catch((error) => {

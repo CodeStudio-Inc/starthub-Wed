@@ -1,0 +1,378 @@
+.startups-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.cancel-btn {
+    color: #37561b;
+    margin-top: 0.5rem;
+}
+
+.cancel-btn:hover {
+    cursor: pointer;
+}
+
+.add-startup-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 90%;
+    margin-bottom: 1rem;
+}
+
+.add-startup-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 15%;
+    background: #37561b;
+}
+
+.add-startup-button p {
+    margin: 0;
+    color: #fff;
+}
+
+.add-startup-button:hover {
+    cursor: pointer;
+}
+
+.card-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 90%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 30%;
+    height: 100%;
+    padding: 10px;
+    background: #fff;
+    box-sizing: border-box;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card-content-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.card-content-row-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 200px;
+    background: #36561b56;
+}
+
+.card-content-column {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.card-content-column h3 {
+    margin: 0;
+    font-weight: 200;
+    font-size: 25px;
+}
+
+.card-content-column h1 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 40px;
+}
+
+.table-column-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.table-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+    background: #36561b56;
+    margin-right: 0.5rem;
+}
+.table-avatar h3 {
+    margin: 0;
+    color: #37561b;
+    font-size: 20px;
+}
+.table-column-row h5 {
+    margin: 0;
+    font-size: 16px;
+    color: #37561b;
+}
+
+/* Startup css */
+.startup-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+    background: #f7f7f7;
+    height: 100vh;
+}
+
+.profile-row {
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    background: #fff;
+}
+
+.icon-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+}
+
+.icon-row:hover {
+    cursor: pointer;
+}
+
+.profile-lable-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: #fff;
+    border-radius: 20px;
+    padding-right: 10px;
+}
+
+.profile-row h4 {
+    color: #37561b;
+    margin: 0;
+}
+
+.profile-lable-row h2 {
+    color: #37561b;
+    margin: 0;
+    margin-left: 0.1rem;
+}
+
+.startup-card-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 95%;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+}
+
+.graph-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.left-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 65%;  
+}
+
+.right-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 30%;  
+  }
+
+.graph-tab {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    flex-direction: column;
+    background: #fff;
+    margin-bottom: 1rem;
+}
+
+.table-tab {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    flex-direction: column;
+    background: #fff;
+}
+
+.graph-tab-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    align-self: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.table-tab h2 {
+    margin: 0;
+    font-weight: 400;
+    margin-left: 0.5rem;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.graph-tab h2 {
+    margin: 0;
+    font-weight: 400;
+    margin-left: 0.5rem;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.progress {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    flex-direction: column;
+    background: #fff;
+    padding: 10px;
+    max-height: 340px;
+    margin-bottom: 1rem;
+}
+
+.progress h2 {
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.table-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.lean-canvas {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    flex-direction: column;
+    background: #fff;
+    padding: 10px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.lean-canvas h2 {
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.lean-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.lean-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 95%;
+    border: 1px dashed #f7f7f7;
+    margin-top: 1rem;
+}
+
+.lean-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    background: #f7f7f7;
+    border-radius: 5px;
+    padding: 5px;
+}
+.lean-header h4 {
+    margin: 0;
+}
+
+.lean-card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #37561b;
+    border-radius: 5px;
+    background: #36561b56;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.lean-card p {
+    color: #37561b;
+    margin: 0;
+}
+
+.list-icon {
+color: #37561b;
+}
+
+.list-icon:hover {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+	.card-row {
+        flex-direction: column;
+    }
+    .card {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .add-startup-button {
+        width: 40%;
+    }
+    .graph-row  {
+        flex-direction: column;
+    }
+    .left-container {
+        width: 100%;
+    }
+    .right-container {
+        width: 100%;
+    }
+    .startup-card-row {
+        flex-direction: column;
+    }
+}
