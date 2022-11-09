@@ -1,0 +1,115 @@
+.calendar-container {
+	display: flex;
+	align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+	width: 100%;
+  overflow-y: scroll;
+}
+
+
+.calendar-container  h2 {
+  text-align: center;
+  margin: 0;
+  margin-top: 1rem;
+}
+
+.calendar-container  h3 {
+  text-align: center;
+  margin: 0;
+}
+
+.calendar-container-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.calendar-container-row  h5 {
+ color: #37561b;
+ font-size: 16px;
+ margin: 0;
+ margin-left: 0.5rem;
+}
+
+.calendar-container-row:hover {
+  cursor: pointer;
+ }
+
+.carlender {
+  width: 85%;
+  height: 400px;
+}
+
+.schedule-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  height: 60vh;
+  margin-top: 2rem;
+}
+
+.schedule-card {
+  width: 320px;
+  /* overflow: hidden; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: 0.5s ease-in-out;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.schedule-card:hover {
+  box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+}
+
+.schedule-card img {
+  width: 100%;
+  height: 300px;
+}
+
+.schedule-card-column {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 90%;
+  margin-bottom: 1rem;
+}
+
+.schedule-card-column h3 {
+  font-weight: bold;
+}
+
+.schedule-card-column button {
+  width: 50%;
+  height: 40px;
+  background: none;
+  border: 1px solid #37561b;
+  color: #37561b;
+  border-radius: 5px;
+  outline: none;
+  transition: 0.5s ease-in-out; 
+}
+
+.schedule-card-column button:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #37561b;
+}
+
+@media screen and (max-width: 768px) {
+  .schedule-card-row {
+    flex-direction: column;
+    height: 80vh;
+  }
+  .schedule-card {
+    margin-bottom: 1rem;
+  }
+}
