@@ -55,7 +55,7 @@ const Login = () => {
 							<h2>World-class venture building for innovators in Uganda.</h2>
 							<h4>
 								Have weekly sessions with expert venture associates for 2 years. Get Investor
-								connections, 4M UGX in cash, and access to StartHub loans.
+								connections of upto 4M UGX in cash, and access to StartHub loans.
 							</h4>
 						</div>
 					</div>

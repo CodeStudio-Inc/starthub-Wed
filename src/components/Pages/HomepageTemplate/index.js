@@ -127,13 +127,12 @@ const HomepageTemplate = (props) => {
 	const [ img, setImg ] = React.useState('');
 
 	const { loader } = useSelector((state) => state.admin);
-	const { username, admin } = useSelector((state) => state.auth);
-	const expire = useSelector((state) => state.auth.tokenExpiration);
+	const { username, admin, tokenExpiration } = useSelector((state) => state.auth);
 
 	const current_date = Date.now();
 
 	React.useEffect(() => {
-		if (current_date >= expire) {
+		if (current_date >= tokenExpiration) {
 			dispatch(actionCreators.removeUser());
 			props.history.push('/');
 		}
@@ -170,6 +169,14 @@ const HomepageTemplate = (props) => {
 
 	const toggleActive = (index) => {
 		setActive({ ...active, actionObject: active.objects[index] });
+	};
+
+	const toggleActiveStyle = (index) => {
+		if (active.objects[index] === active.actionObject) {
+			return 'home-link home-active';
+		} else {
+			return 'home-link home-inactive';
+		}
 	};
 
 	const addPayment = async () => {
@@ -246,26 +253,6 @@ const HomepageTemplate = (props) => {
 			month: ''
 		});
 		setMessage('');
-	};
-
-	const toggleActiveStyle = (index) => {
-		if (active.objects[index] === active.actionObject) {
-			return 'home-link home-active';
-		} else {
-			return 'home-link home-inactive';
-		}
-	};
-
-	const toggleAdminActive = (index) => {
-		setAdmin({ ...adminLink, actionObject: adminLink.objects[index] });
-	};
-
-	const toggleAdminActiveStyle = (index) => {
-		if (adminLink.objects[index] === adminLink.actionObject) {
-			return 'home-link home-active';
-		} else {
-			return 'home-link home-inactive';
-		}
 	};
 
 	const handleLogoutClick = (e) => {
@@ -388,7 +375,11 @@ const HomepageTemplate = (props) => {
 										<option value="Dec">December</option>
 									</select>
 									<button
-										style={{ background: loader ? '#eee' : '#37561b', marginTop: '1rem' }}
+										style={{
+											background: disable ? '#eee' : '#37561b',
+											marginTop: '1rem',
+											color: '#fff'
+										}}
 										disabled={loader ? true : false}
 										onClick={addRevenue}
 									>
@@ -489,7 +480,11 @@ const HomepageTemplate = (props) => {
 									</div>
 									<input style={{ border: 'none' }} type="file" onChange={handleChange} />
 									<button
-										style={{ background: disable ? '#eee' : '#37561b', marginTop: '1rem' }}
+										style={{
+											background: disable ? '#eee' : '#37561b',
+											marginTop: '1rem',
+											color: '#fff'
+										}}
 										disabled={disable ? true : false}
 										onClick={addPayment}
 									>

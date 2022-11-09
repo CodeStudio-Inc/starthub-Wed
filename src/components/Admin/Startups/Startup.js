@@ -19,6 +19,7 @@ const Startup = ({ location, history }) => {
 	const [ startMonth, setStartMonth ] = React.useState(0);
 
 	const { revenue, objectives } = useSelector((state) => state.admin);
+
 	const data = location.state.data;
 	const startup_revenue = revenue.filter((e) => e.creator === data._id);
 

@@ -29,26 +29,17 @@ const OKRs = ({ setOpen, props }) => {
 		quarter: ''
 	});
 
-	const lists = useSelector((state) => state.requests.lists);
-	const Boards = useSelector((state) => state.requests.boards);
-	const userId = useSelector((state) => state.auth.userId);
-	const username = useSelector((state) => state.auth.username);
-	const category = useSelector((state) => state.auth.category);
-	const email = useSelector((state) => state.auth.email);
+	const { lists, boards, statements, objectives } = useSelector((state) => state.requests);
 	const _value = useSelector((state) => state.requests.values);
-	const statements = useSelector((state) => state.requests.statements);
-	const objectives = useSelector((state) => state.requests.objectives);
 	const listLoader = useSelector((state) => state.requests.loading);
 	const loading = useSelector((state) => state.requests.loading);
-	const users = useSelector((state) => state.admin.users);
-	const expire = useSelector((state) => state.auth.tokenExpiration);
-	const admin = useSelector((state) => state.auth.admin);
+	const { tokenExpiration, userId, username, email, category } = useSelector((state) => state.auth);
 	const { revenue } = useSelector((state) => state.admin);
+
 	const total_revenue = Array.from(revenue, ({ month_revenue }) => month_revenue).reduce((a, b) => a + b, 0);
 	const total_expense = Array.from(revenue, ({ month_expense }) => month_expense).reduce((a, b) => a + b, 0);
 
 	const filter_value = _value && _value.filter((e) => e.creator === userId);
-	const filtereUsers = users.filter((el) => el.admin === false);
 
 	const last_value = filter_value && filter_value.slice(-1).pop();
 
@@ -58,7 +49,7 @@ const OKRs = ({ setOpen, props }) => {
 		if (category === 'catalyzer') {
 			userActivity();
 		}
-		if (current_date >= expire) {
+		if (current_date >= tokenExpiration) {
 			dispatch(actionCreators.removeUser());
 			props.history.push('/');
 		}
@@ -85,7 +76,7 @@ const OKRs = ({ setOpen, props }) => {
 
 	const openModal = () => setModal(true);
 
-	const _boards = Boards.filter((el) => el.creator === userId && el.boardType !== 'Lean Canvas');
+	const _boards = boards.filter((el) => el.creator === userId && el.boardType !== 'Lean Canvas');
 	const current_board = _boards && _boards.slice(-1).pop();
 	const current_boardID = current_board && current_board._id;
 	const filteredStatements = statements && statements.filter((el) => el.boardId === current_boardID);
