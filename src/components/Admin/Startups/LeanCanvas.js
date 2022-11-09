@@ -15,8 +15,8 @@ const LeanCanvas = ({ userId }) => {
 	const getBoards = () => dispatch(actionCreators.getAdminBoard(userId));
 	const getLists = () => dispatch(actionCreators.getAdminLists(userId));
 
-	const canvas_board = boards.filter((el) => el.boardType === 'Lean Canvas' && el.archive === false).at(-1);
-	const board_lists = lists.filter((el) => el.boardId === canvas_board._id);
+	const canvas_board = boards && boards.filter((el) => el.boardType === 'Lean Canvas' && el.archive === false).at(-1);
+	const board_lists = lists && lists.filter((el) => el.boardId === canvas_board._id);
 
 	React.useEffect(() => {
 		getBoards();

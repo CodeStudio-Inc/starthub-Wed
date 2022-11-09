@@ -61,7 +61,7 @@ const Login = () => {
 					</div>
 				</div>
 				<div className="login-main-right">
-					<img src={logo} alt="logo" loading="lazy" />
+					<img src={logo} alt="logo" />
 					<h1>Sign in to Platform</h1>
 					<div className="login-form">
 						<h5>Email</h5>

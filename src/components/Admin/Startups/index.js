@@ -15,8 +15,8 @@ import './StartupStyles.css';
 import '../../Pages/Auth/AuthStyles.css';
 const Startups = (props) => {
 	const [ state, setState ] = React.useState({
-		username: 'Yonja',
-		email: 'yonja256@gmail.com',
+		username: '',
+		email: '',
 		category: '',
 		mentor: '',
 		password: ''
@@ -33,11 +33,10 @@ const Startups = (props) => {
 
 	let users_activity = [];
 
-	filtereUsers &&
-		filtereUsers.forEach((element) => {
-			let user = user_activity.filter((el) => el.username === element.username).slice(-1).pop();
-			users_activity.push(user);
-		});
+	filtereUsers.forEach((element) => {
+		let user = user_activity && user_activity.filter((el) => el.username === element.username).slice(-1).pop();
+		users_activity.push(user);
+	});
 
 	const dispatch = useDispatch();
 
@@ -183,7 +182,7 @@ const Startups = (props) => {
 							</div>
 						</div>
 						<div className="login-main-right">
-							<img style={{ height: '90px', width: '70px' }} src={logo} alt="logo" loading="lazy" />
+							<img style={{ height: '90px', width: '70px' }} src={logo} alt="logo" />
 							<h1>Register New Startup</h1>
 							<div className="login-form">
 								<h5>Username</h5>
