@@ -1,4 +1,4 @@
-import * as actions from '../actions';
+import * as actions from '../Actions';
 import axios from 'axios';
 import Airtable from 'airtable';
 

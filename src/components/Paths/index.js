@@ -1,4 +1,4 @@
-import * as actionCreators from '../store/actionCreators';
+import * as actionCreators from '../store/ActionCreators';
 import HomepageTemplate from '../Pages/HomepageTemplate';
 import OKRs from '../Pages/OKRs';
 import KanbanList from '../DnD/KanbanList';
