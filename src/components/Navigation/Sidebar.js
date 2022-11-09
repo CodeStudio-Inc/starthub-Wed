@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import * as actionCreators from '../store/actionCreators';
+import * as actionCreators from '../store/ActionCreators';
 import { Menu } from 'antd';
 import 'antd/dist/antd.css';
 

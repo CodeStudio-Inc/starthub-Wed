@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import { Menu, Dropdown, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import * as actionCreators from '../store/actionCreators';
+import * as actionCreators from '../store/ActionCreators';
 import MenuIcon from '@material-ui/icons/Menu';
 import Sidebar from './Sidebar';
 import ListAltIcon from '@material-ui/icons/ListAlt';
