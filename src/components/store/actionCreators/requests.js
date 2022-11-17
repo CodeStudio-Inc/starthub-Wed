@@ -1,6 +1,8 @@
 import * as actions from '../actions';
 import axios from 'axios';
 
+const BaseUrl = 'https://starthubafrica-api.el.r.appspot.com';
+
 export const loadAction = () => {
 	return {
 		type: actions.LOADER_ACTION
@@ -249,7 +251,7 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, c
 
 		axios
 			.post(
-				'https://starthubafrica-api.el.r.appspot.com/catalyzer/list/updateIndexes',
+				`${BaseUrl}/catalyzer/list/updateIndexes`,
 				{ sourceId, destinationId, sourceCards, destinationCards },
 				{
 					headers: {
@@ -266,191 +268,6 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, c
 			})
 			.catch((err) => {
 				console.log(err);
-			});
-	};
-};
-
-export const createCanvasBoard = (callback) => {
-	return (dispatch, getState) => {
-		dispatch(loadAction());
-
-		const data = {
-			name: 'name'
-		};
-
-		const token = getState().auth.token;
-
-		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/create/canvas', data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				// console.log(res)
-				dispatch(stopLoader());
-				callback({ success: true, res: res });
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-};
-
-export const createMilestoneBoard = (callback) => {
-	return (dispatch, getState) => {
-		dispatch(loadAction());
-
-		const data = {
-			name: 'name'
-		};
-
-		const token = getState().auth.token;
-
-		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/create/milestone', data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				dispatch(stopLoader());
-				callback({ success: true, res: res });
-				// console.log(res)
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-};
-
-export const createAdminBoard = (name, startup, mentor, callback) => {
-	return (dispatch, getState) => {
-		// dispatch(loadAction())
-
-		const token = getState().auth.token;
-
-		const data = {
-			name,
-			startup,
-			mentor
-		};
-
-		console.log(data);
-
-		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/board', data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				// console.log(res)
-				// dispatch(stopLoader())
-				callback({ success: true, res: res });
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const createBoard = (name, startup, boardType, callback) => {
-	return (dispatch, getState) => {
-		// dispatch(loadAction())
-
-		const token = getState().auth.token;
-
-		const data = {
-			name,
-			startup,
-			boardType
-		};
-
-		console.log(data);
-
-		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/board', data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				// console.log(res)
-				dispatch(setBoards(res.data.boards));
-				// dispatch(stopLoader())
-				callback({ success: true, res: res });
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const createList = (id, name, callback) => {
-	return (dispatch, getState) => {
-		dispatch(loadAction());
-
-		const token = getState().auth.token;
-
-		const data = {
-			name
-		};
-
-		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				// console.log(res)
-				dispatch(stopLoader());
-				dispatch(setLists(res.data.lists));
-				callback({ success: true, res: res });
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const createCanvasLists = (id, callback) => {
-	return (dispatch, getState) => {
-		dispatch(loadAction());
-
-		const token = getState().auth.token;
-
-		const data = {
-			name: ''
-		};
-
-		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/create-canvas/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				// console.log(res)
-				dispatch(stopLoader());
-				dispatch(setLists(res.data.lists));
-				callback({ success: true, res: res });
-			})
-			.catch((error) => {
-				console.log(error);
 			});
 	};
 };
@@ -476,7 +293,7 @@ export const createAdminCard = (listId, name, callback) => {
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card`, data, {
+			.post(`${BaseUrl}/catalyzer/card`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -515,7 +332,7 @@ export const createCard = (listId, name, callback) => {
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card`, data, {
+			.post(`${BaseUrl}/catalyzer/card`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -541,7 +358,7 @@ export const updateList = (id, name, callback) => {
 			name
 		};
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/list/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -558,34 +375,6 @@ export const updateList = (id, name, callback) => {
 	};
 };
 
-export const updateBoard = (id, name, callback) => {
-	return (dispatch, getState) => {
-		// dispatch(loadAction())
-		const token = getState().auth.token;
-
-		const data = {
-			name
-		};
-		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/update/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				// console.log(res.data)
-				callback({ success: true, res: res });
-				dispatch(setBoards(res.data.boards));
-				// dispatch(stopLoader())
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
 export const updateCard = (id, cardIndex, name, callback) => {
 	return (dispatch, getState) => {
 		const token = getState().auth.token;
@@ -595,7 +384,7 @@ export const updateCard = (id, cardIndex, name, callback) => {
 			cardIndex
 		};
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/card/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -627,7 +416,7 @@ export const postBlog = (title, name, imageLink, bio, category, featuredimageLin
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/admin/blog', data, {
+			.post(`${BaseUrl}/admin/blog`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -653,7 +442,7 @@ export const postView = (id) => {
 			views: 0
 		};
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/blog/${id}`, data, {
+			.put(`${BaseUrl}/admin/blog/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -676,7 +465,7 @@ export const getBoards = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/boards', {
+			.get(`${BaseUrl}/catalyzer/boards`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -699,7 +488,7 @@ export const getListsOnBoard = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/catalyzer/lists`, {
+			.get(`${BaseUrl}/catalyzer/lists`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -718,35 +507,12 @@ export const getListsOnBoard = () => {
 	};
 };
 
-export const getCardsOnBoard = (id) => {
-	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
-		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/catalyzer//board/${id}/cards`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				dispatch(setCards(res.data.cards));
-				dispatch(setCanvasCards(res.data.cards));
-				dispatch(setMilestoneCards(res.data.cards));
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
 export const getBlogs = () => {
 	return (dispatch, getState) => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/blogs', {
+			.get(`${BaseUrl}/admin/blogs`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -756,62 +522,6 @@ export const getBlogs = () => {
 			.then((res) => {
 				dispatch(setBlogs(res.data.articles));
 				// console.log(res);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const getCanvasBoard = () => {
-	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
-		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/canvas/board', {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				const board = res.data.boards;
-				let boardId;
-				let boardName;
-				board.forEach((element) => {
-					boardId = element._id;
-					boardName = element.name;
-				});
-				dispatch(setCanvas(boardId, boardName));
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const getMilestonesBoard = () => {
-	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
-		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/milestone/board', {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
-			.then((res) => {
-				const board = res.data.boards;
-				let boardId;
-				let boardName;
-				board.forEach((element) => {
-					boardId = element._id;
-					boardName = element.name;
-				});
-				dispatch(setMilestone(boardId, boardName));
 			})
 			.catch((error) => {
 				console.log(error);
@@ -829,7 +539,7 @@ export const deleteCard = (listId, cardIndex, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/delete/${listId}`, data, {
+			.put(`${BaseUrl}/catalyzer/delete/${listId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -860,7 +570,7 @@ export const archiveCard = (listId, cardIndex, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/card/archive/${listId}`, data, {
+			.put(`${BaseUrl}/catalyzer/card/archive/${listId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -884,7 +594,7 @@ export const deleteBoard = (id, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/${id}`, {
+			.delete(`${BaseUrl}/catalyzer/board/${id}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -907,7 +617,7 @@ export const deleteList = (id, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/${id}`, {
+			.delete(`${BaseUrl}/catalyzer/list/${id}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -935,7 +645,7 @@ export const archiveList = (id, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/archive/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/list/archive/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -943,7 +653,7 @@ export const archiveList = (id, callback) => {
 				}
 			})
 			.then((res) => {
-				console.log(res.data.lists, 'll');
+				// console.log(res.data.lists, 'll');
 				dispatch(setLists(res.data.lists));
 				callback({ success: true, res: res });
 			})
@@ -963,7 +673,7 @@ export const unarchiveList = (id, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/list/restore-list/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/list/restore-list/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -991,7 +701,7 @@ export const archiveBoard = (id, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/archive/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/board/archive/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1019,7 +729,7 @@ export const unarchiveBoard = (id, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/board/restore-board/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/board/restore-board/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1054,7 +764,7 @@ export const addValues = (teams, vision, proposition, product, market, business,
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/value', data, {
+			.post(`${BaseUrl}/catalyzer/value`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1076,7 +786,7 @@ export const getValues = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/values', {
+			.get(`${BaseUrl}/catalyzer/values`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1105,7 +815,7 @@ export const addStatement = (id, vision, mission, callback) => {
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/statement/${id}`, data, {
+			.post(`${BaseUrl}/catalyzer/statement/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1129,7 +839,7 @@ export const getStatement = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/statements', {
+			.get(`${BaseUrl}/catalyzer/statements`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1158,7 +868,7 @@ export const editStatement = (id, vision, mission, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/statement/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/statement/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1188,7 +898,7 @@ export const addObjective = (id, description, quarter, callback) => {
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/catalyzer/objective/${id}`, data, {
+			.post(`${BaseUrl}/catalyzer/objective/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1214,7 +924,7 @@ export const getObjective = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/catalyzer/objectives', {
+			.get(`${BaseUrl}/catalyzer/objectives`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1222,7 +932,7 @@ export const getObjective = () => {
 				}
 			})
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				dispatch(stopLoader());
 				dispatch(setObjectives(res.data.objs));
 			})
@@ -1243,7 +953,7 @@ export const editObjective = (id, description, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/objective/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/objective/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1269,7 +979,7 @@ export const deleteObjective = (id, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/objective/${id}`, {
+			.delete(`${BaseUrl}/catalyzer/objective/${id}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1299,7 +1009,7 @@ export const archiveObjective = (id, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/archive-obj/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/archive-obj/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1331,7 +1041,7 @@ export const addkeyResult = (description, measureOfSuccess, objId, controller, c
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/catalyzer/keyresult', data, {
+			.post(`${BaseUrl}/catalyzer/keyresult`, data, {
 				signal: controller.signal,
 				headers: {
 					ContentType: 'Application/json',
@@ -1364,7 +1074,7 @@ export const editkeyResult = (id, description, measureOfSuccess, dateCreated, ca
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/catalyzer/keyresult/${id}`, data, {
+			.put(`${BaseUrl}/catalyzer/keyresult/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1393,7 +1103,7 @@ export const deleteKeyResult = (id, krId) => {
 		const token = getState().auth.token;
 
 		axios
-			.delete(`https://starthubafrica-api.el.r.appspot.com/catalyzer/keyresult/${id}/${krId}`, {
+			.delete(`${BaseUrl}/catalyzer/keyresult/${id}/${krId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',

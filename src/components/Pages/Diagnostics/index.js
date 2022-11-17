@@ -40,19 +40,6 @@ const Diagnostics = () => {
 	const handleTeamsOnChange = (e) => {
 		setTeamsValue(e.target.value);
 		dispatch(actionCreators.setTeamsValue(teamsValue));
-
-		// if (teamsValue === 10) {
-		// 	setTeamsHeader('How sure are you that your team members are commited');
-		// 	setTeamsDesc('Your Team players are commited if');
-		// }
-		// if (teamsValue === 20) {
-		// 	setTeamsHeader('Teams Level 2 Header');
-		// 	setTeamsDesc('Teams Level 2 Description');
-		// }
-		// if (teamsValue === 30) {
-		// 	setTeamsHeader('Teams Level 3 Header');
-		// 	setTeamsDesc('Teams Level 3 Description');
-		// }
 	};
 
 	const handleVisionOnChange = (e) => {

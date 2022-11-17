@@ -1,6 +1,8 @@
 import * as actions from '../actions';
 import axios from 'axios';
 
+const BaseUrl = 'https://starthubafrica-api.el.r.appspot.com';
+
 export const loaderAction = () => {
 	return {
 		type: actions.LOADER_ACTION
@@ -49,7 +51,7 @@ export const login = (email, password, callback) => {
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/auth/signin', data, {
+			.post(`${BaseUrl}/auth/signin`, data, {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
 					'Content-Type': 'application/json'
@@ -88,7 +90,7 @@ export const userActivity = (email, username, userId) => {
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/admin/user-activity', data, {
+			.post(`${BaseUrl}/admin/user-activity`, data, {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
 					'Content-Type': 'application/json'
@@ -112,7 +114,7 @@ export const addLatestRevenuePayment = (startup) => {
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/admin/revenue-payment', data, {
+			.post(`${BaseUrl}/admin/revenue-payment`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -138,7 +140,7 @@ export const addLatestRevenueSubmission = (startup) => {
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/admin/revenue-submission', data, {
+			.post(`${BaseUrl}/admin/revenue-submission`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -159,7 +161,7 @@ export const getUserActivity = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/user-activities', {
+			.get(`${BaseUrl}/admin/user-activities`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -188,7 +190,7 @@ export const signUp = (username, email, category, mentor, password, callback) =>
 		};
 
 		axios
-			.put('https://starthubafrica-api.el.r.appspot.com/admin/auth/register', data, {
+			.put(`${BaseUrl}/admin/auth/register`, data, {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
 					'Content-Type': 'application/json'

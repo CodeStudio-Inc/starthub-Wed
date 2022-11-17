@@ -1,6 +1,7 @@
 import * as actions from '../actions';
 import axios from 'axios';
-import Airtable from 'airtable';
+
+const BaseUrl = 'https://starthubafrica-api.el.r.appspot.com';
 
 export const loadAction = () => {
 	return {
@@ -132,7 +133,7 @@ export const getUsers = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/users', {
+			.get(`${BaseUrl}/admin/users`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -155,7 +156,7 @@ export const getAdminBoard = (userId) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/boards/${userId}`, {
+			.get(`${BaseUrl}/admin/boards/${userId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -179,7 +180,7 @@ export const getAdminLists = (userId) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/lists/${userId}`, {
+			.get(`${BaseUrl}/admin/lists/${userId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -203,7 +204,7 @@ export const getAdminStatements = (userId) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/statements/${userId}`, {
+			.get(`${BaseUrl}/admin/statements/${userId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -232,7 +233,7 @@ export const addAdminObjectives = (boardId, description, quarter, startupId, cal
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/objective/${boardId}`, data, {
+			.post(`${BaseUrl}/admin/objective/${boardId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -263,7 +264,7 @@ export const editAdminObjective = (id, description, startupId, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/objective/${id}`, data, {
+			.put(`${BaseUrl}/admin/objective/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -288,7 +289,7 @@ export const getAdminObjectives = (userId) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/objectives/${userId}`, {
+			.get(`${BaseUrl}/admin/objectives/${userId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -311,7 +312,7 @@ export const getAllObjectives = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/objectives`, {
+			.get(`${BaseUrl}/admin/objectives`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -335,7 +336,7 @@ export const deleteAdminObjective = (id, startupId, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.delete(`https://starthubafrica-api.el.r.appspot.com/admin/objective/${id}/${startupId}`, {
+			.delete(`${BaseUrl}/admin/objective/${id}/${startupId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -366,7 +367,7 @@ export const archiveAdminObjective = (id, startupId, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/archive-obj/${id}`, data, {
+			.put(`${BaseUrl}/admin/archive-obj/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -399,7 +400,7 @@ export const addAdminkeyResult = (description, measureOfSuccess, objId, startupI
 		};
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/admin/keyresult', data, {
+			.post(`${BaseUrl}/admin/keyresult`, data, {
 				signal: controller.signal,
 				headers: {
 					ContentType: 'Application/json',
@@ -435,7 +436,7 @@ export const editAdminkeyResult = (description, measureOfSuccess, dateCreated, o
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/keyresult`, data, {
+			.put(`${BaseUrl}/admin/keyresult`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -461,7 +462,7 @@ export const deleteAdminKeyResult = (objId, krId, startupId, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.delete(`https://starthubafrica-api.el.r.appspot.com/admin/keyresult/${objId}/${krId}/${startupId}`, {
+			.delete(`${BaseUrl}/admin/keyresult/${objId}/${krId}/${startupId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -486,7 +487,7 @@ export const getAdminValues = (userId) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/values/${userId}`, {
+			.get(`${BaseUrl}/admin/values/${userId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -509,7 +510,7 @@ export const getAdminCards = (userId, boardId) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/cards/${userId}/${boardId}`, {
+			.get(`${BaseUrl}/admin/cards/${userId}/${boardId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -526,31 +527,6 @@ export const getAdminCards = (userId, boardId) => {
 	};
 };
 
-export const getAdminMetricsData = (baseId) => {
-	return (dispatch) => {
-		dispatch(loadAction());
-		const key = process.env.REACT_APP_API_KEY;
-		var base = new Airtable({ apiKey: key }).base(baseId);
-
-		base('Metrics')
-			.select({
-				maxRecords: 100
-			})
-			.eachPage(
-				function page(records, fetchNextPage) {
-					dispatch(setAdminMetricsData(records));
-					fetchNextPage();
-				},
-				function done(err) {
-					if (err) {
-						console.error(err);
-						return;
-					}
-				}
-			);
-	};
-};
-
 export const archiveAdminBoard = (id, userId, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
@@ -561,7 +537,7 @@ export const archiveAdminBoard = (id, userId, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/admin-board/archive/${id}`, data, {
+			.put(`${BaseUrl}/admin/admin-board/archive/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -589,7 +565,7 @@ export const unarchiveAdminBoard = (id, userId, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/admin-board/restore-board/${id}`, data, {
+			.put(`${BaseUrl}/admin/admin-board/restore-board/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -618,7 +594,7 @@ export const archiveAdminList = (id, userId, boardId, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/admin-list/archive/${id}`, data, {
+			.put(`${BaseUrl}/admin/admin-list/archive/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -647,7 +623,7 @@ export const unarchiveAdminList = (id, userId, boardId, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/admin-list/restore-list/${id}`, data, {
+			.put(`${BaseUrl}/admin/admin-list/restore-list/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -696,7 +672,7 @@ export const addFlate = (
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/flatrate`, data, {
+			.post(`${BaseUrl}/admin/flatrate`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -725,7 +701,7 @@ export const addFlateratePayment = (loanId, amount, callback) => {
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/fr-payment/${loanId}`, data, {
+			.post(`${BaseUrl}/admin/fr-payment/${loanId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -750,7 +726,7 @@ export const getFlate = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/flatrate', {
+			.get(`${BaseUrl}/admin/flatrate`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -774,7 +750,7 @@ export const searchFlatrate = (startup, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/shorterm-loan?startup=${startup}`, {
+			.get(`${BaseUrl}/admin/shorterm-loan?startup=${startup}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -811,7 +787,7 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/reducing-balance`, data, {
+			.post(`${BaseUrl}/admin/reducing-balance`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -840,7 +816,7 @@ export const addRBPayment = (loanId, installAmount, callback) => {
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/rb-payment/${loanId}`, data, {
+			.post(`${BaseUrl}/admin/rb-payment/${loanId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -865,7 +841,7 @@ export const searchReducingBalance = (startup, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/longterm-loan?startup=${startup}`, {
+			.get(`${BaseUrl}/admin/longterm-loan?startup=${startup}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -890,7 +866,7 @@ export const getReducingBalance = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/reducing-balance', {
+			.get(`${BaseUrl}/admin/reducing-balance`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -934,7 +910,7 @@ export const addRevenueShare = (
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/revenue-share`, data, {
+			.post(`${BaseUrl}/admin/revenue-share`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -960,7 +936,7 @@ export const getRevenueShares = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/revenue-shares', {
+			.get(`${BaseUrl}/admin/revenue-shares`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -989,7 +965,7 @@ export const approvePayment = (id, callback) => {
 		};
 
 		axios
-			.put(`https://starthubafrica-api.el.r.appspot.com/admin/approve/${id}`, data, {
+			.put(`${BaseUrl}/admin/approve/${id}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1013,7 +989,7 @@ export const searchRevShare = (startup) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/revenue-share?startup=${startup}`, {
+			.get(`${BaseUrl}/admin/revenue-share?startup=${startup}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1044,7 +1020,7 @@ export const addAuthor = (name, imageLink, bio, callback) => {
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/author`, data, {
+			.post(`${BaseUrl}/admin/author`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1068,7 +1044,7 @@ export const getAuthors = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/authors', {
+			.get(`${BaseUrl}/admin/authors`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1101,7 +1077,7 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month) =
 		};
 
 		axios
-			.post(`https://starthubafrica-api.el.r.appspot.com/admin/revenue`, data, {
+			.post(`${BaseUrl}/admin/revenue`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1126,7 +1102,7 @@ export const getRevenue = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/revenues', {
+			.get(`${BaseUrl}/admin/revenues`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1150,7 +1126,7 @@ export const getStartupRevenue = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/revenue', {
+			.get(`${BaseUrl}/admin/revenue`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1179,7 +1155,7 @@ export const getStartupRevenueTracking = (creator, year, callback) => {
 		const token = getState().auth.token;
 
 		axios
-			.post('https://starthubafrica-api.el.r.appspot.com/admin/startup-revenue', data, {
+			.post(`${BaseUrl}/admin/startup-revenue`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1203,7 +1179,7 @@ export const searchRevenueTracking = (year) => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`https://starthubafrica-api.el.r.appspot.com/admin/rev-tracking/search?year=${year}`, {
+			.get(`${BaseUrl}/admin/rev-tracking/search?year=${year}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1227,7 +1203,7 @@ export const getRevenueTracking = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/rev-tracking', {
+			.get(`${BaseUrl}/admin/rev-tracking`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1251,7 +1227,7 @@ export const getRevenueAccumulation = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get('https://starthubafrica-api.el.r.appspot.com/admin/rev-accumulation', {
+			.get(`${BaseUrl}/admin/rev-accumulation`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1278,7 +1254,7 @@ export const sendEmail = (email, startup, months, callback) => {
 		};
 
 		axios
-			.post('http://localhost:8080/admin/previous-month-email', data, {
+			.post(`${BaseUrl}/previous-month-email`, data, {
 				contentType: 'application/json'
 			})
 			.then((res) => {

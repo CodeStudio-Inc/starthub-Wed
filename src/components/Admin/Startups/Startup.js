@@ -396,7 +396,7 @@ const Startup = ({ location, history }) => {
 					</div>
 				</div>
 				<div className="right-container">
-					<div className="progress">
+					{/* <div className="progress">
 						<h2>Mentorship Timeline</h2>
 						<CircularProgressbar
 							background={true}
@@ -410,7 +410,7 @@ const Startup = ({ location, history }) => {
 								backgroundColor: '#37561b'
 							})}
 						/>
-					</div>
+					</div> */}
 					<div className="lean-canvas">
 						<AdminLeanCanvas userId={data._id} />
 					</div>

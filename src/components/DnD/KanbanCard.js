@@ -71,7 +71,7 @@ export const KanbanCard = ({ cardId, text, index, cardIndex, listId }) => {
 										style={{ fontSize: '20px' }}
 										onClick={() =>
 											dispatch(
-												actionCreators.archiveCard(listId, cardIndex, (res) => {
+												actionCreators.deleteCard(listId, cardIndex, (res) => {
 													if (res.success) setVisible(false);
 												})
 											)}

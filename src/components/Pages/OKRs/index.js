@@ -10,7 +10,7 @@ import GAEventsTracker from '../../Hooks/GAEventsTracker';
 import CloseIcon from '@material-ui/icons/Close';
 
 import './OKRStyles.css';
-const OKRs = ({ setOpen, props }) => {
+const OKRs = ({ setOpen }) => {
 	const [ archive, setArchive ] = React.useState(false);
 	const [ modal, setModal ] = React.useState(false);
 	const [ quarter1Obj, setQuarter1Obj ] = React.useState(false);
@@ -33,7 +33,7 @@ const OKRs = ({ setOpen, props }) => {
 	const _value = useSelector((state) => state.requests.values);
 	const listLoader = useSelector((state) => state.requests.loading);
 	const loading = useSelector((state) => state.requests.loading);
-	const { tokenExpiration, userId, username, email, category } = useSelector((state) => state.auth);
+	const { userId, username, email, category } = useSelector((state) => state.auth);
 	const { revenue } = useSelector((state) => state.admin);
 
 	const total_revenue = Array.from(revenue, ({ month_revenue }) => month_revenue).reduce((a, b) => a + b, 0);
@@ -43,15 +43,9 @@ const OKRs = ({ setOpen, props }) => {
 
 	const last_value = filter_value && filter_value.slice(-1).pop();
 
-	const current_date = Date.now();
-
 	React.useEffect(() => {
 		if (category === 'catalyzer') {
 			userActivity();
-		}
-		if (current_date >= tokenExpiration) {
-			dispatch(actionCreators.removeUser());
-			props.history.push('/');
 		}
 		getBoards();
 		getLists();
@@ -94,7 +88,6 @@ const OKRs = ({ setOpen, props }) => {
 		objectives.filter((el) => el.boardId === current_boardID && el.quarter === 4 && el.archive === false);
 
 	const archived = objectives && objectives.filter((el) => el.boardId === current_boardID && el.archive === true);
-	// console.log(archived)
 
 	const todoLists = lists && lists.filter((el) => el.boardId === current_boardID && el.archive === false);
 

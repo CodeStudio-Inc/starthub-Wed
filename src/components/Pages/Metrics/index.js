@@ -6,20 +6,13 @@ import { Table } from 'antd';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
 import ReactGA from 'react-ga';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
 
 import './MetricsStyles.css';
-const Metrics = (props) => {
+const Metrics = () => {
 	const [ startMonth, setStartMonth ] = React.useState(0);
 
-	const { expire } = useSelector((state) => state.auth);
 	const { revenue } = useSelector((state) => state.admin);
 
-	const current_date = Date.now();
 	const current_yr = new Date().getFullYear();
 	const previous_yr = new Date().getFullYear() - 1;
 
@@ -40,10 +33,6 @@ const Metrics = (props) => {
 
 	React.useEffect(() => {
 		checkMonth(current_month);
-		if (current_date >= expire) {
-			dispatch(actionCreators.removeUser());
-			props.history.push('/');
-		}
 		getRevenue();
 		ReactGA.pageview(window.location.pathname);
 	}, []);
@@ -51,8 +40,6 @@ const Metrics = (props) => {
 	const dispatch = useDispatch();
 
 	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
-
-	const percentage = 66;
 
 	previous_yr_revenue &&
 		previous_yr_revenue.forEach((e) => {
@@ -193,57 +180,6 @@ const Metrics = (props) => {
 
 	return (
 		<div className="metrics-container">
-			{/* <div className="graph-row">
-				<div className="revenue-visuals">
-					<div className="revenue-inner-row">
-						<PersonAddAlt1Icon
-							className="register-form-container-icon"
-							style={{ fontSize: '70px', color: '#dfa126' }}
-						/>
-						<div className="revenue-inner-column">
-							<h1>133</h1>
-							<h4>NEW CUSTOMERS</h4>
-						</div>
-					</div>
-					<hr className="revenue-inner-column-separator" />
-					<div className="revenue-inner-row">
-						<SignalCellularAltIcon
-							className="register-form-container-icon"
-							style={{ fontSize: '70px', color: '#dfa126' }}
-						/>
-						<div className="revenue-inner-column">
-							<h1>6,405000 SHS</h1>
-							<h4>ACCUMMULATED REVENUE</h4>
-						</div>
-					</div>
-					<hr className="revenue-inner-column-separator" />
-					<div className="revenue-inner-row">
-						<AccountBalanceWalletIcon
-							className="register-form-container-icon"
-							style={{ fontSize: '70px', color: '#dfa126' }}
-						/>
-						<div className="revenue-inner-column">
-							<h1>4,500,000 SHS</h1>
-							<h4>NET PROFIT</h4>
-						</div>
-					</div>
-				</div>
-				<hr />
-				<div className="revenue-visuals">
-					<h3>SALES TARGET</h3>
-					<CircularProgressbar
-						background={true}
-						backgroundPadding={5}
-						value={percentage}
-						text={`${percentage}%`}
-						styles={buildStyles({
-							textColor: '#fff',
-							trailColor: '#dfa126',
-							backgroundColor: '#dfa126'
-						})}
-					/>
-				</div>
-			</div> */}
 			<div className="graph-row">
 				<div className="revenue">
 					<h3>Revenue for the last six months</h3>

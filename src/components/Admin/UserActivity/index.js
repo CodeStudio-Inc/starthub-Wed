@@ -63,8 +63,6 @@ const UserActivity = () => {
 						startup: r.username,
 						email: r.email,
 						loginDate: moment(r.date).format('DD.MM.YYYY, h:mm:ss a')
-						// revenueDate: r.revenuePayment ? moment(r.revenuePayment).format('DD.MM.YYYY, h:mm:ss a') : 'No payment made yet',
-						// submissionDate: r.revenueSubmission ? moment(r.revenueSubmission).format('DD.MM.YYYY, h:mm:ss a') : 'No revenue submitted yet',
 					}))
 				]}
 				style={{ width: '90%', marginTop: '2rem' }}

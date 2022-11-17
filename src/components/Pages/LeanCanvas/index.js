@@ -6,7 +6,7 @@ import { List1, List2, actionCreators, Loader } from '../../Paths';
 import ReactGA from 'react-ga';
 
 import './LeanCanvasStyles.css';
-const LeanCanvas = (props) => {
+const LeanCanvas = () => {
 	const [ boardId, setBoardId ] = React.useState('');
 
 	const Boards = useSelector((state) => state.requests.boards);
@@ -17,9 +17,6 @@ const LeanCanvas = (props) => {
 	const page = 'Lean Canvas';
 
 	const canvas_board = Boards.filter((el) => el.boardType === page && el.archive === false);
-
-	const expire = useSelector((state) => state.auth.tokenExpiration);
-	// console.log(canvas_board)
 
 	let current_lean_canvas,
 		lst,
@@ -54,13 +51,7 @@ const LeanCanvas = (props) => {
 
 	const dispatch = useDispatch();
 
-	const current_date = Date.now();
-
 	React.useEffect(() => {
-		if (current_date >= expire) {
-			dispatch(actionCreators.removeUser());
-			props.history.push('/');
-		}
 		dispatch(actionCreators.getBoards());
 		getLists();
 		ReactGA.pageview(window.location.pathname);

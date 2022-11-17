@@ -20,8 +20,6 @@ const Objective = ({ objectives, svg }) => {
 
 	const dispatch = useDispatch();
 
-	// console.log(objstate)
-
 	return (
 		<div className="objective-bg">
 			{objectives &&
