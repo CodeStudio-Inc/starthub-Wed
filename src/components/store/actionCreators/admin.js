@@ -283,13 +283,13 @@ export const editAdminObjective = (id, description, startupId, callback) => {
 	};
 };
 
-export const getAdminObjectives = (userId) => {
+export const getAdminObjectives = (userId, mentorId) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
 		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/objectives/${userId}`, {
+			.get(`${BaseUrl}/admin/objectives?userId=${userId}&mentorId=${mentorId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',

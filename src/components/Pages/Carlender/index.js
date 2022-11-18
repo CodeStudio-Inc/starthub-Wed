@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import './Carlender.css';
 const Calendar = (props) => {
-	console.log(props);
 	React.useEffect(() => {
 		ReactGA.pageview(window.location.pathname);
 	}, []);

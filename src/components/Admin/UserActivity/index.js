@@ -15,7 +15,7 @@ const UserActivity = () => {
 	let users_activity = [];
 
 	filtereUsers.forEach((element) => {
-		let user = user_activity.filter((el) => el.username === element.username).slice(-1).pop();
+		let user = user_activity && user_activity.filter((el) => el.username === element.username).slice(-1).pop();
 		users_activity.push(user);
 	});
 

@@ -121,9 +121,18 @@ const HomepageTemplate = (props) => {
 	const [ img, setImg ] = React.useState('');
 
 	const { loader } = useSelector((state) => state.admin);
-	const { username, admin, tokenExpiration } = useSelector((state) => state.auth);
+	const { username, admin, tokenExpiration, token } = useSelector((state) => state.auth);
 
 	const current_date = Date.now();
+
+	React.useEffect(() => {
+		setActive({ ...active, actionObject: active.objects[0] });
+		if (active.objects[index] === active.actionObject) {
+			return 'home-link home-active';
+		} else {
+			return 'home-link home-inactive';
+		}
+	}, []);
 
 	React.useEffect(() => {
 		if (current_date >= tokenExpiration) {

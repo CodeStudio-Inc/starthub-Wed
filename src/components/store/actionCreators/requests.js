@@ -917,14 +917,14 @@ export const addObjective = (id, description, quarter, callback) => {
 	};
 };
 
-export const getObjective = () => {
+export const getObjective = (userId, mentorId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
 		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/catalyzer/objectives`, {
+			.get(`${BaseUrl}/catalyzer/objectives?userId=${userId}&mentorId=${mentorId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',

@@ -24,7 +24,7 @@ const Objective = ({ objectives, svg }) => {
 		<div className="objective-bg">
 			{objectives &&
 				objectives.map((obj, index) => (
-					<div key={obj._id} className="objective">
+					<div className="objective" key={obj._id}>
 						<div className="objective-header">
 							<p>Objective {index >= 0 ? index + 1 : null}</p>
 							{loading && obj._id === activeObj ? (

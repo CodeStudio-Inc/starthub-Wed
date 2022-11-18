@@ -15,7 +15,7 @@ export const stopLoader = () => {
 	};
 };
 
-export const setUser = (admin, userId, username, email, category, token, tokenExpiration) => {
+export const setUser = (admin, userId, username, email, category, token, mentor, tokenExpiration) => {
 	return {
 		type: actions.SET_USER,
 		admin,
@@ -24,6 +24,7 @@ export const setUser = (admin, userId, username, email, category, token, tokenEx
 		email,
 		category,
 		token,
+		mentor,
 		tokenExpiration
 	};
 };
@@ -59,6 +60,7 @@ export const login = (email, password, callback) => {
 			})
 			.then((res) => {
 				dispatch(stopLoader());
+				console.log(res);
 				dispatch(
 					setUser(
 						res.data.admin,
@@ -67,6 +69,7 @@ export const login = (email, password, callback) => {
 						res.data.email,
 						res.data.category,
 						res.data.token,
+						res.data.mentor,
 						res.data.tokenExpiration
 					)
 				);

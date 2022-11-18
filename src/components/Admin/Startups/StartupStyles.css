@@ -221,6 +221,12 @@
     background: #fff;
     margin-bottom: 1rem;
 }
+.graph-tab h2 {
+    margin: 0;
+    font-weight: 400;
+    margin-left: 0.5rem;
+    color: rgba(0, 0, 0, 0.3);
+}
 
 .table-tab {
     display: flex;
@@ -228,6 +234,62 @@
     justify-content: flex-start;
     width: 100%;
     flex-direction: column;
+    background: #fff;
+}
+
+.table-tab h2 {
+    margin: 0;
+    font-weight: 400;
+    margin-left: 0.5rem;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.objective-table-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.objective-table-row h2 {
+    margin: 0;
+    font-weight: 400;
+    padding: 0.5rem;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.add-startup-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 90%;
+    margin-bottom: 1rem;
+}
+
+.objective-add-startup-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 25%;
+    margin: 0.5rem;
+    background: #37561b;
+}
+
+.objective-add-startup-button:hover {
+    cursor: pointer;
+}
+
+.objective-add-startup-button p {
+    margin: 0;
+    color: #fff;
+}
+
+.add-objective-modal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
     background: #fff;
 }
 
@@ -239,20 +301,6 @@
     align-self: center;
     flex-direction: column;
     padding: 20px;
-}
-
-.table-tab h2 {
-    margin: 0;
-    font-weight: 400;
-    margin-left: 0.5rem;
-    color: rgba(0, 0, 0, 0.3);
-}
-
-.graph-tab h2 {
-    margin: 0;
-    font-weight: 400;
-    margin-left: 0.5rem;
-    color: rgba(0, 0, 0, 0.3);
 }
 
 .progress {

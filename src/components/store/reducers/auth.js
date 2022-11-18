@@ -6,6 +6,7 @@ const initialState = {
 	username: '',
 	email: '',
 	token: '',
+	mentor: '',
 	category: '',
 	tokenExpiration: '',
 	user_activity: [],
@@ -36,6 +37,7 @@ const auth = (state = initialState, action) => {
 				email: action.email,
 				category: action.category,
 				token: action.token,
+				mentor: action.mentor,
 				tokenExpiration: action.tokenExpiration,
 				authenticated: true
 			});

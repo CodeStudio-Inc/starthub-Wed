@@ -31,9 +31,8 @@ const OKRs = ({ setOpen }) => {
 
 	const { lists, boards, statements, objectives } = useSelector((state) => state.requests);
 	const _value = useSelector((state) => state.requests.values);
-	const listLoader = useSelector((state) => state.requests.loading);
-	const loading = useSelector((state) => state.requests.loading);
-	const { userId, username, email, category } = useSelector((state) => state.auth);
+	const { loading } = useSelector((state) => state.requests);
+	const { userId, username, email, category, mentor } = useSelector((state) => state.auth);
 	const { revenue } = useSelector((state) => state.admin);
 
 	const total_revenue = Array.from(revenue, ({ month_revenue }) => month_revenue).reduce((a, b) => a + b, 0);
@@ -57,12 +56,14 @@ const OKRs = ({ setOpen }) => {
 		ReactGA.pageview(window.location.pathname + window.location.search);
 	}, []);
 
+	// console.log(userId, mentor);
+
 	const dispatch = useDispatch();
 
 	const getBoards = () => dispatch(actionCreators.getBoards());
 	const getLists = () => dispatch(actionCreators.getListsOnBoard());
 	const getStatements = () => dispatch(actionCreators.getStatement());
-	const getObjectives = () => dispatch(actionCreators.getObjective());
+	const getObjectives = () => dispatch(actionCreators.getObjective(userId, mentor));
 	const getUsers = () => dispatch(actionCreators.getUsers());
 	const userActivity = () => dispatch(actionCreators.userActivity(email, username, userId));
 	const getValues = () => dispatch(actionCreators.getValues());
@@ -437,7 +438,7 @@ const OKRs = ({ setOpen }) => {
 					current_board={current_board}
 					onDragEnd={onDragEnd}
 					getLists={getLists}
-					listLoader={listLoader}
+					listLoader={loading}
 					quarter1={quarter1}
 					quarter2={quarter2}
 					quarter3={quarter3}

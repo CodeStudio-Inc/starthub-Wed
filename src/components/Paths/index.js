@@ -30,6 +30,7 @@ import Revenues from '../Admin/Revenue';
 import Overview from '../Admin/Revenue/Overview';
 import RevenueShare from '../Admin/Revenue/RevenueShare';
 import RevenueAccumulation from '../Admin/Revenue/RevenueAccumulation';
+import ObjectivesTable from '../Admin/Startups/ObjectivesTable';
 import AdminLeanCanvas from '../Admin/Startups/LeanCanvas';
 import svg from '../../assets/images/spinner.svg';
 import GAEventsTracker from '../Hooks/GAEventsTracker';
@@ -69,6 +70,7 @@ export {
 	RevenueShare,
 	RevenueAccumulation,
 	AdminLeanCanvas,
+	ObjectivesTable,
 	svg,
 	logo,
 	GAEventsTracker

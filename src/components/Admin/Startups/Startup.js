@@ -2,13 +2,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { Tabs } from 'antd';
 import { Table } from 'antd';
 import { Line } from 'react-chartjs-2';
-import { actionCreators, AdminLeanCanvas } from '../../Paths';
+import { actionCreators, AdminLeanCanvas, ObjectivesTable, ModalUI } from '../../Paths';
 import moment from 'moment';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -19,6 +19,7 @@ const Startup = ({ location, history }) => {
 	const [ startMonth, setStartMonth ] = React.useState(0);
 
 	const { revenue, objectives } = useSelector((state) => state.admin);
+	const { userId } = useSelector((state) => state.auth);
 
 	const data = location.state.data;
 	const startup_revenue = revenue.filter((e) => e.creator === data._id);
@@ -29,7 +30,7 @@ const Startup = ({ location, history }) => {
 	const dispatch = useDispatch();
 
 	const getRevenue = () => dispatch(actionCreators.getRevenue());
-	const getObjectives = () => dispatch(actionCreators.getAdminObjectives(data._id));
+	const getObjectives = () => dispatch(actionCreators.getAdminObjectives(data._id, userId));
 
 	const current_yr = new Date().getFullYear();
 	const previous_yr = new Date().getFullYear() - 1;
@@ -281,9 +282,12 @@ const Startup = ({ location, history }) => {
 
 	return (
 		<div className="startup-container">
-			<div className="profile-row ">
+			{/* <ModalUI>
+				<div className="" />
+			</ModalUI> */}
+			<div className="profile-row">
 				<div className="icon-row" onClick={() => history.goBack()}>
-					<KeyboardBackspaceIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.3rem    ' }} />
+					<KeyboardBackspaceIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.3rem' }} />
 					<h4>Back</h4>
 				</div>
 				<div className="profile-lable-row">
@@ -313,86 +317,24 @@ const Startup = ({ location, history }) => {
 						</Tabs>
 					</div>
 					<div className="table-tab">
-						<h2>Objective Keyresults</h2>
-						<Tabs
-							style={{ width: '100%' }}
-							defaultActiveKey="1"
-							centered
-							tabBarStyle={{ color: '#37561b' }}
-						>
-							<TabPane tab="Quarter 1" key="1" className="graph-tab-content">
-								<Table
-									columns={columns}
-									dataSource={[
-										...quarter1.map((r) => ({
-											...r,
-											key: r._id,
-											createdAt: moment(r.createdAt).format('LL')
-										}))
-									]}
-									style={{ width: '100%' }}
-									pagination={{
-										defaultPageSize: 5,
-										showSizeChanger: true,
-										pageSizeOptions: [ '10', '20', '30' ]
-									}}
-								/>
-							</TabPane>
-							<TabPane tab="Quarter 2" key="2" className="graph-tab-content">
-								<Table
-									columns={columns}
-									dataSource={[
-										...quarter2.map((r) => ({
-											...r,
-											key: r._id,
-											createdAt: moment(r.createdAt).format('LL')
-										}))
-									]}
-									style={{ width: '100%' }}
-									pagination={{
-										defaultPageSize: 5,
-										showSizeChanger: true,
-										pageSizeOptions: [ '10', '20', '30' ]
-									}}
-								/>
-							</TabPane>
-							<TabPane tab="Quarter 3" key="3" className="graph-tab-content">
-								<Table
-									columns={columns}
-									dataSource={[
-										...quarter3.map((r) => ({
-											...r,
-											key: r._id,
-											createdAt: moment(r.createdAt).format('LL')
-										}))
-									]}
-									style={{ width: '100%' }}
-									pagination={{
-										defaultPageSize: 5,
-										showSizeChanger: true,
-										pageSizeOptions: [ '10', '20', '30' ]
-									}}
-								/>
-							</TabPane>
-							<TabPane tab="Quarter 4" key="4" className="graph-tab-content">
-								<Table
-									columns={columns}
-									dataSource={[
-										...quarter4.map((r) => ({
-											...r,
-											key: r._id,
-											createdAt: moment(r.createdAt).format('LL')
-										}))
-									]}
-									style={{ width: '100%' }}
-									pagination={{
-										defaultPageSize: 5,
-										showSizeChanger: true,
-										pageSizeOptions: [ '10', '20', '30' ]
-									}}
-								/>
-							</TabPane>
-						</Tabs>
+						<div className="objective-table-row">
+							<h2>Objective Keyresults</h2>
+							<div className="objective-add-startup-button" style={{ display: 'none' }}>
+								<ControlPointIcon style={{ fontSize: '20px', color: '#fff', marginRight: '0.5rem' }} />
+								<p>New Objective</p>
+							</div>
+						</div>
+						<ObjectivesTable
+							Tabs={Tabs}
+							TabPane={TabPane}
+							Table={Table}
+							moment={moment}
+							quarter1={quarter1}
+							quarter2={quarter2}
+							quarter3={quarter3}
+							quarter4={quarter4}
+							columns={columns}
+						/>
 					</div>
 				</div>
 				<div className="right-container">
