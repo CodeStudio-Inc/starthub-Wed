@@ -14,14 +14,6 @@ const Addkeyresult = ({ obj, dispatch, actionCreators, setaddkeyResult }) => {
 
 	const UseGAEventsTracker = GAEventsTracker('Keyresults');
 
-	let controller = new AbortController();
-
-	React.useEffect(() => {
-		return () => {
-			controller.abort('Aborting');
-		};
-	}, []);
-
 	// console.log(state.measureOfSuccess)
 
 	return (
@@ -63,7 +55,6 @@ const Addkeyresult = ({ obj, dispatch, actionCreators, setaddkeyResult }) => {
 							state.keyresult,
 							state.measureOfSuccess.toString(),
 							obj._id,
-							controller,
 							(res) => {
 								UseGAEventsTracker('addKeyresult', state.keyresult);
 								if (res.success) {

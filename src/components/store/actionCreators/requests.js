@@ -459,9 +459,8 @@ export const postView = (id) => {
 	};
 };
 
-export const getBoards = () => {
+export const getBoards = (creator) => {
 	return (dispatch, getState) => {
-		// dispatch(loadAction())
 		const token = getState().auth.token;
 
 		axios
@@ -473,7 +472,6 @@ export const getBoards = () => {
 				}
 			})
 			.then((res) => {
-				// dispatch(stopLoader())
 				dispatch(setBoards(res.data.boards));
 			})
 			.catch((error) => {
@@ -917,14 +915,14 @@ export const addObjective = (id, description, quarter, callback) => {
 	};
 };
 
-export const getObjective = (userId, mentorId) => {
+export const getObjective = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
 		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/catalyzer/objectives?userId=${userId}&mentorId=${mentorId}`, {
+			.get(`${BaseUrl}/catalyzer/objectives`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1028,7 +1026,7 @@ export const archiveObjective = (id, callback) => {
 	};
 };
 
-export const addkeyResult = (description, measureOfSuccess, objId, controller, callback) => {
+export const addkeyResult = (description, measureOfSuccess, objId, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
@@ -1042,7 +1040,6 @@ export const addkeyResult = (description, measureOfSuccess, objId, controller, c
 
 		axios
 			.post(`${BaseUrl}/catalyzer/keyresult`, data, {
-				signal: controller.signal,
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -1050,12 +1047,14 @@ export const addkeyResult = (description, measureOfSuccess, objId, controller, c
 				}
 			})
 			.then((res) => {
-				// console.log(res)
+				// console.log(res);
 				dispatch(setObjectives(res.data.objs));
 				callback({ success: true, res: res });
 				dispatch(stopLoader());
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
+				callback({ success: false });
 				console.log(error);
 			});
 	};

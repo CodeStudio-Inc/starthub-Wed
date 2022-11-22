@@ -4,10 +4,11 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import SavingsIcon from '@mui/icons-material/Savings';
+import CloseIcon from '@material-ui/icons/Close';
 import { Tabs } from 'antd';
 import { Table } from 'antd';
 import { Line } from 'react-chartjs-2';
-import { actionCreators, AdminLeanCanvas, ObjectivesTable, ModalUI } from '../../Paths';
+import { actionCreators, AdminLeanCanvas, ObjectivesTable, ModalUI, svg } from '../../Paths';
 import moment from 'moment';
 import 'react-circular-progressbar/dist/styles.css';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -17,20 +18,59 @@ import './StartupStyles.css';
 const Startup = ({ location, history }) => {
 	const { TabPane } = Tabs;
 	const [ startMonth, setStartMonth ] = React.useState(0);
+	const [ rowId, setRowId ] = React.useState('');
+	const [ loader, setLoader ] = React.useState(false);
+	const [ open, setOpen ] = React.useState(false);
+	const [ message, setMessage ] = React.useState(false);
+	const [ state, setState ] = React.useState({
+		description: '',
+		quarter: '',
+		keyresult: '',
+		measureOfSuccess: 0
+	});
 
-	const { revenue, objectives } = useSelector((state) => state.admin);
-	const { userId } = useSelector((state) => state.auth);
+	const { revenue, objectives, loading } = useSelector((state) => state.admin);
+	const { boards } = useSelector((state) => state.requests);
 
 	const data = location.state.data;
 	const startup_revenue = revenue.filter((e) => e.creator === data._id);
 
 	const total_revenue = Array.from(startup_revenue, ({ month_revenue }) => month_revenue).reduce((a, b) => a + b, 0);
 	const total_expense = Array.from(startup_revenue, ({ month_expense }) => month_expense).reduce((a, b) => a + b, 0);
-
+	const board_id = boards && boards.at(-1)._id;
+	console.log(board_id);
 	const dispatch = useDispatch();
 
 	const getRevenue = () => dispatch(actionCreators.getRevenue());
-	const getObjectives = () => dispatch(actionCreators.getAdminObjectives(data._id, userId));
+	const getBoards = () => dispatch(actionCreators.getAdminBoard(data._id));
+	const getObjectives = () => dispatch(actionCreators.getAdminObjectives(data._id));
+	const addObjective = () => {
+		if (!state.description || !state.quarter) return setMessage('Invalid Entries');
+		dispatch(
+			actionCreators.addAdminObjectives(data._id, board_id, state.description, state.quarter, (res) => {
+				setState({
+					description: '',
+					quarter: ''
+				});
+				if (res.success) return setMessage('Objective Added');
+				if (!res.success) return setMessage('Error while adding objective');
+			})
+		);
+	};
+	const addKeyresult = () => {
+		if (!state.keyresult || !rowId) return alert('Invalid Entries');
+		setLoader(true);
+		dispatch(
+			actionCreators.addAdminkeyResult(data._id, state.keyresult, state.measureOfSuccess, rowId, (res) => {
+				setLoader(false);
+				setState({
+					keyresult: '',
+					measureOfSuccess: 0
+				});
+				if (!res.success) return alert('Error while adding objective');
+			})
+		);
+	};
 
 	const current_yr = new Date().getFullYear();
 	const previous_yr = new Date().getFullYear() - 1;
@@ -56,6 +96,7 @@ const Startup = ({ location, history }) => {
 		checkMonth(current_month);
 		getRevenue();
 		getObjectives();
+		getBoards();
 	}, []);
 
 	previous_yr_revenue &&
@@ -242,7 +283,7 @@ const Startup = ({ location, history }) => {
 			dataIndex: 'keyresults',
 			key: 'keyresults',
 			align: 'left',
-			render: (r) => <div>{r.map((k) => k.description).join('\n')}</div>
+			render: (r) => <div>{r.map((k) => k.description).join(',\n')}</div>
 		},
 		{
 			title: 'Percentage Covered',
@@ -277,14 +318,82 @@ const Startup = ({ location, history }) => {
 			dataIndex: 'createdAt',
 			key: 'createdAt',
 			align: 'left'
+		},
+		{
+			title: 'Action',
+			dataIndex: '_id',
+			key: '_id',
+			align: 'center',
+			render: (r) => (
+				<div>
+					{rowId === r ? (
+						<div className="table-column">
+							<textarea
+								placeholder="Enter keyresult"
+								value={state.keyresult}
+								onChange={(e) => setState({ ...state, keyresult: e.target.value })}
+							/>
+							<input
+								type="number"
+								placeholder="%"
+								value={state.measureOfSuccess}
+								onChange={(e) => setState({ ...state, measureOfSuccess: e.target.value })}
+							/>
+							<button disabled={loader ? true : false} className="table-btn" onClick={addKeyresult}>
+								{loader ? 'saving' : 'save'}
+							</button>
+							<button className="table-btn" onClick={() => setRowId('')}>
+								cancel
+							</button>
+						</div>
+					) : (
+						<button className="table-btn" onClick={() => setRowId(r)}>
+							Add keyresult
+						</button>
+					)}
+				</div>
+			)
 		}
 	];
 
 	return (
 		<div className="startup-container">
-			{/* <ModalUI>
-				<div className="" />
-			</ModalUI> */}
+			{open ? (
+				<ModalUI>
+					<div className="add-objective-modal-container ">
+						<div className="add-objective-modal-header">
+							<CloseIcon
+								style={{ fontSize: '20px' }}
+								className="add-objective-modal-header-icon"
+								onClick={() => setOpen(false)}
+							/>
+						</div>
+						<div className="add-objective-modal-content">
+							<input
+								placeholder="Enter objective name"
+								value={state.description}
+								onChange={(e) => setState({ ...state, description: e.target.value })}
+							/>
+							<select
+								value={state.quarter}
+								onChange={(e) => setState({ ...state, quarter: e.target.value })}
+							>
+								<option value="" disabled selected>
+									-select-quarter-
+								</option>
+								<option value="1">Quarter1</option>
+								<option value="2">Quarter2</option>
+								<option value="3">Quarter3</option>
+								<option value="4">Quarter3</option>
+							</select>
+						</div>
+						<button onClick={addObjective}>
+							{loading ? <img src={svg} style={{ height: '20px', width: '20px' }} /> : 'save'}
+						</button>
+						{message ? <p>{message}</p> : null}
+					</div>
+				</ModalUI>
+			) : null}
 			<div className="profile-row">
 				<div className="icon-row" onClick={() => history.goBack()}>
 					<KeyboardBackspaceIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.3rem' }} />
@@ -319,7 +428,13 @@ const Startup = ({ location, history }) => {
 					<div className="table-tab">
 						<div className="objective-table-row">
 							<h2>Objective Keyresults</h2>
-							<div className="objective-add-startup-button" style={{ display: 'none' }}>
+							<div
+								className="objective-add-startup-button"
+								onClick={() => {
+									setOpen(true);
+									setMessage('');
+								}}
+							>
 								<ControlPointIcon style={{ fontSize: '20px', color: '#fff', marginRight: '0.5rem' }} />
 								<p>New Objective</p>
 							</div>
@@ -338,21 +453,6 @@ const Startup = ({ location, history }) => {
 					</div>
 				</div>
 				<div className="right-container">
-					{/* <div className="progress">
-						<h2>Mentorship Timeline</h2>
-						<CircularProgressbar
-							background={true}
-							backgroundPadding={4}
-							value={percentage}
-							text={`${percentage} weeks left`}
-							styles={buildStyles({
-								textColor: '#fff',
-								textSize: '10px',
-								trailColor: '#37561b',
-								backgroundColor: '#37561b'
-							})}
-						/>
-					</div> */}
 					<div className="lean-canvas">
 						<AdminLeanCanvas userId={data._id} />
 					</div>

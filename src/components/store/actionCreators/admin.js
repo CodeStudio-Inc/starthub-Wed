@@ -221,19 +221,18 @@ export const getAdminStatements = (userId) => {
 	};
 };
 
-export const addAdminObjectives = (boardId, description, quarter, startupId, callback) => {
+export const addAdminObjectives = (userId, boardId, description, quarter, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 		const token = getState().auth.token;
 
 		const data = {
+			boardId,
 			description,
-			quarter,
-			startupId
+			quarter
 		};
-
 		axios
-			.post(`${BaseUrl}/admin/objective/${boardId}`, data, {
+			.post(`${BaseUrl}/admin/objective/${userId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -247,6 +246,8 @@ export const addAdminObjectives = (boardId, description, quarter, startupId, cal
 				dispatch(stopLoader());
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
+				callback({ success: false });
 				console.log(error);
 			});
 	};
@@ -283,13 +284,13 @@ export const editAdminObjective = (id, description, startupId, callback) => {
 	};
 };
 
-export const getAdminObjectives = (userId, mentorId) => {
+export const getAdminObjectives = (userId) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
 		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/objectives?userId=${userId}&mentorId=${mentorId}`, {
+			.get(`${BaseUrl}/admin/objectives?userId=${userId}`, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -386,7 +387,7 @@ export const archiveAdminObjective = (id, startupId, callback) => {
 	};
 };
 
-export const addAdminkeyResult = (description, measureOfSuccess, objId, startupId, controller, callback) => {
+export const addAdminkeyResult = (userId, description, measureOfSuccess, objId, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
@@ -395,13 +396,11 @@ export const addAdminkeyResult = (description, measureOfSuccess, objId, startupI
 		const data = {
 			description,
 			measureOfSuccess,
-			objId,
-			startupId
+			objId
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/keyresult`, data, {
-				signal: controller.signal,
+			.post(`${BaseUrl}/admin/keyresult/${userId}`, data, {
 				headers: {
 					ContentType: 'Application/json',
 					'Access-Control-Allow-Origin': '*',
@@ -409,12 +408,14 @@ export const addAdminkeyResult = (description, measureOfSuccess, objId, startupI
 				}
 			})
 			.then((res) => {
-				// console.log(res)
+				// console.log(res);
 				dispatch(setObjectives(res.data.objs));
 				callback({ success: true, res: res });
 				dispatch(stopLoader());
 			})
 			.catch((error) => {
+				callback({ success: false });
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};

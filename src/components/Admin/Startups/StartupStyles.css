@@ -289,8 +289,71 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50%;
+    flex-direction: column;
+    width: 40%;
     background: #fff;
+}
+
+.add-objective-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 40px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.add-objective-modal-header-icon {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.add-objective-modal-header-icon:hover {
+    cursor: pointer;
+}
+
+.add-objective-modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 1rem;
+}
+
+.add-objective-modal-content input {
+    outline: none;
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 80%;
+    height: 40px;
+    margin-bottom: 1rem;
+}
+
+.add-objective-modal-content select {
+    outline: none;
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 80%;
+    height: 40px;
+    margin-bottom: 1rem;
+}
+
+.add-objective-modal-container button {
+    outline: none;
+    border: none;
+    background: #37561b;
+    color: #fff;
+    border-radius: 5px;
+    width: 30%;
+    height: 40px;
+    margin-bottom: 1rem;
+}
+
+.add-objective-modal-container button:hover {
+    cursor: pointer;
 }
 
 .graph-tab-content {
@@ -324,6 +387,39 @@
     align-items: flex-start;
     justify-content: space-between;
     width: 90%;
+}
+
+.table-btn {
+    background: none;
+    outline: none;
+    border: none;
+    color: #37561b;
+    font-size: 12px;
+}
+
+.table-btn:hover {
+    cursor: pointer;
+}
+
+.table-column {
+    display: flex;
+    align-items: flex-end;
+    justify-content: end;
+    flex-direction: column;
+}
+
+.table-column textarea {
+    background: #f7f7f7;
+    border: none;
+    outline: none;
+}
+
+.table-column input {
+    background: #f7f7f7;
+    border: none;
+    outline: none;
+    width: 40%;
+    margin-top: 0.5rem;
 }
 
 .lean-canvas {

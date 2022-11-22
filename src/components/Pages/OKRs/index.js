@@ -63,7 +63,7 @@ const OKRs = ({ setOpen }) => {
 	const getBoards = () => dispatch(actionCreators.getBoards());
 	const getLists = () => dispatch(actionCreators.getListsOnBoard());
 	const getStatements = () => dispatch(actionCreators.getStatement());
-	const getObjectives = () => dispatch(actionCreators.getObjective(userId, mentor));
+	const getObjectives = () => dispatch(actionCreators.getObjective(mentor));
 	const getUsers = () => dispatch(actionCreators.getUsers());
 	const userActivity = () => dispatch(actionCreators.userActivity(email, username, userId));
 	const getValues = () => dispatch(actionCreators.getValues());

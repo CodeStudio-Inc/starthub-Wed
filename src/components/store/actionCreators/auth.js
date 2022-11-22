@@ -60,7 +60,7 @@ export const login = (email, password, callback) => {
 			})
 			.then((res) => {
 				dispatch(stopLoader());
-				console.log(res);
+				// console.log(res);
 				dispatch(
 					setUser(
 						res.data.admin,
@@ -125,7 +125,7 @@ export const addLatestRevenuePayment = (startup) => {
 				}
 			})
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				dispatch(setUserActivity(res.data.user_activity));
 			})
 			.catch((error) => {
