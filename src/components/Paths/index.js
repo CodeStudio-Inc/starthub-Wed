@@ -22,6 +22,7 @@ import Metrics from '../Pages/Metrics';
 import BonitaSchedule from '../Pages/Carlender/BonitaSchedule';
 import TimothySchedule from '../Pages/Carlender/TimothySchedule';
 import MathiusSchedule from '../Pages/Carlender/MathiusSchedule';
+import Navbar from '../Pages/HomepageTemplate/Navbar';
 import Startups from '../Admin/Startups';
 import Startup from '../Admin/Startups/Startup';
 import OkrOverview from '../Admin/OkrOverview';
@@ -52,6 +53,7 @@ export {
 	QuarterTabs,
 	Diagnostics,
 	DiagnosticsTest,
+	Navbar,
 	Card,
 	List1,
 	List2,

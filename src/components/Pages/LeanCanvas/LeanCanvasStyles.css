@@ -351,6 +351,12 @@
 }
 
 @media screen and (max-width: 768px) {
+	.canvas-container {
+		padding: 0;
+	}
+	.canvas-main {
+		overflow-y: scroll;
+	}
 	.canvas-right-column-content {
 		overflow-x: scroll;
 	}

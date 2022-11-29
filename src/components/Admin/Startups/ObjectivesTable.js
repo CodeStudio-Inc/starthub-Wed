@@ -1,17 +1,6 @@
 import React from 'react';
 
-const ObjectivesTable = ({
-	Tabs,
-	TabPane,
-	Table,
-	moment,
-	quarter1,
-	quarter2,
-	quarter3,
-	quarter4,
-	columns,
-	setActiveRow
-}) => {
+const ObjectivesTable = ({ Tabs, TabPane, Table, moment, quarter1, quarter2, quarter3, quarter4, columns }) => {
 	return (
 		<Tabs style={{ width: '100%' }} defaultActiveKey="1" centered tabBarStyle={{ color: '#37561b' }}>
 			<TabPane tab="Quarter 1" key="1" className="graph-tab-content">

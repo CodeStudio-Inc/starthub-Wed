@@ -468,17 +468,19 @@ const OKRs = ({ setOpen }) => {
 					</div>
 				)}
 				<Diagnostics last_value={last_value && last_value} />
-				<div className="rev-reporting">
-					<div className="rev-reporting-row">
-						<h4>Total Revenue</h4>
-						<h2>{total_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs</h2>
+				{category === 'internal' ? null : (
+					<div className="rev-reporting">
+						<div className="rev-reporting-row">
+							<h4>Total Revenue</h4>
+							<h2>{total_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs</h2>
+						</div>
+						<div className="rev-reporting-row">
+							<h4>Total Expenses</h4>
+							<h2>{total_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs</h2>
+						</div>
+						<button onClick={() => setOpen(true)}>Report Revenue</button>
 					</div>
-					<div className="rev-reporting-row">
-						<h4>Total Expenses</h4>
-						<h2>{total_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs</h2>
-					</div>
-					<button onClick={() => setOpen(true)}>Report Revenue</button>
-				</div>
+				)}
 			</div>
 		</div>
 	);

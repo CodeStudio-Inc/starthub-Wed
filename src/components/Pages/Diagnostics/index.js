@@ -27,9 +27,6 @@ const Diagnostics = () => {
 	const [ businessValue, setBusinessValue ] = useState(last_value && last_value.business);
 	const [ investmentValue, setInvestmentValue ] = useState(last_value && last_value.investment);
 
-	const [ teamsHeader, setTeamsHeader ] = useState('');
-	const [ teamsDesc, setTeamsDesc ] = useState('');
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {

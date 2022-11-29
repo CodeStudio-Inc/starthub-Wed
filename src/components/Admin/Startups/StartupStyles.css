@@ -519,4 +519,20 @@ color: #37561b;
     .startup-card-row {
         flex-direction: column;
     }
+    .add-startup-button {
+        width: 100%;
+    }
+    .objective-table-row h2 {
+        font-size: 14px;
+    }
+    .objective-add-startup-button {
+        width: 45%;
+        height: 30px;
+    }
+    .graph-tab-content {
+        overflow-y: scroll; 
+    }
+    .add-objective-modal-container {
+        width: 70%;
+    }
 }

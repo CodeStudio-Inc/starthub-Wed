@@ -1360,6 +1360,12 @@
 		width: 90%;
 	}
 	.objectives-content {
-		width: 90%;
+		width: 100%;
+	}
+	.objective-inner-row {
+		flex-direction: column;
+	}
+	.create-modal {
+		width: 80%;
 	}
 }

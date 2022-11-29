@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	OKRs,
@@ -7,6 +7,7 @@ import {
 	Metrics,
 	DiagnosticsTest,
 	Calendar,
+	Navbar,
 	actionCreators,
 	ModalUI,
 	Startups,
@@ -29,11 +30,13 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import './HomepageStyles.css';
 const { TabPane } = Tabs;
 const HomepageTemplate = (props) => {
-	const [ index, setIndex ] = useState(0);
+	const [ index, setIndex ] = React.useState(0);
+	const [ navbar, setNavbar ] = React.useState(false);
 	const [ active, setActive ] = React.useState({
 		actionObject: null,
 		objects: [
@@ -121,7 +124,7 @@ const HomepageTemplate = (props) => {
 	const [ img, setImg ] = React.useState('');
 
 	const { loader } = useSelector((state) => state.admin);
-	const { username, admin, tokenExpiration, token } = useSelector((state) => state.auth);
+	const { username, admin, tokenExpiration } = useSelector((state) => state.auth);
 
 	const current_date = Date.now();
 
@@ -265,6 +268,30 @@ const HomepageTemplate = (props) => {
 
 	return (
 		<div className="homepage-container">
+			{navbar ? null : (
+				<div className="homepage-navbar-menu">
+					<MenuIcon style={{ fontSize: '30px', color: '#fff' }} onClick={() => setNavbar(true)} />
+				</div>
+			)}
+			{navbar ? (
+				<Navbar
+					ListAltIcon={ListAltIcon}
+					DeveloperBoardIcon={DeveloperBoardIcon}
+					BarChartIcon={BarChartIcon}
+					BuildIcon={BuildIcon}
+					CalendarMonthIcon={CalendarMonthIcon}
+					LogoutIcon={LogoutIcon}
+					GroupsIcon={GroupsIcon}
+					AnalyticsIcon={AnalyticsIcon}
+					EventNoteIcon={EventNoteIcon}
+					PaymentIcon={PaymentIcon}
+					setIndex={setIndex}
+					handleLogoutClick={handleLogoutClick}
+					username={username}
+					admin={admin}
+					setNavbar={setNavbar}
+				/>
+			) : null}
 			{open ? (
 				<ModalUI>
 					<div className="nav-modal-container">

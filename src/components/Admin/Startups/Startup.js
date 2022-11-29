@@ -38,7 +38,7 @@ const Startup = ({ location, history }) => {
 	const total_revenue = Array.from(startup_revenue, ({ month_revenue }) => month_revenue).reduce((a, b) => a + b, 0);
 	const total_expense = Array.from(startup_revenue, ({ month_expense }) => month_expense).reduce((a, b) => a + b, 0);
 	const board_id = boards && boards.at(-1)._id;
-	console.log(board_id);
+
 	const dispatch = useDispatch();
 
 	const getRevenue = () => dispatch(actionCreators.getRevenue());
@@ -360,7 +360,7 @@ const Startup = ({ location, history }) => {
 		<div className="startup-container">
 			{open ? (
 				<ModalUI>
-					<div className="add-objective-modal-container ">
+					<div className="add-objective-modal-container">
 						<div className="add-objective-modal-header">
 							<CloseIcon
 								style={{ fontSize: '20px' }}

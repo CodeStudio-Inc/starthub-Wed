@@ -12,6 +12,7 @@ const Metrics = () => {
 	const [ startMonth, setStartMonth ] = React.useState(0);
 
 	const { revenue } = useSelector((state) => state.admin);
+	const { category } = useSelector((state) => state.auth);
 
 	const current_yr = new Date().getFullYear();
 	const previous_yr = new Date().getFullYear() - 1;
@@ -180,36 +181,40 @@ const Metrics = () => {
 
 	return (
 		<div className="metrics-container">
-			<div className="graph-row">
-				<div className="revenue">
-					<h3>Revenue for the last six months</h3>
-					<Line data={Revenue} width={100} height={30} />
-				</div>
+			{category === 'internal' ? null : (
+				<div className="graph-row">
+					<div className="revenue">
+						<h3>Revenue for the last six months</h3>
+						<Line data={Revenue} width={100} height={30} />
+					</div>
 
-				<div className="revenue">
-					<h3>Expense for the last six months</h3>
-					<Line data={Expense} width={100} height={30} />
+					<div className="revenue">
+						<h3>Expense for the last six months</h3>
+						<Line data={Expense} width={100} height={30} />
+					</div>
 				</div>
-			</div>
-			<h2>Reported Metrics</h2>
-			<Table
-				columns={columns}
-				dataSource={[
-					...revenue.map((r) => ({
-						...r,
-						key: r._id,
-						revenue: r.month_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-						expense: r.month_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-						date: r.date
-					}))
-				]}
-				style={{ width: '100%' }}
-				pagination={{
-					defaultPageSize: 5,
-					showSizeChanger: true,
-					pageSizeOptions: [ '10', '20', '30' ]
-				}}
-			/>
+			)}
+			{category === 'internal' ? <h2>No revenue reported for this user</h2> : <h2>Reported Metrics</h2>}
+			{category === 'internal' ? null : (
+				<Table
+					columns={columns}
+					dataSource={[
+						...revenue.map((r) => ({
+							...r,
+							key: r._id,
+							revenue: r.month_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+							expense: r.month_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+							date: r.date
+						}))
+					]}
+					style={{ width: '100%' }}
+					pagination={{
+						defaultPageSize: 5,
+						showSizeChanger: true,
+						pageSizeOptions: [ '10', '20', '30' ]
+					}}
+				/>
+			)}
 		</div>
 	);
 };
