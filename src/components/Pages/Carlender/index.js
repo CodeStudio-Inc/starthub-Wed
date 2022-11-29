@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { withRouter } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import './Carlender.css';
 const Calendar = (props) => {
@@ -22,6 +23,9 @@ const Calendar = (props) => {
 
 	return (
 		<div className="calendar-container ">
+			<Helmet>
+				<title>Carlender</title>
+			</Helmet>
 			<h2>Schedule Meetings with Mentors</h2>
 			<h3>You can also schedule meetings with the entire Team</h3>
 			<div className="schedule-card-row">

@@ -13,6 +13,7 @@ import moment from 'moment';
 import 'react-circular-progressbar/dist/styles.css';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { Helmet } from 'react-helmet';
 
 import './StartupStyles.css';
 const Startup = ({ location, history }) => {
@@ -358,6 +359,9 @@ const Startup = ({ location, history }) => {
 
 	return (
 		<div className="startup-container">
+			<Helmet>
+				<title>{data.username}</title>
+			</Helmet>
 			{open ? (
 				<ModalUI>
 					<div className="add-objective-modal-container">

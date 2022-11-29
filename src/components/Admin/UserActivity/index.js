@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
 import { actionCreators } from '../../Paths';
 import moment from 'moment';
+import { Helmet } from 'react-helmet';
 
 import './UserActivityStyles.css';
 const UserActivity = () => {
@@ -54,6 +55,9 @@ const UserActivity = () => {
 
 	return (
 		<div className="user-activity-container">
+			<Helmet>
+				<title>User Activity</title>
+			</Helmet>
 			<Table
 				columns={columns}
 				dataSource={[

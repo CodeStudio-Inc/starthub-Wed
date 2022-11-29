@@ -7,6 +7,7 @@ import { FormStep } from './MultipleStepForm';
 import { teams, vision, proposition, product, market, business, investment } from './Steps';
 import { actionCreators, svg } from '../../Paths';
 import ReactGA from 'react-ga';
+import { Helmet } from 'react-helmet';
 
 import './Diagnostics.css';
 import { message } from 'antd';
@@ -91,6 +92,9 @@ const Diagnostics = () => {
 
 	return (
 		<div className="diagnostics-container">
+			<Helmet>
+				<title>Diagnostics</title>
+			</Helmet>
 			<div className="steps">
 				<h2>Business Diagnostics</h2>
 				<MultipleStepForm

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Tabs } from 'antd';
 import { actionCreators } from '../../Paths';
 import { Overview, RevenueShare, RevenueAccumulation } from '../../Paths';
+import { Helmet } from 'react-helmet';
 
 import './RevenueStyles.css';
 const { TabPane } = Tabs;
@@ -22,6 +23,9 @@ const Revenues = () => {
 
 	return (
 		<div className="revenue-container">
+			<Helmet>
+				<title>Revenue Reporting Overview</title>
+			</Helmet>
 			<Tabs
 				style={{ marginTop: '3rem', width: '90%' }}
 				defaultActiveKey="1"

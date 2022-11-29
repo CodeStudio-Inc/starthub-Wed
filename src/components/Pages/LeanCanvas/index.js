@@ -4,6 +4,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { withRouter } from 'react-router-dom';
 import { List1, List2, actionCreators, Loader } from '../../Paths';
 import ReactGA from 'react-ga';
+import { Helmet } from 'react-helmet';
 
 import './LeanCanvasStyles.css';
 const LeanCanvas = () => {
@@ -87,6 +88,9 @@ const LeanCanvas = () => {
 
 	return (
 		<div className="canvas-container">
+			<Helmet>
+				<title>Lean Canvas</title>
+			</Helmet>
 			{canvas_board && canvas_board.length === 0 ? (
 				<h1>Your Account has no Lean Canvas, Please contact your Mentor</h1>
 			) : (

@@ -1,0 +1,16 @@
+.error-tab {
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dfa126;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.error-tab h4 {
+    color: #fff;
+    margin: 0;
+}

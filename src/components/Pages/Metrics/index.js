@@ -6,6 +6,7 @@ import { Table } from 'antd';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
 import ReactGA from 'react-ga';
+import { Helmet } from 'react-helmet';
 
 import './MetricsStyles.css';
 const Metrics = () => {
@@ -181,6 +182,9 @@ const Metrics = () => {
 
 	return (
 		<div className="metrics-container">
+			<Helmet>
+				<title>Revenue</title>
+			</Helmet>
 			{category === 'internal' ? null : (
 				<div className="graph-row">
 					<div className="revenue">

@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
 import { actionCreators } from '../../Paths';
+import { Helmet } from 'react-helmet';
 
 import './OKROverviewStyles.css';
 const OKROverview = () => {
@@ -671,6 +672,9 @@ const OKROverview = () => {
 
 	return (
 		<div className="okroverview-container">
+			<Helmet>
+				<title>OKR Overview</title>
+			</Helmet>
 			<Table
 				columns={table_columns}
 				dataSource={[

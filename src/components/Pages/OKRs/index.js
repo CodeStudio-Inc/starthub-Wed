@@ -8,6 +8,7 @@ import { Table } from 'antd';
 import ReactGA from 'react-ga';
 import GAEventsTracker from '../../Hooks/GAEventsTracker';
 import CloseIcon from '@material-ui/icons/Close';
+import { Helmet } from 'react-helmet';
 
 import './OKRStyles.css';
 const OKRs = ({ setOpen }) => {
@@ -55,8 +56,6 @@ const OKRs = ({ setOpen }) => {
 		getValues();
 		ReactGA.pageview(window.location.pathname + window.location.search);
 	}, []);
-
-	// console.log(userId, mentor);
 
 	const dispatch = useDispatch();
 
@@ -198,6 +197,9 @@ const OKRs = ({ setOpen }) => {
 	];
 	return (
 		<div className="okr-container">
+			<Helmet>
+				<title>OKRs</title>
+			</Helmet>
 			{archive ? (
 				<ModalUI>
 					<div className="archive-modal">

@@ -4,6 +4,7 @@ import { actionCreators, GAEventsTracker, logo, svg } from '../../Paths';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import { Helmet } from 'react-helmet';
 
 import './AuthStyles.css';
 const Login = () => {
@@ -47,6 +48,9 @@ const Login = () => {
 
 	return (
 		<div className="login-container">
+			<Helmet>
+				<title>Login</title>
+			</Helmet>
 			<div className="login-main">
 				<div className="login-main-left">
 					<div className="login-main-left-backdrop">
@@ -97,7 +101,11 @@ const Login = () => {
 					{error ? (
 						<div className="error-message">
 							<WarningAmberIcon style={{ color: '#37561b', fontSize: '20px', marginRight: '0.5rem' }} />
-							<h4>Error logging in, Please try again</h4>
+							{!window.navigator.onLine ? (
+								<h4>connect to internet and try again</h4>
+							) : (
+								<h4>Error logging in, Please try again</h4>
+							)}
 						</div>
 					) : null}
 				</div>

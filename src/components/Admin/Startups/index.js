@@ -10,6 +10,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import DoneIcon from '@mui/icons-material/Done';
+import { Helmet } from 'react-helmet';
 
 import './StartupStyles.css';
 import '../../Pages/Auth/AuthStyles.css';
@@ -166,6 +167,9 @@ const Startups = (props) => {
 
 	return (
 		<div className="startups-container">
+			<Helmet>
+				<title>Startups Overview</title>
+			</Helmet>
 			{open ? (
 				<ModalUI>
 					<div className="login-main">
