@@ -193,7 +193,7 @@ export const signUp = (username, email, category, mentor, password, callback) =>
 		};
 
 		axios
-			.put(`${BaseUrl}/admin/auth/register`, data, {
+			.put(`${BaseUrl}/auth/register`, data, {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
 					'Content-Type': 'application/json'

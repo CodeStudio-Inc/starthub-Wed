@@ -16,11 +16,11 @@ import './StartupStyles.css';
 import '../../Pages/Auth/AuthStyles.css';
 const Startups = (props) => {
 	const [ state, setState ] = React.useState({
-		username: '',
-		email: '',
-		category: '',
-		mentor: '',
-		password: ''
+		username: 'Afropay',
+		email: 'afropay@gmail.com',
+		category: 'catalyzer',
+		mentor: '621373424a3c50000a6d2de5',
+		password: 'pass0123'
 	});
 	const [ error, setError ] = React.useState(false);
 	const [ success, setSuccess ] = React.useState(false);
@@ -157,12 +157,12 @@ const Startups = (props) => {
 				if (res.error) setError(true);
 			})
 		);
-		setState({
-			username: '',
-			email: '',
-			category: '',
-			password: ''
-		});
+		// setState({
+		// 	username: '',
+		// 	email: '',
+		// 	category: '',
+		// 	password: ''
+		// });
 	};
 
 	return (
