@@ -16,17 +16,18 @@ const CanvasList2 = ({ listId, listNumber, title, cards, boardId, callback, open
 					<div className={'canvas1-row'}>
 						<h6>{title}</h6>
 						<h6>{listNumber}</h6>
-						<MoreHorizIcon className="close" style={{ fontSize: '25px', visibility: 'hidden' }} />
 					</div>
 					<div className="canvas-add-card">
 						{admin ? null : (
 							<div className="canvas-list-column">
-								<textarea
-									placeholder="Type.."
-									value={cardName}
-									onChange={(e) => setCardName(e.target.value)}
-								/>
-								{cards.length === 0 ? (
+								{!cards || typeof cards.at(-1) === 'undefined' ? (
+									<textarea
+										placeholder="Type.."
+										value={cardName}
+										onChange={(e) => setCardName(e.target.value)}
+									/>
+								) : null}
+								{!cards || typeof cards.at(-1) === 'undefined' ? (
 									<p
 										onClick={() => {
 											if (cardName) {
@@ -46,21 +47,15 @@ const CanvasList2 = ({ listId, listNumber, title, cards, boardId, callback, open
 						)}
 					</div>
 					<div className="canvas-scroll">
-						{cards &&
-							cards.map((c, index) => (
-								<Card
-									key={c.dateCreated}
-									cardId={c.dateCreated}
-									text={c.name}
-									cardIndex={c.cardIndex}
-									listId={listId}
-									index={index}
-									card={c}
-									open={open}
-									callback={callback}
-									setActiveCard={setActiveCard}
-								/>
-							))}
+						{!cards || typeof cards.at(-1) !== 'undefined' ? (
+							<Card
+								key={!cards ? null : cards.at(-1).dateCreated}
+								text={!cards ? null : cards.at(-1).name}
+								cardIndex={!cards ? null : cards.at(-1).cardIndex}
+								listId={listId}
+								callback={callback}
+							/>
+						) : null}
 					</div>
 					{provided.placeholder}
 				</div>

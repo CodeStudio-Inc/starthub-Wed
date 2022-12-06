@@ -2,25 +2,28 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { withRouter } from 'react-router-dom';
-import { List1, List2, actionCreators, Loader } from '../../Paths';
+import { List1, List2, actionCreators, Loader, Menu, ModalUI, svg } from '../../Paths';
 import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
+import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import './LeanCanvasStyles.css';
 const LeanCanvas = () => {
 	const [ boardId, setBoardId ] = React.useState('');
+	const [ open, setOpen ] = React.useState(false);
+	const [ state, setState ] = React.useState({
+		name: '',
+		message: ''
+	});
 
-	const Boards = useSelector((state) => state.requests.boards);
-	const lists = useSelector((state) => state.requests.canvas_lists);
-
-	const dragdropLoading = useSelector((state) => state.requests.loading);
+	const { boards, canvas_lists, loading } = useSelector((state) => state.requests);
 
 	const page = 'Lean Canvas';
 
-	const canvas_board = Boards.filter((el) => el.boardType === page && el.archive === false);
-
-	let current_lean_canvas,
-		lst,
+	const canvas_board = boards.filter((el) => el.boardType === page && el.archive === false);
+	let lst,
 		problem,
 		solution,
 		metrics,
@@ -34,8 +37,10 @@ const LeanCanvas = () => {
 		concept,
 		adoptors;
 
-	current_lean_canvas = canvas_board && canvas_board.slice(-1).pop();
-	lst = lists && lists.filter((el) => el.boardId === current_lean_canvas._id);
+	const [ canvasBoardId, setCanvasBoardId ] = React.useState(
+		canvas_board && canvas_board.length === 0 ? null : canvas_board && canvas_board.at(-1)._id
+	);
+	lst = canvas_lists && canvas_lists.filter((el) => el.boardId === canvasBoardId);
 
 	problem = lst.find((el) => el.name === 'Problem');
 	solution = lst.find((el) => el.name === 'Solution');
@@ -56,6 +61,7 @@ const LeanCanvas = () => {
 		dispatch(actionCreators.getBoards());
 		getLists();
 		ReactGA.pageview(window.location.pathname);
+		setCanvasBoardId(canvas_board && canvas_board.length === 0 ? null : canvas_board && canvas_board.at(-1)._id);
 	}, []);
 
 	const getLists = () => dispatch(actionCreators.getListsOnBoard(() => {}));
@@ -76,8 +82,8 @@ const LeanCanvas = () => {
 			)
 		);
 
-		const newDestList = lists.find((el) => el._id === destination.droppableId);
-		const newSrcList = lists.find((el) => el._id === source.droppableId);
+		const newDestList = canvas_lists.find((el) => el._id === destination.droppableId);
+		const newSrcList = canvas_lists.find((el) => el._id === source.droppableId);
 
 		dispatch(
 			actionCreators.cardIndexUpdate(source.droppableId, destination.droppableId, newSrcList, newDestList, () => {
@@ -88,15 +94,69 @@ const LeanCanvas = () => {
 
 	return (
 		<div className="canvas-container">
+			<div className="canvas-header">
+				{canvas_board && canvas_board.length !== 0 ? (
+					<div
+						className="canvas-header-btn"
+						onClick={() => dispatch(actionCreators.archiveBoard(canvasBoardId))}
+					>
+						<DeleteOutlinedIcon style={{ fontSize: '20px', color: '#fff' }} />
+						{loading ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : <p>Remove canvas</p>}
+					</div>
+				) : null}
+			</div>
 			<Helmet>
 				<title>Lean Canvas</title>
 			</Helmet>
+			{open ? (
+				<ModalUI>
+					<div className="canvas-modal">
+						<DeveloperBoardIcon className="canvas-modal-icon" style={{ fontSize: '70px' }} />
+						<input
+							placeholder="Enter canvas name"
+							value={state.name}
+							onChange={(e) => setState({ ...state, name: e.target.value })}
+						/>
+						<div className="canvas-modal-btns">
+							<button
+								onClick={() => {
+									setOpen(false);
+									setState({ name: '' });
+								}}
+							>
+								Close
+							</button>
+							<button
+								onClick={() =>
+									dispatch(
+										actionCreators.addLeanCanvas(state.name, (res) => {
+											if (res.success) {
+												setState({
+													name: ''
+												});
+											}
+											setOpen(false);
+										})
+									)}
+							>
+								{loading ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : 'Save'}
+							</button>
+						</div>
+					</div>
+				</ModalUI>
+			) : null}
 			{canvas_board && canvas_board.length === 0 ? (
-				<h1>Your Account has no Lean Canvas, Please contact your Mentor</h1>
+				<div className="canvas-header-btn" onClick={() => setOpen(true)}>
+					<AddCircleOutlineIcon style={{ fontSize: '20px', color: '#fff' }} />
+					<p>Add canvas</p>
+				</div>
 			) : (
 				<DragDropContext onDragEnd={onDragEnd}>
+					{canvas_board && canvas_board.length === 0 ? null : (
+						<Menu boards={canvas_board} setCanvasBoardId={setCanvasBoardId} setOpen={setOpen} />
+					)}
 					<div className="canvas-main">
-						{dragdropLoading ? <Loader /> : null}
+						{loading ? <Loader /> : null}
 						<div className="canvas-main-row">
 							<div className="canvas-list-list">
 								<List1

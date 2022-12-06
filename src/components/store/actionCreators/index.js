@@ -11,6 +11,7 @@ export {
 	getBlogs,
 	getBoards,
 	getListsOnBoard,
+	addLeanCanvas,
 	createCard,
 	createAdminCard,
 	postBlog,

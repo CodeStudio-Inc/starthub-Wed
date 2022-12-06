@@ -533,8 +533,21 @@
 	width: 100%;
 }
 
-.objective-header p {
+.objective-name-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 30%;
+}
+
+.objective-name-row h4  {
+	color: rgba(0, 0, 0, 0.3);
+	margin: 0;
+}
+
+.objective-name-row p {
 	color: rgba(0, 0, 0, 0.5);
+	margin: 0;
 }
 
 .objective-description {

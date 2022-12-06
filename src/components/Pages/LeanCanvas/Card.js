@@ -6,7 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-export const Card = ({ cardId, text, callback, index, listId, cardIndex }) => {
+export const Card = ({ text, callback, listId, cardIndex }) => {
 	const [ cardName, setCardName ] = useState(text);
 	const [ visible, setVisible ] = useState(false);
 

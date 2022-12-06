@@ -306,6 +306,7 @@ export const createAdminCard = (listId, name, callback) => {
 				callback({ success: true, res: res });
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};
@@ -459,7 +460,37 @@ export const postView = (id) => {
 	};
 };
 
-export const getBoards = (creator) => {
+export const addLeanCanvas = (name, callback) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+
+		const token = getState().auth.token;
+		const data = {
+			name: name
+		};
+
+		axios
+			.post(`${BaseUrl}/catalyzer/create-canvas`, data, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res);
+				dispatch(stopLoader());
+				callback({ success: true });
+				dispatch(setBoards(res.data.boards));
+			})
+			.catch((error) => {
+				dispatch(stopLoader());
+				console.log(error);
+			});
+	};
+};
+
+export const getBoards = () => {
 	return (dispatch, getState) => {
 		const token = getState().auth.token;
 
@@ -689,9 +720,9 @@ export const unarchiveList = (id, callback) => {
 	};
 };
 
-export const archiveBoard = (id, callback) => {
+export const archiveBoard = (id) => {
 	return (dispatch, getState) => {
-		// dispatch(loadAction())
+		dispatch(loadAction());
 		const token = getState().auth.token;
 
 		const data = {
@@ -707,11 +738,11 @@ export const archiveBoard = (id, callback) => {
 				}
 			})
 			.then((res) => {
-				// console.log(res.data)
+				dispatch(stopLoader());
 				dispatch(setBoards(res.data.boards));
-				callback({ success: true, res: res });
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};

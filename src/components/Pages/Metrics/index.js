@@ -183,7 +183,7 @@ const Metrics = () => {
 	return (
 		<div className="metrics-container">
 			<Helmet>
-				<title>Revenue</title>
+				<title>Dashboard</title>
 			</Helmet>
 			{category === 'internal' ? null : (
 				<div className="graph-row">

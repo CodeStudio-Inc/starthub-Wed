@@ -41,16 +41,16 @@ const HomepageTemplate = (props) => {
 		actionObject: null,
 		objects: [
 			{
+				title: 'Dashboard',
+				icon: <BarChartIcon style={{ fontSize: '25px' }} className="home-link-icon" />
+			},
+			{
 				title: 'OKRs',
 				icon: <ListAltIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			},
 			{
 				title: 'Lean Canvas',
 				icon: <DeveloperBoardIcon style={{ fontSize: '25px' }} className="home-link-icon" />
-			},
-			{
-				title: 'Metrics',
-				icon: <BarChartIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			},
 			{
 				title: 'Diagnostics',
@@ -759,9 +759,9 @@ const HomepageTemplate = (props) => {
 			</div>
 			{!admin ? (
 				<div className="homepage-main">
-					{index === 0 ? <OKRs setOpen={setOpen} /> : null}
-					{index === 1 ? <LeanCanvas /> : null}
-					{index === 2 ? <Metrics /> : null}
+					{index === 0 ? <Metrics /> : null}
+					{index === 1 ? <OKRs setOpen={setOpen} /> : null}
+					{index === 2 ? <LeanCanvas /> : null}
 					{index === 3 ? <DiagnosticsTest /> : null}
 					{index === 4 ? <Calendar /> : null}
 				</div>

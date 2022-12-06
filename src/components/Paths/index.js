@@ -11,6 +11,7 @@ import Addkeyresult from '../Pages/OKRs/Addkeyresult';
 import QuarterTabs from '../Pages/OKRs/QuaterTabs';
 import Diagnostics from '../Pages/OKRs/Diagnostics';
 import ModalUI from '../ModalUI';
+import Menu from '../ModalUI/Menu';
 import Loader from '../ModalUI/Loader';
 import Card from '../Pages/LeanCanvas/Card';
 import List1 from '../Pages/LeanCanvas/List1';
@@ -46,6 +47,7 @@ export {
 	KanbanList,
 	KanbanCard,
 	ModalUI,
+	Menu,
 	Loader,
 	Objective,
 	Statements,

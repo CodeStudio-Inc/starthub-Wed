@@ -4,6 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import CancelIcon from '@material-ui/icons/Cancel';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { Keyresult, Addkeyresult, actionCreators, GAEventsTracker } from '../../Paths';
+import moment from 'moment';
 
 const Objective = ({ objectives, svg }) => {
 	const [ addkeyResult, setaddkeyResult ] = React.useState(false);
@@ -20,13 +21,18 @@ const Objective = ({ objectives, svg }) => {
 
 	const dispatch = useDispatch();
 
+	// console.log(objectives);
+
 	return (
 		<div className="objective-bg">
 			{objectives &&
 				objectives.map((obj, index) => (
 					<div className="objective" key={obj._id}>
 						<div className="objective-header">
-							<p>Objective {index >= 0 ? index + 1 : null}</p>
+							<div className="objective-name-row">
+								<h4>Objective {index >= 0 ? index + 1 : null}</h4>
+								<p>{moment(obj.updatedAt).fromNow()}</p>
+							</div>
 							{loading && obj._id === activeObj ? (
 								<img src={svg} style={{ width: '30px', height: '30px' }} />
 							) : (
