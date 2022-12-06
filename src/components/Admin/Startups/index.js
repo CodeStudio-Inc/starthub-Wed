@@ -16,11 +16,11 @@ import './StartupStyles.css';
 import '../../Pages/Auth/AuthStyles.css';
 const Startups = (props) => {
 	const [ state, setState ] = React.useState({
-		username: 'Afropay',
-		email: 'afropay@gmail.com',
-		category: 'catalyzer',
-		mentor: '621373424a3c50000a6d2de5',
-		password: 'pass0123'
+		username: '',
+		email: '',
+		category: '',
+		mentor: '',
+		password: ''
 	});
 	const [ error, setError ] = React.useState(false);
 	const [ success, setSuccess ] = React.useState(false);
