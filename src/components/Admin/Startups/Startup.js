@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import BalanceIcon from '@mui/icons-material/Balance';
 import SavingsIcon from '@mui/icons-material/Savings';
 import CloseIcon from '@material-ui/icons/Close';
 import { Tabs } from 'antd';
@@ -238,7 +239,7 @@ const Startup = ({ location, history }) => {
 				typeof data.totalExpectedRevenueShare === 'undefined'
 					? 0
 					: data.totalExpectedRevenueShare.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <SavingsIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <BalanceIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		}
 	];
 

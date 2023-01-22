@@ -97,7 +97,9 @@ const Metrics = () => {
 	const message2 = (
 		<h4>
 			Congs {username} on reporting your revenues in time. You are Eligible to apply for Starhub loans. Cheers!{' '}
-			<strong className="notification">Click to apply</strong>
+			<strong onClick={() => alert('In Development')} className="notification">
+				Click to apply
+			</strong>
 		</h4>
 	);
 
@@ -251,18 +253,14 @@ const Metrics = () => {
 			id: 2,
 			label: 'Total Revenue',
 			amount:
-				typeof totalRevenue === 'undefined'
-					? null
-					: totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+				typeof totalRevenue === 'undefined' ? 0 : totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 			icon: <TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		},
 		{
 			id: 3,
 			label: 'Total Expense',
 			amount:
-				typeof totalExpense === 'undefined'
-					? null
-					: totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+				typeof totalExpense === 'undefined' ? 0 : totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 			icon: <TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		},
 		{
@@ -270,7 +268,7 @@ const Metrics = () => {
 			label: 'Total Revenue Share Payment',
 			amount:
 				typeof totalRevSharePaid === 'undefined'
-					? null
+					? 0
 					: totalRevSharePaid.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 			icon: <SavingsIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		},
@@ -279,7 +277,7 @@ const Metrics = () => {
 			label: 'Expected Revenue Share Payment',
 			amount:
 				typeof totalExpectedRevenueShare === 'undefined'
-					? null
+					? 0
 					: totalExpectedRevenueShare.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 			icon: <BalanceIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		},

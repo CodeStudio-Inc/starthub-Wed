@@ -12,8 +12,8 @@ const Login = () => {
 	const [ type, setType ] = React.useState('password');
 	const [ error, setError ] = React.useState(false);
 	const [ state, setState ] = React.useState({
-		email: 'afropay@gmail.com',
-		password: 'pass0123'
+		email: '',
+		password: ''
 	});
 
 	const { loading } = useSelector((state) => state.auth);
