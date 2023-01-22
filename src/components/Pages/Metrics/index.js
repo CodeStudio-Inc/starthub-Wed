@@ -245,8 +245,8 @@ const Metrics = () => {
 			label: 'Loan Eligibility',
 			amount:
 				moment(daysSinceLastSubmit).format('MM') === txt2 && typeof daysSinceLastSubmit !== 'undefined'
-					? 'YOU ARE ELIGIBLE'
-					: 'YOU ARE NOT ELIGIBLE',
+					? 'YES'
+					: 'NO',
 			icon: <CreditScoreIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		},
 		{
