@@ -15,7 +15,21 @@ export const stopLoader = () => {
 	};
 };
 
-export const setUser = (admin, userId, username, email, category, token, mentor, tokenExpiration) => {
+export const setUser = (
+	admin,
+	userId,
+	username,
+	email,
+	category,
+	token,
+	mentor,
+	tokenExpiration,
+	totalExpectedRevenueShare,
+	totalRevSharePaid,
+	totalRevenue,
+	totalExpense,
+	daysSinceLastSubmit
+) => {
 	return {
 		type: actions.SET_USER,
 		admin,
@@ -25,7 +39,12 @@ export const setUser = (admin, userId, username, email, category, token, mentor,
 		category,
 		token,
 		mentor,
-		tokenExpiration
+		tokenExpiration,
+		totalExpectedRevenueShare,
+		totalRevSharePaid,
+		totalRevenue,
+		totalExpense,
+		daysSinceLastSubmit
 	};
 };
 
@@ -60,7 +79,7 @@ export const login = (email, password, callback) => {
 			})
 			.then((res) => {
 				dispatch(stopLoader());
-				// console.log(res);
+				// console.log(res.data);
 				dispatch(
 					setUser(
 						res.data.admin,
@@ -70,7 +89,12 @@ export const login = (email, password, callback) => {
 						res.data.category,
 						res.data.token,
 						res.data.mentor,
-						res.data.tokenExpiration
+						res.data.tokenExpiration,
+						res.data.totalExpectedRevenueShare,
+						res.data.totalRevSharePaid,
+						res.data.totalRevenue,
+						res.data.totalExpense,
+						res.data.daysSinceLastSubmit
 					)
 				);
 			})
@@ -180,7 +204,17 @@ export const getUserActivity = () => {
 	};
 };
 
-export const signUp = (username, email, category, mentor, password, callback) => {
+export const signUp = (
+	username,
+	email,
+	category,
+	mentor,
+	password,
+	contractDate,
+	additionalMetrics,
+	percentageShare,
+	callback
+) => {
 	return (dispatch) => {
 		dispatch(loaderAction());
 
@@ -189,7 +223,10 @@ export const signUp = (username, email, category, mentor, password, callback) =>
 			email,
 			category,
 			mentor,
-			password
+			password,
+			contractDate,
+			additionalMetrics,
+			percentageShare
 		};
 
 		axios
@@ -201,12 +238,11 @@ export const signUp = (username, email, category, mentor, password, callback) =>
 			})
 			.then((res) => {
 				dispatch(stopLoader());
-				callback({ success: true });
-				console.log(res, 'response');
+				callback({ success: true, res: res.data.message });
 			})
 			.catch((error) => {
 				dispatch(stopLoader());
-				callback({ error: true });
+				callback({ error: true, err: error });
 				console.log(error);
 			});
 	};

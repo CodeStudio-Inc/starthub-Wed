@@ -12,7 +12,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 100%;
+    width: 95%;
 }
 
 .rev-modal-container {
@@ -60,6 +60,7 @@
 	width: 100%;
 	padding: 10px;
 	background: #fff;
+	margin-top: 1rem;
 }
 
 .revenue-table-header h2 {
@@ -67,14 +68,29 @@
 	color: #dfa126;
 }
 
-.revenue-table-header input {
+.revenue-table-header select {
 	outline: none;
 	background: none;
+	width: 70%;
 	height: 30px;
 	border: 1px solid rgba(0,0,0,0.1);
 	border-radius: 5px;
 	margin-left: 0.5rem;
 	padding-left: 5px;
+}
+
+.revenue-table-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 20%;
+}
+
+.revenue-table-row button {
+	outline: none;
+	background: none;
+	border: none;
+	color: #dfa126;
 }
 
 .approve-column {

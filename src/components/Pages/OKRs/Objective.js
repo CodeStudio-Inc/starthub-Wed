@@ -33,6 +33,11 @@ const Objective = ({ objectives, svg }) => {
 								<h4>Objective {index >= 0 ? index + 1 : null}</h4>
 								<p>{moment(obj.updatedAt).fromNow()}</p>
 							</div>
+							{obj.quarter === 4 ? null : (
+								<h5 onClick={() => dispatch(actionCreators.updateQuarter(obj._id))}>
+									Push to next Quarter{' '}
+								</h5>
+							)}
 							{loading && obj._id === activeObj ? (
 								<img src={svg} style={{ width: '30px', height: '30px' }} />
 							) : (

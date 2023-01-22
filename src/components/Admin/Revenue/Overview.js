@@ -7,6 +7,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CloseIcon from '@mui/icons-material/Close';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PaidIcon from '@mui/icons-material/Paid';
+import moment from 'moment';
 
 const Overview = () => {
 	const [ open, setOpen ] = React.useState(false);
@@ -22,7 +23,7 @@ const Overview = () => {
 	let users_revenue = [];
 
 	filtereUsers.forEach((element) => {
-		let user = revenue_tracking.filter((el) => el.creator === element._id).slice(-1).pop();
+		let user = revenue_tracking && revenue_tracking.filter((el) => el.creator === element._id).slice(-1).pop();
 		users_revenue.push(user);
 	});
 
@@ -307,6 +308,10 @@ const Overview = () => {
 		}
 	];
 
+	const searchRevenue = () => {
+		dispatch(actionCreators.searchRevenueTracking(state.year));
+	};
+
 	return (
 		<div className="revenue-main">
 			{open ? (
@@ -347,7 +352,21 @@ const Overview = () => {
 				</ModalUI>
 			) : null}
 			<div className="revenue-table-header">
-				<input
+				<div className="revenue-table-row">
+					<select value={state.year} onChange={(e) => setState({ ...state, year: e.target.value })}>
+						<option value="" disabled selected>
+							-selec year-
+						</option>
+						<option value="2020">2020</option>
+						<option value="2021">2021</option>
+						<option value="2022">2022</option>
+						<option value="2023">2023</option>
+						<option value="2024">2024</option>
+						<option value="2025">2025</option>
+					</select>
+					<button onClick={searchRevenue}>search</button>
+				</div>
+				{/* <input
 					value={state.year}
 					onChange={(e) => setState({ ...state, year: e.target.value })}
 					placeholder="search year"
@@ -356,7 +375,8 @@ const Overview = () => {
 							dispatch(actionCreators.searchRevenueTracking(state.year));
 						}
 					}}
-				/>
+				/> */}
+				<h2>{state.year ? state.year : moment(new Date()).format('YYYY')} Revenue Tracking</h2>
 			</div>
 			<Table
 				columns={columns}

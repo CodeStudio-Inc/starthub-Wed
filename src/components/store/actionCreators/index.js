@@ -47,7 +47,8 @@ export {
 	editStatement,
 	editObjective,
 	editkeyResult,
-	deleteKeyResult
+	deleteKeyResult,
+	updateQuarter
 } from './requests';
 
 export {
@@ -91,5 +92,6 @@ export {
 	getStartupRevenueTracking,
 	searchRevenueTracking,
 	getRevenueAccumulation,
-	sendEmail
+	sendEmail,
+	addPayment
 } from './admin';

@@ -1267,3 +1267,34 @@ export const sendEmail = (email, startup, months, callback) => {
 			});
 	};
 };
+
+export const addPayment = (startup, amount, month, date) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		const data = {
+			startup,
+			amount,
+			month,
+			date
+		};
+
+		axios
+			.post(`${BaseUrl}/admin/revShare-payment`, data, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				dispatch(stopLoader());
+				// console.log(res);
+			})
+			.catch((error) => {
+				dispatch(stopLoader());
+				console.log(error);
+			});
+	};
+};

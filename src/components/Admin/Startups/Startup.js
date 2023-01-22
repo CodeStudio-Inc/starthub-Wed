@@ -35,9 +35,6 @@ const Startup = ({ location, history }) => {
 
 	const data = location.state.data;
 	const startup_revenue = revenue.filter((e) => e.creator === data._id);
-
-	const total_revenue = Array.from(startup_revenue, ({ month_revenue }) => month_revenue).reduce((a, b) => a + b, 0);
-	const total_expense = Array.from(startup_revenue, ({ month_expense }) => month_expense).reduce((a, b) => a + b, 0);
 	const board_id = boards && boards.at(-1)._id;
 
 	const dispatch = useDispatch();
@@ -130,7 +127,7 @@ const Startup = ({ location, history }) => {
 
 	six_months_revenue =
 		current_yr_revenue &&
-		current_yr_revenue.filter((e) => moment(e.date).format('MM') >= txt1 && moment(e.date).format('MM') <= txt2);
+		current_yr_revenue.filter((e) => moment(e.date).format('MM') >= txt1 || moment(e.date).format('MM') <= txt2);
 
 	let new_revenue = [];
 
@@ -199,17 +196,11 @@ const Startup = ({ location, history }) => {
 				borderColor: '#37561b',
 				borderWidth: 1,
 				data: rev
-			}
-		]
-	};
-
-	const Expense = {
-		labels: months,
-		datasets: [
+			},
 			{
 				label: 'Monthly Expenses (UGX)',
-				backgroundColor: '#37561b',
-				borderColor: '#37561b',
+				backgroundColor: '#dfa126',
+				borderColor: '#dfa126',
 				borderWidth: 1,
 				data: expense
 			}
@@ -219,17 +210,34 @@ const Startup = ({ location, history }) => {
 	const card_content = [
 		{
 			label: 'Total Revenue',
-			amount: total_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+			amount:
+				typeof data.totalRevenue === 'undefined'
+					? 0
+					: data.totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 			icon: <TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		},
 		{
 			label: 'Total Expense',
-			amount: total_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+			amount:
+				typeof data.totalExpense === 'undefined'
+					? 0
+					: data.totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 			icon: <TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		},
 		{
 			label: 'Total Revenue Share Payment',
-			amount: 0,
+			amount:
+				typeof data.totalRevSharePaid === 'undefined'
+					? 0
+					: data.totalRevSharePaid.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+			icon: <SavingsIcon style={{ fontSize: '30px', color: '#37561b' }} />
+		},
+		{
+			label: 'Total Expected Revenue Share Payment',
+			amount:
+				typeof data.totalExpectedRevenueShare === 'undefined'
+					? 0
+					: data.totalExpectedRevenueShare.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 			icon: <SavingsIcon style={{ fontSize: '30px', color: '#37561b' }} />
 		}
 	];
@@ -414,20 +422,8 @@ const Startup = ({ location, history }) => {
 			<div className="graph-row">
 				<div className="left-container">
 					<div className="graph-tab">
-						<h2>Metrics</h2>
-						<Tabs
-							style={{ width: '100%' }}
-							defaultActiveKey="1"
-							centered
-							tabBarStyle={{ color: '#37561b' }}
-						>
-							<TabPane tab="Revenue" key="1" className="graph-tab-content">
-								<Line data={Revenue} width={100} height={30} />
-							</TabPane>
-							<TabPane tab="Expense" key="2" className="graph-tab-content">
-								<Line data={Expense} width={100} height={30} />
-							</TabPane>
-						</Tabs>
+						<h2>Revenue Reporting</h2>
+						<Line data={Revenue} width={100} height={30} />
 					</div>
 					<div className="table-tab">
 						<div className="objective-table-row">

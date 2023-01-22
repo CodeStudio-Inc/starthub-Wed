@@ -26,22 +26,7 @@ const Revenues = () => {
 			<Helmet>
 				<title>Revenue Reporting Overview</title>
 			</Helmet>
-			<Tabs
-				style={{ marginTop: '3rem', width: '90%' }}
-				defaultActiveKey="1"
-				centered
-				tabBarStyle={{ color: '#37561b' }}
-			>
-				<TabPane tab="Overview" key="1">
-					<Overview />
-				</TabPane>
-				<TabPane tab="Revenue Share" key="2">
-					<RevenueShare />
-				</TabPane>
-				<TabPane tab="Revenue Accumulation" key="3">
-					<RevenueAccumulation />
-				</TabPane>
-			</Tabs>
+			<Overview />
 		</div>
 	);
 };

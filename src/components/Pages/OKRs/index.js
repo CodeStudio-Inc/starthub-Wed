@@ -11,7 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Helmet } from 'react-helmet';
 
 import './OKRStyles.css';
-const OKRs = ({ setOpen }) => {
+const OKRs = () => {
 	const [ archive, setArchive ] = React.useState(false);
 	const [ modal, setModal ] = React.useState(false);
 	const [ quarter1Obj, setQuarter1Obj ] = React.useState(false);
@@ -470,19 +470,6 @@ const OKRs = ({ setOpen }) => {
 					</div>
 				)}
 				<Diagnostics last_value={last_value && last_value} />
-				{category === 'internal' ? null : (
-					<div className="rev-reporting">
-						<div className="rev-reporting-row">
-							<h4>Total Revenue</h4>
-							<h2>{total_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs</h2>
-						</div>
-						<div className="rev-reporting-row">
-							<h4>Total Expenses</h4>
-							<h2>{total_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs</h2>
-						</div>
-						<button onClick={() => setOpen(true)}>Report Revenue</button>
-					</div>
-				)}
 			</div>
 		</div>
 	);

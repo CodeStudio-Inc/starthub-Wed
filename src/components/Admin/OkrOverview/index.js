@@ -358,31 +358,6 @@ const OKROverview = () => {
 		onetopeQ4 &&
 		onetopeQ4.map((e) => (!e.objPercentage ? 0 : e.objPercentage)).reduce((a, b) => a + b, 0) / onetopeQ4.length;
 
-	// FastMere overview data filter
-	const fastMereOverrallPercentage =
-		fastMere &&
-		fastMere.map((e) => (!e.objPercentage ? 0 : e.objPercentage)).reduce((a, b) => a + b, 0) / fastMere.length;
-
-	const fastMereQ1 = fastMere.filter((e) => e.quarter === 1);
-	const fastMereQ1Percentage =
-		fastMereQ1 &&
-		fastMereQ1.map((e) => (!e.objPercentage ? 0 : e.objPercentage)).reduce((a, b) => a + b, 0) / fastMereQ1.length;
-
-	const fastMereQ2 = fastMere.filter((e) => e.quarter === 2);
-	const fastMereQ2Percentage =
-		fastMereQ2 &&
-		fastMereQ2.map((e) => (!e.objPercentage ? 0 : e.objPercentage)).reduce((a, b) => a + b, 0) / fastMereQ2.length;
-
-	const fastMereQ3 = fastMere.filter((e) => e.quarter === 3);
-	const fastMereQ3Percentage =
-		fastMereQ3 &&
-		fastMereQ3.map((e) => (!e.objPercentage ? 0 : e.objPercentage)).reduce((a, b) => a + b, 0) / fastMereQ3.length;
-
-	const fastMereQ4 = fastMere.filter((e) => e.quarter === 4);
-	const fastMereQ4Percentage =
-		fastMereQ4 &&
-		fastMereQ4.map((e) => (!e.objPercentage ? 0 : e.objPercentage)).reduce((a, b) => a + b, 0) / fastMereQ4.length;
-
 	const table_data = [
 		{
 			id: catalyzer[0]._id,
@@ -539,19 +514,6 @@ const OKROverview = () => {
 			Q2update: !onetopeQ2Percentage ? 0 : onetopeQ2Percentage,
 			Q3update: !onetopeQ3Percentage ? 0 : onetopeQ3Percentage,
 			Q4update: !onetopeQ4Percentage ? 0 : onetopeQ4Percentage
-		},
-		{
-			id: catalyzer[15]._id,
-			username: catalyzer[15].username,
-			overrall: fastMereOverrallPercentage,
-			q1Percentage: fastMereQ1Percentage,
-			q2Percentage: fastMereQ2Percentage,
-			q3Percentage: fastMereQ3Percentage,
-			q4Percentage: fastMereQ4Percentage,
-			Q1update: !fastMereQ1Percentage ? 0 : fastMereQ1Percentage,
-			Q2update: !fastMereQ2Percentage ? 0 : fastMereQ2Percentage,
-			Q3update: !fastMereQ3Percentage ? 0 : fastMereQ3Percentage,
-			Q4update: !fastMereQ4Percentage ? 0 : fastMereQ4Percentage
 		}
 	];
 
@@ -644,6 +606,7 @@ const OKROverview = () => {
 			key: 'Q2update',
 			align: 'left',
 			render: (r) => {
+				console.log(r, 'll');
 				if (r === 0) return <Text text="inactive" />;
 				if (r > 0 && r <= 100) return <Text2 r={r} text1="active" text2="complete" />;
 			}

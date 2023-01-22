@@ -9,6 +9,11 @@ const initialState = {
 	mentor: '',
 	category: '',
 	tokenExpiration: '',
+	totalExpectedRevenueShare: 0,
+	totalRevSharePaid: 0,
+	totalRevenue: 0,
+	totalExpense: 0,
+	daysSinceLastSubmit: '',
 	user_activity: [],
 	admin: null,
 	loading: false,
@@ -39,6 +44,11 @@ const auth = (state = initialState, action) => {
 				token: action.token,
 				mentor: action.mentor,
 				tokenExpiration: action.tokenExpiration,
+				totalExpectedRevenueShare: action.totalExpectedRevenueShare,
+				totalRevSharePaid: action.totalRevSharePaid,
+				totalRevenue: action.totalRevenue,
+				totalExpense: action.totalExpense,
+				daysSinceLastSubmit: action.daysSinceLastSubmit,
 				authenticated: true
 			});
 

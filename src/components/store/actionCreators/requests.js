@@ -1151,3 +1151,30 @@ export const deleteKeyResult = (id, krId) => {
 			});
 	};
 };
+
+export const updateQuarter = (objId) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+		const token = getState().auth.token;
+
+		const data = {
+			id: ''
+		};
+		axios
+			.put(`${BaseUrl}/catalyzer/update-quarter/${objId}`, data, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				dispatch(setObjectives(res.data.objs));
+				dispatch(stopLoader());
+			})
+			.catch((error) => {
+				dispatch(stopLoader());
+				console.log(error);
+			});
+	};
+};

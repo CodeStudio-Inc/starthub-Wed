@@ -162,6 +162,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
     border: 1px solid #37561b;
     background: #f7f7f7;
     padding: 10px;
@@ -173,6 +174,133 @@
 .error-message h4 {
     color: #37561b;
     margin: 0;
+}
+
+/* Add startup css */
+.signup-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 70%;
+    height: 85vh;
+    border-radius: 5px;
+    box-sizing: border-box;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.signup-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../../../assets/images/bg.png");
+    flex-direction: column;
+    width: 40%;
+    height: 100%;
+}
+
+.signup-left-backdrop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: #36561b;  
+    background: -webkit-linear-gradient(to right, #477522, #36561b); 
+    background: linear-gradient(to right, #477522f1, #36561b);
+
+}
+
+.signup-left-backdrop h1 {
+    margin: 1.5rem;
+    color: #f7f7f7;
+    text-align: left;
+    line-height: 1.2;
+}
+
+.signup-left-backdrop h3 {
+    color: #dfa126;
+    font-weight: 400;
+    text-align: left;
+    margin-left: 1.5rem;
+}
+
+.signup-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+    background: #f7f7f7;
+}
+
+.signup-right-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+}
+
+.close-modal-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.close-modal-icon:hover {
+cursor: pointer;
+}
+
+.signup-right-container h2 {
+    font-weight: 400;
+}
+
+.signup-right-container h3 {
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.signup-right-container button {
+    background: #37561b;
+    border: none;
+    outline: none;
+    color: #fff;
+    height: 35px;
+    margin: 0.5rem;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0.5rem;
+}
+
+.input-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.input-column h4 {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.input-column input {
+    background: none;
+}
+
+.input-column select {
+    background: none;
 }
 
 @media screen and (max-width: 768px) {

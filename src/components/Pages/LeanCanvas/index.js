@@ -61,7 +61,6 @@ const LeanCanvas = () => {
 		dispatch(actionCreators.getBoards());
 		getLists();
 		ReactGA.pageview(window.location.pathname);
-		setCanvasBoardId(canvas_board && canvas_board.length === 0 ? null : canvas_board && canvas_board.at(-1)._id);
 	}, []);
 
 	const getLists = () => dispatch(actionCreators.getListsOnBoard(() => {}));

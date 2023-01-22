@@ -34,6 +34,8 @@ import RevenueShare from '../Admin/Revenue/RevenueShare';
 import RevenueAccumulation from '../Admin/Revenue/RevenueAccumulation';
 import ObjectivesTable from '../Admin/Startups/ObjectivesTable';
 import AdminLeanCanvas from '../Admin/Startups/LeanCanvas';
+import ReportRevenue from '../Pages/Metrics/ReportRevenue';
+import RevenueTable from '../Pages/Metrics/RevenueTable';
 import Error from '../tabs/Error';
 import svg from '../../assets/images/spinner.svg';
 import GAEventsTracker from '../Hooks/GAEventsTracker';
@@ -77,6 +79,8 @@ export {
 	AdminLeanCanvas,
 	ObjectivesTable,
 	Error,
+	ReportRevenue,
+	RevenueTable,
 	svg,
 	logo,
 	GAEventsTracker
