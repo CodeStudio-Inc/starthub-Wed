@@ -54,7 +54,7 @@ const AddStartup = ({ setOpen }) => {
 				state.mentor,
 				state.password,
 				state.contractDate,
-				state.additionalMetrics,
+				parseInt(state.additionalMetrics),
 				state.percentageShare,
 				(res) => {
 					if (res.success) {

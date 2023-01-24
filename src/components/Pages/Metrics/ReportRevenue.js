@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isInteger } from 'formik';
-import { actionCreators } from '../../Paths';
+import { actionCreators, svg } from '../../Paths';
 import { Spin } from 'antd';
 import CloseIcon from '@mui/icons-material/Close';
+import moment from 'moment';
 
 const ReportRevenue = ({ setOpen }) => {
 	const [ state, setState ] = React.useState({
@@ -23,6 +24,10 @@ const ReportRevenue = ({ setOpen }) => {
 	const dispatch = useDispatch();
 
 	const addRevenue = () => {
+		if (!isInteger(state.month_revenue) || !isInteger(state.month_expense))
+			return setMessage('Invalid Amount Entry');
+		if (moment(state.date).format('MMM') !== state.month.substring(0, 3))
+			return setMessage('Month selected should match with the month in the selected date');
 		if (state.month_revenue === '' || state.month_expense === '' || state.date === '' || state.month === '')
 			return setMessage('All fields are reequired');
 		dispatch(
@@ -149,7 +154,7 @@ const ReportRevenue = ({ setOpen }) => {
 					disabled={loader ? true : false}
 					onClick={addRevenue}
 				>
-					{loader ? <Spin /> : 'Submit'}
+					{loader ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : 'Submit'}
 				</button>
 				{message ? <p>{message}</p> : null}
 			</div>

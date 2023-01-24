@@ -3,29 +3,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators, svg } from '../../../Paths';
 import CloseIcon from '@material-ui/icons/Close';
 
-const MakePayment = ({ setOpen, startups, loading }) => {
+const MakePayment = ({ setOpen, startups }) => {
 	const [ state, setState ] = React.useState({
 		startup: '',
 		amount: '',
 		month: '',
 		date: '',
-		disable: false
+		message: ''
 	});
 
-	// console.log(loading);
+	const { loading } = useSelector((state) => state.admin);
 
 	const dispatch = useDispatch();
 
 	const addPayment = () => {
 		if (!state.startup || !state.amount || !state.month || !state.date)
-			return setState({ ...state, disable: true });
+			return setState({ ...state, message: 'All fields are required' });
 		dispatch(actionCreators.addPayment(state.startup, state.amount, state.month, state.date));
 		setState({
 			startup: '',
 			amount: '',
 			month: '',
 			date: '',
-			disable: false
+			message: ''
 		});
 	};
 
@@ -69,9 +69,10 @@ const MakePayment = ({ setOpen, startups, loading }) => {
 				<h4>Date</h4>
 				<input type="date" value={state.date} onChange={(e) => setState({ ...state, date: e.target.value })} />
 			</div>
-			<button disabled={state.disable} onClick={addPayment}>
-				{loading ? <img src={svg} style={{ height: '20px', width: '20px' }} /> : 'Save'}
+			<button onClick={addPayment}>
+				{loading ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : 'Make Payment'}
 			</button>
+			<p>{state.message}</p>
 		</div>
 	);
 };

@@ -5,7 +5,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import BalanceIcon from '@mui/icons-material/Balance';
 import SavingsIcon from '@mui/icons-material/Savings';
-import CloseIcon from '@material-ui/icons/Close';
+import EditIcon from '@mui/icons-material/Edit';
 import { Tabs } from 'antd';
 import { Table } from 'antd';
 import { Line } from 'react-chartjs-2';
@@ -16,6 +16,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Helmet } from 'react-helmet';
 
+import NewObjective from './NewObjective';
+import EditProfile from './EditProfile';
 import './StartupStyles.css';
 const Startup = ({ location, history }) => {
 	const { TabPane } = Tabs;
@@ -23,6 +25,7 @@ const Startup = ({ location, history }) => {
 	const [ rowId, setRowId ] = React.useState('');
 	const [ loader, setLoader ] = React.useState(false);
 	const [ open, setOpen ] = React.useState(false);
+	const [ edit, setEdit ] = React.useState(false);
 	const [ message, setMessage ] = React.useState(false);
 	const [ state, setState ] = React.useState({
 		description: '',
@@ -373,38 +376,28 @@ const Startup = ({ location, history }) => {
 			</Helmet>
 			{open ? (
 				<ModalUI>
-					<div className="add-objective-modal-container">
-						<div className="add-objective-modal-header">
-							<CloseIcon
-								style={{ fontSize: '20px' }}
-								className="add-objective-modal-header-icon"
-								onClick={() => setOpen(false)}
-							/>
-						</div>
-						<div className="add-objective-modal-content">
-							<input
-								placeholder="Enter objective name"
-								value={state.description}
-								onChange={(e) => setState({ ...state, description: e.target.value })}
-							/>
-							<select
-								value={state.quarter}
-								onChange={(e) => setState({ ...state, quarter: e.target.value })}
-							>
-								<option value="" disabled selected>
-									-select-quarter-
-								</option>
-								<option value="1">Quarter1</option>
-								<option value="2">Quarter2</option>
-								<option value="3">Quarter3</option>
-								<option value="4">Quarter3</option>
-							</select>
-						</div>
-						<button onClick={addObjective}>
-							{loading ? <img src={svg} style={{ height: '20px', width: '20px' }} /> : 'save'}
-						</button>
-						{message ? <p>{message}</p> : null}
-					</div>
+					<NewObjective
+						state={state}
+						setState={setState}
+						setOpen={setOpen}
+						loading={loader}
+						svg={svg}
+						addObjective={addObjective}
+						message={message}
+					/>
+				</ModalUI>
+			) : null}
+			{edit ? (
+				<ModalUI>
+					<EditProfile
+						setEdit={setEdit}
+						username={data.username}
+						userId={data._id}
+						dispatch={dispatch}
+						actionCreators={actionCreators}
+						loading={loading}
+						svg={svg}
+					/>
 				</ModalUI>
 			) : null}
 			<div className="profile-row">
@@ -412,11 +405,17 @@ const Startup = ({ location, history }) => {
 					<KeyboardBackspaceIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.3rem' }} />
 					<h4>Back</h4>
 				</div>
-				<div className="profile-lable-row">
-					<div className="table-avatar">
-						<h3>{data.username.substring(0, 1)}</h3>
+				<div className="edit-profile-container">
+					<div className="edit-profile" onClick={() => setEdit(true)}>
+						<EditIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.2rem' }} />
+						<p>Edit Profile</p>
 					</div>
-					<h2>{data.username}</h2>
+					<div className="profile-lable-row">
+						<div className="table-avatar">
+							<h3>{data.username.substring(0, 1)}</h3>
+						</div>
+						<h2>{data.username}</h2>
+					</div>
 				</div>
 			</div>
 			<Cards />

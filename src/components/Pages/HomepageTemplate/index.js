@@ -73,7 +73,7 @@ const HomepageTemplate = (props) => {
 			// 	icon: <AnalyticsIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			// },
 			// {
-			// 	title: 'Investments',
+			// 	title: 'Loans',
 			// 	icon: <LocalAtmIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			// },
 			{
@@ -337,6 +337,7 @@ const HomepageTemplate = (props) => {
 					{index === 0 ? <Startups /> : null}
 					{/* {index === 1 ? <OkrOverview /> : null} */}
 					{index === 1 ? <UserActivity /> : null}
+					{/* {index === 1 ? <UserActivity /> : null} */}
 					{index === 2 ? <Revenues /> : null}
 				</div>
 			) : null}

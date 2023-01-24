@@ -10,6 +10,7 @@ import AddCardIcon from '@mui/icons-material/AddCard';
 import GroupsIcon from '@mui/icons-material/Groups';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { Helmet } from 'react-helmet';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 import AddStartup from './modals/AddStartup';
 import MakePayment from './modals/MakePayment';
@@ -19,9 +20,11 @@ const Startups = (props) => {
 	const [ addStartupModal, setAddStartupModal ] = React.useState(false);
 	const [ paymentsModal, setPaymentsModal ] = React.useState(false);
 
-	const { users, loader } = useSelector((state) => state.admin);
+	const { users } = useSelector((state) => state.admin);
 	const { userId, user_activity } = useSelector((state) => state.auth);
 	const filterUsers = users.filter((el) => el.category === 'catalyzer' && el.mentor === userId);
+
+	const tableRef = React.useRef(null);
 
 	let users_activity = [];
 
@@ -168,7 +171,7 @@ const Startups = (props) => {
 			) : null}
 			{paymentsModal ? (
 				<ModalUI>
-					<MakePayment startups={filterUsers} setOpen={setPaymentsModal} loading={loader} />
+					<MakePayment startups={filterUsers} setOpen={setPaymentsModal} />
 				</ModalUI>
 			) : null}
 			<div className="card-row">
@@ -203,12 +206,18 @@ const Startups = (props) => {
 					<AddCardIcon style={{ fontSize: '20px', color: '#fff', marginRight: '0.5rem' }} />
 					<p>Add Payment</p>
 				</div>
+				<div className="export-container">
+					<DownloadTableExcel filename="revenue table" sheet="Startups" currentTableRef={tableRef.current}>
+						<button> Export excel </button>
+					</DownloadTableExcel>
+				</div>
 				<div className="add-startup-button" onClick={() => setAddStartupModal(true)}>
 					<ControlPointIcon style={{ fontSize: '20px', color: '#fff', marginRight: '0.5rem' }} />
 					<p>Add new Startup</p>
 				</div>
 			</div>
 			<Table
+				ref={tableRef}
 				columns={columns}
 				dataSource={[
 					...filterUsers.map((r) => ({
@@ -227,7 +236,7 @@ const Startups = (props) => {
 				}}
 				style={{ width: '90%' }}
 				pagination={{
-					defaultPageSize: 5,
+					defaultPageSize: 9,
 					showSizeChanger: true,
 					pageSizeOptions: [ '10', '20', '30' ]
 				}}

@@ -376,7 +376,7 @@ const Overview = () => {
 						}
 					}}
 				/> */}
-				<h2>{state.year ? state.year : moment(new Date()).format('YYYY')} Revenue Tracking</h2>
+				<h2>{state.year ? state.year : moment(new Date()).format('YYYY')} Revenue Reporting</h2>
 			</div>
 			<Table
 				columns={columns}

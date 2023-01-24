@@ -93,5 +93,6 @@ export {
 	searchRevenueTracking,
 	getRevenueAccumulation,
 	sendEmail,
-	addPayment
+	addPayment,
+	updateStartup
 } from './admin';

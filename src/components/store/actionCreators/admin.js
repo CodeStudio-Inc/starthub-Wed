@@ -141,10 +141,12 @@ export const getUsers = () => {
 				}
 			})
 			.then((res) => {
+				dispatch(stopLoader());
 				// console.log(res)
 				dispatch(setUsers(res.data.users));
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};
@@ -1290,6 +1292,36 @@ export const addPayment = (startup, amount, month, date) => {
 			})
 			.then((res) => {
 				dispatch(stopLoader());
+				// console.log(res);
+			})
+			.catch((error) => {
+				dispatch(stopLoader());
+				console.log(error);
+			});
+	};
+};
+
+export const updateStartup = (userId, username, email, contractDate, additionalMetrics) => {
+	return (dispatch) => {
+		dispatch(loadAction());
+
+		const data = {
+			username,
+			email,
+			contractDate,
+			additionalMetrics
+		};
+
+		axios
+			.put(`${BaseUrl}/auth/update-user/${userId}`, data, {
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					'Content-Type': 'application/json'
+				}
+			})
+			.then((res) => {
+				dispatch(stopLoader());
+				dispatch(setUsers(res.data.users));
 				// console.log(res);
 			})
 			.catch((error) => {

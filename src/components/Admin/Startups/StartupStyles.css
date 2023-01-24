@@ -57,7 +57,7 @@
     justify-content: flex-start;
     flex-direction: column;
     width: 30%;
-    min-height: 130px;
+    min-height: 150px;
     padding: 10px;
 	margin: 0.5rem;
     background: #fff;
@@ -126,6 +126,59 @@
     font-size: 16px;
     color: #37561b;
 }
+
+.edit-profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+}
+
+.edit-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-profile p {
+    margin: 0;
+    color: #37561b;
+    font-weight: 500;
+}
+
+.edit-profile-modal-header {
+    display: flex;
+    align-items:  center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.edit-profile-modal-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 80%;
+    padding: 10px;
+}
+
+.edit-profile-modal-content input {
+    width: 100%;
+    outline: none;
+    height: 40px;
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.edit-profile-modal-content h4 {
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 400;
+}
+
 
 /* Startup css */
 .startup-container {
@@ -267,6 +320,26 @@
     justify-content: space-between;
     width: 90%;
     margin-bottom: 1rem;
+}
+
+.export-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.export-container button {
+    outline: none;
+    background: none;
+    border: 1px solid #37561b;
+    border-radius: 5px;
+}
+
+.export-container button:hover {
+    cursor: pointer;
 }
 
 .objective-add-startup-button {
