@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { actionCreators, ReportRevenue, RevenueTable, ModalUI } from '../../Paths';
+import { actionCreators, ModalUI } from '../../Paths';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
 import ReactGA, { set } from 'react-ga';
@@ -11,14 +11,20 @@ import BalanceIcon from '@mui/icons-material/Balance';
 import SavingsIcon from '@mui/icons-material/Savings';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
 
+import ReportRevenue from './modals/ReportRevenue';
+import RevenueTable from './modals/RevenueTable';
+import LoanApplication from './modals/LoanApplication';
 import './MetricsStyles.css';
 const Metrics = () => {
 	const [ startMonth, setStartMonth ] = React.useState(0);
 	const [ loanMessage, setLoanMessage ] = React.useState('');
 	const [ open, setOpen ] = React.useState(false);
 	const [ revenueTable, setRevenueTable ] = React.useState(false);
+	const [ loanApplication, setLoanApplication ] = React.useState(false);
 	const { revenue } = useSelector((state) => state.admin);
 	const {
+		userId,
+		token,
 		category,
 		username,
 		totalExpectedRevenueShare,
@@ -51,12 +57,14 @@ const Metrics = () => {
 		loanEligibilityCheck(daysSinceLastSubmit);
 		checkMonth(currentMonth);
 		getRevenue();
+		getUser();
 		ReactGA.pageview(window.location.pathname);
 	}, []);
 
 	const dispatch = useDispatch();
 
 	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
+	const getUser = () => dispatch(actionCreators.getUser(userId, token));
 
 	previousYearRevenue &&
 		previousYearRevenue.forEach((e) => {
@@ -97,7 +105,7 @@ const Metrics = () => {
 	const message2 = (
 		<h4>
 			Congs {username} on reporting your revenues in time. You are Eligible to apply for Starhub loans. Cheers!{' '}
-			<strong onClick={() => alert('In Development')} className="notification">
+			<strong onClick={() => setLoanApplication(true)} className="notification">
 				Click to apply
 			</strong>
 		</h4>
@@ -323,6 +331,11 @@ const Metrics = () => {
 			{revenueTable ? (
 				<ModalUI>
 					<RevenueTable revenue={revenue} columns={columns} setOpen={setRevenueTable} />
+				</ModalUI>
+			) : null}
+			{loanApplication ? (
+				<ModalUI>
+					<LoanApplication setOpen={setLoanApplication} />
 				</ModalUI>
 			) : null}
 			<Helmet>

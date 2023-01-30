@@ -1,6 +1,7 @@
 export {
 	signUp,
 	login,
+	getUser,
 	removeUser,
 	userActivity,
 	getUserActivity,
@@ -92,6 +93,7 @@ export {
 	getStartupRevenueTracking,
 	searchRevenueTracking,
 	getRevenueAccumulation,
+	getOutstandingRevenueSharePayment,
 	sendEmail,
 	addPayment,
 	updateStartup

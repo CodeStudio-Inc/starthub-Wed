@@ -106,6 +106,42 @@ export const login = (email, password, callback) => {
 	};
 };
 
+export const getUser = (userId) => {
+	return (dispatch, getState) => {
+		const token = getState().auth.token;
+		axios
+			.get(`${BaseUrl}/auth/user/${userId}`, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				dispatch(
+					setUser(
+						res.data.admin,
+						res.data.userId,
+						res.data.username,
+						res.data.email,
+						res.data.category,
+						token,
+						res.data.mentor,
+						res.data.tokenExpiration,
+						res.data.totalExpectedRevenueShare,
+						res.data.totalRevSharePaid,
+						res.data.totalRevenue,
+						res.data.totalExpense,
+						res.data.daysSinceLastSubmit
+					)
+				);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
 export const userActivity = (email, username, userId) => {
 	return (dispatch) => {
 		dispatch(loaderAction());

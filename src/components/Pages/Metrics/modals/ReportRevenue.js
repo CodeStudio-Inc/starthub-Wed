@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isInteger } from 'formik';
-import { actionCreators, svg } from '../../Paths';
+import { actionCreators, svg } from '../../../Paths';
 import { Spin } from 'antd';
 import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment';
@@ -36,7 +36,10 @@ const ReportRevenue = ({ setOpen }) => {
 				parseInt(state.month_revenue.replace(/,/g, '')),
 				parseInt(state.month_expense.replace(/,/g, '')),
 				state.date,
-				state.month
+				state.month,
+				(res) => {
+					if (res.success) setMessage(res.message);
+				}
 			)
 		);
 		setState({

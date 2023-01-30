@@ -14,7 +14,6 @@
     background: #37561b;
     color: #fff;
     padding: 8px;
-    width: 15%;
 }
 
 .metrics-container button:hover {
@@ -266,10 +265,173 @@
 	color: rgba(0, 0, 0, 0.5);
 }
 
-
-
 .report-revenue-btn:hover {
     cursor: pointer;
+}
+
+/* Loan Application Modal */
+.loan-modal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 60%;
+    /* background: #37561b; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../../../assets/images/loans.jpeg");
+}
+
+.loan-modal-container-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    background: #ebcc8d;  
+    background: -webkit-linear-gradient(to right, #f0e4cb, #f3dbaad2); 
+    background: linear-gradient(to right, #f0e4cb, #f3dbaad0);
+}
+
+.loan-btn-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.loan-btn-loan button{
+    outline: none;
+    border: none;
+    height: 40px;
+    color: #fff;
+    background: #37561b;
+}
+
+.loan-btn-loan button:hover {
+cursor: pointer;
+}
+
+.loan-modal-header {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    margin-bottom: 2rem;
+}
+
+.loan-modal-header h3 {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 25px;
+}
+
+
+.loan-modal-row h4 {
+    margin: 0;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.loan-calculator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%; 
+}
+
+.loan-calculator input {
+    outline: none;
+    background: rgba(238, 238, 238, 0.791);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    height: 40px;
+    width: 25%;
+    padding: 5px;
+    margin-bottom: 0.5rem;
+}
+
+
+.loan-calculator select {
+    outline: none;
+    background: rgba(238, 238, 238, 0.791);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    height: 40px;
+    width: 25%;
+    padding: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.loan-calculator button {
+    height: 40px;
+    margin: 0;
+}
+
+.loan-calculator-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loan-calculator-row h1 {
+    margin-left: 0.5rem;
+}
+
+.loan-modal-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 70%;
+    flex-direction: column;
+}
+
+.loan-modal-content p {
+    margin: 0;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-bottom: 1rem;
+}
+
+.loan-modal-content p:hover {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.loan-modal-content input {
+    outline: none;
+    background: rgba(238, 238, 238, 0.791);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    height: 40px;
+    width: 100%;
+    padding-left: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.loan-modal-content select {
+    outline: none;
+    background: rgba(238, 238, 238, 0.791);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    height: 40px;
+    width: 100%;
+    padding-left: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.loan-modal-content textarea {
+    outline: none;
+    background: rgba(238, 238, 238, 0.791);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    height: 150px;
+    width: 100%;
+    padding-left: 5px;
+    margin-bottom: 0.5rem;
 }
 
 @media screen and (max-width: 768px) {

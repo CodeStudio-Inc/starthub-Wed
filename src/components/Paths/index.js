@@ -25,6 +25,7 @@ import TimothySchedule from '../Pages/Carlender/TimothySchedule';
 import MathiusSchedule from '../Pages/Carlender/MathiusSchedule';
 import Navbar from '../Pages/HomepageTemplate/Navbar';
 import Startups from '../Admin/Startups';
+import Loans from '../Admin/Loans';
 import Startup from '../Admin/Startups/Startup';
 import OkrOverview from '../Admin/OkrOverview';
 import UserActivity from '../Admin/UserActivity';
@@ -34,8 +35,6 @@ import RevenueShare from '../Admin/Revenue/RevenueShare';
 import RevenueAccumulation from '../Admin/Revenue/RevenueAccumulation';
 import ObjectivesTable from '../Admin/Startups/ObjectivesTable';
 import AdminLeanCanvas from '../Admin/Startups/LeanCanvas';
-import ReportRevenue from '../Pages/Metrics/ReportRevenue';
-import RevenueTable from '../Pages/Metrics/RevenueTable';
 import Error from '../tabs/Error';
 import svg from '../../assets/images/spinner.svg';
 import GAEventsTracker from '../Hooks/GAEventsTracker';
@@ -69,6 +68,7 @@ export {
 	TimothySchedule,
 	MathiusSchedule,
 	Startups,
+	Loans,
 	Startup,
 	OkrOverview,
 	UserActivity,
@@ -79,8 +79,6 @@ export {
 	AdminLeanCanvas,
 	ObjectivesTable,
 	Error,
-	ReportRevenue,
-	RevenueTable,
 	svg,
 	logo,
 	GAEventsTracker

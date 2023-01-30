@@ -127,6 +127,13 @@ export const setRevenueAccumulation = (data) => {
 	};
 };
 
+export const setOutstandingRevsharePayment = (data) => {
+	return {
+		type: actions.SET_OUTSTANDING_REVSHARE_PAYMENT,
+		data
+	};
+};
+
 export const getUsers = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
@@ -1065,7 +1072,7 @@ export const getAuthors = () => {
 	};
 };
 
-export const addRevenue = (startup, month_revenue, month_expense, date, month) => {
+export const addRevenue = (startup, month_revenue, month_expense, date, month, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
@@ -1090,8 +1097,8 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month) =
 			.then((res) => {
 				dispatch(stopLoader());
 				dispatch(setRevenue(res.data.revenue));
-				// console.log(res);
-				// callback({ success: true, res: res });
+				console.log(res);
+				callback({ success: true, message: res.data.message });
 			})
 			.catch((error) => {
 				console.log(error);
@@ -1296,6 +1303,31 @@ export const addPayment = (startup, amount, month, date) => {
 			})
 			.catch((error) => {
 				dispatch(stopLoader());
+				console.log(error);
+			});
+	};
+};
+
+export const getOutstandingRevenueSharePayment = (startup) => {
+	return (dispatch, getState) => {
+		const token = getState().auth.token;
+
+		const data = {
+			startup: startup
+		};
+
+		axios
+			.post(`${BaseUrl}/admin/pending-payments`, data, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				dispatch(setOutstandingRevsharePayment(res.data.revenue));
+			})
+			.catch((error) => {
 				console.log(error);
 			});
 	};

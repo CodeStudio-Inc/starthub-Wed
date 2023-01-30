@@ -47,6 +47,7 @@
     align-items: flex-start;
     justify-content: space-between;
     width: 90%;
+    flex-wrap: wrap;
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
@@ -92,13 +93,13 @@
 .card-content-column h3 {
     margin: 0;
     font-weight: 200;
-    font-size: 25px;
+    font-size: 18px;
 }
 
 .card-content-column h1 {
     margin: 0;
     font-weight: 400;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .table-column-row {
@@ -578,10 +579,10 @@ color: #37561b;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30%;
+    width: 60%;
     padding: 5px;
     flex-direction: column;
-    background: #f7f7f7;
+    background: #fff;
     border-radius: 10px;
 }
 
@@ -592,12 +593,28 @@ color: #37561b;
     width: 100%;
 }
 
+.payment-modal-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.payment-modal-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 60%;
+}
+
 .payment-modal-content {
     display: flex;
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    width: 80%;
+    width: 40%;
+    padding: 20px;
 }
 
 .payment-modal-content h4 {
@@ -612,7 +629,7 @@ color: #37561b;
  border: 1px solid rgba(0, 0, 0, 0.1);
  height: 40px;
  margin-bottom: 1rem;
- width: 100%;
+ width: 80%;
  border-radius: 5px;
 }
 
@@ -622,7 +639,7 @@ color: #37561b;
     border: 1px solid rgba(0, 0, 0, 0.1);
     height: 40px;
     margin-bottom: 1rem;
-    width: 100%;
+    width: 80%;
     border-radius: 5px;
    }
 
@@ -630,10 +647,14 @@ color: #37561b;
     outline: none;
     border: none;
     height: 40px;
-    width: 80%;
     color: #fff;
+    padding: 10px;
     background: #37561b;
     margin-bottom: 1rem;
+}
+
+.payment-modal-container button:hover{
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

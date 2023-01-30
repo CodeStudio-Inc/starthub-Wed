@@ -11,6 +11,7 @@ import {
 	actionCreators,
 	ModalUI,
 	Startups,
+	Loans,
 	OkrOverview,
 	UserActivity,
 	Revenues
@@ -30,6 +31,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import MenuIcon from '@mui/icons-material/Menu';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 
 import './HomepageStyles.css';
 const { TabPane } = Tabs;
@@ -72,10 +74,6 @@ const HomepageTemplate = (props) => {
 			// 	title: 'OKR Overview',
 			// 	icon: <AnalyticsIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			// },
-			// {
-			// 	title: 'Loans',
-			// 	icon: <LocalAtmIcon style={{ fontSize: '25px' }} className="home-link-icon" />
-			// },
 			{
 				title: 'User Activity',
 				icon: <EventNoteIcon style={{ fontSize: '25px' }} className="home-link-icon" />
@@ -83,16 +81,12 @@ const HomepageTemplate = (props) => {
 			{
 				title: 'Revenue',
 				icon: <PaymentIcon style={{ fontSize: '25px' }} className="home-link-icon" />
+			},
+			{
+				title: 'Loans',
+				icon: <LocalAtmIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			}
 		]
-	});
-
-	const [ loanState, setLoanState ] = React.useState({
-		amount: '',
-		loan_type: '',
-		duration: '',
-		interest: '',
-		expected_payment: ''
 	});
 	const [ emailState, setEmailState ] = React.useState({
 		email: '',
@@ -103,7 +97,7 @@ const HomepageTemplate = (props) => {
 	const [ emailMessage, setEmailMessage ] = React.useState('');
 	const [ emailModal, setEmailModal ] = React.useState(false);
 
-	const { username, admin, tokenExpiration } = useSelector((state) => state.auth);
+	const { username, admin, tokenExpiration, category } = useSelector((state) => state.auth);
 
 	const current_date = Date.now();
 
@@ -128,24 +122,6 @@ const HomepageTemplate = (props) => {
 	const handleMultipleSelectChange = (e) => {
 		let value = Array.from(e.target.selectedOptions, (option) => option.value);
 		setEmailState({ ...emailState, months: value });
-	};
-
-	const calculate_loan = () => {
-		if (loanState.loan_type === 'short-term') {
-			setLoanState({
-				...loanState,
-				interest: parseInt(loanState.amount) * 0.01 * parseInt(loanState.duration),
-				expected_payment:
-					parseInt(loanState.amount) + parseInt(loanState.amount) * 0.01 * parseInt(loanState.duration)
-			});
-		}
-		if (loanState.loan_type === 'long-term') {
-			setLoanState({
-				...loanState,
-				interest: parseInt(loanState.amount) * 0.015,
-				expected_payment: parseInt(loanState.amount) + parseInt(loanState.amount) * 0.015
-			});
-		}
 	};
 
 	const toggleActive = (index) => {
@@ -339,6 +315,7 @@ const HomepageTemplate = (props) => {
 					{index === 1 ? <UserActivity /> : null}
 					{/* {index === 1 ? <UserActivity /> : null} */}
 					{index === 2 ? <Revenues /> : null}
+					{index === 3 ? <Loans /> : null}
 				</div>
 			) : null}
 		</div>

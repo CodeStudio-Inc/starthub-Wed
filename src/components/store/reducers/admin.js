@@ -14,6 +14,7 @@ const initialState = {
 	rb_loans: [],
 	revShares: [],
 	revenue: [],
+	outstanding_revenue_payment: [],
 	revenue_tracking: [],
 	revenue_accumulation: [],
 	authors: [],
@@ -121,6 +122,11 @@ const requests = (state = initialState, action) => {
 		case actions.SET_ADMIN_METRICS_DATA:
 			return updateObject(state, {
 				metrics: action.data
+			});
+
+		case actions.SET_OUTSTANDING_REVSHARE_PAYMENT:
+			return updateObject(state, {
+				outstanding_revenue_payment: action.data
 			});
 
 		default:

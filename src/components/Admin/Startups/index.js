@@ -42,51 +42,9 @@ const Startups = (props) => {
 		getUserActivity();
 	}, []);
 
-	const week1End = 7;
-	const week2End = 15;
-	const week3End = 23;
-	const week4End = 31;
-
-	let dates = [];
-
 	const dataFilter = users_activity.filter(function(element) {
 		return element !== undefined;
 	});
-
-	dataFilter.forEach((element) => {
-		dates.push({ day: parseInt(moment(element.date).format('DD')) });
-	});
-
-	const Week1 = dates.filter((el) => el.day <= week1End).length;
-	const Week2 = dates.filter((el) => el.day > week1End && el.day < week2End).length;
-	const Week3 = dates.filter((el) => el.day > week2End && el.day < week3End).length;
-	const Week4 = dates.filter((el) => el.day > week3End && el.day < week4End).length;
-
-	let values = [ Week1, Week2, Week3, Week4 ];
-	let labels = [ 'Week1', 'week2', 'week3', 'week4' ];
-	const data = {
-		labels: labels,
-		datasets: [
-			{
-				label: 'User Activity',
-				backgroundColor: '#37561b',
-				borderColor: '#dfa126',
-				borderWidth: 1,
-				data: values
-			}
-		],
-		options: {
-			scales: {
-				yAxes: [
-					{
-						ticks: {
-							precision: 0
-						}
-					}
-				]
-			}
-		}
-	};
 
 	const columns = [
 		{
@@ -198,7 +156,26 @@ const Startups = (props) => {
 					</div>
 				</div>
 				<div className="card">
-					<Line data={data} width={100} height={50} />
+					<div className="card-content-row ">
+						<div className="card-content-column">
+							<h3>Total Revenue Share Payment</h3>
+							<h1>0 shs</h1>
+						</div>
+						<div className="card-content-row-avatar">
+							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
+						</div>
+					</div>
+				</div>
+				<div className="card">
+					<div className="card-content-row ">
+						<div className="card-content-column">
+							<h3>Outstanding Revenue Share Payment</h3>
+							<h1>0 shs</h1>
+						</div>
+						<div className="card-content-row-avatar">
+							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
+						</div>
+					</div>
 				</div>
 			</div>
 			<div className="add-startup-row">
@@ -207,7 +184,11 @@ const Startups = (props) => {
 					<p>Add Payment</p>
 				</div>
 				<div className="export-container">
-					<DownloadTableExcel filename="revenue table" sheet="Startups" currentTableRef={tableRef.current}>
+					<DownloadTableExcel
+						filename="Catalyzer Startups"
+						sheet="Startup Records"
+						currentTableRef={tableRef.current}
+					>
 						<button> Export excel </button>
 					</DownloadTableExcel>
 				</div>

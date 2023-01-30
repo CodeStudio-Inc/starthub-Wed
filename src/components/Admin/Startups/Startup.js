@@ -16,8 +16,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Helmet } from 'react-helmet';
 
-import NewObjective from './NewObjective';
-import EditProfile from './EditProfile';
+import NewObjective from './modals/NewObjective';
+import EditProfile from './modals/EditProfile';
 import './StartupStyles.css';
 const Startup = ({ location, history }) => {
 	const { TabPane } = Tabs;
