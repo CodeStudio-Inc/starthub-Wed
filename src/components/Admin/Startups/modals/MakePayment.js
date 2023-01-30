@@ -18,6 +18,8 @@ const MakePayment = ({ setOpen, startups, outstanding }) => {
 
 	const dispatch = useDispatch();
 
+	console.log(outstanding);
+
 	const addPayment = () => {
 		if (!state.startup || !state.amount || !state.date)
 			return setState({ ...state, message: 'All fields are required' });
@@ -72,10 +74,11 @@ const MakePayment = ({ setOpen, startups, outstanding }) => {
 					<Table
 						columns={columns}
 						dataSource={[
-							...outstanding.map((r) => ({
-								...r,
-								key: r._id
-							}))
+							...(outstanding &&
+								outstanding.map((r) => ({
+									...r,
+									key: r._id
+								})))
 						]}
 						onRow={(record) => {
 							return {
