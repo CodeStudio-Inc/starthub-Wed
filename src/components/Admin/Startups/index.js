@@ -129,7 +129,7 @@ const Startups = (props) => {
 			) : null}
 			{paymentsModal ? (
 				<ModalUI>
-					<MakePayment startups={filterUsers} setOpen={setPaymentsModal} />
+					<MakePayment startups={filterUsers && filterUsers} setOpen={setPaymentsModal} />
 				</ModalUI>
 			) : null}
 			<div className="card-row">
