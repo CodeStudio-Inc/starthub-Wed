@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Table } from 'antd';
 import moment from 'moment';
 
-const MakePayment = ({ setOpen, startups }) => {
+const MakePayment = ({ setOpen, startups, outstanding }) => {
 	const [ state, setState ] = React.useState({
 		startup: '',
 		amount: '',
@@ -14,7 +14,7 @@ const MakePayment = ({ setOpen, startups }) => {
 		message: ''
 	});
 
-	const { loading, outstanding_revenue_payment } = useSelector((state) => state.admin);
+	const { loading } = useSelector((state) => state.admin);
 
 	const dispatch = useDispatch();
 
@@ -72,11 +72,10 @@ const MakePayment = ({ setOpen, startups }) => {
 					<Table
 						columns={columns}
 						dataSource={[
-							...(outstanding_revenue_payment &&
-								outstanding_revenue_payment.map((r) => ({
-									...r,
-									key: r._id
-								})))
+							...outstanding.map((r) => ({
+								...r,
+								key: r._id
+							}))
 						]}
 						onRow={(record) => {
 							return {
@@ -104,7 +103,7 @@ const MakePayment = ({ setOpen, startups }) => {
 						<option value="" disabled selected>
 							-select startup-
 						</option>
-						{startups && startups.map((s) => <option value={s.username}>{s.username}</option>)}
+						{startups.map((s) => <option value={s.username}>{s.username}</option>)}
 					</select>
 					<h4>Amount</h4>
 					<input value={state.amount} onChange={(e) => setState({ ...state, amount: e.target.value })} />

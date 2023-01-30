@@ -20,7 +20,7 @@ const Startups = (props) => {
 	const [ addStartupModal, setAddStartupModal ] = React.useState(false);
 	const [ paymentsModal, setPaymentsModal ] = React.useState(false);
 
-	const { users } = useSelector((state) => state.admin);
+	const { users, outstanding_revenue_payment } = useSelector((state) => state.admin);
 	const { userId, user_activity } = useSelector((state) => state.auth);
 	const filterUsers = users.filter((el) => el.category === 'catalyzer' && el.mentor === userId);
 
@@ -129,7 +129,11 @@ const Startups = (props) => {
 			) : null}
 			{paymentsModal ? (
 				<ModalUI>
-					<MakePayment startups={filterUsers && filterUsers} setOpen={setPaymentsModal} />
+					<MakePayment
+						startups={filterUsers && filterUsers}
+						outstanding={outstanding_revenue_payment && outstanding_revenue_payment}
+						setOpen={setPaymentsModal}
+					/>
 				</ModalUI>
 			) : null}
 			<div className="card-row">
