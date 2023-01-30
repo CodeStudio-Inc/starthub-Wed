@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Table } from 'antd';
 import moment from 'moment';
 
-const MakePayment = ({ setOpen, startups, outstanding }) => {
+const MakePayment = ({ setOpen, startups }) => {
 	const [ state, setState ] = React.useState({
 		startup: '',
 		amount: '',
@@ -14,11 +14,9 @@ const MakePayment = ({ setOpen, startups, outstanding }) => {
 		message: ''
 	});
 
-	const { loading } = useSelector((state) => state.admin);
+	const { loading, outstanding_revenue_payment } = useSelector((state) => state.admin);
 
 	const dispatch = useDispatch();
-
-	console.log(outstanding);
 
 	const addPayment = () => {
 		if (!state.startup || !state.amount || !state.date)
@@ -59,6 +57,9 @@ const MakePayment = ({ setOpen, startups, outstanding }) => {
 		}
 	];
 
+	const revenueUndefinedValueCheck =
+		typeof outstanding_revenue_payment === 'undefined' ? [] : outstanding_revenue_payment;
+
 	return (
 		<div className="payment-modal-container">
 			<div className="payment-modal-header">
@@ -74,11 +75,10 @@ const MakePayment = ({ setOpen, startups, outstanding }) => {
 					<Table
 						columns={columns}
 						dataSource={[
-							...(outstanding &&
-								outstanding.map((r) => ({
-									...r,
-									key: r._id
-								})))
+							...revenueUndefinedValueCheck.map((r) => ({
+								...r,
+								key: r._id
+							}))
 						]}
 						onRow={(record) => {
 							return {

@@ -20,7 +20,7 @@ const Startups = (props) => {
 	const [ addStartupModal, setAddStartupModal ] = React.useState(false);
 	const [ paymentsModal, setPaymentsModal ] = React.useState(false);
 
-	const { users, outstanding_revenue_payment } = useSelector((state) => state.admin);
+	const { users } = useSelector((state) => state.admin);
 	const { userId, user_activity } = useSelector((state) => state.auth);
 	const filterUsers = users.filter((el) => el.category === 'catalyzer' && el.mentor === userId);
 
@@ -34,7 +34,7 @@ const Startups = (props) => {
 	});
 
 	// const totalRevenue = Array.from(filterUsers, ({ totalRevenue }) => totalRevenue).reduce((a, b) => a + b, 0);
-	console.log(outstanding_revenue_payment, 'pp');
+
 	const dispatch = useDispatch();
 
 	React.useEffect(() => {
@@ -129,13 +129,7 @@ const Startups = (props) => {
 			) : null}
 			{paymentsModal ? (
 				<ModalUI>
-					<MakePayment
-						startups={filterUsers}
-						outstanding={
-							typeof outstanding_revenue_payment === 'undefined' ? null : outstanding_revenue_payment
-						}
-						setOpen={setPaymentsModal}
-					/>
+					<MakePayment startups={filterUsers} setOpen={setPaymentsModal} />
 				</ModalUI>
 			) : null}
 			<div className="card-row">
