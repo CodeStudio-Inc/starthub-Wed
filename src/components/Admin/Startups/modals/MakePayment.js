@@ -57,8 +57,6 @@ const MakePayment = ({ setOpen, startups, outstanding }) => {
 		}
 	];
 
-	const revenue = outstanding && outstanding;
-
 	return (
 		<div className="payment-modal-container">
 			<div className="payment-modal-header">
@@ -74,7 +72,7 @@ const MakePayment = ({ setOpen, startups, outstanding }) => {
 					<Table
 						columns={columns}
 						dataSource={[
-							...revenue.map((r) => ({
+							...outstanding.map((r) => ({
 								...r,
 								key: r._id
 							}))
