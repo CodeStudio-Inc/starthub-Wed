@@ -72,10 +72,11 @@ const MakePayment = ({ setOpen, startups }) => {
 					<Table
 						columns={columns}
 						dataSource={[
-							...outstanding_revenue_payment.map((r) => ({
-								...r,
-								key: r._id
-							}))
+							...(outstanding_revenue_payment &&
+								outstanding_revenue_payment.map((r) => ({
+									...r,
+									key: r._id
+								})))
 						]}
 						onRow={(record) => {
 							return {
