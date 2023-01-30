@@ -34,7 +34,7 @@ const Startups = (props) => {
 	});
 
 	// const totalRevenue = Array.from(filterUsers, ({ totalRevenue }) => totalRevenue).reduce((a, b) => a + b, 0);
-
+	console.log(outstanding_revenue_payment, 'pp');
 	const dispatch = useDispatch();
 
 	React.useEffect(() => {
