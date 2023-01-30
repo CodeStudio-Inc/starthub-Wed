@@ -130,8 +130,10 @@ const Startups = (props) => {
 			{paymentsModal ? (
 				<ModalUI>
 					<MakePayment
-						startups={filterUsers && filterUsers}
-						outstanding={outstanding_revenue_payment && outstanding_revenue_payment}
+						startups={filterUsers}
+						outstanding={
+							typeof outstanding_revenue_payment === 'undefined' ? null : outstanding_revenue_payment
+						}
 						setOpen={setPaymentsModal}
 					/>
 				</ModalUI>
