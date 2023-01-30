@@ -103,7 +103,7 @@ const MakePayment = ({ setOpen, startups }) => {
 						<option value="" disabled selected>
 							-select startup-
 						</option>
-						{startups.map((s) => <option value={s.username}>{s.username}</option>)}
+						{startups && startups.map((s) => <option value={s.username}>{s.username}</option>)}
 					</select>
 					<h4>Amount</h4>
 					<input value={state.amount} onChange={(e) => setState({ ...state, amount: e.target.value })} />
