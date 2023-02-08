@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	OKRs,
+	InternalOKRs,
 	LeanCanvas,
 	logo,
 	Metrics,
@@ -278,7 +279,7 @@ const HomepageTemplate = (props) => {
 							</div>
 						</div>
 					))}
-				{!admin &&
+				{!admin && category !== 'internal' ? (
 					active.objects.map((e, index) => (
 						<div
 							key={index}
@@ -293,19 +294,26 @@ const HomepageTemplate = (props) => {
 								<h4>{e.title}</h4>
 							</div>
 						</div>
-					))}
+					))
+				) : null}
+				{!admin && category === 'internal' ? <p style={{ visibility: 'hidden' }}>Hello</p> : null}
 				<div className="logout" onClick={handleLogoutClick}>
 					<LogoutIcon style={{ fontSize: '20px' }} className="logout-icon" />
 					<h5>Logout</h5>
 				</div>
 			</div>
-			{!admin ? (
+			{!admin && category !== 'internal' ? (
 				<div className="homepage-main">
 					{index === 0 ? <Metrics /> : null}
 					{index === 1 ? <OKRs /> : null}
 					{index === 2 ? <LeanCanvas /> : null}
 					{index === 3 ? <DiagnosticsTest /> : null}
 					{index === 4 ? <Calendar /> : null}
+				</div>
+			) : null}
+			{!admin && category === 'internal' ? (
+				<div className="homepage-main">
+					<InternalOKRs />
 				</div>
 			) : null}
 			{admin ? (

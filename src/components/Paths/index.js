@@ -1,6 +1,7 @@
 import * as actionCreators from '../store/actionCreators';
 import HomepageTemplate from '../Pages/HomepageTemplate';
 import OKRs from '../Pages/OKRs';
+import InternalOKRs from '../Pages/OKRs/InternalOKRs';
 import KanbanList from '../DnD/KanbanList';
 import KanbanCard from '../DnD/KanbanCard';
 import Objective from '../Pages/OKRs/Objective';
@@ -9,7 +10,6 @@ import Keyresult from '../Pages/OKRs/Keyresult';
 import Login from '../Pages/Auth';
 import Addkeyresult from '../Pages/OKRs/Addkeyresult';
 import QuarterTabs from '../Pages/OKRs/QuaterTabs';
-import Diagnostics from '../Pages/OKRs/Diagnostics';
 import ModalUI from '../ModalUI';
 import Menu from '../ModalUI/Menu';
 import Loader from '../ModalUI/Loader';
@@ -45,6 +45,7 @@ export {
 	Login,
 	HomepageTemplate,
 	OKRs,
+	InternalOKRs,
 	KanbanList,
 	KanbanCard,
 	ModalUI,
@@ -55,7 +56,6 @@ export {
 	Keyresult,
 	Addkeyresult,
 	QuarterTabs,
-	Diagnostics,
 	DiagnosticsTest,
 	Navbar,
 	Card,
