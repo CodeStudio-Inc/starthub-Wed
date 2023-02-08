@@ -971,6 +971,32 @@ export const getObjective = () => {
 	};
 };
 
+export const filterOkrs = (startDate, endDate) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+
+		const token = getState().auth.token;
+
+		axios
+			.get(`${BaseUrl}/catalyzer/filter?startDate=${startDate}&endDate=${endDate}`, {
+				headers: {
+					ContentType: 'Application/json',
+					'Access-Control-Allow-Origin': '*',
+					Authorization: token
+				}
+			})
+			.then((res) => {
+				// console.log(res.data);
+				dispatch(stopLoader());
+				dispatch(setObjectives(res.data.objs));
+			})
+			.catch((error) => {
+				dispatch(stopLoader());
+				console.log(error);
+			});
+	};
+};
+
 export const editObjective = (id, description, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());

@@ -42,6 +42,7 @@ export {
 	getStatement,
 	addObjective,
 	getObjective,
+	filterOkrs,
 	deleteObjective,
 	archiveObjective,
 	addkeyResult,

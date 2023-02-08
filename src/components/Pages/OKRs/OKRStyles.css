@@ -5,9 +5,22 @@
 .okr-container {
 	display: flex;
 	align-items: center;
-    justify-content: space-between;
+	justify-content: center;
+	flex-direction: column;
 	width: 100%;
     overflow-y: scroll;
+}
+
+.okr-container-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 60%;
+}
+
+.okr-container-header h3 {
+	margin: 0;
+	font-weight: 400;
 }
 
 .objectives-content {
@@ -21,13 +34,71 @@
 
 .statments-content {
 	display: flex;
-	align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-	width: 30%;
-    height: 100vh;
+	align-items: flex-start;
+    justify-content: center;
+	width: 100%;
+	padding: 10px;
 }
 
+.quarter-tab-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 95%;
+	margin-top: 0.5rem;
+}
+
+.quarter-tab-header h3 {
+	margin: 0;
+	font-weight: 400;
+}
+
+.filter-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	width: 45%;
+}
+
+.filter-row button {
+	background: none;
+	color: rgba(0, 0, 0, 0.6);
+	height: 30px;
+	width: 15%;
+	transition: 1s ease-in-out;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.filter-row button:hover {
+	cursor: pointer;
+	color: rgba(0, 0, 0, 0.7);
+	border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.filter-row button:focus {
+	background: #eee;
+}
+
+.filter-input-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.filter-input-row h4 {
+	margin: 0;
+	font-weight: 300;
+}
+
+.filter-input-row input {
+	margin-left: 0.5rem;
+	background: none;
+	outline: none;
+	height: 30px;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
 
 .admin-menu {
 	position: relative;
@@ -454,34 +525,31 @@
 }
 
 .add-objective {
+	position: absolute;
+	z-index: 100;
+	right: 40px;
+	bottom: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction: column;
-	width: 85%;
-	height: 100px;
+	padding: 7px;
+	border-radius: 10px;
 	margin-top: 1rem;
 	margin-bottom: 4rem;
-	background: rgba(87, 84, 84, 0.26);
-	border: 2px dashed rgba(0, 0, 0, 0.4);
+	background: #3f5729
 }
 
-.add-objective p {
-	color: rgba(0, 0, 0, 0.4);
-	font-weight: 800;
+.add-objective h4 {
+	color: #fff;
+	margin: 0;
 }
 
-.add-objective p:hover {
-	color: rgba(0, 0, 0, 0.4);
-	cursor: pointer;
-}
 
 .add-obj-icon {
-	color: rgba(0, 0, 0, 0.4);
+	color: #fff;
 }
 
-.add-obj-icon:hover {
-	color: rgba(0, 0, 0, 0.3);
+.add-objective:hover {
 	cursor: pointer;
 }
 
@@ -670,7 +738,7 @@
 	align-items: flex-start;
 	padding-left: 0.3rem;
 	background: #fff;
-	width: 250px;
+	width: 60%;
 }
 
 .objective-card textarea {
@@ -739,9 +807,14 @@
 .vision-statements {
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
-	flex-direction: column;
-	width: 100%;
+	justify-content: space-between;
+	width: 85%;
+}
+
+.statments-separator {
+	height: 200px;
+	width: 2px;
+	background: rgba(0, 0, 0, 0.1);
 }
 
 .vision-mission-1 {
@@ -759,32 +832,39 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 0.5rem;
-	border-radius: 10px;
-	background: -webkit-linear-gradient(to bottom, #37561b, #37561b);
-	background: linear-gradient(to bottom,#37561b,#54842a); 
+	flex-direction: column;
 	width: 100%;
-	border: 1px solid #37561b;
-	margin-bottom: 0.5rem;
 }
 
 
-.vision-mission-card input {
+.vision-mission-card textarea {
 	outline: none;
 	border: none;
-	background: #eee;
-	width: 95%;
-	height: 30px;
+	background: #f7f7f7;
+	width: 60%;
+	height: 100px;
 }
 
-.vision-mission-1 h3 {
+.vision-mission-1 h2 {
 	color: #37561b;
 	font-weight: 400;
+	margin: 0;
 }
 
-.vision-mission-card h3 {
+.vision-mission-card h4 {
+	color: #37561b;
+	font-weight: 300;
 	text-align: center;
-	font-weight: bolder;
+	margin: 0;
+}
+
+.vision-mission-card p {
+	color: rgba(0, 0, 0, 0.4);
+}
+
+.vision-mission-card p:hover {
+	cursor: pointer;
+	color: rgba(0, 0, 0, 0.2);
 }
 
 .vision-mission {
@@ -792,33 +872,23 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	width: 100%;
-	background: -webkit-linear-gradient(to bottom, #37561b, #37561b);
-	background: linear-gradient(to bottom,#37561b,#54842a); 
-	border-radius: 15px;
-	padding: 0.5rem;
+	width: 60%;
 	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
-}
-
-.vision-mission h3 {
-	text-align: center;
-	color: #fff;
-	font-weight: 400;
 }
 
 .vision-mission button {
 	border: none;
 	outline: none;
-	color: #37561b;
-	background: #fff;
+	color: #fff;
+	background: #37561b;
 	border-radius: 15px;
-	padding: 0.4rem;
+	padding: 0.5rem;
 }
 
 .vision-mission button:hover {
 	cursor: pointer;
-	background: rgba(255, 255, 255, 0.836);
+	background: #42691f;
 }
 
 .diagnostics {
@@ -892,6 +962,24 @@
 }
 
 .create-form input {
+	outline: none;
+	width: 70%;
+	height: 35px;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	margin-bottom: 0.5rem;
+	border-radius: 2px;
+}
+
+.create-form textarea {
+	outline: none;
+	width: 70%;
+	height: 100px;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	margin-bottom: 0.5rem;
+	border-radius: 2px;
+}
+
+.create-form select {
 	outline: none;
 	width: 70%;
 	height: 35px;
@@ -1331,12 +1419,38 @@
 	justify-content: center;
 }
 
+/* internalOKRs css */
+.internal-okrs-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+    overflow-y: scroll;
+}
+
+.internal-statements {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 85%;
+}
+
 @media screen and (max-width: 768px) {
 	.okr-container  {
 		flex-direction: column-reverse;
 	}
 	.statments-content {
 		width: 90%;
+		flex-direction: column;
+	}
+	.vision-statements {
+		flex-direction: column;
+		width: 100%;
+	}
+	.statments-separator {
+		display: none;
 	}
 	.objectives-content {
 		width: 100%;

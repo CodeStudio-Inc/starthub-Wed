@@ -24,7 +24,7 @@ const NewObjective = ({ state, setState, loading, svg, message, setOpen, addObje
 					<option value="1">Quarter1</option>
 					<option value="2">Quarter2</option>
 					<option value="3">Quarter3</option>
-					<option value="4">Quarter3</option>
+					<option value="4">Quarter4</option>
 				</select>
 			</div>
 			<button onClick={addObjective}>
