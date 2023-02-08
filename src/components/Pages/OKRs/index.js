@@ -274,7 +274,7 @@ const OKRs = () => {
 				svg={svg}
 				setObjective={setObjective}
 			/>
-			{archived.length > 0 ? (
+			{archived && archived.length > 0 ? (
 				<div onClick={() => setArchive(true)} className="archive-btn">
 					<ArchiveIcon onClick={() => setArchive(true)} style={{ marginRight: '5px' }} />
 					<h3>Archive</h3>
