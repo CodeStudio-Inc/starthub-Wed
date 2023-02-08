@@ -50,7 +50,7 @@ const InternalOKRs = () => {
 		getObjectives();
 	}, []);
 
-	const _boards = boards.filter((el) => el.creator === userId && el.boardType !== 'Lean Canvas');
+	const _boards = boards && boards.filter((el) => el.creator === userId && el.boardType !== 'Lean Canvas');
 	const current_board = _boards && _boards.slice(-1).pop();
 	const current_boardID = current_board && current_board._id;
 	const filteredStatements = statements && statements.filter((el) => el.boardId === current_boardID);
