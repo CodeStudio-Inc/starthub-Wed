@@ -40,10 +40,15 @@ const Metrics = () => {
 	const currentYear = new Date().getFullYear();
 	const previousYear = new Date().getFullYear() - 1;
 
-	let currentMonth, nextLoanDate, currentYearRevenue, previousYearRevenue, sixMonthRevenue;
+	let currentMonth, nextLoanDate, currentYearRevenue, previousYearRevenue, sixMonthRevenue, month, zero, txt1, txt2;
 
 	currentMonth = new Date().getMonth() + 1;
-	nextLoanDate = '01' + '.' + new Date().getMonth() + 3 + '.' + new Date().getFullYear();
+	month = new Date().getMonth() + 3;
+	zero = '0';
+	nextLoanDate = '01' + '.' + zero.concat(month) + '.' + new Date().getFullYear();
+	txt1 = startMonth.toString().length === 1 ? zero.concat(startMonth.toString()) : startMonth.toString();
+	txt2 = currentMonth.toString().length === 1 ? zero.concat(currentMonth.toString()) : currentMonth.toString();
+	// console.log(new Date().getMonth() + 3);
 
 	currentYearRevenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === currentYear.toString());
 	previousYearRevenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === previousYear.toString());
@@ -94,14 +99,11 @@ const Metrics = () => {
 			}
 		});
 
-	const zero = '0';
-	const txt1 = startMonth.toString().length === 1 ? zero.concat(startMonth.toString()) : startMonth.toString();
-	const txt2 = currentMonth.toString().length === 1 ? zero.concat(currentMonth.toString()) : currentMonth.toString();
-
 	const message1 = (
 		<h4>
-			You did not report your revenues in time and can only apply for a loan after{' '}
-			<strong style={{ color: '#dfa126', fontWeight: 'bold' }}>{nextLoanDate}</strong> <br />
+			{/* You did not report your revenues in time and can only apply for a loan after{' '} */}
+			You did not report your revenues in time
+			{/* <strong style={{ color: '#dfa126', fontWeight: 'bold' }}>{nextLoanDate}</strong> <br /> */}{' '}
 			<span onClick={() => setOpen(true)} className="span-link">
 				Report Revenue
 			</span>
@@ -227,6 +229,12 @@ const Metrics = () => {
 
 	const columns = [
 		{
+			title: 'Date',
+			dataIndex: 'date',
+			key: 'date',
+			align: 'left'
+		},
+		{
 			title: 'Monthly Revenue(UGX)',
 			dataIndex: 'revenue',
 			key: 'revenue',
@@ -242,12 +250,6 @@ const Metrics = () => {
 			title: 'Expected Revenue Share Payment(UGX)',
 			dataIndex: 'expectedRevsharePayment',
 			key: 'expectedRevsharePayment',
-			align: 'left'
-		},
-		{
-			title: 'Date',
-			dataIndex: 'date',
-			key: 'date',
 			align: 'left'
 		}
 	];

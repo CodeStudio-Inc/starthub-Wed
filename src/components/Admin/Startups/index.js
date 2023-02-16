@@ -133,7 +133,7 @@ const Startups = (props) => {
 				</ModalUI>
 			) : null}
 			<div className="card-row">
-				<div className="card" style={{ width: '20%' }}>
+				<div className="card2">
 					<div className="card-content-column">
 						<div className="card-content-row-avatar">
 							<GroupsIcon style={{ fontSize: '30px', color: '#37561b' }} />
@@ -142,7 +142,7 @@ const Startups = (props) => {
 						<h3>Startups</h3>
 					</div>
 				</div>
-				<div className="card" style={{ width: '20%' }}>
+				<div className="card2">
 					<div className="card-content-column">
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
@@ -151,7 +151,7 @@ const Startups = (props) => {
 						<h3>Total Revenue</h3>
 					</div>
 				</div>
-				<div className="card" style={{ width: '20%' }}>
+				<div className="card2">
 					<div className="card-content-column">
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
@@ -160,7 +160,7 @@ const Startups = (props) => {
 						<h3>Total Revenue Share Payment</h3>
 					</div>
 				</div>
-				<div className="card" style={{ width: '20%' }}>
+				<div className="card2">
 					<div className="card-content-column">
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
@@ -197,7 +197,10 @@ const Startups = (props) => {
 						...r,
 						key: r._id,
 						username: r.username,
-						dateCreated: moment(r.dateCreated).format('LL')
+						dateCreated: moment(r.dateCreated).format('LL'),
+						totalExpectedRevenueShare: r.totalExpectedRevenueShare
+							.toString()
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 					}))
 				]}
 				onRow={(record, rowIndex) => {
