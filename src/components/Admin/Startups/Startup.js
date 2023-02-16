@@ -433,15 +433,6 @@ const Startup = ({ location, history }) => {
 				</div>
 			</div>
 			<Cards />
-			<Diagnostics
-				teams={typeof diagnostics === 'undefined' ? 0 : diagnostics.teams}
-				vision={typeof diagnostics === 'undefined' ? 0 : diagnostics.vision}
-				proposition={typeof diagnostics === 'undefined' ? 0 : diagnostics.proposition}
-				product={typeof diagnostics === 'undefined' ? 0 : diagnostics.product}
-				market={typeof diagnostics === 'undefined' ? 0 : diagnostics.market}
-				business={typeof diagnostics === 'undefined' ? 0 : diagnostics.business}
-				investment={typeof diagnostics === 'undefined' ? 0 : diagnostics.investment}
-			/>
 			<div className="graph-tab">
 				<h2>last Six Months Revenue Reporting</h2>
 				<Line data={Revenue} width={100} height={30} />
@@ -472,6 +463,15 @@ const Startup = ({ location, history }) => {
 					columns={columns}
 				/>
 			</div>
+			<Diagnostics
+				teams={typeof diagnostics === 'undefined' ? 0 : diagnostics.teams}
+				vision={typeof diagnostics === 'undefined' ? 0 : diagnostics.vision}
+				proposition={typeof diagnostics === 'undefined' ? 0 : diagnostics.proposition}
+				product={typeof diagnostics === 'undefined' ? 0 : diagnostics.product}
+				market={typeof diagnostics === 'undefined' ? 0 : diagnostics.market}
+				business={typeof diagnostics === 'undefined' ? 0 : diagnostics.business}
+				investment={typeof diagnostics === 'undefined' ? 0 : diagnostics.investment}
+			/>
 		</div>
 	);
 };

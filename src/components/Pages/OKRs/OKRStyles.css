@@ -20,7 +20,8 @@
 
 .okr-container-header h3 {
 	margin: 0;
-	font-weight: 400;
+	font-weight: 500;
+	color: rgba(0, 0, 0, 0.7)
 }
 
 .objectives-content {
@@ -45,12 +46,13 @@
 	align-items: center;
 	justify-content: space-between;
 	width: 95%;
-	margin-top: 0.5rem;
+	margin-top: 1rem;
 }
 
 .quarter-tab-header h3 {
 	margin: 0;
-	font-weight: 400;
+	font-weight: 500;
+	color: rgba(0, 0, 0, 0.7);
 }
 
 .filter-row {

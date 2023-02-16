@@ -1,8 +1,6 @@
 import * as actions from '../actions';
 import axios from 'axios';
 
-const BaseUrl = 'https://starthubafrica-api.el.r.appspot.com';
-
 export const loadAction = () => {
 	return {
 		type: actions.LOADER_ACTION
@@ -247,20 +245,8 @@ export const cardIndexUpdate = (sourceId, destinationId, sourceList, DestList, c
 			// console.log(sourceCards, destinationCards, 'lists')
 		}
 
-		const token = getState().auth.token;
-
 		axios
-			.post(
-				`${BaseUrl}/catalyzer/list/updateIndexes`,
-				{ sourceId, destinationId, sourceCards, destinationCards },
-				{
-					headers: {
-						ContentType: 'Application/json',
-						'Access-Control-Allow-Origin': '*',
-						Authorization: token
-					}
-				}
-			)
+			.post(`catalyzer/list/updateIndexes`, { sourceId, destinationId, sourceCards, destinationCards })
 			.then((res) => {
 				// console.log(res.data.lists, 'fsd')
 				// dispatch(setLists(res.data.lists))
@@ -276,7 +262,6 @@ export const createAdminCard = (listId, name, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
 		const lists = getState().admin.lists;
 		let cardIndex;
 
@@ -293,13 +278,7 @@ export const createAdminCard = (listId, name, callback) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/catalyzer/card`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`catalyzer/card`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(stopLoader());
@@ -316,7 +295,6 @@ export const createCard = (listId, name, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
 
-		const token = getState().auth.token;
 		const lists = getState().requests.lists;
 		let cardIndex;
 
@@ -333,13 +311,7 @@ export const createCard = (listId, name, callback) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/catalyzer/card`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`catalyzer/card`, data)
 			.then((res) => {
 				// console.log(res)
 				// dispatch(stopLoader())
@@ -353,19 +325,11 @@ export const createCard = (listId, name, callback) => {
 
 export const updateList = (id, name, callback) => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		const data = {
 			name
 		};
 		axios
-			.put(`${BaseUrl}/catalyzer/list/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/list/${id}`, data)
 			.then((res) => {
 				dispatch(setLists(res.data.lists));
 				callback({ success: true, res: res });
@@ -378,20 +342,12 @@ export const updateList = (id, name, callback) => {
 
 export const updateCard = (id, cardIndex, name, callback) => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		const data = {
 			name,
 			cardIndex
 		};
 		axios
-			.put(`${BaseUrl}/catalyzer/card/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/card/${id}`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setLists(res.data.lists));
@@ -406,7 +362,6 @@ export const updateCard = (id, cardIndex, name, callback) => {
 export const postBlog = (title, name, imageLink, bio, category, featuredimageLink, article, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		const data = {
 			title,
@@ -417,13 +372,7 @@ export const postBlog = (title, name, imageLink, bio, category, featuredimageLin
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/blog`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/blog`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(stopLoader());
@@ -437,19 +386,11 @@ export const postBlog = (title, name, imageLink, bio, category, featuredimageLin
 
 export const postView = (id) => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		const data = {
 			views: 0
 		};
 		axios
-			.put(`${BaseUrl}/admin/blog/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/blog/${id}`, data)
 			.then((res) => {
 				// console.log(res);
 				// dispatch(setBlogs(res.data.articles));
@@ -464,19 +405,12 @@ export const addLeanCanvas = (name, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
 		const data = {
 			name: name
 		};
 
 		axios
-			.post(`${BaseUrl}/catalyzer/create-canvas`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`catalyzer/create-canvas`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(stopLoader());
@@ -492,16 +426,8 @@ export const addLeanCanvas = (name, callback) => {
 
 export const getBoards = () => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		axios
-			.get(`${BaseUrl}/catalyzer/boards`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`catalyzer/boards`)
 			.then((res) => {
 				dispatch(setBoards(res.data.boards));
 			})
@@ -514,16 +440,9 @@ export const getBoards = () => {
 export const getListsOnBoard = () => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/catalyzer/lists`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`catalyzer/lists`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setLists(res.data.list));
@@ -538,16 +457,8 @@ export const getListsOnBoard = () => {
 
 export const getBlogs = () => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		axios
-			.get(`${BaseUrl}/admin/blogs`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/blogs`)
 			.then((res) => {
 				dispatch(setBlogs(res.data.articles));
 				// console.log(res);
@@ -561,20 +472,13 @@ export const getBlogs = () => {
 export const deleteCard = (listId, cardIndex, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		const data = {
 			cardIndex
 		};
 
 		axios
-			.put(`${BaseUrl}/catalyzer/delete/${listId}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/delete/${listId}`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(setLists(res.data.lists));
@@ -596,16 +500,8 @@ export const archiveCard = (listId, cardIndex, callback) => {
 			cardIndex
 		};
 
-		const token = getState().auth.token;
-
 		axios
-			.put(`${BaseUrl}/catalyzer/card/archive/${listId}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/card/archive/${listId}`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(setLists(res.data.lists));
@@ -620,16 +516,8 @@ export const archiveCard = (listId, cardIndex, callback) => {
 
 export const deleteBoard = (id, callback) => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		axios
-			.delete(`${BaseUrl}/catalyzer/board/${id}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.delete(`catalyzer/board/${id}`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setBoards(res.data.boards));
@@ -643,16 +531,8 @@ export const deleteBoard = (id, callback) => {
 
 export const deleteList = (id, callback) => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		axios
-			.delete(`${BaseUrl}/catalyzer/list/${id}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.delete(`catalyzer/list/${id}`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setLists(res.data.lists));
@@ -667,20 +547,13 @@ export const deleteList = (id, callback) => {
 export const archiveList = (id, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		const data = {
 			archive: true
 		};
 
 		axios
-			.put(`${BaseUrl}/catalyzer/list/archive/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/list/archive/${id}`, data)
 			.then((res) => {
 				// console.log(res.data.lists, 'll');
 				dispatch(setLists(res.data.lists));
@@ -695,20 +568,13 @@ export const archiveList = (id, callback) => {
 export const unarchiveList = (id, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		const data = {
 			archive: true
 		};
 
 		axios
-			.put(`${BaseUrl}/catalyzer/list/restore-list/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/list/restore-list/${id}`, data)
 			.then((res) => {
 				// console.log(res.data)
 				dispatch(setLists(res.data.lists));
@@ -723,20 +589,13 @@ export const unarchiveList = (id, callback) => {
 export const archiveBoard = (id) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		const data = {
 			archive: true
 		};
 
 		axios
-			.put(`${BaseUrl}/catalyzer/board/archive/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/board/archive/${id}`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				dispatch(setBoards(res.data.boards));
@@ -751,20 +610,13 @@ export const archiveBoard = (id) => {
 export const unarchiveBoard = (id, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		const data = {
 			archive: true
 		};
 
 		axios
-			.put(`${BaseUrl}/catalyzer/board/restore-board/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/board/restore-board/${id}`, data)
 			.then((res) => {
 				// console.log(res.data)
 				dispatch(setBoards(res.data.boards));
@@ -780,8 +632,6 @@ export const addValues = (teams, vision, proposition, product, market, business,
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			teams,
 			vision,
@@ -793,13 +643,7 @@ export const addValues = (teams, vision, proposition, product, market, business,
 		};
 
 		axios
-			.post(`${BaseUrl}/catalyzer/value`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`catalyzer/value`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				callback({ success: true, res: res });
@@ -812,18 +656,10 @@ export const addValues = (teams, vision, proposition, product, market, business,
 
 export const getValues = () => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		axios
-			.get(`${BaseUrl}/catalyzer/values`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`catalyzer/values`)
 			.then((res) => {
-				// console.log(res.data.scalevalues)
+				// console.log(res);
 				dispatch(setValue(res.data.scalevalues));
 			})
 			.catch((error) => {
@@ -836,21 +672,13 @@ export const addStatement = (id, vision, mission, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			vision,
 			mission
 		};
 
 		axios
-			.post(`${BaseUrl}/catalyzer/statement/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`catalyzer/statement/${id}`, data)
 			.then((res) => {
 				// console.log(res.data.statement)
 				dispatch(stopLoader());
@@ -865,19 +693,11 @@ export const addStatement = (id, vision, mission, callback) => {
 
 export const getStatement = () => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		axios
-			.get(`${BaseUrl}/catalyzer/statements`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`catalyzer/statements`)
 			.then((res) => {
 				dispatch(setStatememnts(res.data.statements));
-				// console.log(res)
+				// console.log(res);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -889,21 +709,13 @@ export const editStatement = (id, vision, mission, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			vision,
 			mission
 		};
 
 		axios
-			.put(`${BaseUrl}/catalyzer/statement/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/statement/${id}`, data)
 			.then((res) => {
 				dispatch(setStatememnts(res.data.statements));
 				callback({ success: true, res: res });
@@ -919,21 +731,13 @@ export const addObjective = (id, description, quarter, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			description,
 			quarter
 		};
 
 		axios
-			.post(`${BaseUrl}/catalyzer/objective/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`catalyzer/objective/${id}`, data)
 			.then((res) => {
 				// console.log(res.data.objs)
 				dispatch(setObjectives(res.data.objs));
@@ -950,18 +754,10 @@ export const getObjective = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		axios
-			.get(`${BaseUrl}/catalyzer/objectives`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`catalyzer/objectives`)
 			.then((res) => {
-				// console.log(res.data);
+				// console.log(res);
 				dispatch(stopLoader());
 				dispatch(setObjectives(res.data.objs));
 			})
@@ -975,16 +771,8 @@ export const filterOkrs = (startDate, endDate) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		axios
-			.get(`${BaseUrl}/catalyzer/filter?startDate=${startDate}&endDate=${endDate}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`catalyzer/filter?startDate=${startDate}&endDate=${endDate}`)
 			.then((res) => {
 				// console.log(res.data);
 				dispatch(stopLoader());
@@ -1001,20 +789,12 @@ export const editObjective = (id, description, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			description
 		};
 
 		axios
-			.put(`${BaseUrl}/catalyzer/objective/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/objective/${id}`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -1031,16 +811,8 @@ export const deleteObjective = (id, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		axios
-			.delete(`${BaseUrl}/catalyzer/objective/${id}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.delete(`catalyzer/objective/${id}`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -1061,16 +833,8 @@ export const archiveObjective = (id, callback) => {
 			archive: ''
 		};
 
-		const token = getState().auth.token;
-
 		axios
-			.put(`${BaseUrl}/catalyzer/archive-obj/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/archive-obj/${id}`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -1087,8 +851,6 @@ export const addkeyResult = (description, measureOfSuccess, objId, callback) => 
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			description,
 			measureOfSuccess,
@@ -1096,13 +858,7 @@ export const addkeyResult = (description, measureOfSuccess, objId, callback) => 
 		};
 
 		axios
-			.post(`${BaseUrl}/catalyzer/keyresult`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`catalyzer/keyresult`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(setObjectives(res.data.objs));
@@ -1121,8 +877,6 @@ export const editkeyResult = (id, description, measureOfSuccess, dateCreated, ca
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			description,
 			measureOfSuccess,
@@ -1130,13 +884,7 @@ export const editkeyResult = (id, description, measureOfSuccess, dateCreated, ca
 		};
 
 		axios
-			.put(`${BaseUrl}/catalyzer/keyresult/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/keyresult/${id}`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -1156,16 +904,9 @@ export const deleteKeyResult = (id, krId) => {
 		const data = {
 			krId
 		};
-		const token = getState().auth.token;
 
 		axios
-			.delete(`${BaseUrl}/catalyzer/keyresult/${id}/${krId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.delete(`catalyzer/keyresult/${id}/${krId}`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -1181,19 +922,12 @@ export const deleteKeyResult = (id, krId) => {
 export const updateQuarter = (objId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		const data = {
 			id: ''
 		};
 		axios
-			.put(`${BaseUrl}/catalyzer/update-quarter/${objId}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`catalyzer/update-quarter/${objId}`, data)
 			.then((res) => {
 				dispatch(setObjectives(res.data.objs));
 				dispatch(stopLoader());

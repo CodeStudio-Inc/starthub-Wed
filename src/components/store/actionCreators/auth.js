@@ -1,8 +1,6 @@
 import * as actions from '../actions';
 import axios from 'axios';
 
-const BaseUrl = 'https://starthubafrica-api.el.r.appspot.com';
-
 export const loaderAction = () => {
 	return {
 		type: actions.LOADER_ACTION
@@ -71,12 +69,7 @@ export const login = (email, password, callback) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/auth/signin`, data, {
-				headers: {
-					'Access-Control-Allow-Origin': '*',
-					'Content-Type': 'application/json'
-				}
-			})
+			.post(`auth/signin`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				// console.log(res.data);
@@ -110,13 +103,7 @@ export const getUser = (userId) => {
 	return (dispatch, getState) => {
 		const token = getState().auth.token;
 		axios
-			.get(`${BaseUrl}/auth/user/${userId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`auth/user/${userId}`)
 			.then((res) => {
 				dispatch(
 					setUser(
@@ -153,12 +140,7 @@ export const userActivity = (email, username, userId) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/user-activity`, data, {
-				headers: {
-					'Access-Control-Allow-Origin': '*',
-					'Content-Type': 'application/json'
-				}
-			})
+			.post(`admin/user-activity`, data)
 			.then((res) => {
 				dispatch(setUserActivity(res.data.user_activity));
 			})
@@ -177,13 +159,7 @@ export const addLatestRevenuePayment = (startup) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/revenue-payment`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/revenue-payment`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(setUserActivity(res.data.user_activity));
@@ -203,13 +179,7 @@ export const addLatestRevenueSubmission = (startup) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/revenue-submission`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/revenue-submission`, data)
 			.then((res) => {
 				dispatch(setUserActivity(res.data.user_activity));
 			})
@@ -224,13 +194,7 @@ export const getUserActivity = () => {
 		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/user-activities`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/user-activities`)
 			.then((res) => {
 				dispatch(setUserActivity(res.data.user_activity));
 			})
@@ -266,12 +230,7 @@ export const signUp = (
 		};
 
 		axios
-			.put(`${BaseUrl}/auth/register`, data, {
-				headers: {
-					'Access-Control-Allow-Origin': '*',
-					'Content-Type': 'application/json'
-				}
-			})
+			.put(`auth/register`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				callback({ success: true, res: res.data.message });
