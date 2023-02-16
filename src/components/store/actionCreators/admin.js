@@ -1,8 +1,6 @@
 import * as actions from '../actions';
 import axios from 'axios';
 
-const BaseUrl = 'https://starthubafrica-api.el.r.appspot.com';
-
 export const loadAction = () => {
 	return {
 		type: actions.LOADER_ACTION
@@ -137,16 +135,9 @@ export const setOutstandingRevsharePayment = (data) => {
 export const getUsers = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/users`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/users`)
 			.then((res) => {
 				dispatch(stopLoader());
 				// console.log(res)
@@ -162,16 +153,9 @@ export const getUsers = () => {
 export const getAdminBoard = (userId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/boards/${userId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/boards/${userId}`)
 			.then((res) => {
 				// console.log(res.data.boards,'req')
 				dispatch(setBoards(res.data.boards));
@@ -186,16 +170,9 @@ export const getAdminLists = (userId) => {
 	return (dispatch, getState) => {
 		// console.log(boardId,'board')
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/lists/${userId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/lists/${userId}`)
 			.then((res) => {
 				// console.log(res.data.lists,'ff')
 				dispatch(stopLoader());
@@ -210,16 +187,9 @@ export const getAdminLists = (userId) => {
 export const getAdminStatements = (userId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/statements/${userId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/statements/${userId}`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setStatememnts(res.data.statements));
@@ -233,7 +203,6 @@ export const getAdminStatements = (userId) => {
 export const addAdminObjectives = (userId, boardId, description, quarter, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		const data = {
 			boardId,
@@ -241,13 +210,7 @@ export const addAdminObjectives = (userId, boardId, description, quarter, callba
 			quarter
 		};
 		axios
-			.post(`${BaseUrl}/admin/objective/${userId}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/objective/${userId}`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -266,21 +229,13 @@ export const editAdminObjective = (id, description, startupId, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			description,
 			startupId
 		};
 
 		axios
-			.put(`${BaseUrl}/admin/objective/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/objective/${id}`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -296,16 +251,9 @@ export const editAdminObjective = (id, description, startupId, callback) => {
 export const getAdminObjectives = (userId) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/objectives?userId=${userId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/objectives?userId=${userId}`)
 			.then((res) => {
 				// console.log(res);
 				dispatch(setObjectives(res.data.objs));
@@ -319,16 +267,9 @@ export const getAdminObjectives = (userId) => {
 export const getAllObjectives = () => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/objectives`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/objectives`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setAllObjectives(res.data.objs));
@@ -343,16 +284,8 @@ export const deleteAdminObjective = (id, startupId, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		axios
-			.delete(`${BaseUrl}/admin/objective/${id}/${startupId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.delete(`admin/objective/${id}/${startupId}`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -374,16 +307,8 @@ export const archiveAdminObjective = (id, startupId, callback) => {
 			startupId
 		};
 
-		const token = getState().auth.token;
-
 		axios
-			.put(`${BaseUrl}/admin/archive-obj/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/archive-obj/${id}`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -400,8 +325,6 @@ export const addAdminkeyResult = (userId, description, measureOfSuccess, objId, 
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			description,
 			measureOfSuccess,
@@ -409,13 +332,7 @@ export const addAdminkeyResult = (userId, description, measureOfSuccess, objId, 
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/keyresult/${userId}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/keyresult/${userId}`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(setObjectives(res.data.objs));
@@ -435,8 +352,6 @@ export const editAdminkeyResult = (description, measureOfSuccess, dateCreated, o
 		console.log(dateCreated, measureOfSuccess);
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			description,
 			measureOfSuccess,
@@ -446,13 +361,7 @@ export const editAdminkeyResult = (description, measureOfSuccess, dateCreated, o
 		};
 
 		axios
-			.put(`${BaseUrl}/admin/keyresult`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/keyresult`, data)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -469,16 +378,8 @@ export const deleteAdminKeyResult = (objId, krId, startupId, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		axios
-			.delete(`${BaseUrl}/admin/keyresult/${objId}/${krId}/${startupId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.delete(`admin/keyresult/${objId}/${krId}/${startupId}`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setObjectives(res.data.objs));
@@ -494,16 +395,8 @@ export const deleteAdminKeyResult = (objId, krId, startupId, callback) => {
 
 export const getAdminValues = (userId) => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		axios
-			.get(`${BaseUrl}/admin/values/${userId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/values/${userId}`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(setValues(res.data.values));
@@ -517,16 +410,9 @@ export const getAdminValues = (userId) => {
 export const getAdminCards = (userId, boardId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/cards/${userId}/${boardId}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/cards/${userId}/${boardId}`)
 			.then((res) => {
 				console.log(res);
 				dispatch(setCards(res.data.cards));
@@ -540,20 +426,13 @@ export const getAdminCards = (userId, boardId) => {
 export const archiveAdminBoard = (id, userId, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		const data = {
 			userId: userId
 		};
 
 		axios
-			.put(`${BaseUrl}/admin/admin-board/archive/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/admin-board/archive/${id}`, data)
 			.then((res) => {
 				// console.log(res.data)
 				dispatch(setBoards(res.data.boards));
@@ -568,20 +447,13 @@ export const archiveAdminBoard = (id, userId, callback) => {
 export const unarchiveAdminBoard = (id, userId, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		const data = {
 			userId: userId
 		};
 
 		axios
-			.put(`${BaseUrl}/admin/admin-board/restore-board/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/admin-board/restore-board/${id}`, data)
 			.then((res) => {
 				// console.log(res.data)
 				dispatch(setBoards(res.data.boards));
@@ -596,7 +468,6 @@ export const unarchiveAdminBoard = (id, userId, callback) => {
 export const archiveAdminList = (id, userId, boardId, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		const data = {
 			userId: userId,
@@ -604,13 +475,7 @@ export const archiveAdminList = (id, userId, boardId, callback) => {
 		};
 
 		axios
-			.put(`${BaseUrl}/admin/admin-list/archive/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/admin-list/archive/${id}`, data)
 			.then((res) => {
 				// console.log(res.data.lists)
 				dispatch(setLists(res.data.lists));
@@ -625,7 +490,6 @@ export const archiveAdminList = (id, userId, boardId, callback) => {
 export const unarchiveAdminList = (id, userId, boardId, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		const data = {
 			userId: userId,
@@ -633,13 +497,7 @@ export const unarchiveAdminList = (id, userId, boardId, callback) => {
 		};
 
 		axios
-			.put(`${BaseUrl}/admin/admin-list/restore-list/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/admin-list/restore-list/${id}`, data)
 			.then((res) => {
 				// console.log(res.data)
 				dispatch(setLists(res.data.lists));
@@ -666,8 +524,6 @@ export const addFlate = (
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			amount,
 			date,
@@ -682,13 +538,7 @@ export const addFlate = (
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/flatrate`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/flatrate`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(stopLoader());
@@ -704,20 +554,12 @@ export const addFlateratePayment = (loanId, amount, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			amount
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/fr-payment/${loanId}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/fr-payment/${loanId}`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(stopLoader());
@@ -733,16 +575,9 @@ export const addFlateratePayment = (loanId, amount, callback) => {
 export const getFlate = () => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/flatrate`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/flatrate`)
 			.then((res) => {
 				// console.log(res,'loans data')
 				// dispatch(stopLoader())
@@ -757,16 +592,9 @@ export const getFlate = () => {
 export const searchFlatrate = (startup, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/shorterm-loan?startup=${startup}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/shorterm-loan?startup=${startup}`)
 			.then((res) => {
 				// console.log(res.data, 'loans data');
 				dispatch(stopLoader());
@@ -783,8 +611,6 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			amount,
 			loan_date: date,
@@ -797,13 +623,7 @@ export const addReducingBalance = (amount, date, duration, startup, comment, int
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/reducing-balance`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/reducing-balance`, data)
 			.then((res) => {
 				// console.log(res.data);
 				dispatch(stopLoader());
@@ -819,20 +639,12 @@ export const addRBPayment = (loanId, installAmount, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			installAmount
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/rb-payment/${loanId}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/rb-payment/${loanId}`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(stopLoader());
@@ -848,16 +660,9 @@ export const addRBPayment = (loanId, installAmount, callback) => {
 export const searchReducingBalance = (startup, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/longterm-loan?startup=${startup}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/longterm-loan?startup=${startup}`)
 			.then((res) => {
 				// console.log(res,'loans data')
 				dispatch(stopLoader());
@@ -873,16 +678,9 @@ export const searchReducingBalance = (startup, callback) => {
 export const getReducingBalance = () => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/reducing-balance`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/reducing-balance`)
 			.then((res) => {
 				// console.log(res,'loans data')
 				// dispatch(stopLoader())
@@ -907,8 +705,6 @@ export const addRevenueShare = (
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			amount,
 			month_of,
@@ -920,13 +716,7 @@ export const addRevenueShare = (
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/revenue-share`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/revenue-share`, data)
 			.then((res) => {
 				// console.log(res.data.revShares);
 				callback({ success: true });
@@ -943,16 +733,9 @@ export const addRevenueShare = (
 export const getRevenueShares = () => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/revenue-shares`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/revenue-shares`)
 			.then((res) => {
 				// console.log(res,'revShare')
 				// dispatch(stopLoader())
@@ -968,20 +751,12 @@ export const approvePayment = (id, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			approve: ''
 		};
 
 		axios
-			.put(`${BaseUrl}/admin/approve/${id}`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.put(`admin/approve/${id}`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				dispatch(setRevShare(res.data.revs));
@@ -996,16 +771,9 @@ export const approvePayment = (id, callback) => {
 export const searchRevShare = (startup) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/revenue-share?startup=${startup}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/revenue-share?startup=${startup}`)
 			.then((res) => {
 				// console.log(res,'revShare')
 				dispatch(stopLoader());
@@ -1021,8 +789,6 @@ export const addAuthor = (name, imageLink, bio, callback) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			name,
 			imageLink,
@@ -1030,13 +796,7 @@ export const addAuthor = (name, imageLink, bio, callback) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/author`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/author`, data)
 			.then((res) => {
 				// dispatch(stopLoader());
 				dispatch(setAuthor(res.data.authors));
@@ -1051,16 +811,9 @@ export const addAuthor = (name, imageLink, bio, callback) => {
 export const getAuthors = () => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/authors`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/authors`)
 			.then((res) => {
 				// console.log(res,'revShare')
 				// dispatch(stopLoader())
@@ -1076,8 +829,6 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month, c
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const token = getState().auth.token;
-
 		const data = {
 			startup,
 			month_revenue,
@@ -1087,13 +838,7 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month, c
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/revenue`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/revenue`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				dispatch(setRevenue(res.data.revenue));
@@ -1109,16 +854,9 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month, c
 export const getRevenue = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/revenues`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/revenues`)
 			.then((res) => {
 				// console.log(res,'revShare')
 				dispatch(stopLoader());
@@ -1133,16 +871,9 @@ export const getRevenue = () => {
 export const getStartupRevenue = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/revenue`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/revenue`)
 			.then((res) => {
 				// console.log(res,'revShare')
 				dispatch(stopLoader());
@@ -1162,16 +893,9 @@ export const getStartupRevenueTracking = (creator, year, callback) => {
 			creator,
 			year
 		};
-		const token = getState().auth.token;
 
 		axios
-			.post(`${BaseUrl}/admin/startup-revenue`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/startup-revenue`, data)
 			.then((res) => {
 				// console.log(res, 'revShare');
 				callback({ success: true, res: res });
@@ -1186,16 +910,9 @@ export const getStartupRevenueTracking = (creator, year, callback) => {
 export const searchRevenueTracking = (year) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/rev-tracking/search?year=${year}`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/rev-tracking/search?year=${year}`)
 			.then((res) => {
 				// console.log(res,'revShare')
 				dispatch(stopLoader());
@@ -1210,16 +927,9 @@ export const searchRevenueTracking = (year) => {
 export const getRevenueTracking = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/rev-tracking`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/rev-tracking`)
 			.then((res) => {
 				// console.log(res, 'revShare');
 				dispatch(stopLoader());
@@ -1234,16 +944,9 @@ export const getRevenueTracking = () => {
 export const getRevenueAccumulation = () => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		axios
-			.get(`${BaseUrl}/admin/rev-accumulation`, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.get(`admin/rev-accumulation`)
 			.then((res) => {
 				// console.log(res, 'revShare');
 				dispatch(stopLoader());
@@ -1264,11 +967,9 @@ export const sendEmail = (email, startup, months, callback) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/previous-month-email`, data, {
-				contentType: 'application/json'
-			})
+			.post(`previous-month-email`, data)
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				callback({ success: true, res: res.data.message });
 			})
 			.catch((error) => {
@@ -1280,7 +981,6 @@ export const sendEmail = (email, startup, months, callback) => {
 export const addPayment = (startup, amount, month, date) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-		const token = getState().auth.token;
 
 		const data = {
 			startup,
@@ -1290,13 +990,7 @@ export const addPayment = (startup, amount, month, date) => {
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/revShare-payment`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/revShare-payment`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				// console.log(res);
@@ -1310,20 +1004,12 @@ export const addPayment = (startup, amount, month, date) => {
 
 export const getOutstandingRevenueSharePayment = (startup) => {
 	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
 		const data = {
 			startup: startup
 		};
 
 		axios
-			.post(`${BaseUrl}/admin/pending-payments`, data, {
-				headers: {
-					ContentType: 'Application/json',
-					'Access-Control-Allow-Origin': '*',
-					Authorization: token
-				}
-			})
+			.post(`admin/pending-payments`, data)
 			.then((res) => {
 				dispatch(setOutstandingRevsharePayment(res.data.revenue));
 			})
@@ -1345,12 +1031,7 @@ export const updateStartup = (userId, username, email, contractDate, additionalM
 		};
 
 		axios
-			.put(`${BaseUrl}/auth/update-user/${userId}`, data, {
-				headers: {
-					'Access-Control-Allow-Origin': '*',
-					'Content-Type': 'application/json'
-				}
-			})
+			.put(`auth/update-user/${userId}`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				dispatch(setUsers(res.data.users));

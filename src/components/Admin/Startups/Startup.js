@@ -13,11 +13,12 @@ import { actionCreators, AdminLeanCanvas, ObjectivesTable, ModalUI, svg } from '
 import moment from 'moment';
 import 'react-circular-progressbar/dist/styles.css';
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import { Helmet } from 'react-helmet';
+import Box from '@mui/material/Box';
 
 import NewObjective from './modals/NewObjective';
 import EditProfile from './modals/EditProfile';
+import Diagnostics from './Diagnostics';
 import './StartupStyles.css';
 const Startup = ({ location, history }) => {
 	const { TabPane } = Tabs;
@@ -25,6 +26,7 @@ const Startup = ({ location, history }) => {
 	const [ rowId, setRowId ] = React.useState('');
 	const [ loader, setLoader ] = React.useState(false);
 	const [ open, setOpen ] = React.useState(false);
+	const [ openLeancanvas, setOpenLeancanvas ] = React.useState(false);
 	const [ edit, setEdit ] = React.useState(false);
 	const [ message, setMessage ] = React.useState(false);
 	const [ state, setState ] = React.useState({
@@ -34,18 +36,20 @@ const Startup = ({ location, history }) => {
 		measureOfSuccess: 0
 	});
 
-	const { revenue, objectives, loading } = useSelector((state) => state.admin);
+	const { revenue, objectives, loading, values } = useSelector((state) => state.admin);
 	const { boards } = useSelector((state) => state.requests);
 
 	const data = location.state.data;
 	const startup_revenue = revenue.filter((e) => e.creator === data._id);
 	const board_id = boards && boards.at(-1)._id;
+	const diagnostics = values && values.at(-1);
 
 	const dispatch = useDispatch();
 
 	const getRevenue = () => dispatch(actionCreators.getRevenue());
 	const getBoards = () => dispatch(actionCreators.getAdminBoard(data._id));
 	const getObjectives = () => dispatch(actionCreators.getAdminObjectives(data._id));
+	const getValues = () => dispatch(actionCreators.getAdminValues(data._id));
 	const addObjective = () => {
 		if (!state.description || !state.quarter) return setMessage('Invalid Entries');
 		dispatch(
@@ -98,6 +102,7 @@ const Startup = ({ location, history }) => {
 		checkMonth(current_month);
 		getRevenue();
 		getObjectives();
+		getValues();
 		getBoards();
 	}, []);
 
@@ -218,7 +223,7 @@ const Startup = ({ location, history }) => {
 				typeof data.totalRevenue === 'undefined'
 					? 0
 					: data.totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <TrendingUpIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
 			label: 'Total Expense',
@@ -226,7 +231,7 @@ const Startup = ({ location, history }) => {
 				typeof data.totalExpense === 'undefined'
 					? 0
 					: data.totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <TrendingUpIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
 			label: 'Total Revenue Share Payment',
@@ -234,7 +239,7 @@ const Startup = ({ location, history }) => {
 				typeof data.totalRevSharePaid === 'undefined'
 					? 0
 					: data.totalRevSharePaid.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <SavingsIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <SavingsIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
 			label: 'Total Expected Revenue Share Payment',
@@ -242,7 +247,12 @@ const Startup = ({ location, history }) => {
 				typeof data.totalExpectedRevenueShare === 'undefined'
 					? 0
 					: data.totalExpectedRevenueShare.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <BalanceIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <BalanceIcon style={{ fontSize: '25px', color: '#37561b' }} />
+		},
+		{
+			label: 'Loan Balance',
+			amount: 0,
+			icon: <BalanceIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		}
 	];
 
@@ -250,12 +260,10 @@ const Startup = ({ location, history }) => {
 		<div className="startup-card-row">
 			{card_content.map((c) => (
 				<div className="card" key={c.label}>
-					<div className="card-content-row ">
-						<div className="card-content-column">
-							<h3>{c.label}</h3>
-							<h1>{c.amount} Shs</h1>
-						</div>
-						<div className="card-content-row-avatar">{c.icon}</div>
+					<div className="card-content-row-avatar">{c.icon}</div>
+					<div className="card-content-column">
+						<h1>{c.amount} Shs</h1>
+						<h3>{c.label}</h3>
 					</div>
 				</div>
 			))}
@@ -400,12 +408,18 @@ const Startup = ({ location, history }) => {
 					/>
 				</ModalUI>
 			) : null}
+			{openLeancanvas ? (
+				<ModalUI>
+					<AdminLeanCanvas userId={data._id} close={setOpenLeancanvas} svg={svg} />
+				</ModalUI>
+			) : null}
 			<div className="profile-row">
 				<div className="icon-row" onClick={() => history.goBack()}>
 					<KeyboardBackspaceIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.3rem' }} />
 					<h4>Back</h4>
 				</div>
 				<div className="edit-profile-container">
+					<h4 onClick={() => setOpenLeancanvas(true)}>Lean Canvas</h4>
 					<div className="edit-profile" onClick={() => setEdit(true)}>
 						<EditIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.2rem' }} />
 						<p>Edit Profile</p>
@@ -419,45 +433,45 @@ const Startup = ({ location, history }) => {
 				</div>
 			</div>
 			<Cards />
-			<div className="graph-row">
-				<div className="left-container">
-					<div className="graph-tab">
-						<h2>Revenue Reporting</h2>
-						<Line data={Revenue} width={100} height={30} />
-					</div>
-					<div className="table-tab">
-						<div className="objective-table-row">
-							<h2>Objective Keyresults</h2>
-							<div
-								className="objective-add-startup-button"
-								onClick={() => {
-									setOpen(true);
-									setMessage('');
-								}}
-							>
-								<ControlPointIcon style={{ fontSize: '20px', color: '#fff', marginRight: '0.5rem' }} />
-								<p>New Objective</p>
-							</div>
-						</div>
-						<ObjectivesTable
-							Tabs={Tabs}
-							TabPane={TabPane}
-							Table={Table}
-							moment={moment}
-							quarter1={quarter1}
-							quarter2={quarter2}
-							quarter3={quarter3}
-							quarter4={quarter4}
-							columns={columns}
-						/>
-					</div>
-				</div>
-				<div className="right-container">
-					<div className="lean-canvas">
-						<AdminLeanCanvas userId={data._id} />
-					</div>
-				</div>
+			<div className="graph-tab">
+				<h2>last Six Months Revenue Reporting</h2>
+				<Line data={Revenue} width={100} height={30} />
 			</div>
+			<div className="table-tab">
+				<div className="objective-table-row">
+					<h2>Objective Keyresults</h2>
+					<div
+						className="objective-add-startup-button"
+						onClick={() => {
+							setOpen(true);
+							setMessage('');
+						}}
+					>
+						<ControlPointIcon style={{ fontSize: '20px', color: '#fff', marginRight: '0.5rem' }} />
+						<p>New Objective</p>
+					</div>
+				</div>
+				<ObjectivesTable
+					Tabs={Tabs}
+					TabPane={TabPane}
+					Table={Table}
+					moment={moment}
+					quarter1={quarter1}
+					quarter2={quarter2}
+					quarter3={quarter3}
+					quarter4={quarter4}
+					columns={columns}
+				/>
+			</div>
+			<Diagnostics
+				teams={typeof diagnostics === 'undefined' ? 0 : diagnostics.teams}
+				vision={typeof diagnostics === 'undefined' ? 0 : diagnostics.vision}
+				proposition={typeof diagnostics === 'undefined' ? 0 : diagnostics.proposition}
+				product={typeof diagnostics === 'undefined' ? 0 : diagnostics.product}
+				market={typeof diagnostics === 'undefined' ? 0 : diagnostics.market}
+				business={typeof diagnostics === 'undefined' ? 0 : diagnostics.business}
+				investment={typeof diagnostics === 'undefined' ? 0 : diagnostics.investment}
+			/>
 		</div>
 	);
 };

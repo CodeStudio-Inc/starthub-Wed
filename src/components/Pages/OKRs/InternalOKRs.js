@@ -1,25 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Statements, QuarterTabs, ModalUI, actionCreators, svg } from '../../Paths';
 import ArchiveIcon from '@mui/icons-material/Archive';
-import ReactGA from 'react-ga';
-import GAEventsTracker from '../../Hooks/GAEventsTracker';
+import moment from 'moment';
+import { Table } from 'antd';
+import { Statements, QuarterTabs, Diagnostics, ModalUI, actionCreators, svg } from '../../Paths';
 import { Helmet } from 'react-helmet';
+import GAEventsTracker from '../../Hooks/GAEventsTracker';
 
 import NewObjective from './NewObjective';
 import NewStatement from './NewStatement';
 import Archive from './Archive';
 import './OKRStyles.css';
-const OKRs = () => {
+const InternalOKRs = () => {
 	const [ archive, setArchive ] = React.useState(false);
 	const [ statement, setStatement ] = React.useState(false);
 	const [ objective, setObjective ] = React.useState(false);
 	const [ activeRow, setActiveRow ] = React.useState(0);
-
-	const UseGAEventsTracker = GAEventsTracker('Objectives');
-	const UseGAEventsTracker2 = GAEventsTracker('Vision & Mission Statements');
-
 	const [ state, setState ] = React.useState({
 		vision: '',
 		mission: '',
@@ -32,34 +28,27 @@ const OKRs = () => {
 		endDate: ''
 	});
 
-	const { lists, boards, statements, objectives, loading } = useSelector((state) => state.requests);
-	const { userId, username, email, category } = useSelector((state) => state.auth);
-
-	React.useEffect(() => {
-		if (category === 'catalyzer') {
-			userActivity();
-		}
-		getBoards();
-		getLists();
-		getStatements();
-		getObjectives();
-		getUsers();
-		getRevenue();
-		getValues();
-		ReactGA.pageview(window.location.pathname + window.location.search);
-	}, []);
-
 	const dispatch = useDispatch();
+
+	const UseGAEventsTracker = GAEventsTracker('Objectives');
+	const UseGAEventsTracker2 = GAEventsTracker('Vision & Mission Statements');
+
+	const { lists, boards, statements, objectives } = useSelector((state) => state.requests);
+	const { loading } = useSelector((state) => state.requests);
+	const { userId } = useSelector((state) => state.auth);
 
 	const getBoards = () => dispatch(actionCreators.getBoards());
 	const getLists = () => dispatch(actionCreators.getListsOnBoard());
 	const getStatements = () => dispatch(actionCreators.getStatement());
 	const getObjectives = () => dispatch(actionCreators.getObjective());
-	const getUsers = () => dispatch(actionCreators.getUsers());
-	const userActivity = () => dispatch(actionCreators.userActivity(email, username, userId));
-	const getValues = () => dispatch(actionCreators.getValues());
-	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
 	const filterOKRsByDate = () => dispatch(actionCreators.filterOkrs(dates.startDate, dates.endDate));
+
+	React.useEffect(() => {
+		getBoards();
+		getLists();
+		getStatements();
+		getObjectives();
+	}, []);
 
 	const _boards = boards && boards.filter((el) => el.creator === userId && el.boardType !== 'Lean Canvas');
 	const current_board = _boards && _boards.slice(-1).pop();
@@ -183,9 +172,8 @@ const OKRs = () => {
 			)
 		}
 	];
-
 	return (
-		<div className="okr-container">
+		<div className="internal-okrs-container">
 			<Helmet>
 				<title>OKRs</title>
 			</Helmet>
@@ -222,14 +210,14 @@ const OKRs = () => {
 			<div className="okr-container-header">
 				<h3>Vision and Mission Statements</h3>
 			</div>
-			<div className="underline" />
-			<div className="statments-content">
+			<div className="internal-statements">
 				{filteredStatements && filteredStatements.length > 0 ? (
 					<Statements svg={svg} statements={filteredStatements} />
 				) : (
 					<div className="vision-mission">
+						<h3>Have you set a Vision and Mission Statement yet?</h3>
 						<button className="vision-btn" onClick={() => setStatement(true)}>
-							Add vision and Mission Statements
+							Click here to create one
 						</button>
 					</div>
 				)}
@@ -283,4 +271,4 @@ const OKRs = () => {
 		</div>
 	);
 };
-export default withRouter(OKRs);
+export default InternalOKRs;

@@ -75,8 +75,8 @@ const Startups = (props) => {
 		},
 		{
 			title: 'Last Revenue submit',
-			dataIndex: 'daysSinceSubmit',
-			key: 'daysSinceSubmit',
+			dataIndex: 'daysSinceLastSubmit',
+			key: 'daysSinceLastSubmit',
 			align: 'left',
 			render: (r) => <p>{r ? moment(r).fromNow() : null}</p>
 		},
@@ -133,48 +133,40 @@ const Startups = (props) => {
 				</ModalUI>
 			) : null}
 			<div className="card-row">
-				<div className="card">
-					<div className="card-content-row ">
-						<div className="card-content-column">
-							<h3>Startups</h3>
-							<h1>{filterUsers.length} teams</h1>
-						</div>
+				<div className="card2">
+					<div className="card-content-column">
 						<div className="card-content-row-avatar">
 							<GroupsIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
+						<h1>{filterUsers.length} teams</h1>
+						<h3>Startups</h3>
 					</div>
 				</div>
-				<div className="card">
-					<div className="card-content-row ">
-						<div className="card-content-column">
-							<h3>Total Revenue</h3>
-							<h1>0 shs</h1>
-						</div>
+				<div className="card2">
+					<div className="card-content-column">
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
+						<h1>0 shs</h1>
+						<h3>Total Revenue</h3>
 					</div>
 				</div>
-				<div className="card">
-					<div className="card-content-row ">
-						<div className="card-content-column">
-							<h3>Total Revenue Share Payment</h3>
-							<h1>0 shs</h1>
-						</div>
+				<div className="card2">
+					<div className="card-content-column">
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
+						<h1>0 shs</h1>
+						<h3>Total Revenue Share Payment</h3>
 					</div>
 				</div>
-				<div className="card">
-					<div className="card-content-row ">
-						<div className="card-content-column">
-							<h3>Outstanding Revenue Share Payment</h3>
-							<h1>0 shs</h1>
-						</div>
+				<div className="card2">
+					<div className="card-content-column">
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
+						<h1>0 shs</h1>
+						<h3>Outstanding Revenue Share Payment</h3>
 					</div>
 				</div>
 			</div>
@@ -205,7 +197,10 @@ const Startups = (props) => {
 						...r,
 						key: r._id,
 						username: r.username,
-						dateCreated: moment(r.dateCreated).format('LL')
+						dateCreated: moment(r.dateCreated).format('LL'),
+						totalExpectedRevenueShare: r.totalExpectedRevenueShare
+							.toString()
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 					}))
 				]}
 				onRow={(record, rowIndex) => {
@@ -216,6 +211,7 @@ const Startups = (props) => {
 					};
 				}}
 				style={{ width: '90%' }}
+				bordered={true}
 				pagination={{
 					defaultPageSize: 9,
 					showSizeChanger: true,

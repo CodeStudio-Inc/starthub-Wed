@@ -19,9 +19,12 @@ const RevenueTable = ({ revenue, columns, setOpen }) => {
 						...revenue.map((r) => ({
 							...r,
 							key: r._id,
+							date: r.date,
 							revenue: r.month_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 							expense: r.month_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-							date: r.date
+							expectedRevsharePayment: r.expectedRevsharePayment
+								.toString()
+								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 						}))
 					]}
 					style={{ width: '100%' }}

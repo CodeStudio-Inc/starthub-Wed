@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import EditIcon from '@material-ui/icons/Edit';
-import CancelIcon from '@material-ui/icons/Cancel';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { GAEventsTracker, actionCreators } from '../../Paths';
 
 const Statements = ({ statements, svg }) => {
@@ -22,10 +22,11 @@ const Statements = ({ statements, svg }) => {
 	return (
 		<div className="vision-statements">
 			<div className="vision-mission-1">
-				<h3>Vision Statement Board</h3>
+				<RemoveRedEyeIcon className="edit-stmt-icon" style={{ fontSize: '60px' }} />
+				<h2>Vision</h2>
 				<div className="vision-mission-card">
 					{vision ? (
-						<input
+						<textarea
 							type="text"
 							placeholder="Enter new Vision"
 							value={state._vision}
@@ -47,29 +48,19 @@ const Statements = ({ statements, svg }) => {
 							}}
 						/>
 					) : null}
-					{vision ? null : <h3 style={{ color: '#f7f7f7' }}>{statements[0].vision}</h3>}
-					{vision ? null : (
-						<EditIcon
-							onClick={() => setVision(true)}
-							className="edit-stmt-icon"
-							style={{ fontSize: '20px', color: '#b68461', marginLeft: '10px' }}
-						/>
-					)}
-					{vision ? (
-						<CancelIcon
-							onClick={() => setVision(false)}
-							className="edit-stmt-icon"
-							style={{ fontSize: '20px', color: '#b68461', marginLeft: '10px' }}
-						/>
-					) : null}
+					{vision ? null : <h4>{statements[0].vision}</h4>}
+					{vision ? null : <p onClick={() => setVision(true)}>edit statement</p>}
+					{vision ? <p onClick={() => setVision(false)}>cancel</p> : null}
 					{loading && vision ? <img src={svg} style={{ width: '30px', height: '30px' }} /> : null}
 				</div>
 			</div>
+			<div className="statments-separator" />
 			<div className="vision-mission-1">
-				<h3>Mission Statement Board</h3>
+				<RocketLaunchIcon className="edit-stmt-icon" style={{ fontSize: '60px' }} />
+				<h2>Mission</h2>
 				<div className="vision-mission-card">
 					{mission ? (
-						<input
+						<textarea
 							type="text"
 							placeholder="Enter new Mission"
 							value={state._mission}
@@ -91,21 +82,9 @@ const Statements = ({ statements, svg }) => {
 							}}
 						/>
 					) : null}
-					{mission ? null : <h3 style={{ color: '#f7f7f7' }}>{statements[0].mission}</h3>}
-					{mission ? null : (
-						<EditIcon
-							onClick={() => setMission(true)}
-							className="edit-stmt-icon"
-							style={{ fontSize: '20px', color: '#b68461', marginLeft: '10px' }}
-						/>
-					)}
-					{mission ? (
-						<CancelIcon
-							onClick={() => setMission(false)}
-							className="edit-stmt-icon"
-							style={{ fontSize: '20px', color: '#b68461', marginLeft: '10px' }}
-						/>
-					) : null}
+					{mission ? null : <h4>{statements[0].mission}</h4>}
+					{mission ? null : <p onClick={() => setMission(true)}>edit statement</p>}
+					{mission ? <p onClick={() => setMission(false)}>cancel</p> : null}
 					{loading && mission ? <img src={svg} style={{ width: '30px', height: '30px' }} /> : null}
 				</div>
 			</div>

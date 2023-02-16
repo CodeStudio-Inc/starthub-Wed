@@ -14,6 +14,7 @@ import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import ReportRevenue from './modals/ReportRevenue';
 import RevenueTable from './modals/RevenueTable';
 import LoanApplication from './modals/LoanApplication';
+import Diagnostics from '../../Admin/Startups/Diagnostics';
 import './MetricsStyles.css';
 const Metrics = () => {
 	const [ startMonth, setStartMonth ] = React.useState(0);
@@ -33,14 +34,21 @@ const Metrics = () => {
 		totalExpense,
 		daysSinceLastSubmit
 	} = useSelector((state) => state.auth);
+	const { values } = useSelector((state) => state.requests);
 
+	const diagnostics = values && values.at(-1);
 	const currentYear = new Date().getFullYear();
 	const previousYear = new Date().getFullYear() - 1;
 
-	let currentMonth, nextLoanDate, currentYearRevenue, previousYearRevenue, sixMonthRevenue;
+	let currentMonth, nextLoanDate, currentYearRevenue, previousYearRevenue, sixMonthRevenue, month, zero, txt1, txt2;
 
 	currentMonth = new Date().getMonth() + 1;
-	nextLoanDate = '01' + '.' + new Date().getMonth() + 3 + '.' + new Date().getFullYear();
+	month = new Date().getMonth() + 3;
+	zero = '0';
+	nextLoanDate = '01' + '.' + zero.concat(month) + '.' + new Date().getFullYear();
+	txt1 = startMonth.toString().length === 1 ? zero.concat(startMonth.toString()) : startMonth.toString();
+	txt2 = currentMonth.toString().length === 1 ? zero.concat(currentMonth.toString()) : currentMonth.toString();
+	// console.log(new Date().getMonth() + 3);
 
 	currentYearRevenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === currentYear.toString());
 	previousYearRevenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === previousYear.toString());
@@ -58,6 +66,7 @@ const Metrics = () => {
 		checkMonth(currentMonth);
 		getRevenue();
 		getUser();
+		getValues();
 		ReactGA.pageview(window.location.pathname);
 	}, []);
 
@@ -65,6 +74,7 @@ const Metrics = () => {
 
 	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
 	const getUser = () => dispatch(actionCreators.getUser(userId, token));
+	const getValues = () => dispatch(actionCreators.getValues());
 
 	previousYearRevenue &&
 		previousYearRevenue.forEach((e) => {
@@ -89,14 +99,11 @@ const Metrics = () => {
 			}
 		});
 
-	const zero = '0';
-	const txt1 = startMonth.toString().length === 1 ? zero.concat(startMonth.toString()) : startMonth.toString();
-	const txt2 = currentMonth.toString().length === 1 ? zero.concat(currentMonth.toString()) : currentMonth.toString();
-
 	const message1 = (
 		<h4>
-			You did not report your revenues in time and can only apply for a loan after{' '}
-			<strong style={{ color: '#dfa126', fontWeight: 'bold' }}>{nextLoanDate}</strong> <br />
+			{/* You did not report your revenues in time and can only apply for a loan after{' '} */}
+			You did not report your revenues in time
+			{/* <strong style={{ color: '#dfa126', fontWeight: 'bold' }}>{nextLoanDate}</strong> <br /> */}{' '}
 			<span onClick={() => setOpen(true)} className="span-link">
 				Report Revenue
 			</span>
@@ -105,9 +112,9 @@ const Metrics = () => {
 	const message2 = (
 		<h4>
 			Congs {username} on reporting your revenues in time. You are Eligible to apply for Starhub loans. Cheers!{' '}
-			<strong onClick={() => setLoanApplication(true)} className="notification">
+			{/* <strong onClick={() => setLoanApplication(true)} className="notification">
 				Click to apply
-			</strong>
+			</strong> */}
 		</h4>
 	);
 
@@ -222,6 +229,12 @@ const Metrics = () => {
 
 	const columns = [
 		{
+			title: 'Date',
+			dataIndex: 'date',
+			key: 'date',
+			align: 'left'
+		},
+		{
 			title: 'Monthly Revenue(UGX)',
 			dataIndex: 'revenue',
 			key: 'revenue',
@@ -238,12 +251,6 @@ const Metrics = () => {
 			dataIndex: 'expectedRevsharePayment',
 			key: 'expectedRevsharePayment',
 			align: 'left'
-		},
-		{
-			title: 'Date',
-			dataIndex: 'date',
-			key: 'date',
-			align: 'left'
 		}
 	];
 
@@ -255,21 +262,21 @@ const Metrics = () => {
 				moment(daysSinceLastSubmit).format('MM') === txt2 && typeof daysSinceLastSubmit !== 'undefined'
 					? 'YES'
 					: 'NO',
-			icon: <CreditScoreIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <CreditScoreIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
 			id: 2,
 			label: 'Total Revenue',
 			amount:
 				typeof totalRevenue === 'undefined' ? 0 : totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <TrendingUpIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
 			id: 3,
 			label: 'Total Expense',
 			amount:
 				typeof totalExpense === 'undefined' ? 0 : totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <TrendingUpIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
 			id: 4,
@@ -278,7 +285,7 @@ const Metrics = () => {
 				typeof totalRevSharePaid === 'undefined'
 					? 0
 					: totalRevSharePaid.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <SavingsIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <SavingsIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
 			id: 5,
@@ -287,13 +294,13 @@ const Metrics = () => {
 				typeof totalExpectedRevenueShare === 'undefined'
 					? 0
 					: totalExpectedRevenueShare.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-			icon: <BalanceIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <BalanceIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
 			id: 6,
 			label: 'Loan Balance',
 			amount: 0,
-			icon: <BalanceIcon style={{ fontSize: '30px', color: '#37561b' }} />
+			icon: <BalanceIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		}
 	];
 
@@ -301,23 +308,16 @@ const Metrics = () => {
 		<div className="revenue-card-row">
 			{card_content.map((c) => (
 				<div className="revenue-card" key={c.id}>
-					<div className="revenue-card-content-row ">
-						<div className="revenue-card-content-column">
-							<h3>{c.label}</h3>
-							{c.id !== 1 ? null : <h2>{c.amount}</h2>}
-							{c.id === 1 ? null : <h1>{c.amount} Shs</h1>}
-							{c.id === 1 && typeof daysSinceLastSubmit !== 'undefined' ? <h4>{loanMessage}</h4> : null}
-							{c.id === 1 && typeof daysSinceLastSubmit === 'undefined' ? <h4>{loanMessage}</h4> : null}
-						</div>
+					<div className="revenue-card-content-column">
 						{c.id === 1 ? null : <div className="revenue-card-content-row-avatar">{c.icon}</div>}
+						{c.id !== 1 ? null : <h2>{c.amount}</h2>}
+						{c.id === 1 ? null : <h1>{c.amount} Shs</h1>}
+						<h3>{c.label}</h3>
+						{c.id === 1 && typeof daysSinceLastSubmit !== 'undefined' ? <h4>{loanMessage}</h4> : null}
+						{c.id === 1 && typeof daysSinceLastSubmit === 'undefined' ? <h4>{loanMessage}</h4> : null}
 					</div>
 				</div>
 			))}
-			{card_content.length === 5 ? (
-				[ ...new Array(3 - card_content.length % 3).fill() ].map((r) => <div className="revenue-card hidden" />)
-			) : (
-				[ ...new Array(3 - card_content.length % 3).fill() ].map((r) => <div className="revenue-card none" />)
-			)}
 		</div>
 	);
 
@@ -342,8 +342,10 @@ const Metrics = () => {
 				<title>Dashboard</title>
 			</Helmet>
 			<Cards />
-			<button onClick={() => setOpen(true)}>Report Revenue</button>
-			<p onClick={() => setRevenueTable(true)}>View Reported Revenue</p>
+			<div className="metric-btn-row">
+				<p onClick={() => setOpen(true)}>Report Revenue</p>
+				<p onClick={() => setRevenueTable(true)}>View Reported Revenue</p>
+			</div>
 			{category === 'internal' ? null : (
 				<div className="graph-row">
 					<div className="revenue">
@@ -352,6 +354,15 @@ const Metrics = () => {
 					</div>
 				</div>
 			)}
+			<Diagnostics
+				teams={typeof diagnostics === 'undefined' ? 0 : diagnostics.teams}
+				vision={typeof diagnostics === 'undefined' ? 0 : diagnostics.vision}
+				proposition={typeof diagnostics === 'undefined' ? 0 : diagnostics.proposition}
+				product={typeof diagnostics === 'undefined' ? 0 : diagnostics.product}
+				market={typeof diagnostics === 'undefined' ? 0 : diagnostics.market}
+				business={typeof diagnostics === 'undefined' ? 0 : diagnostics.business}
+				investment={typeof diagnostics === 'undefined' ? 0 : diagnostics.investment}
+			/>
 		</div>
 	);
 };
