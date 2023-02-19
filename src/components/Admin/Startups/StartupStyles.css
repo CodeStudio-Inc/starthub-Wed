@@ -241,6 +241,10 @@
     padding-right: 10px;
 }
 
+.profile-lable-row:hover {
+    cursor: pointer;
+}
+
 .profile-row h4 {
     color: #37561b;
     margin: 0;
@@ -370,7 +374,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	width: 30rem;
+	width: 40rem;
 }
 
 .admin-filter-row button {
