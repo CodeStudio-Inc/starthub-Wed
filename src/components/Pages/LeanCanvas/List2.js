@@ -25,6 +25,8 @@ const CanvasList2 = ({ listId, listNumber, title, cards, boardId, callback, open
 										placeholder="Type.."
 										value={cardName}
 										onChange={(e) => setCardName(e.target.value)}
+										rows="20"
+										cols="50"
 									/>
 								) : null}
 								{!cards || typeof cards.at(-1) === 'undefined' ? (

@@ -153,6 +153,8 @@ const KanbanList = ({ listId, title, cards, callback, open }) => {
 										placeholder="Add Card"
 										value={cardName}
 										onChange={(e) => setCardName(e.target.value)}
+										rows="20"
+										cols="50"
 									/>
 									<p
 										onClick={() => {

@@ -6,7 +6,8 @@ export {
 	userActivity,
 	getUserActivity,
 	addLatestRevenuePayment,
-	addLatestRevenueSubmission
+	addLatestRevenueSubmission,
+	loanEligibilityCheck
 } from './auth';
 export {
 	getBlogs,
@@ -66,6 +67,7 @@ export {
 	addAdminObjectives,
 	editAdminObjective,
 	getAdminObjectives,
+	filterAdminObjectives,
 	getAllObjectives,
 	deleteAdminObjective,
 	archiveAdminObjective,

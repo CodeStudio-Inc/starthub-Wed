@@ -93,6 +93,9 @@ const LeanCanvas = () => {
 
 	return (
 		<div className="canvas-container">
+			<Helmet>
+				<title>Lean Canvas</title>
+			</Helmet>
 			<div className="canvas-header">
 				{canvas_board && canvas_board.length !== 0 ? (
 					<div
@@ -104,9 +107,6 @@ const LeanCanvas = () => {
 					</div>
 				) : null}
 			</div>
-			<Helmet>
-				<title>Lean Canvas</title>
-			</Helmet>
 			{open ? (
 				<ModalUI>
 					<div className="canvas-modal">

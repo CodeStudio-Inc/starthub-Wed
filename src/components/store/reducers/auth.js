@@ -14,6 +14,10 @@ const initialState = {
 	totalRevenue: 0,
 	totalExpense: 0,
 	daysSinceLastSubmit: '',
+	loanEligibility: '',
+	loanEligibilityMsg: '',
+	loanApplicationDate: '',
+	eligibilityCheck: false,
 	user_activity: [],
 	admin: null,
 	loading: false,
@@ -49,6 +53,10 @@ const auth = (state = initialState, action) => {
 				totalRevenue: action.totalRevenue,
 				totalExpense: action.totalExpense,
 				daysSinceLastSubmit: action.daysSinceLastSubmit,
+				loanEligibility: action.loanEligibility,
+				loanEligibilityMsg: action.loanEligibilityMsg,
+				loanApplicationDate: action.loanApplicationDate,
+				eligibilityCheck: action.eligibilityCheck,
 				authenticated: true
 			});
 
