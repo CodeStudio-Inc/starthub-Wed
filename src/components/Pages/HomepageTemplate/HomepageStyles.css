@@ -54,6 +54,16 @@
 	border-radius: 10px;
 }
 
+.homepage-open-navbar {
+	position: absolute;
+	top: 10px;
+	left: 20px;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .homepage-navbar-avatar {
 	display: flex;
 	align-items: center;
@@ -98,7 +108,28 @@
     flex-direction: column;
 	height: 100vh;
 	width: 13%;
+	transition: 1s ease-in-out;
     background: #f7f7f7;
+}
+
+.hide-menu {
+	display: none;
+} 
+
+.sidebar-icon-row {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	width: 100%;
+	padding: 5px;
+}
+
+.sidebar-icon {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-icon:hover {
+	cursor: pointer;
 }
 
 .username-logo {
@@ -127,7 +158,6 @@
     width: 100px;
     border-radius: 200;
     overflow: hidden; 
-    margin-top: 2rem;
 }
 .homepage-avatar img {
     width: 100px;
@@ -213,13 +243,17 @@
     justify-content: flex-start;
     flex-direction: column;
 	width: 90%;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
+    /* border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px; */
     background: #fff;
     box-sizing: border-box;
 	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
     height: 100vh;
     overflow: hidden;
+}
+
+.increase-width {
+	width: 100%;
 }
 
 .nav-container {
@@ -311,6 +345,9 @@
 	}
 	.homepage-navbar-menu {
 		display: flex;
+	}
+	.homepage-open-navbar {
+		display: none;
 	}
 	.homepage-main {
 		width: 100%;
