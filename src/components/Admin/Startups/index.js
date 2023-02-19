@@ -33,7 +33,11 @@ const Startups = (props) => {
 		users_activity.push(user);
 	});
 
-	// const totalRevenue = Array.from(filterUsers, ({ totalRevenue }) => totalRevenue).reduce((a, b) => a + b, 0);
+	const totalRevenue = Array.from(filterUsers, ({ totalRevenue }) => totalRevenue).reduce((a, b) => a + b, 0);
+	const totalExpectedRevenuePaid = Array.from(filterUsers, ({ totalRevSharePaid }) => totalRevSharePaid).reduce(
+		(a, b) => a + b,
+		0
+	);
 
 	const dispatch = useDispatch();
 
@@ -41,10 +45,6 @@ const Startups = (props) => {
 		getStartups();
 		getUserActivity();
 	}, []);
-
-	const dataFilter = users_activity.filter(function(element) {
-		return element !== undefined;
-	});
 
 	const columns = [
 		{
@@ -147,7 +147,7 @@ const Startups = (props) => {
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
-						<h1>0 shs</h1>
+						<h1>{totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}  Shs</h1>
 						<h3>Total Revenue</h3>
 					</div>
 				</div>
@@ -156,7 +156,7 @@ const Startups = (props) => {
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
-						<h1>0 shs</h1>
+						<h1>{totalExpectedRevenuePaid.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}  shs</h1>
 						<h3>Total Revenue Share Payment</h3>
 					</div>
 				</div>

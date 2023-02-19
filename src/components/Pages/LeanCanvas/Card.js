@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
 import { actionCreators } from '../../Paths';
 import EditIcon from '@material-ui/icons/Edit';
@@ -9,6 +9,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export const Card = ({ text, callback, listId, cardIndex }) => {
 	const [ cardName, setCardName ] = useState(text);
 	const [ visible, setVisible ] = useState(false);
+
+	const { admin } = useSelector((state) => state.auth);
 
 	const dispatch = useDispatch();
 
@@ -45,6 +47,8 @@ export const Card = ({ text, callback, listId, cardIndex }) => {
 						placeholder="Enter Card Title"
 						value={cardName}
 						onChange={(e) => setCardName(e.target.value)}
+						rows="20"
+						cols="33"
 					/>
 					<CloseIcon onClick={() => setVisible(false)} className="close" style={{ fontSize: '25px' }} />
 					<DeleteIcon
@@ -78,7 +82,9 @@ export const Card = ({ text, callback, listId, cardIndex }) => {
 			) : null}
 			{visible ? null : (
 				<div className="icon-row">
-					<EditIcon onClick={() => setVisible(true)} className="edit-icon" fontSize="small" />
+					{admin ? null : (
+						<EditIcon onClick={() => setVisible(true)} className="edit-icon" fontSize="small" />
+					)}
 				</div>
 			)}
 		</div>

@@ -46,6 +46,8 @@ export const KanbanCard = ({ cardId, text, index, cardIndex, listId }) => {
 							<div className="edit-card-row2">
 								<textarea
 									placeholder="Enter Card Title"
+									rows="20"
+									cols="50"
 									value={cardName}
 									onChange={(e) => setCardName(e.target.value)}
 									onKeyUp={(e) => {

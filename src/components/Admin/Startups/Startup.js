@@ -16,7 +16,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Helmet } from 'react-helmet';
 import Box from '@mui/material/Box';
 
-import NewObjective from './modals/NewObjective';
 import EditProfile from './modals/EditProfile';
 import Diagnostics from './Diagnostics';
 import './StartupStyles.css';
@@ -26,7 +25,6 @@ const Startup = ({ location, history }) => {
 	const [ rowId, setRowId ] = React.useState('');
 	const [ loader, setLoader ] = React.useState(false);
 	const [ open, setOpen ] = React.useState(false);
-	const [ openLeancanvas, setOpenLeancanvas ] = React.useState(false);
 	const [ edit, setEdit ] = React.useState(false);
 	const [ message, setMessage ] = React.useState(false);
 	const [ state, setState ] = React.useState({
@@ -48,35 +46,7 @@ const Startup = ({ location, history }) => {
 
 	const getRevenue = () => dispatch(actionCreators.getRevenue());
 	const getBoards = () => dispatch(actionCreators.getAdminBoard(data._id));
-	const getObjectives = () => dispatch(actionCreators.getAdminObjectives(data._id));
 	const getValues = () => dispatch(actionCreators.getAdminValues(data._id));
-	const addObjective = () => {
-		if (!state.description || !state.quarter) return setMessage('Invalid Entries');
-		dispatch(
-			actionCreators.addAdminObjectives(data._id, board_id, state.description, state.quarter, (res) => {
-				setState({
-					description: '',
-					quarter: ''
-				});
-				if (res.success) return setMessage('Objective Added');
-				if (!res.success) return setMessage('Error while adding objective');
-			})
-		);
-	};
-	const addKeyresult = () => {
-		if (!state.keyresult || !rowId) return alert('Invalid Entries');
-		setLoader(true);
-		dispatch(
-			actionCreators.addAdminkeyResult(data._id, state.keyresult, state.measureOfSuccess, rowId, (res) => {
-				setLoader(false);
-				setState({
-					keyresult: '',
-					measureOfSuccess: 0
-				});
-				if (!res.success) return alert('Error while adding objective');
-			})
-		);
-	};
 
 	const current_yr = new Date().getFullYear();
 	const previous_yr = new Date().getFullYear() - 1;
@@ -101,7 +71,6 @@ const Startup = ({ location, history }) => {
 	React.useEffect(() => {
 		checkMonth(current_month);
 		getRevenue();
-		getObjectives();
 		getValues();
 		getBoards();
 	}, []);
@@ -270,131 +239,11 @@ const Startup = ({ location, history }) => {
 		</div>
 	);
 
-	const percentage = 66;
-
-	const quarter1 = objectives.filter((e) => e.quarter === 1);
-	const quarter2 = objectives.filter((e) => e.quarter === 2);
-	const quarter3 = objectives.filter((e) => e.quarter === 3);
-	const quarter4 = objectives.filter((e) => e.quarter === 4);
-
-	const columns = [
-		{
-			title: 'Objective',
-			dataIndex: 'description',
-			key: 'description',
-			align: 'left',
-			render: (r) => (
-				<div
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						width: '100%',
-						background: '#36561b56',
-						padding: '5px',
-						borderRadius: '5px'
-					}}
-				>
-					<p style={{ color: '#37561b', margin: '0' }}>{r}</p>
-				</div>
-			)
-		},
-		{
-			title: 'Keyresults',
-			dataIndex: 'keyresults',
-			key: 'keyresults',
-			align: 'left',
-			render: (r) => <div>{r.map((k) => k.description).join(',\n')}</div>
-		},
-		{
-			title: 'Percentage Covered',
-			dataIndex: 'objPercentage',
-			key: 'objPercentage',
-			align: 'center',
-			render: (r) => (
-				<div style={{ height: '40px' }}>
-					{/* <p style={{ color: r === 100 ? '#37561b' : '#dfa126' }}>{Math.round(r)}%</p> */}
-					<Box sx={{ position: 'relative', display: 'inline-flex' }}>
-						<CircularProgress variant="determinate" value={r} color="success" />
-						<Box
-							sx={{
-								top: 0,
-								left: 0,
-								bottom: 0,
-								right: 0,
-								position: 'absolute',
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center'
-							}}
-						>
-							<p style={{ color: '#dfa126', margin: '0' }}>{`${Math.round(r)}%`}</p>
-						</Box>
-					</Box>
-				</div>
-			)
-		},
-		{
-			title: 'Date Created',
-			dataIndex: 'createdAt',
-			key: 'createdAt',
-			align: 'left'
-		},
-		{
-			title: 'Action',
-			dataIndex: '_id',
-			key: '_id',
-			align: 'center',
-			render: (r) => (
-				<div>
-					{rowId === r ? (
-						<div className="table-column">
-							<textarea
-								placeholder="Enter keyresult"
-								value={state.keyresult}
-								onChange={(e) => setState({ ...state, keyresult: e.target.value })}
-							/>
-							<input
-								type="number"
-								placeholder="%"
-								value={state.measureOfSuccess}
-								onChange={(e) => setState({ ...state, measureOfSuccess: e.target.value })}
-							/>
-							<button disabled={loader ? true : false} className="table-btn" onClick={addKeyresult}>
-								{loader ? 'saving' : 'save'}
-							</button>
-							<button className="table-btn" onClick={() => setRowId('')}>
-								cancel
-							</button>
-						</div>
-					) : (
-						<button className="table-btn" onClick={() => setRowId(r)}>
-							Add keyresult
-						</button>
-					)}
-				</div>
-			)
-		}
-	];
-
 	return (
 		<div className="startup-container">
 			<Helmet>
 				<title>{data.username}</title>
 			</Helmet>
-			{open ? (
-				<ModalUI>
-					<NewObjective
-						state={state}
-						setState={setState}
-						setOpen={setOpen}
-						loading={loader}
-						svg={svg}
-						addObjective={addObjective}
-						message={message}
-					/>
-				</ModalUI>
-			) : null}
 			{edit ? (
 				<ModalUI>
 					<EditProfile
@@ -408,22 +257,18 @@ const Startup = ({ location, history }) => {
 					/>
 				</ModalUI>
 			) : null}
-			{openLeancanvas ? (
-				<ModalUI>
-					<AdminLeanCanvas userId={data._id} close={setOpenLeancanvas} svg={svg} />
-				</ModalUI>
-			) : null}
 			<div className="profile-row">
 				<div className="icon-row" onClick={() => history.goBack()}>
 					<KeyboardBackspaceIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.3rem' }} />
 					<h4>Back</h4>
 				</div>
 				<div className="edit-profile-container">
-					<h4 onClick={() => setOpenLeancanvas(true)}>Lean Canvas</h4>
-					<div className="edit-profile" onClick={() => setEdit(true)}>
+					<h4 onClick={() => history.push(`/lean-canvas/${data.username}`, { data: data })}>Lean Canvas</h4>
+					<h4 onClick={() => history.push(`/okrs/${data.username}`, { data: data })}>OKRs</h4>
+					{/* <div className="edit-profile" onClick={() => setEdit(true)}>
 						<EditIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.2rem' }} />
 						<p>Edit Profile</p>
-					</div>
+					</div> */}
 					<div className="profile-lable-row">
 						<div className="table-avatar">
 							<h3>{data.username.substring(0, 1)}</h3>
@@ -436,32 +281,6 @@ const Startup = ({ location, history }) => {
 			<div className="graph-tab">
 				<h2>last Six Months Revenue Reporting</h2>
 				<Line data={Revenue} width={100} height={30} />
-			</div>
-			<div className="table-tab">
-				<div className="objective-table-row">
-					<h2>Objective Keyresults</h2>
-					<div
-						className="objective-add-startup-button"
-						onClick={() => {
-							setOpen(true);
-							setMessage('');
-						}}
-					>
-						<ControlPointIcon style={{ fontSize: '20px', color: '#fff', marginRight: '0.5rem' }} />
-						<p>New Objective</p>
-					</div>
-				</div>
-				<ObjectivesTable
-					Tabs={Tabs}
-					TabPane={TabPane}
-					Table={Table}
-					moment={moment}
-					quarter1={quarter1}
-					quarter2={quarter2}
-					quarter3={quarter3}
-					quarter4={quarter4}
-					columns={columns}
-				/>
 			</div>
 			<Diagnostics
 				teams={typeof diagnostics === 'undefined' ? 0 : diagnostics.teams}
