@@ -265,11 +265,8 @@ const Startup = ({ location, history }) => {
 				<div className="edit-profile-container">
 					<h4 onClick={() => history.push(`/lean-canvas/${data.username}`, { data: data })}>Lean Canvas</h4>
 					<h4 onClick={() => history.push(`/okrs/${data.username}`, { data: data })}>OKRs</h4>
-					{/* <div className="edit-profile" onClick={() => setEdit(true)}>
-						<EditIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.2rem' }} />
-						<p>Edit Profile</p>
-					</div> */}
-					<div className="profile-lable-row">
+
+					<div className="profile-lable-row" onClick={() => setEdit(true)}>
 						<div className="table-avatar">
 							<h3>{data.username.substring(0, 1)}</h3>
 						</div>
