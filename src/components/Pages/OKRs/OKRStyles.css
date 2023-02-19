@@ -59,7 +59,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	width: 45%;
+	width: 40rem;
 }
 
 .filter-row button {
@@ -1305,6 +1305,7 @@
 	background: #eee;
 	padding-left: 0.5rem;
 	height: 100px;
+	white-space: pre-line;
 }
 
 .edit-card-row2 textarea:focus {
@@ -1403,6 +1404,7 @@
 	background: #f1e8c387;
 	transition: 0.5s ease-in-out;
 	width: 95%;
+	white-space: pre-line;
 }
 
 .add-card input:focus {
@@ -1441,7 +1443,7 @@
 
 @media screen and (max-width: 768px) {
 	.okr-container  {
-		flex-direction: column-reverse;
+		flex-direction: column;
 	}
 	.statments-content {
 		width: 90%;
@@ -1462,5 +1464,8 @@
 	}
 	.create-modal {
 		width: 80%;
+	}
+	.quarter-tab-header {
+		flex-direction: column;
 	}
 }

@@ -264,6 +264,24 @@ export const getAdminObjectives = (userId) => {
 	};
 };
 
+export const filterAdminObjectives = (startDate, endDate, userId) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+
+		axios
+			.get(`admin/filter?startDate=${startDate}&endDate=${endDate}&userId=${userId}`)
+			.then((res) => {
+				// console.log(res.data);
+				dispatch(stopLoader());
+				dispatch(setObjectives(res.data.objs));
+			})
+			.catch((error) => {
+				dispatch(stopLoader());
+				console.log(error);
+			});
+	};
+};
+
 export const getAllObjectives = () => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())

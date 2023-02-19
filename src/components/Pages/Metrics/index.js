@@ -27,12 +27,14 @@ const Metrics = () => {
 		userId,
 		token,
 		category,
-		username,
 		totalExpectedRevenueShare,
 		totalRevSharePaid,
 		totalRevenue,
 		totalExpense,
-		daysSinceLastSubmit
+		loanEligibility,
+		loanEligibilityMsg,
+		loanApplicationDate,
+		eligibilityCheck
 	} = useSelector((state) => state.auth);
 	const { values } = useSelector((state) => state.requests);
 
@@ -48,7 +50,6 @@ const Metrics = () => {
 	nextLoanDate = '01' + '.' + zero.concat(month) + '.' + new Date().getFullYear();
 	txt1 = startMonth.toString().length === 1 ? zero.concat(startMonth.toString()) : startMonth.toString();
 	txt2 = currentMonth.toString().length === 1 ? zero.concat(currentMonth.toString()) : currentMonth.toString();
-	// console.log(new Date().getMonth() + 3);
 
 	currentYearRevenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === currentYear.toString());
 	previousYearRevenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === previousYear.toString());
@@ -62,7 +63,7 @@ const Metrics = () => {
 	};
 
 	React.useEffect(() => {
-		loanEligibilityCheck(daysSinceLastSubmit);
+		loanEligibilityCheck();
 		checkMonth(currentMonth);
 		getRevenue();
 		getUser();
@@ -75,6 +76,7 @@ const Metrics = () => {
 	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
 	const getUser = () => dispatch(actionCreators.getUser(userId, token));
 	const getValues = () => dispatch(actionCreators.getValues());
+	const loanEligibilityCheck = () => dispatch(actionCreators.loanEligibilityCheck());
 
 	previousYearRevenue &&
 		previousYearRevenue.forEach((e) => {
@@ -98,51 +100,6 @@ const Metrics = () => {
 				if (moment(e.date).format('MM') >= '12') currentYearRevenue.push(e);
 			}
 		});
-
-	const message1 = (
-		<h4>
-			{/* You did not report your revenues in time and can only apply for a loan after{' '} */}
-			You did not report your revenues in time
-			{/* <strong style={{ color: '#dfa126', fontWeight: 'bold' }}>{nextLoanDate}</strong> <br /> */}{' '}
-			<span onClick={() => setOpen(true)} className="span-link">
-				Report Revenue
-			</span>
-		</h4>
-	);
-	const message2 = (
-		<h4>
-			Congs {username} on reporting your revenues in time. You are Eligible to apply for Starhub loans. Cheers!{' '}
-			{/* <strong onClick={() => setLoanApplication(true)} className="notification">
-				Click to apply
-			</strong> */}
-		</h4>
-	);
-
-	const message3 = (
-		<h4>
-			Please remeber to submit your revenue for the previous month Cheers!{' '}
-			<strong className="notification">Click to report </strong>
-		</h4>
-	);
-
-	const loanEligibilityCheck = (date) => {
-		const dateFormat =
-			typeof daysSinceLastSubmit === 'undefined'
-				? '2022/10/18'
-				: daysSinceLastSubmit.replace(/-/g, '/').substring(0, 10);
-		const d1 = new Date();
-		const d2 = new Date(dateFormat);
-		const diff = Math.abs(d1 - d2);
-
-		if (diff >= 4647819936) {
-			setLoanMessage(message1);
-		}
-
-		if (diff <= 2914385082) {
-			setLoanMessage(message2);
-		}
-		// console.log(diff);
-	};
 
 	sixMonthRevenue =
 		currentYearRevenue &&
@@ -258,10 +215,7 @@ const Metrics = () => {
 		{
 			id: 1,
 			label: 'Loan Eligibility',
-			amount:
-				moment(daysSinceLastSubmit).format('MM') === txt2 && typeof daysSinceLastSubmit !== 'undefined'
-					? 'YES'
-					: 'NO',
+			amount: loanEligibility,
 			icon: <CreditScoreIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
@@ -313,8 +267,14 @@ const Metrics = () => {
 						{c.id !== 1 ? null : <h2>{c.amount}</h2>}
 						{c.id === 1 ? null : <h1>{c.amount} Shs</h1>}
 						<h3>{c.label}</h3>
-						{c.id === 1 && typeof daysSinceLastSubmit !== 'undefined' ? <h4>{loanMessage}</h4> : null}
-						{c.id === 1 && typeof daysSinceLastSubmit === 'undefined' ? <h4>{loanMessage}</h4> : null}
+						{c.id === 1 ? (
+							<h4>
+								{loanEligibilityMsg}{' '}
+								{eligibilityCheck ? (
+									<strong style={{ color: '#dfa126' }}>{loanApplicationDate.substring(0, 10)}</strong>
+								) : null}
+							</h4>
+						) : null}
 					</div>
 				</div>
 			))}
