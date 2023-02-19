@@ -32,6 +32,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import MenuIcon from '@mui/icons-material/Menu';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 
 import './HomepageStyles.css';
@@ -39,6 +41,7 @@ const { TabPane } = Tabs;
 const HomepageTemplate = (props) => {
 	const [ index, setIndex ] = React.useState(0);
 	const [ navbar, setNavbar ] = React.useState(false);
+	const [ visible, setVisible ] = React.useState(false);
 	const [ active, setActive ] = React.useState({
 		actionObject: null,
 		objects: [
@@ -149,6 +152,15 @@ const HomepageTemplate = (props) => {
 					<MenuIcon style={{ fontSize: '30px', color: '#fff' }} onClick={() => setNavbar(true)} />
 				</div>
 			)}
+			{visible ? (
+				<div className="homepage-open-navbar">
+					<ArrowCircleRightIcon
+						className="sidebar-icon"
+						style={{ fontSize: '35px' }}
+						onClick={() => setVisible(false)}
+					/>
+				</div>
+			) : null}
 			{navbar ? (
 				<Navbar
 					ListAltIcon={ListAltIcon}
@@ -255,7 +267,14 @@ const HomepageTemplate = (props) => {
 					</div>
 				</ModalUI>
 			) : null}
-			<div className="homepage-sidebar">
+			<div className={visible ? 'homepage-sidebar hide-menu' : 'homepage-sidebar'}>
+				<div className="sidebar-icon-row">
+					<ArrowCircleLeftIcon
+						className="sidebar-icon"
+						style={{ fontSize: '35px' }}
+						onClick={() => setVisible(true)}
+					/>
+				</div>
 				<div className="homepage-avatar">
 					<img src={logo} alt="logo" />
 				</div>
@@ -303,8 +322,8 @@ const HomepageTemplate = (props) => {
 				</div>
 			</div>
 			{!admin && category !== 'internal' ? (
-				<div className="homepage-main">
-					{index === 0 ? <Metrics /> : null}
+				<div className={visible ? 'homepage-main increase-width' : 'homepage-main'}>
+					{index === 0 ? <Metrics visible={visible} /> : null}
 					{index === 1 ? <OKRs /> : null}
 					{index === 2 ? <LeanCanvas /> : null}
 					{index === 3 ? <DiagnosticsTest /> : null}
@@ -317,7 +336,7 @@ const HomepageTemplate = (props) => {
 				</div>
 			) : null}
 			{admin ? (
-				<div className="homepage-main">
+				<div className={visible ? 'homepage-main increase-width' : 'homepage-main'}>
 					{index === 0 ? <Startups /> : null}
 					{/* {index === 1 ? <OkrOverview /> : null} */}
 					{index === 1 ? <UserActivity /> : null}

@@ -16,9 +16,8 @@ import RevenueTable from './modals/RevenueTable';
 import LoanApplication from './modals/LoanApplication';
 import Diagnostics from '../../Admin/Startups/Diagnostics';
 import './MetricsStyles.css';
-const Metrics = () => {
+const Metrics = ({ visible }) => {
 	const [ startMonth, setStartMonth ] = React.useState(0);
-	const [ loanMessage, setLoanMessage ] = React.useState('');
 	const [ open, setOpen ] = React.useState(false);
 	const [ revenueTable, setRevenueTable ] = React.useState(false);
 	const [ loanApplication, setLoanApplication ] = React.useState(false);
@@ -261,7 +260,7 @@ const Metrics = () => {
 	const Cards = () => (
 		<div className="revenue-card-row">
 			{card_content.map((c) => (
-				<div className="revenue-card" key={c.id}>
+				<div className={visible ? 'revenue-card revenue-width' : 'revenue-card'} key={c.id}>
 					<div className="revenue-card-content-column">
 						{c.id === 1 ? null : <div className="revenue-card-content-row-avatar">{c.icon}</div>}
 						{c.id !== 1 ? null : <h2>{c.amount}</h2>}
