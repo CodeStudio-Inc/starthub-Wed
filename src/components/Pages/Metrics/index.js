@@ -283,17 +283,17 @@ const Metrics = ({ visible }) => {
 	return (
 		<div className="metrics-container">
 			{open ? (
-				<ModalUI>
+				<ModalUI setClose={setOpen}>
 					<ReportRevenue setOpen={setOpen} />
 				</ModalUI>
 			) : null}
 			{revenueTable ? (
-				<ModalUI>
+				<ModalUI setClose={setRevenueTable}>
 					<RevenueTable revenue={revenue} columns={columns} setOpen={setRevenueTable} />
 				</ModalUI>
 			) : null}
 			{loanApplication ? (
-				<ModalUI>
+				<ModalUI setClose={setLoanApplication}>
 					<LoanApplication setOpen={setLoanApplication} />
 				</ModalUI>
 			) : null}

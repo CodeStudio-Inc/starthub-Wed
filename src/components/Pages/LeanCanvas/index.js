@@ -108,7 +108,7 @@ const LeanCanvas = () => {
 				) : null}
 			</div>
 			{open ? (
-				<ModalUI>
+				<ModalUI setClose={setOpen}>
 					<div className="canvas-modal">
 						<DeveloperBoardIcon className="canvas-modal-icon" style={{ fontSize: '70px' }} />
 						<input

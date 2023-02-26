@@ -5,13 +5,11 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 import List1 from './CanvasLists/List1';
 import List2 from './CanvasLists/List2';
+import Navbar from './modals/Navbar';
 import './StartupStyles.css';
 import '../../Pages/LeanCanvas/LeanCanvasStyles.css';
 const LeanCanvas = ({ location, history }) => {
-	const [ dropDown, setDropDown ] = React.useState(false);
-	const [ listId, setListId ] = React.useState('');
-
-	const { boards, lists, loading } = useSelector((state) => state.admin);
+	const { boards, lists } = useSelector((state) => state.admin);
 
 	const data = location.state.data;
 
@@ -36,8 +34,6 @@ const LeanCanvas = ({ location, history }) => {
 	const concept = board_lists.find((el) => el.name === 'High-Level Concept');
 	const adoptors = board_lists.find((el) => el.name === 'Early Adopters');
 
-	console.log(problem);
-
 	React.useEffect(() => {
 		getBoards();
 		getLists();
@@ -45,13 +41,7 @@ const LeanCanvas = ({ location, history }) => {
 
 	return (
 		<div className="lean-container">
-			<div className="lean-canvas-header">
-				<div className="icon-row" onClick={() => history.goBack()}>
-					<KeyboardBackspaceIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.3rem' }} />
-					<h4>Back</h4>
-				</div>
-				<h3>Lean Canvas</h3>
-			</div>
+			<Navbar data={data} history={history} />
 			<div className="canvas-main">
 				<div className="canvas-main-row">
 					<div className="canvas-list-list">

@@ -2,7 +2,6 @@ import React from 'react';
 import { KanbanList } from '../../Paths';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Objective from './Objective';
-import AddIcon from '@mui/icons-material/Add';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import { Tabs } from 'antd';
 
