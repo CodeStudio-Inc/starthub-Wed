@@ -264,14 +264,14 @@ export const getAdminObjectives = (userId) => {
 	};
 };
 
-export const filterAdminObjectives = (startDate, endDate, userId) => {
+export const filterAdminObjectives = (year, userId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
 		axios
-			.get(`admin/filter?startDate=${startDate}&endDate=${endDate}&userId=${userId}`)
+			.get(`admin/filter?year=${year}&userId=${userId}`)
 			.then((res) => {
-				// console.log(res.data);
+				// console.log(res);
 				dispatch(stopLoader());
 				dispatch(setObjectives(res.data.objs));
 			})

@@ -1,40 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import BalanceIcon from '@mui/icons-material/Balance';
 import SavingsIcon from '@mui/icons-material/Savings';
-import EditIcon from '@mui/icons-material/Edit';
-import { Tabs } from 'antd';
-import { Table } from 'antd';
 import { Line } from 'react-chartjs-2';
-import { actionCreators, AdminLeanCanvas, ObjectivesTable, ModalUI, svg } from '../../Paths';
+import { actionCreators } from '../../Paths';
 import moment from 'moment';
 import 'react-circular-progressbar/dist/styles.css';
-import CircularProgress from '@mui/material/CircularProgress';
 import { Helmet } from 'react-helmet';
-import Box from '@mui/material/Box';
 
-import EditProfile from './modals/EditProfile';
 import Diagnostics from './Diagnostics';
+import Navbar from './modals/Navbar';
 import './StartupStyles.css';
 const Startup = ({ location, history }) => {
-	const { TabPane } = Tabs;
 	const [ startMonth, setStartMonth ] = React.useState(0);
-	const [ rowId, setRowId ] = React.useState('');
-	const [ loader, setLoader ] = React.useState(false);
-	const [ open, setOpen ] = React.useState(false);
-	const [ edit, setEdit ] = React.useState(false);
-	const [ message, setMessage ] = React.useState(false);
-	const [ state, setState ] = React.useState({
-		description: '',
-		quarter: '',
-		keyresult: '',
-		measureOfSuccess: 0
-	});
 
-	const { revenue, objectives, loading, values } = useSelector((state) => state.admin);
+	const { revenue, loading, values } = useSelector((state) => state.admin);
 	const { boards } = useSelector((state) => state.requests);
 
 	const data = location.state.data;
@@ -240,40 +221,11 @@ const Startup = ({ location, history }) => {
 	);
 
 	return (
-		<div className="startup-container">
+		<div className="startup-container" id="container">
 			<Helmet>
 				<title>{data.username}</title>
 			</Helmet>
-			{edit ? (
-				<ModalUI>
-					<EditProfile
-						setEdit={setEdit}
-						username={data.username}
-						userId={data._id}
-						dispatch={dispatch}
-						actionCreators={actionCreators}
-						loading={loading}
-						svg={svg}
-					/>
-				</ModalUI>
-			) : null}
-			<div className="profile-row">
-				<div className="icon-row" onClick={() => history.goBack()}>
-					<KeyboardBackspaceIcon style={{ fontSize: '20px', color: '#37561b', marginRight: '0.3rem' }} />
-					<h4>Back</h4>
-				</div>
-				<div className="edit-profile-container">
-					<h4 onClick={() => history.push(`/lean-canvas/${data.username}`, { data: data })}>Lean Canvas</h4>
-					<h4 onClick={() => history.push(`/okrs/${data.username}`, { data: data })}>OKRs</h4>
-
-					<div className="profile-lable-row" onClick={() => setEdit(true)}>
-						<div className="table-avatar">
-							<h3>{data.username.substring(0, 1)}</h3>
-						</div>
-						<h2>{data.username}</h2>
-					</div>
-				</div>
-			</div>
+			<Navbar data={data} history={history} />
 			<Cards />
 			<div className="graph-tab">
 				<h2>last Six Months Revenue Reporting</h2>

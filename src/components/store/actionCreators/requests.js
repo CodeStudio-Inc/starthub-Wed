@@ -767,14 +767,14 @@ export const getObjective = () => {
 	};
 };
 
-export const filterOkrs = (startDate, endDate) => {
+export const filterOkrs = (year) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
 		axios
-			.get(`catalyzer/filter?startDate=${startDate}&endDate=${endDate}`)
+			.get(`catalyzer/filter?year=${year}`)
 			.then((res) => {
-				// console.log(res.data);
+				// console.log(res);
 				dispatch(stopLoader());
 				dispatch(setObjectives(res.data.objs));
 			})
