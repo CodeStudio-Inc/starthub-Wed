@@ -28,8 +28,7 @@ const OKRs = () => {
 	});
 
 	const [ dates, setDates ] = React.useState({
-		startDate: '',
-		endDate: ''
+		year: ''
 	});
 
 	const { lists, boards, statements, objectives, loading } = useSelector((state) => state.requests);
@@ -59,7 +58,7 @@ const OKRs = () => {
 	const userActivity = () => dispatch(actionCreators.userActivity(email, username, userId));
 	const getValues = () => dispatch(actionCreators.getValues());
 	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
-	const filterOKRsByDate = () => dispatch(actionCreators.filterOkrs(dates.startDate, dates.endDate));
+	const filterOKRsByDate = () => dispatch(actionCreators.filterOkrs(dates.year));
 
 	const _boards = boards && boards.filter((el) => el.creator === userId && el.boardType !== 'Lean Canvas');
 	const current_board = _boards && _boards.slice(-1).pop();
@@ -190,7 +189,7 @@ const OKRs = () => {
 				<title>OKRs</title>
 			</Helmet>
 			{objective ? (
-				<ModalUI>
+				<ModalUI setClose={setObjective}>
 					<NewObjective
 						state={state}
 						setState={setState}
@@ -203,7 +202,7 @@ const OKRs = () => {
 				</ModalUI>
 			) : null}
 			{statement ? (
-				<ModalUI>
+				<ModalUI setClose={setStatement}>
 					<NewStatement
 						state={state}
 						setState={setState}
@@ -215,7 +214,7 @@ const OKRs = () => {
 				</ModalUI>
 			) : null}
 			{archive ? (
-				<ModalUI>
+				<ModalUI setClose={setArchive}>
 					<Archive columns={columns} archived={archived} setArchive={setArchive} />
 				</ModalUI>
 			) : null}
@@ -239,25 +238,18 @@ const OKRs = () => {
 				<h3>Quarterly Objective Key Results</h3>
 				<div className="filter-row">
 					<div className="filter-input-row">
-						<h4>start date</h4>
+						{/* <h4></h4> */}
 						<input
-							type="date"
-							value={dates.startDate}
-							onChange={(e) => setDates({ ...dates, startDate: e.target.value })}
-						/>
-					</div>
-					<div className="filter-input-row">
-						<h4>end date</h4>
-						<input
-							type="date"
-							value={dates.endDate}
-							onChange={(e) => setDates({ ...dates, endDate: e.target.value })}
+							placeholder="enter year"
+							type="text"
+							value={dates.year}
+							onChange={(e) => setDates({ ...dates, year: e.target.value })}
 						/>
 					</div>
 					{loading ? (
 						<img style={{ height: '20px', width: '20px' }} src={svg} />
 					) : (
-						<button onClick={filterOKRsByDate}>Filter</button>
+						<button onClick={filterOKRsByDate}>search</button>
 					)}
 				</div>
 			</div>

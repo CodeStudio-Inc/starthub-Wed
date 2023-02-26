@@ -1,7 +1,8 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
-
-const EditProfile = ({ setEdit, username, userId, dispatch, actionCreators, loading, svg }) => {
+import { actionCreators, svg } from '../../../Paths';
+const EditProfile = ({ setEdit, data }) => {
 	const [ state, setState ] = React.useState({
 		username: '',
 		email: '',
@@ -11,13 +12,17 @@ const EditProfile = ({ setEdit, username, userId, dispatch, actionCreators, load
 	});
 	const [ error, setError ] = React.useState('');
 
+	const { loading } = useSelector((state) => state.admin);
+
+	const dispatch = useDispatch();
+
 	const updateStartup = () => {
 		if (state.email && !validateEmail(state.email)) return setError('The email address you entered is not valid');
 		if (!state.username && !state.email && !state.contractDate && !state.additionalMetrics)
 			return setState({ ...state, message: 'Invalid Entries' });
 		dispatch(
 			actionCreators.updateStartup(
-				userId,
+				data._id,
 				state.username,
 				state.email,
 				state.contractDate,
@@ -53,9 +58,9 @@ const EditProfile = ({ setEdit, username, userId, dispatch, actionCreators, load
 			<div className="edit-profile-modal-header">
 				<div className="profile-lable-row">
 					<div className="table-avatar">
-						<h3>{username.substring(0, 1)}</h3>
+						<h3>{data.username.substring(0, 1)}</h3>
 					</div>
-					<h2>{username}</h2>
+					<h2>{data.username}</h2>
 				</div>
 				<CloseIcon
 					style={{ fontSize: '20px' }}

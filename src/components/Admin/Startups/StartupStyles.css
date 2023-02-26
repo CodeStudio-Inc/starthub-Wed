@@ -118,8 +118,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     border-radius: 100px;
     background: #36561b56;
     margin-right: 0.5rem;
@@ -127,7 +127,7 @@
 .table-avatar h3 {
     margin: 0;
     color: #37561b;
-    font-size: 20px;
+    font-size: 14px;
 }
 .table-column-row h5 {
     margin: 0;
@@ -139,7 +139,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 30%;
+    width: 30rem;
 }
 
 .edit-profile-container h4 {
@@ -212,6 +212,8 @@
 
 .profile-row {
     position: absolute;
+    top: 0;
+    left: 0;
     z-index: 100;
     display: flex;
     align-items: center;
@@ -220,6 +222,7 @@
     height: 50px;
     padding: 10px;
     background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .icon-row {
@@ -250,7 +253,7 @@
     margin: 0;
 }
 
-.profile-lable-row h2 {
+.profile-lable-row h4 {
     color: #37561b;
     margin: 0;
     margin-left: 0.1rem;
@@ -354,34 +357,28 @@
     color: rgba(0, 0, 0, 0.3);
 }
 
-.table-tab {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 95%;
-    flex-direction: column;
-    background: #fff;
-}
-
-.table-tab h2 {
-    margin: 0;
-    font-weight: 400;
-    margin-left: 0.5rem;
-    color: rgba(0, 0, 0, 0.3);
+.admin-okrs-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+    height: 100vh;
+    margin-top: 3rem;
 }
 
 .admin-filter-row {
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	width: 40rem;
+	width: 20rem;
 }
 
 .admin-filter-row button {
 	background: none;
 	color: rgba(0, 0, 0, 0.6);
 	height: 30px;
-	width: 15%;
+	width: 5rem;
 	transition: 1s ease-in-out;
 	border-radius: 5px;
 	border: 1px solid rgba(0, 0, 0, 0.1);
@@ -413,6 +410,7 @@
 	background: none;
 	outline: none;
 	height: 30px;
+    padding-left: 5px;
 	border-radius: 5px;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -422,6 +420,9 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin-top: 1rem;
+    padding: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .objective-table-row h2 {
@@ -622,8 +623,10 @@
     justify-content: flex-start;
     flex-direction: column;
     width: 100%;
+    height: 100vh;
     padding: 10px;
     overflow-y: scroll;
+    margin-top: 3rem;
 }
 
 .lean-canvas-header {
@@ -729,6 +732,96 @@
     cursor: pointer;
 }
 
+/* profile modal css */
+.profile-container {
+    position: absolute;
+    top: 0;
+    bottom: 0; 
+    left: 0;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.profile-modal-container {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    background: #fff;
+    width: 20rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+} 
+
+.profile-modal-overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    top: 0;
+    bottom: 0; 
+    left: 0;
+    height: 100vh;
+}
+
+.profile-modal-header {
+    height: 60px;
+    width: 100%;
+    background: #36561b56;
+}
+
+.profile-modal-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 80px;
+    height: 70px;
+    width: 70px;
+    background: #fff;
+    translate: 0 -30px;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.profile-modal-avatar h1 {
+    margin: 0;
+}
+
+.profile-modal-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+    translate: 0 -20px;
+}
+
+.profile-modal-main h3 {
+    margin: 0;
+}
+
+.profile-modal-main h4 {
+    margin: 0;
+}
+
+.profile-modal-icon {
+    color: #36561b56;
+    border-radius: 30px;
+    margin-bottom: 1rem;
+}
+
+.profile-modal-icon:hover {
+    cursor: pointer;
+    color: #37561b;
+    background: #36561b56;
+    padding: 5px;
+}
+
 @media screen and (max-width: 768px) {
 	.card-row {
         flex-direction: column;
@@ -771,5 +864,12 @@
     }
     .add-objective-modal-container {
         width: 70%;
+    }
+    .edit-profile-container {
+        width: 20rem;
+    }
+    
+    .edit-profile-container h4 {
+        font-size: 12px;
     }
 }

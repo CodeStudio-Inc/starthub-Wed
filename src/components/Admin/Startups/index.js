@@ -123,12 +123,12 @@ const Startups = (props) => {
 				<title>Startups Overview</title>
 			</Helmet>
 			{addStartupModal ? (
-				<ModalUI>
+				<ModalUI setClose={setAddStartupModal}>
 					<AddStartup setOpen={setAddStartupModal} />
 				</ModalUI>
 			) : null}
 			{paymentsModal ? (
-				<ModalUI>
+				<ModalUI setClose={setPaymentsModal}>
 					<MakePayment startups={filterUsers} setOpen={setPaymentsModal} />
 				</ModalUI>
 			) : null}
@@ -147,7 +147,7 @@ const Startups = (props) => {
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
-						<h1>{totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}  Shs</h1>
+						<h1>{totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs</h1>
 						<h3>Total Revenue</h3>
 					</div>
 				</div>
@@ -156,7 +156,7 @@ const Startups = (props) => {
 						<div className="card-content-row-avatar">
 							<TrendingUpIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
-						<h1>{totalExpectedRevenuePaid.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}  shs</h1>
+						<h1>{totalExpectedRevenuePaid.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} shs</h1>
 						<h3>Total Revenue Share Payment</h3>
 					</div>
 				</div>

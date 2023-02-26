@@ -24,8 +24,7 @@ const InternalOKRs = () => {
 	});
 
 	const [ dates, setDates ] = React.useState({
-		startDate: '',
-		endDate: ''
+		year: ''
 	});
 
 	const dispatch = useDispatch();
@@ -41,7 +40,7 @@ const InternalOKRs = () => {
 	const getLists = () => dispatch(actionCreators.getListsOnBoard());
 	const getStatements = () => dispatch(actionCreators.getStatement());
 	const getObjectives = () => dispatch(actionCreators.getObjective());
-	const filterOKRsByDate = () => dispatch(actionCreators.filterOkrs(dates.startDate, dates.endDate));
+	const filterOKRsByDate = () => dispatch(actionCreators.filterOkrs(dates.year));
 
 	React.useEffect(() => {
 		getBoards();
@@ -227,25 +226,18 @@ const InternalOKRs = () => {
 				<h3>Quarterly Objective Key Results</h3>
 				<div className="filter-row">
 					<div className="filter-input-row">
-						<h4>start date</h4>
+						{/* <h4>Filter objective</h4> */}
 						<input
-							type="date"
-							value={dates.startDate}
-							onChange={(e) => setDates({ ...dates, startDate: e.target.value })}
-						/>
-					</div>
-					<div className="filter-input-row">
-						<h4>end date</h4>
-						<input
-							type="date"
-							value={dates.endDate}
-							onChange={(e) => setDates({ ...dates, endDate: e.target.value })}
+							placeholder="enter year"
+							type="text"
+							value={dates.year}
+							onChange={(e) => setDates({ ...dates, year: e.target.value })}
 						/>
 					</div>
 					{loading ? (
 						<img style={{ height: '20px', width: '20px' }} src={svg} />
 					) : (
-						<button onClick={filterOKRsByDate}>Filter</button>
+						<button onClick={filterOKRsByDate}>Search</button>
 					)}
 				</div>
 			</div>

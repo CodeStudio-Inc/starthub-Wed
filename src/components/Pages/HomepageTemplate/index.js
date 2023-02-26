@@ -331,7 +331,7 @@ const HomepageTemplate = (props) => {
 				</div>
 			) : null}
 			{!admin && category === 'internal' ? (
-				<div className="homepage-main">
+				<div className={visible ? 'homepage-main increase-width' : 'homepage-main'}>
 					<InternalOKRs />
 				</div>
 			) : null}
