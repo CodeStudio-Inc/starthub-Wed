@@ -10,6 +10,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import BalanceIcon from '@mui/icons-material/Balance';
 import SavingsIcon from '@mui/icons-material/Savings';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 import ReportRevenue from './modals/ReportRevenue';
 import RevenueTable from './modals/RevenueTable';
@@ -301,9 +302,12 @@ const Metrics = ({ visible }) => {
 				<title>Dashboard</title>
 			</Helmet>
 			<Cards />
+			<div className="report-revenue-btn" onClick={() => setOpen(true)}>
+				<AssessmentIcon style={{ fontSize: '30px', color: '#fff', marginRight: '5px' }} />
+				<h4>Report Revenue</h4>
+			</div>
 			<div className="metric-btn-row">
-				<p onClick={() => setOpen(true)}>Report Revenue</p>
-				<p onClick={() => setRevenueTable(true)}>View Reported Revenue</p>
+				<button onClick={() => setRevenueTable(true)}>View Reported Revenue</button>
 			</div>
 			{category === 'internal' ? null : (
 				<div className="graph-row">
