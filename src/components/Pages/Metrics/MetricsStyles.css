@@ -11,20 +11,46 @@
 .metric-btn-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 20rem;
+    justify-content: center;
+    /* width: 90%; */
 }
 
-.metric-btn-row p {
-    margin: 0;
+.metric-btn-row button {
+    outline: none;
+    border: none;
     color: #dfa126;
-    padding: 5px;
+    background: none;
+    height: 40px;
+    width: 15rem;
 }
 
-.metric-btn-row p:hover {
-    color: #dfa126b8;
+.metric-btn-row button:hover {
     cursor: pointer;
 }
+
+.report-revenue-btn {
+    position: absolute;
+    z-index: 100;
+    bottom: 60px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 12rem;
+    background: #dfa126;
+    border-radius: 10px;
+}
+
+.report-revenue-btn:hover {
+    cursor: pointer;
+}
+
+.report-revenue-btn h4 {
+    color: #fff;
+    margin: 0;
+}
+
 
 .graph-row {
 	display: flex;
