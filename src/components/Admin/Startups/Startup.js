@@ -4,9 +4,11 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import BalanceIcon from '@mui/icons-material/Balance';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { Line } from 'react-chartjs-2';
+import { Table } from 'antd';
 import { actionCreators } from '../../Paths';
 import moment from 'moment';
 import 'react-circular-progressbar/dist/styles.css';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Helmet } from 'react-helmet';
 
 import Diagnostics from './Diagnostics';
@@ -20,7 +22,6 @@ const Startup = ({ location, history }) => {
 
 	const data = location.state.data;
 	const startup_revenue = revenue.filter((e) => e.creator === data._id);
-	const board_id = boards && boards.at(-1)._id;
 	const diagnostics = values && values.at(-1);
 
 	const dispatch = useDispatch();
@@ -88,7 +89,7 @@ const Startup = ({ location, history }) => {
 		current_yr_revenue &&
 		current_yr_revenue.filter((e) => moment(e.date).format('MM') >= txt1 || moment(e.date).format('MM') <= txt2);
 
-	let new_revenue = [];
+	let new_revenue = [ { index: 0, month_revenue: 0, month_expense: 0, revSharepayment: 0, month: '0' } ];
 
 	six_months_revenue &&
 		six_months_revenue.forEach((e) => {
@@ -145,6 +146,7 @@ const Startup = ({ location, history }) => {
 	new_revenue.sort((a, b) => a.index - b.index);
 	const rev = new_revenue.map((el) => el.month_revenue);
 	const expense = new_revenue.map((el) => el.month_expense);
+	const pay = new_revenue.map((el) => el.revSharepayment);
 	const months = Array.from(new_revenue, ({ month }) => month);
 	const Revenue = {
 		labels: months,
@@ -162,6 +164,13 @@ const Startup = ({ location, history }) => {
 				borderColor: '#dfa126',
 				borderWidth: 1,
 				data: expense
+			},
+			{
+				label: 'Revenue Share Payment (UGX)',
+				backgroundColor: '#7e2527',
+				borderColor: '#7e2527',
+				borderWidth: 1,
+				data: pay
 			}
 		]
 	};
@@ -200,7 +209,7 @@ const Startup = ({ location, history }) => {
 			icon: <BalanceIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		},
 		{
-			label: 'Loan Balance',
+			label: 'Loan Balance(includes interest)',
 			amount: 0,
 			icon: <BalanceIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		}

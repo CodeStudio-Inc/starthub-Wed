@@ -1,14 +1,4 @@
-export {
-	signUp,
-	login,
-	getUser,
-	removeUser,
-	userActivity,
-	getUserActivity,
-	addLatestRevenuePayment,
-	addLatestRevenueSubmission,
-	loanEligibilityCheck
-} from './auth';
+export { signUp, login, getUser, removeUser, loanEligibilityCheck } from './auth';
 export {
 	getBlogs,
 	getBoards,

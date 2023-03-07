@@ -32,12 +32,9 @@ const OKRs = () => {
 	});
 
 	const { lists, boards, statements, objectives, loading } = useSelector((state) => state.requests);
-	const { userId, username, email, category } = useSelector((state) => state.auth);
+	const { userId } = useSelector((state) => state.auth);
 
 	React.useEffect(() => {
-		if (category === 'catalyzer') {
-			userActivity();
-		}
 		getBoards();
 		getLists();
 		getStatements();
@@ -55,7 +52,6 @@ const OKRs = () => {
 	const getStatements = () => dispatch(actionCreators.getStatement());
 	const getObjectives = () => dispatch(actionCreators.getObjective());
 	const getUsers = () => dispatch(actionCreators.getUsers());
-	const userActivity = () => dispatch(actionCreators.userActivity(email, username, userId));
 	const getValues = () => dispatch(actionCreators.getValues());
 	const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
 	const filterOKRsByDate = () => dispatch(actionCreators.filterOkrs(dates.year));

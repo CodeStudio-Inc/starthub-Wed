@@ -54,13 +54,6 @@ export const setUser = (
 	};
 };
 
-export const setUserActivity = (data) => {
-	return {
-		type: actions.SET_USER_ACTIVITY,
-		data
-	};
-};
-
 export const removeUser = () => {
 	return {
 		type: actions.REMOVE_USER
@@ -139,81 +132,6 @@ export const getUser = (userId) => {
 						res.data.eligibilityCheck
 					)
 				);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const userActivity = (email, username, userId) => {
-	return (dispatch) => {
-		dispatch(loaderAction());
-
-		const data = {
-			email,
-			username,
-			userId
-		};
-
-		axios
-			.post(`admin/user-activity`, data)
-			.then((res) => {
-				dispatch(setUserActivity(res.data.user_activity));
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const addLatestRevenuePayment = (startup) => {
-	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
-		const data = {
-			date: startup
-		};
-
-		axios
-			.post(`admin/revenue-payment`, data)
-			.then((res) => {
-				// console.log(res);
-				dispatch(setUserActivity(res.data.user_activity));
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const addLatestRevenueSubmission = (startup) => {
-	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
-		const data = {
-			date: startup
-		};
-
-		axios
-			.post(`admin/revenue-submission`, data)
-			.then((res) => {
-				dispatch(setUserActivity(res.data.user_activity));
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const getUserActivity = () => {
-	return (dispatch, getState) => {
-		const token = getState().auth.token;
-
-		axios
-			.get(`admin/user-activities`)
-			.then((res) => {
-				dispatch(setUserActivity(res.data.user_activity));
 			})
 			.catch((error) => {
 				console.log(error);

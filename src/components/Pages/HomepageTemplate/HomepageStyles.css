@@ -243,13 +243,12 @@
     justify-content: flex-start;
     flex-direction: column;
 	width: 90%;
-    /* border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px; */
     background: #fff;
     box-sizing: border-box;
 	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
     height: 100vh;
     overflow: hidden;
+	overflow-y: scroll;
 }
 
 .increase-width {

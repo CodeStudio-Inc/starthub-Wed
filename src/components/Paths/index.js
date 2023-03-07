@@ -28,7 +28,6 @@ import Startups from '../Admin/Startups';
 import Loans from '../Admin/Loans';
 import Startup from '../Admin/Startups/Startup';
 import OkrOverview from '../Admin/OkrOverview';
-import UserActivity from '../Admin/UserActivity';
 import Revenues from '../Admin/Revenue';
 import Overview from '../Admin/Revenue/Overview';
 import RevenueShare from '../Admin/Revenue/RevenueShare';
@@ -71,7 +70,6 @@ export {
 	Loans,
 	Startup,
 	OkrOverview,
-	UserActivity,
 	Revenues,
 	Overview,
 	RevenueShare,
