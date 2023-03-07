@@ -21,17 +21,10 @@ const Startups = (props) => {
 	const [ paymentsModal, setPaymentsModal ] = React.useState(false);
 
 	const { users } = useSelector((state) => state.admin);
-	const { userId, user_activity } = useSelector((state) => state.auth);
+	const { userId } = useSelector((state) => state.auth);
 	const filterUsers = users.filter((el) => el.category === 'catalyzer' && el.mentor === userId);
 
 	const tableRef = React.useRef(null);
-
-	let users_activity = [];
-
-	filterUsers.forEach((element) => {
-		let user = user_activity && user_activity.filter((el) => el.username === element.username).slice(-1).pop();
-		users_activity.push(user);
-	});
 
 	const totalRevenue = Array.from(filterUsers, ({ totalRevenue }) => totalRevenue).reduce((a, b) => a + b, 0);
 	const totalExpectedRevenuePaid = Array.from(filterUsers, ({ totalRevSharePaid }) => totalRevSharePaid).reduce(
@@ -43,7 +36,6 @@ const Startups = (props) => {
 
 	React.useEffect(() => {
 		getStartups();
-		getUserActivity();
 	}, []);
 
 	const columns = [
@@ -52,6 +44,7 @@ const Startups = (props) => {
 			dataIndex: 'username',
 			key: 'username',
 			align: 'left',
+			fixed: true,
 			render: (r) => (
 				<div className="table-column-row">
 					<div className="table-avatar">
@@ -77,6 +70,13 @@ const Startups = (props) => {
 			title: 'Last Revenue submit',
 			dataIndex: 'daysSinceLastSubmit',
 			key: 'daysSinceLastSubmit',
+			align: 'left',
+			render: (r) => <p>{r ? moment(r).fromNow() : null}</p>
+		},
+		{
+			title: 'Last LoggedIn',
+			dataIndex: 'lastLoggedIn',
+			key: 'lastLoggedIn',
 			align: 'left',
 			render: (r) => <p>{r ? moment(r).fromNow() : null}</p>
 		},
@@ -115,7 +115,6 @@ const Startups = (props) => {
 	];
 
 	const getStartups = () => dispatch(actionCreators.getUsers());
-	const getUserActivity = () => dispatch(actionCreators.getUserActivity());
 
 	return (
 		<div className="startups-container">
@@ -212,6 +211,9 @@ const Startups = (props) => {
 				}}
 				style={{ width: '90%' }}
 				bordered={true}
+				scroll={{
+					x: 2000
+				}}
 				pagination={{
 					defaultPageSize: 9,
 					showSizeChanger: true,

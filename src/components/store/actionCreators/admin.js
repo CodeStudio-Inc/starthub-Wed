@@ -856,11 +856,11 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month, c
 		};
 
 		axios
-			.post(`admin/revenue`, data)
+			.post(`http://localhost:8080/admin/revenue`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				dispatch(setRevenue(res.data.revenue));
-				console.log(res);
+				// console.log(res);
 				callback({ success: true, message: res.data.message });
 			})
 			.catch((error) => {

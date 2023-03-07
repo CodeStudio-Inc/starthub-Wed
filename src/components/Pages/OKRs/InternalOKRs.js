@@ -209,6 +209,7 @@ const InternalOKRs = () => {
 			<div className="okr-container-header">
 				<h3>Vision and Mission Statements</h3>
 			</div>
+			<div className="underline" />
 			<div className="internal-statements">
 				{filteredStatements && filteredStatements.length > 0 ? (
 					<Statements svg={svg} statements={filteredStatements} />

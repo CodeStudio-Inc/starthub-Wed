@@ -366,16 +366,6 @@ const Overview = () => {
 					</select>
 					<button onClick={searchRevenue}>search</button>
 				</div>
-				{/* <input
-					value={state.year}
-					onChange={(e) => setState({ ...state, year: e.target.value })}
-					placeholder="search year"
-					onKeyUp={(e) => {
-						if (e.key === 'Enter' && state.year) {
-							dispatch(actionCreators.searchRevenueTracking(state.year));
-						}
-					}}
-				/> */}
 				<h2>{state.year ? state.year : moment(new Date()).format('YYYY')} Revenue Reporting</h2>
 			</div>
 			<Table
