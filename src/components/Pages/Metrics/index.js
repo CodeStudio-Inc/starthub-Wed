@@ -105,7 +105,7 @@ const Metrics = ({ visible }) => {
 		currentYearRevenue &&
 		currentYearRevenue.filter((e) => moment(e.date).format('MM') >= txt1 || moment(e.date).format('MM') <= txt2);
 
-	let new_revenue = [];
+	let new_revenue = [ { index: 0, month_revenue: 0, month_expense: 0, revSharepayment: 0, month: '0' } ];
 
 	sixMonthRevenue &&
 		sixMonthRevenue.forEach((e) => {
@@ -162,6 +162,7 @@ const Metrics = ({ visible }) => {
 	new_revenue.sort((a, b) => a.index - b.index);
 	const rev = new_revenue.map((el) => el.month_revenue);
 	const expense = new_revenue.map((el) => el.month_expense);
+	const pay = new_revenue.map((el) => el.revSharepayment);
 	const months = Array.from(new_revenue, ({ month }) => month);
 
 	const Revenue = {
@@ -180,6 +181,13 @@ const Metrics = ({ visible }) => {
 				borderColor: '#37561b',
 				borderWidth: 1,
 				data: expense
+			},
+			{
+				label: 'Revenue Share Payment (UGX)',
+				backgroundColor: '#7e2527',
+				borderColor: '#7e2527',
+				borderWidth: 1,
+				data: pay
 			}
 		]
 	};
@@ -252,7 +260,7 @@ const Metrics = ({ visible }) => {
 		},
 		{
 			id: 6,
-			label: 'Loan Balance',
+			label: 'Loan Balance(includes interest)',
 			amount: 0,
 			icon: <BalanceIcon style={{ fontSize: '25px', color: '#37561b' }} />
 		}

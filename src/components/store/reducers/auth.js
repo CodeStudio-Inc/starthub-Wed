@@ -18,7 +18,6 @@ const initialState = {
 	loanEligibilityMsg: '',
 	loanApplicationDate: '',
 	eligibilityCheck: false,
-	user_activity: [],
 	admin: null,
 	loading: false,
 	authenticated: false,
@@ -58,12 +57,6 @@ const auth = (state = initialState, action) => {
 				loanApplicationDate: action.loanApplicationDate,
 				eligibilityCheck: action.eligibilityCheck,
 				authenticated: true
-			});
-
-		case actions.SET_USER_ACTIVITY:
-			return updateObject(state, {
-				loading: false,
-				user_activity: action.data
 			});
 
 		case actions.REMOVE_USER:

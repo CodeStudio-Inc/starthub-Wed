@@ -22,12 +22,7 @@ const QuarterTabs = ({
 	setObjective
 }) => {
 	return (
-		<Tabs
-			style={{ width: '100%', overflowY: 'scroll', height: '100vh' }}
-			defaultActiveKey="1"
-			centered
-			tabBarStyle={{ color: '#37561b' }}
-		>
+		<Tabs style={{ width: '100%' }} defaultActiveKey="1" centered tabBarStyle={{ color: '#37561b' }}>
 			<TabPane tab="Quarter 1" key="1" className="tab-pane">
 				<Objective objectives={quarter1} svg={svg} />
 				{objectives && objectives.length === 3 ? null : (

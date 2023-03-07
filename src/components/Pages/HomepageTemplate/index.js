@@ -13,8 +13,6 @@ import {
 	ModalUI,
 	Startups,
 	Loans,
-	OkrOverview,
-	UserActivity,
 	Revenues
 } from '../../Paths';
 import { Tabs } from 'antd';
@@ -37,7 +35,6 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 
 import './HomepageStyles.css';
-const { TabPane } = Tabs;
 const HomepageTemplate = (props) => {
 	const [ index, setIndex ] = React.useState(0);
 	const [ navbar, setNavbar ] = React.useState(false);
@@ -78,10 +75,6 @@ const HomepageTemplate = (props) => {
 			// 	title: 'OKR Overview',
 			// 	icon: <AnalyticsIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			// },
-			{
-				title: 'User Activity',
-				icon: <EventNoteIcon style={{ fontSize: '25px' }} className="home-link-icon" />
-			},
 			{
 				title: 'Revenue',
 				icon: <PaymentIcon style={{ fontSize: '25px' }} className="home-link-icon" />
@@ -339,10 +332,8 @@ const HomepageTemplate = (props) => {
 				<div className={visible ? 'homepage-main increase-width' : 'homepage-main'}>
 					{index === 0 ? <Startups /> : null}
 					{/* {index === 1 ? <OkrOverview /> : null} */}
-					{index === 1 ? <UserActivity /> : null}
-					{/* {index === 1 ? <UserActivity /> : null} */}
-					{index === 2 ? <Revenues /> : null}
-					{index === 3 ? <Loans /> : null}
+					{index === 1 ? <Revenues /> : null}
+					{index === 2 ? <Loans /> : null}
 				</div>
 			) : null}
 		</div>
