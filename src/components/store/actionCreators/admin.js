@@ -248,6 +248,26 @@ export const editAdminObjective = (id, description, startupId, callback) => {
 	};
 };
 
+export const updateQuarterAdmin = (objId, userId) => {
+	return (dispatch, getState) => {
+		dispatch(loadAction());
+
+		const data = {
+			userId
+		};
+		axios
+			.put(`admin/update-quarter/${objId}`, data)
+			.then((res) => {
+				dispatch(setObjectives(res.data.objs));
+				dispatch(stopLoader());
+			})
+			.catch((error) => {
+				dispatch(stopLoader());
+				console.log(error);
+			});
+	};
+};
+
 export const getAdminObjectives = (userId) => {
 	return (dispatch, getState) => {
 		// dispatch(loadAction())
@@ -339,18 +359,18 @@ export const archiveAdminObjective = (id, startupId, callback) => {
 	};
 };
 
-export const addAdminkeyResult = (userId, description, measureOfSuccess, objId, callback) => {
+export const addAdminkeyResult = (objId, description, measureOfSuccess, userId, callback) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
 		const data = {
 			description,
 			measureOfSuccess,
-			objId
+			userId
 		};
 
 		axios
-			.post(`admin/keyresult/${userId}`, data)
+			.post(`admin/keyresult/${objId}`, data)
 			.then((res) => {
 				// console.log(res);
 				dispatch(setObjectives(res.data.objs));
@@ -365,23 +385,21 @@ export const addAdminkeyResult = (userId, description, measureOfSuccess, objId, 
 	};
 };
 
-export const editAdminkeyResult = (description, measureOfSuccess, dateCreated, objId, startupId, callback) => {
+export const editAdminkeyResult = (objId, description, measureOfSuccess, dateCreated, userId, callback) => {
 	return (dispatch, getState) => {
-		console.log(dateCreated, measureOfSuccess);
 		dispatch(loadAction());
 
 		const data = {
 			description,
 			measureOfSuccess,
 			dateCreated,
-			objId,
-			startupId
+			userId
 		};
 
 		axios
-			.put(`admin/keyresult`, data)
+			.put(`admin/keyresult/${objId}`, data)
 			.then((res) => {
-				// console.log(res)
+				// console.log(res.data);
 				dispatch(setObjectives(res.data.objs));
 				callback({ success: true, res: res });
 				dispatch(stopLoader());
@@ -856,7 +874,7 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month, c
 		};
 
 		axios
-			.post(`http://localhost:8080/admin/revenue`, data)
+			.post(`admin/revenue`, data)
 			.then((res) => {
 				dispatch(stopLoader());
 				dispatch(setRevenue(res.data.revenue));
