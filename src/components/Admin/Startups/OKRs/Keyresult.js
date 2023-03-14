@@ -7,7 +7,7 @@ import { GAEventsTracker } from '../../../Paths';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 
-const Keyresult = ({ k, dispatch, actionCreators, svg, loading }) => {
+const Keyresult = ({ k, dispatch, actionCreators, svg, loading, userId }) => {
 	// console.log(k)
 
 	const [ editkeyResult, seteditkeyResult ] = React.useState(false);
@@ -50,11 +50,12 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading }) => {
 										if (state.keyresult) {
 											setBtn(false);
 											dispatch(
-												actionCreators.editkeyResult(
+												actionCreators.editAdminkeyResult(
 													k.objId,
 													state.keyresult,
 													state.measureOfSuccess,
 													k.dateCreated,
+													userId,
 													(res) => {
 														UseGAEventsTracker('editKeyresultDescription', state.keyresult);
 														if (res.success) {
@@ -79,7 +80,7 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading }) => {
 							) : null}
 						</div>
 					) : null}
-					{/* {editkeyResult && activekeyResult === k.objId ? null : (
+					{editkeyResult && activekeyResult === k.objId ? null : (
 						<EditIcon
 							className="edit-stmt-icon"
 							style={{ fontSize: '20px' }}
@@ -88,7 +89,7 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading }) => {
 								seteditkeyResult(true);
 							}}
 						/>
-					)} */}
+					)}
 					{editkeyResult && activekeyResult === k.objId ? (
 						<CancelIcon
 							className="edit-stmt-icon"
@@ -101,7 +102,6 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading }) => {
 					<div className="objective-slider-row">
 						<Box sx={{ width: 150 }}>
 							<Slider
-								disabled={true}
 								size="small"
 								defaultValue={k.measureOfSuccess}
 								valueLabelDisplay="auto"
@@ -114,7 +114,7 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading }) => {
 						</Box>
 						{progress && activekeyResult === k.objId ? null : <h4>{k.measureOfSuccess}%</h4>}
 						{progress && activekeyResult === k.objId ? <h4>{state.measureOfSuccess}%</h4> : null}
-						{/* {!visible && !state.message ? (
+						{!visible && !state.message ? (
 							<button
 								onClick={() => {
 									setactiveKeyresult(k._id);
@@ -130,18 +130,19 @@ const Keyresult = ({ k, dispatch, actionCreators, svg, loading }) => {
 							>
 								{loading && activekeyResult === k._id ? 'Deleting' : 'Delete'}
 							</button>
-						) : null} */}
+						) : null}
 						<p style={{ marginLeft: '5px', marginTop: '0', marginBottom: '0' }}>{state.message}</p>
 					</div>
 					{progress && activekeyResult === k.objId ? (
 						<button
 							onClick={() => {
 								dispatch(
-									actionCreators.editkeyResult(
+									actionCreators.editAdminkeyResult(
 										k.objId,
 										state.keyresult,
 										state.measureOfSuccess.toString(),
 										k.dateCreated,
+										userId,
 										(res) => {
 											UseGAEventsTracker(
 												'adjustMeasureOfKeyresultSuccess',

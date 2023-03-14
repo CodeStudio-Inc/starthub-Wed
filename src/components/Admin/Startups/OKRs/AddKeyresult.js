@@ -50,10 +50,10 @@ const Addkeyresult = ({ obj, dispatch, actionCreators, setaddkeyResult, userId }
 					if (!state.keyresult) return alert('Enter keyresult');
 					dispatch(
 						actionCreators.addAdminkeyResult(
-							userId,
+							obj._id,
 							state.keyresult,
 							state.measureOfSuccess.toString(),
-							obj._id,
+							userId,
 							(res) => {
 								UseGAEventsTracker('addKeyresult', state.keyresult);
 								if (res.success) {

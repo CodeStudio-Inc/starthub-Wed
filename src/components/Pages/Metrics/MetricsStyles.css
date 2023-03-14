@@ -179,7 +179,8 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	width: 70%;
+	width: 90%;
+    height: 95vh;
 	background: #fff;
 }
 
@@ -220,6 +221,7 @@
 	width: 100%;
 	margin-bottom: 0.5rem;
 	padding: 10px;
+    overflow-y: scroll;
 }
 
 .report-container-content p {
@@ -230,7 +232,7 @@
 	outline: none;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	width: 70%;
-	height: 40px;
+	height: 50px;
 	margin-bottom: 0.5rem;
 }
 
@@ -246,9 +248,50 @@
 	background: none;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
-	height: 40px;
+	height: 50px;
 	width: 70%;
 	margin: 0;
+}
+
+.account-details-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    width: 70%;
+    /* background: #ebcc8d; */
+}
+
+.account-details-container h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.account-details-container-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.account-details-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.5rem;
+}
+
+.account-details-label-row h3 {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.account-details-label-row h4 {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 700;
+    margin-left: 0.5rem;
 }
 
 .label {
