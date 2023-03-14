@@ -70,6 +70,34 @@ const ReportRevenue = ({ setOpen }) => {
 						not list you for any investment matchmaking for 9 months as we do not have enough data.
 					</h4>
 				</div>
+				<div className="account-details-container">
+					<h1>SHA Account Details</h1>
+					<div className="account-details-container-row">
+						<div className="account-details-label-row">
+							<h3>Name:</h3> <h4>SHA CONSULTING GROUP LTD</h4>
+						</div>
+						<div className="account-details-label-row">
+							<h3>Acc Number:</h3>
+							<h4>01073659204812</h4>
+						</div>
+						<div className="account-details-label-row">
+							<h3>BIC/SWIFT:</h3>
+							<h4>DFCUUGKA</h4>
+						</div>
+						<div className="account-details-label-row">
+							<h3>BIC/SWIFT:</h3>
+							<h4>DFCUUGKA</h4>
+						</div>
+						<div className="account-details-label-row">
+							<h3>BRANCH:</h3>
+							<h4>JINJA ROAD BRANCH</h4>
+						</div>
+						<div className="account-details-label-row" style={{ visibility: 'hidden' }}>
+							<h3>BRANCH:</h3>
+							<h4>JINJA ROAD BRANCH</h4>
+						</div>
+					</div>
+				</div>
 				<div className="label">
 					<p>
 						Monthly Revenue(UGX)<strong style={{ color: 'red' }}> *</strong>
@@ -136,7 +164,7 @@ const ReportRevenue = ({ setOpen }) => {
 						-select-
 					</option>
 					<option value="Jan">January</option>
-					<option value="Feb">Febuary</option>
+					<option value="Feb">February</option>
 					<option value="Mar">March</option>
 					<option value="Apr">April</option>
 					<option value="May">May</option>

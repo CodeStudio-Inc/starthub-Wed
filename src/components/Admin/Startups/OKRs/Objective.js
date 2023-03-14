@@ -32,12 +32,12 @@ const Objective = ({ objectives, svg, userId }) => {
 								<h4>Objective {index >= 0 ? index + 1 : null}</h4>
 								<p>{moment(obj.updatedAt).fromNow()}</p>
 							</div>
-							{/* {obj.quarter === 4 ? null : (
-								<h5 onClick={() => dispatch(actionCreators.updateQuarter(obj._id))}>
+							{obj.quarter === 4 ? null : (
+								<h5 onClick={() => dispatch(actionCreators.updateQuarterAdmin(obj._id, userId))}>
 									Push to next Quarter{' '}
 								</h5>
-							)} */}
-							{loading && obj._id === activeObj ? (
+							)}
+							{/* {loading && obj._id === activeObj ? (
 								<img src={svg} style={{ width: '30px', height: '30px' }} />
 							) : (
 								<ArchiveIcon
@@ -48,7 +48,7 @@ const Objective = ({ objectives, svg, userId }) => {
 										dispatch(actionCreators.archiveObjective(obj._id));
 									}}
 								/>
-							)}
+							)} */}
 						</div>
 						<div className="objective-description">
 							<div className="objective-description-row">
@@ -62,22 +62,27 @@ const Objective = ({ objectives, svg, userId }) => {
 										onKeyUp={(e) => {
 											if (e.key === 'Enter' && objstate.objective) {
 												dispatch(
-													actionCreators.editObjective(obj._id, objstate.objective, (res) => {
-														UseGAEventsTracker('edit objective', objstate.objective);
-														if (res.success) {
-															setEditObjective(false);
-															setObjstate({
-																objective: ''
-															});
+													actionCreators.editAdminObjective(
+														obj._id,
+														objstate.objective,
+														userId,
+														(res) => {
+															UseGAEventsTracker('edit objective', objstate.objective);
+															if (res.success) {
+																setEditObjective(false);
+																setObjstate({
+																	objective: ''
+																});
+															}
 														}
-													})
+													)
 												);
 											}
 										}}
 									/>
 								) : null}
 								{editObjective && obj._id === activeObj ? null : <h2>{obj.description}</h2>}
-								{/* {editObjective ? null : (
+								{editObjective ? null : (
 									<EditIcon
 										className="edit-stmt-icon"
 										style={{ fontSize: '20px' }}
@@ -86,22 +91,27 @@ const Objective = ({ objectives, svg, userId }) => {
 											setEditObjective(true);
 										}}
 									/>
-								)} */}
+								)}
 								{editObjective && obj._id === activeObj ? (
 									<p
 										style={{ marginRight: '5px' }}
 										onClick={() => {
 											if (objstate.objective) {
 												dispatch(
-													actionCreators.editObjective(obj._id, objstate.objective, (res) => {
-														UseGAEventsTracker('edit objective', objstate.objective);
-														if (res.success) {
-															setEditObjective(false);
-															setObjstate({
-																objective: ''
-															});
+													actionCreators.editAdminObjective(
+														obj._id,
+														objstate.objective,
+														userId,
+														(res) => {
+															UseGAEventsTracker('edit objective', objstate.objective);
+															if (res.success) {
+																setEditObjective(false);
+																setObjstate({
+																	objective: ''
+																});
+															}
 														}
-													})
+													)
 												);
 											}
 										}}
@@ -133,6 +143,7 @@ const Objective = ({ objectives, svg, userId }) => {
 									loading={loading}
 									dispatch={dispatch}
 									actionCreators={actionCreators}
+									userId={userId}
 								/>
 							))}
 						{addkeyResult && obj._id === activeObj ? (

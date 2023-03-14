@@ -56,6 +56,7 @@ export {
 	getAdminStatements,
 	addAdminObjectives,
 	editAdminObjective,
+	updateQuarterAdmin,
 	getAdminObjectives,
 	filterAdminObjectives,
 	getAllObjectives,
