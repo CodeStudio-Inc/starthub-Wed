@@ -15,19 +15,6 @@
     /* width: 90%; */
 }
 
-.metric-btn-row button {
-    outline: none;
-    border: none;
-    color: #dfa126;
-    background: none;
-    height: 40px;
-    width: 15rem;
-}
-
-.metric-btn-row button:hover {
-    cursor: pointer;
-}
-
 .report-revenue-btn {
     position: absolute;
     z-index: 100;
@@ -57,6 +44,49 @@
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+}
+
+.graph-row button {
+    outline: none;
+    border: none;
+    color: #fff;
+    background: #37561b;
+    height: 40px;
+    width: 15rem;
+    border-radius: 5px;
+}
+
+.graph-row button:hover {
+    cursor: pointer;
+}
+
+.search-box-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.search-box-row input {
+    outline: none;
+    background: none;
+    height: 30px;
+    width: 7rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding-left: 5px;
+}
+
+.search-box-row button {
+    outline: none;
+    border: none;
+    background: #37561b;
+    height: 30px;
+    width: 5rem;
+    margin-left: 0.5rem;
+}
+
+.search-box-row button:hover {
+    cursor: pointer;
 }
 
 .revenue-card-row {
@@ -177,7 +207,7 @@
 .report-modal-container {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	flex-direction: column;
 	width: 90%;
     height: 95vh;
@@ -206,6 +236,7 @@
 	width: 100%;
 	padding: 5px;
 	height: 40px;
+    margin-bottom: 1rem;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 

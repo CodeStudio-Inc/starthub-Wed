@@ -57,11 +57,11 @@ const HomepageTemplate = (props) => {
 			{
 				title: 'Diagnostics',
 				icon: <BuildIcon style={{ fontSize: '25px' }} className="home-link-icon" />
-			},
-			{
-				title: 'Schedule',
-				icon: <CalendarMonthIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			}
+			// {
+			// 	title: 'Schedule',
+			// 	icon: <CalendarMonthIcon style={{ fontSize: '25px' }} className="home-link-icon" />
+			// }
 		]
 	});
 	const [ adminLink, setAdmin ] = React.useState({
@@ -75,10 +75,10 @@ const HomepageTemplate = (props) => {
 			// 	title: 'OKR Overview',
 			// 	icon: <AnalyticsIcon style={{ fontSize: '25px' }} className="home-link-icon" />
 			// },
-			{
-				title: 'Revenue',
-				icon: <PaymentIcon style={{ fontSize: '25px' }} className="home-link-icon" />
-			},
+			// {
+			// 	title: 'Revenue',
+			// 	icon: <PaymentIcon style={{ fontSize: '25px' }} className="home-link-icon" />
+			// },
 			{
 				title: 'Loans',
 				icon: <LocalAtmIcon style={{ fontSize: '25px' }} className="home-link-icon" />
@@ -320,7 +320,7 @@ const HomepageTemplate = (props) => {
 					{index === 1 ? <OKRs /> : null}
 					{index === 2 ? <LeanCanvas /> : null}
 					{index === 3 ? <DiagnosticsTest /> : null}
-					{index === 4 ? <Calendar /> : null}
+					{/* {index === 4 ? <Calendar /> : null} */}
 				</div>
 			) : null}
 			{!admin && category === 'internal' ? (
@@ -332,8 +332,8 @@ const HomepageTemplate = (props) => {
 				<div className={visible ? 'homepage-main increase-width' : 'homepage-main'}>
 					{index === 0 ? <Startups /> : null}
 					{/* {index === 1 ? <OkrOverview /> : null} */}
-					{index === 1 ? <Revenues /> : null}
-					{index === 2 ? <Loans /> : null}
+					{/* {index === 1 ? <Revenues /> : null} */}
+					{index === 1 ? <Loans /> : null}
 				</div>
 			) : null}
 		</div>
