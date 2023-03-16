@@ -197,7 +197,7 @@ const Startups = (props) => {
 						key: r._id,
 						username: r.username,
 						dateCreated: moment(r.dateCreated).format('LL'),
-						totalExpectedRevenueShare: r.totalExpectedRevenueShare
+						totalExpectedRevenueShare: Math.round(r.totalExpectedRevenueShare)
 							.toString()
 							.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 					}))

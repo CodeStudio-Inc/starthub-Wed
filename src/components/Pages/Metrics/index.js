@@ -11,6 +11,7 @@ import BalanceIcon from '@mui/icons-material/Balance';
 import SavingsIcon from '@mui/icons-material/Savings';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import { svg } from '../../Paths';
 
 import ReportRevenue from './modals/ReportRevenue';
 import RevenueTable from './modals/RevenueTable';
@@ -18,11 +19,11 @@ import LoanApplication from './modals/LoanApplication';
 import Diagnostics from '../../Admin/Startups/Diagnostics';
 import './MetricsStyles.css';
 const Metrics = ({ visible }) => {
-	const [ startMonth, setStartMonth ] = React.useState(0);
 	const [ open, setOpen ] = React.useState(false);
+	const [ year, setYear ] = React.useState('');
 	const [ revenueTable, setRevenueTable ] = React.useState(false);
 	const [ loanApplication, setLoanApplication ] = React.useState(false);
-	const { revenue } = useSelector((state) => state.admin);
+	const { revenue, loader } = useSelector((state) => state.admin);
 	const {
 		userId,
 		token,
@@ -39,32 +40,9 @@ const Metrics = ({ visible }) => {
 	const { values } = useSelector((state) => state.requests);
 
 	const diagnostics = values && values.at(-1);
-	const currentYear = new Date().getFullYear();
-	const previousYear = new Date().getFullYear() - 1;
-
-	let currentMonth, nextLoanDate, currentYearRevenue, previousYearRevenue, sixMonthRevenue, month, zero, txt1, txt2;
-
-	currentMonth = new Date().getMonth() + 1;
-	month = new Date().getMonth() + 3;
-	zero = '0';
-	nextLoanDate = '01' + '.' + zero.concat(month) + '.' + new Date().getFullYear();
-	txt1 = startMonth.toString().length === 1 ? zero.concat(startMonth.toString()) : startMonth.toString();
-	txt2 = currentMonth.toString().length === 1 ? zero.concat(currentMonth.toString()) : currentMonth.toString();
-
-	currentYearRevenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === currentYear.toString());
-	previousYearRevenue = revenue && revenue.filter((e) => moment(e.date).format('YYYY') === previousYear.toString());
-
-	const checkMonth = (month) => {
-		let result = month - 6;
-		if (result < 0) {
-			result = 12 - Math.abs(result);
-		}
-		setStartMonth(result);
-	};
 
 	React.useEffect(() => {
 		loanEligibilityCheck();
-		checkMonth(currentMonth);
 		getRevenue();
 		getUser();
 		getValues();
@@ -78,92 +56,10 @@ const Metrics = ({ visible }) => {
 	const getValues = () => dispatch(actionCreators.getValues());
 	const loanEligibilityCheck = () => dispatch(actionCreators.loanEligibilityCheck());
 
-	previousYearRevenue &&
-		previousYearRevenue.forEach((e) => {
-			if (moment(new Date()).format('MM') >= '07') return;
-			if (moment(new Date()).format('MM') === '01') {
-				if (moment(e.date).format('MM') >= '07') currentYearRevenue.push(e);
-			}
-			if (moment(new Date()).format('MM') === '02') {
-				if (moment(e.date).format('MM') >= '08') currentYearRevenue.push(e);
-			}
-			if (moment(new Date()).format('MM') >= '03') {
-				if (moment(e.date).format('MM') >= '09') currentYearRevenue.push(e);
-			}
-			if (moment(new Date()).format('MM') === '04') {
-				if (moment(e.date).format('MM') >= '10') currentYearRevenue.push(e);
-			}
-			if (moment(new Date()).format('MM') === '05') {
-				if (moment(e.date).format('MM') >= '11') currentYearRevenue.push(e);
-			}
-			if (moment(new Date()).format('MM') === '06') {
-				if (moment(e.date).format('MM') >= '12') currentYearRevenue.push(e);
-			}
-		});
-
-	sixMonthRevenue =
-		currentYearRevenue &&
-		currentYearRevenue.filter((e) => moment(e.date).format('MM') >= txt1 || moment(e.date).format('MM') <= txt2);
-
-	let new_revenue = [ { index: 0, month_revenue: 0, month_expense: 0, revSharepayment: 0, month: '0' } ];
-
-	sixMonthRevenue &&
-		sixMonthRevenue.forEach((e) => {
-			if (moment(e.date).format('MM') === '01' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 1, month: `Jan${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '02' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 2, month: `Feb${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '03' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 3, month: `Mar${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '04' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 4, month: `Apr${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '05' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 5, month: `May${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '06' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 6, month: `Jun${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '07' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 7, month: `Jul${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '08' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 8, month: `Aug${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '09' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 9, month: `Sep${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '10' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 10, month: `Oct${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '11' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 11, month: `Nov${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '12' && moment(e.date).format('YYYY') === previousYear.toString())
-				new_revenue.push({ ...e, index: 12, month: `Dec${previousYear.toString()}` });
-			if (moment(e.date).format('MM') === '01' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 13, month: `Jan${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '02' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 14, month: `Feb${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '03' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 15, month: `Mar${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '04' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 16, month: `Apr${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '05' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 17, month: `May${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '06' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 18, month: `Jun${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '07' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 19, month: `Jul${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '08' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 20, month: `Aug${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '09' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 21, month: `Sep${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '10' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 22, month: `Oct${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '11' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 23, month: `Nov${currentYear.toString()}` });
-			if (moment(e.date).format('MM') === '12' && moment(e.date).format('YYYY') === currentYear.toString())
-				new_revenue.push({ ...e, index: 24, month: `Dec${currentYear.toString()}` });
-		});
-
-	new_revenue.sort((a, b) => a.index - b.index);
-	const rev = new_revenue.map((el) => el.month_revenue);
-	const expense = new_revenue.map((el) => el.month_expense);
-	const pay = new_revenue.map((el) => el.revSharepayment);
-	const months = Array.from(new_revenue, ({ month }) => month);
+	const rev = revenue.map((el) => el.month_revenue);
+	const expense = revenue.map((el) => el.month_expense);
+	const pay = revenue.map((el) => el.revSharepayment);
+	const months = Array.from(revenue, ({ month }) => month);
 
 	const Revenue = {
 		labels: months,
@@ -298,7 +194,15 @@ const Metrics = ({ visible }) => {
 			) : null}
 			{revenueTable ? (
 				<ModalUI setClose={setRevenueTable}>
-					<RevenueTable revenue={revenue} columns={columns} setOpen={setRevenueTable} />
+					<RevenueTable
+						revenue={revenue}
+						columns={columns}
+						setOpen={setRevenueTable}
+						svg={svg}
+						loader={loader}
+						dispatch={dispatch}
+						actionCreators={actionCreators}
+					/>
 				</ModalUI>
 			) : null}
 			{loanApplication ? (
@@ -314,15 +218,19 @@ const Metrics = ({ visible }) => {
 				<AssessmentIcon style={{ fontSize: '30px', color: '#fff', marginRight: '5px' }} />
 				<h4>Report Revenue</h4>
 			</div>
-			<div className="metric-btn-row">
-				<button onClick={() => setRevenueTable(true)}>View Reported Revenue</button>
-			</div>
+			<div className="metric-btn-row" />
 			{category === 'internal' ? null : (
-				<div className="graph-row">
-					<div className="revenue">
-						<h3>Revenue for the last six months</h3>
-						<Line data={Revenue} width={100} height={30} />
+				<div className="revenue">
+					<div className="graph-row">
+						<button onClick={() => setRevenueTable(true)}>View Reported Revenue</button>
+						<h3>Revenue Reporting Graph</h3>
+						<div className="search-box-row">
+							<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
+							<button onClick={() => dispatch(actionCreators.filterStartupRevenue(year))}>search</button>
+							{loader ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : null}
+						</div>
 					</div>
+					<Line data={Revenue} width={100} height={30} />
 				</div>
 			)}
 			<Diagnostics
