@@ -2,7 +2,13 @@ import React from 'react';
 import { Table } from 'antd';
 import CloseIcon from '@mui/icons-material/Close';
 
-const RevenueTable = ({ revenue, columns, setOpen }) => {
+const RevenueTable = ({ revenue, columns, setOpen, svg, loader, actionCreators, dispatch, userId }) => {
+	const [ year, setYear ] = React.useState('');
+
+	const searchRevenue = () => {
+		if (userId) return dispatch(actionCreators.filterAminRevenue(userId, year));
+		dispatch(actionCreators.filterStartupRevenue(year));
+	};
 	return (
 		<div className="report-modal-container">
 			<div className="report-container-header">
@@ -11,6 +17,13 @@ const RevenueTable = ({ revenue, columns, setOpen }) => {
 					className="report-icon"
 					style={{ color: 'rgba(0,0,0,0.3)' }}
 				/>
+			</div>
+			<div className="search-box-row">
+				<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
+				<button style={{ color: '#fff' }} onClick={searchRevenue}>
+					search
+				</button>
+				{loader ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : null}
 			</div>
 			<div className="report-container-content">
 				<Table
@@ -21,7 +34,10 @@ const RevenueTable = ({ revenue, columns, setOpen }) => {
 							key: r._id,
 							date: r.date,
 							revenue: r.month_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-							expense: r.month_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+							expense: r.month_expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+							expectedRevsharePayment: Math.round(r.expectedRevsharePayment)
+								.toString()
+								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 						}))
 					]}
 					style={{ width: '100%' }}

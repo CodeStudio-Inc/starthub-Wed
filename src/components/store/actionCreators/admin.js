@@ -887,18 +887,34 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month, c
 	};
 };
 
-export const getRevenue = () => {
+export const getAminRevenue = (userId) => {
 	return (dispatch, getState) => {
+		axios
+			.get(`admin/admin-revenues/${userId}`)
+			.then((res) => {
+				// console.log(res, 'revShare');
+				dispatch(setRevenue(res.data.revenue));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
+export const filterAminRevenue = (userId, year) => {
+	return (dispatch, getState) => {
+		console.log(userId, year);
 		dispatch(loadAction());
 
 		axios
-			.get(`admin/revenues`)
+			.get(`admin/admin-revenue/search?userId=${userId}&year=${year}`)
 			.then((res) => {
-				// console.log(res,'revShare')
+				// console.log(res, 'revShare');
 				dispatch(stopLoader());
 				dispatch(setRevenue(res.data.revenue));
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};
@@ -906,13 +922,10 @@ export const getRevenue = () => {
 
 export const getStartupRevenue = () => {
 	return (dispatch, getState) => {
-		dispatch(loadAction());
-
 		axios
-			.get(`admin/revenue`)
+			.get(`admin/revenues`)
 			.then((res) => {
-				// console.log(res,'revShare')
-				dispatch(stopLoader());
+				// console.log(res, 'revShare');
 				dispatch(setRevenue(res.data.revenue));
 			})
 			.catch((error) => {
@@ -921,51 +934,47 @@ export const getStartupRevenue = () => {
 	};
 };
 
-export const getStartupRevenueTracking = (creator, year, callback) => {
+export const filterStartupRevenue = (year) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
-		const data = {
-			creator,
-			year
-		};
-
 		axios
-			.post(`admin/startup-revenue`, data)
+			.get(`admin/revenue/search?year=${year}`)
 			.then((res) => {
-				// console.log(res, 'revShare');
-				callback({ success: true, res: res });
+				// console.log(res, 'startup');
 				dispatch(stopLoader());
+				dispatch(setRevenue(res.data.revenue));
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};
 };
 
-export const searchRevenueTracking = (year) => {
+export const searchRevenueTracking = (userId, year) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
-
 		axios
-			.get(`admin/rev-tracking/search?year=${year}`)
+			.get(`admin/rev-filter/search?userId=${userId}&year=${year}`)
 			.then((res) => {
-				// console.log(res,'revShare')
+				// console.log(res, 'revShare');
 				dispatch(stopLoader());
 				dispatch(setRevenueTracking(res.data.revenue));
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};
 };
 
-export const getRevenueTracking = () => {
+export const getRevenueTracking = (userId) => {
 	return (dispatch, getState) => {
 		dispatch(loadAction());
 
 		axios
-			.get(`admin/rev-tracking`)
+			.get(`admin/rev-tracking/${userId}`)
 			.then((res) => {
 				// console.log(res, 'revShare');
 				dispatch(stopLoader());

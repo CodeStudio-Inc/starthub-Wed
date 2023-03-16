@@ -3,151 +3,84 @@ import { useDispatch, useSelector } from 'react-redux';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import BalanceIcon from '@mui/icons-material/Balance';
 import SavingsIcon from '@mui/icons-material/Savings';
-import { Line } from 'react-chartjs-2';
-import { Table } from 'antd';
-import { actionCreators } from '../../Paths';
-import moment from 'moment';
-import 'react-circular-progressbar/dist/styles.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PaidIcon from '@mui/icons-material/Paid';
+import { Line } from 'react-chartjs-2';
+import { svg } from '../../Paths';
+import { actionCreators, ModalUI } from '../../Paths';
+import { Table } from 'antd';
+import 'react-circular-progressbar/dist/styles.css';
 import { Helmet } from 'react-helmet';
 
+import RevenueTable from '../../Pages/Metrics/modals/RevenueTable';
 import Diagnostics from './Diagnostics';
 import Navbar from './modals/Navbar';
 import './StartupStyles.css';
 const Startup = ({ location, history }) => {
-	const [ startMonth, setStartMonth ] = React.useState(0);
-
-	const { revenue, loading, values } = useSelector((state) => state.admin);
-	const { boards } = useSelector((state) => state.requests);
+	const [ year, setYear ] = React.useState('');
+	const [ year2, setYear2 ] = React.useState('');
+	const [ revenueTable, setRevenueTable ] = React.useState(false);
+	const { revenue, loader, values, revenue_tracking } = useSelector((state) => state.admin);
 
 	const data = location.state.data;
-	const startup_revenue = revenue.filter((e) => e.creator === data._id);
 	const diagnostics = values && values.at(-1);
 
 	const dispatch = useDispatch();
 
-	const getRevenue = () => dispatch(actionCreators.getRevenue());
-	const getBoards = () => dispatch(actionCreators.getAdminBoard(data._id));
+	const getRevenue = () => dispatch(actionCreators.getAminRevenue(data._id));
+	const getRevenueTracking = () => dispatch(actionCreators.getRevenueTracking(data._id));
 	const getValues = () => dispatch(actionCreators.getAdminValues(data._id));
 
-	const current_yr = new Date().getFullYear();
-	const previous_yr = new Date().getFullYear() - 1;
-
-	let current_month, current_yr_revenue, previous_yr_revenue, six_months_revenue;
-
-	current_month = new Date().getMonth() + 1;
-
-	current_yr_revenue =
-		startup_revenue && startup_revenue.filter((e) => moment(e.date).format('YYYY') === current_yr.toString());
-	previous_yr_revenue =
-		startup_revenue && startup_revenue.filter((e) => moment(e.date).format('YYYY') === previous_yr.toString());
-
-	const checkMonth = (month) => {
-		let result = month - 6;
-		if (result < 0) {
-			result = 12 - Math.abs(result);
-		}
-		setStartMonth(result);
-	};
-
 	React.useEffect(() => {
-		checkMonth(current_month);
 		getRevenue();
+		getRevenueTracking();
 		getValues();
-		getBoards();
 	}, []);
 
-	previous_yr_revenue &&
-		previous_yr_revenue.forEach((e) => {
-			if (moment(new Date()).format('MM') >= '07') return;
-			if (moment(new Date()).format('MM') === '01') {
-				if (moment(e.date).format('MM') >= '07') current_yr_revenue.push(e);
-			}
-			if (moment(new Date()).format('MM') === '02') {
-				if (moment(e.date).format('MM') >= '08') current_yr_revenue.push(e);
-			}
-			if (moment(new Date()).format('MM') >= '03') {
-				if (moment(e.date).format('MM') >= '09') current_yr_revenue.push(e);
-			}
-			if (moment(new Date()).format('MM') === '04') {
-				if (moment(e.date).format('MM') >= '10') current_yr_revenue.push(e);
-			}
-			if (moment(new Date()).format('MM') === '05') {
-				if (moment(e.date).format('MM') >= '11') current_yr_revenue.push(e);
-			}
-			if (moment(new Date()).format('MM') === '06') {
-				if (moment(e.date).format('MM') >= '12') current_yr_revenue.push(e);
-			}
-		});
+	const filterRevenueTracking = React.useMemo(
+		() => {
+			let revTracking = revenue_tracking.filter(function(element) {
+				return element !== undefined;
+			});
+			return revTracking;
+		},
+		[ revenue_tracking ]
+	);
 
-	const zero = '0';
-	const txt1 = startMonth.toString().length === 1 ? zero.concat(startMonth.toString()) : startMonth.toString();
-	const txt2 =
-		current_month.toString().length === 1 ? zero.concat(current_month.toString()) : current_month.toString();
+	const rev = revenue.map((el) => el.month_revenue);
+	const expense = revenue.map((el) => el.month_expense);
+	const pay = revenue.map((el) => el.revSharepayment);
+	const months = Array.from(revenue, ({ month }) => month);
 
-	six_months_revenue =
-		current_yr_revenue &&
-		current_yr_revenue.filter((e) => moment(e.date).format('MM') >= txt1 || moment(e.date).format('MM') <= txt2);
+	const columns = [
+		{
+			title: 'Date',
+			dataIndex: 'date',
+			key: 'date',
+			align: 'left'
+		},
+		{
+			title: 'Monthly Revenue(UGX)',
+			dataIndex: 'revenue',
+			key: 'revenue',
+			align: 'left'
+		},
+		{
+			title: 'Monthly Expense(UGX)',
+			dataIndex: 'expense',
+			key: 'expense',
+			align: 'left'
+		},
+		{
+			title: 'Expected Revenue Share Payment(UGX)',
+			dataIndex: 'expectedRevsharePayment',
+			key: 'expectedRevsharePayment',
+			align: 'left'
+		}
+	];
 
-	let new_revenue = [ { index: 0, month_revenue: 0, month_expense: 0, revSharepayment: 0, month: '0' } ];
-
-	six_months_revenue &&
-		six_months_revenue.forEach((e) => {
-			if (moment(e.date).format('MM') === '01' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 1, month: `Jan${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '02' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 2, month: `Feb${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '03' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 3, month: `Mar${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '04' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 4, month: `Apr${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '05' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 5, month: `May${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '06' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 6, month: `Jun${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '07' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 7, month: `Jul${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '08' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 8, month: `Aug${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '09' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 9, month: `Sep${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '10' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 10, month: `Oct${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '11' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 11, month: `Nov${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '12' && moment(e.date).format('YYYY') === previous_yr.toString())
-				new_revenue.push({ ...e, index: 12, month: `Dec${previous_yr.toString()}` });
-			if (moment(e.date).format('MM') === '01' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 13, month: `Jan${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '02' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 14, month: `Feb${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '03' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 15, month: `Mar${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '04' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 16, month: `Apr${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '05' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 17, month: `May${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '06' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 18, month: `Jun${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '07' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 19, month: `Jul${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '08' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 20, month: `Aug${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '09' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 21, month: `Sep${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '10' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 22, month: `Oct${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '11' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 23, month: `Nov${current_yr.toString()}` });
-			if (moment(e.date).format('MM') === '12' && moment(e.date).format('YYYY') === current_yr.toString())
-				new_revenue.push({ ...e, index: 24, month: `Dec${current_yr.toString()}` });
-		});
-
-	new_revenue.sort((a, b) => a.index - b.index);
-	const rev = new_revenue.map((el) => el.month_revenue);
-	const expense = new_revenue.map((el) => el.month_expense);
-	const pay = new_revenue.map((el) => el.revSharepayment);
-	const months = Array.from(new_revenue, ({ month }) => month);
 	const Revenue = {
 		labels: months,
 		datasets: [
@@ -228,16 +161,258 @@ const Startup = ({ location, history }) => {
 			))}
 		</div>
 	);
+	const columnz = [
+		{
+			title: 'Startup',
+			dataIndex: 'startup',
+			key: 'startup',
+			align: 'left'
+		},
+		{
+			title: 'Jan',
+			dataIndex: 'jan',
+			key: 'jan',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Feb',
+			dataIndex: 'feb',
+			key: 'feb',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Mar',
+			dataIndex: 'mar',
+			key: 'mar',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Apr',
+			dataIndex: 'apr',
+			key: 'apr',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'May',
+			dataIndex: 'may',
+			key: 'may',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Jun',
+			dataIndex: 'jun',
+			key: 'jun',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Jul',
+			dataIndex: 'jul',
+			key: 'jul',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Aug',
+			dataIndex: 'aug',
+			key: 'aug',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Sep',
+			dataIndex: 'sep',
+			key: 'sep',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Oct',
+			dataIndex: 'oct',
+			key: 'oct',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Nov',
+			dataIndex: 'nov',
+			key: 'nov',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+				</span>
+			)
+		},
+		{
+			title: 'Dec',
+			dataIndex: 'dec',
+			key: 'dec',
+			align: 'left',
+			render: (r) => (
+				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{r.report === false ? (
+						<CancelIcon style={{ color: '#DB4437', fontSize: '25px' }} />
+					) : (
+						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)}
+					{/* {r.pay === false ? (
+						<AttachMoneyIcon style={{ color: '#DB4437', fontSize: '25px' }} />
+					) : (
+						<PaidIcon style={{ color: '#039487', fontSize: '25px' }} />
+					)} */}
+				</span>
+			)
+		}
+	];
 
 	return (
 		<div className="startup-container" id="container">
 			<Helmet>
 				<title>{data.username}</title>
 			</Helmet>
+			{revenueTable ? (
+				<ModalUI>
+					<RevenueTable
+						revenue={revenue}
+						columns={columns}
+						setOpen={setRevenueTable}
+						svg={svg}
+						loader={loader}
+						dispatch={dispatch}
+						userId={data._id}
+						actionCreators={actionCreators}
+					/>
+				</ModalUI>
+			) : null}
 			<Navbar data={data} history={history} />
 			<Cards />
+			<div className="rev-tracking-table">
+				<div className="rev-tracking-table-row">
+					<h3>Revenue Reporting Tracking</h3>
+					<div className="search-box-row">
+						<input placeholder="year" value={year2} onChange={(e) => setYear2(e.target.value)} />
+						<button
+							style={{ color: '#fff', borderRadius: '5px' }}
+							onClick={() => dispatch(actionCreators.searchRevenueTracking(data._id, year2))}
+						>
+							search
+						</button>
+					</div>
+				</div>
+				<Table
+					style={{ width: '100%', marginBottom: '1rem' }}
+					columns={columnz}
+					dataSource={[
+						...filterRevenueTracking.map((r) => ({
+							...r,
+							key: r._id
+						}))
+					]}
+					pagination={false}
+				/>
+			</div>
 			<div className="graph-tab">
-				<h2>last Six Months Revenue Reporting</h2>
+				<div className="graph-row">
+					<button onClick={() => setRevenueTable(true)}>view reported revenue</button>
+					<h3>Revenue Reporting Graph</h3>
+					<div className="search-box-row">
+						<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
+						<button onClick={() => dispatch(actionCreators.filterAminRevenue(data._id, year))}>
+							search
+						</button>
+						{loader ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : null}
+					</div>
+				</div>
 				<Line data={Revenue} width={100} height={30} />
 			</div>
 			<Diagnostics
