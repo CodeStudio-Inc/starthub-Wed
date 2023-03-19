@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import CloseIcon from '@mui/icons-material/Close';
 
-const RevenueTable = ({ revenue, columns, setOpen, svg, loader, actionCreators, dispatch, userId }) => {
+const RevenueTable = ({ revenue, columns, setOpen, svg, loader, actionCreators, dispatch, userId, revenueTotal }) => {
 	const [ year, setYear ] = React.useState('');
 
 	const searchRevenue = () => {
@@ -26,6 +26,20 @@ const RevenueTable = ({ revenue, columns, setOpen, svg, loader, actionCreators, 
 				{loader ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : null}
 			</div>
 			<div className="report-container-content">
+				<div className="rev-total">
+					<h4>
+						Total Revenue Reported{' '}
+						<strong style={{ color: '#dfa126', fontSize: '18px', marginBottom: '1 rem' }}>
+							{revenueTotal.revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
+						</strong>
+					</h4>
+					<h4>
+						Total Expenses Reported{' '}
+						<strong style={{ color: '#dfa126', fontSize: '18px', marginBottom: '1 rem' }}>
+							{revenueTotal.expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
+						</strong>
+					</h4>
+				</div>
 				<Table
 					columns={columns}
 					dataSource={[

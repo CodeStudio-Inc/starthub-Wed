@@ -342,6 +342,20 @@
     cursor: pointer;
 }
 
+.rev-total {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.rev-total h4 {
+	font-weight: 400;
+    text-align: left;
+    margin: 0;
+    color: rgba(0, 0, 0, 0.5);
+}
+
 .left-container {
   display: flex;
   align-items: center;
@@ -408,7 +422,7 @@
 
 .graph-tab {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     width: 95%;
     flex-direction: column;

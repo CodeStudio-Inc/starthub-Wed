@@ -198,8 +198,22 @@
 }
 
 .revenue h3 {
-	font-weight: 500;
+	font-weight: 400;
     margin: 0;
+}
+
+.rev-total {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.rev-total h4 {
+	font-weight: 400;
+    text-align: left;
+    margin: 0;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 /* report revenue css */
@@ -523,4 +537,7 @@ cursor: pointer;
 	.graph-row {
 		flex-direction: column;
 	}
+    .rev-total {
+        flex-direction: column;
+    }
 }
