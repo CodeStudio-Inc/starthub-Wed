@@ -33,10 +33,12 @@ const Startup = ({ location, history }) => {
 	const getRevenueTracking = () => dispatch(actionCreators.getRevenueTracking(data._id));
 	const getValues = () => dispatch(actionCreators.getAdminValues(data._id));
 	const searchRevenueYear = () => {
+		if (!year) return;
 		dispatch(actionCreators.filterAminRevenue(data._id, year));
 		setYear('');
 	};
 	const searchRevenueTracking = () => {
+		if (!year2) return;
 		dispatch(actionCreators.searchRevenueTracking(data._id, year2));
 		setYear2('');
 	};
@@ -83,9 +85,16 @@ const Startup = ({ location, history }) => {
 			);
 			let reportingYear = revenue.at(-1).year;
 
-			return { revenue: totelMonthRevenue, expense: totelMonthExpense, year: reportingYear };
+			let revenueTrackingyear = revenue_tracking.at(-1).year;
+
+			return {
+				revenue: totelMonthRevenue,
+				expense: totelMonthExpense,
+				year: reportingYear,
+				tracking: revenueTrackingyear
+			};
 		},
-		[ revenue ]
+		[ revenue, revenue_tracking ]
 	);
 
 	const filterRevenueTracking = React.useMemo(
@@ -416,7 +425,6 @@ const Startup = ({ location, history }) => {
 						columns={columns}
 						setOpen={setRevenueTable}
 						svg={svg}
-						loader={loader}
 						dispatch={dispatch}
 						userId={data._id}
 						actionCreators={actionCreators}
@@ -424,11 +432,16 @@ const Startup = ({ location, history }) => {
 					/>
 				</ModalUI>
 			) : null}
+			{loader ? (
+				<ModalUI>
+					<p style={{ color: '#fff' }}>Refresing...</p>
+				</ModalUI>
+			) : null}
 			<Navbar data={data} history={history} />
 			<Cards />
 			<div className="rev-tracking-table">
 				<div className="rev-tracking-table-row">
-					<h3>Revenue Reporting Tracking</h3>
+					<h3>{revenueTotal.tracking} Revenue Reporting Tracking</h3>
 					<div className="search-box-row">
 						<input placeholder="year" value={year2} onChange={(e) => setYear2(e.target.value)} />
 						<button style={{ color: '#fff', borderRadius: '5px' }} onClick={searchRevenueTracking}>
@@ -451,11 +464,10 @@ const Startup = ({ location, history }) => {
 			<div className="graph-tab">
 				<div className="graph-row">
 					<button onClick={() => setRevenueTable(true)}>view reported revenue</button>
-					<h3>Revenue Reporting Graph</h3>
+					<h3>{revenueTotal.year} Revenue Reporting Graph</h3>
 					<div className="search-box-row">
 						<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
 						<button onClick={searchRevenueYear}>search</button>
-						{loader ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : null}
 					</div>
 				</div>
 				<div className="rev-total">
