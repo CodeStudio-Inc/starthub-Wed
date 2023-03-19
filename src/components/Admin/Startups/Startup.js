@@ -32,12 +32,70 @@ const Startup = ({ location, history }) => {
 	const getRevenue = () => dispatch(actionCreators.getAminRevenue(data._id));
 	const getRevenueTracking = () => dispatch(actionCreators.getRevenueTracking(data._id));
 	const getValues = () => dispatch(actionCreators.getAdminValues(data._id));
+	const searchRevenueYear = () => {
+		if (!year) return;
+		dispatch(actionCreators.filterAminRevenue(data._id, year));
+		setYear('');
+	};
+	const searchRevenueTracking = () => {
+		if (!year2) return;
+		dispatch(actionCreators.searchRevenueTracking(data._id, year2));
+		setYear2('');
+	};
 
 	React.useEffect(() => {
 		getRevenue();
 		getRevenueTracking();
 		getValues();
 	}, []);
+
+	const sortRevenue = React.useMemo(
+		() => {
+			let sortedArray = [];
+			let sortArray =
+				revenue &&
+				revenue.forEach((e) => {
+					if (e.month.substring(0, 3) === 'Jan') sortedArray.push({ ...e, index: 1 });
+					if (e.month.substring(0, 3) === 'Feb') sortedArray.push({ ...e, index: 2 });
+					if (e.month.substring(0, 3) === 'Mar') sortedArray.push({ ...e, index: 3 });
+					if (e.month.substring(0, 3) === 'Apr') sortedArray.push({ ...e, index: 4 });
+					if (e.month.substring(0, 3) === 'May') sortedArray.push({ ...e, index: 5 });
+					if (e.month.substring(0, 3) === 'Jun') sortedArray.push({ ...e, index: 6 });
+					if (e.month.substring(0, 3) === 'Jul') sortedArray.push({ ...e, index: 7 });
+					if (e.month.substring(0, 3) === 'Aug') sortedArray.push({ ...e, index: 8 });
+					if (e.month.substring(0, 3) === 'Sep') sortedArray.push({ ...e, index: 9 });
+					if (e.month.substring(0, 3) === 'Oct') sortedArray.push({ ...e, index: 10 });
+					if (e.month.substring(0, 3) === 'Nov') sortedArray.push({ ...e, index: 11 });
+					if (e.month.substring(0, 3) === 'Dec') sortedArray.push({ ...e, index: 12 });
+				});
+			return sortedArray.sort((a, b) => a.index - b.index);
+		},
+		[ revenue ]
+	);
+
+	const revenueTotal = React.useMemo(
+		() => {
+			let totelMonthRevenue = Array.from(revenue, ({ month_revenue }) => month_revenue).reduce(
+				(a, b) => a + b,
+				0
+			);
+			let totelMonthExpense = Array.from(revenue, ({ month_expense }) => month_expense).reduce(
+				(a, b) => a + b,
+				0
+			);
+			let reportingYear = revenue.at(-1).year;
+
+			let revenueTrackingyear = revenue_tracking.at(-1).year;
+
+			return {
+				revenue: totelMonthRevenue,
+				expense: totelMonthExpense,
+				year: reportingYear,
+				tracking: revenueTrackingyear
+			};
+		},
+		[ revenue, revenue_tracking ]
+	);
 
 	const filterRevenueTracking = React.useMemo(
 		() => {
@@ -49,10 +107,10 @@ const Startup = ({ location, history }) => {
 		[ revenue_tracking ]
 	);
 
-	const rev = revenue.map((el) => el.month_revenue);
-	const expense = revenue.map((el) => el.month_expense);
-	const pay = revenue.map((el) => el.revSharepayment);
-	const months = Array.from(revenue, ({ month }) => month);
+	const rev = sortRevenue.map((el) => el.month_revenue);
+	const expense = sortRevenue.map((el) => el.month_expense);
+	const pay = sortRevenue.map((el) => el.revSharepayment);
+	const months = Array.from(sortRevenue, ({ month }) => month);
 
 	const columns = [
 		{
@@ -367,24 +425,26 @@ const Startup = ({ location, history }) => {
 						columns={columns}
 						setOpen={setRevenueTable}
 						svg={svg}
-						loader={loader}
 						dispatch={dispatch}
 						userId={data._id}
 						actionCreators={actionCreators}
+						revenueTotal={revenueTotal}
 					/>
+				</ModalUI>
+			) : null}
+			{loader ? (
+				<ModalUI>
+					<p style={{ color: '#fff' }}>Refresing...</p>
 				</ModalUI>
 			) : null}
 			<Navbar data={data} history={history} />
 			<Cards />
 			<div className="rev-tracking-table">
 				<div className="rev-tracking-table-row">
-					<h3>Revenue Reporting Tracking</h3>
+					<h3>{revenueTotal.tracking} Revenue Reporting Tracking</h3>
 					<div className="search-box-row">
 						<input placeholder="year" value={year2} onChange={(e) => setYear2(e.target.value)} />
-						<button
-							style={{ color: '#fff', borderRadius: '5px' }}
-							onClick={() => dispatch(actionCreators.searchRevenueTracking(data._id, year2))}
-						>
+						<button style={{ color: '#fff', borderRadius: '5px' }} onClick={searchRevenueTracking}>
 							search
 						</button>
 					</div>
@@ -404,14 +464,25 @@ const Startup = ({ location, history }) => {
 			<div className="graph-tab">
 				<div className="graph-row">
 					<button onClick={() => setRevenueTable(true)}>view reported revenue</button>
-					<h3>Revenue Reporting Graph</h3>
+					<h3>{revenueTotal.year} Revenue Reporting Graph</h3>
 					<div className="search-box-row">
 						<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
-						<button onClick={() => dispatch(actionCreators.filterAminRevenue(data._id, year))}>
-							search
-						</button>
-						{loader ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : null}
+						<button onClick={searchRevenueYear}>search</button>
 					</div>
+				</div>
+				<div className="rev-total">
+					<h4>
+						Total Revenue Reported{' '}
+						<strong style={{ color: '#dfa126', fontSize: '18px', marginBottom: '1 rem' }}>
+							{revenueTotal.revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
+						</strong>
+					</h4>
+					<h4>
+						Total Expenses Reported{' '}
+						<strong style={{ color: '#dfa126', fontSize: '18px', marginBottom: '1 rem' }}>
+							{revenueTotal.expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
+						</strong>
+					</h4>
 				</div>
 				<Line data={Revenue} width={100} height={30} />
 			</div>
