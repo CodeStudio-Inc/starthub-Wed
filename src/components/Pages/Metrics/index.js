@@ -56,6 +56,7 @@ const Metrics = ({ visible }) => {
 	const getValues = () => dispatch(actionCreators.getValues());
 	const loanEligibilityCheck = () => dispatch(actionCreators.loanEligibilityCheck());
 	const searchRevenueYear = () => {
+		if (!year) return;
 		dispatch(actionCreators.filterStartupRevenue(year));
 		setYear('');
 	};
@@ -244,7 +245,6 @@ const Metrics = ({ visible }) => {
 						columns={columns}
 						setOpen={setRevenueTable}
 						svg={svg}
-						loader={loader}
 						dispatch={dispatch}
 						actionCreators={actionCreators}
 						revenueTotal={revenueTotal}
@@ -254,6 +254,11 @@ const Metrics = ({ visible }) => {
 			{loanApplication ? (
 				<ModalUI setClose={setLoanApplication}>
 					<LoanApplication setOpen={setLoanApplication} />
+				</ModalUI>
+			) : null}
+			{loader ? (
+				<ModalUI>
+					<p style={{ color: '#fff' }}>Refresing...</p>
 				</ModalUI>
 			) : null}
 			<Helmet>
@@ -273,7 +278,6 @@ const Metrics = ({ visible }) => {
 						<div className="search-box-row">
 							<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
 							<button onClick={searchRevenueYear}>search</button>
-							{loader ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : null}
 						</div>
 					</div>
 					<div className="rev-total">
