@@ -52,8 +52,7 @@ const Startup = ({ location, history }) => {
 	const sortRevenue = React.useMemo(
 		() => {
 			let sortedArray = [];
-			let sortArray =
-				revenue &&
+			revenue &&
 				revenue.forEach((e) => {
 					if (e.month.substring(0, 3) === 'Jan') sortedArray.push({ ...e, index: 1 });
 					if (e.month.substring(0, 3) === 'Feb') sortedArray.push({ ...e, index: 2 });
@@ -73,6 +72,10 @@ const Startup = ({ location, history }) => {
 		[ revenue ]
 	);
 
+	let reportingYear = revenue && revenue.at(-1);
+
+	let revenueTrackingyear = revenue_tracking && revenue_tracking.at(-1);
+
 	const revenueTotal = React.useMemo(
 		() => {
 			let totelMonthRevenue = Array.from(revenue, ({ month_revenue }) => month_revenue).reduce(
@@ -83,18 +86,15 @@ const Startup = ({ location, history }) => {
 				(a, b) => a + b,
 				0
 			);
-			let reportingYear = revenue.at(-1).year;
-
-			let revenueTrackingyear = revenue_tracking.at(-1).year;
 
 			return {
 				revenue: totelMonthRevenue,
 				expense: totelMonthExpense,
-				year: reportingYear,
-				tracking: revenueTrackingyear
+				year: typeof reportingYear === 'undefined' ? '' : reportingYear.year,
+				tracking: typeof revenueTrackingyear === 'undefined' ? '' : revenueTrackingyear.year
 			};
 		},
-		[ revenue, revenue_tracking ]
+		[ revenue, revenue_tracking, reportingYear, revenueTrackingyear ]
 	);
 
 	const filterRevenueTracking = React.useMemo(
@@ -433,7 +433,7 @@ const Startup = ({ location, history }) => {
 				</ModalUI>
 			) : null}
 			{loader ? (
-				<ModalUI>
+				<ModalUI id="loader">
 					<p style={{ color: '#fff' }}>Refresing...</p>
 				</ModalUI>
 			) : null}
