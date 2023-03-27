@@ -42,6 +42,7 @@ const Metrics = ({ visible }) => {
 	const diagnostics = values && values.at(-1);
 
 	React.useEffect(() => {
+		// rearrangeArray();
 		loanEligibilityCheck();
 		getRevenue();
 		getUser();
@@ -64,8 +65,7 @@ const Metrics = ({ visible }) => {
 	const sortRevenue = React.useMemo(
 		() => {
 			let sortedArray = [];
-			let sortArray =
-				revenue &&
+			revenue &&
 				revenue.forEach((e) => {
 					if (e.month.substring(0, 3) === 'Jan') sortedArray.push({ ...e, index: 1 });
 					if (e.month.substring(0, 3) === 'Feb') sortedArray.push({ ...e, index: 2 });
@@ -85,6 +85,8 @@ const Metrics = ({ visible }) => {
 		[ revenue ]
 	);
 
+	let reportingYear = revenue && revenue.at(-1);
+
 	const revenueTotal = React.useMemo(
 		() => {
 			let totelMonthRevenue = Array.from(revenue, ({ month_revenue }) => month_revenue).reduce(
@@ -95,12 +97,62 @@ const Metrics = ({ visible }) => {
 				(a, b) => a + b,
 				0
 			);
-			let reportingYear = revenue.at(-1).year;
 
-			return { revenue: totelMonthRevenue, expense: totelMonthExpense, year: reportingYear };
+			return {
+				revenue: totelMonthRevenue,
+				expense: totelMonthExpense,
+				year: typeof reportingYear === 'undefined' ? '' : reportingYear.year
+			};
 		},
-		[ revenue ]
+		[ revenue, reportingYear ]
 	);
+
+	const workflowNodes = [
+		{
+			id: 53,
+			action: 'add_training',
+			workflowId: 3,
+			previousNodeId: 52,
+			organizationId: 6
+		},
+		{
+			id: 52,
+			action: 'attach_card',
+			workflowId: 3,
+			previousNodeId: 50,
+			organizationId: 6
+		},
+		{
+			id: 51,
+			action: 'archive',
+			workflowId: 3,
+			previousNodeId: 50,
+			organizationId: 6
+		},
+		{
+			id: 50,
+			action: 'fill_form',
+			workflowId: 3,
+			previousNodeId: 48,
+			organizationId: 6
+		},
+		{
+			id: 48,
+			action: 'fill_form',
+			workflowId: 3,
+			previousNodeId: null,
+			organizationId: 6
+		}
+	];
+
+	let new_array = [];
+
+	workflowNodes.sort((a, b) => a.previousNodeId - b.previousNodeId);
+	// const rearrangeArray = () => {
+	// 	return sort;
+	// };
+
+	console.log(workflowNodes);
 
 	const rev = sortRevenue.map((el) => el.month_revenue);
 	const expense = sortRevenue.map((el) => el.month_expense);
@@ -257,7 +309,7 @@ const Metrics = ({ visible }) => {
 				</ModalUI>
 			) : null}
 			{loader ? (
-				<ModalUI>
+				<ModalUI id="loader">
 					<p style={{ color: '#fff' }}>Refresing...</p>
 				</ModalUI>
 			) : null}

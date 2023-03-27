@@ -892,7 +892,7 @@ export const getAminRevenue = (userId) => {
 		axios
 			.get(`admin/admin-revenues/${userId}`)
 			.then((res) => {
-				// console.log(res, 'revShare');
+				// console.log(res, 'revenue');
 				dispatch(setRevenue(res.data.revenue));
 			})
 			.catch((error) => {
@@ -903,7 +903,6 @@ export const getAminRevenue = (userId) => {
 
 export const filterAminRevenue = (userId, year) => {
 	return (dispatch, getState) => {
-		console.log(userId, year);
 		dispatch(loadAction());
 
 		axios
@@ -976,7 +975,7 @@ export const getRevenueTracking = (userId) => {
 		axios
 			.get(`admin/rev-tracking/${userId}`)
 			.then((res) => {
-				// console.log(res, 'revShare');
+				// console.log(res, 'revenue tracking');
 				dispatch(stopLoader());
 				dispatch(setRevenueTracking(res.data.revenue));
 			})
