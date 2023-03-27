@@ -5,7 +5,7 @@ const index = (props) => {
 	return (
 		<div className="modal-container">
 			<div className="modal-inner-container">{props.children}</div>
-			<div className="modal-overlay" onClick={() => props.setClose(false)} />
+			<div className="modal-overlay" onClick={props.id === 'loader' ? null : () => props.setClose(false)} />
 		</div>
 	);
 };
