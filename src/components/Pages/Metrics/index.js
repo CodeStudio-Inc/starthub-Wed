@@ -97,10 +97,15 @@ const Metrics = ({ visible }) => {
 				(a, b) => a + b,
 				0
 			);
+			let totelRevSharepayment = Array.from(revenue, ({ revSharepayment }) => revSharepayment).reduce(
+				(a, b) => a + b,
+				0
+			);
 
 			return {
 				revenue: totelMonthRevenue,
 				expense: totelMonthExpense,
+				payment: totelRevSharepayment,
 				year: typeof reportingYear === 'undefined' ? '' : reportingYear.year
 			};
 		},
@@ -335,7 +340,7 @@ const Metrics = ({ visible }) => {
 					<div className="rev-total">
 						<h4>
 							Total Revenue Reported{' '}
-							<strong style={{ color: '#dfa126', fontSize: '18px', marginBottom: '1 rem' }}>
+							<strong style={{ color: '#37561b', fontSize: '18px', marginBottom: '1 rem' }}>
 								{revenueTotal.revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
 							</strong>
 						</h4>
@@ -343,6 +348,12 @@ const Metrics = ({ visible }) => {
 							Total Expenses Reported{' '}
 							<strong style={{ color: '#dfa126', fontSize: '18px', marginBottom: '1 rem' }}>
 								{revenueTotal.expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
+							</strong>
+						</h4>
+						<h4>
+							Total Revenue Share Payment{' '}
+							<strong style={{ color: '#7e2527', fontSize: '18px', marginBottom: '1 rem' }}>
+								{revenueTotal.payment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
 							</strong>
 						</h4>
 					</div>
