@@ -889,26 +889,11 @@ export const addRevenue = (startup, month_revenue, month_expense, date, month, c
 
 export const getAminRevenue = (userId) => {
 	return (dispatch, getState) => {
+		dispatch(loadAction());
 		axios
 			.get(`admin/admin-revenues/${userId}`)
 			.then((res) => {
 				// console.log(res, 'revenue');
-				dispatch(setRevenue(res.data.revenue));
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-};
-
-export const filterAminRevenue = (userId, year) => {
-	return (dispatch, getState) => {
-		dispatch(loadAction());
-
-		axios
-			.get(`admin/admin-revenue/search?userId=${userId}&year=${year}`)
-			.then((res) => {
-				// console.log(res, 'revShare');
 				dispatch(stopLoader());
 				dispatch(setRevenue(res.data.revenue));
 			})
@@ -921,13 +906,16 @@ export const filterAminRevenue = (userId, year) => {
 
 export const getStartupRevenue = () => {
 	return (dispatch, getState) => {
+		dispatch(loadAction());
 		axios
 			.get(`admin/revenues`)
 			.then((res) => {
 				// console.log(res, 'revShare');
+				dispatch(stopLoader());
 				dispatch(setRevenue(res.data.revenue));
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};
@@ -957,9 +945,10 @@ export const searchRevenueTracking = (userId, year) => {
 		axios
 			.get(`admin/rev-filter/search?userId=${userId}&year=${year}`)
 			.then((res) => {
-				// console.log(res, 'revShare');
+				// console.log(res.data, 'revShare');
 				dispatch(stopLoader());
-				dispatch(setRevenueTracking(res.data.revenue));
+				dispatch(setRevenue(res.data.revenue));
+				dispatch(setRevenueTracking(res.data.revTracking));
 			})
 			.catch((error) => {
 				dispatch(stopLoader());
@@ -980,6 +969,7 @@ export const getRevenueTracking = (userId) => {
 				dispatch(setRevenueTracking(res.data.revenue));
 			})
 			.catch((error) => {
+				dispatch(stopLoader());
 				console.log(error);
 			});
 	};

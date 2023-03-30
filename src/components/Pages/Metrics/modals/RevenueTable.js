@@ -1,13 +1,25 @@
 import React from 'react';
 import { Table } from 'antd';
 import CloseIcon from '@mui/icons-material/Close';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
-const RevenueTable = ({ revenue, columns, setOpen, svg, actionCreators, dispatch, userId, revenueTotal }) => {
+const RevenueTable = ({
+	revenue,
+	columns,
+	setOpen,
+	svg,
+	tableRef,
+	username,
+	actionCreators,
+	dispatch,
+	userId,
+	revenueTotal
+}) => {
 	const [ year, setYear ] = React.useState('');
 
 	const searchRevenue = () => {
 		if (!year) return;
-		if (userId) return dispatch(actionCreators.filterAminRevenue(userId, year));
+		if (userId) return dispatch(actionCreators.searchRevenueTracking(userId, year));
 		dispatch(actionCreators.filterStartupRevenue(year));
 	};
 	return (
@@ -19,11 +31,22 @@ const RevenueTable = ({ revenue, columns, setOpen, svg, actionCreators, dispatch
 					style={{ color: 'rgba(0,0,0,0.3)' }}
 				/>
 			</div>
-			<div className="search-box-row">
-				<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
-				<button style={{ color: '#fff' }} onClick={searchRevenue}>
-					search
-				</button>
+			<div className="report-container-filter-row">
+				<div className="export-container">
+					<DownloadTableExcel
+						filename={username + ' ' + revenueTotal.year + ' ' + 'Revenue Records'}
+						sheet={username + ' ' + revenueTotal.year + ' ' + 'Revenue Records'}
+						currentTableRef={tableRef.current}
+					>
+						<button> Generate excel sheet </button>
+					</DownloadTableExcel>
+				</div>
+				<div className="search-box-row">
+					<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
+					<button style={{ color: '#fff' }} onClick={searchRevenue}>
+						search
+					</button>
+				</div>
 			</div>
 			<div className="report-container-content">
 				<div className="rev-total">
@@ -47,6 +70,7 @@ const RevenueTable = ({ revenue, columns, setOpen, svg, actionCreators, dispatch
 					</h4>
 				</div>
 				<Table
+					ref={tableRef}
 					columns={columns}
 					dataSource={[
 						...revenue.map((r) => ({
@@ -62,9 +86,9 @@ const RevenueTable = ({ revenue, columns, setOpen, svg, actionCreators, dispatch
 					]}
 					style={{ width: '100%' }}
 					pagination={{
-						defaultPageSize: 8,
+						defaultPageSize: 6,
 						showSizeChanger: true,
-						pageSizeOptions: [ '10', '20', '30' ]
+						pageSizeOptions: [ '3', '6', '9', '12' ]
 					}}
 				/>
 			</div>

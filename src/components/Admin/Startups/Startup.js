@@ -20,9 +20,10 @@ import Navbar from './modals/Navbar';
 import './StartupStyles.css';
 const Startup = ({ location, history }) => {
 	const [ year, setYear ] = React.useState('');
-	const [ year2, setYear2 ] = React.useState('');
 	const [ revenueTable, setRevenueTable ] = React.useState(false);
 	const { revenue, loader, values, revenue_tracking } = useSelector((state) => state.admin);
+
+	const tableRef = React.useRef(null);
 
 	const data = location.state.data;
 	const diagnostics = values && values.at(-1);
@@ -34,13 +35,8 @@ const Startup = ({ location, history }) => {
 	const getValues = () => dispatch(actionCreators.getAdminValues(data._id));
 	const searchRevenueYear = () => {
 		if (!year) return;
-		dispatch(actionCreators.filterAminRevenue(data._id, year));
+		dispatch(actionCreators.searchRevenueTracking(data._id, year));
 		setYear('');
-	};
-	const searchRevenueTracking = () => {
-		if (!year2) return;
-		dispatch(actionCreators.searchRevenueTracking(data._id, year2));
-		setYear2('');
 	};
 
 	React.useEffect(() => {
@@ -51,23 +47,7 @@ const Startup = ({ location, history }) => {
 
 	const sortRevenue = React.useMemo(
 		() => {
-			let sortedArray = [];
-			revenue &&
-				revenue.forEach((e) => {
-					if (e.month.substring(0, 3) === 'Jan') sortedArray.push({ ...e, index: 1 });
-					if (e.month.substring(0, 3) === 'Feb') sortedArray.push({ ...e, index: 2 });
-					if (e.month.substring(0, 3) === 'Mar') sortedArray.push({ ...e, index: 3 });
-					if (e.month.substring(0, 3) === 'Apr') sortedArray.push({ ...e, index: 4 });
-					if (e.month.substring(0, 3) === 'May') sortedArray.push({ ...e, index: 5 });
-					if (e.month.substring(0, 3) === 'Jun') sortedArray.push({ ...e, index: 6 });
-					if (e.month.substring(0, 3) === 'Jul') sortedArray.push({ ...e, index: 7 });
-					if (e.month.substring(0, 3) === 'Aug') sortedArray.push({ ...e, index: 8 });
-					if (e.month.substring(0, 3) === 'Sep') sortedArray.push({ ...e, index: 9 });
-					if (e.month.substring(0, 3) === 'Oct') sortedArray.push({ ...e, index: 10 });
-					if (e.month.substring(0, 3) === 'Nov') sortedArray.push({ ...e, index: 11 });
-					if (e.month.substring(0, 3) === 'Dec') sortedArray.push({ ...e, index: 12 });
-				});
-			return sortedArray.sort((a, b) => a.index - b.index);
+			return revenue.sort(({ date: a }, { date: b }) => (a < b ? -1 : a > b ? 1 : 0));
 		},
 		[ revenue ]
 	);
@@ -149,15 +129,15 @@ const Startup = ({ location, history }) => {
 		datasets: [
 			{
 				label: 'Monthly Revenue (UGX)',
-				backgroundColor: '#37561b',
-				borderColor: '#37561b',
+				backgroundColor: '#dfa126',
+				borderColor: '#dfa126',
 				borderWidth: 1,
 				data: rev
 			},
 			{
 				label: 'Monthly Expenses (UGX)',
-				backgroundColor: '#dfa126',
-				borderColor: '#dfa126',
+				backgroundColor: '#37561b',
+				borderColor: '#37561b',
 				borderWidth: 1,
 				data: expense
 			},
@@ -426,14 +406,16 @@ const Startup = ({ location, history }) => {
 			{revenueTable ? (
 				<ModalUI>
 					<RevenueTable
-						revenue={revenue}
+						revenue={sortRevenue}
 						columns={columns}
 						setOpen={setRevenueTable}
 						svg={svg}
+						username={data.username}
 						dispatch={dispatch}
 						userId={data._id}
 						actionCreators={actionCreators}
 						revenueTotal={revenueTotal}
+						tableRef={tableRef}
 					/>
 				</ModalUI>
 			) : null}
@@ -448,8 +430,8 @@ const Startup = ({ location, history }) => {
 				<div className="rev-tracking-table-row">
 					<h3>{revenueTotal.tracking} Revenue Reporting Tracking</h3>
 					<div className="search-box-row">
-						<input placeholder="year" value={year2} onChange={(e) => setYear2(e.target.value)} />
-						<button style={{ color: '#fff', borderRadius: '5px' }} onClick={searchRevenueTracking}>
+						<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
+						<button style={{ color: '#fff', borderRadius: '5px' }} onClick={searchRevenueYear}>
 							search
 						</button>
 					</div>
@@ -468,12 +450,8 @@ const Startup = ({ location, history }) => {
 			</div>
 			<div className="graph-tab">
 				<div className="graph-row">
-					<button onClick={() => setRevenueTable(true)}>view reported revenue</button>
 					<h3>{revenueTotal.year} Revenue Reporting Graph</h3>
-					<div className="search-box-row">
-						<input placeholder="year" value={year} onChange={(e) => setYear(e.target.value)} />
-						<button onClick={searchRevenueYear}>search</button>
-					</div>
+					<button onClick={() => setRevenueTable(true)}>view reported revenue</button>
 				</div>
 				<div className="rev-total">
 					<h4>

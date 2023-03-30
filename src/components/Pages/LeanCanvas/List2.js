@@ -4,7 +4,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Droppable } from 'react-beautiful-dnd';
 import { Card, actionCreators } from '../../Paths';
 
-const CanvasList2 = ({ listId, listNumber, title, cards, boardId, callback, open, setActiveCard }) => {
+const CanvasList2 = ({ listId, listNumber, title, cards, callback, open, setActiveCard }) => {
 	const [ cardName, setCardName ] = useState('');
 	const admin = useSelector((state) => state.auth.admin);
 	const dispatch = useDispatch();
