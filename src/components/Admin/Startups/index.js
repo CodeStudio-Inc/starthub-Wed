@@ -180,7 +180,7 @@ const Startups = (props) => {
 						sheet="Startup Records"
 						currentTableRef={tableRef.current}
 					>
-						<button> Export excel </button>
+						<button> Generate excel sheet </button>
 					</DownloadTableExcel>
 				</div>
 				<div className="add-startup-button" onClick={() => setAddStartupModal(true)}>

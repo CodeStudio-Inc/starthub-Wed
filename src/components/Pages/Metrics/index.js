@@ -27,6 +27,7 @@ const Metrics = ({ visible }) => {
 	const {
 		userId,
 		token,
+		username,
 		category,
 		totalExpectedRevenueShare,
 		totalRevSharePaid,
@@ -38,6 +39,8 @@ const Metrics = ({ visible }) => {
 		eligibilityCheck
 	} = useSelector((state) => state.auth);
 	const { values } = useSelector((state) => state.requests);
+
+	const tableRef = React.useRef(null);
 
 	const diagnostics = values && values.at(-1);
 
@@ -64,23 +67,7 @@ const Metrics = ({ visible }) => {
 
 	const sortRevenue = React.useMemo(
 		() => {
-			let sortedArray = [];
-			revenue &&
-				revenue.forEach((e) => {
-					if (e.month.substring(0, 3) === 'Jan') sortedArray.push({ ...e, index: 1 });
-					if (e.month.substring(0, 3) === 'Feb') sortedArray.push({ ...e, index: 2 });
-					if (e.month.substring(0, 3) === 'Mar') sortedArray.push({ ...e, index: 3 });
-					if (e.month.substring(0, 3) === 'Apr') sortedArray.push({ ...e, index: 4 });
-					if (e.month.substring(0, 3) === 'May') sortedArray.push({ ...e, index: 5 });
-					if (e.month.substring(0, 3) === 'Jun') sortedArray.push({ ...e, index: 6 });
-					if (e.month.substring(0, 3) === 'Jul') sortedArray.push({ ...e, index: 7 });
-					if (e.month.substring(0, 3) === 'Aug') sortedArray.push({ ...e, index: 8 });
-					if (e.month.substring(0, 3) === 'Sep') sortedArray.push({ ...e, index: 9 });
-					if (e.month.substring(0, 3) === 'Oct') sortedArray.push({ ...e, index: 10 });
-					if (e.month.substring(0, 3) === 'Nov') sortedArray.push({ ...e, index: 11 });
-					if (e.month.substring(0, 3) === 'Dec') sortedArray.push({ ...e, index: 12 });
-				});
-			return sortedArray.sort((a, b) => a.index - b.index);
+			return revenue.sort(({ date: a }, { date: b }) => (a < b ? -1 : a > b ? 1 : 0));
 		},
 		[ revenue ]
 	);
@@ -111,53 +98,6 @@ const Metrics = ({ visible }) => {
 		},
 		[ revenue, reportingYear ]
 	);
-
-	const workflowNodes = [
-		{
-			id: 53,
-			action: 'add_training',
-			workflowId: 3,
-			previousNodeId: 52,
-			organizationId: 6
-		},
-		{
-			id: 52,
-			action: 'attach_card',
-			workflowId: 3,
-			previousNodeId: 50,
-			organizationId: 6
-		},
-		{
-			id: 51,
-			action: 'archive',
-			workflowId: 3,
-			previousNodeId: 50,
-			organizationId: 6
-		},
-		{
-			id: 50,
-			action: 'fill_form',
-			workflowId: 3,
-			previousNodeId: 48,
-			organizationId: 6
-		},
-		{
-			id: 48,
-			action: 'fill_form',
-			workflowId: 3,
-			previousNodeId: null,
-			organizationId: 6
-		}
-	];
-
-	let new_array = [];
-
-	workflowNodes.sort((a, b) => a.previousNodeId - b.previousNodeId);
-	// const rearrangeArray = () => {
-	// 	return sort;
-	// };
-
-	console.log(workflowNodes);
 
 	const rev = sortRevenue.map((el) => el.month_revenue);
 	const expense = sortRevenue.map((el) => el.month_expense);
@@ -298,13 +238,15 @@ const Metrics = ({ visible }) => {
 			{revenueTable ? (
 				<ModalUI setClose={setRevenueTable}>
 					<RevenueTable
-						revenue={revenue}
+						revenue={sortRevenue}
 						columns={columns}
 						setOpen={setRevenueTable}
 						svg={svg}
 						dispatch={dispatch}
+						username={username}
 						actionCreators={actionCreators}
 						revenueTotal={revenueTotal}
+						tableRef={tableRef}
 					/>
 				</ModalUI>
 			) : null}
@@ -340,13 +282,13 @@ const Metrics = ({ visible }) => {
 					<div className="rev-total">
 						<h4>
 							Total Revenue Reported{' '}
-							<strong style={{ color: '#37561b', fontSize: '18px', marginBottom: '1 rem' }}>
+							<strong style={{ color: '#dfa126', fontSize: '18px', marginBottom: '1 rem' }}>
 								{revenueTotal.revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
 							</strong>
 						</h4>
 						<h4>
 							Total Expenses Reported{' '}
-							<strong style={{ color: '#dfa126', fontSize: '18px', marginBottom: '1 rem' }}>
+							<strong style={{ color: '#37561b', fontSize: '18px', marginBottom: '1 rem' }}>
 								{revenueTotal.expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Shs
 							</strong>
 						</h4>

@@ -11,7 +11,9 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import './LeanCanvasStyles.css';
 const LeanCanvas = () => {
-	const [ boardId, setBoardId ] = React.useState('');
+	const [ canvasBoardId, setCanvasBoardId ] = React.useState();
+	const [ archiveId, setArchiveId ] = React.useState();
+	const [ boardName, setBoardName ] = React.useState('');
 	const [ open, setOpen ] = React.useState(false);
 	const [ state, setState ] = React.useState({
 		name: '',
@@ -22,7 +24,15 @@ const LeanCanvas = () => {
 
 	const page = 'Lean Canvas';
 
-	const canvas_board = boards.filter((el) => el.boardType === page && el.archive === false);
+	const leanBoard = React.useMemo(
+		() => {
+			let board = boards.filter((el) => el.boardType === page && el.archive === false);
+			let archive = boards.filter((el) => el.boardType === page && el.archive === true);
+			return { board: board, archive: archive };
+		},
+		[ boards, canvasBoardId ]
+	);
+
 	let lst,
 		problem,
 		solution,
@@ -37,9 +47,6 @@ const LeanCanvas = () => {
 		concept,
 		adoptors;
 
-	const [ canvasBoardId, setCanvasBoardId ] = React.useState(
-		canvas_board && canvas_board.length === 0 ? null : canvas_board && canvas_board.at(-1)._id
-	);
 	lst = canvas_lists && canvas_lists.filter((el) => el.boardId === canvasBoardId);
 
 	problem = lst.find((el) => el.name === 'Problem');
@@ -58,12 +65,19 @@ const LeanCanvas = () => {
 	const dispatch = useDispatch();
 
 	React.useEffect(() => {
+		setCanvasBoardId(leanBoard.board.length === 0 ? null : leanBoard.board.at(-1)._id);
+		setBoardName(leanBoard.board.length === 0 ? null : leanBoard.board.at(-1).name);
 		dispatch(actionCreators.getBoards());
 		getLists();
 		ReactGA.pageview(window.location.pathname);
 	}, []);
 
 	const getLists = () => dispatch(actionCreators.getListsOnBoard(() => {}));
+
+	const archiveBoard = () => {
+		if (leanBoard.board.length === 1) return;
+		else dispatch(actionCreators.archiveBoard(canvasBoardId));
+	};
 
 	const onDragEnd = (result) => {
 		const { destination, source, draggableId } = result;
@@ -97,16 +111,14 @@ const LeanCanvas = () => {
 				<title>Lean Canvas</title>
 			</Helmet>
 			<div className="canvas-header">
-				{canvas_board && canvas_board.length !== 0 ? (
-					<div
-						className="canvas-header-btn"
-						onClick={() => dispatch(actionCreators.archiveBoard(canvasBoardId))}
-					>
+				{leanBoard.board.length !== 0 ? (
+					<div className="canvas-header-btn" onClick={archiveBoard}>
 						<DeleteOutlinedIcon style={{ fontSize: '20px', color: '#fff' }} />
 						{loading ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : <p>Remove canvas</p>}
 					</div>
 				) : null}
 			</div>
+			<h2>{boardName}</h2>
 			{open ? (
 				<ModalUI setClose={setOpen}>
 					<div className="canvas-modal">
@@ -144,15 +156,25 @@ const LeanCanvas = () => {
 					</div>
 				</ModalUI>
 			) : null}
-			{canvas_board && canvas_board.length === 0 ? (
+			{leanBoard.board.length === 0 ? (
 				<div className="canvas-header-btn" onClick={() => setOpen(true)}>
 					<AddCircleOutlineIcon style={{ fontSize: '20px', color: '#fff' }} />
 					<p>Add canvas</p>
 				</div>
 			) : (
 				<DragDropContext onDragEnd={onDragEnd}>
-					{canvas_board && canvas_board.length === 0 ? null : (
-						<Menu boards={canvas_board} setCanvasBoardId={setCanvasBoardId} setOpen={setOpen} />
+					{leanBoard.board.length === 0 ? null : (
+						<Menu
+							boards={leanBoard.board}
+							setCanvasBoardId={setCanvasBoardId}
+							setOpen={setOpen}
+							setBoardName={setBoardName}
+							archive={leanBoard.archive}
+							archiveId={archiveId}
+							dispatch={dispatch}
+							actionCreators={actionCreators}
+							setArchiveId={setArchiveId}
+						/>
 					)}
 					<div className="canvas-main">
 						{loading ? <Loader /> : null}
@@ -164,7 +186,6 @@ const LeanCanvas = () => {
 									listNumber={problem && problem.listNumber}
 									title={problem && problem.name}
 									cards={problem && problem.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 								<List1
@@ -172,7 +193,6 @@ const LeanCanvas = () => {
 									listId={alternatives && alternatives._id}
 									title={alternatives && alternatives.name}
 									cards={alternatives && alternatives.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 							</div>
@@ -183,7 +203,6 @@ const LeanCanvas = () => {
 									listNumber={solution && solution.listNumber}
 									title={solution && solution.name}
 									cards={solution && solution.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 								<div className="canvas-separator" />
@@ -193,7 +212,6 @@ const LeanCanvas = () => {
 									listNumber={metrics && metrics.listNumber}
 									title={metrics && metrics.name}
 									cards={metrics && metrics.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 							</div>
@@ -204,7 +222,6 @@ const LeanCanvas = () => {
 									listNumber={proposition && proposition.listNumber}
 									title={proposition && proposition.name}
 									cards={proposition && proposition.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 								<List1
@@ -212,7 +229,6 @@ const LeanCanvas = () => {
 									listId={concept && concept._id}
 									title={concept && concept.name}
 									cards={concept && concept.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 							</div>
@@ -223,7 +239,6 @@ const LeanCanvas = () => {
 									listNumber={advantage && advantage.listNumber}
 									title={advantage && advantage.name}
 									cards={advantage && advantage.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 								<div className="canvas-separator" />
@@ -233,7 +248,6 @@ const LeanCanvas = () => {
 									listNumber={channels && channels.listNumber}
 									title={channels && channels.name}
 									cards={channels && channels.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 							</div>
@@ -244,7 +258,6 @@ const LeanCanvas = () => {
 									listNumber={segments && segments.listNumber}
 									title={segments && segments.name}
 									cards={segments && segments.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 								<List1
@@ -252,7 +265,6 @@ const LeanCanvas = () => {
 									listId={adoptors && adoptors._id}
 									title={adoptors && adoptors.name}
 									cards={adoptors && adoptors.cards}
-									boardId={boardId}
 									callback={getLists}
 								/>
 							</div>
@@ -265,7 +277,6 @@ const LeanCanvas = () => {
 								listNumber={cost && cost.listNumber}
 								title={cost && cost.name}
 								cards={cost && cost.cards}
-								boardId={boardId}
 								callback={getLists}
 							/>
 							<List2
@@ -274,7 +285,6 @@ const LeanCanvas = () => {
 								listNumber={revenue && revenue.listNumber}
 								title={revenue && revenue.name}
 								cards={revenue && revenue.cards}
-								boardId={boardId}
 								callback={getLists}
 							/>
 						</div>
