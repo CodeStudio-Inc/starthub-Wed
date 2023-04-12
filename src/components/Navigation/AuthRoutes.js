@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from '../Pages/Auth/';
 import CashRequest from '../CashRequest';
+import { OverallAdmin } from '../Paths';
 
 const AuthRoutes = () => {
 	return (
