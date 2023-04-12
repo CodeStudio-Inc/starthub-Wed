@@ -71,11 +71,11 @@ const Startups = (props) => {
 			align: 'left'
 		},
 		{
-			title: 'Last Revenue submit',
+			title: 'No. Months since last revenue submit',
 			dataIndex: 'daysSinceLastSubmit',
 			key: 'daysSinceLastSubmit',
-			align: 'left',
-			render: (r) => <p>{r ? moment(r).fromNow() : null}</p>
+			align: 'center',
+			render: (r) => <p>{r ? r : null}</p>
 		},
 		{
 			title: 'Last LoggedIn',

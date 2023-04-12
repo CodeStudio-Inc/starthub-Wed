@@ -23,6 +23,8 @@ import Metrics from '../Pages/Metrics';
 import BonitaSchedule from '../Pages/Carlender/BonitaSchedule';
 import TimothySchedule from '../Pages/Carlender/TimothySchedule';
 import MathiusSchedule from '../Pages/Carlender/MathiusSchedule';
+import AdminNavbar from '../OverallAdmin/Navbar';
+import OverallAdmin from '../OverallAdmin';
 import Navbar from '../Pages/HomepageTemplate/Navbar';
 import Startups from '../Admin/Startups';
 import Loans from '../Admin/Loans';
@@ -67,6 +69,8 @@ export {
 	TimothySchedule,
 	MathiusSchedule,
 	Startups,
+	AdminNavbar,
+	OverallAdmin,
 	Loans,
 	Startup,
 	OkrOverview,

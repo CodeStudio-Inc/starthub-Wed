@@ -218,7 +218,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -233,7 +233,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -248,7 +248,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -263,7 +263,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -278,7 +278,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -293,7 +293,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -308,7 +308,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -323,7 +323,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -338,7 +338,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -353,7 +353,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -368,7 +368,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#dc4638e4', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
@@ -383,7 +383,7 @@ const Startup = ({ location, history }) => {
 			align: 'left',
 			render: (r) => (
 				<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{r === false ? (
+					{r.report === false ? (
 						<CancelIcon style={{ color: '#DB4437', fontSize: '25px' }} />
 					) : (
 						<CheckCircleIcon style={{ color: '#039487', fontSize: '25px' }} />
