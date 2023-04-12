@@ -22,12 +22,16 @@ const Startups = (props) => {
 
 	const { users } = useSelector((state) => state.admin);
 	const { userId } = useSelector((state) => state.auth);
-	const filterUsers = users.filter((el) => el.category === 'catalyzer' && el.mentor === userId);
 
 	const tableRef = React.useRef(null);
 
-	const totalRevenue = Array.from(filterUsers, ({ totalRevenue }) => totalRevenue).reduce((a, b) => a + b, 0);
-	const totalExpectedRevenuePaid = Array.from(filterUsers, ({ totalRevSharePaid }) => totalRevSharePaid).reduce(
+	const filterUsers = users.filter((el) => el.category === 'catalyzer' && el.mentor === userId);
+	const revenueTotal = users.filter(
+		(el) => el.category === 'catalyzer' && el.mentor === userId && typeof el.totalRevenue !== 'undefined'
+	);
+
+	const totalRevenue = Array.from(revenueTotal, ({ totalRevenue }) => totalRevenue).reduce((a, b) => a + b, 0);
+	const totalExpectedRevenuePaid = Array.from(revenueTotal, ({ totalRevSharePaid }) => totalRevSharePaid).reduce(
 		(a, b) => a + b,
 		0
 	);
@@ -137,7 +141,9 @@ const Startups = (props) => {
 						<div className="card-content-row-avatar">
 							<GroupsIcon style={{ fontSize: '30px', color: '#37561b' }} />
 						</div>
-						<h1>{filterUsers.length} teams</h1>
+						<h1>
+							{filterUsers.length} {filterUsers.length === 1 ? 'team' : 'teams'}
+						</h1>
 						<h3>Startups</h3>
 					</div>
 				</div>
