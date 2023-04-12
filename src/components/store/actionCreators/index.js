@@ -84,7 +84,6 @@ export {
 	getStartupRevenue,
 	getAminRevenue,
 	filterStartupRevenue,
-	filterAminRevenue,
 	getRevenueTracking,
 	searchRevenueTracking,
 	getRevenueAccumulation,

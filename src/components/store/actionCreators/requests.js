@@ -444,7 +444,7 @@ export const getListsOnBoard = () => {
 		axios
 			.get(`catalyzer/lists`)
 			.then((res) => {
-				// console.log(res)
+				// console.log(res);
 				dispatch(setLists(res.data.list));
 				dispatch(setCanvasLists(res.data.list));
 				dispatch(setMilestoneLists(res.data.list));
@@ -591,7 +591,7 @@ export const archiveBoard = (id) => {
 		dispatch(loadAction());
 
 		const data = {
-			archive: true
+			archive: ''
 		};
 
 		axios
@@ -599,6 +599,7 @@ export const archiveBoard = (id) => {
 			.then((res) => {
 				dispatch(stopLoader());
 				dispatch(setBoards(res.data.boards));
+				// console.log(res.data);
 			})
 			.catch((error) => {
 				dispatch(stopLoader());

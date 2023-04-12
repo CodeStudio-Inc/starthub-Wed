@@ -76,6 +76,21 @@
     padding-left: 5px;
 }
 
+.search-box-row select {
+    outline: none;
+    background: none;
+    height: 30px;
+    width: 4rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding-left: 5px;
+}
+
+.search-box-row p {
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
 .search-box-row button {
     outline: none;
     border: none;
@@ -224,7 +239,9 @@
 	justify-content: flex-start;
 	flex-direction: column;
 	width: 90%;
-    height: 95vh;
+    height: 800px;
+    /* height: 100%; */
+    overflow-y: scroll;
 	background: #fff;
 }
 
@@ -254,6 +271,14 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.report-container-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    margin-bottom: 0.5rem;
+}
+
 .report-icon:hover {
 	cursor: pointer;
 }
@@ -266,7 +291,6 @@
 	width: 100%;
 	margin-bottom: 0.5rem;
 	padding: 10px;
-    overflow-y: scroll;
 }
 
 .report-container-content p {
@@ -365,6 +389,28 @@
 }
 
 .report-revenue-btn:hover {
+    cursor: pointer;
+}
+
+
+.export-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.export-container button {
+    outline: none;
+    background: none;
+    border: 1px solid #37561b;
+    border-radius: 5px;
+    width: 10rem;
+}
+
+.export-container button:hover {
     cursor: pointer;
 }
 
