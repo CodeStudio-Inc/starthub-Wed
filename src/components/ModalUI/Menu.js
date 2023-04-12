@@ -106,7 +106,6 @@ export default function AccountMenu({
 					<MenuItem
 						onClick={() => {
 							setArchiveId(b._id);
-							console.log(archiveId);
 							setTimeout(() => dispatch(actionCreators.archiveBoard(archiveId)), 3000);
 						}}
 					>
