@@ -34,6 +34,7 @@ import Revenues from '../Admin/Revenue';
 import Overview from '../Admin/Revenue/Overview';
 import RevenueShare from '../Admin/Revenue/RevenueShare';
 import RevenueAccumulation from '../Admin/Revenue/RevenueAccumulation';
+import ResourceFiles from '../Admin/ResourceFiles';
 import ObjectivesTable from '../Admin/Startups/OKRs';
 import AdminLeanCanvas from '../Admin/Startups/LeanCanvas';
 import Error from '../tabs/Error';
@@ -78,6 +79,7 @@ export {
 	Overview,
 	RevenueShare,
 	RevenueAccumulation,
+	ResourceFiles,
 	AdminLeanCanvas,
 	ObjectivesTable,
 	Error,
