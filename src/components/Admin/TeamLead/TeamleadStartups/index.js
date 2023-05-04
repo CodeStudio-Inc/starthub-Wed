@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { Line } from "react-chartjs-2";
 import { Table } from "antd";
-import { actionCreators, ModalUI, svg } from "../../Paths";
+import { actionCreators, ModalUI, svg } from "../../../Paths";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -13,28 +13,32 @@ import { Helmet } from "react-helmet";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "@mui/material/Modal";
 
-import AddStartup from "./modals/AddStartup";
-import MakePayment from "./modals/MakePayment";
-import "./StartupStyles.css";
-import "../../Pages/Auth/AuthStyles.css";
-const Startups = (props) => {
-  const [openAddStartup, setOpenAddStartup] = React.useState(false);
-  const [openPayment, setOpenPayment] = React.useState(false);
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-  const handleAddStarupOpen = () => setOpenAddStartup(true);
-  const handleAddStarupClose = () => setOpenAddStartup(false);
-
-  const handleAddPaymentOpen = () => setOpenPayment(true);
-  const handleAddPaymentClose = () => setOpenPayment(false);
+import AddTeamMember from "../modals/AddTeamMember";
+import "../TeamLead.css";
+// import "../../Pages/Auth/AuthStyles.css";
+const TeamLeadStartups = (props) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const { users } = useSelector((state) => state.admin);
-  const { userId, category } = useSelector((state) => state.auth);
+  const { userId, category, loading } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
 
   const filterUsers = users.filter(
     (el) => el.teamCategory === category && el.creator === userId
   );
+  const startups = users.filter(
+    (el) => el.teamLeadId === userId && el.userRole === "startup"
+  );
+  //   console.log(startups);
+
   const revenueTotal = users.filter(
     (el) =>
       el.teamCategory === category &&
@@ -45,6 +49,10 @@ const Startups = (props) => {
   const totalRevenue = Array.from(
     revenueTotal,
     ({ totalRevenue }) => totalRevenue
+  ).reduce((a, b) => a + b, 0);
+  const totalExpense = Array.from(
+    revenueTotal,
+    ({ totalExpense }) => totalExpense
   ).reduce((a, b) => a + b, 0);
   const totalExpectedRevenuePaid = Array.from(
     revenueTotal,
@@ -138,11 +146,11 @@ const Startups = (props) => {
   return (
     <div className="startups-container">
       <Helmet>
-        <title>Startups Overview</title>
+        <title>TeamleadStartups Overview</title>
       </Helmet>
       <Modal
-        open={openAddStartup}
-        onClose={handleAddStarupClose}
+        open={open}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         style={{
@@ -151,20 +159,7 @@ const Startups = (props) => {
           justifyContent: "center",
         }}
       >
-        <AddStartup setOpen={handleAddStarupClose} />
-      </Modal>
-      <Modal
-        open={openPayment}
-        onClose={handleAddPaymentClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <MakePayment startups={filterUsers} setOpen={handleAddPaymentClose} />
+        <AddTeamMember setOpen={handleClose} />
       </Modal>
       <div className="card-row">
         <div className="card2">
@@ -173,9 +168,9 @@ const Startups = (props) => {
               <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
             </div>
             <h1>
-              {filterUsers.length} {filterUsers.length === 1 ? "team" : "teams"}
+              {startups.length} {startups.length === 1 ? "startup" : "startups"}
             </h1>
-            <h3>Startups</h3>
+            <h3>Total startups</h3>
           </div>
         </div>
         <div className="card2">
@@ -187,7 +182,20 @@ const Startups = (props) => {
               {totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
               Shs
             </h1>
-            <h3>Total Revenue</h3>
+            <h3>Total revenue</h3>
+          </div>
+        </div>
+
+        <div className="card2">
+          <div className="card-content-column">
+            <div className="card-content-row-avatar">
+              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            </div>
+            <h1>
+              {totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              Shs
+            </h1>
+            <h3>Total Expense</h3>
           </div>
         </div>
         <div className="card2">
@@ -204,23 +212,8 @@ const Startups = (props) => {
             <h3>Total Revenue Share Payment</h3>
           </div>
         </div>
-        <div className="card2">
-          <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
-            </div>
-            <h1>0 shs</h1>
-            <h3>Outstanding Revenue Share Payment</h3>
-          </div>
-        </div>
       </div>
       <div className="add-startup-row">
-        <div className="add-startup-button" onClick={setOpenPayment}>
-          <AddCardIcon
-            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-          />
-          <p>Add Payment</p>
-        </div>
         <div className="export-container">
           <DownloadTableExcel
             filename="Catalyzer Startups"
@@ -230,25 +223,20 @@ const Startups = (props) => {
             <button> Generate excel sheet </button>
           </DownloadTableExcel>
         </div>
-        <div className="add-startup-button" onClick={setOpenAddStartup}>
+        {/* <div className="add-startup-button" onClick={handleOpen}>
           <ControlPointIcon
             style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
           />
-          <p>Add new Startup</p>
-        </div>
+          <p>Add new team member</p>
+        </div> */}
       </div>
       <Table
         ref={tableRef}
         columns={columns}
         dataSource={[
-          ...filterUsers.map((r) => ({
+          ...startups.map((r) => ({
             ...r,
             key: r._id,
-            username: r.username,
-            dateCreated: moment(r.dateCreated).format("LL"),
-            totalExpectedRevenueShare: Math.round(r.totalExpectedRevenueShare)
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
           })),
         ]}
         onRow={(record, rowIndex) => {
@@ -274,4 +262,4 @@ const Startups = (props) => {
     </div>
   );
 };
-export default withRouter(Startups);
+export default withRouter(TeamLeadStartups);

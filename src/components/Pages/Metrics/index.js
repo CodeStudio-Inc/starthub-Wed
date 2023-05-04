@@ -265,11 +265,11 @@ const Metrics = ({ visible }) => {
           <LoanApplication setOpen={setLoanApplication} />
         </ModalUI>
       ) : null}
-      {loader ? (
+      {/* {loader ? (
         <ModalUI id="loader">
           <p style={{ color: "#fff" }}>Refresing...</p>
         </ModalUI>
-      ) : null}
+      ) : null} */}
       <Helmet>
         <title>Dashboard</title>
       </Helmet>

@@ -351,8 +351,6 @@ const Diagnostics = () => {
     setInvestmentValue(totalValue);
   };
 
-  //   console.log(visionValue, "%");
-
   const handleStepsSubmit = () => {
     dispatch(
       actionCreators.addValues(
@@ -413,25 +411,7 @@ const Diagnostics = () => {
               </Stack>
             </div>
           </FormStep>
-          <FormStep stepName="Problem & Vision">
-            <div className="step">
-              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {visionPayload
-                  ?.sort((a, b) => b.value - a.value)
-                  .map((r) => (
-                    <div className="step-row">
-                      <input
-                        type="checkbox"
-                        value={r.value}
-                        onChange={() => handleVisionOnChange(r.id)}
-                      />
-                      <p>{r.label}</p>
-                    </div>
-                  ))}
-              </Stack>
-            </div>
-          </FormStep>
-          <FormStep stepName="Value Proposition">
+          <FormStep stepName="Problem, Market & Value Proposition">
             <div className="step">
               <Stack sx={{ height: "100%" }} spacing={1} direction="column">
                 {propositionPayload
@@ -467,7 +447,7 @@ const Diagnostics = () => {
               </Stack>
             </div>
           </FormStep>
-          <FormStep stepName="Market">
+          <FormStep stepName="Marketing, Sales, Growth">
             <div className="step">
               <Stack sx={{ height: "100%" }} spacing={1} direction="column">
                 {marketPayload
@@ -485,7 +465,25 @@ const Diagnostics = () => {
               </Stack>
             </div>
           </FormStep>
-          <FormStep stepName="Business Model">
+          <FormStep stepName="Finance & Investment">
+            <div className="step">
+              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
+                {investmentPayload
+                  ?.sort((a, b) => b.value - a.value)
+                  .map((r) => (
+                    <div className="step-row">
+                      <input
+                        type="checkbox"
+                        value={r.value}
+                        onChange={() => handleInvestmentOnChange(r.id)}
+                      />
+                      <p>{r.label}</p>
+                    </div>
+                  ))}
+              </Stack>
+            </div>
+          </FormStep>
+          <FormStep stepName="Operations & Management">
             <div className="step">
               <Stack sx={{ height: "100%" }} spacing={1} direction="column">
                 {businessPayload
@@ -503,17 +501,17 @@ const Diagnostics = () => {
               </Stack>
             </div>
           </FormStep>
-          <FormStep stepName="Investment and exit">
+          <FormStep stepName="Compliance">
             <div className="step">
               <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {investmentPayload
+                {visionPayload
                   ?.sort((a, b) => b.value - a.value)
                   .map((r) => (
                     <div className="step-row">
                       <input
                         type="checkbox"
                         value={r.value}
-                        onChange={() => handleInvestmentOnChange(r.id)}
+                        onChange={() => handleVisionOnChange(r.id)}
                       />
                       <p>{r.label}</p>
                     </div>

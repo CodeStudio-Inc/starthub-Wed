@@ -689,6 +689,7 @@ export const addValues = (
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true, res: res });
+        // console.log(res);
       })
       .catch((error) => {
         console.log(error);

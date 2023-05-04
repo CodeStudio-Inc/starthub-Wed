@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, logo, svg } from "../../../Paths";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
@@ -13,17 +13,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import AccountDetails from "../components/AccountDetails";
+import Accordion from "../components/Accordion";
 import Features from "../components/Features";
-const AddStartup = ({ setOpen }) => {
+const AddTeamLead = ({ setOpen }) => {
   const [state, setState] = React.useState({
     username: "",
     email: "",
     category: "",
-    userRole: " startup",
+    userRole: "team lead",
+    permissions: "",
     password: "",
-    contractDate: "",
-    percentageShare: 0,
-    additionalMetrics: "",
   });
   const [emailcheck, setEmailCheck] = React.useState("");
   const [error, setError] = React.useState(false);
@@ -34,9 +33,7 @@ const AddStartup = ({ setOpen }) => {
 
   const { loading, platformFeatures } = useSelector((state) => state.auth);
 
-  const adminFeatures = platformFeatures.filter(
-    (f) => f.category === "startup"
-  );
+  const adminFeatures = platformFeatures.filter((f) => f.category === "admins");
 
   const updateFeatuersObject = () => {
     const newPayload = [
@@ -56,7 +53,13 @@ const AddStartup = ({ setOpen }) => {
     updateFeatuersObject();
   }, [platformFeatures]);
 
-  const steps = ["Enter Startup Account Details", "Add Features"];
+  // console.log(state);
+
+  const steps = [
+    "Enter Team Account Details",
+    "Add permissions",
+    "Add Features",
+  ];
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -122,15 +125,14 @@ const AddStartup = ({ setOpen }) => {
     if (!state.username || !state.category || !state.password)
       return setEmailCheck("All fields are required");
     dispatch(
-      actionCreators.addStartup(
+      actionCreators.addTeamLead(
         state.username,
         state.email,
         state.category,
+        state.permissions,
         state.password,
-        features,
         state.userRole,
-        state.contractDate,
-        state.percentageShare,
+        features,
         (response) => {
           const { success, res, error, err } = response;
           if (success) {
@@ -228,6 +230,9 @@ const AddStartup = ({ setOpen }) => {
                   />
                 ) : null}
                 {activeStep === 1 ? (
+                  <Accordion state={state} setState={setState} />
+                ) : null}
+                {activeStep === 2 ? (
                   <Features
                     features={adminFeatures}
                     handleCheckboxSelect={handleCheckboxSelect}
@@ -252,17 +257,7 @@ const AddStartup = ({ setOpen }) => {
               </Box>
             </React.Fragment>
           </Box>
-          {/* <div className="input-row">
-            <div className="input-column">
-              <h4>Additional metrics(optional)</h4>
-              <input
-                value={state.additionalMetrics}
-                onChange={(e) =>
-                  setState({ ...state, additionalMetrics: e.target.value })
-                }
-              />
-            </div>
-          </div> */}
+
           {/* <button onClick={register}>
             {loading ? (
               <img src={svg} style={{ width: "30px", height: "30px" }} />
@@ -275,4 +270,4 @@ const AddStartup = ({ setOpen }) => {
     </div>
   );
 };
-export default AddStartup;
+export default AddTeamLead;

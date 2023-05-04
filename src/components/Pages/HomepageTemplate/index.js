@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   OKRs,
@@ -21,6 +21,7 @@ import axios from "axios";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import BuildIcon from "@material-ui/icons/Build";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -36,6 +37,7 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 
+import { Admin, TeamLead, TeamMember, Startup } from "../LandingPages";
 import "./HomepageStyles.css";
 const HomepageTemplate = (props) => {
   const [index, setIndex] = React.useState(0);
@@ -45,6 +47,7 @@ const HomepageTemplate = (props) => {
     actionObject: null,
     objects: [
       {
+        type: "startup",
         title: "Dashboard",
         icon: (
           <BarChartIcon
@@ -54,6 +57,7 @@ const HomepageTemplate = (props) => {
         ),
       },
       {
+        type: "startup",
         title: "OKRs",
         icon: (
           <ListAltIcon
@@ -63,6 +67,7 @@ const HomepageTemplate = (props) => {
         ),
       },
       {
+        type: "startup",
         title: "Lean Canvas",
         icon: (
           <DeveloperBoardIcon
@@ -72,37 +77,76 @@ const HomepageTemplate = (props) => {
         ),
       },
       {
+        type: "startup",
         title: "Diagnostics",
         icon: (
           <BuildIcon style={{ fontSize: "25px" }} className="home-link-icon" />
         ),
       },
-      // {
-      // 	title: 'Schedule',
-      // 	icon: <CalendarMonthIcon style={{ fontSize: '25px' }} className="home-link-icon" />
-      // }
-    ],
-  });
-  const [adminLink, setAdmin] = React.useState({
-    actionObject: null,
-    objects: [
       {
+        type: "admin",
+        title: "Overview",
+        icon: (
+          <DashboardIcon
+            style={{ fontSize: "25px" }}
+            className="home-link-icon"
+          />
+        ),
+      },
+      {
+        type: "admin",
+        title: "Leads",
+        icon: (
+          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
+        ),
+      },
+      {
+        type: "admin",
+        title: "Members",
+        icon: (
+          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
+        ),
+      },
+      {
+        type: "admin",
         title: "Startups",
         icon: (
           <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
         ),
       },
       {
+        type: "team lead",
+        title: "Overview",
+        icon: (
+          <DashboardIcon
+            style={{ fontSize: "25px" }}
+            className="home-link-icon"
+          />
+        ),
+      },
+      {
+        type: "team lead",
+        title: "startups",
+        icon: (
+          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
+        ),
+      },
+      {
+        type: "team member",
+        title: "Startups",
+        icon: (
+          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
+        ),
+      },
+      {
+        type: "team member",
         title: "Resource Files",
         icon: (
           <FolderIcon style={{ fontSize: "25px" }} className="home-link-icon" />
         ),
       },
-      // {
-      // 	title: 'Revenue',
-      // 	icon: <PaymentIcon style={{ fontSize: '25px' }} className="home-link-icon" />
-      // },
       {
+        type: "team member",
         title: "Loans",
         icon: (
           <LocalAtmIcon
@@ -113,18 +157,20 @@ const HomepageTemplate = (props) => {
       },
     ],
   });
-  const [emailState, setEmailState] = React.useState({
-    email: "",
-    startup: "",
-    months: [],
-  });
 
-  const [emailMessage, setEmailMessage] = React.useState("");
-  const [emailModal, setEmailModal] = React.useState(false);
+  const adminLinks = active.objects.filter((l) => l.type === "admin");
+  const teamLeadLinks = active.objects.filter((l) => l.type === "team lead");
+  const teamMemberLinks = active.objects.filter(
+    (l) => l.type === "team member"
+  );
+  const startupLinks = active.objects.filter((l) => l.type === "startup");
+  // console.log(startupLinks);
 
-  const { username, admin, tokenExpiration, category } = useSelector(
+  const { username, admin, tokenExpiration, category, userRole } = useSelector(
     (state) => state.auth
   );
+
+  const auth = useSelector((state) => state.auth);
 
   const current_date = Date.now();
 
@@ -146,11 +192,6 @@ const HomepageTemplate = (props) => {
 
   const dispatch = useDispatch();
 
-  const handleMultipleSelectChange = (e) => {
-    let value = Array.from(e.target.selectedOptions, (option) => option.value);
-    setEmailState({ ...emailState, months: value });
-  };
-
   const toggleActive = (index) => {
     setActive({ ...active, actionObject: active.objects[index] });
   };
@@ -167,6 +208,119 @@ const HomepageTemplate = (props) => {
     dispatch(actionCreators.removeUser());
     props.history.push("/");
   };
+
+  const SwitchComponent = useCallback(
+    ({ index, visible }) => {
+      switch (userRole) {
+        case "admin":
+          return <Admin index={index} />;
+          break;
+        case "team lead":
+          return <TeamLead index={index} />;
+          break;
+        case "team member":
+          return <TeamMember index={index} />;
+          break;
+        case "startup":
+          return <Startup index={index} visible={visible} />;
+          break;
+        default:
+          break;
+      }
+    },
+    [index, visible]
+  );
+
+  const SwitchNavLinks = useCallback(() => {
+    switch (userRole) {
+      case "admin":
+        return (
+          <div style={{ width: "95%" }}>
+            {adminLinks.map((e, index) => (
+              <div
+                key={index}
+                className={toggleActiveStyle(index)}
+                onClick={() => {
+                  toggleActive(index);
+                  setIndex(index);
+                }}
+              >
+                <div className="home-link-row">
+                  {e.icon}
+                  <h4>{e.title}</h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+        break;
+      case "team lead":
+        return (
+          <div style={{ width: "95%" }}>
+            {teamLeadLinks.map((e, index) => (
+              <div
+                key={index}
+                className={toggleActiveStyle(index)}
+                onClick={() => {
+                  toggleActive(index);
+                  setIndex(index);
+                }}
+              >
+                <div className="home-link-row">
+                  {e.icon}
+                  <h4>{e.title}</h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+        break;
+      case "team member":
+        return (
+          <div style={{ width: "95%" }}>
+            {teamMemberLinks.map((e, index) => (
+              <div
+                key={index}
+                className={toggleActiveStyle(index)}
+                onClick={() => {
+                  toggleActive(index);
+                  setIndex(index);
+                }}
+              >
+                <div className="home-link-row">
+                  {e.icon}
+                  <h4>{e.title}</h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+        break;
+      case "startup":
+        return (
+          <div style={{ width: "95%" }}>
+            {startupLinks.map((e, index) => (
+              <div
+                key={index}
+                className={toggleActiveStyle(index)}
+                onClick={() => {
+                  toggleActive(index);
+                  setIndex(index);
+                }}
+              >
+                <div className="home-link-row">
+                  {e.icon}
+                  <h4>{e.title}</h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+        break;
+      default:
+        break;
+    }
+  }, [active, setActive]);
 
   return (
     <div className="homepage-container">
@@ -206,98 +360,6 @@ const HomepageTemplate = (props) => {
           setNavbar={setNavbar}
         />
       ) : null}
-      {emailModal ? (
-        <ModalUI>
-          <div className="nav-modal-container">
-            <div className="nav-container-header">
-              <CloseIcon
-                onClick={() => setEmailModal(false)}
-                className="nav-icon"
-                style={{ color: "rgba(0,0,0,0.3)" }}
-              />
-            </div>
-            <div className="nav-container-content">
-              <h3>Revenue Submission Reminder Email</h3>
-              <input
-                placeholder="Email"
-                type="email"
-                value={emailState.email}
-                onChange={(e) =>
-                  setEmailState({ ...emailState, email: e.target.value })
-                }
-              />
-              <select
-                onChange={(e) =>
-                  setEmailState({ ...emailState, startup: e.target.value })
-                }
-                className="nav-container-select1"
-              >
-                <option value="" disabled selected>
-                  -select startup-
-                </option>
-                <option value="OnScore Africa">OnScore Africa</option>
-                <option value="Solfix">Solfix</option>
-                <option value="Rada Safaris">Rada Safaris</option>
-                <option value="Zetu Africa">Zetu Africa</option>
-                <option value="Social Clark">Social Clark</option>
-                <option value="Inove Labs">Inove Labs</option>
-                <option value="OMNI Gym">OMNI Gym</option>
-                <option value="Isharc">Isharc</option>
-                <option value="Qiribu">Qiribu</option>
-                <option value="Figurines">Figurines</option>
-                <option value="Grab Gas">Grab Gas</option>
-                <option value="Onestope">Onestope</option>
-                <option value="ShareCARD">ShareCARD</option>
-              </select>
-              <select
-                multiple={true}
-                onChange={handleMultipleSelectChange}
-                className="nav-container-select2"
-              >
-                <option value="" disabled selected>
-                  -select months-
-                </option>
-                <option>January</option>
-                <option>Febuary</option>
-                <option>March</option>
-                <option>April</option>
-                <option>May</option>
-                <option>June</option>
-                <option>July</option>
-                <option>August</option>
-                <option>September</option>
-                <option>October</option>
-                <option>November</option>
-                <option>December</option>
-              </select>
-              <button
-                onClick={() =>
-                  dispatch(
-                    actionCreators.sendEmail(
-                      emailState.email,
-                      emailState.startup,
-                      emailState.months,
-                      (res) => {
-                        if (res.success) {
-                          setEmailMessage(res.res);
-                          setEmailState({
-                            email: "",
-                            startup: "",
-                            months: [],
-                          });
-                        }
-                      }
-                    )
-                  )
-                }
-              >
-                Send Email
-              </button>
-              <p>{emailMessage ? emailMessage : null}</p>
-            </div>
-          </div>
-        </ModalUI>
-      ) : null}
       <div
         className={visible ? "homepage-sidebar hide-menu" : "homepage-sidebar"}
       >
@@ -315,7 +377,7 @@ const HomepageTemplate = (props) => {
           <AccountBoxIcon style={{ fontSize: "25px", color: "#37561b" }} />
           <h2>{username}</h2>
         </div>
-        {admin &&
+        {/* {admin &&
           adminLink.objects.map((e, index) => (
             <div
               key={index}
@@ -330,8 +392,8 @@ const HomepageTemplate = (props) => {
                 <h4>{e.title}</h4>
               </div>
             </div>
-          ))}
-        {!admin && category !== "internal"
+          ))} */}
+        {/* {!admin && category !== "internal"
           ? active.objects.map((e, index) => (
               <div
                 key={index}
@@ -347,16 +409,20 @@ const HomepageTemplate = (props) => {
                 </div>
               </div>
             ))
-          : null}
-        {!admin && category === "internal" ? (
-          <p style={{ visibility: "hidden" }}>Hello</p>
-        ) : null}
+          : null} */}
+        <SwitchNavLinks />
+
         <div className="logout" onClick={handleLogoutClick}>
           <LogoutIcon style={{ fontSize: "20px" }} className="logout-icon" />
           <h5>Logout</h5>
         </div>
       </div>
-      {!admin && category !== "internal" ? (
+      <div
+        className={visible ? "homepage-main increase-width" : "homepage-main"}
+      >
+        <SwitchComponent index={index} visible={visible} />
+      </div>
+      {/* {!admin && category !== "internal" ? (
         <div
           className={visible ? "homepage-main increase-width" : "homepage-main"}
         >
@@ -364,7 +430,7 @@ const HomepageTemplate = (props) => {
           {index === 1 ? <OKRs /> : null}
           {index === 2 ? <LeanCanvas /> : null}
           {index === 3 ? <DiagnosticsTest /> : null}
-          {/* {index === 4 ? <Calendar /> : null} */}
+          {index === 4 ? <Calendar /> : null}
         </div>
       ) : null}
       {!admin && category === "internal" ? (
@@ -379,11 +445,11 @@ const HomepageTemplate = (props) => {
           className={visible ? "homepage-main increase-width" : "homepage-main"}
         >
           {index === 0 ? <Startups /> : null}
-          {/* {index === 1 ? <ResourceFiles /> : null} */}
-          {/* {index === 1 ? <Revenues /> : null} */}
+          {index === 1 ? <ResourceFiles /> : null}
+          {index === 1 ? <Revenues /> : null}
           {index === 1 ? <Loans /> : null}
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

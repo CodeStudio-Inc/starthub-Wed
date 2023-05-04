@@ -13,33 +13,30 @@ import { Helmet } from "react-helmet";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "@mui/material/Modal";
 
-import AddStartup from "./modals/AddStartup";
-import MakePayment from "./modals/MakePayment";
-import "./StartupStyles.css";
+import AddTeamLead from "./modals/AddTeamLead";
+import "./AdminPanel.css";
 import "../../Pages/Auth/AuthStyles.css";
-const Startups = (props) => {
-  const [openAddStartup, setOpenAddStartup] = React.useState(false);
-  const [openPayment, setOpenPayment] = React.useState(false);
-
-  const handleAddStarupOpen = () => setOpenAddStartup(true);
-  const handleAddStarupClose = () => setOpenAddStartup(false);
-
-  const handleAddPaymentOpen = () => setOpenPayment(true);
-  const handleAddPaymentClose = () => setOpenPayment(false);
+const AdminPanel = (props) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const { users } = useSelector((state) => state.admin);
   const { userId, category } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
 
-  const filterUsers = users.filter(
-    (el) => el.teamCategory === category && el.creator === userId
+  const filterUsers = users.filter((el) => el.creator === userId);
+  const teamMembers = users.filter(
+    (el) => el.adminId === userId && el.userRole === "team member"
   );
+  const startups = users.filter(
+    (el) => el.adminId === userId && el.userRole === "startup"
+  );
+  //   const startups = users.filter(u => )
+  // console.log(teamMembers);
   const revenueTotal = users.filter(
-    (el) =>
-      el.teamCategory === category &&
-      el.creator === userId &&
-      typeof el.totalRevenue !== "undefined"
+    (el) => el.creator === userId && typeof el.totalRevenue !== "undefined"
   );
 
   const totalRevenue = Array.from(
@@ -80,56 +77,57 @@ const Startups = (props) => {
       align: "left",
     },
     {
-      title: "Contract Date",
-      dataIndex: "contractDate",
-      key: "contractDate",
+      title: "Category",
+      dataIndex: "teamCategory",
+      key: "teamCategory",
       align: "left",
     },
     {
-      title: "No. Months since last revenue submit",
-      dataIndex: "daysSinceLastSubmit",
-      key: "daysSinceLastSubmit",
+      title: "Permissions",
+      dataIndex: "permissions",
+      key: "permissions",
       align: "center",
-      render: (r) => <p>{r ? r : null}</p>,
     },
     {
-      title: "Last LoggedIn",
-      dataIndex: "lastLoggedIn",
-      key: "lastLoggedIn",
+      title: "Role",
+      dataIndex: "userRole",
+      key: "userRole",
       align: "left",
-      render: (r) => <p>{r ? moment(r).fromNow() : null}</p>,
     },
     {
-      title: "Revenue Share %",
-      dataIndex: "percentageRevShare",
-      key: "percentageRevShare",
+      title: "action",
+      dataIndex: "_id",
+      key: "_id",
       align: "left",
-      render: (r) => <p>{r}%</p>,
+      render: (r) => <button>edit permissions</button>,
     },
     {
-      title: "Additional Metrics",
-      dataIndex: "additionalMetrics",
-      key: "additionalMetrics",
-      align: "center",
-      render: (r) => <p>{r ? r : "-"}</p>,
+      title: "action",
+      dataIndex: "_id",
+      key: "_id",
+      align: "left",
+      render: (r) => <button>edit user role</button>,
     },
     {
-      title: "RevenueSharePaid",
-      dataIndex: "totalRevSharePaid",
-      key: "totalRevSharePaid",
-      align: "center",
+      title: "action",
+      dataIndex: "_id",
+      key: "_id",
+      align: "left",
+      render: (r) => <button>remove access</button>,
     },
     {
-      title: "ExpectedRevenueShare",
-      dataIndex: "totalExpectedRevenueShare",
-      key: "totalExpectedRevenueShare",
-      align: "center",
+      title: "action",
+      dataIndex: "_id",
+      key: "_id",
+      align: "left",
+      render: (r) => <button>view teams</button>,
     },
     {
-      title: "LoanBalance",
-      dataIndex: "totalLoanBalance",
-      key: "totalLoanBalance",
+      title: "action",
+      dataIndex: "_id",
+      key: "_id",
       align: "center",
+      render: (r) => <button>remove user</button>,
     },
   ];
 
@@ -141,8 +139,8 @@ const Startups = (props) => {
         <title>Startups Overview</title>
       </Helmet>
       <Modal
-        open={openAddStartup}
-        onClose={handleAddStarupClose}
+        open={open}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         style={{
@@ -151,20 +149,7 @@ const Startups = (props) => {
           justifyContent: "center",
         }}
       >
-        <AddStartup setOpen={handleAddStarupClose} />
-      </Modal>
-      <Modal
-        open={openPayment}
-        onClose={handleAddPaymentClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <MakePayment startups={filterUsers} setOpen={handleAddPaymentClose} />
+        <AddTeamLead setOpen={handleClose} />
       </Modal>
       <div className="card-row">
         <div className="card2">
@@ -173,54 +158,48 @@ const Startups = (props) => {
               <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
             </div>
             <h1>
-              {filterUsers.length} {filterUsers.length === 1 ? "team" : "teams"}
+              {users.length} {users.length === 1 ? "user" : "total users"}
             </h1>
-            <h3>Startups</h3>
+            <h3 className="card-txt">view users</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
             <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
             </div>
             <h1>
-              {totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
+              {filterUsers.length}{" "}
+              {filterUsers.length === 1 ? "team lead" : "team leads"}
             </h1>
-            <h3>Total Revenue</h3>
+            <h3 className="card-txt">view team leads</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
             <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
             </div>
             <h1>
-              {totalExpectedRevenuePaid
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              shs
+              {teamMembers.length}{" "}
+              {teamMembers.length === 1 ? "team member" : "team members"}
             </h1>
-            <h3>Total Revenue Share Payment</h3>
+            <h3 className="card-txt">view team members</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
             <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
             </div>
-            <h1>0 shs</h1>
-            <h3>Outstanding Revenue Share Payment</h3>
+            <h1>
+              {startups.length} {startups.length === 1 ? "startup" : "startups"}
+            </h1>
+            <h3 className="card-txt">view startups</h3>
           </div>
         </div>
       </div>
-      <div className="add-startup-row">
-        <div className="add-startup-button" onClick={setOpenPayment}>
-          <AddCardIcon
-            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-          />
-          <p>Add Payment</p>
-        </div>
+      {/* <div className="add-startup-row">
         <div className="export-container">
           <DownloadTableExcel
             filename="Catalyzer Startups"
@@ -230,25 +209,20 @@ const Startups = (props) => {
             <button> Generate excel sheet </button>
           </DownloadTableExcel>
         </div>
-        <div className="add-startup-button" onClick={setOpenAddStartup}>
+        <div className="add-startup-button" onClick={handleOpen}>
           <ControlPointIcon
             style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
           />
-          <p>Add new Startup</p>
+          <p>Add new team leads</p>
         </div>
-      </div>
-      <Table
+      </div> */}
+      {/* <Table
         ref={tableRef}
         columns={columns}
         dataSource={[
           ...filterUsers.map((r) => ({
             ...r,
             key: r._id,
-            username: r.username,
-            dateCreated: moment(r.dateCreated).format("LL"),
-            totalExpectedRevenueShare: Math.round(r.totalExpectedRevenueShare)
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
           })),
         ]}
         onRow={(record, rowIndex) => {
@@ -270,8 +244,8 @@ const Startups = (props) => {
           showSizeChanger: true,
           pageSizeOptions: ["10", "20", "30"],
         }}
-      />
+      /> */}
     </div>
   );
 };
-export default withRouter(Startups);
+export default withRouter(AdminPanel);
