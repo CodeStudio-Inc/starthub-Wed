@@ -12,18 +12,17 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import AccountDetails from "../components/AccountDetails";
 import Features from "../components/Features";
-const AddStartup = ({ setOpen }) => {
+import AccountDetails from "../components/AccountDetails";
+import Accordion from "../components/Accordion";
+const AddTeamMember = ({ setOpen }) => {
   const [state, setState] = React.useState({
     username: "",
     email: "",
     category: "",
-    userRole: " startup",
+    userRole: "team member",
+    permissions: "",
     password: "",
-    contractDate: "",
-    percentageShare: 0,
-    additionalMetrics: "",
   });
   const [emailcheck, setEmailCheck] = React.useState("");
   const [error, setError] = React.useState(false);
@@ -34,9 +33,7 @@ const AddStartup = ({ setOpen }) => {
 
   const { loading, platformFeatures } = useSelector((state) => state.auth);
 
-  const adminFeatures = platformFeatures.filter(
-    (f) => f.category === "startup"
-  );
+  const adminFeatures = platformFeatures.filter((f) => f.category === "admins");
 
   const updateFeatuersObject = () => {
     const newPayload = [
@@ -56,7 +53,11 @@ const AddStartup = ({ setOpen }) => {
     updateFeatuersObject();
   }, [platformFeatures]);
 
-  const steps = ["Enter Startup Account Details", "Add Features"];
+  const steps = [
+    "Enter Team Account Details",
+    "Add permissions",
+    "Add Features",
+  ];
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -122,15 +123,14 @@ const AddStartup = ({ setOpen }) => {
     if (!state.username || !state.category || !state.password)
       return setEmailCheck("All fields are required");
     dispatch(
-      actionCreators.addStartup(
+      actionCreators.addTeamMember(
         state.username,
         state.email,
         state.category,
+        state.permissions,
         state.password,
-        features,
         state.userRole,
-        state.contractDate,
-        state.percentageShare,
+        features,
         (response) => {
           const { success, res, error, err } = response;
           if (success) {
@@ -151,7 +151,7 @@ const AddStartup = ({ setOpen }) => {
       <div className="signup-left">
         <div className="signup-left-backdrop">
           <h1>World-class venture building for innovators in Uganda.</h1>
-          <h3>Setup Startup Account.</h3>
+          <h3>Setup Team member Account.</h3>
           {error ? (
             <div className="error-message">
               <WarningAmberIcon
@@ -228,6 +228,9 @@ const AddStartup = ({ setOpen }) => {
                   />
                 ) : null}
                 {activeStep === 1 ? (
+                  <Accordion state={state} setState={setState} />
+                ) : null}
+                {activeStep === 2 ? (
                   <Features
                     features={adminFeatures}
                     handleCheckboxSelect={handleCheckboxSelect}
@@ -252,27 +255,17 @@ const AddStartup = ({ setOpen }) => {
               </Box>
             </React.Fragment>
           </Box>
-          {/* <div className="input-row">
-            <div className="input-column">
-              <h4>Additional metrics(optional)</h4>
-              <input
-                value={state.additionalMetrics}
-                onChange={(e) =>
-                  setState({ ...state, additionalMetrics: e.target.value })
-                }
-              />
-            </div>
-          </div> */}
+
           {/* <button onClick={register}>
             {loading ? (
               <img src={svg} style={{ width: "30px", height: "30px" }} />
             ) : (
               "Create Account"
             )}
-          </button> */}
+          </button>  */}
         </div>
       </div>
     </div>
   );
 };
-export default AddStartup;
+export default AddTeamMember;
