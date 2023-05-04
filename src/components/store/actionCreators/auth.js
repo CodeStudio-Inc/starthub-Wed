@@ -82,7 +82,7 @@ export const login = (email, password, callback) => {
       .post(`auth/signin`, data)
       .then((res) => {
         dispatch(stopLoader());
-        // console.log(res.data);
+        console.log(res.data);
         dispatch(
           setUser(
             res.data.userId,

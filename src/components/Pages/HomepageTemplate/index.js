@@ -325,6 +325,11 @@ const HomepageTemplate = (props) => {
         );
         break;
       default:
+        return (
+          <div className="homepage-main">
+            <h3>Error while loading page</h3>
+          </div>
+        );
         break;
     }
   }, [active, setActive]);
@@ -417,8 +422,7 @@ const HomepageTemplate = (props) => {
               </div>
             ))
           : null} */}
-        {/* <SwitchNavLinks /> */}
-        <h1>hello</h1>
+        <SwitchNavLinks />
 
         <div className="logout" onClick={handleLogoutClick}>
           <LogoutIcon style={{ fontSize: "20px" }} className="logout-icon" />
@@ -428,8 +432,7 @@ const HomepageTemplate = (props) => {
       <div
         className={visible ? "homepage-main increase-width" : "homepage-main"}
       >
-        {/* <SwitchComponent index={index} visible={visible} /> */}
-        <h1>hello</h1>
+        <SwitchComponent index={index} visible={visible} />
       </div>
       {/* {!admin && category !== "internal" ? (
         <div
