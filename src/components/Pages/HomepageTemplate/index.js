@@ -170,6 +170,8 @@ const HomepageTemplate = (props) => {
     (state) => state.auth
   );
 
+  console.log(userRole);
+
   const auth = useSelector((state) => state.auth);
 
   const current_date = Date.now();
@@ -225,6 +227,11 @@ const HomepageTemplate = (props) => {
           return <Startup index={index} visible={visible} />;
           break;
         default:
+          return (
+            <div className="homepage-main">
+              <h3>Error while loading page</h3>
+            </div>
+          );
           break;
       }
     },
@@ -410,7 +417,8 @@ const HomepageTemplate = (props) => {
               </div>
             ))
           : null} */}
-        <SwitchNavLinks />
+        {/* <SwitchNavLinks /> */}
+        <h1>hello</h1>
 
         <div className="logout" onClick={handleLogoutClick}>
           <LogoutIcon style={{ fontSize: "20px" }} className="logout-icon" />
@@ -420,7 +428,8 @@ const HomepageTemplate = (props) => {
       <div
         className={visible ? "homepage-main increase-width" : "homepage-main"}
       >
-        <SwitchComponent index={index} visible={visible} />
+        {/* <SwitchComponent index={index} visible={visible} /> */}
+        <h1>hello</h1>
       </div>
       {/* {!admin && category !== "internal" ? (
         <div
