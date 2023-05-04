@@ -23,6 +23,8 @@ import Metrics from '../Pages/Metrics';
 import BonitaSchedule from '../Pages/Carlender/BonitaSchedule';
 import TimothySchedule from '../Pages/Carlender/TimothySchedule';
 import MathiusSchedule from '../Pages/Carlender/MathiusSchedule';
+import AdminNavbar from '../OverallAdmin/Navbar';
+import OverallAdmin from '../OverallAdmin';
 import Navbar from '../Pages/HomepageTemplate/Navbar';
 import Startups from '../Admin/Startups';
 import Loans from '../Admin/Loans';
@@ -32,6 +34,7 @@ import Revenues from '../Admin/Revenue';
 import Overview from '../Admin/Revenue/Overview';
 import RevenueShare from '../Admin/Revenue/RevenueShare';
 import RevenueAccumulation from '../Admin/Revenue/RevenueAccumulation';
+import ResourceFiles from '../Admin/ResourceFiles';
 import ObjectivesTable from '../Admin/Startups/OKRs';
 import AdminLeanCanvas from '../Admin/Startups/LeanCanvas';
 import Error from '../tabs/Error';
@@ -67,6 +70,8 @@ export {
 	TimothySchedule,
 	MathiusSchedule,
 	Startups,
+	AdminNavbar,
+	OverallAdmin,
 	Loans,
 	Startup,
 	OkrOverview,
@@ -74,6 +79,7 @@ export {
 	Overview,
 	RevenueShare,
 	RevenueAccumulation,
+	ResourceFiles,
 	AdminLeanCanvas,
 	ObjectivesTable,
 	Error,

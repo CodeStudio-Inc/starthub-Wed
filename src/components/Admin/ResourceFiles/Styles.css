@@ -1,0 +1,57 @@
+.resource-file-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    flex-direction: column;
+    background: #fff;
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+.resource-file-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.search-file-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 30%;
+    padding-bottom: 0.5rem;
+}
+
+.search-file-row input {
+    outline: none;
+    background: none;
+    width: 200px;
+    height: 40px;
+    border: none;
+}
+
+.upload-files {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eee;
+    height: 30px;
+    width: 10%;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.upload-files:hover {
+    cursor: pointer;
+}
+
+.upload-files h4 {
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0;
+    font-weight: 400;
+}

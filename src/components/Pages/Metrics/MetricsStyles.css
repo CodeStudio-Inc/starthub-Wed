@@ -1,589 +1,611 @@
 .metrics-container {
-	display: flex;
-	align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-	width: 100%;
-    padding: 10px;
-    overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  overflow-y: scroll;
 }
 
 .metric-btn-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* width: 90%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 90%; */
 }
 
 .report-revenue-btn {
-    position: absolute;
-    z-index: 100;
-    bottom: 60px;
-    right: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    width: 12rem;
-    background: #dfa126;
-    border-radius: 10px;
+  position: absolute;
+  z-index: 100;
+  bottom: 60px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 12rem;
+  background: #dfa126;
+  border-radius: 10px;
 }
 
 .report-revenue-btn:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .report-revenue-btn h4 {
-    color: #fff;
-    margin: 0;
+  color: #fff;
+  margin: 0;
 }
 
-
 .graph-row {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .graph-row button {
-    outline: none;
-    border: none;
-    color: #fff;
-    background: #37561b;
-    height: 40px;
-    width: 15rem;
-    border-radius: 5px;
+  outline: none;
+  border: none;
+  color: #fff;
+  background: #37561b;
+  height: 40px;
+  width: 15rem;
+  border-radius: 5px;
 }
 
 .graph-row button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .search-box-row {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 5px;
 }
 
 .search-box-row input {
-    outline: none;
-    background: none;
-    height: 30px;
-    width: 7rem;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding-left: 5px;
+  outline: none;
+  background: none;
+  height: 30px;
+  width: 7rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding-left: 5px;
 }
 
 .search-box-row select {
-    outline: none;
-    background: none;
-    height: 30px;
-    width: 4rem;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding-left: 5px;
+  outline: none;
+  background: none;
+  height: 30px;
+  width: 4rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding-left: 5px;
 }
 
 .search-box-row p {
-    margin: 0;
-    margin-left: 0.5rem;
+  margin: 0;
+  margin-left: 0.5rem;
 }
 
 .search-box-row button {
-    outline: none;
-    border: none;
-    background: #37561b;
-    height: 30px;
-    width: 5rem;
-    margin-left: 0.5rem;
+  outline: none;
+  border: none;
+  color: #fff;
+  background: #37561b;
+  height: 30px;
+  width: 5rem;
+  margin-left: 0.5rem;
+  border-radius: 5px;
 }
 
 .search-box-row button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .revenue-card-row {
-    display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
-    width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .revenue-card {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 10rem;
-    min-height: 130px;
-    padding: 10px;
-	margin: 0.5rem;
-    background: #fff;
-    box-sizing: border-box;
-	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 10rem;
+  min-height: 130px;
+  padding: 10px;
+  margin: 0.5rem;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
 .revenue-width {
-    width: 13rem;
+  width: 13rem;
 }
 
 .none {
-    display: none;
+  display: none;
 }
 
 .revenue-card-content-row-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 200px;
-    background: #36561b56;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 200px;
+  background: #36561b56;
 }
 
 .revenue-card-content-column {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .revenue-card-content-column h3 {
-    margin: 0;
-    font-weight: 200;
-    font-size: 16px;
+  margin: 0;
+  font-weight: 200;
+  font-size: 16px;
 }
 
 .revenue-card-content-column h4 {
-    margin: 0;
-    font-weight: 300;
-    color: #fff;
-    line-height: 1.2;
-    background: #37561b;
-    padding: 5px;
-    border-radius: 10px;
-    font-size: 12px;
+  margin: 0;
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.2;
+  background: #37561b;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 12px;
 }
 
 .revenue-card-content-column h1 {
-    margin-top: 10px;
-    font-weight: 500;
-    font-size: 18px;
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .revenue-card-content-column h2 {
-    margin: 0;
-    font-weight: 400;
-    font-size: 18px;
-    /* color: #dfa126; */
+  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  /* color: #dfa126; */
 }
 
 .notification {
-    color: #dfa126;
-    font-weight: 400;
+  color: #dfa126;
+  font-weight: 400;
 }
 
 .notification:hover {
-    cursor: pointer;
-    color: #ebcc8d;
+  cursor: pointer;
+  color: #ebcc8d;
 }
 
 .span-link {
-    color: #dfa126;
-    font-weight: 400;
+  color: #dfa126;
+  font-weight: 400;
 }
 
 .span-link:hover {
-    cursor: pointer;
-    color: #ebcc8d;
+  cursor: pointer;
+  color: #ebcc8d;
 }
 
 .revenue {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	width: 100%;
-	padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
 }
 
 .revenue h3 {
-	font-weight: 400;
-    margin: 0;
+  font-weight: 400;
+  margin: 0;
 }
 
 .rev-total {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    width: 75%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 75%;
 }
 
 .rev-total h4 {
-	font-weight: 400;
-    text-align: left;
-    margin: 0;
-    color: rgba(0, 0, 0, 0.5);
+  font-weight: 400;
+  text-align: left;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 /* report revenue css */
 
 .report-modal-container {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	flex-direction: column;
-	width: 90%;
-    height: 800px;
-    /* height: 100%; */
-    overflow-y: scroll;
-	background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 80%;
+  height: 700px;
+  /* height: 100%; */
+  overflow-y: scroll;
+  background: #fff;
 }
 
 .report-modal-container button {
-	outline: none;
-	border: none;
-	border: 1px solid #37561b;
-	color: #37561b;
-	padding: 5px;
-	border-radius: 5px;
-	width: 100px;
+  outline: none;
+  border: none;
+  border: 1px solid #37561b;
+  color: #37561b;
+  padding: 5px;
+  border-radius: 5px;
+  width: 100px;
 }
 
 .report-modal-container button:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .report-container-header {
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	width: 100%;
-	padding: 5px;
-	height: 40px;
-    margin-bottom: 1rem;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 5px;
+  height: 40px;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .report-container-filter-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 50%;
-    margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  margin-bottom: 0.5rem;
 }
 
 .report-icon:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .report-container-content {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	width: 100%;
-	margin-bottom: 0.5rem;
-	padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 10px;
 }
 
 .report-container-content p {
-	margin: 0;
+  margin: 0;
 }
 
 .report-container-content input {
-	outline: none;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	width: 70%;
-	height: 50px;
-	margin-bottom: 0.5rem;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 50px;
+  margin-bottom: 0.5rem;
 }
 
 .report-container-content textarea {
-	outline: none;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	width: 70%;
-	height: 100px;
-	margin-bottom: 0.5rem;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 70%;
+  height: 100px;
+  margin-bottom: 0.5rem;
 }
 
 .report-container-content select {
-	background: none;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	border-radius: 5px;
-	height: 50px;
-	width: 70%;
-	margin: 0;
+  background: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  height: 50px;
+  width: 100%;
+  margin: 0;
 }
 
 .account-details-container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    width: 70%;
-    /* background: #ebcc8d; */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  width: 70%;
+  /* background: #ebcc8d; */
 }
 
 .account-details-container h1 {
-    font-size: 18px;
-    margin: 0;
+  font-size: 18px;
+  margin: 0;
 }
 
 .account-details-container-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .account-details-label-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem;
 }
 
 .account-details-label-row h3 {
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.3);
 }
 
 .account-details-label-row h4 {
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.8);
-    font-weight: 700;
-    margin-left: 0.5rem;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 700;
+  margin-left: 0.5rem;
+}
+
+.text-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 70%;
+}
+
+.textInputColumn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+  margin: 10px;
 }
 
 .label {
-	display: flex;
-	align-items: flex-start;
-	justify-items: center;
-	width: 70%;
-	margin-top: 0.5rem;
-	flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  justify-items: center;
+  width: 70%;
+  margin-top: 0.5rem;
+  flex-direction: column;
 }
 
 .label h1 {
-	margin: 0;
+  margin: 0;
 }
 
 .label h4 {
-	color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .label p {
-	color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .label h5 {
-	color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .report-revenue-btn:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
+.report-btn-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 20%;
+}
 
 .export-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #f7f7f7;
-    padding: 10px;
-    border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f7f7f7;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .export-container button {
-    outline: none;
-    background: none;
-    border: 1px solid #37561b;
-    border-radius: 5px;
-    width: 10rem;
+  outline: none;
+  background: none;
+  border: 1px solid #37561b;
+  border-radius: 5px;
+  width: 10rem;
 }
 
 .export-container button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* Loan Application Modal */
 .loan-modal-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 60%;
-    /* background: #37561b; */
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("../../../assets/images/loans.jpeg");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
+  /* background: #37561b; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../../../assets/images/loans.jpeg");
 }
 
 .loan-modal-container-overlay {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    background: #ebcc8d;  
-    background: -webkit-linear-gradient(to right, #f0e4cb, #f3dbaad2); 
-    background: linear-gradient(to right, #f0e4cb, #f3dbaad0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  background: #ebcc8d;
+  background: -webkit-linear-gradient(to right, #f0e4cb, #f3dbaad2);
+  background: linear-gradient(to right, #f0e4cb, #f3dbaad0);
 }
 
 .loan-btn-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 20%;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 20%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.loan-btn-loan button{
-    outline: none;
-    border: none;
-    height: 40px;
-    color: #fff;
-    background: #37561b;
+.loan-btn-loan button {
+  outline: none;
+  border: none;
+  height: 40px;
+  color: #fff;
+  background: #37561b;
 }
 
 .loan-btn-loan button:hover {
-cursor: pointer;
+  cursor: pointer;
 }
 
 .loan-modal-header {
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    width: 100%;
-    height: 40px;
-    padding: 10px;
-    margin-bottom: 2rem;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  margin-bottom: 2rem;
 }
 
 .loan-modal-header h3 {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 25px;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 25px;
 }
 
-
 .loan-modal-row h4 {
-    margin: 0;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .loan-calculator {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 70%; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
 }
 
 .loan-calculator input {
-    outline: none;
-    background: rgba(238, 238, 238, 0.791);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    height: 40px;
-    width: 25%;
-    padding: 5px;
-    margin-bottom: 0.5rem;
+  outline: none;
+  background: rgba(238, 238, 238, 0.791);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  height: 40px;
+  width: 25%;
+  padding: 5px;
+  margin-bottom: 0.5rem;
 }
 
-
 .loan-calculator select {
-    outline: none;
-    background: rgba(238, 238, 238, 0.791);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    height: 40px;
-    width: 25%;
-    padding: 5px;
-    margin-bottom: 0.5rem;
+  outline: none;
+  background: rgba(238, 238, 238, 0.791);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  height: 40px;
+  width: 25%;
+  padding: 5px;
+  margin-bottom: 0.5rem;
 }
 
 .loan-calculator button {
-    height: 40px;
-    margin: 0;
+  height: 40px;
+  margin: 0;
 }
 
 .loan-calculator-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loan-calculator-row h1 {
-    margin-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .loan-modal-content {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 70%;
-    flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 70%;
+  flex-direction: column;
 }
 
 .loan-modal-content p {
-    margin: 0;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.4);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-    margin-bottom: 1rem;
+  margin: 0;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem;
 }
 
 .loan-modal-content p:hover {
-    color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .loan-modal-content input {
-    outline: none;
-    background: rgba(238, 238, 238, 0.791);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    height: 40px;
-    width: 100%;
-    padding-left: 5px;
-    margin-bottom: 0.5rem;
+  outline: none;
+  background: rgba(238, 238, 238, 0.791);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  height: 40px;
+  width: 100%;
+  padding-left: 5px;
+  margin-bottom: 0.5rem;
 }
 
 .loan-modal-content select {
-    outline: none;
-    background: rgba(238, 238, 238, 0.791);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    height: 40px;
-    width: 100%;
-    padding-left: 5px;
-    margin-bottom: 0.5rem;
+  outline: none;
+  background: rgba(238, 238, 238, 0.791);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  height: 40px;
+  width: 100%;
+  padding-left: 5px;
+  margin-bottom: 0.5rem;
 }
 
 .loan-modal-content textarea {
-    outline: none;
-    background: rgba(238, 238, 238, 0.791);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    height: 150px;
-    width: 100%;
-    padding-left: 5px;
-    margin-bottom: 0.5rem;
+  outline: none;
+  background: rgba(238, 238, 238, 0.791);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  height: 150px;
+  width: 100%;
+  padding-left: 5px;
+  margin-bottom: 0.5rem;
 }
 
 @media screen and (max-width: 768px) {
-	.graph-row {
-		flex-direction: column;
-	}
-    .rev-total {
-        flex-direction: column;
-    }
+  .graph-row {
+    flex-direction: column;
+  }
+  .rev-total {
+    flex-direction: column;
+  }
 }
