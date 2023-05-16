@@ -31,7 +31,9 @@ const AddTeamLead = ({ setOpen }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [payload, setPayload] = React.useState();
 
-  const { loading, platformFeatures } = useSelector((state) => state.auth);
+  const { loading, platformFeatures, categories } = useSelector(
+    (state) => state.auth
+  );
 
   const adminFeatures = platformFeatures.filter((f) => f.category === "admins");
 
@@ -53,7 +55,7 @@ const AddTeamLead = ({ setOpen }) => {
     updateFeatuersObject();
   }, [platformFeatures]);
 
-  // console.log(state);
+  // console.log(categories);
 
   const steps = [
     "Enter Team Account Details",
@@ -115,7 +117,9 @@ const AddTeamLead = ({ setOpen }) => {
 
   const register = () => {
     const filterFeaturePayload = payload.filter((f) => f.check);
-    const features = [...filterFeaturePayload.map((f) => f.name)];
+    const features = [
+      ...filterFeaturePayload.map((f) => ({ name: f.name, status: f.check })),
+    ];
     setError(false);
     setSuccess(false);
     setEmailCheck("");
@@ -225,6 +229,7 @@ const AddTeamLead = ({ setOpen }) => {
                   <AccountDetails
                     state={state}
                     setState={setState}
+                    categories={categories}
                     emailcheck={emailcheck}
                     handleEmailChange={handleEmailChange}
                   />

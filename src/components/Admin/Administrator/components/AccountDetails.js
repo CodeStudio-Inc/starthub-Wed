@@ -1,6 +1,12 @@
 import React from "react";
 
-const AccountDetails = ({ state, setState, emailcheck, handleEmailChange }) => {
+const AccountDetails = ({
+  state,
+  setState,
+  categories,
+  emailcheck,
+  handleEmailChange,
+}) => {
   return (
     <div className="input-modal-column">
       <h2>Register</h2>
@@ -44,10 +50,11 @@ const AccountDetails = ({ state, setState, emailcheck, handleEmailChange }) => {
             <option value="" disabled selected>
               -select-
             </option>
-            <option value="academy">Academy</option>
-            <option value="catalyzer">Catalyzer</option>
-            <option value="consultancy">Consultancy</option>
-            <option value="comms">Comms</option>
+            {categories.map((c, i) => (
+              <option key={i} value={c.name}>
+                {c.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>

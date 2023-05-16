@@ -16,29 +16,16 @@ import {
 import { actionCreators, svg } from "../../Paths";
 import ReactGA from "react-ga";
 import { Helmet } from "react-helmet";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 import "./Diagnostics.css";
 import { message } from "antd";
 const Diagnostics = () => {
-  const userId = useSelector((state) => state.auth.userId);
+  const { userId, diagnostics } = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.requests.loading);
-
-  //   console.log(_value);
-
-  const [teamsValue, setTeamsValue] = useState(0);
-  const [teamsPayload, setTeamsPayload] = useState();
-  const [visionValue, setVisionValue] = useState(0);
-  const [visionPayload, setVisionPayload] = useState();
-  const [propositionValue, setPropositionValue] = useState(0);
-  const [propositionPayload, setPropositionPayload] = useState();
-  const [productValue, setProductValue] = useState(0);
-  const [productPayload, setProductPayload] = useState();
-  const [marketValue, setMarketValue] = useState(0);
-  const [marketPayload, setMarketPayload] = useState();
-  const [businessValue, setBusinessValue] = useState(0);
-  const [businessPayload, setBusinessPayload] = useState();
-  const [investmentValue, setInvestmentValue] = useState(0);
-  const [investmentPayload, setInvestmentPayload] = useState();
+  const { payload } = useSelector((state) => state.diagnostics);
 
   const dispatch = useDispatch();
 
@@ -48,326 +35,64 @@ const Diagnostics = () => {
   }, []);
 
   useEffect(() => {
-    updateTeamsSteps();
-    updateVisionSteps();
-    updatePropositionSteps();
-    updateProductSteps();
-    updateMarketSteps();
-    updateBusinessSteps();
-    updateInvestmentSteps();
-  }, [teams, vision, proposition, product, market, business, investment]);
+    updateDiagnosticsObject();
+  }, [diagnostics]);
 
-  const updateTeamsSteps = () => {
-    const newTeamPayload = [
-      ...teams.map((v) => {
-        const { ...rest } = v;
+  const updateDiagnosticsObject = () => {
+    const newPayload = [
+      ...diagnostics?.map((d) => {
+        const { score, steps, ...rest } = d;
         return {
           ...rest,
-          checked: false,
-          id: Math.random().toString().slice(2),
+          score: score,
+          steps: [
+            ...steps?.map((s) => {
+              const { checked, ...step } = s;
+              return {
+                ...step,
+                checked: checked ? checked : false,
+              };
+            }),
+          ],
         };
       }),
     ];
-    return setTeamsPayload(newTeamPayload);
+    return dispatch(actionCreators.diagnosticsPayload(newPayload));
   };
 
-  const updateVisionSteps = () => {
-    const newVisionPayload = [
-      ...vision.map((v) => {
-        const { ...rest } = v;
-        return {
-          ...rest,
-          checked: false,
-          id: Math.random().toString().slice(2),
-        };
-      }),
-    ];
-    return setVisionPayload(newVisionPayload);
-  };
+  // console.log(payload);
 
-  const updatePropositionSteps = () => {
-    const newPropositionPayload = [
-      ...proposition.map((v) => {
-        const { ...rest } = v;
-        return {
-          ...rest,
-          checked: false,
-          id: Math.random().toString().slice(2),
-        };
-      }),
-    ];
-    return setPropositionPayload(newPropositionPayload);
-  };
+  const handleChange = (toolIndex, stepIndex) => {
+    let paylod = [...payload];
 
-  const updateProductSteps = () => {
-    const newProductPayload = [
-      ...product.map((v) => {
-        const { ...rest } = v;
-        return {
-          ...rest,
-          checked: false,
-          id: Math.random().toString().slice(2),
-        };
-      }),
-    ];
-    return setProductPayload(newProductPayload);
-  };
-
-  const updateMarketSteps = () => {
-    const newMarketPayload = [
-      ...market.map((v) => {
-        const { ...rest } = v;
-        return {
-          ...rest,
-          checked: false,
-          id: Math.random().toString().slice(2),
-        };
-      }),
-    ];
-    return setMarketPayload(newMarketPayload);
-  };
-
-  const updateBusinessSteps = () => {
-    const newBusinessPayload = [
-      ...business.map((v) => {
-        const { ...rest } = v;
-        return {
-          ...rest,
-          checked: false,
-          id: Math.random().toString().slice(2),
-        };
-      }),
-    ];
-    return setBusinessPayload(newBusinessPayload);
-  };
-
-  const updateInvestmentSteps = () => {
-    const newInvestmentPayload = [
-      ...investment.map((v) => {
-        const { ...rest } = v;
-        return {
-          ...rest,
-          checked: false,
-          id: Math.random().toString().slice(2),
-        };
-      }),
-    ];
-    return setInvestmentPayload(newInvestmentPayload);
-  };
-
-  const handleTeamsOnChange = (id) => {
-    let paylod = [...teamsPayload];
-    let indexNumber = -1;
-    const exists = paylod.find((v) => v.id === id);
-    if (exists.checked === true) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
+    const step = paylod[toolIndex].steps[stepIndex];
+    if (step.checked === true) {
+      paylod[toolIndex].steps[stepIndex] = {
+        ...paylod[toolIndex].steps[stepIndex],
         checked: false,
       };
     }
-    if (exists.checked === false) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
+    if (step.checked === false) {
+      paylod[toolIndex].steps[stepIndex] = {
+        ...paylod[toolIndex].steps[stepIndex],
         checked: true,
       };
     }
-    setTeamsPayload(paylod);
-    const totalValue =
-      (paylod.filter((r) => r.checked).length / paylod.length) * 100;
-    setTeamsValue(totalValue);
-  };
-
-  const handleVisionOnChange = (id) => {
-    let paylod = [...visionPayload];
-    let indexNumber = -1;
-    const exists = paylod.find((v) => v.id === id);
-    if (exists.checked === true) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: false,
-      };
-    }
-    if (exists.checked === false) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: true,
-      };
-    }
-    setVisionPayload(paylod);
-    const totalValue =
-      (paylod.filter((r) => r.checked).length / paylod.length) * 100;
-    setVisionValue(totalValue);
-  };
-
-  const handlePropositionOnChange = (id) => {
-    let paylod = [...propositionPayload];
-    let indexNumber = -1;
-    const exists = paylod.find((v) => v.id === id);
-    if (exists.checked === true) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: false,
-      };
-    }
-    if (exists.checked === false) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: true,
-      };
-    }
-    setPropositionPayload(paylod);
-    const totalValue =
-      (paylod.filter((r) => r.checked).length / paylod.length) * 100;
-    setPropositionValue(totalValue);
-  };
-
-  const handleProductOnChange = (id) => {
-    let paylod = [...productPayload];
-    let indexNumber = -1;
-    const exists = paylod.find((v) => v.id === id);
-    if (exists.checked === true) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: false,
-      };
-    }
-    if (exists.checked === false) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: true,
-      };
-    }
-    setProductPayload(paylod);
-    const totalValue =
-      (paylod.filter((r) => r.checked).length / paylod.length) * 100;
-    setProductValue(totalValue);
-  };
-
-  const handleMarketOnChange = (id) => {
-    let paylod = [...marketPayload];
-    let indexNumber = -1;
-    const exists = paylod.find((v) => v.id === id);
-    if (exists.checked === true) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: false,
-      };
-    }
-    if (exists.checked === false) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: true,
-      };
-    }
-    setMarketPayload(paylod);
-    const totalValue =
-      (paylod.filter((r) => r.checked).length / paylod.length) * 100;
-    setMarketValue(totalValue);
-  };
-
-  const handleBusinessOnChange = (id) => {
-    let paylod = [...businessPayload];
-    let indexNumber = -1;
-    const exists = paylod.find((v) => v.id === id);
-    if (exists.checked === true) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: false,
-      };
-    }
-    if (exists.checked === false) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: true,
-      };
-    }
-    setBusinessPayload(paylod);
-    const totalValue =
-      (paylod.filter((r) => r.checked).length / paylod.length) * 100;
-    setBusinessValue(totalValue);
-  };
-
-  const handleInvestmentOnChange = (id) => {
-    let paylod = [...investmentPayload];
-    let indexNumber = -1;
-    const exists = paylod.find((v) => v.id === id);
-    if (exists.checked === true) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: false,
-      };
-    }
-    if (exists.checked === false) {
-      paylod.forEach((r, index) => {
-        if (r.id === id) indexNumber = index;
-      });
-      paylod[indexNumber] = {
-        ...paylod[indexNumber],
-        checked: true,
-      };
-    }
-    setInvestmentPayload(paylod);
-    const totalValue =
-      (paylod.filter((r) => r.checked).length / paylod.length) * 100;
-    setInvestmentValue(totalValue);
+    paylod[toolIndex].score =
+      (paylod[toolIndex].steps.filter((s) => s.checked).length /
+        paylod[toolIndex].steps.length) *
+      100;
+    dispatch(actionCreators.diagnosticsPayload(paylod));
   };
 
   const handleStepsSubmit = () => {
     dispatch(
-      actionCreators.addValues(
-        teamsValue,
-        visionValue,
-        propositionValue,
-        productValue,
-        marketValue,
-        businessValue,
-        investmentValue,
-        (res) => {
-          if (res.success) {
-            dispatch(actionCreators.getValues());
-            message.info("Nice :)!!");
-          }
-        }
-      )
+      actionCreators.updateUserDiagnostics(payload, (res) => {
+        const { success } = res;
+        if (success)
+          message.info("Your Diagnostics score has been updated. Thanks!!!");
+        if (!success) message.info("Sorry, Failed to update diagnostics score");
+      })
     );
   };
 
@@ -380,145 +105,39 @@ const Diagnostics = () => {
         <h2>Business Diagnostics</h2>
         <MultipleStepForm
           initialValues={{
-            teams: teams,
-            vision: vision,
-            proposition: proposition,
-            product: product,
-            market: market,
-            business: business,
-            investment: investment,
+            teams: "",
+            vision: "",
+            proposition: "",
+            product: "",
+            market: "",
+            business: "",
+            investment: "",
           }}
           onSubmit={handleStepsSubmit}
         >
-          <FormStep
-            stepName="Team"
-            // onSubmit={() => console.log("Step 1 submit")}
-          >
-            <div className="step">
-              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {teamsPayload
-                  ?.sort((a, b) => b.value - a.value)
-                  .map((r) => (
-                    <div className="step-row">
-                      <input
-                        type="checkbox"
-                        value={r.value}
-                        onChange={() => handleTeamsOnChange(r.id)}
-                      />
-                      <p>{r.label}</p>
-                    </div>
-                  ))}
-              </Stack>
-            </div>
-          </FormStep>
-          <FormStep stepName="Problem, Market & Value Proposition">
-            <div className="step">
-              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {propositionPayload
-                  ?.sort((a, b) => b.value - a.value)
-                  .map((r) => (
-                    <div className="step-row">
-                      <input
-                        type="checkbox"
-                        value={r.value}
-                        onChange={() => handlePropositionOnChange(r.id)}
-                      />
-                      <p>{r.label}</p>
-                    </div>
-                  ))}
-              </Stack>
-            </div>
-          </FormStep>
-          <FormStep stepName="Product">
-            <div className="step">
-              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {productPayload
-                  ?.sort((a, b) => b.value - a.value)
-                  .map((r) => (
-                    <div className="step-row">
-                      <input
-                        type="checkbox"
-                        value={r.value}
-                        onChange={() => handleProductOnChange(r.id)}
-                      />
-                      <p>{r.label}</p>
-                    </div>
-                  ))}
-              </Stack>
-            </div>
-          </FormStep>
-          <FormStep stepName="Marketing, Sales, Growth">
-            <div className="step">
-              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {marketPayload
-                  ?.sort((a, b) => b.value - a.value)
-                  .map((r) => (
-                    <div className="step-row">
-                      <input
-                        type="checkbox"
-                        value={r.value}
-                        onChange={() => handleMarketOnChange(r.id)}
-                      />
-                      <p>{r.label}</p>
-                    </div>
-                  ))}
-              </Stack>
-            </div>
-          </FormStep>
-          <FormStep stepName="Finance & Investment">
-            <div className="step">
-              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {investmentPayload
-                  ?.sort((a, b) => b.value - a.value)
-                  .map((r) => (
-                    <div className="step-row">
-                      <input
-                        type="checkbox"
-                        value={r.value}
-                        onChange={() => handleInvestmentOnChange(r.id)}
-                      />
-                      <p>{r.label}</p>
-                    </div>
-                  ))}
-              </Stack>
-            </div>
-          </FormStep>
-          <FormStep stepName="Operations & Management">
-            <div className="step">
-              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {businessPayload
-                  ?.sort((a, b) => b.value - a.value)
-                  .map((r) => (
-                    <div className="step-row">
-                      <input
-                        type="checkbox"
-                        value={r.value}
-                        onChange={() => handleBusinessOnChange(r.id)}
-                      />
-                      <p>{r.label}</p>
-                    </div>
-                  ))}
-              </Stack>
-            </div>
-          </FormStep>
-          <FormStep stepName="Compliance">
-            <div className="step">
-              <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                {visionPayload
-                  ?.sort((a, b) => b.value - a.value)
-                  .map((r) => (
-                    <div className="step-row">
-                      <input
-                        type="checkbox"
-                        value={r.value}
-                        onChange={() => handleVisionOnChange(r.id)}
-                      />
-                      <p>{r.label}</p>
-                    </div>
-                  ))}
-              </Stack>
-            </div>
-          </FormStep>
+          {payload?.map((d, index) => (
+            <FormStep
+              stepName={d.title}
+              // onSubmit={() => console.log("Step 1 submit")}
+            >
+              <div className="step">
+                <Stack sx={{ height: "100%" }} spacing={1} direction="column">
+                  {d?.steps
+                    ?.sort((a, b) => b.stepNo - a.stepNo)
+                    .map((s, i) => (
+                      <FormGroup key={i}>
+                        <FormControlLabel
+                          onChange={() => handleChange(index, i)}
+                          checked={s.checked ? s.checked : null}
+                          control={<Checkbox />}
+                          label={s.step}
+                        />
+                      </FormGroup>
+                    ))}
+                </Stack>
+              </div>
+            </FormStep>
+          ))}
         </MultipleStepForm>
         {loading ? (
           <span>

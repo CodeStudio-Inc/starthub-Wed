@@ -13,6 +13,9 @@ import { Helmet } from "react-helmet";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "@mui/material/Modal";
 
+import AddFeatures from "./components/AddFeatures";
+import AddCategories from "./components/AddCategories";
+import AddDiagnostics from "./components/AddDiagnostics";
 import AddTeamLead from "./modals/AddTeamLead";
 import "./AdminPanel.css";
 import "../../Pages/Auth/AuthStyles.css";
@@ -22,7 +25,7 @@ const AdminPanel = (props) => {
   const handleClose = () => setOpen(false);
 
   const { users } = useSelector((state) => state.admin);
-  const { userId, category } = useSelector((state) => state.auth);
+  const { userId, category, loading } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
 
@@ -54,83 +57,6 @@ const AdminPanel = (props) => {
     getStartups();
   }, []);
 
-  const columns = [
-    {
-      title: "Startup",
-      dataIndex: "username",
-      key: "username",
-      align: "left",
-      fixed: true,
-      render: (r) => (
-        <div className="table-column-row">
-          <div className="table-avatar">
-            <h3>{r.substring(0, 1)}</h3>
-          </div>
-          <h5>{r}</h5>
-        </div>
-      ),
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      align: "left",
-    },
-    {
-      title: "Category",
-      dataIndex: "teamCategory",
-      key: "teamCategory",
-      align: "left",
-    },
-    {
-      title: "Permissions",
-      dataIndex: "permissions",
-      key: "permissions",
-      align: "center",
-    },
-    {
-      title: "Role",
-      dataIndex: "userRole",
-      key: "userRole",
-      align: "left",
-    },
-    {
-      title: "action",
-      dataIndex: "_id",
-      key: "_id",
-      align: "left",
-      render: (r) => <button>edit permissions</button>,
-    },
-    {
-      title: "action",
-      dataIndex: "_id",
-      key: "_id",
-      align: "left",
-      render: (r) => <button>edit user role</button>,
-    },
-    {
-      title: "action",
-      dataIndex: "_id",
-      key: "_id",
-      align: "left",
-      render: (r) => <button>remove access</button>,
-    },
-    {
-      title: "action",
-      dataIndex: "_id",
-      key: "_id",
-      align: "left",
-      render: (r) => <button>view teams</button>,
-    },
-    {
-      title: "action",
-      dataIndex: "_id",
-      key: "_id",
-      align: "center",
-      render: (r) => <button>remove user</button>,
-    },
-  ];
-
   const getStartups = () => dispatch(actionCreators.getUsers());
 
   return (
@@ -151,100 +77,79 @@ const AdminPanel = (props) => {
       >
         <AddTeamLead setOpen={handleClose} />
       </Modal>
-      <div className="card-row">
-        <div className="card2">
-          <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+      <div className="admin-row">
+        <div className="admin-left-container">
+          <div className="admin-card-row">
+            <div className="admin-card">
+              <div className="card-content-column">
+                <div className="card-content-row-avatar">
+                  <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+                </div>
+                <h1>
+                  {users.length} {users.length === 1 ? "user" : "total users"}
+                </h1>
+                <h3 className="card-txt">view users</h3>
+              </div>
             </div>
-            <h1>
-              {users.length} {users.length === 1 ? "user" : "total users"}
-            </h1>
-            <h3 className="card-txt">view users</h3>
+            <div className="admin-card">
+              <div className="card-content-column">
+                <div className="card-content-row-avatar">
+                  <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+                </div>
+                <h1>
+                  {filterUsers.length}{" "}
+                  {filterUsers.length === 1 ? "team lead" : "team leads"}
+                </h1>
+                <h3 className="card-txt">view team leads</h3>
+              </div>
+            </div>
+            <div className="admin-card">
+              <div className="card-content-column">
+                <div className="card-content-row-avatar">
+                  <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+                </div>
+                <h1>
+                  {teamMembers.length}{" "}
+                  {teamMembers.length === 1 ? "team member" : "team members"}
+                </h1>
+                <h3 className="card-txt">view team members</h3>
+              </div>
+            </div>
+            <div className="admin-card">
+              <div className="card-content-column">
+                <div className="card-content-row-avatar">
+                  <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+                </div>
+                <h1>
+                  {startups.length}{" "}
+                  {startups.length === 1 ? "startup" : "startups"}
+                </h1>
+                <h3 className="card-txt">view startups</h3>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="card2">
-          <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
-            </div>
-            <h1>
-              {filterUsers.length}{" "}
-              {filterUsers.length === 1 ? "team lead" : "team leads"}
-            </h1>
-            <h3 className="card-txt">view team leads</h3>
-          </div>
-        </div>
-        <div className="card2">
-          <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
-            </div>
-            <h1>
-              {teamMembers.length}{" "}
-              {teamMembers.length === 1 ? "team member" : "team members"}
-            </h1>
-            <h3 className="card-txt">view team members</h3>
-          </div>
-        </div>
-        <div className="card2">
-          <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
-            </div>
-            <h1>
-              {startups.length} {startups.length === 1 ? "startup" : "startups"}
-            </h1>
-            <h3 className="card-txt">view startups</h3>
-          </div>
+        <div className="admin-right-container">
+          <AddFeatures
+            actionCreators={actionCreators}
+            dispatch={dispatch}
+            loading={loading}
+            svg={svg}
+          />
+          <AddCategories
+            actionCreators={actionCreators}
+            dispatch={dispatch}
+            loading={loading}
+            svg={svg}
+          />
+          <AddDiagnostics
+            actionCreators={actionCreators}
+            dispatch={dispatch}
+            loading={loading}
+            svg={svg}
+          />
         </div>
       </div>
-      {/* <div className="add-startup-row">
-        <div className="export-container">
-          <DownloadTableExcel
-            filename="Catalyzer Startups"
-            sheet="Startup Records"
-            currentTableRef={tableRef.current}
-          >
-            <button> Generate excel sheet </button>
-          </DownloadTableExcel>
-        </div>
-        <div className="add-startup-button" onClick={handleOpen}>
-          <ControlPointIcon
-            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-          />
-          <p>Add new team leads</p>
-        </div>
-      </div> */}
-      {/* <Table
-        ref={tableRef}
-        columns={columns}
-        dataSource={[
-          ...filterUsers.map((r) => ({
-            ...r,
-            key: r._id,
-          })),
-        ]}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: () => {
-              props.history.push(`/startup/${record.username}`, {
-                data: record,
-              });
-            },
-          };
-        }}
-        style={{ width: "95%" }}
-        bordered={true}
-        scroll={{
-          x: 2000,
-        }}
-        pagination={{
-          defaultPageSize: 9,
-          showSizeChanger: true,
-          pageSizeOptions: ["10", "20", "30"],
-        }}
-      /> */}
     </div>
   );
 };

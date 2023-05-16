@@ -20,6 +20,13 @@ export const setFeatures = (features) => {
   };
 };
 
+export const setCategories = (categories) => {
+  return {
+    type: actions.SET_CATEGORIES,
+    categories,
+  };
+};
+
 export const setUser = (
   userId,
   username,
@@ -63,6 +70,20 @@ export const setUser = (
   };
 };
 
+export const setDiagnostics = (data) => {
+  return {
+    type: actions.SET_DIAGNOSTICS_TOOLS,
+    data,
+  };
+};
+
+export const setUsers = (data) => {
+  return {
+    type: actions.SET_ALL_USERS,
+    data,
+  };
+};
+
 export const removeUser = () => {
   return {
     type: actions.REMOVE_USER,
@@ -82,7 +103,7 @@ export const login = (email, password, callback) => {
       .post(`auth/signin`, data)
       .then((res) => {
         dispatch(stopLoader());
-        console.log(res.data);
+        // console.log(res.data);
         dispatch(
           setUser(
             res.data.userId,
@@ -105,6 +126,7 @@ export const login = (email, password, callback) => {
             res.data.eligibilityCheck
           )
         );
+        dispatch(setDiagnostics(res.data.diagnostics));
       })
       .catch((error) => {
         dispatch(stopLoader());
@@ -145,6 +167,23 @@ export const getUser = (userId) => {
         );
       })
       .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const getUserz = () => {
+  return (dispatch, getState) => {
+    dispatch(loaderAction());
+
+    axios
+      .get(`auth/users`)
+      .then((res) => {
+        dispatch(stopLoader());
+        dispatch(setUsers(res.data.users));
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
         console.log(error);
       });
   };
@@ -232,6 +271,7 @@ export const addStartup = (
   teamCategory,
   password,
   features,
+  diagnostics,
   userRole,
   contractDate,
   percentageShare,
@@ -246,6 +286,7 @@ export const addStartup = (
       teamCategory,
       password,
       features,
+      diagnostics,
       userRole,
       contractDate,
       percentageShare,
@@ -256,7 +297,7 @@ export const addStartup = (
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true, res: res.data.message });
-        // console.log(res);
+        console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());
@@ -278,12 +319,13 @@ export const editUserPermissions = (id, permission, callback) => {
       .patch(`auth/permissions/${id}`, data)
       .then((res) => {
         dispatch(stopLoader());
+        dispatch(setUsers(res.data.users));
         callback({ success: true });
         // console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());
-        callback({ error: true });
+        callback({ success: false });
         console.log(error);
       });
   };
@@ -301,12 +343,13 @@ export const editUserRole = (id, role, callback) => {
       .patch(`auth/user-role/${id}`, data)
       .then((res) => {
         dispatch(stopLoader());
+        dispatch(setUsers(res.data.users));
         callback({ success: true });
-        // console.log(res);
+        // console.log(res.data);
       })
       .catch((error) => {
         dispatch(stopLoader());
-        callback({ error: true });
+        callback({ success: false });
         console.log(error);
       });
   };
@@ -329,7 +372,31 @@ export const editFeatures = (id, features, callback) => {
       })
       .catch((error) => {
         dispatch(stopLoader());
-        callback({ error: true });
+        callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
+export const assignStartup = (startupId, mentorId, callback) => {
+  return (dispatch) => {
+    dispatch(loaderAction());
+
+    const data = {
+      mentorId,
+    };
+
+    axios
+      .patch(`auth/assign/${startupId}`, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        dispatch(setUsers(res.data.users));
+        callback({ success: true });
+        console.log(res.data);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false });
         console.log(error);
       });
   };
@@ -351,6 +418,26 @@ export const loanEligibilityCheck = () => {
   };
 };
 
+export const addFeatures = (features, callback) => {
+  return (dispatch) => {
+    dispatch(loaderAction());
+    const data = {
+      features,
+    };
+    axios
+      .post("/auth/feature", data)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true });
+      })
+      .catch((error) => {
+        callback({ success: false });
+        dispatch(stopLoader());
+        console.log(error);
+      });
+  };
+};
+
 export const getFeatures = () => {
   return (dispatch) => {
     axios
@@ -360,6 +447,64 @@ export const getFeatures = () => {
         // console.log(res.data);
       })
       .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const addCategory = (categories, callback) => {
+  return (dispatch) => {
+    dispatch(loaderAction());
+    const data = {
+      categories,
+    };
+    axios
+      .post("/auth/category", data)
+      .then((res) => {
+        callback({ success: true });
+        dispatch(stopLoader());
+      })
+      .catch((error) => {
+        callback({ success: false });
+        dispatch(stopLoader());
+        console.log(error);
+      });
+  };
+};
+
+export const getCategories = () => {
+  return (dispatch) => {
+    axios
+      .get("/auth/categories")
+      .then((res) => {
+        dispatch(setCategories(res.data.categories));
+        // console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const updateUserDiagnostics = (diagnostics, callback) => {
+  return (dispatch) => {
+    dispatch(loaderAction());
+
+    const data = {
+      diagnostics,
+    };
+
+    axios
+      .patch(`auth/diagnostics`, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        dispatch(setDiagnostics(res.data.user.diagnostics));
+        callback({ success: true });
+        console.log(res.data.user.diagnostics);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false });
         console.log(error);
       });
   };

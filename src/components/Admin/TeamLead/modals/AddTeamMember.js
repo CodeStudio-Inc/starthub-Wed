@@ -31,7 +31,9 @@ const AddTeamMember = ({ setOpen }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [payload, setPayload] = React.useState();
 
-  const { loading, platformFeatures } = useSelector((state) => state.auth);
+  const { loading, platformFeatures, categories } = useSelector(
+    (state) => state.auth
+  );
 
   const adminFeatures = platformFeatures.filter((f) => f.category === "admins");
 
@@ -113,7 +115,9 @@ const AddTeamMember = ({ setOpen }) => {
 
   const register = () => {
     const filterFeaturePayload = payload.filter((f) => f.check);
-    const features = [...filterFeaturePayload.map((f) => f.name)];
+    const features = [
+      ...filterFeaturePayload.map((f) => ({ name: f.name, status: f.check })),
+    ];
     setError(false);
     setSuccess(false);
     setEmailCheck("");
@@ -198,11 +202,6 @@ const AddTeamMember = ({ setOpen }) => {
             }}
           />
         </div>
-        <img
-          style={{ height: "120px", width: "110px" }}
-          src={logo}
-          alt="logo"
-        />
         <div className="signup-right-container">
           <Box sx={{ width: "100%" }}>
             <Stepper activeStep={activeStep} color="red">
@@ -225,6 +224,7 @@ const AddTeamMember = ({ setOpen }) => {
                     setState={setState}
                     emailcheck={emailcheck}
                     handleEmailChange={handleEmailChange}
+                    categories={categories}
                   />
                 ) : null}
                 {activeStep === 1 ? (
@@ -255,14 +255,6 @@ const AddTeamMember = ({ setOpen }) => {
               </Box>
             </React.Fragment>
           </Box>
-
-          {/* <button onClick={register}>
-            {loading ? (
-              <img src={svg} style={{ width: "30px", height: "30px" }} />
-            ) : (
-              "Create Account"
-            )}
-          </button>  */}
         </div>
       </div>
     </div>

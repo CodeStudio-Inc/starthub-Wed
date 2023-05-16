@@ -2,6 +2,7 @@ import * as actions from "../actions";
 import { updateObject } from "./utility";
 
 const initialState = {
+  all_users: [],
   userId: "",
   username: "",
   email: "",
@@ -9,6 +10,9 @@ const initialState = {
   category: "",
   platformFeatures: [],
   features: [],
+  diagnostics: [],
+  categories: [],
+  diagnostics: [],
   userRole: "",
   permissions: "",
   tokenExpiration: "",
@@ -62,9 +66,24 @@ const auth = (state = initialState, action) => {
         authenticated: true,
       });
 
+    case actions.SET_ALL_USERS:
+      return updateObject(state, {
+        all_users: action.data,
+      });
+
+    case actions.SET_DIAGNOSTICS_TOOLS:
+      return updateObject(state, {
+        diagnostics: action.data,
+      });
+
     case actions.SET_FEATURES:
       return updateObject(state, {
         platformFeatures: action.features,
+      });
+
+    case actions.SET_CATEGORIES:
+      return updateObject(state, {
+        categories: action.categories,
       });
 
     case actions.REMOVE_USER:

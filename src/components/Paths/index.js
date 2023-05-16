@@ -20,6 +20,7 @@ import LeanCanvas from "../Pages/LeanCanvas";
 import DiagnosticsTest from "../Pages/Diagnostics";
 import Calendar from "../Pages/Carlender";
 import Metrics from "../Pages/Metrics";
+import StartupProfile from "../Pages/StartupProfile";
 import BonitaSchedule from "../Pages/Carlender/BonitaSchedule";
 import TimothySchedule from "../Pages/Carlender/TimothySchedule";
 import MathiusSchedule from "../Pages/Carlender/MathiusSchedule";
@@ -73,6 +74,7 @@ export {
   AdminStartups,
   LeanCanvas,
   Metrics,
+  StartupProfile,
   Calendar,
   BonitaSchedule,
   TimothySchedule,

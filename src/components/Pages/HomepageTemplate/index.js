@@ -36,6 +36,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 
 import { Admin, TeamLead, TeamMember, Startup } from "../LandingPages";
 import "./HomepageStyles.css";
@@ -81,6 +82,16 @@ const HomepageTemplate = (props) => {
         title: "Diagnostics",
         icon: (
           <BuildIcon style={{ fontSize: "25px" }} className="home-link-icon" />
+        ),
+      },
+      {
+        type: "startup",
+        title: "Profile",
+        icon: (
+          <PermContactCalendarIcon
+            style={{ fontSize: "25px" }}
+            className="home-link-icon"
+          />
         ),
       },
       {
@@ -138,23 +149,23 @@ const HomepageTemplate = (props) => {
           <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
         ),
       },
-      {
-        type: "team member",
-        title: "Resource Files",
-        icon: (
-          <FolderIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      {
-        type: "team member",
-        title: "Loans",
-        icon: (
-          <LocalAtmIcon
-            style={{ fontSize: "25px" }}
-            className="home-link-icon"
-          />
-        ),
-      },
+      // {
+      //   type: "team member",
+      //   title: "Resource Files",
+      //   icon: (
+      //     <FolderIcon style={{ fontSize: "25px" }} className="home-link-icon" />
+      //   ),
+      // },
+      // {
+      //   type: "team member",
+      //   title: "Loans",
+      //   icon: (
+      //     <LocalAtmIcon
+      //       style={{ fontSize: "25px" }}
+      //       className="home-link-icon"
+      //     />
+      //   ),
+      // },
     ],
   });
 
@@ -166,11 +177,10 @@ const HomepageTemplate = (props) => {
   const startupLinks = active.objects.filter((l) => l.type === "startup");
   // console.log(startupLinks);
 
-  const { username, admin, tokenExpiration, category, userRole } = useSelector(
-    (state) => state.auth
-  );
+  const { username, admin, tokenExpiration, category, userRole, features } =
+    useSelector((state) => state.auth);
 
-  console.log(userRole);
+  // console.log(userRole);
 
   const auth = useSelector((state) => state.auth);
 
@@ -238,101 +248,104 @@ const HomepageTemplate = (props) => {
     [index, visible]
   );
 
-  const SwitchNavLinks = useCallback(() => {
-    switch (userRole) {
-      case "admin":
-        return (
-          <div style={{ width: "95%" }}>
-            {adminLinks.map((e, index) => (
-              <div
-                key={index}
-                className={toggleActiveStyle(index)}
-                onClick={() => {
-                  toggleActive(index);
-                  setIndex(index);
-                }}
-              >
-                <div className="home-link-row">
-                  {e.icon}
-                  <h4>{e.title}</h4>
+  const SwitchNavLinks = useCallback(
+    ({ features }) => {
+      switch (userRole) {
+        case "admin":
+          return (
+            <div style={{ width: "95%" }}>
+              {adminLinks.map((e, index) => (
+                <div
+                  key={index}
+                  className={toggleActiveStyle(index)}
+                  onClick={() => {
+                    toggleActive(index);
+                    setIndex(index);
+                  }}
+                >
+                  <div className="home-link-row">
+                    {e.icon}
+                    <h4>{e.title}</h4>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        );
-        break;
-      case "team lead":
-        return (
-          <div style={{ width: "95%" }}>
-            {teamLeadLinks.map((e, index) => (
-              <div
-                key={index}
-                className={toggleActiveStyle(index)}
-                onClick={() => {
-                  toggleActive(index);
-                  setIndex(index);
-                }}
-              >
-                <div className="home-link-row">
-                  {e.icon}
-                  <h4>{e.title}</h4>
+              ))}
+            </div>
+          );
+          break;
+        case "team lead":
+          return (
+            <div style={{ width: "95%" }}>
+              {teamLeadLinks.map((e, index) => (
+                <div
+                  key={index}
+                  className={toggleActiveStyle(index)}
+                  onClick={() => {
+                    toggleActive(index);
+                    setIndex(index);
+                  }}
+                >
+                  <div className="home-link-row">
+                    {e.icon}
+                    <h4>{e.title}</h4>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        );
-        break;
-      case "team member":
-        return (
-          <div style={{ width: "95%" }}>
-            {teamMemberLinks.map((e, index) => (
-              <div
-                key={index}
-                className={toggleActiveStyle(index)}
-                onClick={() => {
-                  toggleActive(index);
-                  setIndex(index);
-                }}
-              >
-                <div className="home-link-row">
-                  {e.icon}
-                  <h4>{e.title}</h4>
+              ))}
+            </div>
+          );
+          break;
+        case "team member":
+          return (
+            <div style={{ width: "95%" }}>
+              {teamMemberLinks.map((e, index) => (
+                <div
+                  key={index}
+                  className={toggleActiveStyle(index)}
+                  onClick={() => {
+                    toggleActive(index);
+                    setIndex(index);
+                  }}
+                >
+                  <div className="home-link-row">
+                    {e.icon}
+                    <h4>{e.title}</h4>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        );
-        break;
-      case "startup":
-        return (
-          <div style={{ width: "95%" }}>
-            {startupLinks.map((e, index) => (
-              <div
-                key={index}
-                className={toggleActiveStyle(index)}
-                onClick={() => {
-                  toggleActive(index);
-                  setIndex(index);
-                }}
-              >
-                <div className="home-link-row">
-                  {e.icon}
-                  <h4>{e.title}</h4>
+              ))}
+            </div>
+          );
+          break;
+        case "startup":
+          return (
+            <div style={{ width: "95%" }}>
+              {startupLinks.map((e, index) => (
+                <div
+                  key={index}
+                  className={toggleActiveStyle(index)}
+                  onClick={() => {
+                    toggleActive(index);
+                    setIndex(index);
+                  }}
+                >
+                  <div className="home-link-row">
+                    {e.icon}
+                    <h4>{e.title}</h4>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        );
-        break;
-      default:
-        return (
-          <div className="homepage-main">
-            <h3>Error while loading page</h3>
-          </div>
-        );
-        break;
-    }
-  }, [active, setActive]);
+              ))}
+            </div>
+          );
+          break;
+        default:
+          return (
+            <div className="homepage-main">
+              <h3>Error while loading page</h3>
+            </div>
+          );
+          break;
+      }
+    },
+    [active, setActive]
+  );
 
   return (
     <div className="homepage-container">
@@ -389,40 +402,7 @@ const HomepageTemplate = (props) => {
           <AccountBoxIcon style={{ fontSize: "25px", color: "#37561b" }} />
           <h2>{username}</h2>
         </div>
-        {/* {admin &&
-          adminLink.objects.map((e, index) => (
-            <div
-              key={index}
-              className={toggleActiveStyle(index)}
-              onClick={() => {
-                toggleActive(index);
-                setIndex(index);
-              }}
-            >
-              <div className="home-link-row">
-                {e.icon}
-                <h4>{e.title}</h4>
-              </div>
-            </div>
-          ))} */}
-        {/* {!admin && category !== "internal"
-          ? active.objects.map((e, index) => (
-              <div
-                key={index}
-                className={toggleActiveStyle(index)}
-                onClick={() => {
-                  toggleActive(index);
-                  setIndex(index);
-                }}
-              >
-                <div className="home-link-row">
-                  {e.icon}
-                  <h4>{e.title}</h4>
-                </div>
-              </div>
-            ))
-          : null} */}
-        <SwitchNavLinks />
+        <SwitchNavLinks features={features} />
 
         <div className="logout" onClick={handleLogoutClick}>
           <LogoutIcon style={{ fontSize: "20px" }} className="logout-icon" />
@@ -434,34 +414,6 @@ const HomepageTemplate = (props) => {
       >
         <SwitchComponent index={index} visible={visible} />
       </div>
-      {/* {!admin && category !== "internal" ? (
-        <div
-          className={visible ? "homepage-main increase-width" : "homepage-main"}
-        >
-          {index === 0 ? <Metrics visible={visible} /> : null}
-          {index === 1 ? <OKRs /> : null}
-          {index === 2 ? <LeanCanvas /> : null}
-          {index === 3 ? <DiagnosticsTest /> : null}
-          {index === 4 ? <Calendar /> : null}
-        </div>
-      ) : null}
-      {!admin && category === "internal" ? (
-        <div
-          className={visible ? "homepage-main increase-width" : "homepage-main"}
-        >
-          <InternalOKRs />
-        </div>
-      ) : null}
-      {admin ? (
-        <div
-          className={visible ? "homepage-main increase-width" : "homepage-main"}
-        >
-          {index === 0 ? <Startups /> : null}
-          {index === 1 ? <ResourceFiles /> : null}
-          {index === 1 ? <Revenues /> : null}
-          {index === 1 ? <Loans /> : null}
-        </div>
-      ) : null} */}
     </div>
   );
 };

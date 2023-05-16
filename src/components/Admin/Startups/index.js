@@ -28,7 +28,7 @@ const Startups = (props) => {
   const handleAddPaymentClose = () => setOpenPayment(false);
 
   const { users } = useSelector((state) => state.admin);
-  const { userId, category } = useSelector((state) => state.auth);
+  const { userId, category, features } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
 
@@ -55,6 +55,9 @@ const Startups = (props) => {
 
   React.useEffect(() => {
     getStartups();
+    getFeatures();
+    getCategories();
+    getDiagnostics();
   }, []);
 
   const columns = [
@@ -134,6 +137,9 @@ const Startups = (props) => {
   ];
 
   const getStartups = () => dispatch(actionCreators.getUsers());
+  const getFeatures = () => dispatch(actionCreators.getFeatures());
+  const getCategories = () => dispatch(actionCreators.getCategories());
+  const getDiagnostics = () => dispatch(actionCreators.getDiagnostics());
 
   return (
     <div className="startups-container">
@@ -215,12 +221,14 @@ const Startups = (props) => {
         </div>
       </div>
       <div className="add-startup-row">
-        <div className="add-startup-button" onClick={setOpenPayment}>
-          <AddCardIcon
-            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-          />
-          <p>Add Payment</p>
-        </div>
+        {features.includes("add loans") ? (
+          <div className="add-startup-button" onClick={setOpenPayment}>
+            <AddCardIcon
+              style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
+            />
+            <p>Add Payment</p>
+          </div>
+        ) : null}
         <div className="export-container">
           <DownloadTableExcel
             filename="Catalyzer Startups"
@@ -230,12 +238,14 @@ const Startups = (props) => {
             <button> Generate excel sheet </button>
           </DownloadTableExcel>
         </div>
-        <div className="add-startup-button" onClick={setOpenAddStartup}>
-          <ControlPointIcon
-            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-          />
-          <p>Add new Startup</p>
-        </div>
+        {features.includes("add startups") ? (
+          <div className="add-startup-button" onClick={setOpenAddStartup}>
+            <ControlPointIcon
+              style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
+            />
+            <p>Add new Startup</p>
+          </div>
+        ) : null}
       </div>
       <Table
         ref={tableRef}

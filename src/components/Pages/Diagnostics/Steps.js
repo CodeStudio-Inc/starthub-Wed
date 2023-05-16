@@ -521,52 +521,62 @@ export const vision = [
       "We have registered a company and have vesting agreements in place for all co-founders",
   },
   {
-    value: 14.28,
+    value: 1,
     label:
       "We have contracts with stakeholders in place, such as employees, shareholders, clients, suppliers, etc.",
   },
   {
-    value: 28.56,
+    value: 2,
     label:
       "We are tax-registered and compliant – we have a TIN for the company and all directors ",
   },
   {
-    value: 42.84,
+    value: 3,
     label:
       "We know current and future tax implications and understand what taxes apply to us",
   },
   {
-    value: 57.12,
+    value: 4,
     label:
       "We pay the mandatory PAYE (work contracts >235,000 UGX/ month) and NSSF contributions for all employees",
   },
   {
-    value: 71.4,
+    value: 5,
     label: "We have a valid trading license that is renewed annually",
   },
   {
-    value: 85.68,
+    value: 6,
     label:
       "We have registered for VAT as we have surpassed the threshold of 37.5M UGX revenue in any 3 months period and only issue official electronic invoices only",
   },
   {
-    value: 99.96,
-    label:
-      "We have a valid data protection license and are compliant with the regulator",
-  },
-  {
-    value: 85.68,
-    label:
-      "We know all other specific regulations that apply to us, our specific business/ sector, and are compliant",
-  },
-  {
-    value: 99.96,
+    value: 7,
     label:
       "We have a tax strategy to minimize the tax burden, inside the legal context",
   },
   {
-    value: 99.96,
+    value: 8,
     label:
       "We have acquired the necessary intellectual property rights and trademarks, and have an IP strategy if necessary",
+  },
+  {
+    value: 9,
+    label:
+      "We have all policies and valid data protection license and are compliant with the regulator ",
+  },
+  {
+    value: 10,
+    label:
+      "We know all other specific regulations that apply to us, our specific business/ sector, and are compliant",
+  },
+  {
+    value: 11,
+    label:
+      "We have all permits and certification that are required by the regulator in the sector we operate",
+  },
+  {
+    value: 12,
+    label:
+      "We have management accounts and audited financial reports for atleast the past year",
   },
 ];

@@ -37,6 +37,7 @@ const TeamLeadStartups = (props) => {
   const startups = users.filter(
     (el) => el.teamLeadId === userId && el.userRole === "startup"
   );
+
   //   console.log(startups);
 
   const revenueTotal = users.filter(
