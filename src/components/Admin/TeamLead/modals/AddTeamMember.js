@@ -140,6 +140,7 @@ const AddTeamMember = ({ setOpen }) => {
           if (success) {
             setSuccess(true);
             setMessage(res);
+            dispatch(actionCreators.getUserz());
           }
           if (error) {
             setError(true);
@@ -252,6 +253,9 @@ const AddTeamMember = ({ setOpen }) => {
                 >
                   {activeStep === steps.length - 1 ? "Create Account" : "Next"}
                 </button>
+                {loading ? (
+                  <img src={svg} style={{ height: "20px", width: "20px" }} />
+                ) : null}
               </Box>
             </React.Fragment>
           </Box>

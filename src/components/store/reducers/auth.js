@@ -12,7 +12,6 @@ const initialState = {
   features: [],
   diagnostics: [],
   categories: [],
-  diagnostics: [],
   userRole: "",
   permissions: "",
   tokenExpiration: "",

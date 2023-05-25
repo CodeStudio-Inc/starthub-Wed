@@ -68,7 +68,7 @@ const Acordion = ({ dispatch, actionCreators, loading, svg }) => {
 
   //   console.log(val);
   return (
-    <Accordion style={{ width: "100%" }}>
+    <Accordion style={{ width: "95%" }}>
       <AccordionSummary
         expandIcon={<QueryStatsIcon style={{ color: "#37561b" }} />}
         aria-controls="panel1a-content"
@@ -85,7 +85,7 @@ const Acordion = ({ dispatch, actionCreators, loading, svg }) => {
             onChange={(e) => setState({ ...state, project: e.target.value })}
           />
           <input
-            placeholder="tools name"
+            placeholder="category name"
             value={state.toolName}
             onChange={(e) => setState({ ...state, toolName: e.target.value })}
           />

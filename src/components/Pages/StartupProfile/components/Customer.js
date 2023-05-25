@@ -3,16 +3,32 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-const Customer = () => {
+const Customer = ({ customers, customerz, handleCustomerChange }) => {
   return (
-    <div className="accordion">
-      <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="B2B" />
-        <FormControlLabel control={<Checkbox />} label="B2C" />
-        <FormControlLabel control={<Checkbox />} label="B2B2C" />
-        <FormControlLabel control={<Checkbox />} label="B2G" />
-      </FormGroup>
-    </div>
+    <FormGroup>
+      <div className="accordion-business">
+        {customerz?.length > 0
+          ? customerz?.map((c, i) => (
+              <FormControlLabel
+                key={i}
+                control={<Checkbox />}
+                label={c.name}
+                checked={c.checked}
+              />
+            ))
+          : null}
+        {!customerz?.length
+          ? customers?.map((c, i) => (
+              <FormControlLabel
+                key={c.id}
+                control={<Checkbox />}
+                label={c.name}
+                onChange={() => handleCustomerChange(c.id, i)}
+              />
+            ))
+          : null}
+      </div>
+    </FormGroup>
   );
 };
 

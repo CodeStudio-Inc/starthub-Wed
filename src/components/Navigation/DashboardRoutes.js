@@ -8,6 +8,7 @@ import {
   Startup,
   AdminLeanCanvas,
   ObjectivesTable,
+  Profile,
 } from "../Paths";
 
 const DashboardRoutes = () => {
@@ -19,6 +20,7 @@ const DashboardRoutes = () => {
         <Route path="/Timmm" component={TimothySchedule} />
         <Route path="/Mathius" component={MathiusSchedule} />
         <Route path="/startup/:id" component={Startup} />
+        <Route path="/profile/:id" component={Profile} />
         <Route path="/lean-canvas/:id" component={AdminLeanCanvas} />
         <Route path="/okrs/:id" component={ObjectivesTable} />
       </Switch>

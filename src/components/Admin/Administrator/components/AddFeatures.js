@@ -53,7 +53,7 @@ const Acordion = ({ dispatch, actionCreators, loading, svg }) => {
     );
 
   return (
-    <Accordion style={{ width: "100%" }}>
+    <Accordion style={{ width: "95%" }}>
       <AccordionSummary
         expandIcon={<SettingsApplicationsIcon style={{ color: "#37561b" }} />}
         aria-controls="panel1a-content"

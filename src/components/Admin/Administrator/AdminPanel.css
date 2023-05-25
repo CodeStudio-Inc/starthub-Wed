@@ -74,7 +74,8 @@
   align-items: flex-start;
   justify-content: space-between;
   width: 95%;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 
@@ -226,6 +227,19 @@
   background: #fff;
   box-sizing: border-box;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card2-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card2-row h3 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .card-content-row-avatar {

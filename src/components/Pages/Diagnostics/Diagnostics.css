@@ -16,6 +16,20 @@
   margin: 1rem;
 }
 
+.save-steps {
+  outline: none;
+  border: none;
+  color: #fff;
+  background: #37561b;
+  height: 35px;
+  width: 15%;
+  border-radius: 5px;
+}
+
+.save-steps:hover {
+  cursor: pointer;
+}
+
 .step {
   display: flex;
   align-items: flex-start;

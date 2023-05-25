@@ -142,7 +142,6 @@ export const getUser = (userId) => {
     axios
       .get(`auth/user/${userId}`)
       .then((res) => {
-        // console.log(res.data);
         dispatch(
           setUser(
             res.data.userId,
@@ -165,6 +164,7 @@ export const getUser = (userId) => {
             res.data.eligibilityCheck
           )
         );
+        dispatch(setDiagnostics(res.data.diagnostics));
       })
       .catch((error) => {
         console.log(error);
@@ -500,11 +500,25 @@ export const updateUserDiagnostics = (diagnostics, callback) => {
         dispatch(stopLoader());
         dispatch(setDiagnostics(res.data.user.diagnostics));
         callback({ success: true });
-        console.log(res.data.user.diagnostics);
+        // console.log(res.data.user.diagnostics);
       })
       .catch((error) => {
         dispatch(stopLoader());
         callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
+export const getUserDiagnostics = () => {
+  return (dispatch) => {
+    axios
+      .get(`auth/user-diagnostics`)
+      .then((res) => {
+        dispatch(setCategories(res.data.diagnostics));
+        // console.log(res.data);
+      })
+      .catch((error) => {
         console.log(error);
       });
   };

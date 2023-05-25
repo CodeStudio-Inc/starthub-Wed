@@ -39,12 +39,17 @@ const Startups = (props) => {
     (el) =>
       el.teamCategory === category &&
       el.creator === userId &&
-      typeof el.totalRevenue !== "undefined"
+      typeof el.totalRevenue !== "undefined" &&
+      typeof el.totalExpense !== "undefined"
   );
 
   const totalRevenue = Array.from(
     revenueTotal,
     ({ totalRevenue }) => totalRevenue
+  ).reduce((a, b) => a + b, 0);
+  const totalExpense = Array.from(
+    revenueTotal,
+    ({ totalExpense }) => totalExpense
   ).reduce((a, b) => a + b, 0);
   const totalExpectedRevenuePaid = Array.from(
     revenueTotal,
@@ -175,50 +180,85 @@ const Startups = (props) => {
       <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
+              </div>
+              <h3>Startups</h3>
             </div>
             <h1>
-              {filterUsers.length} {filterUsers.length === 1 ? "team" : "teams"}
+              {filterUsers.length === 1 ? "team" : "teams"}
+              {filterUsers.length}
             </h1>
-            <h3>Startups</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Revenue</h3>
             </div>
+
             <h1>
-              {totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
+              Shs{" "}
+              {totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </h1>
-            <h3>Total Revenue</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Expenses</h3>
             </div>
+
             <h1>
+              Shs{" "}
+              {totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </h1>
+          </div>
+        </div>
+        <div className="card2">
+          <div className="card-content-column">
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Revenue Share Payment</h3>
+            </div>
+
+            <h1>
+              Shs{" "}
               {totalExpectedRevenuePaid
                 .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              shs
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </h1>
-            <h3>Total Revenue Share Payment</h3>
           </div>
         </div>
-        <div className="card2">
+        {/* <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Outstanding Revenue Share Payment</h3>
             </div>
+
             <h1>0 shs</h1>
-            <h3>Outstanding Revenue Share Payment</h3>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="add-startup-row">
         {features.includes("add loans") ? (

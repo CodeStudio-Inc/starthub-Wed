@@ -61,10 +61,15 @@ const AddStartup = ({ setOpen }) => {
     updateFeatuersObject();
   }, [platformFeatures]);
 
+  const checkDiagnosticsSelect = (arr) => {
+    const exists = arr?.find((v) => v?.name === "diagnostics");
+    return exists?.check;
+  };
+
   const steps = [
     "Enter Startup Account Details",
-    "Add Diagnostic Tools",
     "Add Features",
+    checkDiagnosticsSelect(payload) ? "Add Diagnostics" : null,
   ];
 
   const handleNext = () => {
@@ -153,6 +158,7 @@ const AddStartup = ({ setOpen }) => {
           if (success) {
             setSuccess(true);
             setMessage(res);
+            dispatch(actionCreators.getUserz());
           }
           if (error) {
             setError(true);
@@ -241,18 +247,18 @@ const AddStartup = ({ setOpen }) => {
                   />
                 ) : null}
                 {activeStep === 1 ? (
-                  <Diagnostics
-                    diagnostics={diagnostics}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                ) : null}
-                {activeStep === 2 ? (
                   <Features
                     features={adminFeatures}
                     handleCheckboxSelect={handleCheckboxSelect}
                     message={message}
                     emailcheck={emailcheck}
+                  />
+                ) : null}
+                {activeStep === 2 && checkDiagnosticsSelect(payload) ? (
+                  <Diagnostics
+                    diagnostics={diagnostics}
+                    selected={selected}
+                    setSelected={setSelected}
                   />
                 ) : null}
               </Typography>
@@ -269,6 +275,9 @@ const AddStartup = ({ setOpen }) => {
                 >
                   {activeStep === steps.length - 1 ? "Create Account" : "Next"}
                 </button>
+                {loading ? (
+                  <img src={svg} style={{ height: "20px", width: "20px" }} />
+                ) : null}
               </Box>
             </React.Fragment>
           </Box>

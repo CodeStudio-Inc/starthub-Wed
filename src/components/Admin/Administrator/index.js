@@ -78,77 +78,83 @@ const AdminPanel = (props) => {
         <AddTeamLead setOpen={handleClose} />
       </Modal>
       <div className="admin-row">
-        <div className="admin-left-container">
-          <div className="admin-card-row">
-            <div className="admin-card">
-              <div className="card-content-column">
+        <div className="admin-card-row">
+          <div className="admin-card">
+            <div className="card-content-column">
+              <div className="card2-row">
                 <div className="card-content-row-avatar">
-                  <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+                  <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
                 </div>
-                <h1>
-                  {users.length} {users.length === 1 ? "user" : "total users"}
-                </h1>
-                <h3 className="card-txt">view users</h3>
+                <h3>view users</h3>
               </div>
+              <h1>
+                {users.length} {users.length === 1 ? "user" : "total users"}
+              </h1>
             </div>
-            <div className="admin-card">
-              <div className="card-content-column">
+          </div>
+          <div className="admin-card">
+            <div className="card-content-column">
+              <div className="card2-row">
                 <div className="card-content-row-avatar">
-                  <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+                  <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
                 </div>
-                <h1>
-                  {filterUsers.length}{" "}
-                  {filterUsers.length === 1 ? "team lead" : "team leads"}
-                </h1>
-                <h3 className="card-txt">view team leads</h3>
+                <h3 className="card-txt">Team leads</h3>
               </div>
+              <h1>
+                {filterUsers.length}{" "}
+                {filterUsers.length === 1 ? "lead" : "leads"}
+              </h1>
             </div>
-            <div className="admin-card">
-              <div className="card-content-column">
+          </div>
+          <div className="admin-card">
+            <div className="card-content-column">
+              <div className="card2-row">
                 <div className="card-content-row-avatar">
-                  <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+                  <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
                 </div>
-                <h1>
-                  {teamMembers.length}{" "}
-                  {teamMembers.length === 1 ? "team member" : "team members"}
-                </h1>
-                <h3 className="card-txt">view team members</h3>
+                <h3 className="card-txt">Team members</h3>
               </div>
+              <h1>
+                {teamMembers.length}{" "}
+                {teamMembers.length === 1 ? "member" : "members"}
+              </h1>
             </div>
-            <div className="admin-card">
-              <div className="card-content-column">
+          </div>
+          <div className="admin-card">
+            <div className="card-content-column">
+              <div className="card2-row">
                 <div className="card-content-row-avatar">
-                  <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+                  <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
                 </div>
-                <h1>
-                  {startups.length}{" "}
-                  {startups.length === 1 ? "startup" : "startups"}
-                </h1>
-                <h3 className="card-txt">view startups</h3>
+                <h3 className="card-txt">Startups</h3>
               </div>
+              <h1>
+                {startups.length}{" "}
+                {startups.length === 1 ? "startup" : "startups"}
+              </h1>
             </div>
           </div>
         </div>
-        <div className="admin-right-container">
-          <AddFeatures
-            actionCreators={actionCreators}
-            dispatch={dispatch}
-            loading={loading}
-            svg={svg}
-          />
-          <AddCategories
-            actionCreators={actionCreators}
-            dispatch={dispatch}
-            loading={loading}
-            svg={svg}
-          />
-          <AddDiagnostics
-            actionCreators={actionCreators}
-            dispatch={dispatch}
-            loading={loading}
-            svg={svg}
-          />
-        </div>
+        <AddFeatures
+          actionCreators={actionCreators}
+          dispatch={dispatch}
+          loading={loading}
+          svg={svg}
+        />
+        <AddCategories
+          actionCreators={actionCreators}
+          dispatch={dispatch}
+          loading={loading}
+          svg={svg}
+        />
+        <AddDiagnostics
+          actionCreators={actionCreators}
+          dispatch={dispatch}
+          loading={loading}
+          svg={svg}
+        />
+        {/* <div className="admin-left-container"></div> */}
+        {/* <div className="admin-right-container"></div> */}
       </div>
     </div>
   );

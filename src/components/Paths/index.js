@@ -25,6 +25,7 @@ import BonitaSchedule from "../Pages/Carlender/BonitaSchedule";
 import TimothySchedule from "../Pages/Carlender/TimothySchedule";
 import MathiusSchedule from "../Pages/Carlender/MathiusSchedule";
 import Navbar from "../Pages/HomepageTemplate/Navbar";
+import Profile from "../Admin/Startups/Profile";
 import Startups from "../Admin/Startups";
 import AdminPanel from "../Admin/Administrator";
 import TeamLead from "../Admin/TeamLead";
@@ -84,6 +85,7 @@ export {
   TeamLead,
   Loans,
   Startup,
+  Profile,
   OkrOverview,
   Revenues,
   Overview,

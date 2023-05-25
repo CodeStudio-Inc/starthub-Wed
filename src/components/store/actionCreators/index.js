@@ -15,6 +15,7 @@ export {
   getCategories,
   assignStartup,
   updateUserDiagnostics,
+  getUserDiagnostics,
 } from "./auth";
 export {
   getBlogs,
@@ -115,3 +116,5 @@ export {
   getDiagnostics,
   diagnosticsPayload,
 } from "./diagnostics";
+
+export { addProfile, getProfile, getProfileAdmin } from "./profile";

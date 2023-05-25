@@ -144,11 +144,11 @@ const TeamLead = (props) => {
 
   const columns = [
     {
-      title: "Startup",
+      title: "Username",
       dataIndex: "username",
       key: "username",
       align: "left",
-      width: "30px",
+      width: "18px",
       fixed: true,
       render: (r) => (
         <div className="table-column-row">
@@ -342,51 +342,63 @@ const TeamLead = (props) => {
       <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card-content-row-avatar">
+                <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
+              </div>
+              <h3>Team members</h3>
             </div>
             <h1>
               {filterUsers.length}{" "}
-              {filterUsers.length === 1 ? "team member" : "team member"}
+              {filterUsers.length === 1 ? "member" : "members"}
             </h1>
-            <h3 className="card-txt">view team members</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card-content-row-avatar">
+                <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
+              </div>
+              <h3 className="card-txt">Startups</h3>
             </div>
             <h1>
               {startups.length} {startups.length === 1 ? "startup" : "startups"}
             </h1>
-            <h3 className="card-txt">view startups</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Revenue</h3>
             </div>
             <h1>
+              Shs{" "}
               {totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
             </h1>
-            <h3>Total Revenue</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Revenue Share Payment</h3>
             </div>
             <h1>
+              shs{" "}
               {totalExpectedRevenuePaid
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              shs
             </h1>
-            <h3>Total Revenue Share Payment</h3>
           </div>
         </div>
       </div>

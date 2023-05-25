@@ -86,7 +86,7 @@ const HomepageTemplate = (props) => {
       },
       {
         type: "startup",
-        title: "Profile",
+        title: "Company Profile",
         icon: (
           <PermContactCalendarIcon
             style={{ fontSize: "25px" }}
@@ -127,12 +127,9 @@ const HomepageTemplate = (props) => {
       },
       {
         type: "team lead",
-        title: "Overview",
+        title: "Team members",
         icon: (
-          <DashboardIcon
-            style={{ fontSize: "25px" }}
-            className="home-link-icon"
-          />
+          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
         ),
       },
       {
@@ -196,11 +193,13 @@ const HomepageTemplate = (props) => {
   }, []);
 
   React.useEffect(() => {
+    getProfile();
     if (current_date >= tokenExpiration) {
       dispatch(actionCreators.removeUser());
       props.history.push("/");
     }
   }, []);
+  const getProfile = () => dispatch(actionCreators.getProfile());
 
   const dispatch = useDispatch();
 
