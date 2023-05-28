@@ -253,7 +253,7 @@ const HomepageTemplate = (props) => {
         case "admin":
           return (
             <div style={{ width: "95%" }}>
-              {adminLinks.map((e, index) => (
+              {adminLinks?.map((e, index) => (
                 <div
                   key={index}
                   className={toggleActiveStyle(index)}
@@ -274,7 +274,7 @@ const HomepageTemplate = (props) => {
         case "team lead":
           return (
             <div style={{ width: "95%" }}>
-              {teamLeadLinks.map((e, index) => (
+              {teamLeadLinks?.map((e, index) => (
                 <div
                   key={index}
                   className={toggleActiveStyle(index)}
@@ -295,7 +295,7 @@ const HomepageTemplate = (props) => {
         case "team member":
           return (
             <div style={{ width: "95%" }}>
-              {teamMemberLinks.map((e, index) => (
+              {teamMemberLinks?.map((e, index) => (
                 <div
                   key={index}
                   className={toggleActiveStyle(index)}
@@ -316,7 +316,7 @@ const HomepageTemplate = (props) => {
         case "startup":
           return (
             <div style={{ width: "95%" }}>
-              {startupLinks.map((e, index) => (
+              {startupLinks?.map((e, index) => (
                 <div
                   key={index}
                   className={toggleActiveStyle(index)}
