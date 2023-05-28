@@ -9,7 +9,7 @@ require("dotenv").config();
 function App() {
   const { token } = useSelector((state) => state.auth);
 
-  axios.defaults.baseURL = process.env.REACT_APP_TEST_BASE_URL;
+  axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
   axios.defaults.headers.common["Authorization"] = token;
   axios.defaults.headers.post["Content-Type"] =
     process.env.REACT_APP_CONTENT_TYPE_HEADER;
