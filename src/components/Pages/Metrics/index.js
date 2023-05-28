@@ -206,7 +206,7 @@ const Metrics = ({ visible }) => {
   ];
 
   const diagnosticTool = [
-    ...diagnostics.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
+    ...diagnostics?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
   ];
 
   const Cards = () => (
