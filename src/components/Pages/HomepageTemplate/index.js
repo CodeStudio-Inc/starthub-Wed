@@ -401,7 +401,6 @@ const HomepageTemplate = (props) => {
           <AccountBoxIcon style={{ fontSize: "25px", color: "#37561b" }} />
           <h2>{username}</h2>
         </div>
-        <h1>Hello</h1>
         <SwitchNavLinks features={features} />
 
         <div className="logout" onClick={handleLogoutClick}>
@@ -412,7 +411,6 @@ const HomepageTemplate = (props) => {
       <div
         className={visible ? "homepage-main increase-width" : "homepage-main"}
       >
-        <h1>Hello</h1>
         <SwitchComponent index={index} visible={visible} />
       </div>
     </div>
