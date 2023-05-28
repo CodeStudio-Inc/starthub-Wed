@@ -12,7 +12,7 @@ const Startup = ({ index, visible }) => {
       {index === 0 ? <Metrics visible={visible} /> : null}
       {index === 1 ? <OKRs /> : null}
       {index === 2 ? <LeanCanvas /> : null}
-      {index === 3 ? <DiagnosticsTest /> : null}
+      {/* {index === 3 ? <DiagnosticsTest /> : null} */}
       {/* {index === 4 ? <StartupProfile /> : null} */}
     </div>
   );
