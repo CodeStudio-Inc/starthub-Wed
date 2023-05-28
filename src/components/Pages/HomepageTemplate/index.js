@@ -220,32 +220,32 @@ const HomepageTemplate = (props) => {
     props.history.push("/");
   };
 
-  // const SwitchComponent = useCallback(
-  //   ({ index, visible }) => {
-  //     switch (userRole) {
-  //       case "admin":
-  //         return <Admin index={index} />;
-  //         break;
-  //       case "team lead":
-  //         return <TeamLead index={index} />;
-  //         break;
-  //       case "team member":
-  //         return <TeamMember index={index} />;
-  //         break;
-  //       case "startup":
-  //         return <Startup index={index} visible={visible} />;
-  //         break;
-  //       default:
-  //         return (
-  //           <div className="homepage-main">
-  //             <h3>Error while loading page</h3>
-  //           </div>
-  //         );
-  //         break;
-  //     }
-  //   },
-  //   [index, visible]
-  // );
+  const SwitchComponent = useCallback(
+    ({ index, visible }) => {
+      switch (userRole) {
+        case "admin":
+          return <Admin index={index} />;
+          break;
+        case "team lead":
+          return <TeamLead index={index} />;
+          break;
+        case "team member":
+          return <TeamMember index={index} />;
+          break;
+        case "startup":
+          return <Startup index={index} visible={visible} />;
+          break;
+        default:
+          return (
+            <div className="homepage-main">
+              <h3>Error while loading page</h3>
+            </div>
+          );
+          break;
+      }
+    },
+    [index, visible]
+  );
 
   // const SwitchNavLinks = useCallback(
   //   ({ features }) => {
@@ -413,7 +413,7 @@ const HomepageTemplate = (props) => {
         className={visible ? "homepage-main increase-width" : "homepage-main"}
       >
         <h1>Hello</h1>
-        {/* <SwitchComponent index={index} visible={visible} /> */}
+        <SwitchComponent index={index} visible={visible} />
       </div>
     </div>
   );
