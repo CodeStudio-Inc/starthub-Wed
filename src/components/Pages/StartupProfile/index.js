@@ -114,7 +114,7 @@ const StartupProfile = () => {
 
   React.useEffect(() => {
     getProfile();
-    updateFounderObject();
+    // updateFounderObject();
   }, []);
 
   const getProfile = () => dispatch(actionCreators.getProfile());
@@ -179,67 +179,67 @@ const StartupProfile = () => {
     setFounderInput(inputData);
   };
 
-  const founders = React.useMemo(() => {
-    let founderData = [];
-    if (!profile?.founder.length) return;
-    else
-      founderData = Array.from(
-        profile?.founder,
-        ({
-          name,
-          skill,
-          growth,
-          product,
-          finance,
-          operations,
-          communication,
-        }) => ({
-          name,
-          skill,
-          growth,
-          product,
-          finance,
-          operations,
-          communication,
-        })
-      );
-    return founderData;
-  }, [profile?.founder]);
+  // const founders = React.useMemo(() => {
+  //   let founderData = [];
+  //   if (!profile?.founder.length) return;
+  //   else
+  //     founderData = Array.from(
+  //       profile?.founder,
+  //       ({
+  //         name,
+  //         skill,
+  //         growth,
+  //         product,
+  //         finance,
+  //         operations,
+  //         communication,
+  //       }) => ({
+  //         name,
+  //         skill,
+  //         growth,
+  //         product,
+  //         finance,
+  //         operations,
+  //         communication,
+  //       })
+  //     );
+  //   return founderData;
+  // }, [profile?.founder]);
 
-  const updateFounderObject = () => {
-    if (typeof founders === "undefined") return;
-    const newPayload = [
-      ...founders.map((f) => {
-        const { name } = f;
-        return {
-          name: name,
-          data: Object.values(founders.find((e) => e.name === name)).slice(1),
-          label: Object.keys(founders.find((e) => e.name === name)).slice(1),
-        };
-      }),
-    ];
-    return setPayload(newPayload);
-  };
+  // const updateFounderObject = () => {
+  //   if (typeof founders === "undefined") return;
+  //   const newPayload = [
+  //     ...founders.map((f) => {
+  //       const { name } = f;
+  //       return {
+  //         name: name,
+  //         data: Object.values(founders.find((e) => e.name === name)).slice(1),
+  //         label: Object.keys(founders.find((e) => e.name === name)).slice(1),
+  //       };
+  //     }),
+  //   ];
+  //   return setPayload(newPayload);
+  // };
 
-  const datasets = [
-    ...payload?.map((f) => ({
-      label: f.name,
-      data: f.data,
-      fill: true,
-      backgroundColor: ["#36561b56", "#dfa12685", "681a1ba8"],
-      borderColor: ["#37561b", "#dfa126", "#681a1b"],
-      pointBackgroundColor: "#681a1b",
-      pointBorderColor: "#681a1b",
-      pointHoverBackgroundColor: "#681a1b",
-      pointHoverBorderColor: "#681a1b",
-      pointStyle: "circle",
-    })),
-  ];
+  // const datasets = [
+  //   ...payload?.map((f) => ({
+  //     label: f.name,
+  //     data: f.data,
+  //     fill: true,
+  //     backgroundColor: ["#36561b56", "#dfa12685", "681a1ba8"],
+  //     borderColor: ["#37561b", "#dfa126", "#681a1b"],
+  //     pointBackgroundColor: "#681a1b",
+  //     pointBorderColor: "#681a1b",
+  //     pointHoverBackgroundColor: "#681a1b",
+  //     pointHoverBorderColor: "#681a1b",
+  //     pointStyle: "circle",
+  //   })),
+  // ];
 
-  const data = {
-    labels: [...payload.map((f) => f.label)][0],
-    datasets: datasets,
-  };
+  // const data = {
+  //   labels: [...payload.map((f) => f.label)][0],
+  //   datasets: datasets,
+  // };
 
   const handleProductAdd = () => {
     const inputs = [...productInput, []];
@@ -535,7 +535,7 @@ const StartupProfile = () => {
 
   return (
     <div className="startup-profile-container">
-      <Helmet>
+      {/* <Helmet>
         <title>Company Profile</title>
       </Helmet>
       <div className="profile-content">
@@ -919,7 +919,7 @@ const StartupProfile = () => {
         <button className="profile-submit-btn" onClick={submitProfile}>
           Submit Profile
         </button>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
