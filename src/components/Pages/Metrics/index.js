@@ -205,9 +205,11 @@ const Metrics = ({ visible }) => {
     },
   ];
 
-  const diagnosticTool = [
-    ...diagnostics?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
-  ];
+  console.log(diagnostics);
+
+  // const diagnosticTool = [
+  //   ...diagnostics?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
+  // ];
 
   const Cards = () => (
     <div className="revenue-card-row">
