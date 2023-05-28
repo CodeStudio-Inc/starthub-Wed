@@ -349,7 +349,7 @@ const Metrics = ({ visible }) => {
           <Line data={Revenue} width={100} height={30} />
         </div>
       )}
-      <Diagnostics diagnosticTool={diagnosticTool} />
+      {/* <Diagnostics diagnosticTool={diagnosticTool} /> */}
     </div>
   );
 };
