@@ -220,131 +220,131 @@ const HomepageTemplate = (props) => {
     props.history.push("/");
   };
 
-  const SwitchComponent = useCallback(
-    ({ index, visible }) => {
-      switch (userRole) {
-        case "admin":
-          return <Admin index={index} />;
-          break;
-        case "team lead":
-          return <TeamLead index={index} />;
-          break;
-        case "team member":
-          return <TeamMember index={index} />;
-          break;
-        case "startup":
-          return <Startup index={index} visible={visible} />;
-          break;
-        default:
-          return (
-            <div className="homepage-main">
-              <h3>Error while loading page</h3>
-            </div>
-          );
-          break;
-      }
-    },
-    [index, visible]
-  );
+  // const SwitchComponent = useCallback(
+  //   ({ index, visible }) => {
+  //     switch (userRole) {
+  //       case "admin":
+  //         return <Admin index={index} />;
+  //         break;
+  //       case "team lead":
+  //         return <TeamLead index={index} />;
+  //         break;
+  //       case "team member":
+  //         return <TeamMember index={index} />;
+  //         break;
+  //       case "startup":
+  //         return <Startup index={index} visible={visible} />;
+  //         break;
+  //       default:
+  //         return (
+  //           <div className="homepage-main">
+  //             <h3>Error while loading page</h3>
+  //           </div>
+  //         );
+  //         break;
+  //     }
+  //   },
+  //   [index, visible]
+  // );
 
-  const SwitchNavLinks = useCallback(
-    ({ features }) => {
-      switch (userRole) {
-        case "admin":
-          return (
-            <div style={{ width: "95%" }}>
-              {adminLinks?.map((e, index) => (
-                <div
-                  key={index}
-                  className={toggleActiveStyle(index)}
-                  onClick={() => {
-                    toggleActive(index);
-                    setIndex(index);
-                  }}
-                >
-                  <div className="home-link-row">
-                    {e.icon}
-                    <h4>{e.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-          break;
-        case "team lead":
-          return (
-            <div style={{ width: "95%" }}>
-              {teamLeadLinks?.map((e, index) => (
-                <div
-                  key={index}
-                  className={toggleActiveStyle(index)}
-                  onClick={() => {
-                    toggleActive(index);
-                    setIndex(index);
-                  }}
-                >
-                  <div className="home-link-row">
-                    {e.icon}
-                    <h4>{e.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-          break;
-        case "team member":
-          return (
-            <div style={{ width: "95%" }}>
-              {teamMemberLinks?.map((e, index) => (
-                <div
-                  key={index}
-                  className={toggleActiveStyle(index)}
-                  onClick={() => {
-                    toggleActive(index);
-                    setIndex(index);
-                  }}
-                >
-                  <div className="home-link-row">
-                    {e.icon}
-                    <h4>{e.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-          break;
-        case "startup":
-          return (
-            <div style={{ width: "95%" }}>
-              {startupLinks?.map((e, index) => (
-                <div
-                  key={index}
-                  className={toggleActiveStyle(index)}
-                  onClick={() => {
-                    toggleActive(index);
-                    setIndex(index);
-                  }}
-                >
-                  <div className="home-link-row">
-                    {e.icon}
-                    <h4>{e.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-          break;
-        default:
-          return (
-            <div className="homepage-main">
-              <h3>Error while loading page</h3>
-            </div>
-          );
-          break;
-      }
-    },
-    [active, setActive]
-  );
+  // const SwitchNavLinks = useCallback(
+  //   ({ features }) => {
+  //     switch (userRole) {
+  //       case "admin":
+  //         return (
+  //           <div style={{ width: "95%" }}>
+  //             {adminLinks?.map((e, index) => (
+  //               <div
+  //                 key={index}
+  //                 className={toggleActiveStyle(index)}
+  //                 onClick={() => {
+  //                   toggleActive(index);
+  //                   setIndex(index);
+  //                 }}
+  //               >
+  //                 <div className="home-link-row">
+  //                   {e.icon}
+  //                   <h4>{e.title}</h4>
+  //                 </div>
+  //               </div>
+  //             ))}
+  //           </div>
+  //         );
+  //         break;
+  //       case "team lead":
+  //         return (
+  //           <div style={{ width: "95%" }}>
+  //             {teamLeadLinks?.map((e, index) => (
+  //               <div
+  //                 key={index}
+  //                 className={toggleActiveStyle(index)}
+  //                 onClick={() => {
+  //                   toggleActive(index);
+  //                   setIndex(index);
+  //                 }}
+  //               >
+  //                 <div className="home-link-row">
+  //                   {e.icon}
+  //                   <h4>{e.title}</h4>
+  //                 </div>
+  //               </div>
+  //             ))}
+  //           </div>
+  //         );
+  //         break;
+  //       case "team member":
+  //         return (
+  //           <div style={{ width: "95%" }}>
+  //             {teamMemberLinks?.map((e, index) => (
+  //               <div
+  //                 key={index}
+  //                 className={toggleActiveStyle(index)}
+  //                 onClick={() => {
+  //                   toggleActive(index);
+  //                   setIndex(index);
+  //                 }}
+  //               >
+  //                 <div className="home-link-row">
+  //                   {e.icon}
+  //                   <h4>{e.title}</h4>
+  //                 </div>
+  //               </div>
+  //             ))}
+  //           </div>
+  //         );
+  //         break;
+  //       case "startup":
+  //         return (
+  //           <div style={{ width: "95%" }}>
+  //             {startupLinks?.map((e, index) => (
+  //               <div
+  //                 key={index}
+  //                 className={toggleActiveStyle(index)}
+  //                 onClick={() => {
+  //                   toggleActive(index);
+  //                   setIndex(index);
+  //                 }}
+  //               >
+  //                 <div className="home-link-row">
+  //                   {e.icon}
+  //                   <h4>{e.title}</h4>
+  //                 </div>
+  //               </div>
+  //             ))}
+  //           </div>
+  //         );
+  //         break;
+  //       default:
+  //         return (
+  //           <div className="homepage-main">
+  //             <h3>Error while loading page</h3>
+  //           </div>
+  //         );
+  //         break;
+  //     }
+  //   },
+  //   [active, setActive]
+  // );
 
   return (
     <div className="homepage-container">
@@ -401,7 +401,8 @@ const HomepageTemplate = (props) => {
           <AccountBoxIcon style={{ fontSize: "25px", color: "#37561b" }} />
           <h2>{username}</h2>
         </div>
-        <SwitchNavLinks features={features} />
+        <h1>Hello</h1>
+        {/* <SwitchNavLinks features={features} /> */}
 
         <div className="logout" onClick={handleLogoutClick}>
           <LogoutIcon style={{ fontSize: "20px" }} className="logout-icon" />
@@ -411,7 +412,8 @@ const HomepageTemplate = (props) => {
       <div
         className={visible ? "homepage-main increase-width" : "homepage-main"}
       >
-        <SwitchComponent index={index} visible={visible} />
+        <h1>Hello</h1>
+        {/* <SwitchComponent index={index} visible={visible} /> */}
       </div>
     </div>
   );
