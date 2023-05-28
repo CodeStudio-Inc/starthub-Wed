@@ -28,7 +28,7 @@ const Startups = (props) => {
   const handleAddPaymentClose = () => setOpenPayment(false);
 
   const { users } = useSelector((state) => state.admin);
-  const { userId, category } = useSelector((state) => state.auth);
+  const { userId, category, features } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
 
@@ -39,12 +39,17 @@ const Startups = (props) => {
     (el) =>
       el.teamCategory === category &&
       el.creator === userId &&
-      typeof el.totalRevenue !== "undefined"
+      typeof el.totalRevenue !== "undefined" &&
+      typeof el.totalExpense !== "undefined"
   );
 
   const totalRevenue = Array.from(
     revenueTotal,
     ({ totalRevenue }) => totalRevenue
+  ).reduce((a, b) => a + b, 0);
+  const totalExpense = Array.from(
+    revenueTotal,
+    ({ totalExpense }) => totalExpense
   ).reduce((a, b) => a + b, 0);
   const totalExpectedRevenuePaid = Array.from(
     revenueTotal,
@@ -55,6 +60,9 @@ const Startups = (props) => {
 
   React.useEffect(() => {
     getStartups();
+    getFeatures();
+    getCategories();
+    getDiagnostics();
   }, []);
 
   const columns = [
@@ -134,6 +142,9 @@ const Startups = (props) => {
   ];
 
   const getStartups = () => dispatch(actionCreators.getUsers());
+  const getFeatures = () => dispatch(actionCreators.getFeatures());
+  const getCategories = () => dispatch(actionCreators.getCategories());
+  const getDiagnostics = () => dispatch(actionCreators.getDiagnostics());
 
   return (
     <div className="startups-container">
@@ -169,58 +180,95 @@ const Startups = (props) => {
       <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
+              </div>
+              <h3>Startups</h3>
             </div>
             <h1>
-              {filterUsers.length} {filterUsers.length === 1 ? "team" : "teams"}
+              {filterUsers.length === 1 ? "team" : "teams"}
+              {filterUsers.length}
             </h1>
-            <h3>Startups</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Revenue</h3>
             </div>
+
             <h1>
-              {totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
+              Shs{" "}
+              {totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </h1>
-            <h3>Total Revenue</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Expenses</h3>
             </div>
+
             <h1>
+              Shs{" "}
+              {totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </h1>
+          </div>
+        </div>
+        <div className="card2">
+          <div className="card-content-column">
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Revenue Share Payment</h3>
+            </div>
+
+            <h1>
+              Shs{" "}
               {totalExpectedRevenuePaid
                 .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              shs
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </h1>
-            <h3>Total Revenue Share Payment</h3>
           </div>
         </div>
-        <div className="card2">
+        {/* <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card2-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Outstanding Revenue Share Payment</h3>
             </div>
+
             <h1>0 shs</h1>
-            <h3>Outstanding Revenue Share Payment</h3>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="add-startup-row">
-        <div className="add-startup-button" onClick={setOpenPayment}>
-          <AddCardIcon
-            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-          />
-          <p>Add Payment</p>
-        </div>
+        {features.includes("add loans") ? (
+          <div className="add-startup-button" onClick={setOpenPayment}>
+            <AddCardIcon
+              style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
+            />
+            <p>Add Payment</p>
+          </div>
+        ) : null}
         <div className="export-container">
           <DownloadTableExcel
             filename="Catalyzer Startups"
@@ -230,12 +278,14 @@ const Startups = (props) => {
             <button> Generate excel sheet </button>
           </DownloadTableExcel>
         </div>
-        <div className="add-startup-button" onClick={setOpenAddStartup}>
-          <ControlPointIcon
-            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-          />
-          <p>Add new Startup</p>
-        </div>
+        {features.includes("add startups") ? (
+          <div className="add-startup-button" onClick={setOpenAddStartup}>
+            <ControlPointIcon
+              style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
+            />
+            <p>Add new Startup</p>
+          </div>
+        ) : null}
       </div>
       <Table
         ref={tableRef}

@@ -20,10 +20,12 @@ import LeanCanvas from "../Pages/LeanCanvas";
 import DiagnosticsTest from "../Pages/Diagnostics";
 import Calendar from "../Pages/Carlender";
 import Metrics from "../Pages/Metrics";
+import StartupProfile from "../Pages/StartupProfile";
 import BonitaSchedule from "../Pages/Carlender/BonitaSchedule";
 import TimothySchedule from "../Pages/Carlender/TimothySchedule";
 import MathiusSchedule from "../Pages/Carlender/MathiusSchedule";
 import Navbar from "../Pages/HomepageTemplate/Navbar";
+import Profile from "../Admin/Startups/Profile";
 import Startups from "../Admin/Startups";
 import AdminPanel from "../Admin/Administrator";
 import TeamLead from "../Admin/TeamLead";
@@ -73,6 +75,7 @@ export {
   AdminStartups,
   LeanCanvas,
   Metrics,
+  StartupProfile,
   Calendar,
   BonitaSchedule,
   TimothySchedule,
@@ -82,6 +85,7 @@ export {
   TeamLead,
   Loans,
   Startup,
+  Profile,
   OkrOverview,
   Revenues,
   Overview,

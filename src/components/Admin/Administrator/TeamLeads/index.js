@@ -17,8 +17,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { message } from "antd";
 
-// import AddTeamMember from "./modals/AddTeamMember";
+import AddTeamMember from "../modals/AddTeamLead";
 import "../AdminPanel.css";
 // import "../../Pages/Auth/AuthStyles.css";
 const TeamLeads = (props) => {
@@ -26,23 +27,40 @@ const TeamLeads = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [ID, setID] = React.useState("");
+  const [startup, setStartup] = React.useState("");
+  const [editstartup, setEditStartup] = React.useState(false);
   const [permission, setPermission] = React.useState("");
   const [editPermission, setEditPermission] = React.useState(false);
   const [role, setRole] = React.useState("");
   const [editRole, setEditRole] = React.useState(false);
+  const [payload, setPayload] = React.useState([]);
 
   const { users } = useSelector((state) => state.admin);
   const { userId, category, loading } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
 
-  const filterUsers = users.filter(
-    (el) => el.userRole === "team lead" && el.creator === userId
-  );
-  const startups = users.filter(
-    (el) => el.teamLeadId === userId && el.userRole === "startup"
-  );
-  //   console.log(filterUsers);
+  const filterUsers = users.filter((el) => el.userRole === "team lead");
+  const startups = users.filter((el) => el.userRole === "startup");
+
+  const updateUsers = () => {
+    const newPayload = [
+      ...filterUsers.map((el) => {
+        const { _id, userRole, permissions, ...rest } = el;
+        return {
+          ...rest,
+          id: _id,
+          permission: { id: _id, value: permissions },
+          role: { id: _id, value: userRole },
+          permissions: permissions,
+          uaerRole: userRole,
+        };
+      }),
+    ];
+    return setPayload(newPayload);
+  };
+
+  // console.log(startups);
 
   const revenueTotal = users.filter(
     (el) =>
@@ -65,6 +83,8 @@ const TeamLeads = (props) => {
   React.useEffect(() => {
     getStartups();
     getFeatures();
+    getCategories();
+    updateUsers();
   }, []);
 
   const handlePermissionChange = (event) => {
@@ -75,7 +95,24 @@ const TeamLeads = (props) => {
     setRole(event.target.value);
   };
 
+  const handleStartupChange = (event) => {
+    setStartup(event.target.value);
+  };
+
+  const showStartupInput = () => setEditStartup(true);
+  const hideStartupInput = () => setEditStartup(false);
+  const assignStartup = () =>
+    dispatch(
+      actionCreators.assignStartup(startup, ID, (res) => {
+        console.log(res);
+        setEditStartup(false);
+        setID("");
+        message.info("Team member assigned startup");
+      })
+    );
+
   const showPermissionInput = () => setEditPermission(true);
+  const hidePermissionInput = () => setEditPermission(false);
   const editUserPermission = () =>
     dispatch(
       actionCreators.editUserPermissions(ID, permission, (res) => {
@@ -83,11 +120,13 @@ const TeamLeads = (props) => {
         if (success) {
           setEditPermission(false);
           setID("");
+          message.info("Permission will be updated shortly");
         }
       })
     );
 
   const showRoleInput = () => setEditRole(true);
+  const hideRoleInput = () => setEditRole(false);
   const editUserRole = () =>
     dispatch(
       actionCreators.editUserRole(ID, role, (res) => {
@@ -95,6 +134,7 @@ const TeamLeads = (props) => {
         if (success) {
           setEditRole(false);
           setID("");
+          message.info("Role will be updated shortly");
         }
       })
     );
@@ -105,7 +145,7 @@ const TeamLeads = (props) => {
       dataIndex: "username",
       key: "username",
       align: "left",
-      width: "50px",
+      width: "5%",
       fixed: true,
       render: (r) => (
         <div className="table-column-row">
@@ -121,18 +161,18 @@ const TeamLeads = (props) => {
       dataIndex: "email",
       key: "email",
       align: "left",
-      width: "90px",
+      width: "10%",
     },
     {
       title: "Permissions",
-      dataIndex: "permissions",
-      key: "permissions",
+      dataIndex: "permission",
+      key: "permission",
       align: "left",
-      width: "90px",
+      width: "10%",
       render: (r) => (
         <div className="table-cell-row ">
-          {!editPermission ? <p>{r}</p> : null}
-          {editPermission ? (
+          {!editPermission ? <p>{r.value}</p> : null}
+          {editPermission && ID === r.id ? (
             <FormControl sx={{ m: 1, minWidth: 130, minHeight: 40 }}>
               <InputLabel id="demo-simple-select-autowidth-label">
                 permission
@@ -153,12 +193,16 @@ const TeamLeads = (props) => {
               </Select>
             </FormControl>
           ) : null}
-          <button
-            onClick={!editPermission ? showPermissionInput : editUserPermission}
-          >
-            {!editPermission ? "change permission" : "save"}
-          </button>
-          {loading ? (
+          {!editPermission ? (
+            <button onClick={showPermissionInput}>change permission</button>
+          ) : null}
+          {editPermission && ID === r.id ? (
+            <button onClick={editUserPermission}>save</button>
+          ) : null}
+          {editPermission && ID === r.id ? (
+            <button onClick={hidePermissionInput}>cancel</button>
+          ) : null}
+          {loading && ID === r.id ? (
             <img src={svg} style={{ height: "20px", width: "20px" }} />
           ) : null}
         </div>
@@ -166,14 +210,14 @@ const TeamLeads = (props) => {
     },
     {
       title: "Role",
-      dataIndex: "userRole",
-      key: "userRole",
+      dataIndex: "role",
+      key: "role",
       align: "left",
-      width: "90px",
+      width: "10%",
       render: (r) => (
         <div className="table-cell-row ">
-          {!editRole ? <p>{r}</p> : null}
-          {editRole ? (
+          {!editRole ? <p>{r.value}</p> : null}
+          {editRole && ID === r.id ? (
             <FormControl sx={{ m: 1, minWidth: 130, minHeight: 40 }}>
               <InputLabel id="demo-simple-select-autowidth-label">
                 user role
@@ -194,10 +238,16 @@ const TeamLeads = (props) => {
               </Select>
             </FormControl>
           ) : null}
-          <button onClick={!editRole ? showRoleInput : editUserRole}>
-            {!editRole ? "change role" : "save"}
-          </button>
-          {loading ? (
+          {!editRole ? (
+            <button onClick={showRoleInput}>change user role</button>
+          ) : null}
+          {editRole && ID === r.id ? (
+            <button onClick={editUserRole}>save</button>
+          ) : null}
+          {editRole && ID === r.id ? (
+            <button onClick={hideRoleInput}>cancel</button>
+          ) : null}
+          {loading && ID === r.id ? (
             <img src={svg} style={{ height: "20px", width: "20px" }} />
           ) : null}
         </div>
@@ -205,25 +255,75 @@ const TeamLeads = (props) => {
     },
     {
       title: "action",
-      dataIndex: "_id",
-      key: "_id",
+      dataIndex: "id",
+      key: "id",
       align: "left",
-      width: "90px",
+      width: "10%",
       render: (r) => (
-        <button className="table-cell-view-button">remove team member</button>
+        <div className="table-cell-row ">
+          {editstartup && ID === r ? (
+            <FormControl sx={{ m: 1, minWidth: 150, minHeight: 40 }}>
+              <InputLabel id="demo-simple-select-autowidth-label">
+                startup
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={startup}
+                onChange={handleStartupChange}
+                autoWidth
+                style={{
+                  height: 50,
+                }}
+                label="startups"
+              >
+                {startups.map((s) => (
+                  <MenuItem key={s._id} value={s._id}>
+                    {s.username}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          ) : null}
+          {!editstartup ? (
+            <button
+              className="table-cell-view-button"
+              onClick={showStartupInput}
+            >
+              assign startup
+            </button>
+          ) : null}
+          {editstartup && ID === r ? (
+            <button className="table-cell-view-button" onClick={assignStartup}>
+              save
+            </button>
+          ) : null}
+          {editstartup && ID === r ? (
+            <button
+              className="table-cell-view-button"
+              onClick={hideStartupInput}
+            >
+              cancel
+            </button>
+          ) : null}
+          {loading && ID === r ? (
+            <img src={svg} style={{ height: "20px", width: "20px" }} />
+          ) : null}
+        </div>
       ),
     },
   ];
 
   const getStartups = () => dispatch(actionCreators.getUsers());
   const getFeatures = () => dispatch(actionCreators.getFeatures());
+  const getCategories = () => dispatch(actionCreators.getCategories());
 
   return (
     <div className="startups-container">
       <Helmet>
         <title>Startups Overview</title>
       </Helmet>
-      {/* <Modal
+      <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -235,7 +335,7 @@ const TeamLeads = (props) => {
         }}
       >
         <AddTeamMember setOpen={handleClose} />
-      </Modal> */}
+      </Modal>
       {/* <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
@@ -301,22 +401,22 @@ const TeamLeads = (props) => {
           <ControlPointIcon
             style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
           />
-          <p>Add new team member</p>
+          <p>Add new team lead</p>
         </div>
       </div>
       <Table
         ref={tableRef}
         columns={columns}
         dataSource={[
-          ...filterUsers.map((r) => ({
+          ...payload?.map((r) => ({
             ...r,
-            key: r._id,
+            key: r.id,
           })),
         ]}
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
-              setID(record._id);
+              setID(record.id);
             },
           };
         }}

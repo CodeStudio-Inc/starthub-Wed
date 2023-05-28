@@ -124,14 +124,28 @@
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
+.card2-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card2-row h3 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .card-content-row-avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 200px;
+  width: 25px;
+  height: 25px;
+  border-radius: 100px;
   background: #36561b56;
+  margin-right: 0.3rem;
 }
 
 .card-content-column {

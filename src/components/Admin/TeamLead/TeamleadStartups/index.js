@@ -37,6 +37,7 @@ const TeamLeadStartups = (props) => {
   const startups = users.filter(
     (el) => el.teamLeadId === userId && el.userRole === "startup"
   );
+
   //   console.log(startups);
 
   const revenueTotal = users.filter(
@@ -164,52 +165,66 @@ const TeamLeadStartups = (props) => {
       <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <GroupsIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card-content-row-avatar">
+                <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
+              </div>
+              <h3>Total startups</h3>
             </div>
             <h1>
               {startups.length} {startups.length === 1 ? "startup" : "startups"}
             </h1>
-            <h3>Total startups</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total revenue</h3>
             </div>
             <h1>
+              Shs{" "}
               {totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
             </h1>
-            <h3>Total revenue</h3>
           </div>
         </div>
 
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Expense</h3>
             </div>
             <h1>
+              Shs{" "}
               {totalExpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
             </h1>
-            <h3>Total Expense</h3>
           </div>
         </div>
         <div className="card2">
           <div className="card-content-column">
-            <div className="card-content-row-avatar">
-              <TrendingUpIcon style={{ fontSize: "30px", color: "#37561b" }} />
+            <div className="card2-row">
+              <div className="card-content-row-avatar">
+                <TrendingUpIcon
+                  style={{ fontSize: "18px", color: "#37561b" }}
+                />
+              </div>
+              <h3>Total Revenue Share Payment</h3>
             </div>
             <h1>
+              shs{" "}
               {totalExpectedRevenuePaid
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              shs
             </h1>
-            <h3>Total Revenue Share Payment</h3>
           </div>
         </div>
       </div>

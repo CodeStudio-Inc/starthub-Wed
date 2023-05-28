@@ -12,6 +12,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import Diagnostics from "../components/DiagnosticTools";
 import AccountDetails from "../components/AccountDetails";
 import Features from "../components/Features";
 const AddStartup = ({ setOpen }) => {
@@ -19,12 +20,13 @@ const AddStartup = ({ setOpen }) => {
     username: "",
     email: "",
     category: "",
-    userRole: " startup",
+    userRole: "startup",
     password: "",
     contractDate: "",
     percentageShare: 0,
     additionalMetrics: "",
   });
+  const [selected, setSelected] = React.useState("");
   const [emailcheck, setEmailCheck] = React.useState("");
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -32,10 +34,13 @@ const AddStartup = ({ setOpen }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [payload, setPayload] = React.useState();
 
-  const { loading, platformFeatures } = useSelector((state) => state.auth);
+  const { diagnostics } = useSelector((state) => state.diagnostics);
+  const { loading, platformFeatures, categories } = useSelector(
+    (state) => state.auth
+  );
 
   const adminFeatures = platformFeatures.filter(
-    (f) => f.category === "startup"
+    (f) => f.category === "startups"
   );
 
   const updateFeatuersObject = () => {
@@ -56,7 +61,16 @@ const AddStartup = ({ setOpen }) => {
     updateFeatuersObject();
   }, [platformFeatures]);
 
-  const steps = ["Enter Startup Account Details", "Add Features"];
+  const checkDiagnosticsSelect = (arr) => {
+    const exists = arr?.find((v) => v?.name === "diagnostics");
+    return exists?.check;
+  };
+
+  const steps = [
+    "Enter Startup Account Details",
+    "Add Features",
+    checkDiagnosticsSelect(payload) ? "Add Diagnostics" : null,
+  ];
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -111,12 +125,19 @@ const AddStartup = ({ setOpen }) => {
   };
 
   const register = () => {
+    const filterDiagnostics = diagnostics.filter((d) => d.project === selected);
     const filterFeaturePayload = payload.filter((f) => f.check);
-    const features = [...filterFeaturePayload.map((f) => f.name)];
+    const features = [
+      ...filterFeaturePayload.map((f) => ({ name: f.name, status: f.check })),
+    ];
     setError(false);
     setSuccess(false);
     setEmailCheck("");
     if (!features.length) return setMessage("No features added for user");
+    if (!filterDiagnostics.length)
+      return setMessage("No diagnostics added for user");
+    if (state.password.length)
+      return setMessage("Password must be atleast 8 characters");
     if (!validateEmail(state.email) || !state.email)
       return setEmailCheck("Enter valid email");
     if (!state.username || !state.category || !state.password)
@@ -128,6 +149,7 @@ const AddStartup = ({ setOpen }) => {
         state.category,
         state.password,
         features,
+        filterDiagnostics,
         state.userRole,
         state.contractDate,
         state.percentageShare,
@@ -136,6 +158,7 @@ const AddStartup = ({ setOpen }) => {
           if (success) {
             setSuccess(true);
             setMessage(res);
+            dispatch(actionCreators.getUserz());
           }
           if (error) {
             setError(true);
@@ -198,11 +221,6 @@ const AddStartup = ({ setOpen }) => {
             }}
           />
         </div>
-        <img
-          style={{ height: "120px", width: "110px" }}
-          src={logo}
-          alt="logo"
-        />
         <div className="signup-right-container">
           <Box sx={{ width: "100%" }}>
             <Stepper activeStep={activeStep} color="red">
@@ -225,6 +243,7 @@ const AddStartup = ({ setOpen }) => {
                     setState={setState}
                     emailcheck={emailcheck}
                     handleEmailChange={handleEmailChange}
+                    categories={categories}
                   />
                 ) : null}
                 {activeStep === 1 ? (
@@ -233,6 +252,13 @@ const AddStartup = ({ setOpen }) => {
                     handleCheckboxSelect={handleCheckboxSelect}
                     message={message}
                     emailcheck={emailcheck}
+                  />
+                ) : null}
+                {activeStep === 2 && checkDiagnosticsSelect(payload) ? (
+                  <Diagnostics
+                    diagnostics={diagnostics}
+                    selected={selected}
+                    setSelected={setSelected}
                   />
                 ) : null}
               </Typography>
@@ -249,27 +275,12 @@ const AddStartup = ({ setOpen }) => {
                 >
                   {activeStep === steps.length - 1 ? "Create Account" : "Next"}
                 </button>
+                {loading ? (
+                  <img src={svg} style={{ height: "20px", width: "20px" }} />
+                ) : null}
               </Box>
             </React.Fragment>
           </Box>
-          {/* <div className="input-row">
-            <div className="input-column">
-              <h4>Additional metrics(optional)</h4>
-              <input
-                value={state.additionalMetrics}
-                onChange={(e) =>
-                  setState({ ...state, additionalMetrics: e.target.value })
-                }
-              />
-            </div>
-          </div> */}
-          {/* <button onClick={register}>
-            {loading ? (
-              <img src={svg} style={{ width: "30px", height: "30px" }} />
-            ) : (
-              "Create Account"
-            )}
-          </button> */}
         </div>
       </div>
     </div>

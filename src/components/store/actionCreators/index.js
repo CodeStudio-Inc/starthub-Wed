@@ -6,9 +6,16 @@ export {
   editUserRole,
   login,
   getUser,
+  getUserz,
   removeUser,
   loanEligibilityCheck,
+  addFeatures,
   getFeatures,
+  addCategory,
+  getCategories,
+  assignStartup,
+  updateUserDiagnostics,
+  getUserDiagnostics,
 } from "./auth";
 export {
   getBlogs,
@@ -103,3 +110,11 @@ export {
   addPayment,
   updateStartup,
 } from "./admin";
+
+export {
+  addDiagnostics,
+  getDiagnostics,
+  diagnosticsPayload,
+} from "./diagnostics";
+
+export { addProfile, getProfile, getProfileAdmin } from "./profile";
