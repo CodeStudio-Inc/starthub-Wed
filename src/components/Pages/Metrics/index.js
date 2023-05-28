@@ -205,11 +205,11 @@ const Metrics = ({ visible }) => {
     },
   ];
 
-  console.log(diagnostics);
+  // console.log(diagnostics);
 
-  // const diagnosticTool = [
-  //   ...diagnostics?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
-  // ];
+  const diagnosticTool = [
+    ...diagnostics?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
+  ];
 
   const Cards = () => (
     <div className="revenue-card-row">
@@ -351,7 +351,7 @@ const Metrics = ({ visible }) => {
           <Line data={Revenue} width={100} height={30} />
         </div>
       )}
-      {/* <Diagnostics diagnosticTool={diagnosticTool} /> */}
+      <Diagnostics diagnosticTool={diagnosticTool} />
     </div>
   );
 };
