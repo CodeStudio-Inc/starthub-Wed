@@ -401,7 +401,7 @@ const HomepageTemplate = (props) => {
           <AccountBoxIcon style={{ fontSize: "25px", color: "#37561b" }} />
           <h2>{username}</h2>
         </div>
-        {/* <SwitchNavLinks features={features} /> */}
+        <SwitchNavLinks features={features} />
 
         <div className="logout" onClick={handleLogoutClick}>
           <LogoutIcon style={{ fontSize: "20px" }} className="logout-icon" />
