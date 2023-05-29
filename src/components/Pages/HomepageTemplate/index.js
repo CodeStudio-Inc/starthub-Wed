@@ -411,7 +411,7 @@ const HomepageTemplate = (props) => {
       <div
         className={visible ? "homepage-main increase-width" : "homepage-main"}
       >
-        <SwitchComponent index={index} visible={visible} />
+        {/* <SwitchComponent index={index} visible={visible} /> */}
       </div>
     </div>
   );
