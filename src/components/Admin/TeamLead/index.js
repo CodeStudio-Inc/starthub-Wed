@@ -41,12 +41,12 @@ const TeamLead = (props) => {
 
   const tableRef = React.useRef(null);
 
-  const filterUsers = all_users?.filter(
-    (el) => el.teamCategory === category && el.creator === userId
-  );
-  const startups = all_users?.filter(
-    (el) => el.teamLeadId === userId && el.userRole === "startup"
-  );
+  // const filterUsers = all_users?.filter(
+  //   (el) => el.teamCategory === category && el.creator === userId
+  // );
+  // const startups = all_users?.filter(
+  //   (el) => el.teamLeadId === userId && el.userRole === "startup"
+  // );
 
   console.log(filterUsers);
   console.log(startups);
@@ -68,21 +68,21 @@ const TeamLead = (props) => {
   //   return setPayload(newPayload);
   // };
 
-  const revenueTotal = all_users?.filter(
-    (el) =>
-      el.teamCategory === category &&
-      el.creator === userId &&
-      typeof el.totalRevenue !== "undefined"
-  );
+  // const revenueTotal = all_users?.filter(
+  //   (el) =>
+  //     el.teamCategory === category &&
+  //     el.creator === userId &&
+  //     typeof el.totalRevenue !== "undefined"
+  // );
 
-  const totalRevenue = Array.from(
-    revenueTotal,
-    ({ totalRevenue }) => totalRevenue
-  ).reduce((a, b) => a + b, 0);
-  const totalExpectedRevenuePaid = Array.from(
-    revenueTotal,
-    ({ totalRevSharePaid }) => totalRevSharePaid
-  ).reduce((a, b) => a + b, 0);
+  // const totalRevenue = Array.from(
+  //   revenueTotal,
+  //   ({ totalRevenue }) => totalRevenue
+  // ).reduce((a, b) => a + b, 0);
+  // const totalExpectedRevenuePaid = Array.from(
+  //   revenueTotal,
+  //   ({ totalRevSharePaid }) => totalRevSharePaid
+  // ).reduce((a, b) => a + b, 0);
 
   const dispatch = useDispatch();
 
