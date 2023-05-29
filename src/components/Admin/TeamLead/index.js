@@ -41,32 +41,38 @@ const TeamLead = (props) => {
 
   const tableRef = React.useRef(null);
 
-  // const filterUsers = all_users?.filter(
-  //   (el) => el.teamCategory === category && el.creator === userId
-  // );
-  // const startups = all_users?.filter(
-  //   (el) => el.teamLeadId === userId && el.userRole === "startup"
-  // );
+  const filterUsers =
+    all_users &&
+    all_users.filter(
+      (el) => el.teamCategory === category && el.creator === userId
+    );
+  const startups =
+    all_users &&
+    all_users?.filter(
+      (el) => el.teamLeadId === userId && el.userRole === "startup"
+    );
 
-  // console.log(filterUsers);
-  // console.log(startups);
+  console.log(filterUsers);
+  console.log(startups);
 
-  // const updateUsers = () => {
-  //   const newPayload = [
-  //     ...filterUsers?.map((el) => {
-  //       const { _id, userRole, permissions, ...rest } = el;
-  //       return {
-  //         ...rest,
-  //         id: _id,
-  //         permission: { id: _id, value: permissions },
-  //         role: { id: _id, value: userRole },
-  //         permissions: permissions,
-  //         uaerRole: userRole,
-  //       };
-  //     }),
-  //   ];
-  //   return setPayload(newPayload);
-  // };
+  const updateUsers = () => {
+    const newPayload = [
+      ...filterUsers?.map((el) => {
+        const { _id, userRole, permissions, ...rest } = el;
+        return {
+          ...rest,
+          id: _id,
+          permission: { id: _id, value: permissions },
+          role: { id: _id, value: userRole },
+          permissions: permissions,
+          uaerRole: userRole,
+        };
+      }),
+    ];
+    return setPayload(newPayload);
+  };
+
+  console.log(payload);
 
   // const revenueTotal = all_users?.filter(
   //   (el) =>
