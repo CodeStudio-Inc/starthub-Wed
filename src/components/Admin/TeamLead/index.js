@@ -52,8 +52,8 @@ const TeamLead = (props) => {
       (el) => el.teamLeadId === userId && el.userRole === "startup"
     );
 
-  console.log(filterUsers);
-  console.log(startups);
+  // console.log(filterUsers);
+  // console.log(startups);
 
   const updateUsers = () => {
     const newPayload = [
@@ -74,28 +74,28 @@ const TeamLead = (props) => {
 
   console.log(payload);
 
-  // const revenueTotal = all_users?.filter(
-  //   (el) =>
-  //     el.teamCategory === category &&
-  //     el.creator === userId &&
-  //     typeof el.totalRevenue !== "undefined"
-  // );
+  const revenueTotal = all_users?.filter(
+    (el) =>
+      el.teamCategory === category &&
+      el.creator === userId &&
+      typeof el.totalRevenue !== "undefined"
+  );
 
-  // const totalRevenue = Array.from(
-  //   revenueTotal,
-  //   ({ totalRevenue }) => totalRevenue
-  // ).reduce((a, b) => a + b, 0);
-  // const totalExpectedRevenuePaid = Array.from(
-  //   revenueTotal,
-  //   ({ totalRevSharePaid }) => totalRevSharePaid
-  // ).reduce((a, b) => a + b, 0);
+  const totalRevenue = Array.from(
+    revenueTotal,
+    ({ totalRevenue }) => totalRevenue
+  ).reduce((a, b) => a + b, 0);
+  const totalExpectedRevenuePaid = Array.from(
+    revenueTotal,
+    ({ totalRevSharePaid }) => totalRevSharePaid
+  ).reduce((a, b) => a + b, 0);
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     getStartup();
     getFeatures();
-    // updateUsers();
+    updateUsers();
     getCategories();
   }, []);
 
@@ -348,8 +348,7 @@ const TeamLead = (props) => {
       >
         <AddTeamMember setOpen={handleClose} />
       </Modal>
-      <h1>Hello</h1>
-      {/* <div className="card-row">
+      <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
             <div className="card2-row">
@@ -429,7 +428,7 @@ const TeamLead = (props) => {
           />
           <p>Add new team member</p>
         </div>
-      </div> */}
+      </div>
       {/* <Table
         ref={tableRef}
         columns={columns}
