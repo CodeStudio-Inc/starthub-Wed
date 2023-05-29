@@ -48,8 +48,8 @@ const TeamLead = (props) => {
   //   (el) => el.teamLeadId === userId && el.userRole === "startup"
   // );
 
-  console.log(filterUsers);
-  console.log(startups);
+  // console.log(filterUsers);
+  // console.log(startups);
 
   // const updateUsers = () => {
   //   const newPayload = [
