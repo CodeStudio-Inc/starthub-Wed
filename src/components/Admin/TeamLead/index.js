@@ -51,22 +51,22 @@ const TeamLead = (props) => {
   console.log(filterUsers);
   console.log(startups);
 
-  const updateUsers = () => {
-    const newPayload = [
-      ...filterUsers?.map((el) => {
-        const { _id, userRole, permissions, ...rest } = el;
-        return {
-          ...rest,
-          id: _id,
-          permission: { id: _id, value: permissions },
-          role: { id: _id, value: userRole },
-          permissions: permissions,
-          uaerRole: userRole,
-        };
-      }),
-    ];
-    return setPayload(newPayload);
-  };
+  // const updateUsers = () => {
+  //   const newPayload = [
+  //     ...filterUsers?.map((el) => {
+  //       const { _id, userRole, permissions, ...rest } = el;
+  //       return {
+  //         ...rest,
+  //         id: _id,
+  //         permission: { id: _id, value: permissions },
+  //         role: { id: _id, value: userRole },
+  //         permissions: permissions,
+  //         uaerRole: userRole,
+  //       };
+  //     }),
+  //   ];
+  //   return setPayload(newPayload);
+  // };
 
   const revenueTotal = all_users?.filter(
     (el) =>
@@ -89,7 +89,7 @@ const TeamLead = (props) => {
   React.useEffect(() => {
     getStartup();
     getFeatures();
-    updateUsers();
+    // updateUsers();
     getCategories();
   }, []);
 
@@ -342,6 +342,7 @@ const TeamLead = (props) => {
       >
         <AddTeamMember setOpen={handleClose} />
       </Modal>
+      <h1>Hello</h1>
       {/* <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
