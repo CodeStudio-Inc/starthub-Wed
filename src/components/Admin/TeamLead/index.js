@@ -51,7 +51,7 @@ const TeamLead = (props) => {
   console.log(filterUsers);
   console.log(startups);
 
-  const updateUsers = useCallback(() => {
+  const updateUsers = () => {
     const newPayload = [
       ...filterUsers?.map((el) => {
         const { _id, userRole, permissions, ...rest } = el;
@@ -66,7 +66,7 @@ const TeamLead = (props) => {
       }),
     ];
     return setPayload(newPayload);
-  }, [filterUsers]);
+  };
 
   const revenueTotal = all_users?.filter(
     (el) =>
