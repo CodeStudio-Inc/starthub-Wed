@@ -151,180 +151,180 @@ const TeamLead = (props) => {
       })
     );
 
-  // const columns = [
-  //   {
-  //     title: "Username",
-  //     dataIndex: "username",
-  //     key: "username",
-  //     align: "left",
-  //     width: "18px",
-  //     fixed: true,
-  //     render: (r) => (
-  //       <div className="table-column-row">
-  //         <div className="table-avatar">
-  //           <h3>{r.substring(0, 1)}</h3>
-  //         </div>
-  //         <h5>{r}</h5>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: "Email",
-  //     dataIndex: "email",
-  //     key: "email",
-  //     align: "left",
-  //     width: "40px",
-  //   },
-  //   {
-  //     title: "Permissions",
-  //     dataIndex: "permission",
-  //     key: "permission",
-  //     align: "left",
-  //     width: "40px",
-  //     render: (r) => (
-  //       <div className="table-cell-row ">
-  //         {!editPermission ? <p>{r.value}</p> : null}
-  //         {editPermission && ID === r.id ? (
-  //           <FormControl sx={{ m: 1, minWidth: 130, minHeight: 40 }}>
-  //             <InputLabel id="demo-simple-select-autowidth-label">
-  //               permission
-  //             </InputLabel>
-  //             <Select
-  //               labelId="demo-simple-select-autowidth-label"
-  //               id="demo-simple-select-autowidth"
-  //               value={permission}
-  //               onChange={handlePermissionChange}
-  //               autoWidth
-  //               style={{
-  //                 height: 50,
-  //               }}
-  //               label="permission"
-  //             >
-  //               <MenuItem value="owner">owner</MenuItem>
-  //               <MenuItem value="member">member</MenuItem>
-  //             </Select>
-  //           </FormControl>
-  //         ) : null}
-  //         {!editPermission ? (
-  //           <button onClick={showPermissionInput}>change permission</button>
-  //         ) : null}
-  //         {editPermission && ID === r.id ? (
-  //           <button onClick={editUserPermission}>save</button>
-  //         ) : null}
-  //         {editPermission && ID === r.id ? (
-  //           <button onClick={hidePermissionInput}>cancel</button>
-  //         ) : null}
-  //         {loading && ID === r.id ? (
-  //           <img src={svg} style={{ height: "20px", width: "20px" }} />
-  //         ) : null}
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: "Role",
-  //     dataIndex: "role",
-  //     key: "role",
-  //     align: "left",
-  //     width: "40px",
-  //     render: (r) => (
-  //       <div className="table-cell-row ">
-  //         {!editRole ? <p>{r.value}</p> : null}
-  //         {editRole && ID === r.id ? (
-  //           <FormControl sx={{ m: 1, minWidth: 130, minHeight: 40 }}>
-  //             <InputLabel id="demo-simple-select-autowidth-label">
-  //               user role
-  //             </InputLabel>
-  //             <Select
-  //               labelId="demo-simple-select-autowidth-label"
-  //               id="demo-simple-select-autowidth"
-  //               value={role}
-  //               onChange={handleRoleChange}
-  //               autoWidth
-  //               style={{
-  //                 height: 50,
-  //               }}
-  //               label="user role"
-  //             >
-  //               <MenuItem value="team lead">team lead</MenuItem>
-  //               <MenuItem value="team member">team member</MenuItem>
-  //             </Select>
-  //           </FormControl>
-  //         ) : null}
-  //         {!editRole ? (
-  //           <button onClick={showRoleInput}>change user role</button>
-  //         ) : null}
-  //         {editRole && ID === r.id ? (
-  //           <button onClick={editUserRole}>save</button>
-  //         ) : null}
-  //         {editRole && ID === r.id ? (
-  //           <button onClick={hideRoleInput}>cancel</button>
-  //         ) : null}
-  //         {loading && ID === r.id ? (
-  //           <img src={svg} style={{ height: "20px", width: "20px" }} />
-  //         ) : null}
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: "action",
-  //     dataIndex: "id",
-  //     key: "id",
-  //     align: "left",
-  //     width: "40px",
-  //     render: (r) => (
-  //       <div className="table-cell-row ">
-  //         {editstartup && ID === r ? (
-  //           <FormControl sx={{ m: 1, minWidth: 150, minHeight: 40 }}>
-  //             <InputLabel id="demo-simple-select-autowidth-label">
-  //               startup
-  //             </InputLabel>
-  //             <Select
-  //               labelId="demo-simple-select-autowidth-label"
-  //               id="demo-simple-select-autowidth"
-  //               value={startup}
-  //               onChange={handleStartupChange}
-  //               autoWidth
-  //               style={{
-  //                 height: 50,
-  //               }}
-  //               label="startups"
-  //             >
-  //               {startups.map((s) => (
-  //                 <MenuItem key={s?._id} value={s?._id}>
-  //                   {s.username}
-  //                 </MenuItem>
-  //               ))}
-  //             </Select>
-  //           </FormControl>
-  //         ) : null}
-  //         {!editstartup ? (
-  //           <button
-  //             className="table-cell-view-button"
-  //             onClick={showStartupInput}
-  //           >
-  //             assign startup
-  //           </button>
-  //         ) : null}
-  //         {editstartup && ID === r ? (
-  //           <button className="table-cell-view-button" onClick={assignStartup}>
-  //             save
-  //           </button>
-  //         ) : null}
-  //         {editstartup && ID === r ? (
-  //           <button
-  //             className="table-cell-view-button"
-  //             onClick={hideStartupInput}
-  //           >
-  //             cancel
-  //           </button>
-  //         ) : null}
-  //         {loading && ID === r ? (
-  //           <img src={svg} style={{ height: "20px", width: "20px" }} />
-  //         ) : null}
-  //       </div>
-  //     ),
-  //   },
-  // ];
+  const columns = [
+    {
+      title: "Username",
+      dataIndex: "username",
+      key: "username",
+      align: "left",
+      width: "18px",
+      fixed: true,
+      render: (r) => (
+        <div className="table-column-row">
+          <div className="table-avatar">
+            <h3>{r.substring(0, 1)}</h3>
+          </div>
+          <h5>{r}</h5>
+        </div>
+      ),
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      align: "left",
+      width: "40px",
+    },
+    {
+      title: "Permissions",
+      dataIndex: "permission",
+      key: "permission",
+      align: "left",
+      width: "40px",
+      render: (r) => (
+        <div className="table-cell-row ">
+          {!editPermission ? <p>{r.value}</p> : null}
+          {editPermission && ID === r.id ? (
+            <FormControl sx={{ m: 1, minWidth: 130, minHeight: 40 }}>
+              <InputLabel id="demo-simple-select-autowidth-label">
+                permission
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={permission}
+                onChange={handlePermissionChange}
+                autoWidth
+                style={{
+                  height: 50,
+                }}
+                label="permission"
+              >
+                <MenuItem value="owner">owner</MenuItem>
+                <MenuItem value="member">member</MenuItem>
+              </Select>
+            </FormControl>
+          ) : null}
+          {!editPermission ? (
+            <button onClick={showPermissionInput}>change permission</button>
+          ) : null}
+          {editPermission && ID === r.id ? (
+            <button onClick={editUserPermission}>save</button>
+          ) : null}
+          {editPermission && ID === r.id ? (
+            <button onClick={hidePermissionInput}>cancel</button>
+          ) : null}
+          {loading && ID === r.id ? (
+            <img src={svg} style={{ height: "20px", width: "20px" }} />
+          ) : null}
+        </div>
+      ),
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      align: "left",
+      width: "40px",
+      render: (r) => (
+        <div className="table-cell-row ">
+          {!editRole ? <p>{r.value}</p> : null}
+          {editRole && ID === r.id ? (
+            <FormControl sx={{ m: 1, minWidth: 130, minHeight: 40 }}>
+              <InputLabel id="demo-simple-select-autowidth-label">
+                user role
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={role}
+                onChange={handleRoleChange}
+                autoWidth
+                style={{
+                  height: 50,
+                }}
+                label="user role"
+              >
+                <MenuItem value="team lead">team lead</MenuItem>
+                <MenuItem value="team member">team member</MenuItem>
+              </Select>
+            </FormControl>
+          ) : null}
+          {!editRole ? (
+            <button onClick={showRoleInput}>change user role</button>
+          ) : null}
+          {editRole && ID === r.id ? (
+            <button onClick={editUserRole}>save</button>
+          ) : null}
+          {editRole && ID === r.id ? (
+            <button onClick={hideRoleInput}>cancel</button>
+          ) : null}
+          {loading && ID === r.id ? (
+            <img src={svg} style={{ height: "20px", width: "20px" }} />
+          ) : null}
+        </div>
+      ),
+    },
+    {
+      title: "action",
+      dataIndex: "id",
+      key: "id",
+      align: "left",
+      width: "40px",
+      render: (r) => (
+        <div className="table-cell-row ">
+          {editstartup && ID === r ? (
+            <FormControl sx={{ m: 1, minWidth: 150, minHeight: 40 }}>
+              <InputLabel id="demo-simple-select-autowidth-label">
+                startup
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={startup}
+                onChange={handleStartupChange}
+                autoWidth
+                style={{
+                  height: 50,
+                }}
+                label="startups"
+              >
+                {startups.map((s) => (
+                  <MenuItem key={s?._id} value={s?._id}>
+                    {s.username}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          ) : null}
+          {!editstartup ? (
+            <button
+              className="table-cell-view-button"
+              onClick={showStartupInput}
+            >
+              assign startup
+            </button>
+          ) : null}
+          {editstartup && ID === r ? (
+            <button className="table-cell-view-button" onClick={assignStartup}>
+              save
+            </button>
+          ) : null}
+          {editstartup && ID === r ? (
+            <button
+              className="table-cell-view-button"
+              onClick={hideStartupInput}
+            >
+              cancel
+            </button>
+          ) : null}
+          {loading && ID === r ? (
+            <img src={svg} style={{ height: "20px", width: "20px" }} />
+          ) : null}
+        </div>
+      ),
+    },
+  ];
 
   const getStartup = () => dispatch(actionCreators.getUserz());
   const getFeatures = () => dispatch(actionCreators.getFeatures());
