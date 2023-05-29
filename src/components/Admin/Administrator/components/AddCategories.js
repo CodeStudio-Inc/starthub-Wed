@@ -54,7 +54,7 @@ const Acordion = ({ dispatch, actionCreators, loading, svg }) => {
             <AddCircleOutlineIcon
               style={{ color: "#37561b", marginRight: "5px" }}
             />
-            <h5>add step</h5>
+            <h5>add category</h5>
           </div>
           {val.map((v, i) => {
             return (

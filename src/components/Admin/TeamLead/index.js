@@ -41,16 +41,16 @@ const TeamLead = (props) => {
 
   const tableRef = React.useRef(null);
 
-  const filterUsers = all_users.filter(
+  const filterUsers = all_users?.filter(
     (el) => el.teamCategory === category && el.creator === userId
   );
-  const startups = all_users.filter(
+  const startups = all_users?.filter(
     (el) => el.teamLeadId === userId && el.userRole === "startup"
   );
 
   const updateUsers = useCallback(() => {
     const newPayload = [
-      ...filterUsers.map((el) => {
+      ...filterUsers?.map((el) => {
         const { _id, userRole, permissions, ...rest } = el;
         return {
           ...rest,
@@ -65,7 +65,7 @@ const TeamLead = (props) => {
     return setPayload(newPayload);
   }, [filterUsers]);
 
-  const revenueTotal = all_users.filter(
+  const revenueTotal = all_users?.filter(
     (el) =>
       el.teamCategory === category &&
       el.creator === userId &&

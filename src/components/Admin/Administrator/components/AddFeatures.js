@@ -78,7 +78,7 @@ const Acordion = ({ dispatch, actionCreators, loading, svg }) => {
               <div className="add-feature-input-column" key={i}>
                 <select onChange={(e) => handleCategoryChange(e, i)}>
                   <option value="" disabled selected>
-                    -select-categoty-
+                    -select-user-
                   </option>
                   <option value="startups">startups</option>
                   <option value="admins">Team Leads/Members</option>

@@ -60,7 +60,7 @@ const LeanCanvas = ({ location, history }) => {
               listNumber={problem && problem.listNumber}
               title={problem && problem.name}
               cards={problem && problem.cards}
-              boardId={canvas_board._id}
+              boardId={canvas_board?._id}
               callback={getLists}
             />
             <List1
@@ -89,7 +89,7 @@ const LeanCanvas = ({ location, history }) => {
               listNumber={metrics && metrics.listNumber}
               title={metrics && metrics.name}
               cards={metrics && metrics.cards}
-              boardId={canvas_board._id}
+              boardId={canvas_board?._id}
               callback={getLists}
             />
           </div>
@@ -100,7 +100,7 @@ const LeanCanvas = ({ location, history }) => {
               listNumber={proposition && proposition.listNumber}
               title={proposition && proposition.name}
               cards={proposition && proposition.cards}
-              boardId={canvas_board._id}
+              boardId={canvas_board?._id}
               callback={getLists}
             />
             <List1
@@ -108,7 +108,7 @@ const LeanCanvas = ({ location, history }) => {
               listId={concept && concept._id}
               title={concept && concept.name}
               cards={concept && concept.cards}
-              boardId={canvas_board._id}
+              boardId={canvas_board?._id}
               callback={getLists}
             />
           </div>
@@ -119,7 +119,7 @@ const LeanCanvas = ({ location, history }) => {
               listNumber={advantage && advantage.listNumber}
               title={advantage && advantage.name}
               cards={advantage && advantage.cards}
-              boardId={canvas_board._id}
+              boardId={canvas_board?._id}
               callback={getLists}
             />
             <div className="canvas-separator" />
@@ -129,7 +129,7 @@ const LeanCanvas = ({ location, history }) => {
               listNumber={channels && channels.listNumber}
               title={channels && channels.name}
               cards={channels && channels.cards}
-              boardId={canvas_board._id}
+              boardId={canvas_board?._id}
               callback={getLists}
             />
           </div>
@@ -140,7 +140,7 @@ const LeanCanvas = ({ location, history }) => {
               listNumber={segments && segments.listNumber}
               title={segments && segments.name}
               cards={segments && segments.cards}
-              boardId={canvas_board._id}
+              boardId={canvas_board?._id}
               callback={getLists}
             />
             <List1
@@ -148,7 +148,7 @@ const LeanCanvas = ({ location, history }) => {
               listId={adoptors && adoptors._id}
               title={adoptors && adoptors.name}
               cards={adoptors && adoptors.cards}
-              boardId={canvas_board._id}
+              boardId={canvas_board?._id}
               callback={getLists}
             />
           </div>
@@ -160,7 +160,7 @@ const LeanCanvas = ({ location, history }) => {
             listNumber={cost && cost.listNumber}
             title={cost && cost.name}
             cards={cost && cost.cards}
-            boardId={canvas_board._id}
+            boardId={canvas_board?._id}
             callback={getLists}
           />
           <List2
@@ -169,7 +169,7 @@ const LeanCanvas = ({ location, history }) => {
             listNumber={revenue && revenue.listNumber}
             title={revenue && revenue.name}
             cards={revenue && revenue.cards}
-            boardId={canvas_board._id}
+            boardId={canvas_board?._id}
             callback={getLists}
           />
         </div>
