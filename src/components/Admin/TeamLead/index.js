@@ -341,7 +341,7 @@ const TeamLead = (props) => {
       >
         <AddTeamMember setOpen={handleClose} />
       </Modal>
-      <div className="card-row">
+      {/* <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
             <div className="card2-row">
@@ -421,7 +421,7 @@ const TeamLead = (props) => {
           />
           <p>Add new team member</p>
         </div>
-      </div>
+      </div> */}
       {/* <Table
         ref={tableRef}
         columns={columns}
