@@ -48,7 +48,8 @@ const TeamLead = (props) => {
     (el) => el.teamLeadId === userId && el.userRole === "startup"
   );
 
-  console.log(all_users);
+  console.log(filterUsers);
+  console.log(startups);
 
   const updateUsers = useCallback(() => {
     const newPayload = [
