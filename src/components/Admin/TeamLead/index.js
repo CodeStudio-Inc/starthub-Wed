@@ -41,6 +41,8 @@ const TeamLead = (props) => {
 
   const tableRef = React.useRef(null);
 
+  console.log(all_users);
+
   const filterUsers = all_users?.filter(
     (el) => el.teamCategory === category && el.creator === userId
   );
