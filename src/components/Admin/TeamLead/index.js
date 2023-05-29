@@ -429,7 +429,7 @@ const TeamLead = (props) => {
           <p>Add new team member</p>
         </div>
       </div>
-      {/* <Table
+      <Table
         ref={tableRef}
         columns={columns}
         dataSource={[
@@ -455,7 +455,7 @@ const TeamLead = (props) => {
           showSizeChanger: true,
           pageSizeOptions: ["10", "20", "30"],
         }}
-      /> */}
+      />
     </div>
   );
 };
