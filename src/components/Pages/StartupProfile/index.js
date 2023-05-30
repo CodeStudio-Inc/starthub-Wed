@@ -28,12 +28,14 @@ import "./Styles.css";
 import { actionCreators, svg } from "../../Paths";
 import { message } from "antd";
 const StartupProfile = () => {
+  const { profile, loading } = useSelector((state) => state.profile);
+
   const [founderInput, setFounderInput] = React.useState([
     {
       id: "",
       name: "",
-      time: "",
-      skill: 0,
+      time: 0,
+      focus: "",
       growth: 0,
       product: 0,
       operations: 0,
@@ -41,53 +43,69 @@ const StartupProfile = () => {
       communication: 0,
     },
   ]);
-  const [customers, setCustomers] = React.useState([
-    { id: 1, name: "B2B", checked: false },
-    { id: 2, name: "B2C", checked: false },
-    { id: 3, name: "B2B2C", checked: false },
-    { id: 4, name: "B2G", checked: false },
-  ]);
-  const [businessModals, setBusinessModals] = React.useState([
-    { id: 1, name: "Transactional", checked: false },
-    { id: 2, name: "Saas", checked: false },
-    { id: 3, name: "E-commerce", checked: false },
-    { id: 4, name: "Hardware", checked: false },
-    { id: 5, name: "Marketplace", checked: false },
-    { id: 6, name: "Usage-Based", checked: false },
-    { id: 7, name: "Subscription", checked: false },
-    { id: 8, name: "Advertising", checked: false },
-    { id: 9, name: "Service", checked: false },
-  ]);
-  const [journeySteps, setJourneySteps] = React.useState([
-    {
-      id: 1,
-      name: "Find a great founding team and find founder/market fit",
-      checked: false,
-    },
-    {
-      id: 2,
-      name: "Urgent, frequent, mandatory, popular, a/o expensive ",
-      checked: false,
-    },
-    {
-      id: 3,
-      name: "Interviewed 10+ customers about the problem",
-      checked: false,
-    },
-    {
-      id: 4,
-      name: "Have a spec document & timeline for your MVP",
-      checked: false,
-    },
-    { id: 5, name: "MVP has been sold 1+ customers", checked: false },
-    { id: 6, name: "10 people LOVE your product, find PSF", checked: false },
-    { id: 7, name: "100 people LOVE your product", checked: false },
-    {
-      id: 8,
-      name: "Find great retention and continuous fast growth",
-      checked: false,
-    },
-  ]);
+  const [customers, setCustomers] = React.useState(
+    profile?.customer?.length > 0
+      ? profile?.customer
+      : [
+          { id: 1, name: "B2B", checked: false },
+          { id: 2, name: "B2C", checked: false },
+          { id: 3, name: "B2B2C", checked: false },
+          { id: 4, name: "B2G", checked: false },
+        ]
+  );
+  const [businessModals, setBusinessModals] = React.useState(
+    profile?.businessModal?.length > 0
+      ? profile?.businessModal
+      : [
+          { id: 1, name: "Transactional", checked: false },
+          { id: 2, name: "Saas", checked: false },
+          { id: 3, name: "E-commerce", checked: false },
+          { id: 4, name: "Hardware", checked: false },
+          { id: 5, name: "Marketplace", checked: false },
+          { id: 6, name: "Usage-Based", checked: false },
+          { id: 7, name: "Subscription", checked: false },
+          { id: 8, name: "Advertising", checked: false },
+          { id: 9, name: "Service", checked: false },
+        ]
+  );
+  const [journeySteps, setJourneySteps] = React.useState(
+    profile?.journey?.length > 0
+      ? profile?.journey
+      : [
+          {
+            id: 1,
+            name: "Find a great founding team and find founder/market fit",
+            checked: false,
+          },
+          {
+            id: 2,
+            name: "Urgent, frequent, mandatory, popular, a/o expensive ",
+            checked: false,
+          },
+          {
+            id: 3,
+            name: "Interviewed 10+ customers about the problem",
+            checked: false,
+          },
+          {
+            id: 4,
+            name: "Have a spec document & timeline for your MVP",
+            checked: false,
+          },
+          { id: 5, name: "MVP has been sold 1+ customers", checked: false },
+          {
+            id: 6,
+            name: "10 people LOVE your product, find PSF",
+            checked: false,
+          },
+          { id: 7, name: "100 people LOVE your product", checked: false },
+          {
+            id: 8,
+            name: "Find great retention and continuous fast growth",
+            checked: false,
+          },
+        ]
+  );
   const [revenue, setRevenue] = React.useState({
     lifetime: "",
     fullMonth: "",
@@ -106,9 +124,9 @@ const StartupProfile = () => {
   const { username, email, totalExpense, totalRevenue } = useSelector(
     (state) => state.auth
   );
+  const [editPitch, setEditPitch] = React.useState(false);
+  const [editGoal, setEditGoal] = React.useState(false);
   const [payload, setPayload] = React.useState([]);
-
-  const { profile, loading } = useSelector((state) => state.profile);
 
   const dispatch = useDispatch();
 
@@ -143,9 +161,9 @@ const StartupProfile = () => {
     setFounderInput(inputData);
   };
 
-  const handleFounderSkillInputChange = (e, i) => {
+  const handleFounderFocusChange = (e, i) => {
     const inputData = [...founderInput];
-    inputData[i].skill = e.target.value;
+    inputData[i].focus = e.target.value;
     setFounderInput(inputData);
   };
 
@@ -185,17 +203,8 @@ const StartupProfile = () => {
     else
       founderData = Array.from(
         profile?.founder,
-        ({
+        ({ name, growth, product, finance, operations, communication }) => ({
           name,
-          skill,
-          growth,
-          product,
-          finance,
-          operations,
-          communication,
-        }) => ({
-          name,
-          skill,
           growth,
           product,
           finance,
@@ -239,7 +248,14 @@ const StartupProfile = () => {
   const data = {
     labels: [...payload.map((f) => f.label)][0],
     datasets: datasets,
+    maintainAspectRatio: true,
   };
+
+  const openPitchEdit = () => setEditPitch(true);
+  const cancelPitchEdit = () => setEditPitch(false);
+
+  const openGoalEdit = () => setEditGoal(true);
+  const cancelGoalEdit = () => setEditGoal(false);
 
   const handleProductAdd = () => {
     const inputs = [...productInput, []];
@@ -313,7 +329,18 @@ const StartupProfile = () => {
   };
 
   const addFounder = () => {
-    if (!founderInput.length) return message.info("Enter required fields");
+    const noAnswer = founderInput.find(
+      (f) =>
+        f.name === " " ||
+        f.growth === 0 ||
+        f.time === 0 ||
+        f.finance === 0 ||
+        f.communication === 0 ||
+        f.product === 0 ||
+        f.operations === 0 ||
+        f.focus === ""
+    );
+    if (noAnswer) return message.info("All fields are required");
     dispatch(
       actionCreators.addProfile(
         [
@@ -321,7 +348,7 @@ const StartupProfile = () => {
             id: f.id,
             name: f.name,
             time: f.time,
-            skill: f.skill,
+            focus: f.focus,
             growth: f.growth,
             product: f.product,
             operations: f.operations,
@@ -345,7 +372,8 @@ const StartupProfile = () => {
   };
 
   const addCustomer = () => {
-    if (!customers.length) return message.info("Enter required fields");
+    const noAnswer = customers.find((c) => c.checked);
+    if (!noAnswer) return message.info("No answer submitted");
     dispatch(
       actionCreators.addProfile(
         [],
@@ -371,7 +399,8 @@ const StartupProfile = () => {
   };
 
   const addBusinessModal = () => {
-    if (!businessModals.length) return message.info("Enter required fields");
+    const noAnswer = businessModals.find((b) => b.checked);
+    if (!noAnswer) return message.info("No answer submitted");
     dispatch(
       actionCreators.addProfile(
         [],
@@ -435,6 +464,7 @@ const StartupProfile = () => {
         const { success } = res;
         if (success) message.info("Company Goal updated");
         getProfile();
+        setEditGoal(false);
       })
     );
   };
@@ -453,6 +483,7 @@ const StartupProfile = () => {
         (res) => {
           const { success } = res;
           if (success) message.info("Company Elevator Pitch updated");
+          setEditPitch(false);
           getProfile();
         }
       )
@@ -460,7 +491,8 @@ const StartupProfile = () => {
   };
 
   const addJourney = () => {
-    if (!journeySteps.length) return message.info("Enter required fields");
+    const noAnswer = journeySteps.find((j) => j.checked);
+    if (!noAnswer) return message.info("No answer submitted");
     dispatch(
       actionCreators.addProfile(
         [],
@@ -609,7 +641,7 @@ const StartupProfile = () => {
             handleDelete={handleFounderDelete}
             handleFounderInputChange={handleFounderNameInputChange}
             handleFounderTimeInputChange={handleFounderTimeInputChange}
-            handleFounderSkillInputChange={handleFounderSkillInputChange}
+            handleFounderFocusChange={handleFounderFocusChange}
             handleFounderGrowthInputChange={handleFounderGrowthInputChange}
             handleFounderProductInputChange={handleFounderProductInputChange}
             handleFounderOperationsInputChange={
@@ -663,21 +695,18 @@ const StartupProfile = () => {
         <AccordionDetails className="accordion-content">
           <Customer
             customers={customers}
-            customerz={profile?.customer}
             handleCustomerChange={handleCustomerChange}
           />
-          {!profile?.customer.length ? (
-            <div className="save-button-column" onClick={addCustomer}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          ) : null}
+          <div className="save-button-column" onClick={addCustomer}>
+            <SaveIcon
+              style={{
+                color: "#37561b",
+                fontSize: "20px",
+                marginRight: "0.5rem",
+              }}
+            />
+            <h3>save</h3>
+          </div>
         </AccordionDetails>
       </Accordion>
       <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
@@ -701,29 +730,26 @@ const StartupProfile = () => {
               }}
             />
             <div className="accordion-column">
-              <h3>Business Modal</h3>
-              <h5>What is your businsess modal type</h5>
+              <h3>Business Model</h3>
+              <h5>What is your businsess model type</h5>
             </div>
           </div>
         </AccordionSummary>
         <AccordionDetails className="accordion-content">
           <BusinessModal
             businessModals={businessModals}
-            businessModalz={profile?.businessModal}
             handleBusinessModalChange={handleBusinessModalChange}
           />
-          {!profile?.businessModal.length ? (
-            <div className="save-button-column" onClick={addBusinessModal}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          ) : null}
+          <div className="save-button-column" onClick={addBusinessModal}>
+            <SaveIcon
+              style={{
+                color: "#37561b",
+                fontSize: "20px",
+                marginRight: "0.5rem",
+              }}
+            />
+            <h3>save</h3>
+          </div>
         </AccordionDetails>
       </Accordion>
       <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
@@ -805,19 +831,23 @@ const StartupProfile = () => {
           </div>
         </AccordionSummary>
         <AccordionDetails className="accordion-content">
-          <Goal setGoal={setGoal} goal={profile?.goal} />
-          {!profile?.goal ? (
-            <div className="save-button-column" onClick={addGoal}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          ) : null}
+          <Goal
+            setGoal={setGoal}
+            goal={profile?.goal}
+            editGoal={editGoal}
+            openGoalEdit={openGoalEdit}
+            cancelGoalEdit={cancelGoalEdit}
+          />
+          <div className="save-button-column" onClick={addGoal}>
+            <SaveIcon
+              style={{
+                color: "#37561b",
+                fontSize: "20px",
+                marginRight: "0.5rem",
+              }}
+            />
+            <h3>save</h3>
+          </div>
         </AccordionDetails>
       </Accordion>
       <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
@@ -854,19 +884,20 @@ const StartupProfile = () => {
             pitch={elevatorPitch}
             elevatorPitch={profile?.pitch}
             handleElecatorPitchChange={handleElecatorPitchChange}
+            openPitchEdit={openPitchEdit}
+            cancelPitchEdit={cancelPitchEdit}
+            editPitch={editPitch}
           />
-          {!profile?.pitch ? (
-            <div className="save-button-column" onClick={addElevatorPitch}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          ) : null}
+          <div className="save-button-column" onClick={addElevatorPitch}>
+            <SaveIcon
+              style={{
+                color: "#37561b",
+                fontSize: "20px",
+                marginRight: "0.5rem",
+              }}
+            />
+            <h3>save</h3>
+          </div>
         </AccordionDetails>
       </Accordion>
       <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
@@ -898,21 +929,18 @@ const StartupProfile = () => {
         <AccordionDetails className="accordion-content">
           <Journey
             journeySteps={journeySteps}
-            journey={profile?.journey}
             handleJourneyStepsChange={handleJourneyStepsChange}
           />
-          {!profile?.journey.length ? (
-            <div className="save-button-column" onClick={addJourney}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          ) : null}
+          <div className="save-button-column" onClick={addJourney}>
+            <SaveIcon
+              style={{
+                color: "#37561b",
+                fontSize: "20px",
+                marginRight: "0.5rem",
+              }}
+            />
+            <h3>save</h3>
+          </div>
         </AccordionDetails>
       </Accordion>
       {!profile ? (

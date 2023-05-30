@@ -11,26 +11,15 @@ const BusinessModal = ({
   return (
     <FormGroup>
       <div className="accordion-business">
-        {businessModalz?.length > 0
-          ? businessModalz?.map((b, i) => (
-              <FormControlLabel
-                key={i}
-                control={<Checkbox />}
-                label={b.name}
-                checked={b.checked}
-              />
-            ))
-          : null}
-        {!businessModalz?.length
-          ? businessModals?.map((b, i) => (
-              <FormControlLabel
-                key={b.id}
-                control={<Checkbox />}
-                label={b.name}
-                onChange={() => handleBusinessModalChange(b.id, i)}
-              />
-            ))
-          : null}
+        {businessModals?.map((b, i) => (
+          <FormControlLabel
+            key={b.id}
+            control={<Checkbox />}
+            label={b.name}
+            checked={b.checked ? b.checked : null}
+            onChange={() => handleBusinessModalChange(b.id, i)}
+          />
+        ))}
       </div>
     </FormGroup>
   );

@@ -133,7 +133,7 @@ const OKRs = ({ location, history }) => {
           {loading ? (
             <img style={{ height: "20px", width: "20px" }} src={svg} />
           ) : (
-            <button onClick={filterAdminObjectives}>seacrh</button>
+            <button onClick={filterAdminObjectives}>search</button>
           )}
         </div>
         {/* <div

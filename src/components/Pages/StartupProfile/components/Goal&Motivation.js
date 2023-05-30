@@ -4,8 +4,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import EditIcon from "@mui/icons-material/Edit";
+import CancelIcon from "@mui/icons-material/Cancel";
 
-const Goal = ({ setGoal, goal }) => {
+const Goal = ({ setGoal, goal, editGoal, openGoalEdit, cancelGoalEdit }) => {
   const [checked, setCkecked] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [selected, setSelected] = React.useState();
@@ -21,7 +23,7 @@ const Goal = ({ setGoal, goal }) => {
 
   return (
     <div className="accordion-business">
-      {goal ? (
+      {goal && !editGoal ? (
         <FormGroup>
           <FormControlLabel
             control={<Checkbox />}
@@ -30,7 +32,7 @@ const Goal = ({ setGoal, goal }) => {
           />
         </FormGroup>
       ) : null}
-      {goal ? (
+      {goal && !editGoal ? (
         <FormGroup>
           <FormControlLabel
             control={<Checkbox />}
@@ -39,7 +41,7 @@ const Goal = ({ setGoal, goal }) => {
           />
         </FormGroup>
       ) : null}
-      {goal ? (
+      {goal && !editGoal ? (
         <FormGroup>
           <FormControlLabel
             control={<Checkbox />}
@@ -70,6 +72,42 @@ const Goal = ({ setGoal, goal }) => {
             </div>
           ))
         : null}
+      {goal && editGoal
+        ? values.map((v, i) => (
+            <div className="option-select-container" key={i}>
+              <div className="checkbox-container">
+                {checked && selected === i ? (
+                  <CheckBoxIcon
+                    style={{ fontSize: "25px", color: "#1776d1" }}
+                    className="checkbox"
+                    onClick={() => toggleCheckboxOff(i)}
+                  />
+                ) : (
+                  <CheckBoxOutlineBlankIcon
+                    style={{ fontSize: "25px", color: "rgba(0,0,0,0.6)" }}
+                    className="checkbox"
+                    onClick={() => toggleCheckboxOn(i)}
+                  />
+                )}
+              </div>
+              <h3>{v}</h3>
+            </div>
+          ))
+        : null}
+      {goal && !editGoal ? (
+        <EditIcon
+          onClick={openGoalEdit}
+          style={{ alignSelf: "flex-end", color: "#37561b" }}
+          className="edit-icon"
+        />
+      ) : null}
+      {editGoal ? (
+        <CancelIcon
+          onClick={cancelGoalEdit}
+          style={{ alignSelf: "flex-end", color: "#37561b" }}
+          className="edit-icon"
+        />
+      ) : null}
     </div>
   );
 };
