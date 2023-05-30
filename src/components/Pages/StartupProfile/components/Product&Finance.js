@@ -35,7 +35,7 @@ const Finance = ({
       render: (r) => (
         <p style={{ color: "#37561b" }}>
           <strong style={{ fontWeight: "300", marginRight: "0.5rem" }}>
-            UGX
+            USD
           </strong>
           {r.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </p>
@@ -49,7 +49,7 @@ const Finance = ({
       render: (r) => (
         <p>
           <strong style={{ fontWeight: "300", marginRight: "0.5rem" }}>
-            UGX
+            USD
           </strong>
           {r.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </p>

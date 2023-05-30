@@ -328,6 +328,8 @@ const StartupProfile = () => {
     setElevetorPitch(e.target.value);
   };
 
+  console.log(profile.founder);
+
   const addFounder = () => {
     const noAnswer = founderInput.find(
       (f) =>
