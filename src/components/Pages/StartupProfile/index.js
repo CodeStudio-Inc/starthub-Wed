@@ -328,8 +328,6 @@ const StartupProfile = () => {
     setElevetorPitch(e.target.value);
   };
 
-  console.log(profile.founder);
-
   const addFounder = () => {
     const noAnswer = founderInput.find(
       (f) =>
@@ -472,7 +470,7 @@ const StartupProfile = () => {
   };
 
   const addElevatorPitch = () => {
-    if (!elevatorPitch) return message.info("Enter required field");
+    if (!elevatorPitch) return message.info("No Elevetor Pitch Submitted");
     dispatch(
       actionCreators.addProfile(
         [],
