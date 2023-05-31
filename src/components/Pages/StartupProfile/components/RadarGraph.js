@@ -24,7 +24,7 @@ const RadarGraph = ({ data, founders }) => {
                     marginRight: "0.5rem",
                   }}
                 />
-                <h3>{(parseInt(f.time) / 100) * 168} hrs</h3>
+                <h3>{parseInt(f.time)} %</h3>
               </div>
             </div>
             <div className="founder-card-row">
@@ -43,7 +43,7 @@ const RadarGraph = ({ data, founders }) => {
           </div>
         ))}
       </div>
-      <h4>Founder skill level</h4>
+      <h4>Founder skill level on a scale of 10</h4>
       <Radar
         data={data}
         // options={{
@@ -56,13 +56,13 @@ const RadarGraph = ({ data, founders }) => {
         // }}
         options={{
           aspectRatio: 2,
-          scales: {
-            ticks: {
-              beginAtZero: true,
-              max: 10,
-              min: 0,
-            },
-          },
+          // scales: {
+          //   ticks: {
+          //     beginAtZero: true,
+          //     max: 10,
+          //     min: 0,
+          //   },
+          // },
         }}
       />
     </div>

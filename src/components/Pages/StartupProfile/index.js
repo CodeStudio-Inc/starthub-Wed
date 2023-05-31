@@ -16,6 +16,8 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import SaveIcon from "@mui/icons-material/Save";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 import Journey from "./components/Journey";
 import Pitch from "./components/ElevatorPitch";
@@ -126,12 +128,34 @@ const StartupProfile = () => {
   );
   const [editPitch, setEditPitch] = React.useState(false);
   const [editGoal, setEditGoal] = React.useState(false);
+  const [editRevenue, setEditRevenue] = React.useState(false);
+  const [editFinance, setEditFinance] = React.useState(false);
+  const [editFounder, setEditFounder] = React.useState(false);
+  const [editFounderTableColumn, setEditFounderColumn] = React.useState(false);
+  const [selectedFounderId, setSelectedFounderId] = React.useState("");
+  const [selectedProductId, setSelectedProductId] = React.useState("");
+  const [founderState, setFounderState] = React.useState({
+    name: "",
+    time: "",
+    focus: "",
+    growth: "",
+    product: "",
+    finance: "",
+    operations: "",
+    communication: "",
+  });
+  const [productState, setProductState] = React.useState({
+    name: "",
+    price: "",
+    unitCost: "",
+  });
   const [payload, setPayload] = React.useState([]);
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     getProfile();
+    founderScaleSetter();
     updateFounderObject();
   }, []);
 
@@ -169,61 +193,109 @@ const StartupProfile = () => {
 
   const handleFounderGrowthInputChange = (e, i) => {
     const inputData = [...founderInput];
-    inputData[i].growth = e.target.value;
+    if (e.target.value > 10) inputData[i].growth = "10";
+    else inputData[i].growth = e.target.value;
     setFounderInput(inputData);
   };
 
   const handleFounderProductInputChange = (e, i) => {
     const inputData = [...founderInput];
-    inputData[i].product = e.target.value;
+    if (e.target.value > 10) inputData[i].product = "10";
+    else inputData[i].product = e.target.value;
     setFounderInput(inputData);
   };
 
   const handleFounderOperationsInputChange = (e, i) => {
     const inputData = [...founderInput];
-    inputData[i].operations = e.target.value;
+    if (e.target.value > 10) inputData[i].operations = "10";
+    else inputData[i].operations = e.target.value;
     setFounderInput(inputData);
   };
 
   const handleFounderFinanceInputChange = (e, i) => {
     const inputData = [...founderInput];
-    inputData[i].finance = e.target.value;
+    if (e.target.value > 10) inputData[i].finance = "10";
+    else inputData[i].finance = e.target.value;
     setFounderInput(inputData);
   };
 
   const handleFounderCommunicationInputChange = (e, i) => {
     const inputData = [...founderInput];
-    inputData[i].communication = e.target.value;
+    if (e.target.value > 10) inputData[i].communication = "10";
+    else inputData[i].communication = e.target.value;
     setFounderInput(inputData);
+  };
+
+  const founderScaleSetter = () => {
+    if (typeof profile.founder === "undefined") {
+      dispatch(
+        actionCreators.addProfile(
+          [
+            {
+              id: "SHA" + Math.random().toString().slice(2),
+              name: "default",
+              time: "default",
+              focus: "default",
+              growth: 1,
+              product: 4,
+              operations: 6,
+              finance: 8,
+              communication: 10,
+            },
+          ],
+          [],
+          [],
+          {},
+          "",
+          "",
+          [],
+          (res) => {
+            const { success } = res;
+            if (success) getProfile();
+          }
+        )
+      );
+    }
   };
 
   const founders = React.useMemo(() => {
     let founderData = [];
-    if (!profile?.founder.length) return;
-    else
-      founderData = Array.from(
-        profile?.founder,
-        ({ name, growth, product, finance, operations, communication }) => ({
-          name,
-          growth,
-          product,
-          finance,
-          operations,
-          communication,
-        })
-      );
+    founderData = Array.from(
+      profile?.founder,
+      ({ name, growth, product, finance, operations, communication }) => ({
+        name,
+        growth,
+        product,
+        finance,
+        operations,
+        communication,
+      })
+    );
     return founderData;
   }, [profile?.founder]);
 
   const updateFounderObject = () => {
     if (typeof founders === "undefined") return;
+    const newFounders = [
+      {
+        name: "default",
+        growth: 1,
+        product: 2,
+        finance: 5,
+        operations: 8,
+        communication: 10,
+      },
+      ...founders,
+    ];
     const newPayload = [
-      ...founders.map((f) => {
+      ...newFounders.map((f) => {
         const { name } = f;
         return {
           name: name,
-          data: Object.values(founders.find((e) => e.name === name)).slice(1),
-          label: Object.keys(founders.find((e) => e.name === name)).slice(1),
+          data: Object.values(newFounders.find((e) => e.name === name)).slice(
+            1
+          ),
+          label: Object.keys(newFounders.find((e) => e.name === name)).slice(1),
         };
       }),
     ];
@@ -232,15 +304,18 @@ const StartupProfile = () => {
 
   const datasets = [
     ...payload?.map((f) => ({
-      label: f.name,
+      label: f.name === "default" ? " " : f.name,
       data: f.data,
       fill: true,
-      backgroundColor: ["#36561b56", "#dfa12685", "681a1ba8"],
-      borderColor: ["#37561b", "#dfa126", "#681a1b"],
-      pointBackgroundColor: "#681a1b",
-      pointBorderColor: "#681a1b",
-      pointHoverBackgroundColor: "#681a1b",
-      pointHoverBorderColor: "#681a1b",
+      backgroundColor:
+        f.name === "default" ? "rgba(0,0,0,0)" : ["#36561b56", "#dfa12685"],
+      borderColor:
+        f.name === "default" ? "rgba(0,0,0,0)" : ["#37561b", "#dfa126"],
+      pointBackgroundColor: f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
+      pointBorderColor: f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
+      pointHoverBackgroundColor:
+        f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
+      pointHoverBorderColor: f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
       pointStyle: "circle",
     })),
   ];
@@ -256,6 +331,24 @@ const StartupProfile = () => {
 
   const openGoalEdit = () => setEditGoal(true);
   const cancelGoalEdit = () => setEditGoal(false);
+
+  const openRevenueEdit = () => setEditRevenue(true);
+  const cancelRevenueEdit = () => setEditRevenue(false);
+
+  const openFinanceEdit = (id) => {
+    setEditFinance(true);
+    setSelectedProductId(id);
+  };
+  const cancelFinanceEdit = () => setEditFinance(false);
+
+  const openFounderEdit = () => setEditFounder(true);
+  const cancelFounderEdit = () => setEditFounder(false);
+
+  const openFounderColumnEdit = (id) => {
+    setEditFounderColumn(true);
+    setSelectedFounderId(id);
+  };
+  const cancelFounderColumnEdit = () => setEditFounderColumn(false);
 
   const handleProductAdd = () => {
     const inputs = [...productInput, []];
@@ -470,7 +563,7 @@ const StartupProfile = () => {
   };
 
   const addElevatorPitch = () => {
-    if (!elevatorPitch) return message.info("No Elevetor Pitch Submitted");
+    if (!elevatorPitch) return message.info("No Elevator Pitch Submitted");
     dispatch(
       actionCreators.addProfile(
         [],
@@ -637,6 +730,14 @@ const StartupProfile = () => {
             founders={profile?.founder}
             data={data}
             founderInput={founderInput}
+            editFounder={editFounder}
+            selectedFounderId={selectedFounderId}
+            editFounderTableColumn={editFounderTableColumn}
+            founderState={founderState}
+            setFounderState={setFounderState}
+            cancelFounderEdit={cancelFounderEdit}
+            openFounderColumnEdit={openFounderColumnEdit}
+            cancelFounderColumnEdit={cancelFounderColumnEdit}
             handleAdd={handleFounderAdd}
             handleDelete={handleFounderDelete}
             handleFounderInputChange={handleFounderNameInputChange}
@@ -663,6 +764,28 @@ const StartupProfile = () => {
               />
               <h3>save</h3>
             </div>
+          ) : null}
+          {profile?.founder.length > 0 && !editFounder ? (
+            <ModeEditOutlineIcon
+              onClick={openFounderEdit}
+              style={{
+                fontSize: "20px",
+                color: "#37561b",
+                alignSelf: "flex-end",
+              }}
+              className="finance-table-icon"
+            />
+          ) : null}
+          {editFounder ? (
+            <CancelIcon
+              onClick={cancelFounderEdit}
+              style={{
+                fontSize: "20px",
+                color: "#37561b",
+                alignSelf: "flex-end",
+              }}
+              className="finance-table-icon"
+            />
           ) : null}
         </AccordionDetails>
       </Accordion>
@@ -784,6 +907,15 @@ const StartupProfile = () => {
             finance={profile?.finance}
             setRevenue={setRevenue}
             productInput={productInput}
+            editRevenue={editRevenue}
+            editFinance={editFinance}
+            productState={productState}
+            setProductState={setProductState}
+            selectedProductId={selectedProductId}
+            openRevenueEdit={openRevenueEdit}
+            cancelRevenueEdit={cancelRevenueEdit}
+            openFinanceEdit={openFinanceEdit}
+            cancelFinanceEdit={cancelFinanceEdit}
             handleProductAdd={handleProductAdd}
             handleProductDelete={handleProductDelete}
             handleProductNameChange={handleProductNameChange}

@@ -139,6 +139,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 0.5rem;
 }
 
 .founder-card {
@@ -176,6 +177,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.founder-table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.founder-table-row p {
+  margin: 0;
+}
+
+.founder-table-row input {
+  outline: none;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 40px;
+}
+
+.founder-table-row select {
+  outline: none;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 40px;
+}
+
+.founder-table-icon:hover {
+  cursor: pointer;
 }
 
 .accordion-content {
@@ -247,6 +285,32 @@
 .finance-card h2 {
   font-weight: bold;
   color: #dfa126;
+}
+
+.finance-table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.finance-table-row p {
+  margin: 0;
+}
+
+.finance-table-row input {
+  outline: none;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 150px;
+  height: 40px;
+}
+
+.finance-table-icon:hover {
+  cursor: pointer;
 }
 
 .listing-row {
