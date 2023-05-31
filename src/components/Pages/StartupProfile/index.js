@@ -150,12 +150,13 @@ const StartupProfile = () => {
     unitCost: "",
   });
   const [payload, setPayload] = React.useState([]);
+  const [productsPayload, setProductPayload] = React.useState([]);
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     getProfile();
-    founderScaleSetter();
+    updateProductsColumnData();
     updateFounderObject();
   }, []);
 
@@ -226,36 +227,20 @@ const StartupProfile = () => {
     setFounderInput(inputData);
   };
 
-  const founderScaleSetter = () => {
-    if (typeof profile.founder === "undefined") {
-      dispatch(
-        actionCreators.addProfile(
-          [
-            {
-              id: "SHA" + Math.random().toString().slice(2),
-              name: "default",
-              time: "default",
-              focus: "default",
-              growth: 1,
-              product: 4,
-              operations: 6,
-              finance: 8,
-              communication: 10,
-            },
-          ],
-          [],
-          [],
-          {},
-          "",
-          "",
-          [],
-          (res) => {
-            const { success } = res;
-            if (success) getProfile();
-          }
-        )
-      );
-    }
+  const updateProductsColumnData = () => {
+    if (typeof profile?.finance?.products === "undefined") return;
+    const newPayload = [
+      ...profile?.finance?.products?.map((f) => {
+        const { id, name, price, unitCost } = f;
+        return {
+          id: id,
+          name: { id: id, name: name },
+          price: { id: id, price: price },
+          unitCost: { id: id, unitCost: unitCost },
+        };
+      }),
+    ];
+    return setProductPayload(newPayload);
   };
 
   const founders = React.useMemo(() => {
@@ -272,7 +257,7 @@ const StartupProfile = () => {
       })
     );
     return founderData;
-  }, [profile?.founder]);
+  }, [profile?.finance]);
 
   const updateFounderObject = () => {
     if (typeof founders === "undefined") return;
@@ -464,6 +449,24 @@ const StartupProfile = () => {
     );
   };
 
+  const updateFounder = (id) => {
+    dispatch(
+      actionCreators.updateFounder(
+        id,
+        founderState.name,
+        founderState.time,
+        founderState.focus,
+        founderState.growth,
+        founderState.product,
+        founderState.operations,
+        founderState.finance,
+        founderState.communication
+      )
+    );
+    cancelFounderColumnEdit();
+    updateFounderObject();
+  };
+
   const addCustomer = () => {
     const noAnswer = customers.find((c) => c.checked);
     if (!noAnswer) return message.info("No answer submitted");
@@ -548,6 +551,17 @@ const StartupProfile = () => {
         }
       )
     );
+  };
+
+  const updateRevenue = () => {
+    dispatch(
+      actionCreators.updateRevenue(
+        revenue.lifetime,
+        revenue.fullMonth,
+        revenue.monthYear
+      )
+    );
+    cancelRevenueEdit();
   };
 
   const addGoal = () => {
@@ -696,7 +710,7 @@ const StartupProfile = () => {
       </div>
       <Accordion
         style={{
-          width: "90%",
+          width: "95%",
           marginBottom: "1rem",
         }}
       >
@@ -734,6 +748,9 @@ const StartupProfile = () => {
             selectedFounderId={selectedFounderId}
             editFounderTableColumn={editFounderTableColumn}
             founderState={founderState}
+            updateFounder={updateFounder}
+            loading={loading}
+            svg={svg}
             setFounderState={setFounderState}
             cancelFounderEdit={cancelFounderEdit}
             openFounderColumnEdit={openFounderColumnEdit}
@@ -789,7 +806,7 @@ const StartupProfile = () => {
           ) : null}
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.customer.length ? (
@@ -832,7 +849,7 @@ const StartupProfile = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.businessModal.length ? (
@@ -875,7 +892,7 @@ const StartupProfile = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.finance ? (
@@ -910,6 +927,10 @@ const StartupProfile = () => {
             editRevenue={editRevenue}
             editFinance={editFinance}
             productState={productState}
+            payload={productsPayload}
+            updateRevenue={updateRevenue}
+            loading={loading}
+            svg={svg}
             setProductState={setProductState}
             selectedProductId={selectedProductId}
             openRevenueEdit={openRevenueEdit}
@@ -936,7 +957,7 @@ const StartupProfile = () => {
           ) : null}
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.goal ? (
@@ -982,7 +1003,7 @@ const StartupProfile = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.pitch ? (
@@ -1032,7 +1053,7 @@ const StartupProfile = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.journey.length ? (

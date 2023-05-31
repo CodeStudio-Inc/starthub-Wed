@@ -64,9 +64,68 @@ export const getProfile = () => {
       .get(`catalyzer/profile`)
       .then((res) => {
         dispatch(setProfile(res?.data?.profile));
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const updateRevenue = (lifeTimeRevenue, fullMonthRevenue, monthYear) => {
+  const data = {
+    lifeTimeRevenue,
+    fullMonthRevenue,
+    monthYear,
+  };
+  return (dispatch, getState) => {
+    dispatch(loaderAction());
+    axios
+      .patch(`catalyzer/update-revenue`, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        dispatch(setProfile(res?.data?.profile));
         // console.log(res.data);
       })
       .catch((error) => {
+        dispatch(stopLoader());
+        console.log(error);
+      });
+  };
+};
+
+export const updateFounder = (
+  id,
+  name,
+  time,
+  focus,
+  growth,
+  product,
+  operations,
+  finance,
+  communication
+) => {
+  const data = {
+    name,
+    time,
+    focus,
+    growth,
+    product,
+    operations,
+    finance,
+    communication,
+  };
+  return (dispatch, getState) => {
+    dispatch(loaderAction());
+    axios
+      .patch(`catalyzer/update-founder/${id}`, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        dispatch(setProfile(res?.data?.profile));
+        // console.log(res.data);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
         console.log(error);
       });
   };

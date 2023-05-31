@@ -17,6 +17,9 @@ const Founders = ({
   selectedFounderId,
   cancelFounderEdit,
   founderState,
+  updateFounder,
+  loading,
+  svg,
   setFounderState,
   handleAdd,
   handleDelete,
@@ -285,11 +288,18 @@ const Founders = ({
               className="founder-table-icon"
             />
           ) : (
-            <CancelIcon
-              onClick={cancelFounderColumnEdit}
-              style={{ fontSize: "16px", color: "#37561b" }}
-              className="founder-table-icon"
-            />
+            <div className="founder-icon-row">
+              <h4 onClick={() => updateFounder(r)}>save</h4>
+              <CancelIcon
+                onClick={cancelFounderColumnEdit}
+                style={{
+                  fontSize: "16px",
+                  color: "#37561b",
+                  marginLeft: "0.5rem",
+                }}
+                className="founder-table-icon"
+              />
+            </div>
           )}
         </div>
       ),

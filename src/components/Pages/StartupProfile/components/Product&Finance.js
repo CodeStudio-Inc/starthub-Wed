@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from "antd";
+
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
@@ -18,6 +19,10 @@ const Finance = ({
   editFinance,
   productState,
   setProductState,
+  payload,
+  updateRevenue,
+  loading,
+  svg,
   openRevenueEdit,
   selectedProductId,
   cancelRevenueEdit,
@@ -29,28 +34,7 @@ const Finance = ({
   handleProductPriceChange,
   handleProductUnitCostChange,
 }) => {
-  const [payload, setPayload] = React.useState([]);
   const tableRef = React.useRef(null);
-
-  const updateFinanceColumn = () => {
-    if (typeof finance?.products === "undefined") return;
-    const newPayload = [
-      ...finance?.products?.map((f) => {
-        const { id, name, price, unitCost } = f;
-        return {
-          id: id,
-          name: { id: id, name: name },
-          price: { id: id, price: price },
-          unitCost: { id: id, unitCost: unitCost },
-        };
-      }),
-    ];
-    return setPayload(newPayload);
-  };
-
-  React.useEffect(() => {
-    updateFinanceColumn();
-  }, []);
 
   const columns = [
     {
@@ -159,6 +143,7 @@ const Finance = ({
       ),
     },
   ];
+
   return (
     <div className="accordion">
       {finance ? (
@@ -185,7 +170,11 @@ const Finance = ({
                   finance?.lifeTimeRevenue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 ) : (
                   <input
-                    value={revenue.lifetime}
+                    value={
+                      revenue.lifetime
+                        ? revenue.lifetime
+                        : finance?.lifeTimeRevenue
+                    }
                     onChange={(e) =>
                       setRevenue({ ...revenue, lifetime: e.target.value })
                     }
@@ -233,7 +222,11 @@ const Finance = ({
                   )
                 ) : (
                   <input
-                    value={revenue.fullMonth}
+                    value={
+                      revenue.fullMonth
+                        ? revenue.fullMonth
+                        : finance?.fullMonthRevenue
+                    }
                     onChange={(e) =>
                       setRevenue({ ...revenue, fullMonth: e.target.value })
                     }
@@ -264,7 +257,9 @@ const Finance = ({
               ) : (
                 <input
                   type="month"
-                  value={revenue.monthYear}
+                  value={
+                    revenue.monthYear ? revenue.monthYear : finance?.monthYear
+                  }
                   onChange={(e) =>
                     setRevenue({ ...revenue, monthYear: e.target.value })
                   }
@@ -286,57 +281,43 @@ const Finance = ({
               ) : null}
             </div>
           </div>
+          {editRevenue && !loading ? (
+            <h4 onClick={updateRevenue}>save</h4>
+          ) : null}
+          {loading ? (
+            <img src={svg} style={{ height: "30px", width: "30px" }} />
+          ) : null}
         </div>
       ) : null}
       {!finance ? (
-        <div className="profile-input-row">
-          <FormControl style={{ width: "100%" }}>
-            <InputLabel htmlFor="outlined-adornment-amount">Revenue</InputLabel>
-            <OutlinedInput
-              required
-              id="outlined-adornment-amount"
-              placeholder="Total lifetime revenue so far"
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
-              label="Amount"
-              value={revenue.lifetime}
-              onChange={(e) =>
-                setRevenue({ ...revenue, lifetime: e.target.value })
-              }
-            />
-          </FormControl>
-        </div>
-      ) : null}
-      {!finance ? (
-        <div className="profile-input-row">
-          <FormControl style={{ width: "45%" }}>
-            <InputLabel htmlFor="outlined-adornment-amount">Revenue</InputLabel>
-            <OutlinedInput
-              required
-              id="outlined-adornment-amount"
-              placeholder="Revenue of last full month"
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
-              label="Amount"
-              value={revenue.fullMonth}
-              onChange={(e) =>
-                setRevenue({ ...revenue, fullMonth: e.target.value })
-              }
-            />
-          </FormControl>
-          <TextField
+        <div className="revenue-input-row">
+          <input
             required
-            label="month & year"
-            variant="outlined"
-            type="month"
-            value={revenue.monthYear}
+            placeholder="$ Total lifetime revenue so far"
+            value={revenue.lifetime}
             onChange={(e) =>
-              setRevenue({ ...revenue, monthYear: e.target.value })
+              setRevenue({ ...revenue, lifetime: e.target.value })
             }
-            style={{ width: "45%" }}
           />
+          <input
+            required
+            placeholder="$ Revenue of last full month"
+            value={revenue.fullMonth}
+            onChange={(e) =>
+              setRevenue({ ...revenue, fullMonth: e.target.value })
+            }
+          />
+          <div className="month-column">
+            <h4>last full month & year</h4>
+            <input
+              required
+              type="month"
+              value={revenue.monthYear}
+              onChange={(e) =>
+                setRevenue({ ...revenue, monthYear: e.target.value })
+              }
+            />
+          </div>
         </div>
       ) : null}
       {finance ? (
@@ -372,29 +353,17 @@ const Finance = ({
       ) : null}
       {!finance
         ? productInput?.map((p, i) => (
-            <div className="profile-input-row" key={i}>
-              <TextField
-                required
-                label="name"
-                variant="outlined"
-                type="text"
-                style={{ width: "30%" }}
+            <div className="revenue-input-row" key={i}>
+              <input
+                placeholder="name"
                 onChange={(e) => handleProductNameChange(e, i)}
               />
-              <TextField
-                required
-                label="price"
-                variant="outlined"
-                type="text"
-                style={{ width: "30%" }}
+              <input
+                placeholder="price"
                 onChange={(e) => handleProductPriceChange(e, i)}
               />
-              <TextField
-                required
-                label="unit production cost"
-                variant="outlined"
-                type="text"
-                style={{ width: "30%" }}
+              <input
+                placeholder="unit production cost"
                 onChange={(e) => handleProductUnitCostChange(e, i)}
               />
               <HighlightOffIcon
