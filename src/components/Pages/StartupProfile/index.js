@@ -696,7 +696,7 @@ const StartupProfile = () => {
       </div>
       <Accordion
         style={{
-          width: "80%",
+          width: "90%",
           marginBottom: "1rem",
         }}
       >
@@ -789,7 +789,7 @@ const StartupProfile = () => {
           ) : null}
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.customer.length ? (
@@ -832,7 +832,7 @@ const StartupProfile = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.businessModal.length ? (
@@ -875,7 +875,7 @@ const StartupProfile = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.finance ? (
@@ -936,7 +936,7 @@ const StartupProfile = () => {
           ) : null}
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.goal ? (
@@ -982,7 +982,7 @@ const StartupProfile = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.pitch ? (
@@ -1032,7 +1032,7 @@ const StartupProfile = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ width: "80%", marginBottom: "1rem" }}>
+      <Accordion style={{ width: "90%", marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={
             !profile?.journey.length ? (

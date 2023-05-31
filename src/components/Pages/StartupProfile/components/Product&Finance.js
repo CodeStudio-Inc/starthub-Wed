@@ -70,7 +70,7 @@ const Finance = ({
               placeholder="product name"
             />
           ) : (
-            <p>{r.nam}</p>
+            <p>{r.name}</p>
           )}
         </div>
       ),
@@ -184,7 +184,12 @@ const Finance = ({
                 {!editRevenue ? (
                   finance?.lifeTimeRevenue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 ) : (
-                  <input />
+                  <input
+                    value={revenue.lifetime}
+                    onChange={(e) =>
+                      setRevenue({ ...revenue, lifetime: e.target.value })
+                    }
+                  />
                 )}
               </h2>
               {!editRevenue ? (
@@ -227,7 +232,12 @@ const Finance = ({
                     ","
                   )
                 ) : (
-                  <input />
+                  <input
+                    value={revenue.fullMonth}
+                    onChange={(e) =>
+                      setRevenue({ ...revenue, fullMonth: e.target.value })
+                    }
+                  />
                 )}
               </h2>
               {!editRevenue ? (
@@ -252,7 +262,13 @@ const Finance = ({
               {!editRevenue ? (
                 <h2>{finance?.monthYear}</h2>
               ) : (
-                <input type="month" />
+                <input
+                  type="month"
+                  value={revenue.monthYear}
+                  onChange={(e) =>
+                    setRevenue({ ...revenue, monthYear: e.target.value })
+                  }
+                />
               )}
               {!editRevenue ? (
                 <ModeEditOutlineIcon
