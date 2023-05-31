@@ -191,6 +191,10 @@
   color: #37561b;
 }
 
+.founder-icon-row h4:hover {
+  cursor: pointer;
+}
+
 .founder-table-row p {
   margin: 0;
 }

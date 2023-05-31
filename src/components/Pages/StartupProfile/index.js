@@ -151,12 +151,14 @@ const StartupProfile = () => {
   });
   const [payload, setPayload] = React.useState([]);
   const [productsPayload, setProductPayload] = React.useState([]);
+  const [foundersPayload, setFounderPayload] = React.useState([]);
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     getProfile();
     updateProductsColumnData();
+    updateFoundersColumn();
     updateFounderObject();
   }, []);
 
@@ -241,6 +243,37 @@ const StartupProfile = () => {
       }),
     ];
     return setProductPayload(newPayload);
+  };
+
+  const updateFoundersColumn = () => {
+    if (typeof profile?.founder === "undefined") return;
+    const newPayload = [
+      ...profile?.founder.map((f) => {
+        const {
+          id,
+          name,
+          time,
+          focus,
+          growth,
+          product,
+          finance,
+          operations,
+          communication,
+        } = f;
+        return {
+          id: id,
+          name: { id: id, name: name },
+          time: { id: id, time: time },
+          focus: { id: id, focus: focus },
+          growth: { id: id, growth: growth },
+          product: { id: id, product: product },
+          finance: { id: id, finance },
+          operations: { id: id, operations },
+          communication: { id: id, communication },
+        };
+      }),
+    ];
+    return setFounderPayload(newPayload);
   };
 
   const founders = React.useMemo(() => {
@@ -464,7 +497,7 @@ const StartupProfile = () => {
       )
     );
     cancelFounderColumnEdit();
-    updateFounderObject();
+    getProfile();
   };
 
   const addCustomer = () => {
@@ -748,6 +781,7 @@ const StartupProfile = () => {
             selectedFounderId={selectedFounderId}
             editFounderTableColumn={editFounderTableColumn}
             founderState={founderState}
+            payload={foundersPayload}
             updateFounder={updateFounder}
             loading={loading}
             svg={svg}

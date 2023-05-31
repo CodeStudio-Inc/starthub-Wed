@@ -17,6 +17,7 @@ const Founders = ({
   selectedFounderId,
   cancelFounderEdit,
   founderState,
+  payload,
   updateFounder,
   loading,
   svg,
@@ -34,42 +35,7 @@ const Founders = ({
   handleFounderFinanceInputChange,
   handleFounderCommunicationInputChange,
 }) => {
-  const [payload, setPayload] = React.useState([]);
   const tableRef = React.useRef(null);
-
-  const updateFoundersColumn = () => {
-    const newPayload = [
-      ...founders.map((f) => {
-        const {
-          id,
-          name,
-          time,
-          focus,
-          growth,
-          product,
-          finance,
-          operations,
-          communication,
-        } = f;
-        return {
-          id: id,
-          name: { id: id, name: name },
-          time: { id: id, time: time },
-          focus: { id: id, focus: focus },
-          growth: { id: id, growth: growth },
-          product: { id: id, product: product },
-          finance: { id: id, finance },
-          operations: { id: id, operations },
-          communication: { id: id, communication },
-        };
-      }),
-    ];
-    return setPayload(newPayload);
-  };
-
-  React.useEffect(() => {
-    updateFoundersColumn();
-  }, []);
 
   const columns = [
     {
@@ -164,7 +130,10 @@ const Founders = ({
               max={10}
               value={founderState.growth ? founderState.growth : r.growth}
               onChange={(e) =>
-                setFounderState({ ...founderState, growth: e.target.value })
+                setFounderState({
+                  ...founderState,
+                  growth: e.target.value > 10 ? "10" : e.target.value,
+                })
               }
             />
           ) : (
@@ -187,7 +156,10 @@ const Founders = ({
               max={10}
               value={founderState.product ? founderState.product : r.product}
               onChange={(e) =>
-                setFounderState({ ...founderState, product: e.target.value })
+                setFounderState({
+                  ...founderState,
+                  product: e.target.value > 10 ? "10" : e.target.value,
+                })
               }
             />
           ) : (
@@ -210,7 +182,10 @@ const Founders = ({
               max={10}
               value={founderState.finance ? founderState.finance : r.finance}
               onChange={(e) =>
-                setFounderState({ ...founderState, finance: e.target.value })
+                setFounderState({
+                  ...founderState,
+                  finance: e.target.value > 10 ? "10" : e.target.value,
+                })
               }
             />
           ) : (
@@ -235,7 +210,10 @@ const Founders = ({
                 founderState.operations ? founderState.operations : r.operations
               }
               onChange={(e) =>
-                setFounderState({ ...founderState, operations: e.target.value })
+                setFounderState({
+                  ...founderState,
+                  operations: e.target.value > 10 ? "10" : e.target.value,
+                })
               }
             />
           ) : (
@@ -264,7 +242,7 @@ const Founders = ({
               onChange={(e) =>
                 setFounderState({
                   ...founderState,
-                  communication: e.target.value,
+                  communication: e.target.value > 10 ? "10" : e.target.value,
                 })
               }
             />
@@ -301,6 +279,9 @@ const Founders = ({
               />
             </div>
           )}
+          {loading && selectedFounderId === r ? (
+            <img src={svg} style={{ height: "30px", width: "30px" }} />
+          ) : null}
         </div>
       ),
     },
