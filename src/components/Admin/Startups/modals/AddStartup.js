@@ -130,24 +130,24 @@ const AddStartup = ({ setOpen }) => {
     const features = [
       ...filterFeaturePayload.map((f) => ({ name: f.name, status: f.check })),
     ];
-    setError(false);
-    setSuccess(false);
-    setEmailCheck("");
-    if (!features.length) return setMessage("No features added for user");
-    if (!filterDiagnostics.length)
-      return setMessage("No diagnostics added for user");
-    if (state.password.length)
-      return setMessage("Password must be atleast 8 characters");
-    if (!validateEmail(state.email) || !state.email)
-      return setEmailCheck("Enter valid email");
-    if (!state.username || !state.category || !state.password)
-      return setEmailCheck("All fields are required");
+    // setError(false);
+    // setSuccess(false);
+    // setEmailCheck("");
+    // if (!features.length) return setMessage("No features added for user");
+    // if (!filterDiagnostics.length)
+    //   return setMessage("No diagnostics added for user");
+    // if (state.password.length)
+    //   return setMessage("Password must be atleast 8 characters");
+    // if (!validateEmail(state.email) || !state.email)
+    //   return setEmailCheck("Enter valid email");
+    // if (!state.username || !state.category || !state.password)
+    //   return setEmailCheck("All fields are required");
     dispatch(
       actionCreators.addStartup(
         state.username,
         state.email,
-        state.category,
-        state.password,
+        "catalyzer",
+        "5tartapp",
         features,
         filterDiagnostics,
         state.userRole,

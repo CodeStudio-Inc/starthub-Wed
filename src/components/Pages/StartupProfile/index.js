@@ -75,35 +75,49 @@ const StartupProfile = () => {
       ? profile?.journey
       : [
           {
-            id: 1,
-            name: "Find a great founding team and find founder/market fit",
+            id: 9,
+            name: "We have a great founding team and have founder/market fit",
             checked: false,
           },
           {
-            id: 2,
-            name: "Urgent, frequent, mandatory, popular, a/o expensive ",
+            id: 9,
+            name: "We are solving an urgent, frequent, mandatory, popular, and/or expensive Problem",
             checked: false,
           },
           {
-            id: 3,
-            name: "Interviewed 10+ customers about the problem",
+            id: 8,
+            name: "Interviewed 10+ customers about the Problem.",
+            checked: false,
+          },
+          {
+            id: 7,
+            name: "We have a specifications document & timeline for your MVP or launched already",
+            checked: false,
+          },
+          { id: 6, name: "MVP has been sold to 1+ customers", checked: false },
+          {
+            id: 5,
+            name: "We have 10 recurring customers who LOVE our product",
             checked: false,
           },
           {
             id: 4,
-            name: "Have a spec document & timeline for your MVP",
+            name: "We have 100 recurring customers who LOVE your product and refer many other clients",
             checked: false,
           },
-          { id: 5, name: "MVP has been sold 1+ customers", checked: false },
           {
-            id: 6,
-            name: "10 people LOVE your product, find PSF",
+            id: 3,
+            name: "We Have found retention that is on industry standard and grow consistently week over week",
             checked: false,
           },
-          { id: 7, name: "100 people LOVE your product", checked: false },
           {
-            id: 8,
-            name: "Find great retention and continuous fast growth",
+            id: 2,
+            name: "We Have managed to raise growth capital and are ready for fast growth",
+            checked: false,
+          },
+          {
+            id: 1,
+            name: "We have standardized processes, structures, and have a strong culture to improve quality as we scale",
             checked: false,
           },
         ]
