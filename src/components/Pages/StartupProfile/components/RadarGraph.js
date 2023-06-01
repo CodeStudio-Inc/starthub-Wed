@@ -12,7 +12,11 @@ const RadarGraph = ({ data, founders }) => {
     <div className="accordion-founder">
       <div className="founder-card-row">
         {founder.map((f) => (
-          <div className="founder-card">
+          <div
+            className={
+              founder.length >= 3 ? "resized-founder-card" : "founder-card"
+            }
+          >
             <h2>{f.name}</h2>
             <div className="founder-card-row">
               <h4>Time committed per week</h4>

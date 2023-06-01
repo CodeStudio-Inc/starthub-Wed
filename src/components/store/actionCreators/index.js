@@ -123,4 +123,5 @@ export {
   getProfileAdmin,
   updateRevenue,
   updateFounder,
+  updateProduct,
 } from "./profile";

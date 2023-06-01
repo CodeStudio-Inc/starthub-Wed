@@ -278,6 +278,7 @@ const StartupProfile = () => {
 
   const founders = React.useMemo(() => {
     let founderData = [];
+    if (typeof profile?.founder === "undefined") return;
     founderData = Array.from(
       profile?.founder,
       ({ name, growth, product, finance, operations, communication }) => ({
@@ -326,9 +327,13 @@ const StartupProfile = () => {
       data: f.data,
       fill: true,
       backgroundColor:
-        f.name === "default" ? "rgba(0,0,0,0)" : ["#36561b56", "#dfa12685"],
+        f.name === "default"
+          ? "rgba(0,0,0,0)"
+          : ["#36561b56", "#dfa12685", "#61041848"],
       borderColor:
-        f.name === "default" ? "rgba(0,0,0,0)" : ["#37561b", "#dfa126"],
+        f.name === "default"
+          ? "rgba(0,0,0,0)"
+          : ["#37561b", "#dfa126", "#61041848"],
       pointBackgroundColor: f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
       pointBorderColor: f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
       pointHoverBackgroundColor:
@@ -595,6 +600,19 @@ const StartupProfile = () => {
       )
     );
     cancelRevenueEdit();
+  };
+
+  const updateProduct = (id) => {
+    dispatch(
+      actionCreators.updateProduct(
+        id,
+        productState.name,
+        productState.price,
+        productState.unitCost
+      )
+    );
+    cancelFinanceEdit();
+    getProfile();
   };
 
   const addGoal = () => {
@@ -963,6 +981,7 @@ const StartupProfile = () => {
             productState={productState}
             payload={productsPayload}
             updateRevenue={updateRevenue}
+            updateProduct={updateProduct}
             loading={loading}
             svg={svg}
             setProductState={setProductState}

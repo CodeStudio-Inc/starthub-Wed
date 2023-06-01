@@ -21,6 +21,7 @@ const Finance = ({
   setProductState,
   payload,
   updateRevenue,
+  updateProduct,
   loading,
   svg,
   openRevenueEdit,
@@ -126,19 +127,22 @@ const Finance = ({
               className="finance-table-icon"
             />
           ) : (
-            <CancelIcon
-              onClick={cancelFinanceEdit}
-              style={{ fontSize: "16px", color: "#37561b" }}
-              className="finance-table-icon"
-            />
+            <div className="founder-icon-row">
+              <h4 onClick={() => updateProduct(r)}>save</h4>
+              <CancelIcon
+                onClick={cancelFinanceEdit}
+                style={{
+                  fontSize: "16px",
+                  color: "#37561b",
+                  marginLeft: "0.5rem",
+                }}
+                className="finance-table-icon"
+              />
+            </div>
           )}
-          {/* {editFinance ? (
-            <CancelIcon
-              onClick={cancelFinanceEdit}
-              style={{ fontSize: "16px", color: "#37561b" }}
-              className="finance-table-icon"
-            />
-          ) : null} */}
+          {loading && selectedProductId === r ? (
+            <img src={svg} style={{ height: "30px", width: "30px" }} />
+          ) : null}
         </div>
       ),
     },

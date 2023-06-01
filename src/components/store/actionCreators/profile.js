@@ -131,6 +131,29 @@ export const updateFounder = (
   };
 };
 
+export const updateProduct = (id, name, price, unitCost) => {
+  const data = {
+    id,
+    name,
+    price,
+    unitCost,
+  };
+  return (dispatch, getState) => {
+    dispatch(loaderAction());
+    axios
+      .patch(`catalyzer/update-product/${id}`, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        dispatch(setProfile(res?.data?.profile));
+        console.log(res.data);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        console.log(error);
+      });
+  };
+};
+
 export const getProfileAdmin = (userId) => {
   return (dispatch, getState) => {
     axios
