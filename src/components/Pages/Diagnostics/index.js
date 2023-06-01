@@ -1,211 +1,166 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Stack from '@mui/material/Stack';
-import Slider from '@mui/material/Slider';
-import MultipleStepForm from './MultipleStepForm';
-import { FormStep } from './MultipleStepForm';
-import { teams, vision, proposition, product, market, business, investment } from './Steps';
-import { actionCreators, svg } from '../../Paths';
-import ReactGA from 'react-ga';
-import { Helmet } from 'react-helmet';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Stack from "@mui/material/Stack";
+import MultipleStepForm from "./MultipleStepForm";
+import { FormStep } from "./MultipleStepForm";
+import {
+  teams,
+  vision,
+  proposition,
+  product,
+  market,
+  business,
+  investment,
+} from "./Steps";
+import { actionCreators, svg } from "../../Paths";
+import ReactGA from "react-ga";
+import { Helmet } from "react-helmet";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
-import './Diagnostics.css';
-import { message } from 'antd';
+import "./Diagnostics.css";
+import { message } from "antd";
 const Diagnostics = () => {
-	const userId = useSelector((state) => state.auth.userId);
-	const _value = useSelector((state) => state.requests.values);
-	const loading = useSelector((state) => state.requests.loading);
+  const { userId, diagnostics } = useSelector((state) => state.auth);
+  const loading = useSelector((state) => state.requests.loading);
+  const { payload } = useSelector((state) => state.diagnostics);
 
-	const filter_value = _value && _value.filter((e) => e.creator === userId);
-	const last_value = filter_value && filter_value.slice(-1).pop();
-	//   console.log(_value)
+  const dispatch = useDispatch();
 
-	const [ teamsValue, setTeamsValue ] = useState(last_value && last_value.teams);
-	const [ visionValue, setVisionValue ] = useState(last_value && last_value.vision);
-	const [ propositionValue, setPropositionValue ] = useState(last_value && last_value.proposition);
-	const [ productValue, setProductValue ] = useState(last_value && last_value.product);
-	const [ marketValue, setMarketValue ] = useState(last_value && last_value.market);
-	const [ businessValue, setBusinessValue ] = useState(last_value && last_value.business);
-	const [ investmentValue, setInvestmentValue ] = useState(last_value && last_value.investment);
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
 
-	const dispatch = useDispatch();
+  useEffect(() => {
+    updateDiagnosticsObject();
+  }, [diagnostics]);
 
-	useEffect(() => {
-		dispatch(actionCreators.getValues());
-		ReactGA.pageview(window.location.pathname);
-	}, []);
+  const getDiagnostics = () => dispatch(actionCreators.getUserDiagnostics());
 
-	const handleTeamsOnChange = (e) => {
-		setTeamsValue(e.target.value);
-		dispatch(actionCreators.setTeamsValue(teamsValue));
-	};
+  const updateDiagnosticsObject = () => {
+    const newPayload = [
+      ...diagnostics?.map((d) => {
+        const { score, steps, ...rest } = d;
+        return {
+          ...rest,
+          score: score,
+          steps: [
+            ...steps?.map((s) => {
+              const { checked, ...step } = s;
+              return {
+                ...step,
+                checked: checked ? checked : false,
+              };
+            }),
+          ],
+        };
+      }),
+    ];
+    return dispatch(actionCreators.diagnosticsPayload(newPayload));
+  };
 
-	const handleVisionOnChange = (e) => {
-		setVisionValue(e.target.value);
-		dispatch(actionCreators.setVisionValue(visionValue));
-	};
+  // console.log(diagnostics);
 
-	const handlePropositionOnChange = (e) => {
-		setPropositionValue(e.target.value);
-		dispatch(actionCreators.setPropositionValue(propositionValue));
-	};
+  const handleChange = (toolIndex, stepIndex) => {
+    let paylod = [...payload];
 
-	const handleProductOnChange = (e) => {
-		setProductValue(e.target.value);
-		dispatch(actionCreators.setProductValue(productValue));
-	};
+    const step = paylod[toolIndex].steps[stepIndex];
+    if (step.checked === true) {
+      paylod[toolIndex].steps[stepIndex] = {
+        ...paylod[toolIndex].steps[stepIndex],
+        checked: false,
+      };
+    }
+    if (step.checked === false) {
+      paylod[toolIndex].steps[stepIndex] = {
+        ...paylod[toolIndex].steps[stepIndex],
+        checked: true,
+      };
+    }
+    paylod[toolIndex].score =
+      (paylod[toolIndex].steps.filter((s) => s.checked).length /
+        paylod[toolIndex].steps.length) *
+      100;
+    dispatch(actionCreators.diagnosticsPayload(paylod));
+  };
 
-	const handleMarketOnChange = (e) => {
-		setMarketValue(e.target.value);
-		dispatch(actionCreators.setMarketValue(marketValue));
-	};
+  const handleStepsSubmit = () => {
+    dispatch(
+      actionCreators.updateUserDiagnostics(payload, (res) => {
+        const { success } = res;
+        if (success) {
+          message.info("Your Diagnostics score has been updated. Thanks!!!");
+          getDiagnostics();
+        }
+        if (!success) message.info("Sorry, Failed to update diagnostics score");
+      })
+    );
+  };
 
-	const handleBusinessOnChange = (e) => {
-		setBusinessValue(e.target.value);
-		dispatch(actionCreators.setBusinessValue(businessValue));
-	};
-
-	const handleInvestmentOnChange = (e) => {
-		setInvestmentValue(e.target.value);
-		dispatch(actionCreators.setInvestmentValue(investmentValue));
-	};
-
-	const handleStepsSubmit = () => {
-		dispatch(
-			actionCreators.addValues(
-				teamsValue,
-				visionValue,
-				propositionValue,
-				productValue,
-				marketValue,
-				businessValue,
-				investmentValue,
-				(res) => {
-					if (res.success) {
-						dispatch(actionCreators.getValues());
-						message.info('Thank you, You have done a Great Job, Cheers!!');
-					}
-				}
-			)
-		);
-	};
-
-	return (
-		<div className="diagnostics-container">
-			<Helmet>
-				<title>Diagnostics</title>
-			</Helmet>
-			<div className="steps">
-				<h2>Business Diagnostics</h2>
-				<MultipleStepForm
-					initialValues={{
-						teams: teams,
-						vision: vision,
-						proposition: proposition,
-						product: product,
-						market: market,
-						business: business,
-						investment: investment
-					}}
-					onSubmit={handleStepsSubmit}
-				>
-					<FormStep stepName="Team" onSubmit={() => console.log('Step 1 submit')}>
-						<div className="step">
-							<Stack sx={{ height: 300 }} spacing={1} direction="row">
-								<Slider
-									orientation="vertical"
-									defaultValue={teamsValue > 0 ? teamsValue : last_value && last_value.teams}
-									marks={teams}
-									onChange={handleTeamsOnChange}
-								/>
-							</Stack>
-						</div>
-					</FormStep>
-					<FormStep stepName="Problem & Vision" onSubmit={() => console.log('Step 1 submit')}>
-						<div className="step">
-							<Stack sx={{ height: 300 }} spacing={1} direction="row">
-								<Slider
-									orientation="vertical"
-									defaultValue={visionValue > 0 ? visionValue : last_value && last_value.vision}
-									marks={vision}
-									onChange={handleVisionOnChange}
-								/>
-							</Stack>
-						</div>
-					</FormStep>
-					<FormStep stepName="Value Proposition" onSubmit={() => console.log('Step 1 subit')}>
-						<div className="step">
-							<Stack sx={{ height: 300 }} spacing={1} direction="row">
-								<Slider
-									orientation="vertical"
-									defaultValue={
-										propositionValue > 0 ? propositionValue : last_value && last_value.proposition
-									}
-									marks={proposition}
-									onChange={handlePropositionOnChange}
-								/>
-							</Stack>
-						</div>
-					</FormStep>
-					<FormStep stepName="Product" onSubmit={() => console.log('Step 1 submit')}>
-						<div className="step">
-							<Stack sx={{ height: 300 }} spacing={1} direction="row">
-								<Slider
-									orientation="vertical"
-									defaultValue={productValue > 0 ? productValue : last_value && last_value.product}
-									marks={product}
-									onChange={handleProductOnChange}
-								/>
-							</Stack>
-						</div>
-					</FormStep>
-					<FormStep stepName="Market" onSubmit={() => console.log('Step 1 subit')}>
-						<div className="step">
-							<Stack sx={{ height: 300 }} spacing={1} direction="row">
-								<Slider
-									orientation="vertical"
-									defaultValue={marketValue > 0 ? marketValue : last_value && last_value.market}
-									marks={market}
-									onChange={handleMarketOnChange}
-								/>
-							</Stack>
-						</div>
-					</FormStep>
-					<FormStep stepName="Business Model" onSubmit={() => console.log('Step 1 subit')}>
-						<div className="step">
-							<Stack sx={{ height: 300 }} spacing={1} direction="row">
-								<Slider
-									orientation="vertical"
-									defaultValue={businessValue > 0 ? businessValue : last_value && last_value.business}
-									marks={business}
-									onChange={handleBusinessOnChange}
-								/>
-							</Stack>
-						</div>
-					</FormStep>
-					<FormStep stepName="Investment and exit" onSubmit={() => console.log('Step 1 subit')}>
-						<div className="step">
-							<Stack sx={{ height: 300 }} spacing={1} direction="row">
-								<Slider
-									orientation="vertical"
-									defaultValue={
-										investmentValue > 0 ? investmentValue : last_value && last_value.investment
-									}
-									marks={investment}
-									onChange={handleInvestmentOnChange}
-								/>
-							</Stack>
-						</div>
-					</FormStep>
-				</MultipleStepForm>
-				{loading ? (
-					<span>
-						<img src={svg} style={{ width: '30px', height: '30px' }} />
-					</span>
-				) : null}
-			</div>
-		</div>
-	);
+  if (!payload.length)
+    return (
+      <div className="diagnostics-container">
+        <div className="steps">
+          <h2 style={{ alignSelf: "center" }}>User has no Diagnostics set</h2>
+        </div>
+      </div>
+    );
+  else
+    return (
+      <div className="diagnostics-container">
+        <Helmet>
+          <title>Diagnostics</title>
+        </Helmet>
+        <div className="steps">
+          <h2>Business Diagnostics</h2>
+          <MultipleStepForm
+            initialValues={{
+              teams: "",
+              vision: "",
+              proposition: "",
+              product: "",
+              market: "",
+              business: "",
+              investment: "",
+            }}
+            onSubmit={handleStepsSubmit}
+          >
+            {payload?.map((d, index) => (
+              <FormStep
+                stepName={d.title}
+                onSubmit={() => console.log("Step 1 submit")}
+              >
+                <div className="step">
+                  <Stack sx={{ height: "100%" }} spacing={1} direction="column">
+                    {d?.steps
+                      ?.sort((a, b) => b.stepNo - a.stepNo)
+                      .map((s, i) => (
+                        <FormGroup key={i}>
+                          <FormControlLabel
+                            onChange={() => handleChange(index, i)}
+                            checked={s.checked ? s.checked : null}
+                            control={<Checkbox />}
+                            label={s.step}
+                          />
+                        </FormGroup>
+                      ))}
+                  </Stack>
+                </div>
+              </FormStep>
+            ))}
+          </MultipleStepForm>
+          {loading ? (
+            <span>
+              <img src={svg} style={{ width: "30px", height: "30px" }} />
+            </span>
+          ) : null}
+          <button className="save-steps" onClick={handleStepsSubmit}>
+            save progress
+          </button>
+        </div>
+      </div>
+    );
 };
 
 export default Diagnostics;

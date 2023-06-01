@@ -37,19 +37,16 @@ const Metrics = ({ visible }) => {
     loanEligibilityMsg,
     loanApplicationDate,
     eligibilityCheck,
+    diagnostics,
   } = useSelector((state) => state.auth);
-  const { values } = useSelector((state) => state.requests);
 
   const tableRef = React.useRef(null);
 
-  const diagnostics = values && values.at(-1);
-
   React.useEffect(() => {
-    // rearrangeArray();
     loanEligibilityCheck();
     getRevenue();
     getUser();
-    getValues();
+    getDiagnostics();
     ReactGA.pageview(window.location.pathname);
   }, []);
 
@@ -57,7 +54,7 @@ const Metrics = ({ visible }) => {
 
   const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
   const getUser = () => dispatch(actionCreators.getUser(userId, token));
-  const getValues = () => dispatch(actionCreators.getValues());
+  const getDiagnostics = () => dispatch(actionCreators.getDiagnostics());
   const loanEligibilityCheck = () =>
     dispatch(actionCreators.loanEligibilityCheck());
   const searchRevenueYear = () => {
@@ -208,6 +205,12 @@ const Metrics = ({ visible }) => {
     },
   ];
 
+  // console.log(diagnostics);
+
+  const diagnosticTool = [
+    ...diagnostics?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
+  ];
+
   const Cards = () => (
     <div className="revenue-card-row">
       {card_content.map((c) => (
@@ -265,11 +268,11 @@ const Metrics = ({ visible }) => {
           <LoanApplication setOpen={setLoanApplication} />
         </ModalUI>
       ) : null}
-      {loader ? (
+      {/* {loader ? (
         <ModalUI id="loader">
           <p style={{ color: "#fff" }}>Refresing...</p>
         </ModalUI>
-      ) : null}
+      ) : null} */}
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
@@ -348,19 +351,7 @@ const Metrics = ({ visible }) => {
           <Line data={Revenue} width={100} height={30} />
         </div>
       )}
-      <Diagnostics
-        teams={typeof diagnostics === "undefined" ? 0 : diagnostics.teams}
-        vision={typeof diagnostics === "undefined" ? 0 : diagnostics.vision}
-        proposition={
-          typeof diagnostics === "undefined" ? 0 : diagnostics.proposition
-        }
-        product={typeof diagnostics === "undefined" ? 0 : diagnostics.product}
-        market={typeof diagnostics === "undefined" ? 0 : diagnostics.market}
-        business={typeof diagnostics === "undefined" ? 0 : diagnostics.business}
-        investment={
-          typeof diagnostics === "undefined" ? 0 : diagnostics.investment
-        }
-      />
+      <Diagnostics diagnosticTool={diagnosticTool} />
     </div>
   );
 };
