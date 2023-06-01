@@ -145,7 +145,7 @@ export const updateProduct = (id, name, price, unitCost) => {
       .then((res) => {
         dispatch(stopLoader());
         dispatch(setProfile(res?.data?.profile));
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((error) => {
         dispatch(stopLoader());
