@@ -86,7 +86,7 @@ const StartupProfile = () => {
           },
           {
             id: 8,
-            name: "Interviewed 10+ customers about the Problem",
+            name: "Interviewed 10+ customers about the Problem.",
             checked: false,
           },
           {
