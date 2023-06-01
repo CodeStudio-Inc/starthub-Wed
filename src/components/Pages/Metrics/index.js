@@ -205,6 +205,8 @@ const Metrics = ({ visible }) => {
     },
   ];
 
+  // console.log(diagnostics);
+
   const diagnosticTool = [
     ...diagnostics?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
   ];
@@ -349,7 +351,7 @@ const Metrics = ({ visible }) => {
           <Line data={Revenue} width={100} height={30} />
         </div>
       )}
-      {/* <Diagnostics diagnosticTool={diagnosticTool} /> */}
+      <Diagnostics diagnosticTool={diagnosticTool} />
     </div>
   );
 };

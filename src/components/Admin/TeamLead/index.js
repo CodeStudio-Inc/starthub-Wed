@@ -41,16 +41,23 @@ const TeamLead = (props) => {
 
   const tableRef = React.useRef(null);
 
-  const filterUsers = all_users.filter(
-    (el) => el.teamCategory === category && el.creator === userId
-  );
-  const startups = all_users.filter(
-    (el) => el.teamLeadId === userId && el.userRole === "startup"
-  );
+  const filterUsers =
+    all_users &&
+    all_users.filter(
+      (el) => el.teamCategory === category && el.creator === userId
+    );
+  const startups =
+    all_users &&
+    all_users?.filter(
+      (el) => el.teamLeadId === userId && el.userRole === "startup"
+    );
 
-  const updateUsers = useCallback(() => {
+  // console.log(filterUsers);
+  // console.log(startups);
+
+  const updateUsers = () => {
     const newPayload = [
-      ...filterUsers.map((el) => {
+      ...filterUsers?.map((el) => {
         const { _id, userRole, permissions, ...rest } = el;
         return {
           ...rest,
@@ -63,9 +70,11 @@ const TeamLead = (props) => {
       }),
     ];
     return setPayload(newPayload);
-  }, [filterUsers]);
+  };
 
-  const revenueTotal = all_users.filter(
+  console.log(payload);
+
+  const revenueTotal = all_users?.filter(
     (el) =>
       el.teamCategory === category &&
       el.creator === userId &&
@@ -281,7 +290,7 @@ const TeamLead = (props) => {
                 label="startups"
               >
                 {startups.map((s) => (
-                  <MenuItem key={s._id} value={s._id}>
+                  <MenuItem key={s?._id} value={s?._id}>
                     {s.username}
                   </MenuItem>
                 ))}
@@ -349,8 +358,8 @@ const TeamLead = (props) => {
               <h3>Team members</h3>
             </div>
             <h1>
-              {filterUsers.length}{" "}
-              {filterUsers.length === 1 ? "member" : "members"}
+              {filterUsers?.length}{" "}
+              {filterUsers?.length === 1 ? "member" : "members"}
             </h1>
           </div>
         </div>
@@ -363,7 +372,8 @@ const TeamLead = (props) => {
               <h3 className="card-txt">Startups</h3>
             </div>
             <h1>
-              {startups.length} {startups.length === 1 ? "startup" : "startups"}
+              {startups?.length}{" "}
+              {startups?.length === 1 ? "startup" : "startups"}
             </h1>
           </div>
         </div>

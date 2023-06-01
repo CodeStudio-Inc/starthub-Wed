@@ -27,7 +27,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  width: 80%;
+  width: 95%;
   height: 100%;
   padding-bottom: 20px;
   border-radius: 10px;
@@ -125,6 +125,120 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+.accordion-founder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 90%;
+  /* height: 500px; */
+}
+
+.founder-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.founder-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  width: 35%;
+  border-radius: 5px;
+}
+
+.resized-founder-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  width: 25%;
+  border-radius: 5px;
+}
+
+.founder-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.founder-card-row h3 {
+  color: #dfa126;
+  font-weight: 500;
+}
+
+.founder-card-row h4 {
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+}
+
+.founder-icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.founder-table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.founder-icon-row h4 {
+  margin: 0;
+  color: #37561b;
+}
+
+.founder-icon-row h4:hover {
+  cursor: pointer;
+}
+
+.founder-table-row p {
+  margin: 0;
+}
+
+.founder-table-row input {
+  outline: none;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 40px;
+}
+
+.founder-table-row select {
+  outline: none;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 40px;
+}
+
+.founder-table-icon:hover {
+  cursor: pointer;
+}
+
 .accordion-content {
   display: flex;
   align-items: center;
@@ -173,6 +287,15 @@
   margin-bottom: 1rem;
 }
 
+.profile-listing-row h4 {
+  margin: 0;
+  color: #37561b;
+}
+
+.profile-listing-row h4:hover {
+  cursor: pointer;
+}
+
 .finance-card {
   display: flex;
   align-items: flex-start;
@@ -194,6 +317,32 @@
 .finance-card h2 {
   font-weight: bold;
   color: #dfa126;
+}
+
+.finance-table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.finance-table-row p {
+  margin: 0;
+}
+
+.finance-table-row input {
+  outline: none;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 150px;
+  height: 40px;
+}
+
+.finance-table-icon:hover {
+  cursor: pointer;
 }
 
 .listing-row {
@@ -341,10 +490,74 @@
   width: 100%;
 }
 
+.revenue-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.revenue-input-row input {
+  background: none;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 5px;
+  border-radius: 5px;
+  height: 50px;
+  width: 30%;
+}
+
+.month-column {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 30%;
+}
+
+.month-column h4 {
+  margin: 0;
+}
+
+.month-column input {
+  background: none;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 5px;
+  border-radius: 5px;
+  height: 50px;
+  width: 40%;
+  margin-left: 1rem;
+}
+
 .profile-input-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 1rem;
+}
+
+.profile-input-row input {
+  background: none;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 5px;
+  border-radius: 5px;
+  height: 50px;
+  width: 45%;
+}
+
+.profile-input-row select {
+  background: none;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 5px;
+  border-radius: 5px;
+  height: 50px;
+  width: 45%;
+}
+
+.edit-icon:hover {
+  cursor: pointer;
 }

@@ -47,16 +47,16 @@ const HomepageTemplate = (props) => {
   const [active, setActive] = React.useState({
     actionObject: null,
     objects: [
-      {
-        type: "startup",
-        title: "Dashboard",
-        icon: (
-          <BarChartIcon
-            style={{ fontSize: "25px" }}
-            className="home-link-icon"
-          />
-        ),
-      },
+      // {
+      //   type: "startup",
+      //   title: "Dashboard",
+      //   icon: (
+      //     <BarChartIcon
+      //       style={{ fontSize: "25px" }}
+      //       className="home-link-icon"
+      //     />
+      //   ),
+      // },
       {
         type: "startup",
         title: "OKRs",

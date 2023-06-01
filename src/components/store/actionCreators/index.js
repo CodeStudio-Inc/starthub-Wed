@@ -117,4 +117,11 @@ export {
   diagnosticsPayload,
 } from "./diagnostics";
 
-export { addProfile, getProfile, getProfileAdmin } from "./profile";
+export {
+  addProfile,
+  getProfile,
+  getProfileAdmin,
+  updateRevenue,
+  updateFounder,
+  updateProduct,
+} from "./profile";

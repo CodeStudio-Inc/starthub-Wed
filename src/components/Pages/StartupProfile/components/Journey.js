@@ -3,22 +3,30 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-const Journey = ({ journeySteps, handleJourneyStepsChange, journey }) => {
+const Journey = ({ journeySteps, handleJourneyStepsChange }) => {
   return (
     <div className="accordion">
       <FormGroup>
-        {journey?.length > 0
+        {journeySteps?.map((j, i) => (
+          <FormControlLabel
+            key={j.id}
+            control={<Checkbox />}
+            label={j.name}
+            checked={j.checked ? j.checked : null}
+            onChange={() => handleJourneyStepsChange(j.id, i)}
+          />
+        ))}
+        {/* {journey?.length > 0 && !editJourney
           ? journey?.map((j, i) => (
               <FormControlLabel
                 key={i}
                 control={<Checkbox />}
                 label={j.name}
-                checked={true}
-                disabled={true}
+                checked={j.checked}
               />
             ))
           : null}
-        {!journey?.length
+        {!journey?.length && !editJourney
           ? journeySteps?.map((j, i) => (
               <FormControlLabel
                 key={j.id}
@@ -28,7 +36,31 @@ const Journey = ({ journeySteps, handleJourneyStepsChange, journey }) => {
               />
             ))
           : null}
+        {editJourney
+          ? journeySteps?.map((j, i) => (
+              <FormControlLabel
+                key={j.id}
+                control={<Checkbox />}
+                label={j.name}
+                onChange={() => handleJourneyStepsChange(j.id, i)}
+              />
+            ))
+          : null} */}
       </FormGroup>
+      {/* {journey?.length > 0 && !editJourney ? (
+        <EditIcon
+          onClick={openJourneyEdit}
+          style={{ alignSelf: "flex-end", color: "#37561b" }}
+          className="edit-icon"
+        />
+      ) : null}
+      {editJourney ? (
+        <CancelIcon
+          onClick={cancelJourneyEdit}
+          style={{ alignSelf: "flex-end", color: "#37561b" }}
+          className="edit-icon"
+        />
+      ) : null} */}
     </div>
   );
 };

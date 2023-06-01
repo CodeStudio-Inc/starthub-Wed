@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from "antd";
+
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
@@ -7,12 +8,27 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 const Finance = ({
   revenue,
   finance,
   setRevenue,
   productInput,
+  editRevenue,
+  editFinance,
+  productState,
+  setProductState,
+  payload,
+  updateRevenue,
+  updateProduct,
+  loading,
+  svg,
+  openRevenueEdit,
+  selectedProductId,
+  cancelRevenueEdit,
+  openFinanceEdit,
+  cancelFinanceEdit,
   handleProductAdd,
   handleProductDelete,
   handleProductNameChange,
@@ -20,12 +36,29 @@ const Finance = ({
   handleProductUnitCostChange,
 }) => {
   const tableRef = React.useRef(null);
+
   const columns = [
     {
       title: "Product",
       dataIndex: "name",
       key: "name",
       align: "left",
+      render: (r) => (
+        <div className="finance-table-row">
+          {editFinance && selectedProductId === r.id ? (
+            <input
+              value={productState.name ? productState.name : r.name}
+              placeholder="product"
+              onChange={(e) =>
+                setProductState({ ...productState, name: e.target.value })
+              }
+              placeholder="product name"
+            />
+          ) : (
+            <p>{r.name}</p>
+          )}
+        </div>
+      ),
     },
     {
       title: "Price",
@@ -33,12 +66,25 @@ const Finance = ({
       key: "price",
       align: "left",
       render: (r) => (
-        <p style={{ color: "#37561b" }}>
-          <strong style={{ fontWeight: "300", marginRight: "0.5rem" }}>
-            UGX
-          </strong>
-          {r.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        </p>
+        <div className="finance-table-row">
+          {editFinance && selectedProductId === r.id ? (
+            <input
+              value={productState.price ? productState.price : r.price}
+              placeholder="price"
+              onChange={(e) =>
+                setProductState({ ...productState, price: e.target.value })
+              }
+              placeholder="price"
+            />
+          ) : (
+            <p style={{ color: "#37561b" }}>
+              <strong style={{ fontWeight: "300", marginRight: "0.5rem" }}>
+                USD
+              </strong>
+              {r.price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </p>
+          )}
+        </div>
       ),
     },
     {
@@ -47,15 +93,61 @@ const Finance = ({
       key: "unitCost",
       align: "left",
       render: (r) => (
-        <p>
-          <strong style={{ fontWeight: "300", marginRight: "0.5rem" }}>
-            UGX
-          </strong>
-          {r.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        </p>
+        <div className="finance-table-row">
+          {editFinance && selectedProductId === r.id ? (
+            <input
+              value={productState.unitCost ? productState.unitCost : r.unitCost}
+              placeholder="unit production cost"
+              onChange={(e) =>
+                setProductState({ ...productState, unitCost: e.target.value })
+              }
+            />
+          ) : (
+            <p>
+              <strong style={{ fontWeight: "300", marginRight: "0.5rem" }}>
+                USD
+              </strong>
+              {r.unitCost.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </p>
+          )}
+        </div>
+      ),
+    },
+    {
+      title: "edit",
+      dataIndex: "id",
+      key: "id",
+      align: "center",
+      render: (r) => (
+        <div className="finance-table-row">
+          {!editFinance ? (
+            <ModeEditOutlineIcon
+              onClick={() => openFinanceEdit(r)}
+              style={{ fontSize: "16px", color: "#37561b" }}
+              className="finance-table-icon"
+            />
+          ) : (
+            <div className="founder-icon-row">
+              <h4 onClick={() => updateProduct(r)}>save</h4>
+              <CancelIcon
+                onClick={cancelFinanceEdit}
+                style={{
+                  fontSize: "16px",
+                  color: "#37561b",
+                  marginLeft: "0.5rem",
+                }}
+                className="finance-table-icon"
+              />
+            </div>
+          )}
+          {loading && selectedProductId === r ? (
+            <img src={svg} style={{ height: "30px", width: "30px" }} />
+          ) : null}
+        </div>
       ),
     },
   ];
+
   return (
     <div className="accordion">
       {finance ? (
@@ -75,9 +167,39 @@ const Finance = ({
               </strong>
               Total lifetime revenue sofar
             </h4>
-            <h2>
-              ${finance?.lifeTimeRevenue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            </h2>
+            <div className="finance-table-row">
+              <h2>
+                $
+                {!editRevenue ? (
+                  finance?.lifeTimeRevenue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                ) : (
+                  <input
+                    value={
+                      revenue.lifetime
+                        ? revenue.lifetime
+                        : finance?.lifeTimeRevenue
+                    }
+                    onChange={(e) =>
+                      setRevenue({ ...revenue, lifetime: e.target.value })
+                    }
+                  />
+                )}
+              </h2>
+              {!editRevenue ? (
+                <ModeEditOutlineIcon
+                  onClick={openRevenueEdit}
+                  style={{ fontSize: "16px", color: "#37561b" }}
+                  className="finance-table-icon"
+                />
+              ) : null}
+              {editRevenue ? (
+                <CancelIcon
+                  onClick={cancelRevenueEdit}
+                  style={{ fontSize: "16px", color: "#37561b" }}
+                  className="finance-table-icon"
+                />
+              ) : null}
+            </div>
           </div>
           <div className="finance-card">
             <h4>
@@ -94,65 +216,112 @@ const Finance = ({
               </strong>
               Revenue of last full month
             </h4>
-            <h2>
-              ${finance?.fullMonthRevenue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            </h2>
+            <div className="finance-table-row">
+              <h2>
+                $
+                {!editRevenue ? (
+                  finance?.fullMonthRevenue.replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    ","
+                  )
+                ) : (
+                  <input
+                    value={
+                      revenue.fullMonth
+                        ? revenue.fullMonth
+                        : finance?.fullMonthRevenue
+                    }
+                    onChange={(e) =>
+                      setRevenue({ ...revenue, fullMonth: e.target.value })
+                    }
+                  />
+                )}
+              </h2>
+              {!editRevenue ? (
+                <ModeEditOutlineIcon
+                  onClick={openRevenueEdit}
+                  style={{ fontSize: "16px", color: "#37561b" }}
+                  className="finance-table-icon"
+                />
+              ) : null}
+              {editRevenue ? (
+                <CancelIcon
+                  onClick={cancelRevenueEdit}
+                  style={{ fontSize: "16px", color: "#37561b" }}
+                  className="finance-table-icon"
+                />
+              ) : null}
+            </div>
           </div>
           <div className="finance-card">
             <h4>Last fullmonth Month & Year</h4>
-            <h2>{finance?.monthYear}</h2>
+            <div className="finance-table-row">
+              {!editRevenue ? (
+                <h2>{finance?.monthYear}</h2>
+              ) : (
+                <input
+                  type="month"
+                  value={
+                    revenue.monthYear ? revenue.monthYear : finance?.monthYear
+                  }
+                  onChange={(e) =>
+                    setRevenue({ ...revenue, monthYear: e.target.value })
+                  }
+                />
+              )}
+              {!editRevenue ? (
+                <ModeEditOutlineIcon
+                  onClick={openRevenueEdit}
+                  style={{ fontSize: "16px", color: "#37561b" }}
+                  className="finance-table-icon"
+                />
+              ) : null}
+              {editRevenue ? (
+                <CancelIcon
+                  onClick={cancelRevenueEdit}
+                  style={{ fontSize: "16px", color: "#37561b" }}
+                  className="finance-table-icon"
+                />
+              ) : null}
+            </div>
           </div>
+          {editRevenue && !loading ? (
+            <h4 onClick={updateRevenue}>save</h4>
+          ) : null}
+          {loading ? (
+            <img src={svg} style={{ height: "30px", width: "30px" }} />
+          ) : null}
         </div>
       ) : null}
       {!finance ? (
-        <div className="profile-input-row">
-          <FormControl style={{ width: "100%" }}>
-            <InputLabel htmlFor="outlined-adornment-amount">Revenue</InputLabel>
-            <OutlinedInput
-              required
-              id="outlined-adornment-amount"
-              placeholder="Total lifetime revenue so far"
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
-              label="Amount"
-              value={revenue.lifetime}
-              onChange={(e) =>
-                setRevenue({ ...revenue, lifetime: e.target.value })
-              }
-            />
-          </FormControl>
-        </div>
-      ) : null}
-      {!finance ? (
-        <div className="profile-input-row">
-          <FormControl style={{ width: "45%" }}>
-            <InputLabel htmlFor="outlined-adornment-amount">Revenue</InputLabel>
-            <OutlinedInput
-              required
-              id="outlined-adornment-amount"
-              placeholder="Revenue of last full month"
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
-              label="Amount"
-              value={revenue.fullMonth}
-              onChange={(e) =>
-                setRevenue({ ...revenue, fullMonth: e.target.value })
-              }
-            />
-          </FormControl>
-          <TextField
+        <div className="revenue-input-row">
+          <input
             required
-            label="month & year"
-            variant="outlined"
-            type="month"
-            value={revenue.monthYear}
+            placeholder="$ Total lifetime revenue so far"
+            value={revenue.lifetime}
             onChange={(e) =>
-              setRevenue({ ...revenue, monthYear: e.target.value })
+              setRevenue({ ...revenue, lifetime: e.target.value })
             }
-            style={{ width: "45%" }}
           />
+          <input
+            required
+            placeholder="$ Revenue of last full month"
+            value={revenue.fullMonth}
+            onChange={(e) =>
+              setRevenue({ ...revenue, fullMonth: e.target.value })
+            }
+          />
+          <div className="month-column">
+            <h4>last full month & year</h4>
+            <input
+              required
+              type="month"
+              value={revenue.monthYear}
+              onChange={(e) =>
+                setRevenue({ ...revenue, monthYear: e.target.value })
+              }
+            />
+          </div>
         </div>
       ) : null}
       {finance ? (
@@ -160,7 +329,7 @@ const Finance = ({
           ref={tableRef}
           columns={columns}
           dataSource={[
-            ...finance?.products?.map((r) => ({
+            ...payload.map((r) => ({
               ...r,
               key: r.id,
             })),
@@ -188,29 +357,17 @@ const Finance = ({
       ) : null}
       {!finance
         ? productInput?.map((p, i) => (
-            <div className="profile-input-row" key={i}>
-              <TextField
-                required
-                label="name"
-                variant="outlined"
-                type="text"
-                style={{ width: "30%" }}
+            <div className="revenue-input-row" key={i}>
+              <input
+                placeholder="name"
                 onChange={(e) => handleProductNameChange(e, i)}
               />
-              <TextField
-                required
-                label="price"
-                variant="outlined"
-                type="text"
-                style={{ width: "30%" }}
+              <input
+                placeholder="price"
                 onChange={(e) => handleProductPriceChange(e, i)}
               />
-              <TextField
-                required
-                label="unit production cost"
-                variant="outlined"
-                type="text"
-                style={{ width: "30%" }}
+              <input
+                placeholder="unit production cost"
                 onChange={(e) => handleProductUnitCostChange(e, i)}
               />
               <HighlightOffIcon
