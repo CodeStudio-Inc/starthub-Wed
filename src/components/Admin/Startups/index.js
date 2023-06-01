@@ -278,14 +278,12 @@ const Startups = (props) => {
             <button> Generate excel sheet </button>
           </DownloadTableExcel>
         </div>
-        {features.includes("add startups") ? (
-          <div className="add-startup-button" onClick={setOpenAddStartup}>
-            <ControlPointIcon
-              style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-            />
-            <p>Add new Startup</p>
-          </div>
-        ) : null}
+        <div className="add-startup-button" onClick={setOpenAddStartup}>
+          <ControlPointIcon
+            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
+          />
+          <p>Add new Startup</p>
+        </div>
       </div>
       <Table
         ref={tableRef}
