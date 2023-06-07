@@ -150,6 +150,60 @@
   color: #37561b;
 }
 
+.table-column-row:hover {
+  cursor: pointer;
+}
+
+.table-more-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 60px;
+  background: #37561b;
+  margin-left: 1.5rem;
+}
+
+.table-email-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-email-cell input {
+  outline: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 80%;
+  height: 30px;
+}
+
+.table-email-cell p {
+  margin: 0;
+}
+
+.table-email-cell h4 {
+  margin: 0;
+  color: #37561b;
+}
+
+.table-email-cell h4:hover {
+  cursor: pointer;
+}
+
+.email-icon {
+  color: #37561b;
+  margin-left: 0.5rem;
+}
+
+.email-icon:hover {
+  cursor: pointer;
+}
+
 .edit-profile-container {
   display: flex;
   align-items: center;
@@ -908,6 +962,24 @@
   color: #37561b;
   background: #36561b56;
   padding: 5px;
+}
+
+.attach-diagnostics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+}
+
+.attach-diagnostics select {
+  outline: none;
+  background: none;
+  height: 40px;
+  width: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin: 10px;
 }
 
 @media screen and (max-width: 768px) {

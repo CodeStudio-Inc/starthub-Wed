@@ -4,6 +4,7 @@ import { updateObject } from "./utility";
 const initialState = {
   profile: [],
   loading: false,
+  profiles: [],
 };
 
 const auth = (state = initialState, action) => {
@@ -21,6 +22,11 @@ const auth = (state = initialState, action) => {
     case actions.SET_PROFILE:
       return updateObject(state, {
         profile: action.data,
+      });
+
+    case actions.SET_ALL_PROFILES:
+      return updateObject(state, {
+        profiles: action.data,
       });
     default:
       return state;

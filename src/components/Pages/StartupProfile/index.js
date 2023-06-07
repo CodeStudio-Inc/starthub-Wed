@@ -75,39 +75,8 @@ const StartupProfile = () => {
       ? profile?.journey
       : [
           {
-            id: 9,
-            name: "We have a great founding team and have founder/market fit",
-            checked: false,
-          },
-          {
-            id: 9,
-            name: "We are solving an urgent, frequent, mandatory, popular, and/or expensive Problem",
-            checked: false,
-          },
-          {
-            id: 8,
-            name: "Interviewed 10+ customers about the Problem.",
-            checked: false,
-          },
-          {
-            id: 7,
-            name: "We have a specifications document & timeline for your MVP or launched already",
-            checked: false,
-          },
-          { id: 6, name: "MVP has been sold to 1+ customers", checked: false },
-          {
-            id: 5,
-            name: "We have 10 recurring customers who LOVE our product",
-            checked: false,
-          },
-          {
-            id: 4,
-            name: "We have 100 recurring customers who LOVE your product and refer many other clients",
-            checked: false,
-          },
-          {
-            id: 3,
-            name: "We Have found retention that is on industry standard and grow consistently week over week",
+            id: 1,
+            name: "We have standardized processes, structures, and have a strong culture to improve quality as we scale",
             checked: false,
           },
           {
@@ -116,8 +85,39 @@ const StartupProfile = () => {
             checked: false,
           },
           {
-            id: 1,
-            name: "We have standardized processes, structures, and have a strong culture to improve quality as we scale",
+            id: 3,
+            name: "We Have found retention that is on industry standard and grow consistently week over week",
+            checked: false,
+          },
+          {
+            id: 4,
+            name: "We have 100 recurring customers who LOVE your product and refer many other clients",
+            checked: false,
+          },
+          {
+            id: 5,
+            name: "We have 10 recurring customers who LOVE our product",
+            checked: false,
+          },
+          { id: 6, name: "MVP has been sold to 1+ customers", checked: false },
+          {
+            id: 7,
+            name: "We have a specifications document & timeline for your MVP or launched already",
+            checked: false,
+          },
+          {
+            id: 8,
+            name: "Interviewed 10+ customers about the Problem.",
+            checked: false,
+          },
+          {
+            id: 9,
+            name: "We are solving an urgent, frequent, mandatory, popular, and/or expensive Problem",
+            checked: false,
+          },
+          {
+            id: 10,
+            name: "We have a great founding team and have founder/market fit",
             checked: false,
           },
         ]

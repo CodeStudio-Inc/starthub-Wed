@@ -26,7 +26,7 @@ const Navbar = ({ data, history }) => {
 					<h4>Back</h4> */}
         <h4 onClick={() => history.push("/")}>Dashboard</h4>
       </div>
-      <div className="edit-profile-container">
+      <div className="edit-profile-container" style={{ width: "60%" }}>
         <h4
           onClick={() =>
             history.push(`/startup/${data.username}`, { data: data })
