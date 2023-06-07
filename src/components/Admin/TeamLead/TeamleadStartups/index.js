@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { Line } from "react-chartjs-2";
-import { Table } from "antd";
+import { Table, message } from "antd";
 import { actionCreators, ModalUI, svg } from "../../../Paths";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import AddCardIcon from "@mui/icons-material/AddCard";
@@ -17,16 +17,26 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import EditIcon from "@mui/icons-material/Edit";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 import AddTeamMember from "../modals/AddTeamMember";
 import "../TeamLead.css";
 // import "../../Pages/Auth/AuthStyles.css";
 const TeamLeadStartups = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [emailEdit, setEmailEdit] = React.useState(false);
+  const [record, setRecord] = React.useState({});
+  const [email, setEmail] = React.useState("");
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { users } = useSelector((state) => state.admin);
+  const editEmail = () => setEmailEdit(true);
+  const cancelEdit = () => setEmailEdit(false);
+
+  const { users, loader } = useSelector((state) => state.admin);
   const { userId, category, loading } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
@@ -34,9 +44,7 @@ const TeamLeadStartups = (props) => {
   const filterUsers = users.filter(
     (el) => el.teamCategory === category && el.creator === userId
   );
-  const startups = users.filter(
-    (el) => el.teamLeadId === userId && el.userRole === "startup"
-  );
+  const startups = users.filter((el) => el.teamLeadId === userId);
 
   const revenueTotal = users.filter(
     (el) =>
@@ -64,19 +72,52 @@ const TeamLeadStartups = (props) => {
     getStartups();
   }, []);
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const updateStartup = () => {
+    if (!email || !validateEmail(email))
+      return message.info("Enter valid Email");
+    dispatch(actionCreators.updateStartup(record._id, "", email, "", ""));
+    getStartups();
+    setEmailEdit(false);
+  };
+
+  const viewStartup = (r) => {
+    const data = startups.find((s) => s.username === r);
+    props.history.push(`/startup/${data.username}`, {
+      data: data,
+    });
+  };
+
   const columns = [
     {
       title: "Startup",
       dataIndex: "username",
       key: "username",
       align: "left",
+      width: 300,
       fixed: true,
       render: (r) => (
-        <div className="table-column-row">
+        <div className="table-column-row" onClick={() => viewStartup(r)}>
           <div className="table-avatar">
             <h3>{r.substring(0, 1)}</h3>
           </div>
-          <h5>{r}</h5>
+          <h5>{r.length > 10 ? r.substring(0, 10) + "..." : r}</h5>
+          {loader && record.username === r ? (
+            <img src={svg} style={{ height: "20px", width: "20px" }} />
+          ) : (
+            <div className="table-more-icon">
+              <ArrowForwardIosRoundedIcon
+                style={{ color: "#fff", fontSize: "14px" }}
+              />
+            </div>
+          )}
         </div>
       ),
     },
@@ -85,6 +126,55 @@ const TeamLeadStartups = (props) => {
       dataIndex: "email",
       key: "email",
       align: "left",
+      width: 300,
+      render: (r) => (
+        <div className="table-email-cell">
+          {emailEdit && record.email === r ? (
+            <input
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          ) : (
+            <p>{r}</p>
+          )}
+          {emailEdit && record.email === r ? (
+            <h4 onClick={updateStartup}>save</h4>
+          ) : null}
+          {emailEdit && record.email === r ? (
+            <CancelRoundedIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
+              onClick={cancelEdit}
+            />
+          ) : (
+            <EditIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
+              onClick={editEmail}
+            />
+          )}
+        </div>
+      ),
+    },
+    {
+      title: "Category",
+      dataIndex: "teamCategory",
+      key: "teamCategory",
+      align: "left",
+      filterMode: "tree",
+      filterSearch: true,
+      filters: [
+        {
+          text: "OIP",
+          value: "OIP",
+        },
+        {
+          text: "Catalyzer",
+          value: "catalyzer",
+        },
+      ],
+      onFilter: (value, record) => record.teamCategory.includes(value),
     },
     {
       title: "Contract Date",
@@ -255,9 +345,7 @@ const TeamLeadStartups = (props) => {
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
-              props.history.push(`/startup/${record.username}`, {
-                data: record,
-              });
+              setRecord(record);
             },
           };
         }}

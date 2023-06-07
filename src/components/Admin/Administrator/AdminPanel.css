@@ -103,6 +103,48 @@
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
+.admin-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.navigation-cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 30%;
+  padding: 10px;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.navigation-cards-columns {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.admin-table-cells {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.admin-table-cells-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .add-feature-column {
   display: flex;
   align-items: flex-start;

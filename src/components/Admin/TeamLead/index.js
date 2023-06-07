@@ -12,6 +12,8 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { Helmet } from "react-helmet";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "@mui/material/Modal";
+import EditIcon from "@mui/icons-material/Edit";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -34,21 +36,21 @@ const TeamLead = (props) => {
   const [role, setRole] = React.useState("");
   const [editRole, setEditRole] = React.useState(false);
   const [payload, setPayload] = React.useState([]);
+  const [emailEdit, setEmailEdit] = React.useState(false);
+  const [record, setRecord] = React.useState({});
+  const [email, setEmail] = React.useState("");
 
-  const { userId, category, loading, all_users } = useSelector(
-    (state) => state.auth
-  );
+  const { userId, category, loading } = useSelector((state) => state.auth);
+  const { loader, users } = useSelector((state) => state.admin);
 
   const tableRef = React.useRef(null);
 
   const filterUsers =
-    all_users &&
-    all_users.filter(
-      (el) => el.teamCategory === category && el.creator === userId
-    );
+    users &&
+    users.filter((el) => el.teamCategory === category && el.creator === userId);
   const startups =
-    all_users &&
-    all_users?.filter(
+    users &&
+    users?.filter(
       (el) => el.teamLeadId === userId && el.userRole === "startup"
     );
 
@@ -72,9 +74,7 @@ const TeamLead = (props) => {
     return setPayload(newPayload);
   };
 
-  console.log(payload);
-
-  const revenueTotal = all_users?.filter(
+  const revenueTotal = users?.filter(
     (el) =>
       el.teamCategory === category &&
       el.creator === userId &&
@@ -93,7 +93,7 @@ const TeamLead = (props) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    getStartup();
+    getStartups();
     getFeatures();
     updateUsers();
     getCategories();
@@ -151,20 +151,41 @@ const TeamLead = (props) => {
       })
     );
 
+  const editEmail = () => setEmailEdit(true);
+  const cancelEdit = () => setEmailEdit(false);
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const updateStartup = () => {
+    if (!email || !validateEmail(email))
+      return message.info("Enter valid Email");
+    dispatch(actionCreators.updateStartup(ID, "", email, "", ""));
+    getStartups();
+    setEmailEdit(false);
+  };
+
   const columns = [
     {
       title: "Username",
       dataIndex: "username",
       key: "username",
       align: "left",
-      width: "18px",
-      fixed: true,
+      // width: 10,
       render: (r) => (
         <div className="table-column-row">
           <div className="table-avatar">
             <h3>{r.substring(0, 1)}</h3>
           </div>
           <h5>{r}</h5>
+          {loader && record.username === r ? (
+            <img src={svg} style={{ height: "20px", width: "20px" }} />
+          ) : null}
         </div>
       ),
     },
@@ -173,14 +194,43 @@ const TeamLead = (props) => {
       dataIndex: "email",
       key: "email",
       align: "left",
-      width: "40px",
+      // width: 20,
+      render: (r) => (
+        <div className="table-email-cell">
+          {emailEdit && record.email === r ? (
+            <input
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          ) : (
+            <p>{r}</p>
+          )}
+          {emailEdit && record.email === r ? (
+            <h4 onClick={updateStartup}>save</h4>
+          ) : null}
+          {emailEdit && record.email === r ? (
+            <CancelRoundedIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
+              onClick={cancelEdit}
+            />
+          ) : (
+            <EditIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
+              onClick={editEmail}
+            />
+          )}
+        </div>
+      ),
     },
     {
       title: "Permissions",
       dataIndex: "permission",
       key: "permission",
       align: "left",
-      width: "40px",
+      // width: 20,
       render: (r) => (
         <div className="table-cell-row ">
           {!editPermission ? <p>{r.value}</p> : null}
@@ -206,13 +256,21 @@ const TeamLead = (props) => {
             </FormControl>
           ) : null}
           {!editPermission ? (
-            <button onClick={showPermissionInput}>change permission</button>
+            <EditIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
+              onClick={showPermissionInput}
+            />
           ) : null}
           {editPermission && ID === r.id ? (
             <button onClick={editUserPermission}>save</button>
           ) : null}
           {editPermission && ID === r.id ? (
-            <button onClick={hidePermissionInput}>cancel</button>
+            <CancelRoundedIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
+              onClick={hidePermissionInput}
+            />
           ) : null}
           {loading && ID === r.id ? (
             <img src={svg} style={{ height: "20px", width: "20px" }} />
@@ -225,7 +283,7 @@ const TeamLead = (props) => {
       dataIndex: "role",
       key: "role",
       align: "left",
-      width: "40px",
+      // width: 20,
       render: (r) => (
         <div className="table-cell-row ">
           {!editRole ? <p>{r.value}</p> : null}
@@ -251,13 +309,21 @@ const TeamLead = (props) => {
             </FormControl>
           ) : null}
           {!editRole ? (
-            <button onClick={showRoleInput}>change user role</button>
+            <EditIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
+              onClick={showRoleInput}
+            />
           ) : null}
           {editRole && ID === r.id ? (
             <button onClick={editUserRole}>save</button>
           ) : null}
           {editRole && ID === r.id ? (
-            <button onClick={hideRoleInput}>cancel</button>
+            <CancelRoundedIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
+              onClick={hideRoleInput}
+            />
           ) : null}
           {loading && ID === r.id ? (
             <img src={svg} style={{ height: "20px", width: "20px" }} />
@@ -270,7 +336,7 @@ const TeamLead = (props) => {
       dataIndex: "id",
       key: "id",
       align: "left",
-      width: "40px",
+      // width: 20,
       render: (r) => (
         <div className="table-cell-row ">
           {editstartup && ID === r ? (
@@ -311,12 +377,11 @@ const TeamLead = (props) => {
             </button>
           ) : null}
           {editstartup && ID === r ? (
-            <button
-              className="table-cell-view-button"
+            <CancelRoundedIcon
+              style={{ fontSize: "18px" }}
+              className="email-icon"
               onClick={hideStartupInput}
-            >
-              cancel
-            </button>
+            />
           ) : null}
           {loading && ID === r ? (
             <img src={svg} style={{ height: "20px", width: "20px" }} />
@@ -326,7 +391,7 @@ const TeamLead = (props) => {
     },
   ];
 
-  const getStartup = () => dispatch(actionCreators.getUserz());
+  const getStartups = () => dispatch(actionCreators.getUsers());
   const getFeatures = () => dispatch(actionCreators.getFeatures());
   const getCategories = () => dispatch(actionCreators.getCategories());
 
@@ -442,14 +507,15 @@ const TeamLead = (props) => {
           return {
             onClick: () => {
               setID(record.id);
+              setRecord(record);
             },
           };
         }}
         style={{ width: "95%" }}
         bordered={true}
-        scroll={{
-          x: 2000,
-        }}
+        // scroll={{
+        //   x: 2000,
+        // }}
         pagination={{
           defaultPageSize: 9,
           showSizeChanger: true,

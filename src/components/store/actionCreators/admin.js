@@ -140,7 +140,7 @@ export const getUsers = () => {
       .get(`admin/users`)
       .then((res) => {
         dispatch(stopLoader());
-        // console.log(res)
+        // console.log(res);
         dispatch(setUsers(res.data.users));
       })
       .catch((error) => {
@@ -1111,6 +1111,46 @@ export const updateStartup = (
         dispatch(stopLoader());
         dispatch(setUsers(res.data.users));
         // console.log(res);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        console.log(error);
+      });
+  };
+};
+
+export const attachDiagnostics = (userId, diagnostics) => {
+  return (dispatch) => {
+    dispatch(loadAction());
+
+    const data = {
+      diagnostics,
+    };
+
+    axios
+      .patch(`auth/attach-diagnostics/${userId}`, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        dispatch(setUsers(res.data.users));
+        console.log(res);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        console.log(error);
+      });
+  };
+};
+
+export const searchUsers = (teamCategory) => {
+  return (dispatch) => {
+    dispatch(loadAction());
+
+    axios
+      .get(`auth/search-category?teamCategory=${teamCategory}`)
+      .then((res) => {
+        dispatch(stopLoader());
+        dispatch(setUsers(res.data.users));
+        console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());

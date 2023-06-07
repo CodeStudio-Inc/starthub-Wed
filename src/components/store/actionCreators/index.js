@@ -109,6 +109,8 @@ export {
   sendEmail,
   addPayment,
   updateStartup,
+  attachDiagnostics,
+  searchUsers,
 } from "./admin";
 
 export {
@@ -124,4 +126,5 @@ export {
   updateRevenue,
   updateFounder,
   updateProduct,
+  getAllProfiles,
 } from "./profile";

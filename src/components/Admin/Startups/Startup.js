@@ -19,11 +19,13 @@ import Diagnostics from "./Diagnostics";
 import Navbar from "./modals/Navbar";
 import "./StartupStyles.css";
 const Startup = ({ location, history }) => {
+  const [selected, setSelected] = React.useState("");
   const [year, setYear] = React.useState("");
   const [revenueTable, setRevenueTable] = React.useState(false);
   const { revenue, loader, revenue_tracking } = useSelector(
     (state) => state.admin
   );
+  const { diagnostics } = useSelector((state) => state.diagnostics);
 
   const tableRef = React.useRef(null);
 
@@ -48,6 +50,12 @@ const Startup = ({ location, history }) => {
     setYear("");
   };
   const getProfile = () => dispatch(actionCreators.getProfileAdmin(data._id));
+
+  const handleChange = (event) => {
+    setSelected(event.target.value);
+  };
+
+  console.log(selected);
 
   React.useEffect(() => {
     getRevenue();
@@ -510,93 +518,102 @@ const Startup = ({ location, history }) => {
         </ModalUI>
       ) : null}
       <Navbar data={data} history={history} />
-      <Cards />
-      <div className="rev-tracking-table">
-        <div className="rev-tracking-table-row">
-          <h3>{revenueTotal.tracking} Revenue Reporting Tracking</h3>
-          <div className="search-box-row">
-            <input
-              placeholder="year"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-            />
-            <button
-              style={{ color: "#fff", borderRadius: "5px" }}
-              onClick={searchRevenueYear}
-            >
-              search
+      {data.teamCategory.includes("catalyzer") ? <Cards /> : null}
+      {data.teamCategory.includes("catalyzer") ? (
+        <div className="rev-tracking-table">
+          <div className="rev-tracking-table-row">
+            <h3>{revenueTotal.tracking} Revenue Reporting Tracking</h3>
+            <div className="search-box-row">
+              <input
+                placeholder="year"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+              />
+              <button
+                style={{ color: "#fff", borderRadius: "5px" }}
+                onClick={searchRevenueYear}
+              >
+                search
+              </button>
+            </div>
+          </div>
+          <Table
+            style={{ width: "100%", marginBottom: "1rem" }}
+            columns={columnz}
+            dataSource={[
+              ...filterRevenueTracking.map((r) => ({
+                ...r,
+                key: r._id,
+              })),
+            ]}
+            pagination={false}
+          />
+        </div>
+      ) : null}
+      {data.teamCategory.includes("catalyzer") ? (
+        <div className="graph-tab">
+          <div className="graph-row">
+            <h3>{revenueTotal.year} Revenue Reporting Graph</h3>
+            <button onClick={() => setRevenueTable(true)}>
+              view reported revenue
             </button>
           </div>
+          <div className="rev-total">
+            <h4>
+              Total Revenue Reported{" "}
+              <strong
+                style={{
+                  color: "#37561b",
+                  fontSize: "18px",
+                  marginBottom: "1 rem",
+                }}
+              >
+                {revenueTotal.revenue
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                Shs
+              </strong>
+            </h4>
+            <h4>
+              Total Expenses Reported{" "}
+              <strong
+                style={{
+                  color: "#dfa126",
+                  fontSize: "18px",
+                  marginBottom: "1 rem",
+                }}
+              >
+                {revenueTotal.expense
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                Shs
+              </strong>
+            </h4>
+            <h4>
+              Total Revenue Share Payment{" "}
+              <strong
+                style={{
+                  color: "#7e2527",
+                  fontSize: "18px",
+                  marginBottom: "1 rem",
+                }}
+              >
+                {revenueTotal.payment
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                Shs
+              </strong>
+            </h4>
+          </div>
+          <Line data={Revenue} width={100} height={30} />
         </div>
-        <Table
-          style={{ width: "100%", marginBottom: "1rem" }}
-          columns={columnz}
-          dataSource={[
-            ...filterRevenueTracking.map((r) => ({
-              ...r,
-              key: r._id,
-            })),
-          ]}
-          pagination={false}
-        />
-      </div>
-      <div className="graph-tab">
-        <div className="graph-row">
-          <h3>{revenueTotal.year} Revenue Reporting Graph</h3>
-          <button onClick={() => setRevenueTable(true)}>
-            view reported revenue
-          </button>
-        </div>
-        <div className="rev-total">
-          <h4>
-            Total Revenue Reported{" "}
-            <strong
-              style={{
-                color: "#37561b",
-                fontSize: "18px",
-                marginBottom: "1 rem",
-              }}
-            >
-              {revenueTotal.revenue
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
-            </strong>
-          </h4>
-          <h4>
-            Total Expenses Reported{" "}
-            <strong
-              style={{
-                color: "#dfa126",
-                fontSize: "18px",
-                marginBottom: "1 rem",
-              }}
-            >
-              {revenueTotal.expense
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
-            </strong>
-          </h4>
-          <h4>
-            Total Revenue Share Payment{" "}
-            <strong
-              style={{
-                color: "#7e2527",
-                fontSize: "18px",
-                marginBottom: "1 rem",
-              }}
-            >
-              {revenueTotal.payment
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              Shs
-            </strong>
-          </h4>
-        </div>
-        <Line data={Revenue} width={100} height={30} />
-      </div>
-      <Diagnostics diagnosticTool={diagnosticTool} />
+      ) : null}
+      <Diagnostics
+        diagnosticTool={diagnosticTool}
+        diagnostics={diagnostics}
+        handleChange={handleChange}
+        selected={selected}
+      />
     </div>
   );
 };
