@@ -20,6 +20,13 @@ export const setProfile = (data) => {
   };
 };
 
+export const setAllProfiles = (data) => {
+  return {
+    type: actions.SET_ALL_PROFILES,
+    data,
+  };
+};
+
 export const addProfile = (
   founder,
   customer,
@@ -160,6 +167,20 @@ export const getProfileAdmin = (userId) => {
       .get(`catalyzer/startup-profile?userId=${userId}`)
       .then((res) => {
         dispatch(setProfile(res?.data?.profile));
+        // console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const getAllProfiles = () => {
+  return (dispatch, getState) => {
+    axios
+      .get(`catalyzer/profiles`)
+      .then((res) => {
+        dispatch(setAllProfiles(res.data.profiles));
         // console.log(res.data);
       })
       .catch((error) => {

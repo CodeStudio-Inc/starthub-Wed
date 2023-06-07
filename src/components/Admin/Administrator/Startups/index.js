@@ -77,7 +77,7 @@ const Startups = (props) => {
           <div className="table-avatar">
             <h3>{r.substring(0, 1)}</h3>
           </div>
-          <h5>{r}</h5>
+          <h5>{r.length > 10 ? r.substring(0, 10) + "..." : r}</h5>
         </div>
       ),
     },
