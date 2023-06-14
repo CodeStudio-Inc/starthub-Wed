@@ -58,6 +58,7 @@ export {
   editStatement,
   editObjective,
   editkeyResult,
+  updateObjectiveProgress,
   deleteKeyResult,
   updateQuarter,
 } from "./requests";

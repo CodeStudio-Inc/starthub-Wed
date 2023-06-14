@@ -770,7 +770,7 @@ export const editStatement = (id, vision, mission, callback) => {
   };
 };
 
-export const addObjective = (id, description, quarter, callback) => {
+export const addObjective = (description, quarter, callback) => {
   return (dispatch, getState) => {
     dispatch(loadAction());
 
@@ -780,14 +780,15 @@ export const addObjective = (id, description, quarter, callback) => {
     };
 
     axios
-      .post(`catalyzer/objective/${id}`, data)
+      .post(`catalyzer/objective`, data)
       .then((res) => {
-        // console.log(res.data.objs)
+        // console.log(res.data.objs);
         dispatch(setObjectives(res.data.objs));
-        callback({ success: true, res: res });
+        callback({ success: true, data: res.data.objs });
         dispatch(stopLoader());
       })
       .catch((error) => {
+        dispatch(stopLoader());
         console.log(error);
       });
   };
@@ -841,7 +842,7 @@ export const editObjective = (id, description, callback) => {
       .then((res) => {
         // console.log(res)
         dispatch(setObjectives(res.data.objs));
-        callback({ success: true, res: res });
+        callback({ success: true, data: res.data.objs });
         dispatch(stopLoader());
       })
       .catch((error) => {
@@ -859,7 +860,7 @@ export const deleteObjective = (id, callback) => {
       .then((res) => {
         // console.log(res)
         dispatch(setObjectives(res.data.objs));
-        callback({ success: true, res: res });
+        callback({ success: true, data: res.data.objs });
         dispatch(stopLoader());
       })
       .catch((error) => {
@@ -890,18 +891,44 @@ export const archiveObjective = (id, callback) => {
   };
 };
 
-export const addkeyResult = (
-  description,
-  measureOfSuccess,
-  objId,
-  callback
-) => {
+// export const addkeyResult = (
+//   description,
+//   measureOfSuccess,
+//   objId,
+//   callback
+// ) => {
+//   return (dispatch, getState) => {
+//     dispatch(loadAction());
+
+//     const data = {
+//       description,
+//       measureOfSuccess,
+//       objId,
+//     };
+
+//     axios
+//       .post(`catalyzer/keyresult`, data)
+//       .then((res) => {
+//         // console.log(res);
+//         dispatch(setObjectives(res.data.objs));
+//         callback({ success: true, res: res });
+//         dispatch(stopLoader());
+//       })
+//       .catch((error) => {
+//         dispatch(stopLoader());
+//         callback({ success: false });
+//         console.log(error);
+//       });
+//   };
+// };
+
+export const addkeyResult = (description, startDate, objId, callback) => {
   return (dispatch, getState) => {
     dispatch(loadAction());
 
     const data = {
       description,
-      measureOfSuccess,
+      startDate,
       objId,
     };
 
@@ -910,7 +937,7 @@ export const addkeyResult = (
       .then((res) => {
         // console.log(res);
         dispatch(setObjectives(res.data.objs));
-        callback({ success: true, res: res });
+        callback({ success: true, data: res.data.objs });
         dispatch(stopLoader());
       })
       .catch((error) => {
@@ -921,28 +948,21 @@ export const addkeyResult = (
   };
 };
 
-export const editkeyResult = (
-  id,
-  description,
-  measureOfSuccess,
-  dateCreated,
-  callback
-) => {
+export const updateObjectiveProgress = (objId, score, keyresults, callback) => {
   return (dispatch, getState) => {
     dispatch(loadAction());
 
     const data = {
-      description,
-      measureOfSuccess,
-      dateCreated,
+      score,
+      keyresults,
     };
 
     axios
-      .put(`catalyzer/keyresult/${id}`, data)
+      .patch(`catalyzer/objective-progress/${objId}`, data)
       .then((res) => {
-        // console.log(res)
+        // console.log(res);
         dispatch(setObjectives(res.data.objs));
-        callback({ success: true, res: res });
+        callback({ success: true, data: res.data.objs });
         dispatch(stopLoader());
       })
       .catch((error) => {
@@ -950,6 +970,65 @@ export const editkeyResult = (
       });
   };
 };
+
+export const editkeyResult = (
+  objId,
+  krId,
+  description,
+  startDate,
+  callback
+) => {
+  return (dispatch, getState) => {
+    dispatch(loadAction());
+
+    const data = {
+      description,
+      startDate,
+    };
+
+    axios
+      .patch(`catalyzer/edit-keyresult?objId=${objId}&krId=${krId}`, data)
+      .then((res) => {
+        // console.log(res);
+        dispatch(setObjectives(res.data.objs));
+        callback({ success: true, data: res.data.objs });
+        dispatch(stopLoader());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+// export const editkeyResult = (
+//   id,
+//   description,
+//   measureOfSuccess,
+//   dateCreated,
+//   callback
+// ) => {
+//   return (dispatch, getState) => {
+//     dispatch(loadAction());
+
+//     const data = {
+//       description,
+//       measureOfSuccess,
+//       dateCreated,
+//     };
+
+//     axios
+//       .put(`catalyzer/keyresult/${id}`, data)
+//       .then((res) => {
+//         // console.log(res)
+//         dispatch(setObjectives(res.data.objs));
+//         callback({ success: true, res: res });
+//         dispatch(stopLoader());
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+// };
 
 export const deleteKeyResult = (id, krId) => {
   return (dispatch, getState) => {

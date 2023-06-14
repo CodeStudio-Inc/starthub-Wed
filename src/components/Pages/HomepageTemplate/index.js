@@ -146,6 +146,13 @@ const HomepageTemplate = (props) => {
           <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
         ),
       },
+      {
+        type: "team member",
+        title: "OKRs",
+        icon: (
+          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
+        ),
+      },
       // {
       //   type: "team member",
       //   title: "Resource Files",
