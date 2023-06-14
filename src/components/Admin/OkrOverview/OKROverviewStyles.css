@@ -25,7 +25,9 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  white-space: break-spaces;
   width: 500px;
+  min-width: 500px;
   background: #eee;
   box-sizing: border-box;
   margin: 1rem;
