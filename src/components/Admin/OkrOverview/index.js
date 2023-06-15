@@ -279,9 +279,10 @@ const OKROverview = () => {
       <h2>OKRs</h2>
       <Tabs
         style={{ width: "100%" }}
-        defaultActiveKey="1"
-        centered
+        // centered
         tabBarStyle={{ color: "#37561b" }}
+        size="small"
+        type="card"
       >
         <TabPane tab="First Quarter" key="1">
           <div

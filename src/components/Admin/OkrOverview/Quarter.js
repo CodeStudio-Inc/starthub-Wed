@@ -82,7 +82,7 @@ const Quarter = ({
                 background: r.objPercentage === 100 ? "#37561b" : "#dfa126",
               }}
             >
-              <p>score:</p>
+              <p>progress:</p>
               <h5>{!r.objPercentage ? 0 : Math.round(r.objPercentage)}%</h5>
             </span>
           </div>
