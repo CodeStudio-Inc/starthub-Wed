@@ -38,6 +38,7 @@ const Quarter = ({
   hideEditKeyresult,
   objectives,
   loading,
+  svg,
   updateKeyresultsStatus,
 }) => {
   //   console.log(objectives);
@@ -187,7 +188,9 @@ const Quarter = ({
                       className="objective-icons"
                     />
                   </div>
-                  {loading ? <p>updating keyresult...</p> : null}
+                  {loading ? (
+                    <img src={svg} style={{ height: "30px", width: "30px" }} />
+                  ) : null}
                 </div>
               ) : (
                 <FormGroup key={k._id}>
@@ -245,7 +248,9 @@ const Quarter = ({
                   className="objective-icons"
                 />
               </div>
-              {loading ? <p>adding keyresult...</p> : null}
+              {loading ? (
+                <img src={svg} style={{ height: "30px", width: "30px" }} />
+              ) : null}
             </div>
           ) : (
             <div
@@ -296,7 +301,9 @@ const Quarter = ({
             }}
             className="objective-icons"
           />
-          {loading ? <p>adding objective...</p> : null}
+          {loading ? (
+            <img src={svg} style={{ height: "30px", width: "30px" }} />
+          ) : null}
         </div>
       )}
     </div>

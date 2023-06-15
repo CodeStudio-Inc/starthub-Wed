@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Table, message } from "antd";
-import { actionCreators } from "../../Paths";
+import { actionCreators, svg } from "../../Paths";
 import { Helmet } from "react-helmet";
 import { Tabs } from "antd";
 import FormGroup from "@mui/material/FormGroup";
@@ -322,6 +322,7 @@ const OKROverview = () => {
               hideEditObjective={hideEditObjective}
               objectives={[...payload.filter((r) => r.quarter === 1)]}
               loading={loading}
+              svg={svg}
               updateKeyresultsStatus={updateKeyresultsStatus}
             />
           </div>
@@ -364,6 +365,7 @@ const OKROverview = () => {
               hideEditObjective={hideEditObjective}
               objectives={[...payload.filter((r) => r.quarter === 2)]}
               loading={loading}
+              svg={svg}
               updateKeyresultsStatus={updateKeyresultsStatus}
             />
           </div>
@@ -406,6 +408,7 @@ const OKROverview = () => {
               hideEditObjective={hideEditObjective}
               objectives={[...payload.filter((r) => r.quarter === 3)]}
               loading={loading}
+              svg={svg}
               updateKeyresultsStatus={updateKeyresultsStatus}
             />
           </div>
@@ -448,6 +451,7 @@ const OKROverview = () => {
               hideEditObjective={hideEditObjective}
               objectives={[...payload.filter((r) => r.quarter === 4)]}
               loading={loading}
+              svg={svg}
               updateKeyresultsStatus={updateKeyresultsStatus}
             />
           </div>
