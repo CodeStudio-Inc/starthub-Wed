@@ -1,12 +1,12 @@
 import React from "react";
-import { Startups, ResourceFiles, Loans } from "../../Paths";
+import { Startups, ResourceFiles, Loans, StartupList } from "../../Paths";
 
-const TeamMember = ({ index }) => {
+const TeamMember = ({ index, title }) => {
   return (
     <div style={{ width: "100%" }}>
-      {index === 0 ? <Startups /> : null}
-      {index === 1 ? <ResourceFiles /> : null}
-      {/* {index === 2 ? <Loans /> : null} */}
+      {index === 1 ? <Startups /> : null}
+      {index === 3 ? <StartupList /> : null}
+      {index === 4 ? <StartupList title={title} /> : null}
     </div>
   );
 };
