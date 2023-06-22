@@ -6,11 +6,12 @@ import { Helmet } from "react-helmet";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
 import Navbar from "../modals/Navbar";
 import "./Style.css";
@@ -78,6 +79,22 @@ const Diagnostics = ({ location, history }) => {
                 onSubmit={() => console.log("Step 1 submit")}
               >
                 <div className="step">
+                  <div className="progress-bar">
+                    <Box
+                      sx={{
+                        width: "100%",
+                        alignSelf: "center",
+                        marginRight: "0.5rem",
+                      }}
+                    >
+                      <LinearProgress
+                        variant="determinate"
+                        value={d.score}
+                        color="primary"
+                      />
+                    </Box>
+                    <h5>{Math.round(d.score)}%</h5>
+                  </div>
                   <Stack sx={{ height: "100%" }} spacing={1} direction="column">
                     {d?.steps
                       ?.sort((a, b) => b.stepNo - a.stepNo)
