@@ -55,8 +55,6 @@ const Startup = ({ location, history }) => {
     setSelected(event.target.value);
   };
 
-  console.log(selected);
-
   React.useEffect(() => {
     getRevenue();
     getRevenueTracking();
