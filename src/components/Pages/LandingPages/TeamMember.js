@@ -1,5 +1,11 @@
 import React from "react";
-import { Startups, ResourceFiles, Loans, StartupList } from "../../Paths";
+import {
+  Startups,
+  ResourceFiles,
+  Loans,
+  StartupList,
+  OkrOverview,
+} from "../../Paths";
 
 const TeamMember = ({ index, title }) => {
   return (
@@ -7,6 +13,7 @@ const TeamMember = ({ index, title }) => {
       {index === 1 ? <Startups /> : null}
       {index === 3 ? <StartupList /> : null}
       {index === 4 ? <StartupList title={title} /> : null}
+      {index === 5 ? <OkrOverview /> : null}
     </div>
   );
 };

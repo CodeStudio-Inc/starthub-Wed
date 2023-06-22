@@ -123,6 +123,7 @@ const HomepageTemplate = (props) => {
       getSubItem("Catalyzer", "catalyzer", "3"),
       getSubItem("OIP", "OIP", "4"),
     ]),
+    getItem("OKRs", "5", <ContainerOutlined />),
   ];
 
   const adminItems = [

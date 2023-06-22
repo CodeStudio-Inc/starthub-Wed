@@ -18,6 +18,8 @@ import { Helmet } from "react-helmet";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
 import "./Diagnostics.css";
 import { message } from "antd";
@@ -132,6 +134,22 @@ const Diagnostics = () => {
                 onSubmit={() => console.log("Step 1 submit")}
               >
                 <div className="step">
+                  <div className="progress-bar">
+                    <Box
+                      sx={{
+                        width: "100%",
+                        alignSelf: "center",
+                        marginRight: "0.5rem",
+                      }}
+                    >
+                      <LinearProgress
+                        variant="determinate"
+                        value={d.score}
+                        color="primary"
+                      />
+                    </Box>
+                    <h5>{Math.round(d.score)}%</h5>
+                  </div>
                   <Stack sx={{ height: "100%" }} spacing={1} direction="column">
                     {d?.steps
                       ?.sort((a, b) => b.stepNo - a.stepNo)

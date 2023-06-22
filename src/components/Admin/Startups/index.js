@@ -3,7 +3,8 @@ import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { Line } from "react-chartjs-2";
-import { Table, message } from "antd";
+import { Table, message, Timeline } from "antd";
+import { ClockCircleOutlined } from "@ant-design/icons";
 import { actionCreators, ModalUI, svg } from "../../Paths";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import AddCardIcon from "@mui/icons-material/AddCard";
@@ -214,7 +215,21 @@ const Startups = (props) => {
           <p>Add new Startup</p>
         </div>
       </div>
-      <h3>Activity logs</h3>
+      <h3>Recent Activity</h3>
+      <Timeline mode="alternate" style={{ width: "60%" }}>
+        <Timeline.Item label="Date 1" dot={<ClockCircleOutlined />}>
+          user added new startup
+        </Timeline.Item>
+        <Timeline.Item label="Date 2" dot={<ClockCircleOutlined />}>
+          user loggedin
+        </Timeline.Item>
+        <Timeline.Item label="Date 3" dot={<ClockCircleOutlined />}>
+          user added new okrs
+        </Timeline.Item>
+        <Timeline.Item label="Date 4" dot={<ClockCircleOutlined />}>
+          user updated profile
+        </Timeline.Item>
+      </Timeline>
     </div>
   );
 };
