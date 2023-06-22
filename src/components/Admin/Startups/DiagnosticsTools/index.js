@@ -3,6 +3,8 @@ import Stack from "@mui/material/Stack";
 import MultipleStepForm from "./MultipleStepForm";
 import { FormStep } from "./MultipleStepForm";
 import { Helmet } from "react-helmet";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators, svg } from "../../../Paths";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -17,15 +19,40 @@ import Navbar from "../modals/Navbar";
 import "./Style.css";
 const Diagnostics = ({ location, history }) => {
   const [selected, setSelected] = React.useState("");
+  const [successMessage, setMessage] = React.useState("");
+  const [payload, setPayload] = React.useState([]);
+
+  const { diagnostics } = useSelector((state) => state.diagnostics);
+  const { loading } = useSelector((state) => state.auth);
 
   const data = location.state.data;
-  const diagnostics = data?.diagnostics;
+  const diagnostic = data?.diagnostics;
+
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setSelected(event.target.value);
+    let diagnosticPayload = diagnostics.filter(
+      (d) => d.project === event.target.value
+    );
+    setPayload(diagnosticPayload);
   };
 
-  if (!diagnostics.length)
+  const getStartups = () => dispatch(actionCreators.getUsers());
+
+  const attachDiagnostics = () => {
+    dispatch(
+      actionCreators.attachDiagnostics(data._id, payload, (res) => {
+        const { success, message } = res;
+        if (success) {
+          getStartups();
+          setMessage(message);
+        }
+      })
+    );
+  };
+
+  if (!diagnostic.length)
     return (
       <div className="diagnostics-container">
         <Navbar data={data} history={history} />
@@ -50,6 +77,13 @@ const Diagnostics = ({ location, history }) => {
               <MenuItem value="Catalyzer">Catalyzer</MenuItem>
             </Select>
           </FormControl>
+          {selected ? (
+            <button onClick={attachDiagnostics}>Attach</button>
+          ) : null}
+          {loading ? (
+            <img src={svg} style={{ height: "20px", width: "20px" }} />
+          ) : null}
+          <h5>{successMessage}</h5>
         </div>
       </div>
     );
@@ -73,7 +107,7 @@ const Diagnostics = ({ location, history }) => {
               investment: "",
             }}
           >
-            {diagnostics?.map((d, index) => (
+            {diagnostic?.map((d, index) => (
               <FormStep
                 stepName={d.title}
                 onSubmit={() => console.log("Step 1 submit")}

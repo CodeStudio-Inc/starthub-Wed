@@ -36,3 +36,22 @@
   width: 100%;
   margin-top: 5rem;
 }
+
+.attach-diagnostics button {
+  outline: none;
+  border: none;
+  background: #37561b;
+  color: #fff;
+  margin: 1rem;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.attach-diagnostics button:hover {
+  cursor: pointer;
+}
+
+.attach-diagnostics h5 {
+  color: #37561b;
+}
