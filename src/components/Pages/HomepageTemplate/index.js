@@ -16,7 +16,16 @@ import {
   Revenues,
   ResourceFiles,
 } from "../../Paths";
-import { Tabs } from "antd";
+import {
+  AppstoreOutlined,
+  ContainerOutlined,
+  MenuFoldOutlined,
+  PieChartOutlined,
+  ProfileOutlined,
+  GroupOutlined,
+  BarChartOutlined,
+} from "@ant-design/icons";
+import { Tabs, Menu } from "antd";
 import axios from "axios";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import BarChartIcon from "@material-ui/icons/BarChart";
@@ -42,161 +51,22 @@ import { Admin, TeamLead, TeamMember, Startup } from "../LandingPages";
 import "./HomepageStyles.css";
 const HomepageTemplate = (props) => {
   const [index, setIndex] = React.useState(0);
+  const [title, setTitle] = React.useState("");
   const [navbar, setNavbar] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
-  const [active, setActive] = React.useState({
-    actionObject: null,
-    objects: [
-      // {
-      //   type: "startup",
-      //   title: "Dashboard",
-      //   icon: (
-      //     <BarChartIcon
-      //       style={{ fontSize: "25px" }}
-      //       className="home-link-icon"
-      //     />
-      //   ),
-      // },
-      {
-        type: "startup",
-        title: "OKRs",
-        icon: (
-          <ListAltIcon
-            style={{ fontSize: "25px" }}
-            className="home-link-icon"
-          />
-        ),
-      },
-      {
-        type: "startup",
-        title: "Lean Canvas",
-        icon: (
-          <DeveloperBoardIcon
-            style={{ fontSize: "25px" }}
-            className="home-link-icon"
-          />
-        ),
-      },
-      {
-        type: "startup",
-        title: "Diagnostics",
-        icon: (
-          <BuildIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      {
-        type: "startup",
-        title: "Company Profile",
-        icon: (
-          <PermContactCalendarIcon
-            style={{ fontSize: "25px" }}
-            className="home-link-icon"
-          />
-        ),
-      },
-      {
-        type: "admin",
-        title: "Overview",
-        icon: (
-          <DashboardIcon
-            style={{ fontSize: "25px" }}
-            className="home-link-icon"
-          />
-        ),
-      },
-      {
-        type: "admin",
-        title: "Leads",
-        icon: (
-          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      {
-        type: "admin",
-        title: "Members",
-        icon: (
-          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      {
-        type: "admin",
-        title: "Startups",
-        icon: (
-          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      {
-        type: "team lead",
-        title: "Team members",
-        icon: (
-          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      {
-        type: "team lead",
-        title: "startups",
-        icon: (
-          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      {
-        type: "team member",
-        title: "Startups",
-        icon: (
-          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      {
-        type: "team member",
-        title: "OKRs",
-        icon: (
-          <GroupsIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-        ),
-      },
-      // {
-      //   type: "team member",
-      //   title: "Resource Files",
-      //   icon: (
-      //     <FolderIcon style={{ fontSize: "25px" }} className="home-link-icon" />
-      //   ),
-      // },
-      // {
-      //   type: "team member",
-      //   title: "Loans",
-      //   icon: (
-      //     <LocalAtmIcon
-      //       style={{ fontSize: "25px" }}
-      //       className="home-link-icon"
-      //     />
-      //   ),
-      // },
-    ],
-  });
-
-  const adminLinks = active.objects.filter((l) => l.type === "admin");
-  const teamLeadLinks = active.objects.filter((l) => l.type === "team lead");
-  const teamMemberLinks = active.objects.filter(
-    (l) => l.type === "team member"
-  );
-  const startupLinks = active.objects.filter((l) => l.type === "startup");
   // console.log(startupLinks);
 
   const { username, admin, tokenExpiration, category, userRole, features } =
     useSelector((state) => state.auth);
 
-  // console.log(userRole);
+  // console.log(category);
 
   const auth = useSelector((state) => state.auth);
 
   const current_date = Date.now();
 
   React.useEffect(() => {
-    setActive({ ...active, actionObject: active.objects[0] });
-    if (active.objects[index] === active.actionObject) {
-      return "home-link home-active";
-    } else {
-      return "home-link home-inactive";
-    }
+    setIndex(1);
   }, []);
 
   React.useEffect(() => {
@@ -210,16 +80,63 @@ const HomepageTemplate = (props) => {
 
   const dispatch = useDispatch();
 
-  const toggleActive = (index) => {
-    setActive({ ...active, actionObject: active.objects[index] });
+  const getItem = (label, key, icon, children, type) => {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      type,
+    };
   };
 
-  const toggleActiveStyle = (index) => {
-    if (active.objects[index] === active.actionObject) {
-      return "home-link home-active";
-    } else {
-      return "home-link home-inactive";
-    }
+  const getSubItem = (label, title, key, icon, children, type) => {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      title,
+      type,
+    };
+  };
+
+  const items = [
+    getItem("Metrics", "1", <BarChartOutlined />),
+    getItem("OKRs", "2", <ContainerOutlined />),
+    getItem("Lean Canvas", "3", <ContainerOutlined />),
+    getItem("Diagnostics", "4", <ContainerOutlined />),
+    getItem("Company Profile", "5", <ProfileOutlined />),
+  ];
+
+  const teamLeadItems = [
+    getItem("Dashboard", "1", <AppstoreOutlined />),
+    getItem("Teams", "sub1", <GroupOutlined />, [
+      getItem("Team Members", "3"),
+      getItem("Startups", "4"),
+    ]),
+  ];
+
+  const teamMembersItems = [
+    getItem("Dashboard", "1", <AppstoreOutlined />),
+    getItem("Starups", "sub1", <GroupOutlined />, [
+      getSubItem("Catalyzer", "catalyzer", "3"),
+      getSubItem("OIP", "OIP", "4"),
+    ]),
+  ];
+
+  const adminItems = [
+    getItem("Dashboard", "1", <AppstoreOutlined />),
+    getItem("Teams", "sub1", <GroupOutlined />, [
+      getItem("Team Leads", "3"),
+      getItem("Team Members", "4"),
+      getItem("Startups", "5"),
+    ]),
+  ];
+
+  const onClick = ({ key, item, selectedKeys }) => {
+    setTitle(item.props.title);
+    setIndex(parseInt(key));
   };
 
   const handleLogoutClick = (e) => {
@@ -228,7 +145,7 @@ const HomepageTemplate = (props) => {
   };
 
   const SwitchComponent = useCallback(
-    ({ index, visible }) => {
+    ({ index, visible, title }) => {
       switch (userRole) {
         case "admin":
           return <Admin index={index} />;
@@ -237,7 +154,7 @@ const HomepageTemplate = (props) => {
           return <TeamLead index={index} />;
           break;
         case "team member":
-          return <TeamMember index={index} />;
+          return <TeamMember index={index} title={title} />;
           break;
         case "startup":
           return <Startup index={index} visible={visible} />;
@@ -254,104 +171,61 @@ const HomepageTemplate = (props) => {
     [index, visible]
   );
 
-  const SwitchNavLinks = useCallback(
-    ({ features }) => {
-      switch (userRole) {
-        case "admin":
-          return (
-            <div style={{ width: "95%" }}>
-              {adminLinks?.map((e, index) => (
-                <div
-                  key={index}
-                  className={toggleActiveStyle(index)}
-                  onClick={() => {
-                    toggleActive(index);
-                    setIndex(index);
-                  }}
-                >
-                  <div className="home-link-row">
-                    {e.icon}
-                    <h4>{e.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-          break;
-        case "team lead":
-          return (
-            <div style={{ width: "95%" }}>
-              {teamLeadLinks?.map((e, index) => (
-                <div
-                  key={index}
-                  className={toggleActiveStyle(index)}
-                  onClick={() => {
-                    toggleActive(index);
-                    setIndex(index);
-                  }}
-                >
-                  <div className="home-link-row">
-                    {e.icon}
-                    <h4>{e.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-          break;
-        case "team member":
-          return (
-            <div style={{ width: "95%" }}>
-              {teamMemberLinks?.map((e, index) => (
-                <div
-                  key={index}
-                  className={toggleActiveStyle(index)}
-                  onClick={() => {
-                    toggleActive(index);
-                    setIndex(index);
-                  }}
-                >
-                  <div className="home-link-row">
-                    {e.icon}
-                    <h4>{e.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-          break;
-        case "startup":
-          return (
-            <div style={{ width: "95%" }}>
-              {startupLinks?.map((e, index) => (
-                <div
-                  key={index}
-                  className={toggleActiveStyle(index)}
-                  onClick={() => {
-                    toggleActive(index);
-                    setIndex(index);
-                  }}
-                >
-                  <div className="home-link-row">
-                    {e.icon}
-                    <h4>{e.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-          break;
-        default:
-          return (
-            <div className="homepage-main">
-              <h3>Error while loading page</h3>
-            </div>
-          );
-          break;
-      }
-    },
-    [active, setActive]
-  );
+  const SwitchNavLinks = useCallback(({ features }) => {
+    switch (userRole) {
+      case "admin":
+        return (
+          <Menu
+            onClick={onClick}
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={adminItems}
+            style={{ background: "none", color: "#37561b" }}
+          />
+        );
+        break;
+      case "team lead":
+        return (
+          <Menu
+            onClick={onClick}
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={teamLeadItems}
+            style={{ background: "none", color: "#37561b" }}
+          />
+        );
+        break;
+      case "team member":
+        return (
+          <Menu
+            onClick={onClick}
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={teamMembersItems}
+            style={{ background: "none", color: "#37561b" }}
+          />
+        );
+        break;
+      case "startup":
+        return (
+          <Menu
+            onClick={onClick}
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={items}
+            style={{ background: "none", color: "#37561b" }}
+          />
+        );
+        break;
+      default:
+        return (
+          <div className="homepage-main">
+            <h3>Error while loading page</h3>
+          </div>
+        );
+        break;
+    }
+  }, []);
 
   return (
     <div className="homepage-container">
@@ -409,7 +283,6 @@ const HomepageTemplate = (props) => {
           <h2>{username}</h2>
         </div>
         <SwitchNavLinks features={features} />
-
         <div className="logout" onClick={handleLogoutClick}>
           <LogoutIcon style={{ fontSize: "20px" }} className="logout-icon" />
           <h5>Logout</h5>
@@ -418,7 +291,7 @@ const HomepageTemplate = (props) => {
       <div
         className={visible ? "homepage-main increase-width" : "homepage-main"}
       >
-        <SwitchComponent index={index} visible={visible} />
+        <SwitchComponent index={index} visible={visible} title={title} />
       </div>
     </div>
   );

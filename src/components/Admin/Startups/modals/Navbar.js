@@ -10,7 +10,6 @@ const Navbar = ({ data, history }) => {
   const [edit, setEdit] = React.useState(false);
 
   const { profile } = useSelector((state) => state.profile);
-
   return (
     <div className="profile-row">
       {edit ? (
@@ -27,17 +26,24 @@ const Navbar = ({ data, history }) => {
         <h4 onClick={() => history.push("/")}>Dashboard</h4>
       </div>
       <div className="edit-profile-container" style={{ width: "60%" }}>
+        {data.teamCategory !== "catalyzer" ? null : (
+          <h4
+            onClick={() =>
+              history.push(`/startup/${data.username}`, { data: data })
+            }
+          >
+            Overview
+          </h4>
+        )}
         <h4
           onClick={() =>
-            history.push(`/startup/${data.username}`, { data: data })
+            history.push(`/diagnostics/${data.username}`, { data: data })
           }
         >
-          Overview
+          Diagnostics
         </h4>
         <h4
           onClick={() => {
-            if (!profile)
-              return message.info("User has not submited profile info yet!");
             history.push(`/profile/${data.username}`, { data: data });
           }}
         >
