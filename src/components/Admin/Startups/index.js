@@ -217,16 +217,44 @@ const Startups = (props) => {
       </div>
       <h3>Recent Activity</h3>
       <Timeline mode="alternate" style={{ width: "60%" }}>
-        <Timeline.Item label="Date 1" dot={<ClockCircleOutlined />}>
+        <Timeline.Item
+          label="Date 1"
+          dot={
+            <ClockCircleOutlined
+              style={{ color: "#37561b", fontSize: "20px" }}
+            />
+          }
+        >
           user added new startup
         </Timeline.Item>
-        <Timeline.Item label="Date 2" dot={<ClockCircleOutlined />}>
+        <Timeline.Item
+          label="Date 2"
+          dot={
+            <ClockCircleOutlined
+              style={{ color: "#37561b", fontSize: "20px" }}
+            />
+          }
+        >
           user loggedin
         </Timeline.Item>
-        <Timeline.Item label="Date 3" dot={<ClockCircleOutlined />}>
+        <Timeline.Item
+          label="Date 3"
+          dot={
+            <ClockCircleOutlined
+              style={{ color: "#37561b", fontSize: "20px" }}
+            />
+          }
+        >
           user added new okrs
         </Timeline.Item>
-        <Timeline.Item label="Date 4" dot={<ClockCircleOutlined />}>
+        <Timeline.Item
+          label="Date 4"
+          dot={
+            <ClockCircleOutlined
+              style={{ color: "#37561b", fontSize: "20px" }}
+            />
+          }
+        >
           user updated profile
         </Timeline.Item>
       </Timeline>
