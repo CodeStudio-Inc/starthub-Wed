@@ -66,8 +66,6 @@ const StartupList = ({ history, title }) => {
     }
   };
 
-  console.log(history);
-
   const columns = [
     {
       title: "Startup",

@@ -1119,7 +1119,7 @@ export const updateStartup = (
   };
 };
 
-export const attachDiagnostics = (userId, diagnostics) => {
+export const attachDiagnostics = (userId, diagnostics, callback) => {
   return (dispatch) => {
     dispatch(loadAction());
 
@@ -1131,8 +1131,9 @@ export const attachDiagnostics = (userId, diagnostics) => {
       .patch(`auth/attach-diagnostics/${userId}`, data)
       .then((res) => {
         dispatch(stopLoader());
-        dispatch(setUsers(res.data.users));
-        console.log(res);
+        callback({ success: true, message: res.data.message });
+        // dispatch(setUsers(res.data.users));
+        // console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());
