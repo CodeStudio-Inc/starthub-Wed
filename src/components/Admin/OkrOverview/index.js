@@ -1,28 +1,30 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, message } from "antd";
+import { Table, message, Tabs, Modal } from "antd";
 import { actionCreators, svg } from "../../Paths";
 import { Helmet } from "react-helmet";
-import { Tabs } from "antd";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 import Quarter from "./Quarter";
+import Tasks from "./Tasks";
+import MenuBar from "./MenuBar";
+import AddObjectiveDialogue from "./AddObjectiveDialogue";
 import "./OKROverviewStyles.css";
 import moment from "moment";
 const OKROverview = () => {
   const { TabPane } = Tabs;
   const { users } = useSelector((state) => state.admin);
   const { objectives, loading } = useSelector((state) => state.requests);
-  //   console.log(objectives);
-  const [description, setDescription] = React.useState("");
-  const [keyResultState, setKeyresultState] = React.useState({
-    keyResult: "",
-    startDate: "",
+  const [tasks, setTasks] = React.useState({
+    members: [],
+    task: "",
   });
+  const [open, setOpen] = React.useState(false);
+  const [openDialogue, setOpenDialogue] = React.useState(false);
   const [objective, setAddObjective] = React.useState(false);
   const [editObjective, setEditObjective] = React.useState(false);
   const [keyResult, setAddKeyresult] = React.useState(false);
@@ -30,6 +32,9 @@ const OKROverview = () => {
   const [progressBtn, setProgressBtn] = React.useState(false);
   const [activeCardId, setActiveCardId] = React.useState("");
   const [payload, setPayload] = React.useState([]);
+  const [selectedKeyresult, setSelectedKeyresult] = React.useState({
+    tasks: [],
+  });
 
   const dispatch = useDispatch();
 
@@ -62,6 +67,28 @@ const OKROverview = () => {
 
   const getObjectives = () => dispatch(actionCreators.getObjective());
 
+  const openModal = React.useCallback(
+    (objId, krId) => {
+      let paylod = [...payload];
+      let indexNumber = -1;
+      paylod.forEach((r, index) => {
+        if (r._id === objId) indexNumber = index;
+      });
+      let optionPaylod = [...paylod[indexNumber].keyresults];
+      let optionIndex = -1;
+      optionPaylod.forEach((r, index) => {
+        if (r._id === krId) optionIndex = index;
+      });
+      setSelectedKeyresult(optionPaylod[optionIndex]);
+      setOpen(true);
+    },
+    [setOpen, setSelectedKeyresult, payload]
+  );
+
+  const closeModal = React.useCallback(() => {
+    setOpen(false);
+  }, [setOpen]);
+
   const showAddObjective = () => setAddObjective(true);
   const hideAddObjective = () => setAddObjective(false);
 
@@ -89,55 +116,6 @@ const OKROverview = () => {
   };
   const hideProgressBtn = () => setProgressBtn(false);
 
-  const addObjective = () => {
-    let quarter;
-    if (!description) return message.info("Enter objective description");
-    if (
-      parseInt(moment(new Date()).format("M")) >= 1 &&
-      parseInt(moment(new Date()).format("M")) <= 3
-    )
-      quarter = 1;
-    if (
-      parseInt(moment(new Date()).format("M")) >= 4 &&
-      parseInt(moment(new Date()).format("M")) <= 6
-    )
-      quarter = 2;
-    if (
-      parseInt(moment(new Date()).format("M")) >= 7 &&
-      parseInt(moment(new Date()).format("M")) <= 9
-    )
-      quarter = 3;
-    if (
-      parseInt(moment(new Date()).format("M")) >= 10 &&
-      parseInt(moment(new Date()).format("M")) <= 12
-    )
-      quarter = 4;
-
-    dispatch(
-      actionCreators.addObjective(description, quarter, (res) => {
-        const { success, data } = res;
-        if (success) {
-          setPayload(data);
-          setDescription("");
-          hideAddObjective();
-        }
-      })
-    );
-  };
-
-  const editObjectiveDescription = (id) => {
-    dispatch(
-      actionCreators.editObjective(id, description, (res) => {
-        const { success, data } = res;
-        if (success) {
-          setPayload(data);
-          hideEditObjective();
-          setDescription("");
-        }
-      })
-    );
-  };
-
   const deleteObjective = (id) => {
     dispatch(
       actionCreators.deleteObjective(id, (res) => {
@@ -149,57 +127,17 @@ const OKROverview = () => {
     );
   };
 
-  const addkeyResult = (id) => {
-    if (!keyResultState.keyResult) return;
-
-    dispatch(
-      actionCreators.addkeyResult(
-        keyResultState.keyResult,
-        keyResultState.startDate,
-        id,
-        (res) => {
-          const { success, data } = res;
-          if (success) {
-            setPayload(data);
-            hideAddKeyresult();
-            setKeyresultState({
-              keyResult: "",
-              startDate: "",
-            });
-          }
-        }
-      )
-    );
-  };
-
-  const editKeyresult = (objId, krId) => {
-    dispatch(
-      actionCreators.editkeyResult(
-        objId,
-        krId,
-        keyResultState.keyResult,
-        keyResultState.startDate,
-        (res) => {
-          const { success, data } = res;
-          if (success) {
-            setPayload(data);
-            hideEditKeyresult();
-            setKeyresultState({
-              keyResult: "",
-              startDate: "",
-            });
-          }
-        }
-      )
-    );
-  };
-
-  const deleteKeyresult = (objId, krId, objIndex) => {
+  const deleteKeyresult = (objId, krId) => {
     let paylod = [...payload];
-    const removeKeyresult = paylod[objIndex].keyresults.filter(
-      (kr) => kr._id !== krId
-    );
+    let objIndex = -1;
 
+    paylod.forEach((r, index) => {
+      if (r._id === objId) return (objIndex = index);
+    });
+
+    const keyresults = paylod[objIndex].keyresults;
+
+    const removeKeyresult = keyresults.filter((kr) => kr._id !== krId);
     paylod[objIndex] = {
       ...paylod[objIndex],
       keyresults: removeKeyresult,
@@ -212,71 +150,36 @@ const OKROverview = () => {
 
     setPayload(paylod);
     showProgressBtn(objId);
-    console.log(paylod[objIndex]);
   };
 
-  const updateKeyresultsStatus = (objId, krId, objIndex, krIndex) => {
-    let paylod = [...payload];
-
-    const keyresult = paylod[objIndex].keyresults[krIndex];
-
-    if (keyresult.checked) {
-      paylod[objIndex].keyresults[krIndex] = {
-        ...paylod[objIndex].keyresults[krIndex],
-        checked: false,
-      };
-    }
-
-    if (keyresult.checked === false) {
-      paylod[objIndex].keyresults[krIndex] = {
-        ...paylod[objIndex].keyresults[krIndex],
-        checked: true,
-      };
-    }
-
-    paylod[objIndex].objPercentage =
-      (paylod[objIndex].keyresults.filter((kr) => kr.checked).length /
-        paylod[objIndex].keyresults.length) *
-      100;
-
-    setPayload(paylod);
-    showProgressBtn(objId);
-    // console.log(paylod[objIndex].keyresults[krIndex]);
+  const handleOpenDialogue = () => {
+    setOpenDialogue(true);
   };
 
-  const updateObjectiveProgress = (objId) => {
-    const paylod = [...payload];
-
-    const updatedObjective = paylod.find((r) => r._id === objId);
-
-    dispatch(
-      actionCreators.updateObjectiveProgress(
-        objId,
-        !updatedObjective.objPercentage
-          ? 0
-          : Math.round(updatedObjective.objPercentage),
-        updatedObjective.keyresults,
-        (res) => {
-          const { success, data } = res;
-          if (success) {
-            setPayload(data);
-            hideProgressBtn();
-          }
-        }
-      )
-    );
+  const handleCloseDialogue = () => {
+    setOpenDialogue(false);
   };
-
-  const quarter2 = payload.filter((el) => el.quarter === 2);
-
-  //   console.log(quarter2);
 
   return (
     <div className="okroverview-container">
       <Helmet>
         <title>OKRs</title>
       </Helmet>
-      <h2>OKRs</h2>
+      <AddObjectiveDialogue
+        open={openDialogue}
+        setPayload={setPayload}
+        handleClose={handleCloseDialogue}
+      />
+      <MenuBar
+        handleOpenDialogue={handleOpenDialogue}
+        setPayload={setPayload}
+      />
+      <Tasks
+        open={open}
+        closeModal={closeModal}
+        keyresult={selectedKeyresult}
+        setPayload={setPayload}
+      />
       <Tabs
         style={{ width: "100%" }}
         // centered
@@ -295,23 +198,18 @@ const OKROverview = () => {
             }}
           >
             <Quarter
-              description={description}
-              setDescription={setDescription}
-              keyResultState={keyResultState}
-              setKeyresultState={setKeyresultState}
-              addObjective={addObjective}
-              addkeyResult={addkeyResult}
               deleteKeyresult={deleteKeyresult}
               deleteObjective={deleteObjective}
+              setPayload={setPayload}
+              payload={payload}
               objective={objective}
               keyResult={keyResult}
               editObjective={editObjective}
-              editObjectiveDescription={editObjectiveDescription}
-              updateObjectiveProgress={updateObjectiveProgress}
               editkeyResult={editkeyResult}
-              editKeyresult={editKeyresult}
               activeCardId={activeCardId}
               progressBtn={progressBtn}
+              hideProgressBtn={hideProgressBtn}
+              openModal={openModal}
               showAddObjective={showAddObjective}
               hideAddObjective={hideAddObjective}
               showAddKeyresult={showAddKeyresult}
@@ -323,7 +221,6 @@ const OKROverview = () => {
               objectives={[...payload.filter((r) => r.quarter === 1)]}
               loading={loading}
               svg={svg}
-              updateKeyresultsStatus={updateKeyresultsStatus}
             />
           </div>
         </TabPane>
@@ -338,23 +235,18 @@ const OKROverview = () => {
             }}
           >
             <Quarter
-              description={description}
-              setDescription={setDescription}
-              keyResultState={keyResultState}
-              setKeyresultState={setKeyresultState}
-              addObjective={addObjective}
-              addkeyResult={addkeyResult}
               deleteKeyresult={deleteKeyresult}
               deleteObjective={deleteObjective}
               objective={objective}
+              setPayload={setPayload}
+              payload={payload}
               keyResult={keyResult}
               editObjective={editObjective}
-              editObjectiveDescription={editObjectiveDescription}
-              updateObjectiveProgress={updateObjectiveProgress}
               editkeyResult={editkeyResult}
-              editKeyresult={editKeyresult}
               activeCardId={activeCardId}
               progressBtn={progressBtn}
+              hideProgressBtn={hideProgressBtn}
+              openModal={openModal}
               showAddObjective={showAddObjective}
               hideAddObjective={hideAddObjective}
               showAddKeyresult={showAddKeyresult}
@@ -366,7 +258,6 @@ const OKROverview = () => {
               objectives={[...payload.filter((r) => r.quarter === 2)]}
               loading={loading}
               svg={svg}
-              updateKeyresultsStatus={updateKeyresultsStatus}
             />
           </div>
         </TabPane>
@@ -381,23 +272,18 @@ const OKROverview = () => {
             }}
           >
             <Quarter
-              description={description}
-              setDescription={setDescription}
-              keyResultState={keyResultState}
-              setKeyresultState={setKeyresultState}
-              addObjective={addObjective}
-              addkeyResult={addkeyResult}
               deleteKeyresult={deleteKeyresult}
               deleteObjective={deleteObjective}
+              setPayload={setPayload}
+              payload={payload}
               objective={objective}
               keyResult={keyResult}
               editObjective={editObjective}
-              editObjectiveDescription={editObjectiveDescription}
-              updateObjectiveProgress={updateObjectiveProgress}
               editkeyResult={editkeyResult}
-              editKeyresult={editKeyresult}
               activeCardId={activeCardId}
               progressBtn={progressBtn}
+              hideProgressBtn={hideProgressBtn}
+              openModal={openModal}
               showAddObjective={showAddObjective}
               hideAddObjective={hideAddObjective}
               showAddKeyresult={showAddKeyresult}
@@ -409,7 +295,6 @@ const OKROverview = () => {
               objectives={[...payload.filter((r) => r.quarter === 3)]}
               loading={loading}
               svg={svg}
-              updateKeyresultsStatus={updateKeyresultsStatus}
             />
           </div>
         </TabPane>
@@ -424,23 +309,18 @@ const OKROverview = () => {
             }}
           >
             <Quarter
-              description={description}
-              setDescription={setDescription}
-              keyResultState={keyResultState}
-              setKeyresultState={setKeyresultState}
-              addObjective={addObjective}
-              addkeyResult={addkeyResult}
               deleteKeyresult={deleteKeyresult}
               deleteObjective={deleteObjective}
               objective={objective}
               keyResult={keyResult}
+              setPayload={setPayload}
+              payload={payload}
               editObjective={editObjective}
-              editObjectiveDescription={editObjectiveDescription}
-              updateObjectiveProgress={updateObjectiveProgress}
               editkeyResult={editkeyResult}
-              editKeyresult={editKeyresult}
               activeCardId={activeCardId}
               progressBtn={progressBtn}
+              hideProgressBtn={hideProgressBtn}
+              openModal={openModal}
               showAddObjective={showAddObjective}
               hideAddObjective={hideAddObjective}
               showAddKeyresult={showAddKeyresult}
@@ -452,7 +332,6 @@ const OKROverview = () => {
               objectives={[...payload.filter((r) => r.quarter === 4)]}
               loading={loading}
               svg={svg}
-              updateKeyresultsStatus={updateKeyresultsStatus}
             />
           </div>
         </TabPane>

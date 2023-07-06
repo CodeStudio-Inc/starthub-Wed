@@ -1,4 +1,5 @@
 import * as actions from "../actions";
+import { message } from "antd";
 import axios from "axios";
 
 export const loadAction = () => {
@@ -770,25 +771,91 @@ export const editStatement = (id, vision, mission, callback) => {
   };
 };
 
-export const addObjective = (description, quarter, callback) => {
-  return (dispatch, getState) => {
+export const addItem = (path, data, validate, callback) => {
+  if (typeof validate !== "undefined" && !validate(data))
+    return message.info("All fields are required");
+  return (dispatch) => {
     dispatch(loadAction());
-
-    const data = {
-      description,
-      quarter,
-    };
-
     axios
-      .post(`catalyzer/objective`, data)
+      .post(path, data)
       .then((res) => {
-        // console.log(res.data.objs);
-        dispatch(setObjectives(res.data.objs));
-        callback({ success: true, data: res.data.objs });
         dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+        console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());
+        callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
+export const getItem = (path, callback) => {
+  return (dispatch) => {
+    dispatch(loadAction());
+    axios
+      .get(path)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false, error: error });
+        console.log(error);
+      });
+  };
+};
+
+export const searchItem = (path, callback) => {
+  return (dispatch) => {
+    dispatch(loadAction());
+    axios
+      .get(path)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false, error: error });
+        console.log(error);
+      });
+  };
+};
+
+export const updateItem = (path, data, validate, callback) => {
+  if (typeof validate !== "undefined" && !validate(data))
+    return message.info("All fields are required");
+  return (dispatch) => {
+    dispatch(loadAction());
+    axios
+      .patch(path, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
+export const deleteItem = (path, callback) => {
+  return (dispatch) => {
+    dispatch(loadAction());
+    axios
+      .delete(path)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false, error: error });
         console.log(error);
       });
   };
@@ -811,64 +878,6 @@ export const getObjective = () => {
   };
 };
 
-export const filterOkrs = (year) => {
-  return (dispatch, getState) => {
-    dispatch(loadAction());
-
-    axios
-      .get(`catalyzer/filter?year=${year}`)
-      .then((res) => {
-        // console.log(res);
-        dispatch(stopLoader());
-        dispatch(setObjectives(res.data.objs));
-      })
-      .catch((error) => {
-        dispatch(stopLoader());
-        console.log(error);
-      });
-  };
-};
-
-export const editObjective = (id, description, callback) => {
-  return (dispatch, getState) => {
-    dispatch(loadAction());
-
-    const data = {
-      description,
-    };
-
-    axios
-      .put(`catalyzer/objective/${id}`, data)
-      .then((res) => {
-        // console.log(res)
-        dispatch(setObjectives(res.data.objs));
-        callback({ success: true, data: res.data.objs });
-        dispatch(stopLoader());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
-export const deleteObjective = (id, callback) => {
-  return (dispatch, getState) => {
-    dispatch(loadAction());
-
-    axios
-      .delete(`catalyzer/objective/${id}`)
-      .then((res) => {
-        // console.log(res)
-        dispatch(setObjectives(res.data.objs));
-        callback({ success: true, data: res.data.objs });
-        dispatch(stopLoader());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
 export const archiveObjective = (id, callback) => {
   return (dispatch, getState) => {
     dispatch(loadAction());
@@ -883,167 +892,6 @@ export const archiveObjective = (id, callback) => {
         // console.log(res)
         dispatch(setObjectives(res.data.objs));
         callback({ success: true, res: res });
-        dispatch(stopLoader());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
-// export const addkeyResult = (
-//   description,
-//   measureOfSuccess,
-//   objId,
-//   callback
-// ) => {
-//   return (dispatch, getState) => {
-//     dispatch(loadAction());
-
-//     const data = {
-//       description,
-//       measureOfSuccess,
-//       objId,
-//     };
-
-//     axios
-//       .post(`catalyzer/keyresult`, data)
-//       .then((res) => {
-//         // console.log(res);
-//         dispatch(setObjectives(res.data.objs));
-//         callback({ success: true, res: res });
-//         dispatch(stopLoader());
-//       })
-//       .catch((error) => {
-//         dispatch(stopLoader());
-//         callback({ success: false });
-//         console.log(error);
-//       });
-//   };
-// };
-
-export const addkeyResult = (description, startDate, objId, callback) => {
-  return (dispatch, getState) => {
-    dispatch(loadAction());
-
-    const data = {
-      description,
-      startDate,
-      objId,
-    };
-
-    axios
-      .post(`catalyzer/keyresult`, data)
-      .then((res) => {
-        // console.log(res);
-        dispatch(setObjectives(res.data.objs));
-        callback({ success: true, data: res.data.objs });
-        dispatch(stopLoader());
-      })
-      .catch((error) => {
-        dispatch(stopLoader());
-        callback({ success: false });
-        console.log(error);
-      });
-  };
-};
-
-export const updateObjectiveProgress = (objId, score, keyresults, callback) => {
-  return (dispatch, getState) => {
-    dispatch(loadAction());
-
-    const data = {
-      score,
-      keyresults,
-    };
-
-    axios
-      .patch(`catalyzer/objective-progress/${objId}`, data)
-      .then((res) => {
-        // console.log(res);
-        dispatch(setObjectives(res.data.objs));
-        callback({ success: true, data: res.data.objs });
-        dispatch(stopLoader());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
-export const editkeyResult = (
-  objId,
-  krId,
-  description,
-  startDate,
-  callback
-) => {
-  return (dispatch, getState) => {
-    dispatch(loadAction());
-
-    const data = {
-      description,
-      startDate,
-    };
-
-    axios
-      .patch(`catalyzer/edit-keyresult?objId=${objId}&krId=${krId}`, data)
-      .then((res) => {
-        // console.log(res);
-        dispatch(setObjectives(res.data.objs));
-        callback({ success: true, data: res.data.objs });
-        dispatch(stopLoader());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
-// export const editkeyResult = (
-//   id,
-//   description,
-//   measureOfSuccess,
-//   dateCreated,
-//   callback
-// ) => {
-//   return (dispatch, getState) => {
-//     dispatch(loadAction());
-
-//     const data = {
-//       description,
-//       measureOfSuccess,
-//       dateCreated,
-//     };
-
-//     axios
-//       .put(`catalyzer/keyresult/${id}`, data)
-//       .then((res) => {
-//         // console.log(res)
-//         dispatch(setObjectives(res.data.objs));
-//         callback({ success: true, res: res });
-//         dispatch(stopLoader());
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-// };
-
-export const deleteKeyResult = (id, krId) => {
-  return (dispatch, getState) => {
-    dispatch(loadAction());
-
-    const data = {
-      krId,
-    };
-
-    axios
-      .delete(`catalyzer/keyresult/${id}/${krId}`, data)
-      .then((res) => {
-        // console.log(res)
-        dispatch(setObjectives(res.data.objs));
-        // callback({ success: true, res: res })
         dispatch(stopLoader());
       })
       .catch((error) => {
