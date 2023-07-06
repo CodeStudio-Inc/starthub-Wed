@@ -19,6 +19,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
   const { Option } = Select;
 
   const { loading } = useSelector((state) => state.requests);
+  const { username } = useSelector((state) => state.auth);
 
   React.useEffect(() => {
     setTasks(keyresult?.tasks);
@@ -66,6 +67,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
     const data = {
       members,
       krId: _id,
+      updatedBy: username,
     };
     dispatch(
       actionCreators.addItem(
@@ -93,6 +95,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
       tasks,
       krId: _id,
       progress,
+      updatedBy: username,
     };
     dispatch(
       actionCreators.addItem(

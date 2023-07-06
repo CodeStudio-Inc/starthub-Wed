@@ -4,12 +4,13 @@ import { actionCreators, svg } from "../../Paths";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 
 const AddKeyresult = ({ objId, setPayload, hideAddKeyresult }) => {
+  const { loading } = useSelector((state) => state.requests);
+  const { username } = useSelector((state) => state.auth);
+
   const [state, setState] = React.useState({
     keyResult: "",
-    dueDate: "",
+    updatedBy: username,
   });
-
-  const { loading } = useSelector((state) => state.requests);
 
   const dispatch = useDispatch();
 
@@ -52,8 +53,8 @@ const AddKeyresult = ({ objId, setPayload, hideAddKeyresult }) => {
           })
         }
       />
-      <h3>due date: </h3>
-      <input
+      {/* <h3>due date: </h3> */}
+      {/* <input
         type="date"
         value={state.dueDate}
         onChange={(e) =>
@@ -62,7 +63,7 @@ const AddKeyresult = ({ objId, setPayload, hideAddKeyresult }) => {
             dueDate: e.target.value,
           })
         }
-      />
+      /> */}
       <div className="add-keyresult-input-row"></div>
       <div className="icons-row">
         <p onClick={addkeyResult}>save</p>

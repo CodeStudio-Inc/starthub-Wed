@@ -5,6 +5,7 @@ import QueryBuilderRoundedIcon from "@mui/icons-material/QueryBuilderRounded";
 import EditIcon from "@mui/icons-material/Edit";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import moment from "moment";
 
 const Keyresult = ({
@@ -21,6 +22,7 @@ const Keyresult = ({
   const [keyResult, setKeyresult] = React.useState(k.keyResult);
 
   const { loading } = useSelector((state) => state.requests);
+  const { username } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -28,10 +30,13 @@ const Keyresult = ({
     const addedMembers = k?.members?.map((r) => r.name);
     return addedMembers;
   }, [k]);
+  const totalTasks = k.tasks.length;
+  const totalDoneTasks = k?.tasks.filter((t) => t.check).length;
 
   const editKeyresult = (objId, krId) => {
     const data = {
       keyResult,
+      updatedBy: username,
     };
     dispatch(
       actionCreators.updateItem(
@@ -66,7 +71,9 @@ const Keyresult = ({
               marginRight: "0.2rem",
             }}
           />
-          <p>{moment(k.dateCreated).fromNow()}</p>
+          <p>
+            last changed by {k.updatedBy} {moment(k.updatedAt).fromNow()}
+          </p>
         </div>
         <div className="keyresult-card-header-row">
           <EditIcon
@@ -110,9 +117,17 @@ const Keyresult = ({
         <h4 onClick={() => openModal(r._id, k._id)}>{k.keyResult}</h4>
       )}
       <div className="keyresult-card-footer">
-        <div className="dueDate-row">
-          <p>due date:</p>
-          <h4>{moment(k.dueDate).fromNow()}</h4>
+        <div className="tasks-row">
+          <CheckCircleOutlineIcon
+            style={{
+              fontSize: "18px",
+              color: "rgba(0,0,0,0.5)",
+              marginRight: "0.3rem",
+            }}
+          />
+          <p>
+            {totalDoneTasks} / {totalTasks}
+          </p>
         </div>
         <div className="keyresult-member-row">
           {updatedMembersArray?.map((m) => (
