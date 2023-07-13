@@ -70,7 +70,7 @@ const Quarter = ({
             setDescription("");
             hideAddObjective();
           }
-          if (!success) console.log(success);
+          if (!success) console.log(error);
         }
       )
     );

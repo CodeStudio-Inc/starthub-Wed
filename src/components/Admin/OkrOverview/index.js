@@ -8,6 +8,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import { getCurrentQuarter } from "../../utilities/helpers";
 
 import Quarter from "./Quarter";
 import Tasks from "./Tasks";
@@ -65,7 +66,15 @@ const OKROverview = () => {
     return setPayload(newPayload);
   };
 
-  const getObjectives = () => dispatch(actionCreators.getObjective());
+  const getObjectives = () => {
+    dispatch(
+      actionCreators.getItem(`catalyzer/objectives`, (res) => {
+        const { success, data, error } = res;
+        if (success) dispatch(actionCreators.setObjectives(data.objs));
+        if (!success) console.log(error);
+      })
+    );
+  };
 
   const openModal = React.useCallback(
     (objId, krId) => {
@@ -186,6 +195,7 @@ const OKROverview = () => {
         tabBarStyle={{ color: "#37561b" }}
         size="small"
         type="card"
+        defaultActiveKey={getCurrentQuarter().toString()}
       >
         <TabPane tab="First Quarter" key="1">
           <div

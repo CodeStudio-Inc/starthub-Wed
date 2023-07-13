@@ -781,7 +781,7 @@ export const addItem = (path, data, validate, callback) => {
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true, data: res.data });
-        console.log(res);
+        // console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());
@@ -799,6 +799,7 @@ export const getItem = (path, callback) => {
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true, data: res.data });
+        // console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());
@@ -835,6 +836,7 @@ export const updateItem = (path, data, validate, callback) => {
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true, data: res.data });
+        // console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());
@@ -856,23 +858,6 @@ export const deleteItem = (path, callback) => {
       .catch((error) => {
         dispatch(stopLoader());
         callback({ success: false, error: error });
-        console.log(error);
-      });
-  };
-};
-
-export const getObjective = () => {
-  return (dispatch, getState) => {
-    dispatch(loadAction());
-
-    axios
-      .get(`catalyzer/objectives`)
-      .then((res) => {
-        // console.log(res);
-        dispatch(stopLoader());
-        dispatch(setObjectives(res.data.objs));
-      })
-      .catch((error) => {
         console.log(error);
       });
   };

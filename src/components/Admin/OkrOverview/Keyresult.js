@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, svg } from "../../Paths";
+import { Popover } from "antd";
 import QueryBuilderRoundedIcon from "@mui/icons-material/QueryBuilderRounded";
 import EditIcon from "@mui/icons-material/Edit";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
@@ -76,20 +77,24 @@ const Keyresult = ({
           </p>
         </div>
         <div className="keyresult-card-header-row">
-          <EditIcon
-            onClick={() => showEditKeyresult(k._id)}
-            style={{
-              fontSize: "15px",
-              color: "rgba(0, 0, 0, 0.5)",
-            }}
-          />
-          <DeleteOutlineIcon
-            onClick={() => deleteKeyresult(r._id, k._id)}
-            style={{
-              fontSize: "15px",
-              color: "rgba(0, 0, 0, 0.5)",
-            }}
-          />
+          <Popover title="Edit keyresult">
+            <EditIcon
+              onClick={() => showEditKeyresult(k._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Popover>
+          <Popover title="Delete keyresult">
+            <DeleteOutlineIcon
+              onClick={() => deleteKeyresult(r._id, k._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Popover>
         </div>
       </div>
       {editkR && activeCardId === k._id ? (
@@ -114,7 +119,12 @@ const Keyresult = ({
           ) : null}
         </div>
       ) : (
-        <h4 onClick={() => openModal(r._id, k._id)}>{k.keyResult}</h4>
+        <div
+          className="keyresult-container"
+          onClick={() => openModal(r._id, k._id)}
+        >
+          <h4 onClick={() => openModal(r._id, k._id)}>{k.keyResult}</h4>
+        </div>
       )}
       <div className="keyresult-card-footer">
         <div className="tasks-row">

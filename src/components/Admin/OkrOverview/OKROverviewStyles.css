@@ -71,7 +71,6 @@
   align-items: center;
   justify-content: space-between;
   width: 95%;
-  height: 30px;
 }
 
 .objective-card-header p {
@@ -157,6 +156,18 @@
   width: 95%;
   margin: 0.2rem;
   background: #fff;
+}
+
+.keyresult-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 2rem;
+}
+
+.keyresult-container:hover {
+  cursor: pointer;
 }
 
 .editKR-row {

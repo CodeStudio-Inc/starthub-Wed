@@ -115,6 +115,7 @@ const HomepageTemplate = (props) => {
       getItem("Team Members", "3"),
       getItem("Startups", "4"),
     ]),
+    getItem("OKRs", "5", <ContainerOutlined />),
   ];
 
   const teamMembersItems = [

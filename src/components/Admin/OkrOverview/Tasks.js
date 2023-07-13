@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, DatePicker, Select, Space, Progress } from "antd";
+import { Modal, DatePicker, Select, Space, Progress, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, svg } from "../../Paths";
 import { generateId } from "../../utilities/helpers";
@@ -22,6 +22,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
   const { username } = useSelector((state) => state.auth);
 
   React.useEffect(() => {
+    setMembers([]);
     setTasks(keyresult?.tasks);
   }, [keyresult]);
 
@@ -38,6 +39,8 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
 
   const handleSelectChange = (value) => {
     const member = value.map((v) => ({ _id: generateId(), name: v }));
+    if (keyresult?.members?.length > 0)
+      return setMembers([...keyresult?.members, ...member]);
     setMembers(member);
   };
 
@@ -64,6 +67,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
   }, [tasks, setTasks]);
 
   const addMember = () => {
+    if (!members.length) return message.info("No members selected");
     const data = {
       members,
       krId: _id,
@@ -71,7 +75,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
     };
     dispatch(
       actionCreators.addItem(
-        `catalyzer/member/${objId}`,
+        `http://localhost:8080/catalyzer/member/${objId}`,
         data,
         (data) => {
           const { members } = data;
@@ -83,6 +87,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
           if (success) {
             setPayload(data.objs);
             dispatch(actionCreators.setObjectives(data.objs));
+            setMembers([]);
           }
           if (!success) console.log(success);
         }
@@ -128,17 +133,15 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
       footer={null}
     >
       <div className="keyresult-modal">
-        {!updatedMembersArray?.length ? (
-          <MemberSelector
-            members={members}
-            handleSelectChange={handleSelectChange}
-            addMember={addMember}
-            loading={loading}
-            svg={svg}
-          />
-        ) : (
-          <Members members={updatedMembersArray} />
-        )}
+        <Members members={updatedMembersArray} />
+        <MemberSelector
+          members={members}
+          updatedMembersArray={updatedMembersArray}
+          handleSelectChange={handleSelectChange}
+          addMember={addMember}
+          loading={loading}
+          svg={svg}
+        />
         <div className="keyresult-modal-row"></div>
         <input
           placeholder="add task(press enter to save)"

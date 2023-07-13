@@ -1,6 +1,8 @@
 import React from "react";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
+import { Popover } from "antd";
+import { RightCircleOutlined } from "@ant-design/icons";
 import Keyresult from "./Keyresult";
 import AddKeyresult from "./AddKeyresult";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
@@ -8,6 +10,7 @@ import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import QueryBuilderRoundedIcon from "@mui/icons-material/QueryBuilderRounded";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
 import { actionCreators, svg } from "../../Paths";
 
 const Objective = ({
@@ -104,6 +107,21 @@ const Objective = ({
     );
   };
 
+  const pushToNextQuarter = (objId) => {
+    dispatch(
+      actionCreators.getItem(`catalyzer/update-quarter/${objId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          if (success) {
+            setPayload(data.objs);
+            dispatch(actionCreators.setObjectives(data.objs));
+          }
+          if (!success) console.log(error);
+        }
+      })
+    );
+  };
+
   return (
     <div className="objective-card">
       <div className="objective-card-header">
@@ -115,23 +133,37 @@ const Objective = ({
               marginRight: "0.2rem",
             }}
           />
-          <p>{moment(r.updatedAt).fromNow()}</p>
+          <p>last changed {moment(r.updatedAt).fromNow()}</p>
         </div>
         <div className="objective-card-header-row">
-          <EditIcon
-            onClick={() => showEditObjective(r._id)}
-            style={{
-              fontSize: "15px",
-              color: "rgba(0, 0, 0, 0.5)",
-            }}
-          />
-          <DeleteOutlineIcon
-            onClick={() => deleteObjective(r._id)}
-            style={{
-              fontSize: "15px",
-              color: "rgba(0, 0, 0, 0.5)",
-            }}
-          />
+          <Popover title="Push to next quarter">
+            <RightCircleOutlined
+              onClick={() => pushToNextQuarter(r._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+                background: "none",
+              }}
+            />
+          </Popover>
+          <Popover title="Edit objective">
+            <EditIcon
+              onClick={() => showEditObjective(r._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Popover>
+          <Popover title="Delete Objective">
+            <DeleteOutlineIcon
+              onClick={() => deleteObjective(r._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Popover>
           {progressBtn && activeCardId === r._id ? (
             <button onClick={() => saveObjectiveChanges(r._id)}>
               save changes

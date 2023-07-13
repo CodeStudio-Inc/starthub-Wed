@@ -49,7 +49,6 @@ export {
   getValues,
   addStatement,
   getStatement,
-  getObjective,
   archiveObjective,
   editStatement,
   updateQuarter,

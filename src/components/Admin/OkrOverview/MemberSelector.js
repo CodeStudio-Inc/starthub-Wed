@@ -1,14 +1,30 @@
 import React from "react";
 import { Select, Space } from "antd";
+import { useSelector } from "react-redux";
 
 const MemberSelector = ({
   addMember,
   members,
   handleSelectChange,
+  updatedMembersArray,
   svg,
   loading,
 }) => {
+  const { category } = useSelector((state) => state.auth);
+
   const { Option } = Select;
+
+  const memberz =
+    category === "catalyzer"
+      ? ["Matthias", "Timmm", "Esther"]
+      : ["Laura", "Gerald", "Noah", "Rebecca"];
+
+  const removeExistingMembers = (arr1, arr2) => {
+    if (typeof arr2 === "undefined") return;
+    return arr1.filter((m) => !arr2.includes(m));
+  };
+
+  const items = removeExistingMembers(memberz, updatedMembersArray);
 
   return (
     <div className="member-select-row">
@@ -19,26 +35,13 @@ const MemberSelector = ({
         onChange={handleSelectChange}
         optionLabelProp="label"
       >
-        <Option value="Matthias" label="Matthias">
-          <Space>
-            <p>Matthias</p>
-          </Space>
-        </Option>
-        <Option value="Timmm" label="Timmm">
-          <Space>
-            <p>Timmm</p>
-          </Space>
-        </Option>
-        <Option value="Esther" label="Esther">
-          <Space>
-            <p>Esther</p>
-          </Space>
-        </Option>
-        <Option value="Bonita" label="Bonita">
-          <Space>
-            <p>Bonita</p>
-          </Space>
-        </Option>
+        {items.map((m) => (
+          <Option value={m} label={m} key={Math.random()}>
+            <Space>
+              <p>{m}</p>
+            </Space>
+          </Option>
+        ))}
       </Select>
       <p onClick={addMember}>
         {members?.length > 1 ? "add members" : "add member"}
