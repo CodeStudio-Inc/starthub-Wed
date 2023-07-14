@@ -19,7 +19,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
   const { Option } = Select;
 
   const { loading } = useSelector((state) => state.requests);
-  const { username } = useSelector((state) => state.auth);
+  const { username, userRole } = useSelector((state) => state.auth);
 
   React.useEffect(() => {
     setMembers([]);
@@ -75,7 +75,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
     };
     dispatch(
       actionCreators.addItem(
-        `http://localhost:8080/catalyzer/member/${objId}`,
+        `/catalyzer/member/${objId}`,
         data,
         (data) => {
           const { members } = data;
@@ -134,14 +134,16 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
     >
       <div className="keyresult-modal">
         <Members members={updatedMembersArray} />
-        <MemberSelector
-          members={members}
-          updatedMembersArray={updatedMembersArray}
-          handleSelectChange={handleSelectChange}
-          addMember={addMember}
-          loading={loading}
-          svg={svg}
-        />
+        {userRole === "startup" ? null : (
+          <MemberSelector
+            members={members}
+            updatedMembersArray={updatedMembersArray}
+            handleSelectChange={handleSelectChange}
+            addMember={addMember}
+            loading={loading}
+            svg={svg}
+          />
+        )}
         <div className="keyresult-modal-row"></div>
         <input
           placeholder="add task(press enter to save)"
