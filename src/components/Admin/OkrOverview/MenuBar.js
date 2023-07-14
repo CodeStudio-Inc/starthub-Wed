@@ -24,16 +24,12 @@ const MenuBar = ({ handleOpenDialogue, setPayload }) => {
     if (!year) return;
     if (e.key === "Enter") {
       dispatch(
-        actionCreators.searchItem(
-          `http://localhost:8080/catalyzer/filter?year=${year}`,
-          (res) => {
-            const { success, data, error } = res;
-            console.log(res);
-            // setPayload(data.objs);
-            // dispatch(actionCreators.setObjectives(data.objs));
-            setYear("");
-          }
-        )
+        actionCreators.searchItem(`catalyzer/filter?year=${year}`, (res) => {
+          const { success, data, error } = res;
+          setPayload(data.objs);
+          dispatch(actionCreators.setObjectives(data.objs));
+          setYear("");
+        })
       );
     }
   };
@@ -59,13 +55,13 @@ const MenuBar = ({ handleOpenDialogue, setPayload }) => {
         <Toolbar className="tool-bar">
           <h1>OKRs</h1>
           <Box className="tool-bar-action-container">
-            {/* <input
+            <input
               value={year}
               placeholder="enter year to search"
               onKeyUp={(e) => searchOkrs(e)}
               onChange={(e) => setYear(e.target.value)}
               disabled={loading}
-            /> */}
+            />
             <MoreVertIcon
               id="basic-button"
               aria-controls={openMenu ? "basic-menu" : undefined}

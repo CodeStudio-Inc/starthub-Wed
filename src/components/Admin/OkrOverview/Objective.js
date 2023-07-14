@@ -35,6 +35,7 @@ const Objective = ({
   const [description, setDescription] = React.useState(r.description);
 
   const { loading } = useSelector((state) => state.requests);
+  const { username } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -133,7 +134,9 @@ const Objective = ({
               marginRight: "0.2rem",
             }}
           />
-          <p>last changed {moment(r.updatedAt).fromNow()}</p>
+          <p>
+            last changed {username} {moment(r.updatedAt).fromNow()}
+          </p>
         </div>
         <div className="objective-card-header-row">
           <Popover title="Push to next quarter">

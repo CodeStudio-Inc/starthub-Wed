@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 15rem;
+  width: 20%;
 }
 
 .tool-bar-action-container input {
