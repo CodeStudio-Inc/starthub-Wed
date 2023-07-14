@@ -1,8 +1,466 @@
 .okroverview-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-    width: 100%;
-    overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.okroverview-container h2 {
+  font-weight: bold;
+  color: #fff;
+  background: #37561b;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.app-bar-container {
+  width: 100%;
+}
+
+.tool-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.tool-bar h1 {
+  color: #37561b;
+}
+
+.tool-bar-action-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 20%;
+}
+
+.tool-bar-action-container input {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 2rem;
+  border-radius: 5px;
+  background: #eee;
+  padding-left: 5px;
+  color: black;
+}
+
+.objective-quarter-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.objective-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  white-space: break-spaces;
+  width: 500px;
+  min-width: 500px;
+  background: #eee;
+  box-sizing: border-box;
+  margin: 1rem;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.objective-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.objective-card-header p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.objective-card-header p:hover {
+  cursor: pointer;
+}
+
+.objective-card-edit-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 95%;
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.objective-card-edit-row input {
+  outline: none;
+  display: inline-flex;
+  background: #fff;
+  height: 30px;
+  padding-left: 5px;
+  margin-right: 0.5rem;
+  width: 90%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.objective-card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.objective-card-header-row button {
+  background: none;
+  outline: none;
+  color: #37561b;
+  border: none;
+  height: 25px;
+  margin: 0.5rem;
+}
+
+.objective-card-header span {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+  height: 20px;
+  border-radius: 100px;
+  background: #dfa126;
+}
+
+.objective-card-header span p {
+  color: #fff;
+}
+
+.objective-card-header span h5 {
+  color: #fff;
+  margin: 0;
+}
+
+.objective-card-header p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.objective-card-header h3 {
+  margin: 0;
+}
+
+.keyresult-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  white-space: break-spaces;
+  padding: 5px;
+  width: 95%;
+  margin: 0.2rem;
+  background: #fff;
+}
+
+.keyresult-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 2rem;
+}
+
+.keyresult-container:hover {
+  cursor: pointer;
+}
+
+.editKR-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.editKR-row input {
+  outline: none;
+  background: #eee;
+  height: 2rem;
+  width: 80%;
+  border: none;
+  padding-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.editKR-row p {
+  margin: 0;
+  color: #37561b;
+}
+
+.editKR-row p:hover {
+  cursor: pointer;
+}
+
+.keyresult-card h4:hover {
+  cursor: pointer;
+}
+
+.keyresult-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.keyresult-card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyresult-card-header-row p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+}
+
+.keyresult-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 30px;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tasks-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tasks-row p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.keyresult-member-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.member-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  width: 25px;
+  border-radius: 60px;
+  margin-right: 0.2rem;
+  border: 1px solid #37561b;
+}
+
+.member-avatar p {
+  margin: 0;
+  font-size: 12px;
+  color: #37561b;
+}
+
+.add-result-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  margin: 5px;
+}
+
+.add-result-row h4 {
+  margin: 0;
+  color: #37561b;
+}
+
+.add-result-row:hover {
+  cursor: pointer;
+}
+
+.add-objective-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 1rem;
+}
+
+.selector {
+  border: none;
+  outline: none;
+  width: 70%;
+  margin-right: 0.5rem;
+}
+
+.add-objective-row input {
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background: #eee;
+  height: 50px;
+  /* width: 70%; */
+  min-width: 20rem;
+  padding-left: 5px;
+  margin-right: 0.5rem;
+}
+
+.add-objective-row p {
+  margin: 0;
+  color: #37561b;
+}
+
+.add-objective-row p:hover {
+  cursor: pointer;
+}
+
+.add-keyresult-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 95%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.add-keyresult-row textarea {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: none;
+  height: 100px;
+  width: 100%;
+  padding-left: 5px;
+}
+
+.add-keyresult-row input {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  height: 30px;
+  width: 40%;
+}
+
+.add-keyresult-row h3 {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 400;
+}
+
+.add-keyresult-row p {
+  margin: 0;
+  color: #dfa126;
+}
+
+.icons-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.icons-row p {
+  color: #37561b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.icons-row p:hover {
+  cursor: pointer;
+}
+
+.objective-icons:hover {
+  cursor: pointer;
+}
+
+.keyresult-modal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.member-select-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.member-select-row p {
+  margin: 0;
+  color: #37561b;
+}
+
+.member-select-row p:hover {
+  cursor: pointer;
+}
+
+.member-select-row h5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.3rem;
+  padding: 0.3rem;
+  background: #36561b69;
+  color: #37561b;
+  border-radius: 60px;
+}
+
+.keyresult-modal input {
+  outline: none;
+  height: 30px;
+  width: 90%;
+  background: #eee;
+  padding-left: 5px;
+  border: none;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.keyresult-modal h4 {
+  margin: 0;
+}
+
+.keyresult-modal p {
+  margin: 0;
+  color: #37561b;
+}
+
+.keyresult-modal p:hover {
+  cursor: pointer;
+}
+
+.keyresult-modal button {
+  border: none;
+  outline: none;
+  background: none;
+  color: #37561b;
+  height: 30px;
+}
+
+.keyresult-modal button:hover {
+  cursor: pointer;
+}
+
+.keyresult-modal-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.keyresult-modal-row p {
+  color: rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+.keyresult-modal-row p {
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
 }

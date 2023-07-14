@@ -29,6 +29,7 @@ const Metrics = ({ visible }) => {
     token,
     username,
     category,
+    userRole,
     totalExpectedRevenueShare,
     totalRevSharePaid,
     totalRevenue,
@@ -51,6 +52,7 @@ const Metrics = ({ visible }) => {
   }, []);
 
   const dispatch = useDispatch();
+  const teams = ["OIP", "SheTechs"];
 
   const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
   const getUser = () => dispatch(actionCreators.getUser(userId, token));
@@ -276,7 +278,7 @@ const Metrics = ({ visible }) => {
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
-      <Cards />
+      {teams.includes(category) ? null : <Cards />}
       {/* <div className="report-revenue-btn" onClick={() => setOpen(true)}>
         <AssessmentIcon
           style={{ fontSize: "30px", color: "#fff", marginRight: "5px" }}
@@ -284,7 +286,9 @@ const Metrics = ({ visible }) => {
         <h4>Report Revenue</h4>
       </div> */}
       <div className="metric-btn-row" />
-      {category === "internal" ? null : (
+      {teams.includes(category) ? (
+        <Diagnostics diagnosticTool={diagnosticTool} />
+      ) : (
         <div className="revenue">
           <div className="graph-row">
             <button onClick={() => setOpen(true)}>Report Revenue</button>
@@ -351,7 +355,6 @@ const Metrics = ({ visible }) => {
           <Line data={Revenue} width={100} height={30} />
         </div>
       )}
-      <Diagnostics diagnosticTool={diagnosticTool} />
     </div>
   );
 };

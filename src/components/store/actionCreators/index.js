@@ -49,17 +49,15 @@ export {
   getValues,
   addStatement,
   getStatement,
-  addObjective,
-  getObjective,
-  filterOkrs,
-  deleteObjective,
   archiveObjective,
-  addkeyResult,
   editStatement,
-  editObjective,
-  editkeyResult,
-  deleteKeyResult,
   updateQuarter,
+  addItem,
+  getItem,
+  updateItem,
+  searchItem,
+  deleteItem,
+  setObjectives,
 } from "./requests";
 
 export {

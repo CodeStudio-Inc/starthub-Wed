@@ -55,8 +55,6 @@ const Startup = ({ location, history }) => {
     setSelected(event.target.value);
   };
 
-  console.log(selected);
-
   React.useEffect(() => {
     getRevenue();
     getRevenueTracking();
@@ -608,12 +606,12 @@ const Startup = ({ location, history }) => {
           <Line data={Revenue} width={100} height={30} />
         </div>
       ) : null}
-      <Diagnostics
+      {/* <Diagnostics
         diagnosticTool={diagnosticTool}
         diagnostics={diagnostics}
         handleChange={handleChange}
         selected={selected}
-      />
+      /> */}
     </div>
   );
 };

@@ -33,9 +33,11 @@ import TeamleadStartups from "../Admin/TeamLead/TeamleadStartups";
 import TeamLeads from "../Admin/Administrator/TeamLeads";
 import TeamMembers from "../Admin/Administrator/TeamMembers";
 import AdminStartups from "../Admin/Administrator/Startups";
+import StartupList from "../Admin/Startups/StartupList";
 import Loans from "../Admin/Loans";
 import Startup from "../Admin/Startups/Startup";
 import OkrOverview from "../Admin/OkrOverview";
+import StartupOkrs from "../Pages/OkrOverview";
 import Revenues from "../Admin/Revenue";
 import Overview from "../Admin/Revenue/Overview";
 import RevenueShare from "../Admin/Revenue/RevenueShare";
@@ -43,6 +45,7 @@ import RevenueAccumulation from "../Admin/Revenue/RevenueAccumulation";
 import ResourceFiles from "../Admin/ResourceFiles";
 import ObjectivesTable from "../Admin/Startups/OKRs";
 import AdminLeanCanvas from "../Admin/Startups/LeanCanvas";
+import DiagnosticTools from "../Admin/Startups/DiagnosticsTools";
 import Error from "../tabs/Error";
 import svg from "../../assets/images/spinner.svg";
 import GAEventsTracker from "../Hooks/GAEventsTracker";
@@ -85,14 +88,17 @@ export {
   TeamLead,
   Loans,
   Startup,
+  StartupList,
   Profile,
   OkrOverview,
+  StartupOkrs,
   Revenues,
   Overview,
   RevenueShare,
   RevenueAccumulation,
   ResourceFiles,
   AdminLeanCanvas,
+  DiagnosticTools,
   ObjectivesTable,
   Error,
   svg,

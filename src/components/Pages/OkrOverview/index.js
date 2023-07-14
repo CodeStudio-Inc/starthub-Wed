@@ -10,11 +10,11 @@ import Checkbox from "@mui/material/Checkbox";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import { getCurrentQuarter } from "../../utilities/helpers";
 
-import Quarter from "./Quarter";
-import Tasks from "./Tasks";
-import MenuBar from "./MenuBar";
-import AddObjectiveDialogue from "./AddObjectiveDialogue";
-import "./OKROverviewStyles.css";
+import Quarter from "../../Admin/OkrOverview/Quarter";
+import Tasks from "../../Admin/OkrOverview/Tasks";
+import MenuBar from "../../Admin/OkrOverview/MenuBar";
+import AddObjectiveDialogue from "../../Admin/OkrOverview/AddObjectiveDialogue";
+import "../../Admin/OkrOverview/OKROverviewStyles.css";
 import moment from "moment";
 const OKROverview = () => {
   const { TabPane } = Tabs;
