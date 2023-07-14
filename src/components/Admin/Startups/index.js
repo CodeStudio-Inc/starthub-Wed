@@ -216,7 +216,7 @@ const Startups = (props) => {
         </div>
       </div>
       <h3>Recent Activity</h3>
-      <Timeline mode="alternate" style={{ width: "60%" }}>
+      <Timeline mode="right" style={{ width: "60%" }}>
         <Timeline.Item
           label="Date 1"
           dot={
