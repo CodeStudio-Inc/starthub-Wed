@@ -75,6 +75,7 @@ const Diagnostics = ({ location, history }) => {
             >
               <MenuItem value="OIP">OIP</MenuItem>
               <MenuItem value="Catalyzer">Catalyzer</MenuItem>
+              <MenuItem value="SheTechs">SheTechs</MenuItem>
             </Select>
           </FormControl>
           {selected ? (

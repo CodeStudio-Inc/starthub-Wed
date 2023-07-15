@@ -130,6 +130,7 @@ const AddStartup = ({ setOpen }) => {
     const features = [
       ...filterFeaturePayload.map((f) => ({ name: f.name, status: f.check })),
     ];
+    console.log(filterDiagnostics);
     // setError(false);
     // setSuccess(false);
     // setEmailCheck("");
@@ -146,8 +147,8 @@ const AddStartup = ({ setOpen }) => {
       actionCreators.addStartup(
         state.username,
         state.email,
-        "catalyzer",
-        "5tartapp",
+        "SheTechs",
+        state.password,
         features,
         filterDiagnostics,
         state.userRole,
