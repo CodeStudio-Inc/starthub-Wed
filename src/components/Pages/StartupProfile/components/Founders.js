@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { Chart } from "chart.js/auto";
-import { Table } from "antd";
+import { Table, message } from "antd";
 import { actionCreators } from "../../../Paths";
 import RadarGraph from "./RadarGraph";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
@@ -318,6 +318,7 @@ const Founders = ({
         (res) => {
           const { success, data, error } = res;
           if (success) {
+            message.info("Founder added successfully");
             dispatch(actionCreators.setProfile(data.profile));
           }
         }
