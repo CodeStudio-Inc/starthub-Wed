@@ -20,6 +20,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 
+//import components
 import Journey from "../../Pages/StartupProfile/components/Journey";
 import Pitch from "../../Pages/StartupProfile/components/ElevatorPitch";
 import Goal from "../../Pages/StartupProfile/components/Goal&Motivation";

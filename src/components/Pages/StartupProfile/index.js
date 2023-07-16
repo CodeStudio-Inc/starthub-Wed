@@ -19,6 +19,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 
+//import components
+import ProfileCard from "./components/ProfileCard";
 import Journey from "./components/Journey";
 import Pitch from "./components/ElevatorPitch";
 import Goal from "./components/Goal&Motivation";
@@ -742,32 +744,7 @@ const StartupProfile = () => {
       <Helmet>
         <title>Company Profile</title>
       </Helmet>
-      <div className="profile-content">
-        <div className="profile-content-header">
-          <div className="startup-avatar">
-            <h1>{username.substring(0, 1)}</h1>
-          </div>
-        </div>
-        <div className="profile-details-column">
-          <h3>{username}</h3>
-          <div className="profile-details-row">
-            <EmailIcon
-              style={{
-                color: "rgba(0,0,0,0.2)",
-                fontSize: "20px",
-                marginRight: "0.5rem",
-              }}
-            />
-            <h4>{email}</h4>
-          </div>
-        </div>
-        {loading ? (
-          <img
-            src={svg}
-            style={{ height: "40px", width: "40px", alignSelf: "center" }}
-          />
-        ) : null}
-      </div>
+      <ProfileCard username={username} email={email} loading={loading} />
       <div className="separator-row">
         <div className="profile-separator" />
         <h4>{!profile ? "Setup company profile" : "Company profile"}</h4>

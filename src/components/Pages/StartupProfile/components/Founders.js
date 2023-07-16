@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { validateObjectData } from "../../../utilities/helpers";
 import TextField from "@mui/material/TextField";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { Chart } from "chart.js/auto";
-import { Table } from "antd";
+import { Table, message } from "antd";
+import { actionCreators } from "../../../Paths";
 import RadarGraph from "./RadarGraph";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
+
+import AddNewFounder from "./AddNewFounder";
 
 const Founders = ({
   founders,
@@ -35,7 +40,19 @@ const Founders = ({
   handleFounderFinanceInputChange,
   handleFounderCommunicationInputChange,
 }) => {
+  const [newFounder, setNewFounder] = React.useState({
+    id: "SHA" + Math.random().toString().slice(2),
+    name: "",
+    time: 0,
+    focus: "",
+    growth: 0,
+    product: 0,
+    operations: 0,
+    finance: 0,
+    communication: 0,
+  });
   const tableRef = React.useRef(null);
+  const dispatch = useDispatch();
 
   const columns = [
     {
@@ -99,6 +116,7 @@ const Founders = ({
                 setFounderState({ ...founderState, time: e.target.value })
               }
             >
+              <option value={0}>0%</option>
               <option value={10}>10%</option>
               <option value={20}>20%</option>
               <option value={30}>30%</option>
@@ -287,6 +305,30 @@ const Founders = ({
     },
   ];
 
+  const addNewFounder = () => {
+    const data = {
+      founder: newFounder,
+    };
+    dispatch(
+      actionCreators.updateProfileItem(
+        `catalyzer/new-founder`,
+        data,
+        (data) => {
+          if (validateObjectData(data.founder)) return false;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            message.info("Founder added successfully");
+            dispatch(actionCreators.setProfile(data.profile));
+          }
+          if (!success) message.info("Request failed");
+        }
+      )
+    );
+  };
+
   return (
     <div className="accordion">
       {editFounder ? (
@@ -301,6 +343,15 @@ const Founders = ({
           ]}
           style={{ width: "100%" }}
           bordered={true}
+          expandable={{
+            expandedRowRender: (r) => (
+              <AddNewFounder
+                newFounder={newFounder}
+                setNewFounder={setNewFounder}
+                addNewFounder={addNewFounder}
+              />
+            ),
+          }}
           pagination={{
             defaultPageSize: 9,
             showSizeChanger: true,
@@ -335,6 +386,7 @@ const Founders = ({
                   <option disabled selected>
                     Time commitment per week(Founders)
                   </option>
+                  <option value={0}>0%</option>
                   <option value={10}>10%</option>
                   <option value={20}>20%</option>
                   <option value={30}>30%</option>

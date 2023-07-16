@@ -4,6 +4,7 @@ import { actionCreators, logo, svg } from "../../../Paths";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@material-ui/icons/Close";
+import { message } from "antd";
 
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -30,7 +31,6 @@ const AddStartup = ({ setOpen }) => {
   const [emailcheck, setEmailCheck] = React.useState("");
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
-  const [message, setMessage] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(0);
   const [payload, setPayload] = React.useState();
 
@@ -126,6 +126,7 @@ const AddStartup = ({ setOpen }) => {
 
   const register = () => {
     const filterDiagnostics = diagnostics.filter((d) => d.project === selected);
+    console.log(selected);
     const filterFeaturePayload = payload.filter((f) => f.check);
     const features = [
       ...filterFeaturePayload.map((f) => ({ name: f.name, status: f.check })),
@@ -133,21 +134,21 @@ const AddStartup = ({ setOpen }) => {
     // setError(false);
     // setSuccess(false);
     // setEmailCheck("");
-    // if (!features.length) return setMessage("No features added for user");
-    // if (!filterDiagnostics.length)
-    //   return setMessage("No diagnostics added for user");
-    // if (state.password.length)
-    //   return setMessage("Password must be atleast 8 characters");
-    // if (!validateEmail(state.email) || !state.email)
-    //   return setEmailCheck("Enter valid email");
-    // if (!state.username || !state.category || !state.password)
-    //   return setEmailCheck("All fields are required");
+    if (!features.length) return message.info("No features added for user");
+    if (!filterDiagnostics.length)
+      return message.info("No diagnostics added for user");
+    if (state.password.length < 8)
+      return message.info("Password must be atleast 8 characters");
+    if (!validateEmail(state.email) || !state.email)
+      return setEmailCheck("Enter valid email");
+    if (!state.username || !state.category || !state.password)
+      return setEmailCheck("All fields are required");
     dispatch(
       actionCreators.addStartup(
         state.username,
         state.email,
-        "catalyzer",
-        "5tartapp",
+        state.category,
+        state.password,
         features,
         filterDiagnostics,
         state.userRole,
@@ -156,13 +157,11 @@ const AddStartup = ({ setOpen }) => {
         (response) => {
           const { success, res, error, err } = response;
           if (success) {
-            setSuccess(true);
-            setMessage(res);
+            message.info("User Account created Successfully");
             dispatch(actionCreators.getUserz());
           }
           if (error) {
-            setError(true);
-            setMessage(JSON.stringify(err.message));
+            message.info(JSON.stringify(err.message));
           }
         }
       )
@@ -175,30 +174,6 @@ const AddStartup = ({ setOpen }) => {
         <div className="signup-left-backdrop">
           <h1>World-class venture building for innovators in Uganda.</h1>
           <h3>Setup Startup Account.</h3>
-          {error ? (
-            <div className="error-message">
-              <WarningAmberIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h4>{message}</h4>
-            </div>
-          ) : null}
-          {success ? (
-            <div className="error-message">
-              <DoneIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h4>{message}</h4>
-            </div>
-          ) : null}
         </div>
       </div>
       <div className="signup-right">
@@ -250,7 +225,6 @@ const AddStartup = ({ setOpen }) => {
                   <Features
                     features={adminFeatures}
                     handleCheckboxSelect={handleCheckboxSelect}
-                    message={message}
                     emailcheck={emailcheck}
                   />
                 ) : null}

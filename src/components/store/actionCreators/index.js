@@ -125,4 +125,9 @@ export {
   updateFounder,
   updateProduct,
   getAllProfiles,
+  getProfileItem,
+  searchProfileItem,
+  updateProfileItem,
+  deleteProfileItem,
+  setProfile,
 } from "./profile";

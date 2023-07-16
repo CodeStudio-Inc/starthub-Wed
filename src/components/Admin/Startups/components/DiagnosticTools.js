@@ -39,15 +39,9 @@ const Features = ({ diagnostics, selected, setSelected }) => {
           }}
           label="startups"
         >
-          {doesContainDups(projects) ? (
-            <MenuItem value={projects[0]}>{projects[0]}</MenuItem>
-          ) : (
-            projects?.map((d) => (
-              <MenuItem key={d} value={d}>
-                {d}
-              </MenuItem>
-            ))
-          )}
+          <MenuItem value="Catalyzer">Catalyzer</MenuItem>
+          <MenuItem value="OIP">OIP</MenuItem>
+          <MenuItem value="SheTechs">SheTechs</MenuItem>
         </Select>
       </FormControl>
     </div>
