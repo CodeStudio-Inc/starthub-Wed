@@ -309,7 +309,7 @@ const Founders = ({
     founders = [...founders, newFounder];
     dispatch(
       actionCreators.updateProfileItem(
-        `http://localhost:8080/catalyzer/new-founder`,
+        `catalyzer/new-founder`,
         data,
         (data) => {
           if (validateObjectData(data.founder)) return false;

@@ -21,7 +21,7 @@ const ProfileCard = ({ username, email, loading, history }) => {
     const data = state;
     dispatch(
       actionCreators.updateProfileItem(
-        `http://localhost:8080/auth/change-password`,
+        `auth/change-password`,
         data,
         (data) => {
           if (validateObjectData(data)) return false;
