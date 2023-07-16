@@ -27,3 +27,14 @@ export const getCurrentQuarter = () => {
 
   return quarter;
 };
+
+export const validateObjectData = (data) => {
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      if (data[key] === null || data[key] === undefined || data[key] === "") {
+        return true; // Object has an empty value
+      }
+    }
+  }
+  return false; // No empty values found
+};

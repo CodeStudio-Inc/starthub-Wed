@@ -67,6 +67,51 @@
   font-weight: 400;
 }
 
+.profile-content-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.change-password-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 40%;
+  padding-right: 20px;
+  /* background: #37561b; */
+}
+
+.change-password-row p {
+  margin: 0;
+  color: #37561b;
+}
+
+.change-password-row p:hover {
+  cursor: pointer;
+}
+
+.change-password-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+  padding: 10px;
+}
+
+.change-password-input input {
+  outline: none;
+  border: none;
+  background: #eee;
+  border-radius: 2px;
+  height: 30px;
+  padding-left: 5px;
+  margin-bottom: 0.5rem;
+  /* width: 5rem; */
+}
+
 .profile-details-column {
   display: flex;
   align-items: flex-start;

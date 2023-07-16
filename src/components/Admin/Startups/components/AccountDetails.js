@@ -7,6 +7,8 @@ const AccountDetails = ({
   emailcheck,
   handleEmailChange,
 }) => {
+  const programs = ["SheTechs", "OIP"];
+
   return (
     <div className="input-modal-column">
       <h2>Register</h2>
@@ -56,7 +58,7 @@ const AccountDetails = ({
           </select>
         </div>
       </div>
-      {state.category === "academy" || state.category === "comms" ? null : (
+      {programs.includes(state.category) ? null : (
         <div className="input-row">
           <div className="input-column">
             <h4>contract date</h4>
