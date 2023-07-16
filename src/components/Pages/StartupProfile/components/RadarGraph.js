@@ -11,11 +11,12 @@ const RadarGraph = ({ data, founders }) => {
   return (
     <div className="accordion-founder">
       <div className="founder-card-row">
-        {founder.map((f) => (
+        {founder.map((f, i) => (
           <div
             className={
               founder.length >= 3 ? "resized-founder-card" : "founder-card"
             }
+            key={i}
           >
             <h2>{f.name}</h2>
             <div className="founder-card-row">
@@ -28,7 +29,9 @@ const RadarGraph = ({ data, founders }) => {
                     marginRight: "0.5rem",
                   }}
                 />
-                <h3>{parseInt(f.time)} %</h3>
+                <h3>
+                  {typeof f.time === "undefined" ? 0 : parseInt(f.time)} %
+                </h3>
               </div>
             </div>
             <div className="founder-card-row">
