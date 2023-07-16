@@ -5,7 +5,7 @@ import { actionCreators, svg } from "../../../Paths";
 import { validateObjectData } from "../../../utilities/helpers";
 import EmailIcon from "@mui/icons-material/Email";
 
-const ProfileCard = ({ username, email, loading, history }) => {
+const ProfileCard = ({ username, email, loading }) => {
   const [state, setState] = React.useState({
     oldPassword: "",
     newPassword: "",
@@ -36,7 +36,6 @@ const ProfileCard = ({ username, email, loading, history }) => {
               newPassword: "",
             });
             dispatch(actionCreators.removeUser());
-            history.push("/");
           }
           if (!success) message.info("Old password does not match");
         }
