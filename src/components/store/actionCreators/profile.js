@@ -1,5 +1,6 @@
 import * as actions from "../actions";
 import axios from "axios";
+import { message } from "antd";
 
 export const loaderAction = () => {
   return {
@@ -55,6 +56,7 @@ export const addProfile = (
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true });
+        // dispatch(setProfile(res?.data?.profile));
         // console.log(res.data);
       })
       .catch((error) => {
@@ -184,6 +186,99 @@ export const getAllProfiles = () => {
         // console.log(res.data);
       })
       .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+/// resusable functions for making requests
+export const addProfileItem = (path, data, validate, callback) => {
+  if (typeof validate !== "undefined" && !validate(data))
+    return message.info("All fields are required");
+  return (dispatch) => {
+    dispatch(loaderAction());
+    axios
+      .post(path, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+        // console.log(res);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
+export const getProfileItem = (path, callback) => {
+  return (dispatch) => {
+    dispatch(loaderAction());
+    axios
+      .get(path)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+        // console.log(res);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false, error: error });
+        console.log(error);
+      });
+  };
+};
+
+export const searchProfileItem = (path, callback) => {
+  return (dispatch) => {
+    dispatch(loaderAction());
+    axios
+      .get(path)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false, error: error });
+        console.log(error);
+      });
+  };
+};
+
+export const updateProfileItem = (path, data, validate, callback) => {
+  if (typeof validate !== "undefined" && !validate(data))
+    return message.info("All fields are required");
+  return (dispatch) => {
+    dispatch(loaderAction());
+    axios
+      .patch(path, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+        // console.log(res);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
+export const deleteProfileItem = (path, callback) => {
+  return (dispatch) => {
+    dispatch(loaderAction());
+    axios
+      .delete(path)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false, error: error });
         console.log(error);
       });
   };

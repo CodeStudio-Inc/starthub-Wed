@@ -3,7 +3,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-const Features = ({ features, message, emailcheck, handleCheckboxSelect }) => {
+const Features = ({ features, emailcheck, handleCheckboxSelect }) => {
   return (
     <div className="input-modal-column">
       <FormGroup>
@@ -15,7 +15,6 @@ const Features = ({ features, message, emailcheck, handleCheckboxSelect }) => {
           />
         ))}
       </FormGroup>
-      <p>{message}</p>
       <p>{emailcheck}</p>
     </div>
   );

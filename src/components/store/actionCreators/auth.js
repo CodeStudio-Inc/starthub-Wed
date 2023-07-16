@@ -297,7 +297,7 @@ export const addStartup = (
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true, res: res.data.message });
-        console.log(res);
+        // console.log(res);
       })
       .catch((error) => {
         dispatch(stopLoader());

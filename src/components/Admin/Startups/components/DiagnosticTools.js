@@ -9,8 +9,6 @@ const Features = ({ diagnostics, selected, setSelected }) => {
     setSelected(event.target.value);
   };
 
-  console.log(selected);
-
   const filterDiagnostics = () => {
     diagnostics.filter((d) => d);
   };
