@@ -41,10 +41,9 @@ const TeamLeadStartups = (props) => {
 
   const tableRef = React.useRef(null);
 
-  const filterUsers = users.filter(
-    (el) => el.teamCategory === category && el.creator === userId
+  const startups = users?.filter(
+    (el) => el.teamCategory === category && el.userRole === "startup"
   );
-  const startups = users.filter((el) => el.teamLeadId === userId);
 
   const revenueTotal = users.filter(
     (el) =>
