@@ -630,7 +630,7 @@
   background: none;
   border: 1px solid #37561b;
   border-radius: 5px;
-  width: 10rem;
+  /* width: 10rem; */
 }
 
 .export-container button:hover {

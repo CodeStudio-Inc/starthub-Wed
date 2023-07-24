@@ -111,16 +111,13 @@ const HomepageTemplate = (props) => {
 
   const teamLeadItems = [
     getItem("Dashboard", "1", <AppstoreOutlined />),
-    getItem("Teams", "sub1", <GroupOutlined />, [
-      getItem("Team Members", "3"),
-      getItem("Startups", "4"),
-    ]),
-    getItem("OKRs", "5", <ContainerOutlined />),
+    getItem("Startups", "2", <ContainerOutlined />),
+    getItem("OKRs", "3", <ContainerOutlined />),
   ];
 
   const teamMembersItems = [
     getItem("Dashboard", "1", <AppstoreOutlined />),
-    getItem("Starups", "sub1", <GroupOutlined />, [
+    getItem("Startups", "sub1", <GroupOutlined />, [
       getSubItem("Catalyzer", "catalyzer", "3"),
       getSubItem("OIP", "OIP", "4"),
     ]),
