@@ -4,8 +4,8 @@ const Teamlead = ({ index }) => {
   return (
     <div style={{ width: "100%" }}>
       {index === 1 ? <TeamLead /> : null}
-      {index === 3 ? <TeamleadStartups /> : null}
-      {index === 5 ? <OkrOverview /> : null}
+      {index === 2 ? <TeamleadStartups /> : null}
+      {index === 3 ? <OkrOverview /> : null}
     </div>
   );
 };

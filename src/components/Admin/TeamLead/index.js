@@ -47,11 +47,13 @@ const TeamLead = (props) => {
 
   const filterUsers =
     users &&
-    users.filter((el) => el.teamCategory === category && el.creator === userId);
+    users.filter(
+      (el) => el.teamCategory === category && el.userRole === "team member"
+    );
   const startups =
     users &&
     users?.filter(
-      (el) => el.teamLeadId === userId && el.userRole === "startup"
+      (el) => el.teamCategory === category && el.userRole === "startup"
     );
 
   // console.log(filterUsers);
