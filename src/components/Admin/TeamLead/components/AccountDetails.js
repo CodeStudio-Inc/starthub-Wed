@@ -39,9 +39,9 @@ const AccountDetails = ({
         <option value="" disabled selected>
           -select-
         </option>
-        {categories.map((c) => (
-          <option value={c.name}>{c.name}</option>
-        ))}
+        <option value="catalyzer">Catalyzer</option>
+        <option value="OIP">OIP</option>
+        <option value="SheTechs">SheTechs</option>
       </select>
     </div>
   );

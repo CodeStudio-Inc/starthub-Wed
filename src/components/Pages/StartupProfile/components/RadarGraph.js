@@ -49,6 +49,9 @@ const RadarGraph = ({ data, founders }) => {
             </div>
           </div>
         ))}
+        {[...new Array(3 - (founder.length % 3)).fill()].map((r) => (
+          <div className="resized-founder-card hidden" />
+        ))}
       </div>
       <h4>Founder skill level on a scale of 10</h4>
       <Radar
