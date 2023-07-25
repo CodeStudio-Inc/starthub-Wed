@@ -605,13 +605,14 @@ const Startup = ({ location, history }) => {
           </div>
           <Line data={Revenue} width={100} height={30} />
         </div>
-      ) : null}
-      {/* <Diagnostics
-        diagnosticTool={diagnosticTool}
-        diagnostics={diagnostics}
-        handleChange={handleChange}
-        selected={selected}
-      /> */}
+      ) : (
+        <Diagnostics
+          diagnosticTool={diagnosticTool}
+          diagnostics={diagnostics}
+          handleChange={handleChange}
+          selected={selected}
+        />
+      )}
     </div>
   );
 };
