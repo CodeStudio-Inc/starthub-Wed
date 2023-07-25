@@ -268,7 +268,7 @@ const StartupList = ({ history, title }) => {
       </div>
       <Table
         ref={tableRef}
-        columns={title === "OIP" ? columnz : columns}
+        columns={typeof title === "undefined" ? columns : columnz}
         dataSource={[
           ...filterUsers.map((r) => ({
             ...r,
@@ -290,7 +290,7 @@ const StartupList = ({ history, title }) => {
         style={{ width: "95%" }}
         bordered={true}
         scroll={{
-          x: title === "OIP" ? 1000 : 2000,
+          x: typeof title === "undefined" ? 2000 : 1000,
         }}
         pagination={{
           defaultPageSize: 9,
