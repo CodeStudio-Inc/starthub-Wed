@@ -208,12 +208,12 @@ const Startups = (props) => {
             <p>Add Payment</p>
           </div>
         ) : null}
-        <div className="add-startup-button" onClick={setOpenAddStartup}>
+        {/* <div className="add-startup-button" onClick={setOpenAddStartup}>
           <ControlPointIcon
             style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
           />
           <p>Add new Startup</p>
-        </div>
+        </div> */}
       </div>
       <h3>Recent Activity</h3>
       <Timeline mode="right" style={{ width: "60%" }}>
