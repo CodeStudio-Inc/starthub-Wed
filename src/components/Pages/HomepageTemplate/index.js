@@ -120,8 +120,9 @@ const HomepageTemplate = (props) => {
     getItem("Startups", "sub1", <GroupOutlined />, [
       getSubItem("Catalyzer", "catalyzer", "3"),
       getSubItem("OIP", "OIP", "4"),
+      getSubItem("SheTechs", "SheTechs", "5"),
     ]),
-    getItem("OKRs", "5", <ContainerOutlined />),
+    getItem("OKRs", "6", <ContainerOutlined />),
   ];
 
   const adminItems = [
