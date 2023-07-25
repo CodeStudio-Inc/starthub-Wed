@@ -34,6 +34,7 @@ import TeamLeads from "../Admin/Administrator/TeamLeads";
 import TeamMembers from "../Admin/Administrator/TeamMembers";
 import AdminStartups from "../Admin/Administrator/Startups";
 import StartupList from "../Admin/Startups/StartupList";
+import AddStartup from "../Admin/AddStartup";
 import Loans from "../Admin/Loans";
 import Startup from "../Admin/Startups/Startup";
 import OkrOverview from "../Admin/OkrOverview";
@@ -89,6 +90,7 @@ export {
   Loans,
   Startup,
   StartupList,
+  AddStartup,
   Profile,
   OkrOverview,
   StartupOkrs,
