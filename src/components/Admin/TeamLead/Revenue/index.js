@@ -26,6 +26,7 @@ const Revenue = () => {
     month_expense: "",
     date: "",
     month: "",
+    expectedRevsharePayment: "",
   });
   const [columnIndex, setColumnIndex] = React.useState(null);
   const [paymentsIndex, setPaymnentsIndex] = React.useState(null);
@@ -41,8 +42,6 @@ const Revenue = () => {
     );
 
   const [open, setOpen] = React.useState(false);
-
-  //   console.log(revState);
 
   const showDrawer = () => {
     setOpen(true);
@@ -68,6 +67,8 @@ const Revenue = () => {
 
   const updateRevenue = (id) => {
     const data = revState;
+    if (data.expectedRevsharePayment <= 0)
+      return message.info("Revenue share payment already cleared");
     dispatch(
       actionCreators.updateItem(
         `admin/update-revenue/${id}`,
@@ -129,12 +130,10 @@ const Revenue = () => {
 
   const payment = (id) => {
     const data = newRevState;
+
     if (!isInteger(data.revSharepayment))
       return message.info("Invalid data entry");
-    if (
-      data.revSharepayment >= data.expectedRevsharePayment ||
-      data.revSharepayment < 0
-    )
+    if (parseInt(data.revSharepayment) > parseInt(data.expectedRevsharePayment))
       return message.info("Amounts exceeds expected payment");
     dispatch(
       actionCreators.updateItem(
@@ -279,6 +278,8 @@ const Revenue = () => {
                   month_revenue: record.month_revenue.replace(/\,/g, ""),
                   month_expense: record.month_expense.replace(/\,/g, ""),
                   revSharepayment: record.revSharepayment.replace(/\,/g, ""),
+                  expectedRevsharePayment:
+                    record.expectedRevsharePayment.replace(/\,/g, ""),
                 });
               }}
             >
@@ -394,13 +395,13 @@ const Revenue = () => {
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             })),
           ]}
-          onRow={(record, rowIndex) => {
-            return {
-              onClick: () => {
-                setColumnIndex(rowIndex);
-              },
-            };
-          }}
+          //   onRow={(record, rowIndex) => {
+          //     return {
+          //       onClick: () => {
+          //         setColumnIndex(rowIndex);
+          //       },
+          //     };
+          //   }}
           style={{ width: "100%", marginTop: "1rem" }}
           bordered={true}
           // scroll={{
