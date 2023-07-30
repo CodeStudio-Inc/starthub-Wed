@@ -376,27 +376,27 @@ const Revenue = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        {/* <Table
+        <Table
           ref={tableRef}
           columns={columns}
-          dataSource={[
-            ...revenue?.map((r) => ({
-              ...r,
-              key: r._id,
-              month_revenue: r.month_revenue
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              month_expense: r.month_expense
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              expectedRevsharePayment: r.expectedRevsharePayment
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              revSharepayment: r.revSharepayment
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-            })),
-          ]} */}
+          //   dataSource={[
+          //     ...revenue?.map((r) => ({
+          //       ...r,
+          //       key: r._id,
+          //       month_revenue: r.month_revenue
+          //         .toString()
+          //         .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          //       month_expense: r.month_expense
+          //         .toString()
+          //         .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          //       expectedRevsharePayment: r.expectedRevsharePayment
+          //         .toString()
+          //         .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          //       revSharepayment: r.revSharepayment
+          //         .toString()
+          //         .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          //     })),
+          //   ]}
           //   onRow={(record, rowIndex) => {
           //     return {
           //       onClick: () => {
