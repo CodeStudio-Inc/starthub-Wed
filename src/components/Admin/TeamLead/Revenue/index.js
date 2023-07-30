@@ -376,7 +376,7 @@ const Revenue = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <Table
+        {/* <Table
           ref={tableRef}
           columns={columns}
           dataSource={[
@@ -396,7 +396,7 @@ const Revenue = () => {
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             })),
-          ]}
+          ]} */}
           //   onRow={(record, rowIndex) => {
           //     return {
           //       onClick: () => {
