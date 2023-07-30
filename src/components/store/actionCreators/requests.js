@@ -191,6 +191,13 @@ export const setObjectives = (data) => {
   };
 };
 
+export const setRevenue = (data) => {
+  return {
+    type: actions.SET_REVENUE,
+    data,
+  };
+};
+
 export const dragWithListAction = (
   droppableIdStart,
   droppableIdEnd,

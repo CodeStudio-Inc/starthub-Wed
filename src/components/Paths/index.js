@@ -40,6 +40,7 @@ import Startup from "../Admin/Startups/Startup";
 import OkrOverview from "../Admin/OkrOverview";
 import StartupOkrs from "../Pages/OkrOverview";
 import Revenues from "../Admin/Revenue";
+import Revenue from "../Admin/TeamLead/Revenue";
 import Overview from "../Admin/Revenue/Overview";
 import RevenueShare from "../Admin/Revenue/RevenueShare";
 import RevenueAccumulation from "../Admin/Revenue/RevenueAccumulation";
@@ -97,6 +98,7 @@ export {
   Revenues,
   Overview,
   RevenueShare,
+  Revenue,
   RevenueAccumulation,
   ResourceFiles,
   AdminLeanCanvas,
