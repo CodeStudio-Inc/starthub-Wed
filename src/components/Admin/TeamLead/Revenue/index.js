@@ -34,9 +34,11 @@ const Revenue = () => {
 
   const tableRef = React.useRef(null);
 
-  const startups = users?.filter(
-    (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
-  );
+  const startups =
+    users &&
+    users.filter(
+      (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
+    );
 
   const [open, setOpen] = React.useState(false);
 
@@ -361,7 +363,7 @@ const Revenue = () => {
           />
         </Grid>
       </Grid>
-      <AddRevenueDrawer
+      {/* <AddRevenueDrawer
         open={open}
         showDrawer={showDrawer}
         onClose={onClose}
@@ -369,7 +371,7 @@ const Revenue = () => {
         newRevState={newRevState}
         setNewRevState={setNewRevState}
         addRevenue={addRevenue}
-      />
+      /> */}
       <Grid item xs={12}>
         <Divider />
       </Grid>
