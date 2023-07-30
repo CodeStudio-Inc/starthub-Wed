@@ -34,11 +34,9 @@ const Revenue = () => {
 
   const tableRef = React.useRef(null);
 
-  const startups = users.filter(
+  const startups = users?.filter(
     (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
   );
-
-  console.log(startups);
 
   const [open, setOpen] = React.useState(false);
 
