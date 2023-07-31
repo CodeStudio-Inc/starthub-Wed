@@ -12,9 +12,12 @@ import QueryBuilderRoundedIcon from "@mui/icons-material/QueryBuilderRounded";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import moment from "moment";
+
+import AddObjective from "./AddObjective";
 import Objective from "./Objective";
 
 const Quarter = ({
+  tab,
   deleteKeyresult,
   deleteObjective,
   objective,
@@ -42,6 +45,7 @@ const Quarter = ({
   const [description, setDescription] = React.useState("");
 
   const { category } = useSelector((state) => state.auth);
+  const { quarter } = useSelector((state) => state.requests);
 
   const dispatch = useDispatch();
 
@@ -101,7 +105,19 @@ const Quarter = ({
           hideProgressBtn={hideProgressBtn}
         />
       ))}
-      {!objective ? (
+      {tab === quarter ? (
+        <AddObjective
+          objective={objective}
+          hideAddObjective={hideAddObjective}
+          showAddObjective={showAddObjective}
+          description={description}
+          setDescription={setDescription}
+          loading={loading}
+          svg={svg}
+          addObjective={addObjective}
+        />
+      ) : null}
+      {/* {!objective ? (
         <div className="add-result-row" onClick={showAddObjective}>
           <AddRoundedIcon
             style={{
@@ -132,7 +148,7 @@ const Quarter = ({
             <img src={svg} style={{ height: "30px", width: "30px" }} />
           ) : null}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

@@ -191,6 +191,13 @@ export const setObjectives = (data) => {
   };
 };
 
+export const setCurrentQuarter = (data) => {
+  return {
+    type: actions.SET_CURRENT_QUARTER,
+    data,
+  };
+};
+
 export const setRevenue = (data) => {
   return {
     type: actions.SET_REVENUE,
