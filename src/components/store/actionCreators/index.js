@@ -59,6 +59,7 @@ export {
   deleteItem,
   setObjectives,
   setRevenue,
+  setCurrentQuarter,
 } from "./requests";
 
 export {

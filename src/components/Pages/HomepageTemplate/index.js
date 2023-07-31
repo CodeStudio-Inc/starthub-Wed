@@ -122,7 +122,7 @@ const HomepageTemplate = (props) => {
       getSubItem("Add Startup", "add startup", "3"),
       getSubItem("Catalyzer", "catalyzer", "4"),
       getSubItem("OIP", "OIP", "5"),
-      getSubItem("SheTechs", "SheTechs", "6"),
+      getSubItem("UDSM", "UDSM", "6"),
     ]),
     getItem("OKRs", "7", <ContainerOutlined />),
   ];

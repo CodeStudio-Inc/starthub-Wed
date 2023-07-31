@@ -87,22 +87,6 @@ const MenuBar = ({ handleOpenDialogue, setPayload }) => {
                 </ListItemIcon>
                 add objective
               </MenuItem>
-              {/* <MenuItem onClick={handleMenuClose}>
-                <ListItemIcon>
-                  <DownloadIcon
-                    style={{ fontSize: "20px", color: "rgba(0,0,0,0.4)" }}
-                  />
-                </ListItemIcon>
-                export
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <ListItemIcon>
-                  <PersonAddIcon
-                    style={{ fontSize: "20px", color: "rgba(0,0,0,0.4)" }}
-                  />
-                </ListItemIcon>
-                invite
-              </MenuItem> */}
             </Menu>
           </Box>
         </Toolbar>
