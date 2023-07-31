@@ -7,9 +7,9 @@ const initialState = {
   boards: [],
   values: [],
   statements: [],
+  quarter: 0,
   objectives: [],
   revenue: [],
-  // obj:'',
   teams: 0,
   vision: 0,
   proposition: 0,
@@ -120,6 +120,12 @@ const requests = (state = initialState, action) => {
       return updateObject(state, {
         loading: false,
         objectives: action.data,
+      });
+
+    case actions.SET_CURRENT_QUARTER:
+      return updateObject(state, {
+        loading: false,
+        quarter: action.data,
       });
 
     case actions.SET_REVENUE:
