@@ -25,7 +25,7 @@ const ReportRevenue = ({ setOpen }) => {
 
   const addRevenue = () => {
     if (!isInteger(state.month_revenue) || !isInteger(state.month_expense))
-      return setMessage("Invalid Amount Entry");
+      return setMessage("All fields are required");
     if (moment(state.date).format("MMM") !== state.month.substring(0, 3))
       return setMessage(
         "Month selected should match with the month in the selected date"

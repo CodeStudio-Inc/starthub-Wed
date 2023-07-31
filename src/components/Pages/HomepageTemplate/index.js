@@ -112,7 +112,8 @@ const HomepageTemplate = (props) => {
   const teamLeadItems = [
     getItem("Dashboard", "1", <AppstoreOutlined />),
     getItem("Startups", "2", <ContainerOutlined />),
-    getItem("OKRs", "3", <ContainerOutlined />),
+    getItem("Revenue", "3", <PaymentIcon />),
+    getItem("OKRs", "4", <ContainerOutlined />),
   ];
 
   const teamMembersItems = [

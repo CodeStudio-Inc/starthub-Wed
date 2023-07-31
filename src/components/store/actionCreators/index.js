@@ -58,6 +58,7 @@ export {
   searchItem,
   deleteItem,
   setObjectives,
+  setRevenue,
 } from "./requests";
 
 export {
