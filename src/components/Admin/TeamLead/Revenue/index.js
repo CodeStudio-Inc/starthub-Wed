@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid, Divider, Typography } from "@mui/material";
 import { Table, message, Input, Button } from "antd";
 import { isInteger } from "formik";
-import { actionCreators } from "../../../Paths";
+import { actionCreators, svg } from "../../../Paths";
 import { PlusOutlined } from "@ant-design/icons";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
@@ -30,7 +30,7 @@ const Revenue = () => {
   });
   const [columnIndex, setColumnIndex] = React.useState(null);
   const [paymentsIndex, setPaymnentsIndex] = React.useState(null);
-  const { revenue } = useSelector((state) => state.requests);
+  const { revenue, loading } = useSelector((state) => state.requests);
   const { users } = useSelector((state) => state.admin);
 
   const tableRef = React.useRef(null);
@@ -395,6 +395,7 @@ const Revenue = () => {
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             })),
           ]}
+          loading={loading}
           //   onRow={(record, rowIndex) => {
           //     return {
           //       onClick: () => {
