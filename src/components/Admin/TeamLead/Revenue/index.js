@@ -41,8 +41,6 @@ const Revenue = () => {
       (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
     );
 
-  console.log(revenue);
-
   const [open, setOpen] = React.useState(false);
 
   const showDrawer = () => {
@@ -160,14 +158,11 @@ const Revenue = () => {
 
   const onSearch = (value) => {
     dispatch(
-      actionCreators.getItem(
-        `http://localhost:8080/admin/filter-startup?startup=${value}`,
-        (res) => {
-          const { success } = res;
-          if (success) dispatch(actionCreators.setRevenue(res.data.revenue));
-          if (!success) message.info("Request Failed");
-        }
-      )
+      actionCreators.getItem(`admin/filter-startup?startup=${value}`, (res) => {
+        const { success } = res;
+        if (success) dispatch(actionCreators.setRevenue(res.data.revenue));
+        if (!success) message.info("Request Failed");
+      })
     );
   };
 
