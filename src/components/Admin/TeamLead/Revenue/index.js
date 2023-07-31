@@ -41,6 +41,8 @@ const Revenue = () => {
       (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
     );
 
+  console.log(revenue);
+
   const [open, setOpen] = React.useState(false);
 
   const showDrawer = () => {
@@ -377,37 +379,27 @@ const Revenue = () => {
         <Table
           ref={tableRef}
           columns={columns}
-          dataSource={[
-            ...revenue?.map((r) => ({
-              ...r,
-              key: r._id,
-              month_revenue: r.month_revenue
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              month_expense: r.month_expense
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              expectedRevsharePayment: r.expectedRevsharePayment
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              revSharepayment: r.revSharepayment
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-            })),
-          ]}
+          //   dataSource={[
+          //     ...revenue?.map((r) => ({
+          //       ...r,
+          //       key: r._id,
+          //       month_revenue: r.month_revenue
+          //         .toString()
+          //         .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          //       month_expense: r.month_expense
+          //         .toString()
+          //         .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          //       expectedRevsharePayment: r.expectedRevsharePayment
+          //         .toString()
+          //         .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          //       revSharepayment: r.revSharepayment
+          //         .toString()
+          //         .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          //     })),
+          //   ]}
           loading={loading}
-          //   onRow={(record, rowIndex) => {
-          //     return {
-          //       onClick: () => {
-          //         setColumnIndex(rowIndex);
-          //       },
-          //     };
-          //   }}
           style={{ width: "100%", marginTop: "1rem" }}
           bordered={true}
-          // scroll={{
-          //   x: 2000,
-          // }}
           pagination={{
             defaultPageSize: 9,
             showSizeChanger: true,
