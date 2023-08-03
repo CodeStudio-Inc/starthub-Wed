@@ -380,16 +380,16 @@ const Revenue = () => {
             ...revenue?.map((r) => ({
               ...r,
               key: r?._id,
-              month_revenue: r?.month_revenue
+              month_revenue: Math.round(r?.month_revenue)
                 ?.toString()
                 ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              month_expense: r?.month_expense
+              month_expense: Math.round(r?.month_expense)
                 ?.toString()
                 ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              expectedRevsharePayment: r?.expectedRevsharePayment
+              expectedRevsharePayment: Math.round(r?.expectedRevsharePayment)
                 ?.toString()
                 ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              revSharepayment: r?.revSharepayment
+              revSharepayment: Math.round(r?.revSharepayment)
                 ?.toString()
                 ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             })),
