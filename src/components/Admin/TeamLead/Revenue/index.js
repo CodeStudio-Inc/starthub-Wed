@@ -104,7 +104,6 @@ const Revenue = () => {
       );
     if (!newRevState.id) return message.info("Please select startup");
     const data = newRevState;
-    console.log(data);
     dispatch(
       actionCreators.addItem(
         `admin/teamlead-revenue`,
@@ -121,6 +120,13 @@ const Revenue = () => {
             message.info(data.message);
             dispatch(actionCreators.setRevenue(data.revenue));
             onClose();
+            setNewRevState({
+              id: "",
+              month_revenue: "",
+              month_expense: "",
+              date: "",
+              month: "",
+            });
           }
           if (!success) message.info("Request Failed");
         }
@@ -373,7 +379,7 @@ const Revenue = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        {/* <Table
+        <Table
           ref={tableRef}
           columns={columns}
           dataSource={[
@@ -402,7 +408,7 @@ const Revenue = () => {
             showSizeChanger: true,
             pageSizeOptions: ["10", "20", "30"],
           }}
-        /> */}
+        />
       </Grid>
     </Grid>
   );
