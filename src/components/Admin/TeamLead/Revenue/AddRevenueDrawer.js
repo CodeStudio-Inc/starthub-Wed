@@ -19,6 +19,8 @@ const AddRevenueDrawer = ({
   newRevState,
   setNewRevState,
   addRevenue,
+  loading,
+  svg,
 }) => {
   const months = [
     { month: "January", value: "Jan" },
@@ -60,6 +62,9 @@ const AddRevenueDrawer = ({
             <Button onClick={addRevenue} className="btn">
               Submit
             </Button>
+            {loading ? (
+              <img src={svg} style={{ height: "30px", width: "30px" }} />
+            ) : null}
           </Space>
         }
       >
@@ -95,6 +100,7 @@ const AddRevenueDrawer = ({
                   setNewRevState({ ...newRevState, id: e.target.value })
                 }
               >
+                <option>-select startup-</option>
                 {options.map((m, i) => (
                   <option key={i} value={m.value}>
                     {m.startup}
@@ -184,6 +190,7 @@ const AddRevenueDrawer = ({
                   })
                 }
               >
+                <option>-select month-</option>
                 {months.map((m, i) => (
                   <option key={i} value={m.value}>
                     {m.month}

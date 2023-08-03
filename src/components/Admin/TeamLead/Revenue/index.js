@@ -26,7 +26,6 @@ const Revenue = () => {
     month_expense: "",
     date: "",
     month: "",
-    expectedRevsharePayment: "",
   });
   const [columnIndex, setColumnIndex] = React.useState(null);
   const [paymentsIndex, setPaymnentsIndex] = React.useState(null);
@@ -103,11 +102,12 @@ const Revenue = () => {
       return message.info(
         "Month selected should match with the month in the selected date"
       );
+    if (!newRevState.id) return message.info("Please select startup");
     const data = newRevState;
     console.log(data);
     dispatch(
       actionCreators.addItem(
-        `admin/revenue`,
+        `admin/teamlead-revenue`,
         data,
         (data) => {
           const { id, month_revenue, month_expense, date, month } = data;
@@ -118,9 +118,9 @@ const Revenue = () => {
         (res) => {
           const { success, data, error } = res;
           if (success) {
-            console.log(data);
-            // dispatch(actionCreators.setRevenue(data.revenue));
-            // onClose();
+            message.info(data.message);
+            dispatch(actionCreators.setRevenue(data.revenue));
+            onClose();
           }
           if (!success) message.info("Request Failed");
         }
@@ -338,7 +338,7 @@ const Revenue = () => {
   return (
     <Grid container className="revenue-container">
       <Grid container className="revenue-header">
-        {/* <Grid item>
+        <Grid item>
           <Button
             onClick={showDrawer}
             style={{ color: "#fff", background: "#37561b", border: "none" }}
@@ -346,7 +346,7 @@ const Revenue = () => {
           >
             Add Revenue
           </Button>
-        </Grid> */}
+        </Grid>
         <Grid item>
           <Search
             placeholder="input startup username"
@@ -358,7 +358,7 @@ const Revenue = () => {
           />
         </Grid>
       </Grid>
-      {/* <AddRevenueDrawer
+      <AddRevenueDrawer
         open={open}
         showDrawer={showDrawer}
         onClose={onClose}
@@ -366,7 +366,9 @@ const Revenue = () => {
         newRevState={newRevState}
         setNewRevState={setNewRevState}
         addRevenue={addRevenue}
-      /> */}
+        loading={loading}
+        svg={svg}
+      />
       <Grid item xs={12}>
         <Divider />
       </Grid>
