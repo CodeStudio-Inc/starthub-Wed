@@ -373,7 +373,7 @@ const Revenue = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <Table
+        {/* <Table
           ref={tableRef}
           columns={columns}
           dataSource={[
@@ -402,7 +402,7 @@ const Revenue = () => {
             showSizeChanger: true,
             pageSizeOptions: ["10", "20", "30"],
           }}
-        />
+        /> */}
       </Grid>
     </Grid>
   );
