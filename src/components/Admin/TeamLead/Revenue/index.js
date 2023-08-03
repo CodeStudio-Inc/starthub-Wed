@@ -118,6 +118,7 @@ const Revenue = () => {
           const { success, data, error } = res;
           if (success) {
             message.info(data.message);
+            console.log(data);
             dispatch(actionCreators.setRevenue(data.revenue));
             onClose();
             setNewRevState({
@@ -379,7 +380,7 @@ const Revenue = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <Table
+        {/* <Table
           ref={tableRef}
           columns={columns}
           dataSource={[
@@ -408,7 +409,7 @@ const Revenue = () => {
             showSizeChanger: true,
             pageSizeOptions: ["10", "20", "30"],
           }}
-        />
+        /> */}
       </Grid>
     </Grid>
   );
