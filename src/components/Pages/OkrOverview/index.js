@@ -43,6 +43,7 @@ const OKROverview = () => {
 
   React.useEffect(() => {
     getObjectives();
+    setCurrentQuarter();
     updateObjectives();
   }, []);
 
@@ -80,6 +81,9 @@ const OKROverview = () => {
       })
     );
   };
+
+  const setCurrentQuarter = () =>
+    dispatch(actionCreators.setCurrentQuarter(getCurrentQuarter()));
 
   const openModal = React.useCallback(
     (objId, krId) => {
