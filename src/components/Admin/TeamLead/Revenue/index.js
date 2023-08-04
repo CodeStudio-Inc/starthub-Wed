@@ -47,6 +47,13 @@ const Revenue = () => {
   };
   const onClose = () => {
     setOpen(false);
+    setNewRevState({
+      id: "",
+      month_revenue: "",
+      month_expense: "",
+      date: "",
+      month: "",
+    });
   };
 
   React.useEffect(() => {
@@ -118,16 +125,9 @@ const Revenue = () => {
           const { success, data, error } = res;
           if (success) {
             message.info(data.message);
-            console.log(data);
+            // console.log(data);
             dispatch(actionCreators.setRevenue(data.revenue));
             onClose();
-            setNewRevState({
-              id: "",
-              month_revenue: "",
-              month_expense: "",
-              date: "",
-              month: "",
-            });
           }
           if (!success) message.info("Request Failed");
         }
