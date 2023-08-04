@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Table, message, Tabs, Modal } from "antd";
 import { actionCreators, svg } from "../../Paths";
 import { Helmet } from "react-helmet";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -211,6 +213,7 @@ const OKROverview = () => {
             }}
           >
             <Quarter
+              tab={1}
               deleteKeyresult={deleteKeyresult}
               deleteObjective={deleteObjective}
               setPayload={setPayload}
@@ -248,6 +251,7 @@ const OKROverview = () => {
             }}
           >
             <Quarter
+              tab={2}
               deleteKeyresult={deleteKeyresult}
               deleteObjective={deleteObjective}
               objective={objective}
@@ -285,6 +289,7 @@ const OKROverview = () => {
             }}
           >
             <Quarter
+              tab={3}
               deleteKeyresult={deleteKeyresult}
               deleteObjective={deleteObjective}
               setPayload={setPayload}
@@ -322,6 +327,7 @@ const OKROverview = () => {
             }}
           >
             <Quarter
+              tab={4}
               deleteKeyresult={deleteKeyresult}
               deleteObjective={deleteObjective}
               objective={objective}
@@ -349,6 +355,19 @@ const OKROverview = () => {
           </div>
         </TabPane>
       </Tabs>
+      <Fab
+        aria-label="add"
+        style={{
+          position: "absolute",
+          bottom: "2rem",
+          right: "2rem",
+          background: "#37561b",
+          color: "#fff",
+        }}
+        onClick={handleOpenDialogue}
+      >
+        <AddIcon />
+      </Fab>
     </div>
   );
 };
