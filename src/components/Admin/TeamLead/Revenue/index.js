@@ -47,6 +47,13 @@ const Revenue = () => {
   };
   const onClose = () => {
     setOpen(false);
+    setNewRevState({
+      id: "",
+      month_revenue: "",
+      month_expense: "",
+      date: "",
+      month: "",
+    });
   };
 
   React.useEffect(() => {
@@ -104,7 +111,6 @@ const Revenue = () => {
       );
     if (!newRevState.id) return message.info("Please select startup");
     const data = newRevState;
-    console.log(data);
     dispatch(
       actionCreators.addItem(
         `admin/teamlead-revenue`,
@@ -119,6 +125,7 @@ const Revenue = () => {
           const { success, data, error } = res;
           if (success) {
             message.info(data.message);
+            // console.log(data);
             dispatch(actionCreators.setRevenue(data.revenue));
             onClose();
           }
