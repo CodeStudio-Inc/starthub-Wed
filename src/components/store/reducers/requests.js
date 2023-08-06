@@ -6,6 +6,7 @@ const initialState = {
   expense: [],
   boards: [],
   values: [],
+  users: [],
   statements: [],
   quarter: 0,
   objectives: [],
@@ -120,6 +121,12 @@ const requests = (state = initialState, action) => {
       return updateObject(state, {
         loading: false,
         objectives: action.data,
+      });
+
+    case actions.SET_ALL_USERS:
+      return updateObject(state, {
+        loading: false,
+        users: action.data,
       });
 
     case actions.SET_CURRENT_QUARTER:

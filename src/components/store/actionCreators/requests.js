@@ -205,6 +205,13 @@ export const setRevenue = (data) => {
   };
 };
 
+export const setUsers = (data) => {
+  return {
+    type: actions.SET_ALL_USERS,
+    data,
+  };
+};
+
 export const dragWithListAction = (
   droppableIdStart,
   droppableIdEnd,

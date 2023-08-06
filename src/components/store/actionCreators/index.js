@@ -60,6 +60,7 @@ export {
   setObjectives,
   setRevenue,
   setCurrentQuarter,
+  setUsers,
 } from "./requests";
 
 export {
