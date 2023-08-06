@@ -14,6 +14,7 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "@mui/material/Modal";
 import EditIcon from "@mui/icons-material/Edit";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -30,6 +31,8 @@ const TeamLead = (props) => {
   const handleClose = () => setOpen(false);
   const [ID, setID] = React.useState("");
   const [permission, setPermission] = React.useState("");
+  const [activeRowIndex, setRowIndex] = React.useState(null);
+  const [assignIndex, setAssignIndex] = React.useState(null);
   const [startup, setStartup] = React.useState("");
   const [editstartup, setEditStartup] = React.useState(false);
   const [editPermission, setEditPermission] = React.useState(false);
@@ -40,8 +43,8 @@ const TeamLead = (props) => {
   const [record, setRecord] = React.useState({});
   const [email, setEmail] = React.useState("");
 
-  const { userId, category, loading } = useSelector((state) => state.auth);
-  const { loader, users } = useSelector((state) => state.admin);
+  const { userId, category } = useSelector((state) => state.auth);
+  const { loading, users } = useSelector((state) => state.requests);
 
   const tableRef = React.useRef(null);
 
@@ -57,7 +60,7 @@ const TeamLead = (props) => {
     );
 
   // console.log(filterUsers);
-  // console.log(startups);
+  // console.log(users);
 
   const updateUsers = () => {
     const newPayload = [
@@ -113,20 +116,32 @@ const TeamLead = (props) => {
     setStartup(event.target.value);
   };
 
-  const showStartupInput = () => setEditStartup(true);
-  const hideStartupInput = () => setEditStartup(false);
-  const assignStartup = () =>
+  const assignStartup = () => {
+    const data = {
+      mentorId: record._id,
+    };
     dispatch(
-      actionCreators.assignStartup(startup, ID, (res) => {
-        console.log(res);
-        setEditStartup();
-        setID("");
-        message.info("Team member assigned startup");
-      })
+      actionCreators.updateItem(
+        `auth/assign/${ID}`,
+        data,
+        (data) => {
+          const { mentorId } = data;
+          if (!mentorId) return false;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            message.info("Successfully assigned startup");
+            dispatch(actionCreators.setUsers(data.users));
+            setAssignIndex(null);
+          }
+          if (!success) console.log(error);
+        }
+      )
     );
+  };
 
-  const showPermissionInput = () => setEditPermission(true);
-  const hidePermissionInput = () => setEditPermission(false);
   const editUserPermission = () =>
     dispatch(
       actionCreators.editUserPermissions(ID, permission, (res) => {
@@ -139,8 +154,6 @@ const TeamLead = (props) => {
       })
     );
 
-  const showRoleInput = () => setEditRole(true);
-  const hideRoleInput = () => setEditRole(false);
   const editUserRole = () =>
     dispatch(
       actionCreators.editUserRole(ID, role, (res) => {
@@ -153,9 +166,6 @@ const TeamLead = (props) => {
       })
     );
 
-  const editEmail = () => setEmailEdit(true);
-  const cancelEdit = () => setEmailEdit(false);
-
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -165,11 +175,35 @@ const TeamLead = (props) => {
   };
 
   const updateStartup = () => {
-    if (!email || !validateEmail(email))
-      return message.info("Enter valid Email");
-    dispatch(actionCreators.updateStartup(ID, "", email, "", ""));
-    getStartups();
-    setEmailEdit(false);
+    if (!role) return message.info("Please enter team member user role");
+    if (!permission)
+      return message.info("Please enter team member permissions");
+    if (!email) return message.info("Please enter team member user email");
+    const data = {
+      role,
+      permission,
+      email,
+    };
+    dispatch(
+      actionCreators.updateItem(
+        `/auth/update-user/${record._id}`,
+        data,
+        (data) => {
+          const { role, permission, email } = data;
+          if (!role || !permission || !email) return false;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            message.info("Successfully updated startup");
+            dispatch(actionCreators.setUsers(data.users));
+            setRowIndex(null);
+          }
+          if (!success) console.log(error);
+        }
+      )
+    );
   };
 
   const columns = [
@@ -179,17 +213,6 @@ const TeamLead = (props) => {
       key: "username",
       align: "left",
       // width: 10,
-      render: (r) => (
-        <div className="table-column-row">
-          <div className="table-avatar">
-            <h3>{r.substring(0, 1)}</h3>
-          </div>
-          <h5>{r}</h5>
-          {loader && record.username === r ? (
-            <img src={svg} style={{ height: "20px", width: "20px" }} />
-          ) : null}
-        </div>
-      ),
     },
     {
       title: "Email",
@@ -197,203 +220,144 @@ const TeamLead = (props) => {
       key: "email",
       align: "left",
       // width: 20,
-      render: (r) => (
-        <div className="table-email-cell">
-          {emailEdit && record.email === r ? (
-            <input
-              placeholder="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+      render: (text, record, rowIndex) => (
+        <div className="table-cell-row">
+          {activeRowIndex === rowIndex ? (
+            <input onChange={(e) => setEmail(e.target.value)} value={email} />
           ) : (
-            <p>{r}</p>
-          )}
-          {emailEdit && record.email === r ? (
-            <h4 onClick={updateStartup}>save</h4>
-          ) : null}
-          {emailEdit && record.email === r ? (
-            <CancelRoundedIcon
-              style={{ fontSize: "18px" }}
-              className="email-icon"
-              onClick={cancelEdit}
-            />
-          ) : (
-            <EditIcon
-              style={{ fontSize: "18px" }}
-              className="email-icon"
-              onClick={editEmail}
-            />
+            <p>{text}</p>
           )}
         </div>
       ),
     },
     {
       title: "Permissions",
-      dataIndex: "permission",
-      key: "permission",
+      dataIndex: "permissions",
+      key: "permissions",
       align: "left",
       // width: 20,
-      render: (r) => (
-        <div className="table-cell-row ">
-          {!editPermission ? <p>{r.value}</p> : null}
-          {editPermission && ID === r.id ? (
-            <FormControl sx={{ m: 1, minWidth: 130, minHeight: 40 }}>
-              <InputLabel id="demo-simple-select-autowidth-label">
-                permission
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                value={permission}
-                onChange={handlePermissionChange}
-                autoWidth
-                style={{
-                  height: 50,
-                }}
-                label="permission"
-              >
-                <MenuItem value="owner">owner</MenuItem>
-                <MenuItem value="member">member</MenuItem>
-              </Select>
-            </FormControl>
-          ) : null}
-          {!editPermission ? (
-            <EditIcon
-              style={{ fontSize: "18px" }}
-              className="email-icon"
-              onClick={showPermissionInput}
-            />
-          ) : null}
-          {editPermission && ID === r.id ? (
-            <button onClick={editUserPermission}>save</button>
-          ) : null}
-          {editPermission && ID === r.id ? (
-            <CancelRoundedIcon
-              style={{ fontSize: "18px" }}
-              className="email-icon"
-              onClick={hidePermissionInput}
-            />
-          ) : null}
-          {loading && ID === r.id ? (
-            <img src={svg} style={{ height: "20px", width: "20px" }} />
-          ) : null}
+      render: (text, record, rowIndex) => (
+        <div className="table-cell-row">
+          {activeRowIndex === rowIndex ? (
+            <select
+              onChange={(e) => setPermission(e.target.value)}
+              value={permission}
+            >
+              <option value="viewer">viewer</option>
+              <option value="owner">owner</option>
+            </select>
+          ) : (
+            <p>{text}</p>
+          )}
         </div>
       ),
     },
     {
       title: "Role",
-      dataIndex: "role",
-      key: "role",
+      dataIndex: "userRole",
+      key: "userRole",
       align: "left",
       // width: 20,
-      render: (r) => (
-        <div className="table-cell-row ">
-          {!editRole ? <p>{r.value}</p> : null}
-          {editRole && ID === r.id ? (
-            <FormControl sx={{ m: 1, minWidth: 130, minHeight: 40 }}>
-              <InputLabel id="demo-simple-select-autowidth-label">
-                user role
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                value={role}
-                onChange={handleRoleChange}
-                autoWidth
-                style={{
-                  height: 50,
-                }}
-                label="user role"
-              >
-                <MenuItem value="team lead">team lead</MenuItem>
-                <MenuItem value="team member">team member</MenuItem>
-              </Select>
-            </FormControl>
+      render: (text, record, rowIndex) => (
+        <div className="table-cell-row">
+          {activeRowIndex === rowIndex ? (
+            <select onChange={(e) => setRole(e.target.value)} value={role}>
+              <option value="team member">team member</option>
+              <option value="team lead">team lead</option>
+            </select>
+          ) : (
+            <p>{text}</p>
+          )}
+        </div>
+      ),
+    },
+    {
+      // title: "edit",
+      dataIndex: "_id",
+      key: "_id",
+      align: "left",
+      render: (text, record, rowIndex) => (
+        <div className="table-cell-row">
+          {activeRowIndex !== rowIndex ? (
+            <h4
+              onClick={() => {
+                setRecord(record);
+                setRowIndex(rowIndex);
+                setEmail(record.email);
+                setRole(record.userRole);
+                setPermission(record.permissions);
+                console.log(record);
+              }}
+            >
+              edit
+            </h4>
           ) : null}
-          {!editRole ? (
-            <EditIcon
-              style={{ fontSize: "18px" }}
-              className="email-icon"
-              onClick={showRoleInput}
+          {activeRowIndex === rowIndex ? (
+            <h4 onClick={updateStartup}>save</h4>
+          ) : null}
+          {activeRowIndex === rowIndex ? (
+            <CancelIcon
+              style={{ fontSize: "20px", color: "#37561b" }}
+              className="icon"
+              onClick={() => setRowIndex(null)}
             />
-          ) : null}
-          {editRole && ID === r.id ? (
-            <button onClick={editUserRole}>save</button>
-          ) : null}
-          {editRole && ID === r.id ? (
-            <CancelRoundedIcon
-              style={{ fontSize: "18px" }}
-              className="email-icon"
-              onClick={hideRoleInput}
-            />
-          ) : null}
-          {loading && ID === r.id ? (
-            <img src={svg} style={{ height: "20px", width: "20px" }} />
           ) : null}
         </div>
       ),
     },
     {
-      title: "action",
-      dataIndex: "id",
-      key: "id",
+      // title: "edit",
+      dataIndex: "_id",
+      key: "_id",
       align: "left",
-      // width: 20,
-      render: (r) => (
-        <div className="table-cell-row ">
-          {editstartup && ID === r ? (
-            <FormControl sx={{ m: 1, minWidth: 150, minHeight: 40 }}>
-              <InputLabel id="demo-simple-select-autowidth-label">
-                startup
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                value={startup}
-                onChange={handleStartupChange}
-                autoWidth
-                style={{
-                  height: 50,
-                }}
-                label="startups"
-              >
-                {startups.map((s) => (
-                  <MenuItem key={s?._id} value={s?._id}>
-                    {s.username}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+      render: (text, record, rowIndex) => (
+        <div className="table-cell-row">
+          {assignIndex === rowIndex ? (
+            <select onChange={(e) => setID(e.target.value)} value={ID}>
+              <option value=" ">-select startup-</option>
+              {startups.map((r) => (
+                <option key={r._id} value={r._id}>
+                  {r.username}
+                </option>
+              ))}
+            </select>
           ) : null}
-          {!editstartup ? (
-            <button
-              className="table-cell-view-button"
-              onClick={showStartupInput}
+          {assignIndex !== rowIndex ? (
+            <h4
+              onClick={() => {
+                setAssignIndex(rowIndex);
+                setRecord(record);
+              }}
             >
-              assign startup
-            </button>
+              assign team
+            </h4>
           ) : null}
-          {editstartup && ID === r ? (
-            <button className="table-cell-view-button" onClick={assignStartup}>
-              save
-            </button>
+          {assignIndex === rowIndex ? (
+            <h4 onClick={assignStartup}>save</h4>
           ) : null}
-          {editstartup && ID === r ? (
-            <CancelRoundedIcon
-              style={{ fontSize: "18px" }}
-              className="email-icon"
-              onClick={hideStartupInput}
+          {assignIndex === rowIndex ? (
+            <CancelIcon
+              style={{ fontSize: "20px", color: "#37561b" }}
+              className="icon"
+              onClick={() => setAssignIndex(null)}
             />
-          ) : null}
-          {loading && ID === r ? (
-            <img src={svg} style={{ height: "20px", width: "20px" }} />
           ) : null}
         </div>
       ),
     },
   ];
 
-  const getStartups = () => dispatch(actionCreators.getUsers());
+  const getStartups = () => {
+    dispatch(
+      actionCreators.getItem(`/auth/users`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setUsers(data.users));
+        }
+        if (!success) console.log(error);
+      })
+    );
+  };
   const getFeatures = () => dispatch(actionCreators.getFeatures());
   const getCategories = () => dispatch(actionCreators.getCategories());
 
@@ -500,24 +464,25 @@ const TeamLead = (props) => {
         ref={tableRef}
         columns={columns}
         dataSource={[
-          ...payload?.map((r) => ({
+          ...filterUsers?.map((r) => ({
             ...r,
             key: r.id,
           })),
         ]}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: () => {
-              setID(record.id);
-              setRecord(record);
-            },
-          };
-        }}
+        // onRow={(record, rowIndex) => {
+        //   return {
+        //     onClick: () => {
+        //       setID(record.id);
+        //       setRecord(record);
+        //     },
+        //   };
+        // }}
         style={{ width: "95%" }}
         bordered={true}
         // scroll={{
         //   x: 2000,
         // }}
+        loading={loading}
         pagination={{
           defaultPageSize: 9,
           showSizeChanger: true,

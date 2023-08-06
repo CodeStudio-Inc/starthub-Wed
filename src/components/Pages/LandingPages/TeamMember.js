@@ -23,7 +23,8 @@ const TeamMember = ({ index, title }) => {
       {index === 4 ? <StartupList /> : null}
       {index === 5 ? <StartupList title={title} /> : null}
       {index === 6 ? <StartupList title={title} /> : null}
-      {index === 7 ? <OkrOverview /> : null}
+      {index === 7 ? <StartupList title={title} /> : null}
+      {index === 8 ? <OkrOverview /> : null}
     </div>
   );
 };
