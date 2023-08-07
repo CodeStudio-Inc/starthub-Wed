@@ -46,16 +46,14 @@ const TeamLead = (props) => {
   const filterUsers =
     users &&
     users.filter(
-      (el) => el?.teamCategory === category && el?.userRole === "team member"
+      (el) => el.creator === userId && el.userRole === "team member"
     );
   const startups =
     users &&
-    users?.filter(
-      (el) => el?.teamCategory === category && el?.userRole === "startup"
-    );
+    users?.filter((el) => el.creator === userId && el.userRole === "startup");
 
   // console.log(filterUsers);
-  console.log(users);
+  // console.log(users);
 
   const revenueTotal = users?.filter(
     (el) =>
@@ -239,7 +237,6 @@ const TeamLead = (props) => {
                 setEmail(record.email);
                 setRole(record.userRole);
                 setPermission(record.permissions);
-                console.log(record);
               }}
             >
               edit
@@ -389,9 +386,11 @@ const TeamLead = (props) => {
             </div>
             <h1>
               shs{" "}
-              {totalExpectedRevenuePaid
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              {Number.isNaN(totalExpectedRevenuePaid)
+                ? 0
+                : totalExpectedRevenuePaid
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
             </h1>
           </div>
         </div>

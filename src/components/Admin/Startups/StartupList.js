@@ -22,10 +22,13 @@ const StartupList = ({ history, title }) => {
 
   const dispatch = useDispatch();
 
+  const mentor = users.find((r) => r._id === userId);
+  const mentorTeamIds = mentor?.teams.map((r) => r.startupId);
+
   const titleCheck = typeof title === "undefined" ? "catalyzer" : title;
 
   const filterUsers = users.filter(
-    (el) => el.creator === userId && el.teamCategory === titleCheck
+    (el) => mentorTeamIds.includes(el._id) && el.teamCategory === titleCheck
   );
 
   React.useEffect(() => {

@@ -55,6 +55,7 @@ export {
   addItem,
   getItem,
   updateItem,
+  registerItem,
   searchItem,
   deleteItem,
   setObjectives,
