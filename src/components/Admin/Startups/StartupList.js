@@ -22,10 +22,11 @@ const StartupList = ({ history, title }) => {
 
   const dispatch = useDispatch();
 
-  const titleCheck = typeof title === "undefined" ? "catalyzer" : title;
+  const mentor = users.find((r) => r._id === userId);
+  const mentorTeamIds = mentor?.teams.map((r) => r.startupId);
 
   const filterUsers = users.filter(
-    (el) => el.creator === userId && el.teamCategory === titleCheck
+    (el) => mentorTeamIds?.includes(el._id) && el.teamCategory === title
   );
 
   React.useEffect(() => {
@@ -141,13 +142,13 @@ const StartupList = ({ history, title }) => {
       key: "contractDate",
       align: "left",
     },
-    {
-      title: "No. Months since last revenue submit",
-      dataIndex: "daysSinceLastSubmit",
-      key: "daysSinceLastSubmit",
-      align: "center",
-      render: (r) => <p>{r ? r : null}</p>,
-    },
+    // {
+    //   title: "No. Months since last revenue submit",
+    //   dataIndex: "daysSinceLastSubmit",
+    //   key: "daysSinceLastSubmit",
+    //   align: "center",
+    //   render: (r) => <p>{r ? r : null}</p>,
+    // },
     {
       title: "Revenue Share %",
       dataIndex: "percentageRevShare",
@@ -292,6 +293,7 @@ const StartupList = ({ history, title }) => {
         scroll={{
           x: typeof title === "undefined" ? 2000 : 1000,
         }}
+        title={() => <h3>{title} Startups</h3>}
         pagination={{
           defaultPageSize: 9,
           showSizeChanger: true,

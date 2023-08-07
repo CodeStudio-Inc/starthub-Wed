@@ -205,6 +205,13 @@ export const setRevenue = (data) => {
   };
 };
 
+export const setUsers = (data) => {
+  return {
+    type: actions.SET_ALL_USERS,
+    data,
+  };
+};
+
 export const dragWithListAction = (
   droppableIdStart,
   droppableIdEnd,
@@ -847,6 +854,26 @@ export const updateItem = (path, data, validate, callback) => {
     dispatch(loadAction());
     axios
       .patch(path, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+        // console.log(res);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
+export const registerItem = (path, data, validate, callback) => {
+  if (typeof validate !== "undefined" && !validate(data))
+    return message.info("All fields are required");
+  return (dispatch) => {
+    dispatch(loadAction());
+    axios
+      .put(path, data)
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true, data: res.data });

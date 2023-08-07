@@ -55,11 +55,13 @@ export {
   addItem,
   getItem,
   updateItem,
+  registerItem,
   searchItem,
   deleteItem,
   setObjectives,
   setRevenue,
   setCurrentQuarter,
+  setUsers,
 } from "./requests";
 
 export {

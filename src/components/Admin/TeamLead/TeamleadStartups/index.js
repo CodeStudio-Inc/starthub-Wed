@@ -42,7 +42,7 @@ const TeamLeadStartups = (props) => {
   const tableRef = React.useRef(null);
 
   const startups = users?.filter(
-    (el) => el.teamCategory === category && el.userRole === "startup"
+    (el) => el.creator === userId && el.userRole === "startup"
   );
 
   const revenueTotal = users.filter(
@@ -181,13 +181,13 @@ const TeamLeadStartups = (props) => {
       key: "contractDate",
       align: "left",
     },
-    {
-      title: "No. Months since last revenue submit",
-      dataIndex: "daysSinceLastSubmit",
-      key: "daysSinceLastSubmit",
-      align: "center",
-      render: (r) => <p>{r ? r : null}</p>,
-    },
+    // {
+    //   title: "No. Months since last revenue submit",
+    //   dataIndex: "daysSinceLastSubmit",
+    //   key: "daysSinceLastSubmit",
+    //   align: "center",
+    //   render: (r) => <p>{r ? r : null}</p>,
+    // },
     {
       title: "Last LoggedIn",
       dataIndex: "lastLoggedIn",
@@ -308,9 +308,11 @@ const TeamLeadStartups = (props) => {
             </div>
             <h1>
               shs{" "}
-              {totalExpectedRevenuePaid
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              {Number.isNaN(totalExpectedRevenuePaid)
+                ? 0
+                : totalExpectedRevenuePaid
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
             </h1>
           </div>
         </div>

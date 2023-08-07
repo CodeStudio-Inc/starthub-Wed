@@ -181,10 +181,39 @@
 .table-cell-row p {
   margin: 0;
   color: #37561b;
-  background: #36561b56;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 20px;
+}
+
+.table-cell-row h4 {
+  margin: 0;
+  color: #37561b;
+}
+
+.table-cell-row:hover h4 {
+  cursor: pointer;
+}
+
+.table-cell-row input {
+  outline: none;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 90%;
+  height: 30px;
+  padding-left: 5px;
+}
+
+.table-cell-row select {
+  outline: none;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 70%;
+  height: 30px;
+  padding-left: 5px;
 }
 
 .table-cell-row button {
