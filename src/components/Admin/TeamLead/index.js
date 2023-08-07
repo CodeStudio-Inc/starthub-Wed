@@ -51,7 +51,7 @@ const TeamLead = (props) => {
     users &&
     users?.filter((el) => el.creator === userId && el.userRole === "startup");
 
-  const mentor = users.find((r) => r._id === record?._id);
+  const mentor = users?.find((r) => r._id === record?._id);
   // console.log(users);
 
   const revenueTotal = users?.filter(
