@@ -38,7 +38,6 @@ const TeamLead = (props) => {
   const [editPermission, setEditPermission] = React.useState(false);
   const [role, setRole] = React.useState("");
   const [editRole, setEditRole] = React.useState(false);
-  const [payload, setPayload] = React.useState([]);
   const [emailEdit, setEmailEdit] = React.useState(false);
   const [record, setRecord] = React.useState({});
   const [email, setEmail] = React.useState("");
@@ -48,59 +47,41 @@ const TeamLead = (props) => {
 
   const tableRef = React.useRef(null);
 
-  const filterUsers =
-    users &&
-    users.filter(
-      (el) => el?.teamCategory === category && el?.userRole === "team member"
-    );
-  const startups =
-    users &&
-    users?.filter(
-      (el) => el?.teamCategory === category && el?.userRole === "startup"
-    );
+  // const filterUsers =
+  //   users &&
+  //   users.filter(
+  //     (el) => el?.teamCategory === category && el?.userRole === "team member"
+  //   );
+  // const startups =
+  //   users &&
+  //   users?.filter(
+  //     (el) => el?.teamCategory === category && el?.userRole === "startup"
+  //   );
 
   // console.log(filterUsers);
   console.log(users);
 
-  const updateUsers = () => {
-    const newPayload = [
-      ...filterUsers?.map((el) => {
-        const { _id, userRole, permissions, ...rest } = el;
-        return {
-          ...rest,
-          id: _id,
-          permission: { id: _id, value: permissions },
-          role: { id: _id, value: userRole },
-          permissions: permissions,
-          uaerRole: userRole,
-        };
-      }),
-    ];
-    return setPayload(newPayload);
-  };
+  // const revenueTotal = users?.filter(
+  //   (el) =>
+  //     el.teamCategory === category &&
+  //     el.creator === userId &&
+  //     typeof el.totalRevenue !== "undefined"
+  // );
 
-  const revenueTotal = users?.filter(
-    (el) =>
-      el.teamCategory === category &&
-      el.creator === userId &&
-      typeof el.totalRevenue !== "undefined"
-  );
-
-  const totalRevenue = Array.from(
-    revenueTotal,
-    ({ totalRevenue }) => totalRevenue
-  ).reduce((a, b) => a + b, 0);
-  const totalExpectedRevenuePaid = Array.from(
-    revenueTotal,
-    ({ totalRevSharePaid }) => totalRevSharePaid
-  ).reduce((a, b) => a + b, 0);
+  // const totalRevenue = Array.from(
+  //   revenueTotal,
+  //   ({ totalRevenue }) => totalRevenue
+  // ).reduce((a, b) => a + b, 0);
+  // const totalExpectedRevenuePaid = Array.from(
+  //   revenueTotal,
+  //   ({ totalRevSharePaid }) => totalRevSharePaid
+  // ).reduce((a, b) => a + b, 0);
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     getStartups();
     getFeatures();
-    updateUsers();
     getCategories();
   }, []);
 
@@ -348,7 +329,7 @@ const TeamLead = (props) => {
   // ];
 
   const getStartups = () => {
-    console.log("object");
+    console.log("executed");
     dispatch(
       actionCreators.getItem(`/auth/users`, (res) => {
         const { success, data, error } = res;
@@ -380,7 +361,7 @@ const TeamLead = (props) => {
       >
         <AddTeamMember setOpen={handleClose} />
       </Modal>
-      <div className="card-row">
+      {/* <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
             <div className="card2-row">
@@ -443,7 +424,7 @@ const TeamLead = (props) => {
             </h1>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="add-startup-row">
         <div className="export-container">
           <DownloadTableExcel
