@@ -51,16 +51,16 @@ const TeamLead = (props) => {
   const filterUsers =
     users &&
     users.filter(
-      (el) => el.teamCategory === category && el.userRole === "team member"
+      (el) => el?.teamCategory === category && el?.userRole === "team member"
     );
   const startups =
     users &&
     users?.filter(
-      (el) => el.teamCategory === category && el.userRole === "startup"
+      (el) => el?.teamCategory === category && el?.userRole === "startup"
     );
 
   // console.log(filterUsers);
-  // console.log(users);
+  console.log(users);
 
   const updateUsers = () => {
     const newPayload = [
@@ -466,22 +466,11 @@ const TeamLead = (props) => {
         dataSource={[
           ...filterUsers?.map((r) => ({
             ...r,
-            key: r.id,
+            key: r._id,
           })),
         ]}
-        // onRow={(record, rowIndex) => {
-        //   return {
-        //     onClick: () => {
-        //       setID(record.id);
-        //       setRecord(record);
-        //     },
-        //   };
-        // }}
         style={{ width: "95%" }}
         bordered={true}
-        // scroll={{
-        //   x: 2000,
-        // }}
         loading={loading}
         pagination={{
           defaultPageSize: 9,
