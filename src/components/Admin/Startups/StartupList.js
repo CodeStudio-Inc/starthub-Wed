@@ -15,7 +15,7 @@ const StartupList = ({ history, title }) => {
   const [email, setEmail] = React.useState("");
   const [record, setRecord] = React.useState({});
 
-  const { users, loader } = useSelector((state) => state.admin);
+  const { loading, users } = useSelector((state) => state.requests);
   const { userId, features } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
@@ -33,7 +33,17 @@ const StartupList = ({ history, title }) => {
     getStartups();
   }, []);
 
-  const getStartups = () => dispatch(actionCreators.getUsers());
+  const getStartups = () => {
+    dispatch(
+      actionCreators.getItem(`/auth/users`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setUsers(data.users));
+        }
+        if (!success) console.log(error);
+      })
+    );
+  };
 
   const editEmail = () => setEmailEdit(true);
   const cancelEdit = () => setEmailEdit(false);
@@ -81,7 +91,7 @@ const StartupList = ({ history, title }) => {
             <h3>{r.substring(0, 1)}</h3>
           </div>
           <h5>{r.length > 10 ? r.substring(0, 10) + "..." : r}</h5>
-          {loader && record.username === r ? (
+          {loading && record.username === r ? (
             <img src={svg} style={{ height: "20px", width: "20px" }} />
           ) : (
             <div className="table-more-icon">
@@ -196,7 +206,7 @@ const StartupList = ({ history, title }) => {
             <h3>{r.substring(0, 1)}</h3>
           </div>
           <h5>{r.length > 10 ? r.substring(0, 10) + "..." : r}</h5>
-          {loader && record.username === r ? (
+          {loading && record.username === r ? (
             <img src={svg} style={{ height: "20px", width: "20px" }} />
           ) : (
             <div className="table-more-icon">
@@ -288,6 +298,7 @@ const StartupList = ({ history, title }) => {
             },
           };
         }}
+        loading={loading}
         style={{ width: "95%" }}
         bordered={true}
         scroll={{
