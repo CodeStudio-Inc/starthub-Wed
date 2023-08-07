@@ -43,11 +43,13 @@ const Startups = (props) => {
 
   const tableRef = React.useRef(null);
 
-  const filterUsers = users.filter((el) => el.creator === userId);
+  const mentor = users.find((el) => el._id === userId);
+  const mentorNumberOfTeams = mentor?.teams.length;
+  const teams = mentor?.teams?.map((r) => r.startup);
+
   const revenueTotal = users.filter(
     (el) =>
-      el.teamCategory === category &&
-      el.creator === userId &&
+      teams.includes(el.username) &&
       typeof el.totalRevenue !== "undefined" &&
       typeof el.totalExpense !== "undefined"
   );
@@ -108,7 +110,7 @@ const Startups = (props) => {
           justifyContent: "center",
         }}
       >
-        <MakePayment startups={filterUsers} setOpen={handleAddPaymentClose} />
+        {/* <MakePayment startups={filterUsers} setOpen={handleAddPaymentClose} /> */}
       </Modal>
       {category.includes("catalyzer") ? (
         <div className="card-row">
@@ -121,8 +123,8 @@ const Startups = (props) => {
                 <h3>Startups</h3>
               </div>
               <h1>
-                {filterUsers.length === 1 ? "team" : "teams"}
-                {filterUsers.length}
+                {mentorNumberOfTeams}{" "}
+                {mentorNumberOfTeams === 1 ? "team" : "teams"}
               </h1>
             </div>
           </div>
@@ -134,7 +136,7 @@ const Startups = (props) => {
                     style={{ fontSize: "18px", color: "#37561b" }}
                   />
                 </div>
-                <h3>Total Revenue</h3>
+                <h3>Total Revenue(catalyzer)</h3>
               </div>
 
               <h1>
@@ -151,7 +153,7 @@ const Startups = (props) => {
                     style={{ fontSize: "18px", color: "#37561b" }}
                   />
                 </div>
-                <h3>Total Expenses</h3>
+                <h3>Total Expenses(catalyzer)</h3>
               </div>
 
               <h1>
@@ -168,14 +170,16 @@ const Startups = (props) => {
                     style={{ fontSize: "18px", color: "#37561b" }}
                   />
                 </div>
-                <h3>Total Revenue Share Payment</h3>
+                <h3>Total Revenue Share Payment(catalyzer)</h3>
               </div>
 
               <h1>
                 Shs{" "}
-                {totalExpectedRevenuePaid
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {Number.isNaN(totalExpectedRevenuePaid)
+                  ? 0
+                  : totalExpectedRevenuePaid
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </h1>
             </div>
           </div>
