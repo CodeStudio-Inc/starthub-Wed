@@ -59,7 +59,7 @@ const TeamLead = (props) => {
       (el) => el?.teamCategory === category && el?.userRole === "startup"
     );
 
-  // console.log(filterUsers);
+  console.log(filterUsers);
   console.log(users);
 
   const updateUsers = () => {
@@ -463,12 +463,12 @@ const TeamLead = (props) => {
       <Table
         ref={tableRef}
         columns={columns}
-        dataSource={[
-          ...filterUsers?.map((r) => ({
-            ...r,
-            key: r._id,
-          })),
-        ]}
+        // dataSource={[
+        //   ...filterUsers?.map((r) => ({
+        //     ...r,
+        //     key: r._id,
+        //   })),
+        // ]}
         style={{ width: "95%" }}
         bordered={true}
         loading={loading}
