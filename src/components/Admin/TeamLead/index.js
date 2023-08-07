@@ -27,12 +27,11 @@ import "./TeamLead.css";
 // import "../../Pages/Auth/AuthStyles.css";
 const TeamLead = (props) => {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [ID, setID] = React.useState("");
   const [permission, setPermission] = React.useState("");
   const [activeRowIndex, setRowIndex] = React.useState(null);
   const [assignIndex, setAssignIndex] = React.useState(null);
+  const [unAssignIndex, setUnAssignIndex] = React.useState(null);
   const [startup, setStartup] = React.useState("");
   const [role, setRole] = React.useState("");
   const [record, setRecord] = React.useState({});
@@ -46,13 +45,13 @@ const TeamLead = (props) => {
   const filterUsers =
     users &&
     users.filter(
-      (el) => el.creator === userId && el.userRole === "team member"
+      (el) => el.userRole === "team lead" || el.userRole === "team member"
     );
   const startups =
     users &&
     users?.filter((el) => el.creator === userId && el.userRole === "startup");
 
-  // console.log(filterUsers);
+  const mentor = users.find((r) => r._id === record?._id);
   // console.log(users);
 
   const revenueTotal = users?.filter(
@@ -92,6 +91,10 @@ const TeamLead = (props) => {
   };
 
   const assignStartup = () => {
+    const mentor = users.find((r) => r._id === record._id);
+    const teams = mentor?.teams.map((r) => r.startupId);
+    if (teams.includes(ID))
+      return message.info(`Startup already assigned to ${mentor.username}`);
     const data = {
       mentorId: record._id,
     };
@@ -110,6 +113,32 @@ const TeamLead = (props) => {
             message.info("Successfully assigned startup");
             dispatch(actionCreators.setUsers(data.users));
             setAssignIndex(null);
+          }
+          if (!success) console.log(error);
+        }
+      )
+    );
+  };
+
+  const unAssignStartup = () => {
+    const data = {
+      mentorId: record._id,
+    };
+    dispatch(
+      actionCreators.updateItem(
+        `auth/unassign/${ID}`,
+        data,
+        (data) => {
+          const { mentorId } = data;
+          if (!mentorId) return false;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            message.info("Successfully unassigned startup");
+            dispatch(actionCreators.setUsers(data.users));
+            setUnAssignIndex(null);
           }
           if (!success) console.log(error);
         }
@@ -279,7 +308,7 @@ const TeamLead = (props) => {
                 setRecord(record);
               }}
             >
-              assign team
+              assign startup
             </h4>
           ) : null}
           {assignIndex === rowIndex ? (
@@ -290,6 +319,46 @@ const TeamLead = (props) => {
               style={{ fontSize: "20px", color: "#37561b" }}
               className="icon"
               onClick={() => setAssignIndex(null)}
+            />
+          ) : null}
+        </div>
+      ),
+    },
+    {
+      // title: "edit",
+      dataIndex: "_id",
+      key: "_id",
+      align: "left",
+      render: (text, record, rowIndex) => (
+        <div className="table-cell-row">
+          {unAssignIndex === rowIndex ? (
+            <select onChange={(e) => setID(e.target.value)} value={ID}>
+              <option value=" ">-select startup-</option>
+              {mentor?.teams.map((r) => (
+                <option key={r._id} value={r.startupId}>
+                  {r.startup}
+                </option>
+              ))}
+            </select>
+          ) : null}
+          {unAssignIndex !== rowIndex ? (
+            <h4
+              onClick={() => {
+                setUnAssignIndex(rowIndex);
+                setRecord(record);
+              }}
+            >
+              unassign startup
+            </h4>
+          ) : null}
+          {unAssignIndex === rowIndex ? (
+            <h4 onClick={unAssignStartup}>save</h4>
+          ) : null}
+          {unAssignIndex === rowIndex ? (
+            <CancelIcon
+              style={{ fontSize: "20px", color: "#37561b" }}
+              className="icon"
+              onClick={() => setUnAssignIndex(null)}
             />
           ) : null}
         </div>
@@ -316,19 +385,6 @@ const TeamLead = (props) => {
       <Helmet>
         <title>Startups Overview</title>
       </Helmet>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <AddTeamMember setOpen={handleClose} />
-      </Modal>
       <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
@@ -366,7 +422,7 @@ const TeamLead = (props) => {
                   style={{ fontSize: "18px", color: "#37561b" }}
                 />
               </div>
-              <h3>Total Revenue</h3>
+              <h3>Total Revenue(catalyzer)</h3>
             </div>
             <h1>
               Shs{" "}
@@ -382,7 +438,7 @@ const TeamLead = (props) => {
                   style={{ fontSize: "18px", color: "#37561b" }}
                 />
               </div>
-              <h3>Total Revenue Share Payment</h3>
+              <h3>Total Revenue Share Payment(catalyzer)</h3>
             </div>
             <h1>
               shs{" "}
@@ -405,12 +461,6 @@ const TeamLead = (props) => {
             <button> Generate excel sheet </button>
           </DownloadTableExcel>
         </div>
-        <div className="add-startup-button" onClick={handleOpen}>
-          <ControlPointIcon
-            style={{ fontSize: "20px", color: "#fff", marginRight: "0.5rem" }}
-          />
-          <p>Add new team member</p>
-        </div>
       </div>
       <Table
         ref={tableRef}
@@ -421,6 +471,7 @@ const TeamLead = (props) => {
             key: r._id,
           })),
         ]}
+        title={() => <h3>Mentors</h3>}
         style={{ width: "95%" }}
         bordered={true}
         loading={loading}

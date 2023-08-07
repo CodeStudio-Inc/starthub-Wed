@@ -64,7 +64,7 @@ const TeamLeadStartups = (props) => {
     revenueTotal,
     ({ totalRevSharePaid }) => totalRevSharePaid
   ).reduce((a, b) => a + b, 0);
-  console.log(typeof totalExpectedRevenuePaid);
+
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -181,13 +181,13 @@ const TeamLeadStartups = (props) => {
       key: "contractDate",
       align: "left",
     },
-    {
-      title: "No. Months since last revenue submit",
-      dataIndex: "daysSinceLastSubmit",
-      key: "daysSinceLastSubmit",
-      align: "center",
-      render: (r) => <p>{r ? r : null}</p>,
-    },
+    // {
+    //   title: "No. Months since last revenue submit",
+    //   dataIndex: "daysSinceLastSubmit",
+    //   key: "daysSinceLastSubmit",
+    //   align: "center",
+    //   render: (r) => <p>{r ? r : null}</p>,
+    // },
     {
       title: "Last LoggedIn",
       dataIndex: "lastLoggedIn",

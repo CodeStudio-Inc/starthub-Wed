@@ -114,22 +114,27 @@ const HomepageTemplate = (props) => {
     getItem("Startups", "sub1", <ContainerOutlined />, [
       getSubItem("Add Mentor", "add mentor", "3"),
       getSubItem("Add Startup", "add startup", "4"),
-      getSubItem("All Teams", "all teams", "5"),
+      getSubItem("All Startups", "all teams", "5"),
     ]),
-    getItem("Revenue", "6", <PaymentIcon />),
-    getItem("OKRs", "7", <ContainerOutlined />),
+    getItem("My Startups", "sub2", <ContainerOutlined />, [
+      getSubItem("Catalyzer", "catalyzer", "7"),
+      getSubItem("OIP", "OIP", "8"),
+      getSubItem("SheTechs", "SheTechs", "9"),
+      getSubItem("UDSM", "UDSM", "10"),
+    ]),
+    getItem("Revenue", "11", <PaymentIcon />),
+    getItem("OKRs", "12", <ContainerOutlined />),
   ];
 
   const teamMembersItems = [
     getItem("Dashboard", "1", <AppstoreOutlined />),
     getItem("Startups", "sub1", <GroupOutlined />, [
-      getSubItem("Add Startup", "add startup", "3"),
-      getSubItem("Catalyzer", "catalyzer", "4"),
-      getSubItem("OIP", "OIP", "5"),
-      getSubItem("SheTechs", "SheTechs", "6"),
-      getSubItem("UDSM", "UDSM", "7"),
+      getSubItem("Catalyzer", "catalyzer", "3"),
+      getSubItem("OIP", "OIP", "4"),
+      getSubItem("SheTechs", "SheTechs", "5"),
+      getSubItem("UDSM", "UDSM", "6"),
     ]),
-    getItem("OKRs", "8", <ContainerOutlined />),
+    getItem("OKRs", "7", <ContainerOutlined />),
   ];
 
   const adminItems = [
@@ -158,7 +163,7 @@ const HomepageTemplate = (props) => {
           return <Admin index={index} />;
           break;
         case "team lead":
-          return <TeamLead index={index} />;
+          return <TeamLead index={index} title={title} />;
           break;
         case "team member":
           return <TeamMember index={index} title={title} />;
