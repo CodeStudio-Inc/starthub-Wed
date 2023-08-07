@@ -867,6 +867,26 @@ export const updateItem = (path, data, validate, callback) => {
   };
 };
 
+export const registerItem = (path, data, validate, callback) => {
+  if (typeof validate !== "undefined" && !validate(data))
+    return message.info("All fields are required");
+  return (dispatch) => {
+    dispatch(loadAction());
+    axios
+      .put(path, data)
+      .then((res) => {
+        dispatch(stopLoader());
+        callback({ success: true, data: res.data });
+        // console.log(res);
+      })
+      .catch((error) => {
+        dispatch(stopLoader());
+        callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
 export const deleteItem = (path, callback) => {
   return (dispatch) => {
     dispatch(loadAction());
