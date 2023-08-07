@@ -52,23 +52,23 @@ const TeamLead = (props) => {
     users?.filter((el) => el.creator === userId && el.userRole === "startup");
 
   const mentor = users?.find((r) => r._id === record?._id);
-  // console.log(users);
+  console.log(users);
 
-  const revenueTotal = users?.filter(
-    (el) =>
-      el.teamCategory === category &&
-      el.creator === userId &&
-      typeof el.totalRevenue !== "undefined"
-  );
+  // const revenueTotal = users?.filter(
+  //   (el) =>
+  //     el.teamCategory === category &&
+  //     el.creator === userId &&
+  //     typeof el.totalRevenue !== "undefined"
+  // );
 
-  const totalRevenue = Array.from(
-    revenueTotal,
-    ({ totalRevenue }) => totalRevenue
-  ).reduce((a, b) => a + b, 0);
-  const totalExpectedRevenuePaid = Array.from(
-    revenueTotal,
-    ({ totalRevSharePaid }) => totalRevSharePaid
-  ).reduce((a, b) => a + b, 0);
+  // const totalRevenue = Array.from(
+  //   revenueTotal,
+  //   ({ totalRevenue }) => totalRevenue
+  // ).reduce((a, b) => a + b, 0);
+  // const totalExpectedRevenuePaid = Array.from(
+  //   revenueTotal,
+  //   ({ totalRevSharePaid }) => totalRevSharePaid
+  // ).reduce((a, b) => a + b, 0);
 
   const dispatch = useDispatch();
 
@@ -90,35 +90,35 @@ const TeamLead = (props) => {
     setStartup(event.target.value);
   };
 
-  const assignStartup = () => {
-    const mentor = users.find((r) => r._id === record._id);
-    const teams = mentor?.teams.map((r) => r.startupId);
-    if (teams.includes(ID))
-      return message.info(`Startup already assigned to ${mentor.username}`);
-    const data = {
-      mentorId: record._id,
-    };
-    dispatch(
-      actionCreators.updateItem(
-        `auth/assign/${ID}`,
-        data,
-        (data) => {
-          const { mentorId } = data;
-          if (!mentorId) return false;
-          else return true;
-        },
-        (res) => {
-          const { success, data, error } = res;
-          if (success) {
-            message.info("Successfully assigned startup");
-            dispatch(actionCreators.setUsers(data.users));
-            setAssignIndex(null);
-          }
-          if (!success) console.log(error);
-        }
-      )
-    );
-  };
+  // const assignStartup = () => {
+  //   const mentor = users.find((r) => r._id === record._id);
+  //   const teams = mentor?.teams.map((r) => r.startupId);
+  //   if (teams.includes(ID))
+  //     return message.info(`Startup already assigned to ${mentor.username}`);
+  //   const data = {
+  //     mentorId: record._id,
+  //   };
+  //   dispatch(
+  //     actionCreators.updateItem(
+  //       `auth/assign/${ID}`,
+  //       data,
+  //       (data) => {
+  //         const { mentorId } = data;
+  //         if (!mentorId) return false;
+  //         else return true;
+  //       },
+  //       (res) => {
+  //         const { success, data, error } = res;
+  //         if (success) {
+  //           message.info("Successfully assigned startup");
+  //           dispatch(actionCreators.setUsers(data.users));
+  //           setAssignIndex(null);
+  //         }
+  //         if (!success) console.log(error);
+  //       }
+  //     )
+  //   );
+  // };
 
   const unAssignStartup = () => {
     const data = {
@@ -186,185 +186,185 @@ const TeamLead = (props) => {
     );
   };
 
-  const columns = [
-    {
-      title: "Username",
-      dataIndex: "username",
-      key: "username",
-      align: "left",
-      // width: 10,
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      align: "left",
-      // width: 20,
-      render: (text, record, rowIndex) => (
-        <div className="table-cell-row">
-          {activeRowIndex === rowIndex ? (
-            <input onChange={(e) => setEmail(e.target.value)} value={email} />
-          ) : (
-            <p>{text}</p>
-          )}
-        </div>
-      ),
-    },
-    {
-      title: "Permissions",
-      dataIndex: "permissions",
-      key: "permissions",
-      align: "left",
-      // width: 20,
-      render: (text, record, rowIndex) => (
-        <div className="table-cell-row">
-          {activeRowIndex === rowIndex ? (
-            <select
-              onChange={(e) => setPermission(e.target.value)}
-              value={permission}
-            >
-              <option value="viewer">viewer</option>
-              <option value="owner">owner</option>
-            </select>
-          ) : (
-            <p>{text}</p>
-          )}
-        </div>
-      ),
-    },
-    {
-      title: "Role",
-      dataIndex: "userRole",
-      key: "userRole",
-      align: "left",
-      // width: 20,
-      render: (text, record, rowIndex) => (
-        <div className="table-cell-row">
-          {activeRowIndex === rowIndex ? (
-            <select onChange={(e) => setRole(e.target.value)} value={role}>
-              <option value="team member">team member</option>
-              <option value="team lead">team lead</option>
-            </select>
-          ) : (
-            <p>{text}</p>
-          )}
-        </div>
-      ),
-    },
-    {
-      // title: "edit",
-      dataIndex: "_id",
-      key: "_id",
-      align: "left",
-      render: (text, record, rowIndex) => (
-        <div className="table-cell-row">
-          {activeRowIndex !== rowIndex ? (
-            <h4
-              onClick={() => {
-                setRecord(record);
-                setRowIndex(rowIndex);
-                setEmail(record.email);
-                setRole(record.userRole);
-                setPermission(record.permissions);
-              }}
-            >
-              edit
-            </h4>
-          ) : null}
-          {activeRowIndex === rowIndex ? (
-            <h4 onClick={updateStartup}>save</h4>
-          ) : null}
-          {activeRowIndex === rowIndex ? (
-            <CancelIcon
-              style={{ fontSize: "20px", color: "#37561b" }}
-              className="icon"
-              onClick={() => setRowIndex(null)}
-            />
-          ) : null}
-        </div>
-      ),
-    },
-    {
-      // title: "edit",
-      dataIndex: "_id",
-      key: "_id",
-      align: "left",
-      render: (text, record, rowIndex) => (
-        <div className="table-cell-row">
-          {assignIndex === rowIndex ? (
-            <select onChange={(e) => setID(e.target.value)} value={ID}>
-              <option value=" ">-select startup-</option>
-              {startups?.map((r) => (
-                <option key={r._id} value={r._id}>
-                  {r.username}
-                </option>
-              ))}
-            </select>
-          ) : null}
-          {assignIndex !== rowIndex ? (
-            <h4
-              onClick={() => {
-                setAssignIndex(rowIndex);
-                setRecord(record);
-              }}
-            >
-              assign startup
-            </h4>
-          ) : null}
-          {assignIndex === rowIndex ? (
-            <h4 onClick={assignStartup}>save</h4>
-          ) : null}
-          {assignIndex === rowIndex ? (
-            <CancelIcon
-              style={{ fontSize: "20px", color: "#37561b" }}
-              className="icon"
-              onClick={() => setAssignIndex(null)}
-            />
-          ) : null}
-        </div>
-      ),
-    },
-    {
-      // title: "edit",
-      dataIndex: "_id",
-      key: "_id",
-      align: "left",
-      render: (text, record, rowIndex) => (
-        <div className="table-cell-row">
-          {unAssignIndex === rowIndex ? (
-            <select onChange={(e) => setID(e.target.value)} value={ID}>
-              <option value=" ">-select startup-</option>
-              {mentor?.teams.map((r) => (
-                <option key={r._id} value={r.startupId}>
-                  {r.startup}
-                </option>
-              ))}
-            </select>
-          ) : null}
-          {unAssignIndex !== rowIndex ? (
-            <h4
-              onClick={() => {
-                setUnAssignIndex(rowIndex);
-                setRecord(record);
-              }}
-            >
-              unassign startup
-            </h4>
-          ) : null}
-          {unAssignIndex === rowIndex ? (
-            <h4 onClick={unAssignStartup}>save</h4>
-          ) : null}
-          {unAssignIndex === rowIndex ? (
-            <CancelIcon
-              style={{ fontSize: "20px", color: "#37561b" }}
-              className="icon"
-              onClick={() => setUnAssignIndex(null)}
-            />
-          ) : null}
-        </div>
-      ),
-    },
-  ];
+  // const columns = [
+  //   {
+  //     title: "Username",
+  //     dataIndex: "username",
+  //     key: "username",
+  //     align: "left",
+  //     // width: 10,
+  //   },
+  //   {
+  //     title: "Email",
+  //     dataIndex: "email",
+  //     key: "email",
+  //     align: "left",
+  //     // width: 20,
+  //     render: (text, record, rowIndex) => (
+  //       <div className="table-cell-row">
+  //         {activeRowIndex === rowIndex ? (
+  //           <input onChange={(e) => setEmail(e.target.value)} value={email} />
+  //         ) : (
+  //           <p>{text}</p>
+  //         )}
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     title: "Permissions",
+  //     dataIndex: "permissions",
+  //     key: "permissions",
+  //     align: "left",
+  //     // width: 20,
+  //     render: (text, record, rowIndex) => (
+  //       <div className="table-cell-row">
+  //         {activeRowIndex === rowIndex ? (
+  //           <select
+  //             onChange={(e) => setPermission(e.target.value)}
+  //             value={permission}
+  //           >
+  //             <option value="viewer">viewer</option>
+  //             <option value="owner">owner</option>
+  //           </select>
+  //         ) : (
+  //           <p>{text}</p>
+  //         )}
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     title: "Role",
+  //     dataIndex: "userRole",
+  //     key: "userRole",
+  //     align: "left",
+  //     // width: 20,
+  //     render: (text, record, rowIndex) => (
+  //       <div className="table-cell-row">
+  //         {activeRowIndex === rowIndex ? (
+  //           <select onChange={(e) => setRole(e.target.value)} value={role}>
+  //             <option value="team member">team member</option>
+  //             <option value="team lead">team lead</option>
+  //           </select>
+  //         ) : (
+  //           <p>{text}</p>
+  //         )}
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     // title: "edit",
+  //     dataIndex: "_id",
+  //     key: "_id",
+  //     align: "left",
+  //     render: (text, record, rowIndex) => (
+  //       <div className="table-cell-row">
+  //         {activeRowIndex !== rowIndex ? (
+  //           <h4
+  //             onClick={() => {
+  //               setRecord(record);
+  //               setRowIndex(rowIndex);
+  //               setEmail(record.email);
+  //               setRole(record.userRole);
+  //               setPermission(record.permissions);
+  //             }}
+  //           >
+  //             edit
+  //           </h4>
+  //         ) : null}
+  //         {activeRowIndex === rowIndex ? (
+  //           <h4 onClick={updateStartup}>save</h4>
+  //         ) : null}
+  //         {activeRowIndex === rowIndex ? (
+  //           <CancelIcon
+  //             style={{ fontSize: "20px", color: "#37561b" }}
+  //             className="icon"
+  //             onClick={() => setRowIndex(null)}
+  //           />
+  //         ) : null}
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     // title: "edit",
+  //     dataIndex: "_id",
+  //     key: "_id",
+  //     align: "left",
+  //     render: (text, record, rowIndex) => (
+  //       <div className="table-cell-row">
+  //         {assignIndex === rowIndex ? (
+  //           <select onChange={(e) => setID(e.target.value)} value={ID}>
+  //             <option value=" ">-select startup-</option>
+  //             {startups?.map((r) => (
+  //               <option key={r._id} value={r._id}>
+  //                 {r.username}
+  //               </option>
+  //             ))}
+  //           </select>
+  //         ) : null}
+  //         {assignIndex !== rowIndex ? (
+  //           <h4
+  //             onClick={() => {
+  //               setAssignIndex(rowIndex);
+  //               setRecord(record);
+  //             }}
+  //           >
+  //             assign startup
+  //           </h4>
+  //         ) : null}
+  //         {assignIndex === rowIndex ? (
+  //           <h4 onClick={assignStartup}>save</h4>
+  //         ) : null}
+  //         {assignIndex === rowIndex ? (
+  //           <CancelIcon
+  //             style={{ fontSize: "20px", color: "#37561b" }}
+  //             className="icon"
+  //             onClick={() => setAssignIndex(null)}
+  //           />
+  //         ) : null}
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     // title: "edit",
+  //     dataIndex: "_id",
+  //     key: "_id",
+  //     align: "left",
+  //     render: (text, record, rowIndex) => (
+  //       <div className="table-cell-row">
+  //         {unAssignIndex === rowIndex ? (
+  //           <select onChange={(e) => setID(e.target.value)} value={ID}>
+  //             <option value=" ">-select startup-</option>
+  //             {mentor?.teams.map((r) => (
+  //               <option key={r._id} value={r.startupId}>
+  //                 {r.startup}
+  //               </option>
+  //             ))}
+  //           </select>
+  //         ) : null}
+  //         {unAssignIndex !== rowIndex ? (
+  //           <h4
+  //             onClick={() => {
+  //               setUnAssignIndex(rowIndex);
+  //               setRecord(record);
+  //             }}
+  //           >
+  //             unassign startup
+  //           </h4>
+  //         ) : null}
+  //         {unAssignIndex === rowIndex ? (
+  //           <h4 onClick={unAssignStartup}>save</h4>
+  //         ) : null}
+  //         {unAssignIndex === rowIndex ? (
+  //           <CancelIcon
+  //             style={{ fontSize: "20px", color: "#37561b" }}
+  //             className="icon"
+  //             onClick={() => setUnAssignIndex(null)}
+  //           />
+  //         ) : null}
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
   const getStartups = () => {
     dispatch(
@@ -385,7 +385,7 @@ const TeamLead = (props) => {
       <Helmet>
         <title>Startups Overview</title>
       </Helmet>
-      <div className="card-row">
+      {/* <div className="card-row">
         <div className="card2">
           <div className="card-content-column">
             <div className="card2-row">
@@ -450,7 +450,7 @@ const TeamLead = (props) => {
             </h1>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="add-startup-row">
         <div className="export-container">
           <DownloadTableExcel
@@ -464,13 +464,13 @@ const TeamLead = (props) => {
       </div>
       <Table
         ref={tableRef}
-        columns={columns}
-        dataSource={[
-          ...filterUsers?.map((r) => ({
-            ...r,
-            key: r._id,
-          })),
-        ]}
+        // columns={columns}
+        // dataSource={[
+        //   ...filterUsers?.map((r) => ({
+        //     ...r,
+        //     key: r._id,
+        //   })),
+        // ]}
         title={() => <h3>Mentors</h3>}
         style={{ width: "95%" }}
         bordered={true}
