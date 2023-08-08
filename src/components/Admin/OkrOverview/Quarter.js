@@ -44,7 +44,7 @@ const Quarter = ({
 }) => {
   const [description, setDescription] = React.useState("");
 
-  const { category } = useSelector((state) => state.auth);
+  const { category, userRole } = useSelector((state) => state.auth);
   const { quarter } = useSelector((state) => state.requests);
 
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ const Quarter = ({
       description,
       quarter,
       category,
+      userRole,
     };
 
     dispatch(
