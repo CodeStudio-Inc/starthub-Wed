@@ -100,6 +100,8 @@ const Diagnostics = () => {
     );
   };
 
+  const clickMe = () => message.info("Clicked");
+
   if (!payload.length)
     return (
       <div className="diagnostics-container">
@@ -142,6 +144,12 @@ const Diagnostics = () => {
                         marginRight: "0.5rem",
                       }}
                     >
+                      <button
+                        className="save-steps"
+                        onClick={handleStepsSubmit}
+                      >
+                        save progress
+                      </button>
                       <LinearProgress
                         variant="determinate"
                         value={d.score}
@@ -173,9 +181,6 @@ const Diagnostics = () => {
               <img src={svg} style={{ width: "30px", height: "30px" }} />
             </span>
           ) : null}
-          <button className="save-steps" onClick={handleStepsSubmit}>
-            save progress
-          </button>
         </div>
       </div>
     );

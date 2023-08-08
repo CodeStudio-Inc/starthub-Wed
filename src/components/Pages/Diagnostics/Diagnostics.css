@@ -19,6 +19,7 @@
 .save-steps {
   outline: none;
   border: none;
+  margin-bottom: 1rem;
   color: #fff;
   background: #37561b;
   height: 35px;
