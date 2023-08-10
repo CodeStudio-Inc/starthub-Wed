@@ -27,6 +27,17 @@
   border-radius: 5px;
 }
 
+.loader {
+  position: absolute;
+  align-self: center;
+  margin-top: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10%;
+  height: 90px;
+}
+
 .save-steps:hover {
   cursor: pointer;
 }
