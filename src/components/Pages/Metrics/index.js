@@ -224,8 +224,12 @@ const Metrics = ({ visible }) => {
             {c.id === 1 ? null : (
               <div className="revenue-card-content-row-avatar">{c.icon}</div>
             )}
-            {c.id !== 1 ? null : <h2>{c.amount}</h2>}
-            {c.id === 1 ? null : <h1>{c.amount} Shs</h1>}
+            {c.id !== 1 ? null : (
+              <h2>{Number.isNaN(c.amount) ? 0 : c.amount}</h2>
+            )}
+            {c.id === 1 ? null : (
+              <h1>{Number.isNaN(c.amount) ? 0 : c.amount} Shs</h1>
+            )}
             <h3>{c.label}</h3>
             {c.id === 1 ? (
               <h4>
@@ -353,6 +357,7 @@ const Metrics = ({ visible }) => {
             </h4>
           </div>
           <Line data={Revenue} width={100} height={30} />
+          <Diagnostics diagnosticTool={diagnosticTool} />
         </div>
       )}
     </div>

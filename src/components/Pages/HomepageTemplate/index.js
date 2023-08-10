@@ -67,6 +67,7 @@ const HomepageTemplate = (props) => {
 
   React.useEffect(() => {
     setIndex(1);
+    getStartups();
   }, []);
 
   React.useEffect(() => {
@@ -76,6 +77,17 @@ const HomepageTemplate = (props) => {
       props.history.push("/");
     }
   }, []);
+  const getStartups = () => {
+    dispatch(
+      actionCreators.getItem(`/auth/users`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setUsers(data.users));
+        }
+        if (!success) console.log(error);
+      })
+    );
+  };
   const getProfile = () => dispatch(actionCreators.getProfile());
 
   const dispatch = useDispatch();

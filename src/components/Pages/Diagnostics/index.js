@@ -20,10 +20,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
 
 import "./Diagnostics.css";
 import { message } from "antd";
 const Diagnostics = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const [loader, setLoader] = React.useState(false);
+
   const { userId, diagnostics } = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.requests.loading);
   const { payload } = useSelector((state) => state.diagnostics);
@@ -62,7 +66,16 @@ const Diagnostics = () => {
     return dispatch(actionCreators.diagnosticsPayload(newPayload));
   };
 
-  // console.log(diagnostics);
+  const successMessage = () => {
+    messageApi.open({
+      type: "success",
+      content: "Diagnostics Update successful",
+      className: "custom-class",
+      style: {
+        marginTop: "20vh",
+      },
+    });
+  };
 
   const handleChange = (toolIndex, stepIndex) => {
     let paylod = [...payload];
@@ -88,14 +101,19 @@ const Diagnostics = () => {
   };
 
   const handleStepsSubmit = () => {
+    setLoader(true);
     dispatch(
       actionCreators.updateUserDiagnostics(payload, (res) => {
         const { success } = res;
         if (success) {
-          message.info("Your Diagnostics score has been updated. Thanks!!!");
+          setLoader(false);
+          successMessage();
           getDiagnostics();
         }
-        if (!success) message.info("Sorry, Failed to update diagnostics score");
+        if (!success) {
+          setLoader(false);
+          message.info("Sorry, Failed to update diagnostics score");
+        }
       })
     );
   };
@@ -114,6 +132,7 @@ const Diagnostics = () => {
         <Helmet>
           <title>Diagnostics</title>
         </Helmet>
+        {contextHolder}
         <div className="steps">
           <h2>Business Diagnostics</h2>
           <MultipleStepForm
@@ -142,6 +161,13 @@ const Diagnostics = () => {
                         marginRight: "0.5rem",
                       }}
                     >
+                      <button
+                        className="save-steps"
+                        onClick={handleStepsSubmit}
+                        disabled={loader}
+                      >
+                        save progress
+                      </button>
                       <LinearProgress
                         variant="determinate"
                         value={d.score}
@@ -168,14 +194,11 @@ const Diagnostics = () => {
               </FormStep>
             ))}
           </MultipleStepForm>
-          {loading ? (
-            <span>
-              <img src={svg} style={{ width: "30px", height: "30px" }} />
+          {loader ? (
+            <span className="loader">
+              <img src={svg} style={{ width: "50px", height: "50px" }} />
             </span>
           ) : null}
-          <button className="save-steps" onClick={handleStepsSubmit}>
-            save progress
-          </button>
         </div>
       </div>
     );

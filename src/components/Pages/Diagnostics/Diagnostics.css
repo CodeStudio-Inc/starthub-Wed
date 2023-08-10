@@ -19,11 +19,23 @@
 .save-steps {
   outline: none;
   border: none;
+  margin-bottom: 1rem;
   color: #fff;
   background: #37561b;
   height: 35px;
   width: 15%;
   border-radius: 5px;
+}
+
+.loader {
+  position: absolute;
+  align-self: center;
+  margin-top: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10%;
+  height: 90px;
 }
 
 .save-steps:hover {
