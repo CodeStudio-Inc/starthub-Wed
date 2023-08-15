@@ -6,6 +6,7 @@ export const REMOVE_USER = "REMOVE_USER";
 export const SET_AIRTABLE_DATA = "SET_AIRTABLE_DATA";
 export const SET_EXPENSE_DATA = "SET_EXPENSE_DATA";
 export const SET_BOARDS = "SET_BOARDS";
+
 export const SET_LISTS = "SET_LISTS";
 export const SET_NEW_LISTS = "SET_NEW_LISTS";
 export const SET_ALL_LISTS = "SET_ALL_LISTS";
