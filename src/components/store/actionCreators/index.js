@@ -62,6 +62,7 @@ export {
   setRevenue,
   setCurrentQuarter,
   setUsers,
+  setCanvasLists,
 } from "./requests";
 
 export {
