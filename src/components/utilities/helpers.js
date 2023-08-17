@@ -104,3 +104,10 @@ export const setPlaceholderTxt = (name) => {
 export const incrementValue = (value) => {
   return value + 1;
 };
+
+export const getLastElement = (array) => {
+  if (array.length === 0) {
+    return undefined; // Return undefined for an empty array
+  }
+  return array[array.length - 1];
+};

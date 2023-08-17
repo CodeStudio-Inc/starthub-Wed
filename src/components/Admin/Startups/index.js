@@ -47,9 +47,9 @@ const Startups = (props) => {
   const mentorNumberOfTeams = mentor?.teams.length;
   const teams = mentor?.teams?.map((r) => r.startup);
 
-  const revenueTotal = users.filter(
+  const revenueTotal = users?.filter(
     (el) =>
-      teams.includes(el.username) &&
+      teams?.includes(el.username) &&
       typeof el.totalRevenue !== "undefined" &&
       typeof el.totalExpense !== "undefined"
   );

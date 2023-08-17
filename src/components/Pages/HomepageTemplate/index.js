@@ -72,6 +72,8 @@ const HomepageTemplate = (props) => {
 
   React.useEffect(() => {
     getProfile();
+    getBoards();
+    getLists();
     if (current_date >= tokenExpiration) {
       dispatch(actionCreators.removeUser());
       props.history.push("/");
@@ -89,6 +91,26 @@ const HomepageTemplate = (props) => {
     );
   };
   const getProfile = () => dispatch(actionCreators.getProfile());
+
+  const getBoards = () =>
+    dispatch(
+      actionCreators.getItem(`catalyzer/boards`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setBoards(data.boards));
+        }
+      })
+    );
+
+  const getLists = () =>
+    dispatch(
+      actionCreators.getItem(`catalyzer/lists`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setCanvasLists(data.lists));
+        }
+      })
+    );
 
   const dispatch = useDispatch();
 

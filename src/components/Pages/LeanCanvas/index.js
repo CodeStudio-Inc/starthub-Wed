@@ -3,18 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { DragDropContext } from "react-beautiful-dnd";
 import { withRouter } from "react-router-dom";
 import {
-  List1,
-  List2,
   actionCreators,
   Loader,
-  Menu,
   ModalUI,
   svg,
+  StartupNavbar,
 } from "../../Paths";
-import { rearrangelists, setPlaceholderTxt } from "../../utilities/helpers";
+import {
+  rearrangelists,
+  setPlaceholderTxt,
+  getLastElement,
+} from "../../utilities/helpers";
 import ReactGA from "react-ga";
 import { Helmet } from "react-helmet";
 import { Row, Col, Grid, message } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -23,11 +26,12 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Column1 from "./Column1";
 import Column2 from "./Column2";
 import Column3 from "./Column3";
+import CanvasDropDown from "./CanvasDropDown";
 import "./LeanCanvasStyles.css";
-const LeanCanvas = () => {
+const LeanCanvas = ({ location, history }) => {
   const [canvasBoardId, setCanvasBoardId] = React.useState();
+  const [boardName, setBoardName] = React.useState();
   const [archiveId, setArchiveId] = React.useState();
-  const [boardName, setBoardName] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [cardName, setCardName] = React.useState(" ");
   const [payload, setPayload] = React.useState([]);
@@ -37,20 +41,16 @@ const LeanCanvas = () => {
   const { boards, canvas_lists, loading } = useSelector(
     (state) => state.requests
   );
+  const { userRole } = useSelector((state) => state.auth);
 
-  payload.sort((a, b) => a.position - b.position);
+  const data = location.state?.data;
+  const userId = data?._id;
+
+  const roles = ["team member", "team lead"];
+
+  payload?.sort((a, b) => a.position - b.position);
 
   const page = "Lean Canvas";
-
-  const leanBoard = React.useMemo(() => {
-    let board = boards.filter(
-      (el) => el.boardType === page && el.archive === false
-    );
-    let archive = boards.filter(
-      (el) => el.boardType === page && el.archive === true
-    );
-    return { board: board, archive: archive };
-  }, [boards, canvasBoardId]);
 
   let lst, col1, col2, col3, col4, col5, col6;
 
@@ -87,17 +87,23 @@ const LeanCanvas = () => {
 
   const dispatch = useDispatch();
 
+  const leanBoards = boards?.filter((r) => r.name !== "OKRs");
+
   React.useEffect(() => {
-    updateObject(canvas_lists);
-    setCanvasBoardId(
-      leanBoard.board.length === 0 ? null : leanBoard.board.at(-1)._id
-    );
-    setBoardName(
-      leanBoard.board.length === 0 ? null : leanBoard.board.at(-1).name
-    );
-    dispatch(actionCreators.getBoards());
-    getLists();
-    ReactGA.pageview(window.location.pathname);
+    if (typeof data !== "undefined") {
+      updateObject(canvas_lists);
+      dashboardBoards();
+      dashboardLists();
+      setCanvasBoardId(getLastElement(leanBoards)?._id);
+      setBoardName(getLastElement(leanBoards)?.name);
+    } else {
+      updateObject(canvas_lists);
+      setCanvasBoardId(getLastElement(leanBoards)?._id);
+      setBoardName(getLastElement(leanBoards)?.name);
+      getBoards();
+      getLists();
+      ReactGA.pageview(window.location.pathname);
+    }
   }, []);
 
   const updateObject = (arr) => {
@@ -114,8 +120,6 @@ const LeanCanvas = () => {
     ];
     return setPayload(newPayload);
   };
-
-  //   console.log(col1);
 
   const addCard = (listId) => {
     let cardIndex;
@@ -170,11 +174,52 @@ const LeanCanvas = () => {
     );
   };
 
-  const getLists = () => dispatch(actionCreators.getListsOnBoard(() => {}));
+  const getBoards = () =>
+    dispatch(
+      actionCreators.getItem(`catalyzer/boards`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setBoards(data.boards));
+        }
+        if (!success) message.info("Request Failied!");
+      })
+    );
 
-  const archiveBoard = () => {
-    if (leanBoard.board.length === 1) return;
-    else dispatch(actionCreators.archiveBoard(canvasBoardId));
+  const getLists = () =>
+    dispatch(
+      actionCreators.getItem(`catalyzer/lists`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setCanvasLists(data.lists));
+          updateObject(data.lists);
+        }
+        if (!success) message.info("Request Failied!");
+      })
+    );
+
+  const dashboardBoards = () => {
+    dispatch(
+      actionCreators.getItem(`admin/boards/${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setBoards(data.boards));
+        }
+        if (!success) message.info("Request Failied!");
+      })
+    );
+  };
+
+  const dashboardLists = () => {
+    dispatch(
+      actionCreators.getItem(`admin/lists/${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setCanvasLists(data.lists));
+          updateObject(data.lists);
+        }
+        if (!success) message.info("Request Failied!");
+      })
+    );
   };
 
   const onDragEnd = (result) => {
@@ -210,15 +255,29 @@ const LeanCanvas = () => {
       )
     );
   };
-
   return (
     <div className="canvas-container">
       <Helmet>
         <title>Lean Canvas</title>
       </Helmet>
-      {loading ? (
-        <img src={svg} style={{ height: "30px", width: "30px" }} />
+      {roles.includes(userRole) ? (
+        <StartupNavbar data={data} history={history} />
       ) : null}
+      {roles.includes(userRole) ? <div style={{ marginTop: "2rem" }} /> : null}
+      <div className="lean-header-container">
+        <CanvasDropDown
+          setCanvasBoardId={setCanvasBoardId}
+          boardId={canvasBoardId}
+          setBoardName={setBoardName}
+          boardName={boardName}
+          getLists={getLists}
+          roles={roles}
+          userRole={userRole}
+        />
+        {loading ? (
+          <img src={svg} style={{ height: "30px", width: "30px" }} />
+        ) : null}
+      </div>
       <Row gutter={[16, 16]} className="row">
         <Col>
           <div className="col-1">
