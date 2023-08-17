@@ -30,6 +30,7 @@ const Startup = ({ location, history }) => {
   const tableRef = React.useRef(null);
 
   const data = location.state.data;
+  const userId = data?._id;
 
   const diagnosticTool = [
     ...data?.diagnostics?.map((d) => ({
@@ -51,6 +52,28 @@ const Startup = ({ location, history }) => {
   };
   const getProfile = () => dispatch(actionCreators.getProfileAdmin(data._id));
 
+  const dashboardBoards = () => {
+    dispatch(
+      actionCreators.getItem(`admin/boards/${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setBoards(data.boards));
+        }
+      })
+    );
+  };
+
+  const dashboardLists = () => {
+    dispatch(
+      actionCreators.getItem(`admin/lists/${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setCanvasLists(data.lists));
+        }
+      })
+    );
+  };
+
   const handleChange = (event) => {
     setSelected(event.target.value);
   };
@@ -60,6 +83,8 @@ const Startup = ({ location, history }) => {
     getRevenueTracking();
     getValues();
     getProfile();
+    dashboardBoards();
+    dashboardLists();
   }, []);
 
   const sortRevenue = React.useMemo(() => {

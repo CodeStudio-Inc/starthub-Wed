@@ -7,6 +7,7 @@ import {
   MathiusSchedule,
   Startup,
   AdminLeanCanvas,
+  LeanCanvas,
   ObjectivesTable,
   Profile,
   DiagnosticTools,
@@ -22,7 +23,7 @@ const DashboardRoutes = () => {
         <Route path="/Mathius" component={MathiusSchedule} />
         <Route path="/startup/:id" component={Startup} />
         <Route path="/profile/:id" component={Profile} />
-        <Route path="/lean-canvas/:id" component={AdminLeanCanvas} />
+        <Route path="/lean-canvas/:id" component={LeanCanvas} />
         <Route path="/okrs/:id" component={ObjectivesTable} />
         <Route path="/diagnostics/:id" component={DiagnosticTools} />
       </Switch>
