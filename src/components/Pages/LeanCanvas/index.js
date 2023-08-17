@@ -46,8 +46,6 @@ const LeanCanvas = ({ location, history }) => {
   const data = location.state?.data;
   const userId = data?._id;
 
-  console.log(canvas_lists);
-
   const roles = ["team member", "team lead"];
 
   payload?.sort((a, b) => a.position - b.position);
@@ -93,13 +91,13 @@ const LeanCanvas = ({ location, history }) => {
 
   React.useEffect(() => {
     if (typeof data !== "undefined") {
-      // updateObject(canvas_lists);
+      updateObject(canvas_lists);
       dashboardBoards();
       dashboardLists();
       setCanvasBoardId(getLastElement(leanBoards)?._id);
       setBoardName(getLastElement(leanBoards)?.name);
     } else {
-      // updateObject(canvas_lists);
+      updateObject(canvas_lists);
       setCanvasBoardId(getLastElement(leanBoards)?._id);
       setBoardName(getLastElement(leanBoards)?.name);
       getBoards();
@@ -108,73 +106,73 @@ const LeanCanvas = ({ location, history }) => {
     }
   }, []);
 
-  // const updateObject = (arr) => {
-  //   const newPayload = [
-  //     ...arr?.map((r) => {
-  //       const { name, ...rest } = r;
-  //       return {
-  //         ...rest,
-  //         name: name,
-  //         position: rearrangelists(name),
-  //         placeholderTxt: setPlaceholderTxt(name),
-  //       };
-  //     }),
-  //   ];
-  //   return setPayload(newPayload);
-  // };
+  const updateObject = (arr) => {
+    const newPayload = [
+      ...arr?.map((r) => {
+        const { name, ...rest } = r;
+        return {
+          ...rest,
+          name: name,
+          position: rearrangelists(name),
+          placeholderTxt: setPlaceholderTxt(name),
+        };
+      }),
+    ];
+    return setPayload(newPayload);
+  };
 
-  // const addCard = (listId) => {
-  //   let cardIndex;
+  const addCard = (listId) => {
+    let cardIndex;
 
-  //   const list = lst.find((l) => l._id === listId);
+    const list = lst.find((l) => l._id === listId);
 
-  //   if (list.cards.length === 0) cardIndex = 0;
-  //   if (list.cards.length > 0) cardIndex = parseInt(list.cards.length);
+    if (list.cards.length === 0) cardIndex = 0;
+    if (list.cards.length > 0) cardIndex = parseInt(list.cards.length);
 
-  //   const data = {
-  //     cardIndex,
-  //     name: cardName.trimStart(),
-  //     listId,
-  //   };
+    const data = {
+      cardIndex,
+      name: cardName.trimStart(),
+      listId,
+    };
 
-  //   dispatch(
-  //     actionCreators.addItem(
-  //       `catalyzer/card`,
-  //       data,
-  //       (data) => {
-  //         const { cardName } = data;
-  //         if (!cardName) return true;
-  //         else return true;
-  //       },
-  //       (res) => {
-  //         const { success, data, error } = res;
-  //         if (success) {
-  //           dispatch(actionCreators.setCanvasLists(data.lists));
-  //           setCardName("");
-  //           setInput(false);
-  //           updateObject(data.lists);
-  //         }
-  //         if (!success) message.info("Request Failied!");
-  //       }
-  //     )
-  //   );
-  // };
+    dispatch(
+      actionCreators.addItem(
+        `catalyzer/card`,
+        data,
+        (data) => {
+          const { cardName } = data;
+          if (!cardName) return true;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setCanvasLists(data.lists));
+            setCardName("");
+            setInput(false);
+            updateObject(data.lists);
+          }
+          if (!success) message.info("Request Failied!");
+        }
+      )
+    );
+  };
 
-  // const deleteCard = (listId, cardId) => {
-  //   dispatch(
-  //     actionCreators.deleteItem(
-  //       `catalyzer/card?listId=${listId}&cardId=${cardId}`,
-  //       (res) => {
-  //         const { success, data, error } = res;
-  //         if (success) {
-  //           dispatch(actionCreators.setCanvasLists(data.lists));
-  //           updateObject(data.lists);
-  //         }
-  //         if (!success) message.info("Request Failied!");
-  //       }
-  //     )
-  //   );
-  // };
+  const deleteCard = (listId, cardId) => {
+    dispatch(
+      actionCreators.deleteItem(
+        `catalyzer/card?listId=${listId}&cardId=${cardId}`,
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setCanvasLists(data.lists));
+            updateObject(data.lists);
+          }
+          if (!success) message.info("Request Failied!");
+        }
+      )
+    );
+  };
 
   const getBoards = () =>
     dispatch(
@@ -193,8 +191,7 @@ const LeanCanvas = ({ location, history }) => {
         const { success, data, error } = res;
         if (success) {
           dispatch(actionCreators.setCanvasLists(data.lists));
-          // updateObject(data.lists);
-          console.log(data.lists, "lean request");
+          updateObject(data.lists);
         }
         if (!success) message.info("Request Failied!");
       })
@@ -218,7 +215,7 @@ const LeanCanvas = ({ location, history }) => {
         const { success, data, error } = res;
         if (success) {
           dispatch(actionCreators.setCanvasLists(data.lists));
-          // updateObject(data.lists);
+          updateObject(data.lists);
         }
         if (!success) message.info("Request Failied!");
       })
@@ -267,7 +264,7 @@ const LeanCanvas = ({ location, history }) => {
         <StartupNavbar data={data} history={history} />
       ) : null}
       {roles.includes(userRole) ? <div style={{ marginTop: "2rem" }} /> : null}
-      {/* <div className="lean-header-container">
+      <div className="lean-header-container">
         <CanvasDropDown
           setCanvasBoardId={setCanvasBoardId}
           boardId={canvasBoardId}
@@ -402,7 +399,7 @@ const LeanCanvas = ({ location, history }) => {
             deleteCard={deleteCard}
           />
         ))}
-      </Row> */}
+      </Row>
     </div>
   );
 };
