@@ -108,7 +108,6 @@ const HomepageTemplate = (props) => {
         const { success, data, error } = res;
         if (success) {
           dispatch(actionCreators.setCanvasLists(data.lists));
-          console.log(data.lists, "dashboard");
         }
       })
     );
