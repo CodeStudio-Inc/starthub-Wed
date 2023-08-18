@@ -60,13 +60,6 @@ const ReportRevenue = ({ setOpen }) => {
 
   return (
     <div className="report-modal-container">
-      <div className="report-container-header">
-        <CloseIcon
-          onClick={() => setOpen(false)}
-          className="report-icon"
-          style={{ color: "rgba(0,0,0,0.3)" }}
-        />
-      </div>
       <div className="report-container-content">
         <div className="label">
           <h1>Monthly Reporting {username}</h1>

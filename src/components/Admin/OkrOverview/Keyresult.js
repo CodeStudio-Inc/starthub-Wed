@@ -23,9 +23,11 @@ const Keyresult = ({
   const [keyResult, setKeyresult] = React.useState(k.keyResult);
 
   const { loading } = useSelector((state) => state.requests);
-  const { username } = useSelector((state) => state.auth);
+  const { username, userRole } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
+
+  const roles = ["team lead", "team member"];
 
   const updatedMembersArray = React.useMemo(() => {
     const addedMembers = k?.members?.map((r) => r.name);
@@ -76,26 +78,28 @@ const Keyresult = ({
             last changed by {k.updatedBy} {moment(k.updatedAt).fromNow()}
           </p>
         </div>
-        <div className="keyresult-card-header-row">
-          <Popover title="Edit keyresult">
-            <EditIcon
-              onClick={() => showEditKeyresult(k._id)}
-              style={{
-                fontSize: "15px",
-                color: "rgba(0, 0, 0, 0.5)",
-              }}
-            />
-          </Popover>
-          <Popover title="Delete keyresult">
-            <DeleteOutlineIcon
-              onClick={() => deleteKeyresult(r._id, k._id)}
-              style={{
-                fontSize: "15px",
-                color: "rgba(0, 0, 0, 0.5)",
-              }}
-            />
-          </Popover>
-        </div>
+        {roles.includes(userRole) ? null : (
+          <div className="keyresult-card-header-row">
+            <Popover title="Edit keyresult">
+              <EditIcon
+                onClick={() => showEditKeyresult(k._id)}
+                style={{
+                  fontSize: "15px",
+                  color: "rgba(0, 0, 0, 0.5)",
+                }}
+              />
+            </Popover>
+            <Popover title="Delete keyresult">
+              <DeleteOutlineIcon
+                onClick={() => deleteKeyresult(r._id, k._id)}
+                style={{
+                  fontSize: "15px",
+                  color: "rgba(0, 0, 0, 0.5)",
+                }}
+              />
+            </Popover>
+          </div>
+        )}
       </div>
       {editkR && activeCardId === k._id ? (
         <div className="editKR-row">
