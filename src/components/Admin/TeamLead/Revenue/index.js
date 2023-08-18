@@ -30,6 +30,7 @@ const Revenue = () => {
   const [columnIndex, setColumnIndex] = React.useState(null);
   const [paymentsIndex, setPaymnentsIndex] = React.useState(null);
   const { revenue, loading } = useSelector((state) => state.requests);
+  const { category } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.admin);
 
   const tableRef = React.useRef(null);
@@ -383,24 +384,30 @@ const Revenue = () => {
         <Table
           ref={tableRef}
           columns={columns}
-          dataSource={[
-            ...revenue?.map((r) => ({
-              ...r,
-              key: r?._id,
-              month_revenue: Math.round(r?.month_revenue)
-                ?.toString()
-                ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              month_expense: Math.round(r?.month_expense)
-                ?.toString()
-                ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              expectedRevsharePayment: Math.round(r?.expectedRevsharePayment)
-                ?.toString()
-                ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-              revSharepayment: Math.round(r?.revSharepayment)
-                ?.toString()
-                ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-            })),
-          ]}
+          dataSource={
+            category === "catalyzer"
+              ? [
+                  ...revenue?.map((r) => ({
+                    ...r,
+                    key: r?._id,
+                    month_revenue: Math.round(r?.month_revenue)
+                      ?.toString()
+                      ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                    month_expense: Math.round(r?.month_expense)
+                      ?.toString()
+                      ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                    expectedRevsharePayment: Math.round(
+                      r?.expectedRevsharePayment
+                    )
+                      ?.toString()
+                      ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                    revSharepayment: Math.round(r?.revSharepayment)
+                      ?.toString()
+                      ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                  })),
+                ]
+              : []
+          }
           loading={loading}
           style={{ width: "100%", marginTop: "1rem" }}
           bordered={true}

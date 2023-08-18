@@ -8,7 +8,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import PaidIcon from "@mui/icons-material/Paid";
 import { Line } from "react-chartjs-2";
-import { svg } from "../../Paths";
+import { svg, StartupNavbar } from "../../Paths";
 import { actionCreators, ModalUI } from "../../Paths";
 import { Table } from "antd";
 import "react-circular-progressbar/dist/styles.css";
@@ -16,12 +16,12 @@ import { Helmet } from "react-helmet";
 
 import RevenueTable from "../../Pages/Metrics/modals/RevenueTable";
 import Diagnostics from "./Diagnostics";
-import Navbar from "./modals/Navbar";
+import DrawerModal from "../../ModalUI/DrawerModal";
 import "./StartupStyles.css";
 const Startup = ({ location, history }) => {
   const [selected, setSelected] = React.useState("");
   const [year, setYear] = React.useState("");
-  const [revenueTable, setRevenueTable] = React.useState(false);
+  const [openModal, setOpenModal] = React.useState(false);
   const { revenue, loader, revenue_tracking } = useSelector(
     (state) => state.admin
   );
@@ -30,6 +30,7 @@ const Startup = ({ location, history }) => {
   const tableRef = React.useRef(null);
 
   const data = location.state.data;
+  const userId = data?._id;
 
   const diagnosticTool = [
     ...data?.diagnostics?.map((d) => ({
@@ -51,15 +52,54 @@ const Startup = ({ location, history }) => {
   };
   const getProfile = () => dispatch(actionCreators.getProfileAdmin(data._id));
 
+  const dashboardBoards = () => {
+    dispatch(
+      actionCreators.getItem(`admin/boards/${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setBoards(data.boards));
+        }
+      })
+    );
+  };
+
+  const dashboardLists = () => {
+    dispatch(
+      actionCreators.getItem(`admin/lists/${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setCanvasLists(data.lists));
+        }
+      })
+    );
+  };
+
+  const getObjectives = () => {
+    dispatch(
+      actionCreators.getItem(`admin/objectives?userId=${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setObjectives(data.objs));
+        }
+      })
+    );
+  };
+
   const handleChange = (event) => {
     setSelected(event.target.value);
   };
+
+  const open = () => setOpenModal(true);
+  const close = () => setOpenModal(false);
 
   React.useEffect(() => {
     getRevenue();
     getRevenueTracking();
     getValues();
     getProfile();
+    dashboardBoards();
+    dashboardLists();
+    getObjectives();
   }, []);
 
   const sortRevenue = React.useMemo(() => {
@@ -494,28 +534,25 @@ const Startup = ({ location, history }) => {
       <Helmet>
         <title>{data.username}</title>
       </Helmet>
-      {revenueTable ? (
-        <ModalUI>
-          <RevenueTable
-            revenue={sortRevenue}
-            columns={columns}
-            setOpen={setRevenueTable}
-            svg={svg}
-            username={data.username}
-            dispatch={dispatch}
-            userId={data._id}
-            actionCreators={actionCreators}
-            revenueTotal={revenueTotal}
-            tableRef={tableRef}
-          />
-        </ModalUI>
-      ) : null}
+      <DrawerModal open={openModal} close={close} title="Revenue Table">
+        <RevenueTable
+          revenue={sortRevenue}
+          columns={columns}
+          svg={svg}
+          username={data.username}
+          dispatch={dispatch}
+          userId={data._id}
+          actionCreators={actionCreators}
+          revenueTotal={revenueTotal}
+          tableRef={tableRef}
+        />
+      </DrawerModal>
       {loader ? (
         <ModalUI id="loader">
           <p style={{ color: "#fff" }}>Refresing...</p>
         </ModalUI>
       ) : null}
-      <Navbar data={data} history={history} />
+      <StartupNavbar data={data} history={history} />
       {data.teamCategory.includes("catalyzer") ? <Cards /> : null}
       {data.teamCategory.includes("catalyzer") ? (
         <div className="rev-tracking-table">
@@ -552,9 +589,7 @@ const Startup = ({ location, history }) => {
         <div className="graph-tab">
           <div className="graph-row">
             <h3>{revenueTotal.year} Revenue Reporting Graph</h3>
-            <button onClick={() => setRevenueTable(true)}>
-              view reported revenue
-            </button>
+            <button onClick={open}>view reported revenue</button>
           </div>
           <div className="rev-total">
             <h4>
@@ -604,6 +639,12 @@ const Startup = ({ location, history }) => {
             </h4>
           </div>
           <Line data={Revenue} width={100} height={30} />
+          <Diagnostics
+            diagnosticTool={diagnosticTool}
+            diagnostics={diagnostics}
+            handleChange={handleChange}
+            selected={selected}
+          />
         </div>
       ) : (
         <Diagnostics

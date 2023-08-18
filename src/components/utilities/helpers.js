@@ -38,3 +38,76 @@ export const validateObjectData = (data) => {
   }
   return false; // No empty values found
 };
+
+export const rearrangelists = (name) => {
+  switch (name) {
+    case "Problem":
+      return 1;
+    case "Existing Alternatives":
+      return 2;
+    case "Solution":
+      return 3;
+    case "Key Metrics":
+      return 4;
+    case "Unique Value Proposition":
+      return 5;
+    case "High-Level Concept":
+      return 6;
+    case "Unfair Advantage":
+      return 7;
+    case "Channels":
+      return 8;
+    case "Customer Segments":
+      return 9;
+    case "Early Adopters":
+      return 10;
+    case "Cost Structure":
+      return 11;
+    case "Revenue Streams":
+      return 12;
+    default:
+      break;
+  }
+};
+
+export const setPlaceholderTxt = (name) => {
+  switch (name) {
+    case "Problem":
+      return "Your customer's problems";
+    case "Existing Alternatives":
+      return "How your customer's problems are solved today";
+    case "Solution":
+      return "Outline possible solutions";
+    case "Key Metrics":
+      return "List key numbers showing how your business is doing";
+    case "Unique Value Proposition":
+      return "Compelling message that gets you customers";
+    case "High-Level Concept":
+      return "Statement that explains your business idea in a few words";
+    case "Unfair Advantage":
+      return "Something about your product that can not be copied";
+    case "Channels":
+      return "Your path to customers";
+    case "Customer Segments":
+      return "Your customer categories";
+    case "Early Adopters":
+      return "Characteristics of your ideal customers";
+    case "Cost Structure":
+      return "Fixed and variable costs";
+    case "Revenue Streams":
+      return "Sources of revenue";
+    default:
+      break;
+  }
+};
+
+export const incrementValue = (value) => {
+  return value + 1;
+};
+
+export const getLastElement = (array) => {
+  if (array.length === 0) {
+    return undefined; // Return undefined for an empty array
+  }
+  return array[array.length - 1];
+};

@@ -1,298 +1,427 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { DragDropContext } from 'react-beautiful-dnd';
-import { withRouter } from 'react-router-dom';
-import { List1, List2, actionCreators, Loader, Menu, ModalUI, svg } from '../../Paths';
-import ReactGA from 'react-ga';
-import { Helmet } from 'react-helmet';
-import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { DragDropContext } from "react-beautiful-dnd";
+import { withRouter } from "react-router-dom";
+import {
+  actionCreators,
+  Loader,
+  ModalUI,
+  svg,
+  StartupNavbar,
+} from "../../Paths";
+import {
+  rearrangelists,
+  setPlaceholderTxt,
+  getLastElement,
+} from "../../utilities/helpers";
+import ReactGA from "react-ga";
+import { Helmet } from "react-helmet";
+import { Row, Col, Grid, message } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 
-import './LeanCanvasStyles.css';
-const LeanCanvas = () => {
-	const [ canvasBoardId, setCanvasBoardId ] = React.useState();
-	const [ archiveId, setArchiveId ] = React.useState();
-	const [ boardName, setBoardName ] = React.useState('');
-	const [ open, setOpen ] = React.useState(false);
-	const [ state, setState ] = React.useState({
-		name: '',
-		message: ''
-	});
+import Column1 from "./Column1";
+import Column2 from "./Column2";
+import Column3 from "./Column3";
+import CanvasDropDown from "./CanvasDropDown";
+import "./LeanCanvasStyles.css";
+import "antd/dist/antd.css";
+const LeanCanvas = ({ location, history }) => {
+  const [canvasBoardId, setCanvasBoardId] = React.useState();
+  const [boardName, setBoardName] = React.useState();
+  const [archiveId, setArchiveId] = React.useState();
+  const [open, setOpen] = React.useState(false);
+  const [cardName, setCardName] = React.useState(" ");
+  const [payload, setPayload] = React.useState([]);
+  const [input, setInput] = React.useState(false);
+  const [activeList, setActiveList] = React.useState("");
 
-	const { boards, canvas_lists, loading } = useSelector((state) => state.requests);
+  const { boards, canvas_lists, loading } = useSelector(
+    (state) => state.requests
+  );
+  const { userRole } = useSelector((state) => state.auth);
 
-	const page = 'Lean Canvas';
+  const data = location.state?.data;
+  const userId = data?._id;
 
-	const leanBoard = React.useMemo(
-		() => {
-			let board = boards.filter((el) => el.boardType === page && el.archive === false);
-			let archive = boards.filter((el) => el.boardType === page && el.archive === true);
-			return { board: board, archive: archive };
-		},
-		[ boards, canvasBoardId ]
-	);
+  const roles = ["team member", "team lead"];
 
-	let lst,
-		problem,
-		solution,
-		metrics,
-		proposition,
-		advantage,
-		channels,
-		segments,
-		revenue,
-		cost,
-		alternatives,
-		concept,
-		adoptors;
+  payload?.sort((a, b) => a.position - b.position);
 
-	lst = canvas_lists && canvas_lists.filter((el) => el.boardId === canvasBoardId);
+  const page = "Lean Canvas";
 
-	problem = lst.find((el) => el.name === 'Problem');
-	solution = lst.find((el) => el.name === 'Solution');
-	metrics = lst.find((el) => el.name === 'Key Metrics');
-	proposition = lst.find((el) => el.name === 'Unique Value Proposition');
-	advantage = lst.find((el) => el.name === 'Unfair Advantage');
-	channels = lst.find((el) => el.name === 'Channels');
-	segments = lst.find((el) => el.name === 'Customer Segments');
-	revenue = lst.find((el) => el.name === 'Revenue Streams');
-	cost = lst.find((el) => el.name === 'Cost Structure');
-	alternatives = lst.find((el) => el.name === 'Existing Alternatives');
-	concept = lst.find((el) => el.name === 'High-Level Concept');
-	adoptors = lst.find((el) => el.name === 'Early Adopters');
+  let lst, col1, col2, col3, col4, col5, col6;
 
-	const dispatch = useDispatch();
+  lst = payload?.filter((el) => el.boardId === canvasBoardId);
 
-	React.useEffect(() => {
-		setCanvasBoardId(leanBoard.board.length === 0 ? null : leanBoard.board.at(-1)._id);
-		setBoardName(leanBoard.board.length === 0 ? null : leanBoard.board.at(-1).name);
-		dispatch(actionCreators.getBoards());
-		getLists();
-		ReactGA.pageview(window.location.pathname);
-	}, []);
+  col1 = lst.filter(
+    (el) => el.name === "Problem" || el.name === "Existing Alternatives"
+  );
+  col2 = lst.filter(
+    (el) => el.name === "Solution" || el.name === "Key Metrics"
+  );
+  col3 = lst.filter(
+    (el) =>
+      el.name === "Unique Value Proposition" || el.name === "High-Level Concept"
+  );
+  col4 = lst.filter(
+    (el) => el.name === "Unfair Advantage" || el.name === "Channels"
+  );
+  col5 = lst.filter(
+    (el) => el.name === "Customer Segments" || el.name === "Early Adopters"
+  );
+  col6 = lst.filter(
+    (el) => el.name === "Cost Structure" || el.name === "Revenue Streams"
+  );
 
-	const getLists = () => dispatch(actionCreators.getListsOnBoard(() => {}));
+  const show = (id) => {
+    if (roles.includes(userRole)) return;
+    setInput(true);
+    setActiveList(id);
+  };
+  const hide = () => {
+    setInput(false);
+    setActiveList(" ");
+  };
 
-	const archiveBoard = () => {
-		if (leanBoard.board.length === 1) return;
-		else dispatch(actionCreators.archiveBoard(canvasBoardId));
-	};
+  const dispatch = useDispatch();
 
-	const onDragEnd = (result) => {
-		const { destination, source, draggableId } = result;
-		if (!destination) {
-			return;
-		}
+  const leanBoards = boards?.filter((r) => r.name !== "OKRs");
 
-		dispatch(
-			actionCreators.dragCardWithInList(
-				source.droppableId,
-				destination.droppableId,
-				source.index,
-				destination.index,
-				draggableId
-			)
-		);
+  React.useEffect(() => {
+    if (typeof data !== "undefined") {
+      updateObject(canvas_lists);
+      dashboardBoards();
+      dashboardLists();
+      setCanvasBoardId(getLastElement(leanBoards)?._id);
+      setBoardName(getLastElement(leanBoards)?.name);
+    } else {
+      updateObject(canvas_lists);
+      setCanvasBoardId(getLastElement(leanBoards)?._id);
+      setBoardName(getLastElement(leanBoards)?.name);
+      getBoards();
+      getLists();
+      ReactGA.pageview(window.location.pathname);
+    }
+  }, []);
 
-		const newDestList = canvas_lists.find((el) => el._id === destination.droppableId);
-		const newSrcList = canvas_lists.find((el) => el._id === source.droppableId);
+  const updateObject = (arr) => {
+    const newPayload = [
+      ...arr?.map((r) => {
+        const { name, ...rest } = r;
+        return {
+          ...rest,
+          name: name,
+          position: rearrangelists(name),
+          placeholderTxt: setPlaceholderTxt(name),
+        };
+      }),
+    ];
+    return setPayload(newPayload);
+  };
 
-		dispatch(
-			actionCreators.cardIndexUpdate(source.droppableId, destination.droppableId, newSrcList, newDestList, () => {
-				getLists();
-			})
-		);
-	};
+  const addCard = (listId) => {
+    let cardIndex;
 
-	return (
-		<div className="canvas-container">
-			<Helmet>
-				<title>Lean Canvas</title>
-			</Helmet>
-			<div className="canvas-header">
-				{leanBoard.board.length !== 0 ? (
-					<div className="canvas-header-btn" onClick={archiveBoard}>
-						<DeleteOutlinedIcon style={{ fontSize: '20px', color: '#fff' }} />
-						{loading ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : <p>Remove canvas</p>}
-					</div>
-				) : null}
-			</div>
-			<h2>{boardName}</h2>
-			{open ? (
-				<ModalUI setClose={setOpen}>
-					<div className="canvas-modal">
-						<DeveloperBoardIcon className="canvas-modal-icon" style={{ fontSize: '70px' }} />
-						<input
-							placeholder="Enter canvas name"
-							value={state.name}
-							onChange={(e) => setState({ ...state, name: e.target.value })}
-						/>
-						<div className="canvas-modal-btns">
-							<button
-								onClick={() => {
-									setOpen(false);
-									setState({ name: '' });
-								}}
-							>
-								Close
-							</button>
-							<button
-								onClick={() =>
-									dispatch(
-										actionCreators.addLeanCanvas(state.name, (res) => {
-											if (res.success) {
-												setState({
-													name: ''
-												});
-											}
-											setOpen(false);
-										})
-									)}
-							>
-								{loading ? <img src={svg} style={{ height: '30px', width: '30px' }} /> : 'Save'}
-							</button>
-						</div>
-					</div>
-				</ModalUI>
-			) : null}
-			{leanBoard.board.length === 0 ? (
-				<div className="canvas-header-btn" onClick={() => setOpen(true)}>
-					<AddCircleOutlineIcon style={{ fontSize: '20px', color: '#fff' }} />
-					<p>Add canvas</p>
-				</div>
-			) : (
-				<DragDropContext onDragEnd={onDragEnd}>
-					{leanBoard.board.length === 0 ? null : (
-						<Menu
-							boards={leanBoard.board}
-							setCanvasBoardId={setCanvasBoardId}
-							setOpen={setOpen}
-							setBoardName={setBoardName}
-							archive={leanBoard.archive}
-							archiveId={archiveId}
-							dispatch={dispatch}
-							actionCreators={actionCreators}
-							setArchiveId={setArchiveId}
-						/>
-					)}
-					<div className="canvas-main">
-						{loading ? <Loader /> : null}
-						<div className="canvas-main-row">
-							<div className="canvas-list-list">
-								<List1
-									key={problem && problem._id}
-									listId={problem && problem._id}
-									listNumber={problem && problem.listNumber}
-									title={problem && problem.name}
-									cards={problem && problem.cards}
-									callback={getLists}
-								/>
-								<List1
-									key={alternatives && alternatives._id}
-									listId={alternatives && alternatives._id}
-									title={alternatives && alternatives.name}
-									cards={alternatives && alternatives.cards}
-									callback={getLists}
-								/>
-							</div>
-							<div className="canvas-list-list">
-								<List1
-									key={solution && solution._id}
-									listId={solution && solution._id}
-									listNumber={solution && solution.listNumber}
-									title={solution && solution.name}
-									cards={solution && solution.cards}
-									callback={getLists}
-								/>
-								<div className="canvas-separator" />
-								<List1
-									key={metrics && metrics._id}
-									listId={metrics && metrics._id}
-									listNumber={metrics && metrics.listNumber}
-									title={metrics && metrics.name}
-									cards={metrics && metrics.cards}
-									callback={getLists}
-								/>
-							</div>
-							<div className="canvas-list-list">
-								<List1
-									key={proposition && proposition._id}
-									listId={proposition && proposition._id}
-									listNumber={proposition && proposition.listNumber}
-									title={proposition && proposition.name}
-									cards={proposition && proposition.cards}
-									callback={getLists}
-								/>
-								<List1
-									key={concept && concept._id}
-									listId={concept && concept._id}
-									title={concept && concept.name}
-									cards={concept && concept.cards}
-									callback={getLists}
-								/>
-							</div>
-							<div className="canvas-list-list">
-								<List1
-									key={advantage && advantage._id}
-									listId={advantage && advantage._id}
-									listNumber={advantage && advantage.listNumber}
-									title={advantage && advantage.name}
-									cards={advantage && advantage.cards}
-									callback={getLists}
-								/>
-								<div className="canvas-separator" />
-								<List1
-									key={channels && channels._id}
-									listId={channels && channels._id}
-									listNumber={channels && channels.listNumber}
-									title={channels && channels.name}
-									cards={channels && channels.cards}
-									callback={getLists}
-								/>
-							</div>
-							<div className="canvas-list-list">
-								<List1
-									key={segments && segments._id}
-									listId={segments && segments._id}
-									listNumber={segments && segments.listNumber}
-									title={segments && segments.name}
-									cards={segments && segments.cards}
-									callback={getLists}
-								/>
-								<List1
-									key={adoptors && adoptors._id}
-									listId={adoptors && adoptors._id}
-									title={adoptors && adoptors.name}
-									cards={adoptors && adoptors.cards}
-									callback={getLists}
-								/>
-							</div>
-						</div>
+    const list = lst.find((l) => l._id === listId);
 
-						<div className="canvas-main-row">
-							<List2
-								key={cost && cost._id}
-								listId={cost && cost._id}
-								listNumber={cost && cost.listNumber}
-								title={cost && cost.name}
-								cards={cost && cost.cards}
-								callback={getLists}
-							/>
-							<List2
-								key={revenue && revenue._id}
-								listId={revenue && revenue._id}
-								listNumber={revenue && revenue.listNumber}
-								title={revenue && revenue.name}
-								cards={revenue && revenue.cards}
-								callback={getLists}
-							/>
-						</div>
-					</div>
-				</DragDropContext>
-			)}
-		</div>
-	);
+    if (list.cards.length === 0) cardIndex = 0;
+    if (list.cards.length > 0) cardIndex = parseInt(list.cards.length);
+
+    const data = {
+      cardIndex,
+      name: cardName.trimStart(),
+      listId,
+    };
+
+    dispatch(
+      actionCreators.addItem(
+        `catalyzer/card`,
+        data,
+        (data) => {
+          const { cardName } = data;
+          if (!cardName) return true;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setCanvasLists(data.lists));
+            setCardName("");
+            setInput(false);
+            updateObject(data.lists);
+          }
+          if (!success) message.info("Request Failied!");
+        }
+      )
+    );
+  };
+
+  const deleteCard = (listId, cardId) => {
+    dispatch(
+      actionCreators.deleteItem(
+        `catalyzer/card?listId=${listId}&cardId=${cardId}`,
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setCanvasLists(data.lists));
+            updateObject(data.lists);
+          }
+          if (!success) message.info("Request Failied!");
+        }
+      )
+    );
+  };
+
+  const getBoards = () =>
+    dispatch(
+      actionCreators.getItem(`catalyzer/boards`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setBoards(data.boards));
+        }
+        if (!success) message.info("Request Failied!");
+      })
+    );
+
+  const getLists = () =>
+    dispatch(
+      actionCreators.getItem(`catalyzer/lists`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setCanvasLists(data.lists));
+          updateObject(data.lists);
+        }
+        if (!success) message.info("Request Failied!");
+      })
+    );
+
+  const dashboardBoards = () => {
+    dispatch(
+      actionCreators.getItem(`admin/boards/${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setBoards(data.boards));
+        }
+        if (!success) message.info("Request Failied!");
+      })
+    );
+  };
+
+  const dashboardLists = () => {
+    dispatch(
+      actionCreators.getItem(`admin/lists/${userId}`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setCanvasLists(data.lists));
+          updateObject(data.lists);
+        }
+        if (!success) message.info("Request Failied!");
+      })
+    );
+  };
+
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+    if (!destination) {
+      return;
+    }
+
+    dispatch(
+      actionCreators.dragCardWithInList(
+        source.droppableId,
+        destination.droppableId,
+        source.index,
+        destination.index,
+        draggableId
+      )
+    );
+
+    const newDestList = canvas_lists.find(
+      (el) => el._id === destination.droppableId
+    );
+    const newSrcList = canvas_lists.find((el) => el._id === source.droppableId);
+
+    dispatch(
+      actionCreators.cardIndexUpdate(
+        source.droppableId,
+        destination.droppableId,
+        newSrcList,
+        newDestList,
+        () => {
+          getLists();
+        }
+      )
+    );
+  };
+  return (
+    <div className="canvas-container">
+      <Helmet>
+        <title>Lean Canvas</title>
+      </Helmet>
+      {roles.includes(userRole) ? (
+        <StartupNavbar data={data} history={history} />
+      ) : null}
+      {roles.includes(userRole) ? <div style={{ marginTop: "2rem" }} /> : null}
+      <div className="lean-header-container">
+        <CanvasDropDown
+          setCanvasBoardId={setCanvasBoardId}
+          boardId={canvasBoardId}
+          setBoardName={setBoardName}
+          boardName={boardName}
+          getLists={getLists}
+          roles={roles}
+          userRole={userRole}
+        />
+        {loading ? (
+          <img src={svg} style={{ height: "30px", width: "30px" }} />
+        ) : null}
+      </div>
+      <Row gutter={[16, 16]} className="row">
+        <Col
+          style={{
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
+          <div className="col-1">
+            {col1.map((r) => (
+              <Column1
+                key={r._id}
+                id={r._id}
+                title={r.name}
+                placeholderTxt={r.placeholderTxt}
+                input={input}
+                show={show}
+                hide={hide}
+                activeList={activeList}
+                cardName={cardName}
+                cards={r.cards}
+                setCardName={setCardName}
+                addCard={addCard}
+                deleteCard={deleteCard}
+                roles={roles}
+                userRole={userRole}
+              />
+            ))}
+          </div>
+        </Col>
+        <Col>
+          {col2.map((r) => (
+            <Column2
+              key={r._id}
+              id={r._id}
+              title={r.name}
+              placeholderTxt={r.placeholderTxt}
+              input={input}
+              show={show}
+              hide={hide}
+              activeList={activeList}
+              cardName={cardName}
+              setCardName={setCardName}
+              cards={r.cards}
+              addCard={addCard}
+              deleteCard={deleteCard}
+              roles={roles}
+              userRole={userRole}
+            />
+          ))}
+        </Col>
+        <Col>
+          <div className="col-1">
+            {col3.map((r) => (
+              <Column1
+                key={r._id}
+                id={r._id}
+                title={r.name}
+                placeholderTxt={r.placeholderTxt}
+                input={input}
+                show={show}
+                hide={hide}
+                activeList={activeList}
+                cardName={cardName}
+                setCardName={setCardName}
+                cards={r.cards}
+                addCard={addCard}
+                deleteCard={deleteCard}
+                roles={roles}
+                userRole={userRole}
+              />
+            ))}
+          </div>
+        </Col>
+        <Col>
+          {col4.map((r) => (
+            <Column2
+              key={r._id}
+              id={r._id}
+              title={r.name}
+              placeholderTxt={r.placeholderTxt}
+              input={input}
+              show={show}
+              hide={hide}
+              activeList={activeList}
+              cardName={cardName}
+              setCardName={setCardName}
+              cards={r.cards}
+              addCard={addCard}
+              deleteCard={deleteCard}
+              roles={roles}
+              userRole={userRole}
+            />
+          ))}
+        </Col>
+        <Col>
+          <div className="col-1">
+            {col5.map((r) => (
+              <Column1
+                key={r._id}
+                id={r._id}
+                title={r.name}
+                placeholderTxt={r.placeholderTxt}
+                input={input}
+                show={show}
+                hide={hide}
+                activeList={activeList}
+                cardName={cardName}
+                setCardName={setCardName}
+                cards={r.cards}
+                addCard={addCard}
+                deleteCard={deleteCard}
+                roles={roles}
+                userRole={userRole}
+              />
+            ))}
+          </div>
+        </Col>
+      </Row>
+      <Row gutter={[16, 16]} className="row">
+        {col6.map((r) => (
+          <Column3
+            key={r._id}
+            id={r._id}
+            title={r.name}
+            placeholderTxt={r.placeholderTxt}
+            input={input}
+            show={show}
+            hide={hide}
+            activeList={activeList}
+            cardName={cardName}
+            setCardName={setCardName}
+            cards={r.cards}
+            addCard={addCard}
+            deleteCard={deleteCard}
+            roles={roles}
+            userRole={userRole}
+          />
+        ))}
+      </Row>
+    </div>
+  );
 };
 
 export default withRouter(LeanCanvas);

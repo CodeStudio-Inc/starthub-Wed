@@ -17,10 +17,12 @@ import ReportRevenue from "./modals/ReportRevenue";
 import RevenueTable from "./modals/RevenueTable";
 import LoanApplication from "./modals/LoanApplication";
 import Diagnostics from "../../Admin/Startups/Diagnostics";
+import DrawerModal from "../../ModalUI/DrawerModal";
 import "./MetricsStyles.css";
 const Metrics = ({ visible }) => {
-  const [open, setOpen] = React.useState(false);
   const [year, setYear] = React.useState("");
+  const [openTableModal, setOpenTableModal] = React.useState(false);
+  const [openReportModal, setOpenReportModal] = React.useState(false);
   const [revenueTable, setRevenueTable] = React.useState(false);
   const [loanApplication, setLoanApplication] = React.useState(false);
   const { revenue, loader } = useSelector((state) => state.admin);
@@ -64,6 +66,12 @@ const Metrics = ({ visible }) => {
     dispatch(actionCreators.filterStartupRevenue(year));
     setYear("");
   };
+
+  const openRevenueTable = () => setOpenTableModal(true);
+  const closeRevenueTable = () => setOpenTableModal(false);
+
+  const openRevenueReport = () => setOpenReportModal(true);
+  const closeRevenueReport = () => setOpenReportModal(false);
 
   const sortRevenue = React.useMemo(() => {
     return revenue.sort(({ date: a }, { date: b }) =>
@@ -249,26 +257,35 @@ const Metrics = ({ visible }) => {
 
   return (
     <div className="metrics-container">
-      {open ? (
+      {/* {open ? (
         <ModalUI setClose={setOpen}>
           <ReportRevenue setOpen={setOpen} />
         </ModalUI>
-      ) : null}
-      {revenueTable ? (
-        <ModalUI setClose={setRevenueTable}>
-          <RevenueTable
-            revenue={sortRevenue}
-            columns={columns}
-            setOpen={setRevenueTable}
-            svg={svg}
-            dispatch={dispatch}
-            username={username}
-            actionCreators={actionCreators}
-            revenueTotal={revenueTotal}
-            tableRef={tableRef}
-          />
-        </ModalUI>
-      ) : null}
+      ) : null} */}
+      <DrawerModal
+        open={openReportModal}
+        close={closeRevenueReport}
+        title="Report Revenue"
+      >
+        <ReportRevenue close={closeRevenueReport} />
+      </DrawerModal>
+      <DrawerModal
+        open={openTableModal}
+        close={closeRevenueTable}
+        title="Revenue Table"
+      >
+        <RevenueTable
+          revenue={sortRevenue}
+          columns={columns}
+          svg={svg}
+          dispatch={dispatch}
+          username={username}
+          actionCreators={actionCreators}
+          revenueTotal={revenueTotal}
+          tableRef={tableRef}
+        />
+      </DrawerModal>
+
       {loanApplication ? (
         <ModalUI setClose={setLoanApplication}>
           <LoanApplication setOpen={setLoanApplication} />
@@ -295,10 +312,8 @@ const Metrics = ({ visible }) => {
       ) : (
         <div className="revenue">
           <div className="graph-row">
-            <button onClick={() => setOpen(true)}>Report Revenue</button>
-            <button onClick={() => setRevenueTable(true)}>
-              View Reported Revenue
-            </button>
+            <button onClick={openRevenueReport}>Report Revenue</button>
+            <button onClick={openRevenueTable}>View Reported Revenue</button>
           </div>
           <h3>{revenueTotal.year} Revenue Reporting Graph</h3>
           <div className="search-box-row">

@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Profile from "./Profile";
-import EditProfile from "./EditProfile";
-import { ModalUI } from "../../../Paths";
+import Profile from "../Startups/modals/Profile";
+import EditProfile from "../Startups/modals/EditProfile";
+import { ModalUI } from "../../Paths";
 import { message } from "antd";
 
 const Navbar = ({ data, history }) => {

@@ -35,9 +35,11 @@ const Objective = ({
   const [description, setDescription] = React.useState(r.description);
 
   const { loading } = useSelector((state) => state.requests);
-  const { username } = useSelector((state) => state.auth);
+  const { username, userRole } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
+
+  const roles = ["team lead", "team member"];
 
   const editObjectiveDescription = (id) => {
     const data = {
@@ -135,47 +137,49 @@ const Objective = ({
             }}
           />
           <p>
-            last changed {username} {moment(r.updatedAt).fromNow()}
+            last changed by {username} {moment(r.updatedAt).fromNow()}
           </p>
         </div>
-        <div className="objective-card-header-row">
-          <Popover title="Push to next quarter">
-            <RightCircleOutlined
-              onClick={() => pushToNextQuarter(r._id)}
-              style={{
-                fontSize: "15px",
-                color: "rgba(0, 0, 0, 0.5)",
-                background: "none",
-              }}
-            />
-          </Popover>
-          <Popover title="Edit objective">
-            <EditIcon
-              onClick={() => showEditObjective(r._id)}
-              style={{
-                fontSize: "15px",
-                color: "rgba(0, 0, 0, 0.5)",
-              }}
-            />
-          </Popover>
-          <Popover title="Delete Objective">
-            <DeleteOutlineIcon
-              onClick={() => deleteObjective(r._id)}
-              style={{
-                fontSize: "15px",
-                color: "rgba(0, 0, 0, 0.5)",
-              }}
-            />
-          </Popover>
-          {progressBtn && activeCardId === r._id ? (
-            <button onClick={() => saveObjectiveChanges(r._id)}>
-              save changes
-            </button>
-          ) : null}
-          {loading && activeCardId === r._id ? (
-            <img style={{ height: "30px", width: "30px" }} src={svg} />
-          ) : null}
-        </div>
+        {roles.includes(userRole) ? null : (
+          <div className="objective-card-header-row">
+            <Popover title="Push to next quarter">
+              <RightCircleOutlined
+                onClick={() => pushToNextQuarter(r._id)}
+                style={{
+                  fontSize: "15px",
+                  color: "rgba(0, 0, 0, 0.5)",
+                  background: "none",
+                }}
+              />
+            </Popover>
+            <Popover title="Edit objective">
+              <EditIcon
+                onClick={() => showEditObjective(r._id)}
+                style={{
+                  fontSize: "15px",
+                  color: "rgba(0, 0, 0, 0.5)",
+                }}
+              />
+            </Popover>
+            <Popover title="Delete Objective">
+              <DeleteOutlineIcon
+                onClick={() => deleteObjective(r._id)}
+                style={{
+                  fontSize: "15px",
+                  color: "rgba(0, 0, 0, 0.5)",
+                }}
+              />
+            </Popover>
+            {progressBtn && activeCardId === r._id ? (
+              <button onClick={() => saveObjectiveChanges(r._id)}>
+                save changes
+              </button>
+            ) : null}
+            {loading && activeCardId === r._id ? (
+              <img style={{ height: "30px", width: "30px" }} src={svg} />
+            ) : null}
+          </div>
+        )}
       </div>
       <div className="objective-card-header">
         {editObjective && activeCardId === r._id ? (
@@ -224,7 +228,13 @@ const Objective = ({
           hideAddKeyresult={hideAddKeyresult}
         />
       ) : (
-        <div className="add-result-row" onClick={() => showAddKeyresult(r._id)}>
+        <div
+          className="add-result-row"
+          onClick={() => showAddKeyresult(r._id)}
+          style={{
+            visibility: roles.includes(userRole) ? "hidden" : "visible",
+          }}
+        >
           <AddRoundedIcon
             style={{
               fontSize: "20PX",
