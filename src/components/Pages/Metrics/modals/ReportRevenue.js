@@ -6,7 +6,7 @@ import { Spin } from "antd";
 import CloseIcon from "@mui/icons-material/Close";
 import moment from "moment";
 
-const ReportRevenue = ({ setOpen }) => {
+const ReportRevenue = ({ close }) => {
   const [state, setState] = React.useState({
     month_revenue: "",
     month_expense: "",
@@ -61,6 +61,7 @@ const ReportRevenue = ({ setOpen }) => {
   return (
     <div className="report-modal-container">
       <div className="report-container-content">
+        {message ? <p style={{ color: "#37561b" }}>{message}</p> : null}
         <div className="label">
           <h1>Monthly Reporting {username}</h1>
           <h4>
@@ -222,12 +223,11 @@ const ReportRevenue = ({ setOpen }) => {
               color: "#fff",
             }}
             disabled={loader ? true : false}
-            onClick={() => setOpen(false)}
+            onClick={close}
           >
             cancel
           </button>
         </div>
-        {message ? <p>{message}</p> : null}
       </div>
     </div>
   );

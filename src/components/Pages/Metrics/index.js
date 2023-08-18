@@ -267,7 +267,7 @@ const Metrics = ({ visible }) => {
         close={closeRevenueReport}
         title="Report Revenue"
       >
-        <ReportRevenue />
+        <ReportRevenue close={closeRevenueReport} />
       </DrawerModal>
       <DrawerModal
         open={openTableModal}
