@@ -54,7 +54,7 @@
   flex-direction: column;
   white-space: break-spaces;
   word-wrap: break-word;
-  padding: 10px;
+  padding: 5px;
   min-height: 30rem;
   width: 14rem;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -82,6 +82,7 @@
   word-wrap: break-word;
   min-height: 14rem;
   width: 14rem;
+  padding: 5px;
 }
 
 .col-2 {

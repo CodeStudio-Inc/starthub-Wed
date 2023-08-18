@@ -11,7 +11,7 @@ import moment from "moment";
 import MemberSelector from "./MemberSelector";
 import Members from "./Members";
 
-const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
+const Keyresult = ({ open, closeModal, keyresult, setPayload, userId }) => {
   const { keyResult, startDate, objId, _id } = keyresult;
   const [tasks, setTasks] = useState([]);
   const [members, setMembers] = useState([]);
@@ -32,6 +32,8 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
   }, [keyresult]);
 
   const dispatch = useDispatch();
+
+  const roles = ["team lead", "team member"];
 
   const handleChange = ({ target: { value } }) => {
     setT(value);
@@ -142,6 +144,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
             addMember={addMember}
             loading={loading}
             svg={svg}
+            userId={userId}
           />
         )}
         <div className="keyresult-modal-row"></div>
@@ -150,7 +153,7 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
           value={t}
           onChange={handleChange}
           onKeyUp={onKeyUp}
-          disabled={loading}
+          disabled={userId ? true : loading}
         />
         <h4>Tasks</h4>
         <Progress
@@ -175,14 +178,16 @@ const Keyresult = ({ open, closeModal, keyresult, setPayload }) => {
               label={r.task}
               checked={r.check}
               onChange={() => updateKeyresultsStatus(r._id)}
-              disabled={loading}
+              disabled={userId ? true : loading}
             />
-            <p style={{ margin: 0 }} onClick={() => onRemove(r._id)}>
-              remove task
-            </p>
+            {userId ? null : (
+              <p style={{ margin: 0 }} onClick={() => onRemove(r._id)}>
+                remove task
+              </p>
+            )}
           </FormGroup>
         ))}
-        <button onClick={addTask}>save changes</button>
+        {userId ? null : <button onClick={addTask}>save changes</button>}
         {loading ? (
           <img style={{ height: "30px", width: "30px" }} src={svg} />
         ) : null}

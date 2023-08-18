@@ -206,6 +206,7 @@ const OKROverview = ({ location, history }) => {
         closeModal={closeModal}
         keyresult={selectedKeyresult}
         setPayload={setPayload}
+        userId={userId}
       />
       <Tabs
         style={{ width: "100%" }}

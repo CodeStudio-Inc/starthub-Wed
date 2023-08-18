@@ -28,6 +28,7 @@ import Column2 from "./Column2";
 import Column3 from "./Column3";
 import CanvasDropDown from "./CanvasDropDown";
 import "./LeanCanvasStyles.css";
+import "antd/dist/antd.css";
 const LeanCanvas = ({ location, history }) => {
   const [canvasBoardId, setCanvasBoardId] = React.useState();
   const [boardName, setBoardName] = React.useState();
@@ -280,7 +281,13 @@ const LeanCanvas = ({ location, history }) => {
         ) : null}
       </div>
       <Row gutter={[16, 16]} className="row">
-        <Col>
+        <Col
+          style={{
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
           <div className="col-1">
             {col1.map((r) => (
               <Column1

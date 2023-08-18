@@ -9,6 +9,7 @@ const MemberSelector = ({
   updatedMembersArray,
   svg,
   loading,
+  userId,
 }) => {
   const { category } = useSelector((state) => state.auth);
 
@@ -34,6 +35,7 @@ const MemberSelector = ({
         placeholder="add members"
         onChange={handleSelectChange}
         optionLabelProp="label"
+        disabled={userId ? true : false}
       >
         {items.map((m) => (
           <Option value={m} label={m} key={Math.random()}>
@@ -43,9 +45,11 @@ const MemberSelector = ({
           </Option>
         ))}
       </Select>
-      <p onClick={addMember}>
-        {members?.length > 1 ? "add members" : "add member"}
-      </p>
+      {userId ? null : (
+        <p onClick={addMember}>
+          {members?.length > 1 ? "add members" : "add member"}
+        </p>
+      )}
       {loading ? (
         <img style={{ height: "30px", widith: "30px" }} src={svg} />
       ) : null}
