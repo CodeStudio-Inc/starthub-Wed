@@ -49,6 +49,8 @@ const Quarter = ({
 
   const dispatch = useDispatch();
 
+  const roles = ["team lead", "team member"];
+
   const addObjective = () => {
     const quarter = getCurrentQuarter();
     const data = {
@@ -106,7 +108,7 @@ const Quarter = ({
           hideProgressBtn={hideProgressBtn}
         />
       ))}
-      {tab === quarter ? (
+      {!roles.includes(userRole) && tab === quarter ? (
         <AddObjective
           objective={objective}
           hideAddObjective={hideAddObjective}

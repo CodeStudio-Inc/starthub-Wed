@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators, svg } from "../../Paths";
+import { actionCreators, svg, StartupNavbar } from "../../Paths";
 import { message } from "antd";
 import { Helmet } from "react-helmet";
 import Accordion from "@mui/material/Accordion";
@@ -29,7 +29,6 @@ import BusinessModal from "../../Pages/StartupProfile/components/BusinessModal";
 import Customer from "../../Pages/StartupProfile/components/Customer";
 import Founders from "../../Pages/StartupProfile/components/Founders";
 
-import Navbar from "./modals/Navbar";
 import "../../Pages/StartupProfile/Styles.css";
 const Profile = ({ location, history }) => {
   const { profile, loading } = useSelector((state) => state.profile);
@@ -752,7 +751,7 @@ const Profile = ({ location, history }) => {
       <Helmet>
         <title>{location?.state?.data?.username}</title>
       </Helmet>
-      <Navbar data={location?.state?.data} history={history} />
+      <StartupNavbar data={location?.state?.data} history={history} />
       {/* <div className="profile-content">
         <div className="profile-content-header">
           <div className="startup-avatar">

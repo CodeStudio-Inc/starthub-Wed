@@ -17,6 +17,8 @@ const Column1 = ({
   setCardName,
   addCard,
   deleteCard,
+  roles,
+  userRole,
 }) => {
   return (
     <div className="col-2-borderless">
@@ -26,11 +28,17 @@ const Column1 = ({
         <div className="col-card" key={c._id}>
           <h5>{i == 0 ? 1 : incrementValue(i)}. </h5>
           <h3>{c.name}</h3>
-          <CancelIcon
-            style={{ fontSize: "20px", color: "red", alignSelf: "flex-start" }}
-            className="icon"
-            onClick={() => deleteCard(id, c._id)}
-          />
+          {roles.includes(userRole) ? null : (
+            <CancelIcon
+              style={{
+                fontSize: "20px",
+                color: "red",
+                alignSelf: "flex-start",
+              }}
+              className="icon"
+              onClick={() => deleteCard(id, c._id)}
+            />
+          )}
         </div>
       ))}
       {input && activeList === id ? (
@@ -45,7 +53,8 @@ const Column1 = ({
           />
           <h5 onClick={() => addCard(id)}>save</h5>
         </div>
-      ) : (
+      ) : null}
+      {input || roles.includes(userRole) ? null : (
         <AddCircleIcon
           style={{ fontSize: "20px", color: "#37561b" }}
           onClick={() => show(id)}

@@ -77,6 +77,7 @@ const LeanCanvas = ({ location, history }) => {
   );
 
   const show = (id) => {
+    if (roles.includes(userRole)) return;
     setInput(true);
     setActiveList(id);
   };
@@ -296,6 +297,8 @@ const LeanCanvas = ({ location, history }) => {
                 setCardName={setCardName}
                 addCard={addCard}
                 deleteCard={deleteCard}
+                roles={roles}
+                userRole={userRole}
               />
             ))}
           </div>
@@ -316,6 +319,8 @@ const LeanCanvas = ({ location, history }) => {
               cards={r.cards}
               addCard={addCard}
               deleteCard={deleteCard}
+              roles={roles}
+              userRole={userRole}
             />
           ))}
         </Col>
@@ -336,6 +341,8 @@ const LeanCanvas = ({ location, history }) => {
                 cards={r.cards}
                 addCard={addCard}
                 deleteCard={deleteCard}
+                roles={roles}
+                userRole={userRole}
               />
             ))}
           </div>
@@ -356,6 +363,8 @@ const LeanCanvas = ({ location, history }) => {
               cards={r.cards}
               addCard={addCard}
               deleteCard={deleteCard}
+              roles={roles}
+              userRole={userRole}
             />
           ))}
         </Col>
@@ -376,6 +385,8 @@ const LeanCanvas = ({ location, history }) => {
                 cards={r.cards}
                 addCard={addCard}
                 deleteCard={deleteCard}
+                roles={roles}
+                userRole={userRole}
               />
             ))}
           </div>
@@ -397,6 +408,8 @@ const LeanCanvas = ({ location, history }) => {
             cards={r.cards}
             addCard={addCard}
             deleteCard={deleteCard}
+            roles={roles}
+            userRole={userRole}
           />
         ))}
       </Row>

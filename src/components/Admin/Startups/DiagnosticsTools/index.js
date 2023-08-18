@@ -4,7 +4,7 @@ import MultipleStepForm from "./MultipleStepForm";
 import { FormStep } from "./MultipleStepForm";
 import { Helmet } from "react-helmet";
 import { useSelector, useDispatch } from "react-redux";
-import { actionCreators, svg } from "../../../Paths";
+import { actionCreators, svg, StartupNavbar } from "../../../Paths";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -15,7 +15,6 @@ import Select from "@mui/material/Select";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 
-import Navbar from "../modals/Navbar";
 import "./Style.css";
 const Diagnostics = ({ location, history }) => {
   const [selected, setSelected] = React.useState("");
@@ -55,7 +54,7 @@ const Diagnostics = ({ location, history }) => {
   if (!diagnostic.length)
     return (
       <div className="diagnostics-container">
-        <Navbar data={data} history={history} />
+        <StartupNavbar data={data} history={history} />
         <div className="attach-diagnostics">
           <h3>Add diagnostic tools</h3>
           <FormControl sx={{ m: 1, width: "30%", minHeight: 40 }}>
@@ -94,7 +93,7 @@ const Diagnostics = ({ location, history }) => {
         <Helmet>
           <title>Diagnostics</title>
         </Helmet>
-        <Navbar data={data} history={history} />
+        <StartupNavbar data={data} history={history} />
         <div className="steps">
           <h2 style={{ marginTop: "2rem" }}>Business Diagnostics</h2>
           <MultipleStepForm

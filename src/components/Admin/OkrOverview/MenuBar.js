@@ -12,7 +12,7 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import DownloadIcon from "@mui/icons-material/Download";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-const MenuBar = ({ handleOpenDialogue, setPayload }) => {
+const MenuBar = ({ handleOpenDialogue, setPayload, userId }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [year, setYear] = React.useState("");
 
@@ -21,15 +21,37 @@ const MenuBar = ({ handleOpenDialogue, setPayload }) => {
   const dispatch = useDispatch();
 
   const searchOkrs = (e) => {
+    if (userId) return searchDashboardOkrs(e);
     if (!year) return;
     if (e.key === "Enter") {
       dispatch(
         actionCreators.searchItem(`catalyzer/filter?year=${year}`, (res) => {
           const { success, data, error } = res;
-          setPayload(data.objs);
-          dispatch(actionCreators.setObjectives(data.objs));
-          setYear("");
+          if (success) {
+            setPayload(data.objs);
+            dispatch(actionCreators.setObjectives(data.objs));
+            setYear("");
+          }
         })
+      );
+    }
+  };
+
+  const searchDashboardOkrs = (e) => {
+    if (!year) return;
+    if (e.key === "Enter") {
+      dispatch(
+        actionCreators.searchItem(
+          `catalyzer/dashboard-okrs?userId=${userId}&year=${year}`,
+          (res) => {
+            const { success, data, error } = res;
+            if (success) {
+              setPayload(data.objs);
+              dispatch(actionCreators.setObjectives(data.objs));
+              setYear("");
+            }
+          }
+        )
       );
     }
   };
@@ -62,14 +84,16 @@ const MenuBar = ({ handleOpenDialogue, setPayload }) => {
               onChange={(e) => setYear(e.target.value)}
               disabled={loading}
             />
-            <MoreVertIcon
-              id="basic-button"
-              aria-controls={openMenu ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={openMenu ? "true" : undefined}
-              style={{ fontSize: "30px", color: "rgba(0,0,0,0.4)" }}
-              onClick={handleMenueClick}
-            />
+            {userId ? null : (
+              <MoreVertIcon
+                id="basic-button"
+                aria-controls={openMenu ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMenu ? "true" : undefined}
+                style={{ fontSize: "30px", color: "rgba(0,0,0,0.4)" }}
+                onClick={handleMenueClick}
+              />
+            )}
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
