@@ -1,207 +1,83 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Stack from "@mui/material/Stack";
-import MultipleStepForm from "./MultipleStepForm";
-import { FormStep } from "./MultipleStepForm";
-import {
-  teams,
-  vision,
-  proposition,
-  product,
-  market,
-  business,
-  investment,
-} from "./Steps";
-import { actionCreators, svg } from "../../Paths";
-import ReactGA from "react-ga";
-import { Helmet } from "react-helmet";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import LinearProgress from "@mui/material/LinearProgress";
+import * as React from "react";
 import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
+import { useTheme } from "@mui/material/styles";
+import MobileStepper from "@mui/material/MobileStepper";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
-import "./Diagnostics.css";
-import { message } from "antd";
-const Diagnostics = () => {
-  const [messageApi, contextHolder] = message.useMessage();
-  const [loader, setLoader] = React.useState(false);
+import { steps } from "../../utilities/json";
 
-  const { userId, diagnostics } = useSelector((state) => state.auth);
-  const loading = useSelector((state) => state.requests.loading);
-  const { payload } = useSelector((state) => state.diagnostics);
+export default function TextMobileStepper() {
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const maxSteps = steps.length;
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
-
-  useEffect(() => {
-    updateDiagnosticsObject();
-  }, [diagnostics]);
-
-  const getDiagnostics = () => dispatch(actionCreators.getUserDiagnostics());
-
-  const updateDiagnosticsObject = () => {
-    const newPayload = [
-      ...diagnostics?.map((d) => {
-        const { score, steps, ...rest } = d;
-        return {
-          ...rest,
-          score: score,
-          steps: [
-            ...steps?.map((s) => {
-              const { checked, ...step } = s;
-              return {
-                ...step,
-                checked: checked ? checked : false,
-              };
-            }),
-          ],
-        };
-      }),
-    ];
-    return dispatch(actionCreators.diagnosticsPayload(newPayload));
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const successMessage = () => {
-    messageApi.open({
-      type: "success",
-      content: "Diagnostics Update successful",
-      className: "custom-class",
-      style: {
-        marginTop: "20vh",
-      },
-    });
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleChange = (toolIndex, stepIndex) => {
-    let paylod = [...payload];
-
-    const step = paylod[toolIndex].steps[stepIndex];
-    if (step.checked === true) {
-      paylod[toolIndex].steps[stepIndex] = {
-        ...paylod[toolIndex].steps[stepIndex],
-        checked: false,
-      };
-    }
-    if (step.checked === false) {
-      paylod[toolIndex].steps[stepIndex] = {
-        ...paylod[toolIndex].steps[stepIndex],
-        checked: true,
-      };
-    }
-    paylod[toolIndex].score =
-      (paylod[toolIndex].steps.filter((s) => s.checked).length /
-        paylod[toolIndex].steps.length) *
-      100;
-    dispatch(actionCreators.diagnosticsPayload(paylod));
-  };
-
-  const handleStepsSubmit = () => {
-    setLoader(true);
-    dispatch(
-      actionCreators.updateUserDiagnostics(payload, (res) => {
-        const { success } = res;
-        if (success) {
-          setLoader(false);
-          successMessage();
-          getDiagnostics();
-        }
-        if (!success) {
-          setLoader(false);
-          message.info("Sorry, Failed to update diagnostics score");
-        }
-      })
-    );
-  };
-
-  if (!payload.length)
-    return (
-      <div className="diagnostics-container">
-        <div className="steps">
-          <h2 style={{ alignSelf: "center" }}>User has no Diagnostics set</h2>
-        </div>
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "1rem",
+      }}
+    >
+      <div className="steps-header">
+        <h2>{steps[activeStep].title}</h2>
       </div>
-    );
-  else
-    return (
-      <div className="diagnostics-container">
-        <Helmet>
-          <title>Diagnostics</title>
-        </Helmet>
-        {contextHolder}
-        <div className="steps">
-          <h2>Business Diagnostics</h2>
-          <MultipleStepForm
-            initialValues={{
-              teams: "",
-              vision: "",
-              proposition: "",
-              product: "",
-              market: "",
-              business: "",
-              investment: "",
-            }}
-            onSubmit={handleStepsSubmit}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "flex-start",
+
+          width: "100%",
+          height: "80vh",
+        }}
+      >
+        {/* <h4>{steps[activeStep].description}</h4> */}
+      </Box>
+      <MobileStepper
+        variant="text"
+        steps={maxSteps}
+        position="static"
+        activeStep={activeStep}
+        nextButton={
+          <Button
+            size="small"
+            onClick={handleNext}
+            disabled={activeStep === maxSteps - 1}
           >
-            {payload?.map((d, index) => (
-              <FormStep
-                stepName={d.title}
-                onSubmit={() => console.log("Step 1 submit")}
-              >
-                <div className="step">
-                  <div className="progress-bar">
-                    <Box
-                      sx={{
-                        width: "100%",
-                        alignSelf: "center",
-                        marginRight: "0.5rem",
-                      }}
-                    >
-                      <button
-                        className="save-steps"
-                        onClick={handleStepsSubmit}
-                        disabled={loader}
-                      >
-                        save progress
-                      </button>
-                      <LinearProgress
-                        variant="determinate"
-                        value={d.score}
-                        color="primary"
-                      />
-                    </Box>
-                    <h5>{Math.round(d.score)}%</h5>
-                  </div>
-                  <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                    {d?.steps
-                      ?.sort((a, b) => b.stepNo - a.stepNo)
-                      .map((s, i) => (
-                        <FormGroup key={i}>
-                          <FormControlLabel
-                            onChange={() => handleChange(index, i)}
-                            checked={s.checked ? s.checked : null}
-                            control={<Checkbox />}
-                            label={s.step}
-                          />
-                        </FormGroup>
-                      ))}
-                  </Stack>
-                </div>
-              </FormStep>
-            ))}
-          </MultipleStepForm>
-          {loader ? (
-            <span className="loader">
-              <img src={svg} style={{ width: "50px", height: "50px" }} />
-            </span>
-          ) : null}
-        </div>
-      </div>
-    );
-};
-
-export default Diagnostics;
+            Next
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}
+          </Button>
+        }
+        backButton={
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
+            Back
+          </Button>
+        }
+      />
+    </Box>
+  );
+}
