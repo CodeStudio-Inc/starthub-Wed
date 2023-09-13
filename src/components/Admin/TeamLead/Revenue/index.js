@@ -43,19 +43,9 @@ const Revenue = () => {
 
   const [open, setOpen] = React.useState(false);
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-    setNewRevState({
-      id: "",
-      month_revenue: "",
-      month_expense: "",
-      date: "",
-      month: "",
-    });
-  };
+  const showDrawer = () => setOpen(true);
+
+  const onClose = () => setOpen(false);
 
   React.useEffect(() => {
     getRevenue();

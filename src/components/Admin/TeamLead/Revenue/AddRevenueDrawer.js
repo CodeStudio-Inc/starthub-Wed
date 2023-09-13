@@ -34,6 +34,7 @@ const AddRevenueDrawer = ({
     { month: "September", value: "Sep" },
     { month: "October", value: "Oct" },
     { month: "November", value: "Nov" },
+    { month: "December", value: "Dec" },
   ];
 
   const options = [
