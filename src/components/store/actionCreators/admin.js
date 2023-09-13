@@ -909,7 +909,7 @@ export const addRevenue = (
     };
 
     axios
-      .post(`http://localhost:8080/admin/revenue`, data)
+      .post(`admin/revenue`, data)
       .then((res) => {
         dispatch(stopLoader());
         dispatch(setRevenue(res.data.revenue));
