@@ -57,7 +57,7 @@ const MenuBar = ({ handleOpenDialogue, setPayload, userId }) => {
   };
 
   const openMenu = Boolean(anchorEl);
-  const handleMenueClick = (event) => {
+  const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleMenuClose = (arg) => {
@@ -91,7 +91,7 @@ const MenuBar = ({ handleOpenDialogue, setPayload, userId }) => {
                 aria-haspopup="true"
                 aria-expanded={openMenu ? "true" : undefined}
                 style={{ fontSize: "30px", color: "rgba(0,0,0,0.4)" }}
-                onClick={handleMenueClick}
+                onClick={handleMenuClick}
               />
             )}
             <Menu
