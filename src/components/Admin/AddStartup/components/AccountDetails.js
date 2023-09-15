@@ -7,7 +7,7 @@ const AccountDetails = ({
   emailcheck,
   handleEmailChange,
 }) => {
-  const programs = ["SheTechs", "OIP"];
+  const programs = ["SheTechs", "OIP", "Greenovation"];
 
   return (
     <div className="input-modal-column">
@@ -55,6 +55,7 @@ const AccountDetails = ({
             <option value="catalyzer">Catalyzer</option>
             <option value="OIP">OIP</option>
             <option value="SheTechs">SheTechs</option>
+            <option value="Greenovation">Greenovation</option>
           </select>
         </div>
       </div>
