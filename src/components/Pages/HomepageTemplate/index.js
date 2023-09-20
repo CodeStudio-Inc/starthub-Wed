@@ -74,6 +74,7 @@ const HomepageTemplate = (props) => {
     getProfile();
     getBoards();
     getLists();
+    getDiagnostics();
     if (current_date >= tokenExpiration) {
       dispatch(actionCreators.removeUser());
       props.history.push("/");
@@ -91,6 +92,8 @@ const HomepageTemplate = (props) => {
     );
   };
   const getProfile = () => dispatch(actionCreators.getProfile());
+
+  const getDiagnostics = () => dispatch(actionCreators.getDiagnostics());
 
   const getBoards = () =>
     dispatch(

@@ -1,207 +1,375 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Stack from "@mui/material/Stack";
-import MultipleStepForm from "./MultipleStepForm";
-import { FormStep } from "./MultipleStepForm";
-import {
-  teams,
-  vision,
-  proposition,
-  product,
-  market,
-  business,
-  investment,
-} from "./Steps";
-import { actionCreators, svg } from "../../Paths";
-import ReactGA from "react-ga";
-import { Helmet } from "react-helmet";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import LinearProgress from "@mui/material/LinearProgress";
+import * as React from "react";
 import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-
-import "./Diagnostics.css";
+import Card from "@mui/material/Card";
+import { useTheme } from "@mui/material/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators } from "../../Paths";
 import { message } from "antd";
-const Diagnostics = () => {
-  const [messageApi, contextHolder] = message.useMessage();
-  const [loader, setLoader] = React.useState(false);
+import MobileStepper from "@mui/material/MobileStepper";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import Checkbox from "@mui/material/Checkbox";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import PermMediaIcon from "@mui/icons-material/PermMedia";
+import GroupsIcon from "@mui/icons-material/Groups";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 
-  const { userId, diagnostics } = useSelector((state) => state.auth);
-  const loading = useSelector((state) => state.requests.loading);
+import ContentModal from "./ContentModal";
+import { steps } from "../../utilities/json";
+import { getCurrentQuarter } from "../../utilities/helpers";
+
+export default function DiagnosticsTools() {
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [description, setDescription] = React.useState("");
+  const [content, setContent] = React.useState([]);
+  const [checked, setChecked] = React.useState(true);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const { payload } = useSelector((state) => state.diagnostics);
+  const { category, userRole } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.requests);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
-
-  useEffect(() => {
-    updateDiagnosticsObject();
-  }, [diagnostics]);
-
-  const getDiagnostics = () => dispatch(actionCreators.getUserDiagnostics());
-
-  const updateDiagnosticsObject = () => {
-    const newPayload = [
-      ...diagnostics?.map((d) => {
-        const { score, steps, ...rest } = d;
-        return {
-          ...rest,
-          score: score,
-          steps: [
-            ...steps?.map((s) => {
-              const { checked, ...step } = s;
-              return {
-                ...step,
-                checked: checked ? checked : false,
-              };
-            }),
-          ],
-        };
-      }),
-    ];
-    return dispatch(actionCreators.diagnosticsPayload(newPayload));
-  };
-
-  const successMessage = () => {
-    messageApi.open({
-      type: "success",
-      content: "Diagnostics Update successful",
-      className: "custom-class",
-      style: {
-        marginTop: "20vh",
-      },
-    });
-  };
-
-  const handleChange = (toolIndex, stepIndex) => {
-    let paylod = [...payload];
-
-    const step = paylod[toolIndex].steps[stepIndex];
-    if (step.checked === true) {
-      paylod[toolIndex].steps[stepIndex] = {
-        ...paylod[toolIndex].steps[stepIndex],
-        checked: false,
-      };
+  React.useEffect(() => {
+    if (!payload.length) {
+      dispatch(actionCreators.diagnosticsPayload(steps));
     }
-    if (step.checked === false) {
-      paylod[toolIndex].steps[stepIndex] = {
-        ...paylod[toolIndex].steps[stepIndex],
-        checked: true,
-      };
-    }
-    paylod[toolIndex].score =
-      (paylod[toolIndex].steps.filter((s) => s.checked).length /
-        paylod[toolIndex].steps.length) *
-      100;
-    dispatch(actionCreators.diagnosticsPayload(paylod));
+  }, [steps]);
+
+  const maxSteps = payload.length;
+
+  const handleChange = (id, i) => {
+    const totalTasks = payload[activeStep].tasks.length;
+    payload[activeStep].tasks[i] = {
+      ...payload[activeStep].tasks[i],
+      status: !payload[activeStep].tasks[i].status,
+    };
+    let totalCheckTasks = payload[activeStep].tasks.filter((t) => t.status);
+    const percentageCovered = (totalCheckTasks.length / totalTasks) * 100;
+    payload[activeStep] = {
+      ...payload[activeStep],
+      score: Math.round(percentageCovered),
+    };
+    dispatch(actionCreators.diagnosticsPayload(payload));
   };
 
-  const handleStepsSubmit = () => {
-    setLoader(true);
+  const handleNext = () => {
     dispatch(
-      actionCreators.updateUserDiagnostics(payload, (res) => {
+      actionCreators.addDiagnostics(payload, (res) => {
         const { success } = res;
-        if (success) {
-          setLoader(false);
-          successMessage();
-          getDiagnostics();
-        }
-        if (!success) {
-          setLoader(false);
-          message.info("Sorry, Failed to update diagnostics score");
-        }
+        if (success) message.info("progress saved!");
+      })
+    );
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleFinish = () => {
+    dispatch(
+      actionCreators.addDiagnostics(payload, (res) => {
+        const { success } = res;
+        if (success) message.info("Results submitted!");
       })
     );
   };
 
-  if (!payload.length)
-    return (
-      <div className="diagnostics-container">
-        <div className="steps">
-          <h2 style={{ alignSelf: "center" }}>User has no Diagnostics set</h2>
-        </div>
-      </div>
-    );
-  else
-    return (
-      <div className="diagnostics-container">
-        <Helmet>
-          <title>Diagnostics</title>
-        </Helmet>
-        {contextHolder}
-        <div className="steps">
-          <h2>Business Diagnostics</h2>
-          <MultipleStepForm
-            initialValues={{
-              teams: "",
-              vision: "",
-              proposition: "",
-              product: "",
-              market: "",
-              business: "",
-              investment: "",
-            }}
-            onSubmit={handleStepsSubmit}
-          >
-            {payload?.map((d, index) => (
-              <FormStep
-                stepName={d.title}
-                onSubmit={() => console.log("Step 1 submit")}
-              >
-                <div className="step">
-                  <div className="progress-bar">
-                    <Box
-                      sx={{
-                        width: "100%",
-                        alignSelf: "center",
-                        marginRight: "0.5rem",
-                      }}
-                    >
-                      <button
-                        className="save-steps"
-                        onClick={handleStepsSubmit}
-                        disabled={loader}
-                      >
-                        save progress
-                      </button>
-                      <LinearProgress
-                        variant="determinate"
-                        value={d.score}
-                        color="primary"
-                      />
-                    </Box>
-                    <h5>{Math.round(d.score)}%</h5>
-                  </div>
-                  <Stack sx={{ height: "100%" }} spacing={1} direction="column">
-                    {d?.steps
-                      ?.sort((a, b) => b.stepNo - a.stepNo)
-                      .map((s, i) => (
-                        <FormGroup key={i}>
-                          <FormControlLabel
-                            onChange={() => handleChange(index, i)}
-                            checked={s.checked ? s.checked : null}
-                            control={<Checkbox />}
-                            label={s.step}
-                          />
-                        </FormGroup>
-                      ))}
-                  </Stack>
-                </div>
-              </FormStep>
-            ))}
-          </MultipleStepForm>
-          {loader ? (
-            <span className="loader">
-              <img src={svg} style={{ width: "50px", height: "50px" }} />
-            </span>
-          ) : null}
-        </div>
-      </div>
-    );
-};
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
-export default Diagnostics;
+  const setDiagnosticIcons = (icon) => {
+    switch (icon) {
+      case "partners":
+        return (
+          <GroupsIcon
+            style={{
+              fontSize: "40px",
+              color: "#91d4a1",
+              marginRight: "0.5rem",
+            }}
+          />
+        );
+      case "team":
+        return (
+          <GroupsIcon
+            style={{
+              fontSize: "40px",
+              color: "#91d4a1",
+              marginRight: "0.5rem",
+            }}
+          />
+        );
+      case "value":
+        return (
+          <VolunteerActivismIcon
+            style={{
+              fontSize: "40px",
+              color: "#91d4a1",
+              marginRight: "0.5rem",
+            }}
+          />
+        );
+      case "product":
+        return (
+          <TipsAndUpdatesIcon
+            style={{
+              fontSize: "40px",
+              color: "#91d4a1",
+              marginRight: "0.5rem",
+            }}
+          />
+        );
+      case "sales":
+        return (
+          <CurrencyExchangeIcon
+            style={{
+              fontSize: "40px",
+              color: "#91d4a1",
+              marginRight: "0.5rem",
+            }}
+          />
+        );
+      case "finance":
+        return (
+          <MonetizationOnIcon
+            style={{
+              fontSize: "40px",
+              color: "#91d4a1",
+              marginRight: "0.5rem",
+            }}
+          />
+        );
+      case "operations":
+        return (
+          <ManageAccountsIcon
+            style={{
+              fontSize: "40px",
+              color: "#91d4a1",
+              marginRight: "0.5rem",
+            }}
+          />
+        );
+      case "compliance":
+        return (
+          <ListAltIcon
+            style={{
+              fontSize: "40px",
+              color: "#91d4a1",
+              marginRight: "0.5rem",
+            }}
+          />
+        );
+      default:
+        break;
+    }
+  };
+
+  const handleAddObjective = () => {
+    const quarter = getCurrentQuarter();
+    const data = {
+      description,
+      quarter,
+      category,
+      userRole,
+    };
+    dispatch(
+      actionCreators.addItem(
+        `catalyzer/objective`,
+        data,
+        (data) => {
+          const { description } = data;
+          if (!description) return false;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setObjectives(data.objs));
+            message.info("Task successfully added to objectives");
+            setAnchorEl(null);
+            setDescription("");
+          }
+          if (!success) console.log(error);
+        }
+      )
+    );
+  };
+
+  const openMenu = Boolean(anchorEl);
+
+  const handleMenuClick = (event, step) => {
+    setAnchorEl(event.currentTarget);
+    setDescription(step.task);
+    setContent(step?.content);
+  };
+
+  const handleMenuClose = (arg) => setAnchorEl(null);
+
+  const handleShowContentModal = () => {
+    setIsModalOpen(true);
+    setAnchorEl(null);
+  };
+
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "1rem",
+      }}
+    >
+      <Box
+        sx={{ alignItems: "center", justifyContent: "center", display: "flex" }}
+      >
+        {setDiagnosticIcons(payload[activeStep]?.icon)}
+        <h2 style={{ margin: "0", color: "#91d4a1" }}>
+          {payload[activeStep]?.title}
+        </h2>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "flex-start",
+          flexDirection: "column",
+          width: "90%",
+        }}
+      >
+        {payload[activeStep]?.tasks?.map((t, i) => (
+          <Card
+            key={t.id}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+              margin: "0.5rem",
+              padding: "0.3rem",
+              backgroundColor: t.status ? "#91d4a1" : "white",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                // height: "80vh",
+              }}
+            >
+              <Checkbox
+                color="success"
+                checked={t.status}
+                onChange={() => handleChange(t.id, i)}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+              <h4 style={{ color: t.status ? "#37561b" : "black" }}>
+                {t.task}
+              </h4>
+            </Box>
+            <MoreVertIcon
+              id="basic-button"
+              aria-controls={openMenu ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={openMenu ? "true" : undefined}
+              style={{ fontSize: "30px", color: "rgba(0,0,0,0.4)" }}
+              onClick={(e) => handleMenuClick(e, t)}
+            />
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={openMenu}
+              onClose={handleMenuClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleAddObjective} disabled={loading}>
+                <ListItemIcon>
+                  <BookmarkAddIcon
+                    style={{ fontSize: "20px", color: "rgba(0,0,0,0.3)" }}
+                  />
+                </ListItemIcon>
+                Add to objectives
+              </MenuItem>
+              <MenuItem onClick={handleShowContentModal} disabled={loading}>
+                <ListItemIcon>
+                  <PermMediaIcon
+                    style={{ fontSize: "20px", color: "rgba(0,0,0,0.3)" }}
+                  />
+                </ListItemIcon>
+                View content
+              </MenuItem>
+            </Menu>
+          </Card>
+        ))}
+      </Box>
+      <MobileStepper
+        variant="text"
+        steps={maxSteps}
+        position="static"
+        activeStep={activeStep}
+        nextButton={
+          activeStep === maxSteps - 1 ? (
+            <Button
+              size="small"
+              style={{ color: "#37561b" }}
+              onClick={handleFinish}
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button
+              size="small"
+              onClick={handleNext}
+              style={{ color: "#37561b" }}
+              disabled={activeStep === maxSteps - 1}
+            >
+              Next
+              {theme.direction === "rtl" ? (
+                <KeyboardArrowLeft />
+              ) : (
+                <KeyboardArrowRight />
+              )}
+            </Button>
+          )
+        }
+        backButton={
+          <Button
+            size="small"
+            style={{ color: "#37561b" }}
+            onClick={handleBack}
+            disabled={activeStep === 0}
+          >
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
+            Back
+          </Button>
+        }
+      />
+      <ContentModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        content={content}
+      />
+    </Box>
+  );
+}
