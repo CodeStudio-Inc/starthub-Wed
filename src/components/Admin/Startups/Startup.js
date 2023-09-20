@@ -51,6 +51,8 @@ const Startup = ({ location, history }) => {
     setYear("");
   };
   const getProfile = () => dispatch(actionCreators.getProfileAdmin(data._id));
+  const getDiagnostics = () =>
+    dispatch(actionCreators.getStartupDiagnostics(data._id));
 
   const dashboardBoards = () => {
     dispatch(
@@ -100,6 +102,7 @@ const Startup = ({ location, history }) => {
     dashboardBoards();
     dashboardLists();
     getObjectives();
+    getDiagnostics();
   }, []);
 
   const sortRevenue = React.useMemo(() => {

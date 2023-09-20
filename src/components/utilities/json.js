@@ -2,16 +2,29 @@ const steps = [
   {
     title: "Co-creation with partners",
     icon: "partners",
+    score: 0,
     tasks: [
       {
         id: 1,
         status: false,
         task: "We signed an MoU with the partner.",
+        content: [
+          {
+            link: "https://www.youtube.com/embed/2O8pkybH6po",
+            title: "How to become a marketing suberhero",
+          },
+        ],
       },
       {
         id: 2,
         status: false,
         task: "We agreed on a continous collaboration with the partner beyond OIP.",
+        content: [
+          {
+            link: "https://www.youtube.com/embed/CzJUCxwz8hk",
+            title: "Creating a businsess from nothing",
+          },
+        ],
       },
       {
         id: 3,
@@ -43,6 +56,7 @@ const steps = [
   {
     title: "Teams",
     icon: "team",
+    score: 0,
     tasks: [
       {
         id: 1,
@@ -113,7 +127,8 @@ const steps = [
   },
   {
     title: "Problem, Market & Value Proposition",
-    icon: "team",
+    icon: "value",
+    score: 0,
     tasks: [
       {
         id: 1,
@@ -195,6 +210,7 @@ const steps = [
   {
     title: "Product",
     icon: "product",
+    score: 0,
     tasks: [
       {
         id: 1,
@@ -286,6 +302,7 @@ const steps = [
   {
     title: "Markting, Sales, Growth",
     icon: "sales",
+    score: 0,
     tasks: [
       {
         id: 1,
@@ -392,6 +409,7 @@ const steps = [
   {
     title: "Finance & Investment",
     icon: "finance",
+    score: 0,
     tasks: [
       {
         id: 1,
@@ -473,6 +491,7 @@ const steps = [
   {
     title: "Operations & Management",
     icon: "operations",
+    score: 0,
     tasks: [
       {
         id: 1,
@@ -554,6 +573,7 @@ const steps = [
   {
     title: "Compliance",
     icon: "compliance",
+    score: 0,
     tasks: [
       {
         id: 1,

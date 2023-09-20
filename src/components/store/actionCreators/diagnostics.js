@@ -15,15 +15,30 @@ export const setDiagnosticsPayload = (data) => {
   };
 };
 
-export const addDiagnostics = (project, title, steps, callback) => {
+export const addDiagnostics = (payload, callback) => {
   return (dispatch) => {
     const data = {
-      project,
-      title,
-      steps,
+      payload,
     };
     axios
-      .post("/auth/diagnostic", data)
+      .patch("/auth/update-diagnostics", data)
+      .then((res) => {
+        callback({ success: true });
+      })
+      .catch((error) => {
+        callback({ success: false });
+        console.log(error);
+      });
+  };
+};
+
+export const addStartupDiagnostics = (userId, payload, callback) => {
+  return (dispatch) => {
+    const data = {
+      payload,
+    };
+    axios
+      .patch(`/auth/diagnostics/${userId}`, data)
       .then((res) => {
         callback({ success: true });
       })
@@ -37,9 +52,23 @@ export const addDiagnostics = (project, title, steps, callback) => {
 export const getDiagnostics = () => {
   return (dispatch) => {
     axios
-      .get("/auth/diagnostics")
+      .get("/auth/user-diagnostics")
       .then((res) => {
-        dispatch(setDiagnostics(res.data.diagnostics));
+        dispatch(setDiagnosticsPayload(res.data.diagnostics));
+        // console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const getStartupDiagnostics = (userId) => {
+  return (dispatch) => {
+    axios
+      .get(`/auth/diagnostics/${userId}`)
+      .then((res) => {
+        dispatch(setDiagnosticsPayload(res.data.diagnostics));
         // console.log(res.data);
       })
       .catch((error) => {

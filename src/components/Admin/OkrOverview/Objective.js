@@ -140,28 +140,30 @@ const Objective = ({
             last changed by {username} {moment(r.updatedAt).fromNow()}
           </p>
         </div>
-        {roles.includes(userRole) ? null : (
-          <div className="objective-card-header-row">
-            <Popover title="Push to next quarter">
-              <RightCircleOutlined
-                onClick={() => pushToNextQuarter(r._id)}
-                style={{
-                  fontSize: "15px",
-                  color: "rgba(0, 0, 0, 0.5)",
-                  background: "none",
-                }}
-              />
-            </Popover>
-            <Popover title="Edit objective">
-              <EditIcon
-                onClick={() => showEditObjective(r._id)}
-                style={{
-                  fontSize: "15px",
-                  color: "rgba(0, 0, 0, 0.5)",
-                }}
-              />
-            </Popover>
-            <Popover title="Delete Objective">
+        <div className="objective-card-header-row">
+          <Popover title="Push to next quarter">
+            <RightCircleOutlined
+              onClick={() => pushToNextQuarter(r._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+                background: "none",
+              }}
+            />
+          </Popover>
+          <Popover title="Edit objective">
+            <EditIcon
+              onClick={() => showEditObjective(r._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Popover>
+          <Popover title="Delete Objective">
+            {loading ? (
+              <img src={svg} style={{ height: "30px", width: "30px" }} />
+            ) : (
               <DeleteOutlineIcon
                 onClick={() => deleteObjective(r._id)}
                 style={{
@@ -169,17 +171,17 @@ const Objective = ({
                   color: "rgba(0, 0, 0, 0.5)",
                 }}
               />
-            </Popover>
-            {progressBtn && activeCardId === r._id ? (
-              <button onClick={() => saveObjectiveChanges(r._id)}>
-                save changes
-              </button>
-            ) : null}
-            {loading && activeCardId === r._id ? (
-              <img style={{ height: "30px", width: "30px" }} src={svg} />
-            ) : null}
-          </div>
-        )}
+            )}
+          </Popover>
+          {progressBtn && activeCardId === r._id ? (
+            <button onClick={() => saveObjectiveChanges(r._id)}>
+              save changes
+            </button>
+          ) : null}
+          {loading && activeCardId === r._id ? (
+            <img style={{ height: "30px", width: "30px" }} src={svg} />
+          ) : null}
+        </div>
       </div>
       <div className="objective-card-header">
         {editObjective && activeCardId === r._id ? (
@@ -231,9 +233,9 @@ const Objective = ({
         <div
           className="add-result-row"
           onClick={() => showAddKeyresult(r._id)}
-          style={{
-            visibility: roles.includes(userRole) ? "hidden" : "visible",
-          }}
+          // style={{
+          //   visibility: roles.includes(userRole) ? "hidden" : "visible",
+          // }}
         >
           <AddRoundedIcon
             style={{

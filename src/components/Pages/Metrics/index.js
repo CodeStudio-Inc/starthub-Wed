@@ -257,11 +257,6 @@ const Metrics = ({ visible }) => {
 
   return (
     <div className="metrics-container">
-      {/* {open ? (
-        <ModalUI setClose={setOpen}>
-          <ReportRevenue setOpen={setOpen} />
-        </ModalUI>
-      ) : null} */}
       <DrawerModal
         open={openReportModal}
         close={closeRevenueReport}
@@ -291,21 +286,10 @@ const Metrics = ({ visible }) => {
           <LoanApplication setOpen={setLoanApplication} />
         </ModalUI>
       ) : null}
-      {/* {loader ? (
-        <ModalUI id="loader">
-          <p style={{ color: "#fff" }}>Refresing...</p>
-        </ModalUI>
-      ) : null} */}
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
       {teams.includes(category) ? null : <Cards />}
-      {/* <div className="report-revenue-btn" onClick={() => setOpen(true)}>
-        <AssessmentIcon
-          style={{ fontSize: "30px", color: "#fff", marginRight: "5px" }}
-        />
-        <h4>Report Revenue</h4>
-      </div> */}
       <div className="metric-btn-row" />
       {teams.includes(category) ? (
         <Diagnostics diagnosticTool={diagnosticTool} />
@@ -372,7 +356,7 @@ const Metrics = ({ visible }) => {
             </h4>
           </div>
           <Line data={Revenue} width={100} height={30} />
-          <Diagnostics diagnosticTool={diagnosticTool} />
+          {/* <Diagnostics diagnosticTool={diagnosticTool} /> */}
         </div>
       )}
     </div>
