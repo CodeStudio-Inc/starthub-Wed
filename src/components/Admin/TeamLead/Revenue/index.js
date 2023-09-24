@@ -356,7 +356,7 @@ const Revenue = (props) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            width: "20%",
+            width: "30%",
           }}
         >
           <Button
