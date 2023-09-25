@@ -78,28 +78,26 @@ const Keyresult = ({
             last changed by {k.updatedBy} {moment(k.updatedAt).fromNow()}
           </p>
         </div>
-        {roles.includes(userRole) ? null : (
-          <div className="keyresult-card-header-row">
-            <Popover title="Edit keyresult">
-              <EditIcon
-                onClick={() => showEditKeyresult(k._id)}
-                style={{
-                  fontSize: "15px",
-                  color: "rgba(0, 0, 0, 0.5)",
-                }}
-              />
-            </Popover>
-            <Popover title="Delete keyresult">
-              <DeleteOutlineIcon
-                onClick={() => deleteKeyresult(r._id, k._id)}
-                style={{
-                  fontSize: "15px",
-                  color: "rgba(0, 0, 0, 0.5)",
-                }}
-              />
-            </Popover>
-          </div>
-        )}
+        <div className="keyresult-card-header-row">
+          <Popover title="Edit keyresult">
+            <EditIcon
+              onClick={() => showEditKeyresult(k._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Popover>
+          <Popover title="Delete keyresult">
+            <DeleteOutlineIcon
+              onClick={() => deleteKeyresult(r._id, k._id)}
+              style={{
+                fontSize: "15px",
+                color: "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Popover>
+        </div>
       </div>
       {editkR && activeCardId === k._id ? (
         <div className="editKR-row">

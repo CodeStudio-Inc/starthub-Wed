@@ -18,24 +18,13 @@ export {
   getUserDiagnostics,
 } from "./auth";
 export {
-  getBlogs,
   getBoards,
   getListsOnBoard,
   addLeanCanvas,
   createCard,
   createAdminCard,
-  postBlog,
-  postView,
-  deleteCard,
-  archiveCard,
-  deleteBoard,
-  deleteList,
   updateList,
   updateCard,
-  archiveBoard,
-  unarchiveBoard,
-  archiveList,
-  unarchiveList,
   dragCardWithInList,
   cardIndexUpdate,
   setTeamsValue,
@@ -49,9 +38,7 @@ export {
   getValues,
   addStatement,
   getStatement,
-  archiveObjective,
   editStatement,
-  updateQuarter,
   addItem,
   getItem,
   updateItem,
@@ -121,6 +108,8 @@ export {
   addDiagnostics,
   getDiagnostics,
   diagnosticsPayload,
+  addStartupDiagnostics,
+  getStartupDiagnostics,
 } from "./diagnostics";
 
 export {

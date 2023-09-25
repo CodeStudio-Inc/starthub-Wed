@@ -133,7 +133,8 @@ const Revenue = (props) => {
             dispatch(actionCreators.setRevenue(data.revenue));
             onClose();
           }
-          if (!success) message.info("Request Failed");
+          // if (!success) message.info(`${error.response.message}`);
+          if (!success) console.log(error?.message);
         }
       )
     );

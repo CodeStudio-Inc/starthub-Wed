@@ -74,11 +74,13 @@ const HomepageTemplate = (props) => {
     getProfile();
     getBoards();
     getLists();
+    getDiagnostics();
     if (current_date >= tokenExpiration) {
       dispatch(actionCreators.removeUser());
       props.history.push("/");
     }
   }, []);
+
   const getStartups = () => {
     dispatch(
       actionCreators.getItem(`/auth/users`, (res) => {
@@ -91,6 +93,8 @@ const HomepageTemplate = (props) => {
     );
   };
   const getProfile = () => dispatch(actionCreators.getProfile());
+
+  const getDiagnostics = () => dispatch(actionCreators.getDiagnostics());
 
   const getBoards = () =>
     dispatch(
@@ -328,7 +332,7 @@ const HomepageTemplate = (props) => {
         </div>
         <div className="username-logo">
           <AccountBoxIcon style={{ fontSize: "25px", color: "#37561b" }} />
-          <h2>{username}</h2>
+          <h2>{username.substring(0, 12) + "..."}</h2>
         </div>
         <hr style={{ width: "100%", color: "rgba(0,0,0,0.1)" }} />
         <SwitchNavLinks features={features} />

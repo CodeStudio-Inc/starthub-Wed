@@ -22,6 +22,7 @@ const OKROverview = () => {
   const { TabPane } = Tabs;
   const { users } = useSelector((state) => state.admin);
   const { objectives, loading } = useSelector((state) => state.requests);
+  const { userRole, category } = useSelector((state) => state.auth);
   const [tasks, setTasks] = React.useState({
     members: [],
     task: "",

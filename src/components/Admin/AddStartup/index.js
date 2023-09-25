@@ -65,11 +65,7 @@ const AddStartup = () => {
     return exists?.check;
   };
 
-  const steps = [
-    "Enter Startup Account Details",
-    "Add Features",
-    checkDiagnosticsSelect(payload) ? "Add Diagnostics" : null,
-  ];
+  const steps = ["Enter Startup Account Details", "Add Features"];
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -207,13 +203,13 @@ const AddStartup = () => {
                 emailcheck={emailcheck}
               />
             ) : null}
-            {activeStep === 2 && checkDiagnosticsSelect(payload) ? (
+            {/* {activeStep === 2 && checkDiagnosticsSelect(payload) ? (
               <Diagnostics
                 diagnostics={diagnostics}
                 selected={selected}
                 setSelected={setSelected}
               />
-            ) : null}
+            ) : null} */}
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <button disabled={activeStep === 0} onClick={handleBack}>

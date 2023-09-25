@@ -19,13 +19,12 @@ import Diagnostics from "./Diagnostics";
 import DrawerModal from "../../ModalUI/DrawerModal";
 import "./StartupStyles.css";
 const Startup = ({ location, history }) => {
-  const [selected, setSelected] = React.useState("");
   const [year, setYear] = React.useState("");
   const [openModal, setOpenModal] = React.useState(false);
   const { revenue, loader, revenue_tracking } = useSelector(
     (state) => state.admin
   );
-  const { diagnostics } = useSelector((state) => state.diagnostics);
+  const { payload } = useSelector((state) => state.diagnostics);
 
   const tableRef = React.useRef(null);
 
@@ -33,7 +32,7 @@ const Startup = ({ location, history }) => {
   const userId = data?._id;
 
   const diagnosticTool = [
-    ...data?.diagnostics?.map((d) => ({
+    ...payload?.map((d) => ({
       tool: d.title,
       score: Math.round(d.score),
     })),
@@ -51,6 +50,8 @@ const Startup = ({ location, history }) => {
     setYear("");
   };
   const getProfile = () => dispatch(actionCreators.getProfileAdmin(data._id));
+  const getDiagnostics = () =>
+    dispatch(actionCreators.getStartupDiagnostics(data._id));
 
   const dashboardBoards = () => {
     dispatch(
@@ -85,10 +86,6 @@ const Startup = ({ location, history }) => {
     );
   };
 
-  const handleChange = (event) => {
-    setSelected(event.target.value);
-  };
-
   const open = () => setOpenModal(true);
   const close = () => setOpenModal(false);
 
@@ -100,6 +97,7 @@ const Startup = ({ location, history }) => {
     dashboardBoards();
     dashboardLists();
     getObjectives();
+    getDiagnostics();
   }, []);
 
   const sortRevenue = React.useMemo(() => {
@@ -639,20 +637,9 @@ const Startup = ({ location, history }) => {
             </h4>
           </div>
           <Line data={Revenue} width={100} height={30} />
-          <Diagnostics
-            diagnosticTool={diagnosticTool}
-            diagnostics={diagnostics}
-            handleChange={handleChange}
-            selected={selected}
-          />
         </div>
       ) : (
-        <Diagnostics
-          diagnosticTool={diagnosticTool}
-          diagnostics={diagnostics}
-          handleChange={handleChange}
-          selected={selected}
-        />
+        <Diagnostics diagnosticTool={diagnosticTool} />
       )}
     </div>
   );
