@@ -80,6 +80,7 @@ const HomepageTemplate = (props) => {
       props.history.push("/");
     }
   }, []);
+
   const getStartups = () => {
     dispatch(
       actionCreators.getItem(`/auth/users`, (res) => {
@@ -329,7 +330,7 @@ const HomepageTemplate = (props) => {
         </div>
         <div className="username-logo">
           <AccountBoxIcon style={{ fontSize: "25px", color: "#37561b" }} />
-          <h2>{username}</h2>
+          <h2>{username.substring(0, 12) + "..."}</h2>
         </div>
         <SwitchNavLinks features={features} />
         <div className="logout" onClick={handleLogoutClick}>

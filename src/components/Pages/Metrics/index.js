@@ -12,6 +12,7 @@ import SavingsIcon from "@mui/icons-material/Savings";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import { svg } from "../../Paths";
+import { steps } from "../../utilities/json";
 
 import ReportRevenue from "./modals/ReportRevenue";
 import RevenueTable from "./modals/RevenueTable";
@@ -19,12 +20,15 @@ import LoanApplication from "./modals/LoanApplication";
 import Diagnostics from "../../Admin/Startups/Diagnostics";
 import DrawerModal from "../../ModalUI/DrawerModal";
 import "./MetricsStyles.css";
+import { message } from "antd";
 const Metrics = ({ visible }) => {
   const [year, setYear] = React.useState("");
   const [openTableModal, setOpenTableModal] = React.useState(false);
   const [openReportModal, setOpenReportModal] = React.useState(false);
   const [revenueTable, setRevenueTable] = React.useState(false);
   const [loanApplication, setLoanApplication] = React.useState(false);
+
+  const { payload } = useSelector((state) => state.diagnostics);
   const { revenue, loader } = useSelector((state) => state.admin);
   const {
     userId,
@@ -49,7 +53,6 @@ const Metrics = ({ visible }) => {
     loanEligibilityCheck();
     getRevenue();
     getUser();
-    getDiagnostics();
     ReactGA.pageview(window.location.pathname);
   }, []);
 
@@ -218,7 +221,7 @@ const Metrics = ({ visible }) => {
   // console.log(diagnostics);
 
   const diagnosticTool = [
-    ...diagnostics?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
+    ...payload?.map((d) => ({ tool: d.title, score: Math.round(d.score) })),
   ];
 
   const Cards = () => (
