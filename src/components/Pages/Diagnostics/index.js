@@ -45,8 +45,15 @@ export default function DiagnosticsTools() {
 
   const dispatch = useDispatch();
 
+  // set user diagnostics
   React.useEffect(() => {
+    const categories = ["SheTechs", "OIP"];
+    let paylod;
     if (!payload.length) {
+      if (!categories.includes(category)) {
+        paylod = steps.filter((r) => r.title !== "Co-creation with partners");
+        return dispatch(actionCreators.diagnosticsPayload(paylod));
+      }
       dispatch(actionCreators.diagnosticsPayload(steps));
     }
   }, [steps]);
@@ -251,73 +258,75 @@ export default function DiagnosticsTools() {
           width: "90%",
         }}
       >
-        {payload[activeStep]?.tasks?.map((t, i) => (
-          <Card
-            key={t.id}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-              margin: "0.5rem",
-              padding: "0.3rem",
-              backgroundColor: t.status ? "#91d4a1" : "white",
-            }}
-          >
-            <Box
+        {payload[activeStep]?.tasks
+          ?.sort((a, b) => a.id - b.id)
+          .map((t, i) => (
+            <Card
+              key={t.id}
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                // height: "80vh",
+                justifyContent: "space-between",
+                width: "100%",
+                margin: "0.5rem",
+                padding: "0.3rem",
+                backgroundColor: t.status ? "#91d4a1" : "white",
               }}
             >
-              <Checkbox
-                color="success"
-                checked={t.status}
-                onChange={() => handleChange(t.id, i)}
-                inputProps={{ "aria-label": "controlled" }}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  // height: "80vh",
+                }}
+              >
+                <Checkbox
+                  color="success"
+                  checked={t.status}
+                  onChange={() => handleChange(t.id, i)}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+                <h4 style={{ color: t.status ? "#37561b" : "black" }}>
+                  {t.task}
+                </h4>
+              </Box>
+              <MoreVertIcon
+                id="basic-button"
+                aria-controls={openMenu ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMenu ? "true" : undefined}
+                style={{ fontSize: "30px", color: "rgba(0,0,0,0.4)" }}
+                onClick={(e) => handleMenuClick(e, t)}
               />
-              <h4 style={{ color: t.status ? "#37561b" : "black" }}>
-                {t.task}
-              </h4>
-            </Box>
-            <MoreVertIcon
-              id="basic-button"
-              aria-controls={openMenu ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={openMenu ? "true" : undefined}
-              style={{ fontSize: "30px", color: "rgba(0,0,0,0.4)" }}
-              onClick={(e) => handleMenuClick(e, t)}
-            />
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={openMenu}
-              onClose={handleMenuClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={handleAddObjective} disabled={loading}>
-                <ListItemIcon>
-                  <BookmarkAddIcon
-                    style={{ fontSize: "20px", color: "rgba(0,0,0,0.3)" }}
-                  />
-                </ListItemIcon>
-                Add to objectives
-              </MenuItem>
-              <MenuItem onClick={handleShowContentModal} disabled={loading}>
-                <ListItemIcon>
-                  <PermMediaIcon
-                    style={{ fontSize: "20px", color: "rgba(0,0,0,0.3)" }}
-                  />
-                </ListItemIcon>
-                View content
-              </MenuItem>
-            </Menu>
-          </Card>
-        ))}
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleMenuClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleAddObjective} disabled={loading}>
+                  <ListItemIcon>
+                    <BookmarkAddIcon
+                      style={{ fontSize: "20px", color: "rgba(0,0,0,0.3)" }}
+                    />
+                  </ListItemIcon>
+                  Add to objectives
+                </MenuItem>
+                <MenuItem onClick={handleShowContentModal} disabled={loading}>
+                  <ListItemIcon>
+                    <PermMediaIcon
+                      style={{ fontSize: "20px", color: "rgba(0,0,0,0.3)" }}
+                    />
+                  </ListItemIcon>
+                  View content
+                </MenuItem>
+              </Menu>
+            </Card>
+          ))}
       </Box>
       <MobileStepper
         variant="text"
