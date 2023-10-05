@@ -7,6 +7,7 @@ const AccountDetails = ({
   emailcheck,
   handleEmailChange,
 }) => {
+
   const programs = ["SheTechs", "OIP", "Greenovation", "LPUSP"];
 
   return (
@@ -57,6 +58,7 @@ const AccountDetails = ({
             <option value="SheTechs">SheTechs</option>
             <option value="Greenovation">Greenovation</option>
             <option value="LPUSP">LPUSP</option>
+
           </select>
         </div>
       </div>

@@ -141,8 +141,7 @@
   box-sizing: border-box;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
   background: #f7f7f7;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .username-logo h2 {
@@ -155,14 +154,14 @@
 }
 
 .homepage-avatar {
-  height: 120px;
-  width: 100px;
+  height: 100px;
+  width: 80px;
   border-radius: 200;
   overflow: hidden;
 }
 .homepage-avatar img {
-  width: 100px;
-  height: 120px;
+  width: 80px;
+  height: 100px;
 }
 .separator {
   width: 100%;

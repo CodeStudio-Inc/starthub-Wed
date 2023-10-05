@@ -1,18 +1,20 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Divider, Typography } from "@mui/material";
 import { Table, message, Input, Button } from "antd";
 import { isInteger } from "formik";
 import { actionCreators, svg } from "../../../Paths";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, GroupOutlined } from "@ant-design/icons";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import moment from "moment";
 
+import Teams from "./Teams";
 import AddRevenueDrawer from "./AddRevenueDrawer";
 import "./Styles.css";
 const { Search } = Input;
-const Revenue = () => {
+const Revenue = (props) => {
   const [id, setId] = React.useState("");
   const [revState, setRevState] = React.useState({
     month_revenue: "",
@@ -30,10 +32,12 @@ const Revenue = () => {
   const [columnIndex, setColumnIndex] = React.useState(null);
   const [paymentsIndex, setPaymnentsIndex] = React.useState(null);
   const { revenue, loading } = useSelector((state) => state.requests);
-  const { category } = useSelector((state) => state.auth);
+  const { category, username } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.admin);
 
   const tableRef = React.useRef(null);
+
+  console.log(props.history);
 
   const startups =
     users &&
@@ -41,11 +45,20 @@ const Revenue = () => {
       (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
     );
 
+  const teams =
+    users &&
+    users.filter(
+      (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
+    );
+
   const [open, setOpen] = React.useState(false);
+  const [team, setTeams] = React.useState(false);
 
   const showDrawer = () => setOpen(true);
-
   const onClose = () => setOpen(false);
+
+  const showTeamsDrawer = () => setTeams(true);
+  const onCloseTeamsDrawer = () => setTeams(false);
 
   React.useEffect(() => {
     getRevenue();
@@ -337,7 +350,16 @@ const Revenue = () => {
   return (
     <Grid container className="revenue-container">
       <Grid container className="revenue-header">
-        <Grid item>
+        <Grid
+          item
+          spacing={2}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "30%",
+          }}
+        >
           <Button
             onClick={showDrawer}
             style={{ color: "#fff", background: "#37561b", border: "none" }}
@@ -345,6 +367,15 @@ const Revenue = () => {
           >
             Add Revenue
           </Button>
+          {username === "Martha" ? (
+            <Button
+              onClick={showTeamsDrawer}
+              style={{ color: "#fff", background: "#37561b", border: "none" }}
+              icon={<GroupOutlined />}
+            >
+              Teams
+            </Button>
+          ) : null}
         </Grid>
         <Grid item>
           <Search
@@ -367,6 +398,14 @@ const Revenue = () => {
         addRevenue={addRevenue}
         loading={loading}
         svg={svg}
+      />
+      <Teams
+        open={team}
+        showDrawer={showTeamsDrawer}
+        onClose={onCloseTeamsDrawer}
+        teams={teams}
+        tableRef={tableRef}
+        props={props}
       />
       <Grid item xs={12}>
         <Divider />
@@ -413,4 +452,4 @@ const Revenue = () => {
   );
 };
 
-export default Revenue;
+export default withRouter(Revenue);

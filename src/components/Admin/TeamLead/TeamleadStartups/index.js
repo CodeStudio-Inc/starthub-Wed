@@ -62,7 +62,7 @@ const TeamLeadStartups = (props) => {
   ).reduce((a, b) => a + b, 0);
   const totalExpectedRevenuePaid = Array.from(
     revenueTotal,
-    ({ totalRevSharePaid }) => totalRevSharePaid
+    ({ totalExpectedRevenueShare }) => totalExpectedRevenueShare
   ).reduce((a, b) => a + b, 0);
 
   const dispatch = useDispatch();

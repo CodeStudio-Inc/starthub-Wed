@@ -160,9 +160,10 @@ const HomepageTemplate = (props) => {
       getSubItem("SheTechs", "SheTechs", "9"),
       getSubItem("UDSM", "UDSM", "10"),
       getSubItem("LPUSP", "LPUSP", "11"),
+      getSubItem("Greenovation", "Greenovation", "12"),
     ]),
-    getItem("Revenue", "12", <PaymentIcon />),
-    getItem("OKRs", "13", <ContainerOutlined />),
+    getItem("Revenue", "13", <PaymentIcon />),
+    getItem("OKRs", "14", <ContainerOutlined />),
   ];
 
   const teamMembersItems = [
@@ -173,8 +174,9 @@ const HomepageTemplate = (props) => {
       getSubItem("SheTechs", "SheTechs", "5"),
       getSubItem("UDSM", "UDSM", "6"),
       getSubItem("LPUSP", "LPUSP", "7"),
+      getSubItem("Greenovation", "Greenovation", "8"),
     ]),
-    getItem("OKRs", "8", <ContainerOutlined />),
+    getItem("OKRs", "9", <ContainerOutlined />),
   ];
 
   const adminItems = [
@@ -334,7 +336,9 @@ const HomepageTemplate = (props) => {
           <AccountBoxIcon style={{ fontSize: "25px", color: "#37561b" }} />
           <h2>{username.substring(0, 12) + "..."}</h2>
         </div>
+        <hr style={{ width: "100%", color: "rgba(0,0,0,0.1)" }} />
         <SwitchNavLinks features={features} />
+        <hr style={{ width: "100%", color: "rgba(0,0,0,0.1)" }} />
         <div className="logout" onClick={handleLogoutClick}>
           <LogoutIcon style={{ fontSize: "20px" }} className="logout-icon" />
           <h5>Logout</h5>

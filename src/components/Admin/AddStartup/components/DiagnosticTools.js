@@ -24,26 +24,13 @@ const Features = ({ diagnostics, selected, setSelected }) => {
     <div className="input-modal-column">
       <h2>Diagnostic Tools</h2>
       <h3>Select project</h3>
-      <FormControl sx={{ m: 1, width: "70%", minHeight: 40 }}>
-        <InputLabel id="demo-simple-select-autowidth-label">
-          Diagnostic Tools
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          value={selected}
-          onChange={handleChange}
-          autoWidth
-          style={{
-            height: 50,
-          }}
-          label="startups"
-        >
-          <MenuItem value="Catalyzer">Catalyzer</MenuItem>
-          <MenuItem value="OIP">OIP</MenuItem>
-          <MenuItem value="SheTechs">SheTechs</MenuItem>
-        </Select>
-      </FormControl>
+      <select value={selected} onChange={(e) => setSelected(e.target.value)}>
+        <option value="" disabled selected>
+          select diagnostics
+        </option>
+        <option value="Catalyzer">Catalyzer</option>
+        <option value="OIP">OIP</option>
+      </select>
     </div>
   );
 };
