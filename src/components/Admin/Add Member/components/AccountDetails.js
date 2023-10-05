@@ -21,8 +21,8 @@ const AccountDetails = ({
           />
         </div>
         <div className="input-column">
-          {!emailcheck ? <h4>email</h4> : null}
-          {emailcheck ? <p style={{ color: "red" }}>{emailcheck}</p> : null}
+          <h4>email</h4>
+          {/* {emailcheck ? <p style={{ color: "red" }}>{emailcheck}</p> : null} */}
           <input
             type="email"
             placeholder="@email.com"
@@ -52,6 +52,7 @@ const AccountDetails = ({
             <option value="catalyzer">Catalyzer</option>
             <option value="OIP">OIP</option>
             <option value="SheTechs">SheTechs</option>
+            <option value="LPUSP">LPUSP</option>
           </select>
         </div>
       </div>

@@ -57,7 +57,7 @@ const Metrics = ({ visible }) => {
   }, []);
 
   const dispatch = useDispatch();
-  const teams = ["OIP", "SheTechs"];
+  const teams = ["OIP", "SheTechs", "UDSM", "LPUSP"];
 
   const getRevenue = () => dispatch(actionCreators.getStartupRevenue());
   const getUser = () => dispatch(actionCreators.getUser(userId, token));

@@ -26,8 +26,9 @@ const Teamlead = ({ index, title }) => {
       {index === 8 ? <StartupList title={title} /> : null}
       {index === 9 ? <StartupList title={title} /> : null}
       {index === 10 ? <StartupList title={title} /> : null}
-      {index === 11 ? <Revenue /> : null}
-      {index === 12 ? <OkrOverview /> : null}
+      {index === 11 ? <StartupList title={title} /> : null}
+      {index === 12 ? <Revenue /> : null}
+      {index === 13 ? <OkrOverview /> : null}
     </div>
   );
 };

@@ -120,18 +120,11 @@ const AddStartup = () => {
   };
 
   const register = () => {
-    const filterDiagnostics = diagnostics.filter((d) => d.project === selected);
-    console.log(selected);
     const filterFeaturePayload = payload.filter((f) => f.check);
     const features = [
       ...filterFeaturePayload.map((f) => ({ name: f.name, status: f.check })),
     ];
-    // setError(false);
-    // setSuccess(false);
-    // setEmailCheck("");
     if (!features.length) return message.info("No features added for user");
-    if (!filterDiagnostics.length)
-      return message.info("No diagnostics added for user");
     if (state.password.length < 8)
       return message.info("Password must be atleast 8 characters");
     if (!validateEmail(state.email) || !state.email)
@@ -145,7 +138,6 @@ const AddStartup = () => {
         state.category,
         state.password,
         features,
-        filterDiagnostics,
         state.userRole,
         state.contractDate,
         state.percentageShare,
