@@ -149,7 +149,7 @@ const HomepageTemplate = (props) => {
 
   const teamLeadItems = [
     getItem("Dashboard", "1", <AppstoreOutlined />),
-    getItem("Startups", "sub1", <ContainerOutlined />, [
+    getItem("Accounts", "sub1", <ContainerOutlined />, [
       getSubItem("Add Mentor", "add mentor", "3"),
       getSubItem("Add Startup", "add startup", "4"),
       getSubItem("All Startups", "all teams", "5"),
@@ -159,10 +159,11 @@ const HomepageTemplate = (props) => {
       getSubItem("OIP", "OIP", "8"),
       getSubItem("SheTechs", "SheTechs", "9"),
       getSubItem("UDSM", "UDSM", "10"),
-      getSubItem("Greenovation", "Greenovation", "11"),
+      getSubItem("LPUSP", "LPUSP", "11"),
+      getSubItem("Greenovation", "Greenovation", "12"),
     ]),
-    getItem("Revenue", "12", <PaymentIcon />),
-    getItem("OKRs", "13", <ContainerOutlined />),
+    getItem("Revenue", "13", <PaymentIcon />),
+    getItem("OKRs", "14", <ContainerOutlined />),
   ];
 
   const teamMembersItems = [
@@ -172,9 +173,10 @@ const HomepageTemplate = (props) => {
       getSubItem("OIP", "OIP", "4"),
       getSubItem("SheTechs", "SheTechs", "5"),
       getSubItem("UDSM", "UDSM", "6"),
-      getSubItem("Greenovation", "Greenovation", "7"),
+      getSubItem("LPUSP", "LPUSP", "7"),
+      getSubItem("Greenovation", "Greenovation", "8"),
     ]),
-    getItem("OKRs", "8", <ContainerOutlined />),
+    getItem("OKRs", "9", <ContainerOutlined />),
   ];
 
   const adminItems = [

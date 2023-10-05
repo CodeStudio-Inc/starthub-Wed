@@ -7,7 +7,8 @@ const AccountDetails = ({
   emailcheck,
   handleEmailChange,
 }) => {
-  const programs = ["SheTechs", "OIP", "Greenovation"];
+
+  const programs = ["SheTechs", "OIP", "Greenovation", "LPUSP"];
 
   return (
     <div className="input-modal-column">
@@ -34,8 +35,8 @@ const AccountDetails = ({
       </div>
       <div className="input-row">
         <div className="input-column">
-          {!emailcheck ? <h4>email</h4> : null}
-          {emailcheck ? <p style={{ color: "red" }}>{emailcheck}</p> : null}
+          <h4>email</h4>
+          {/* {emailcheck ? <p style={{ color: "red" }}>{emailcheck}</p> : null} */}
           <input
             type="email"
             placeholder="@email.com"
@@ -56,6 +57,8 @@ const AccountDetails = ({
             <option value="OIP">OIP</option>
             <option value="SheTechs">SheTechs</option>
             <option value="Greenovation">Greenovation</option>
+            <option value="LPUSP">LPUSP</option>
+
           </select>
         </div>
       </div>
