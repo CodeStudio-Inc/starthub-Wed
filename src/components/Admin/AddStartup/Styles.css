@@ -22,9 +22,10 @@
 
 .input-column {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   flex-direction: column;
+  width: 45%;
 }
 
 .input-column h4 {
@@ -38,4 +39,5 @@
 
 .input-column select {
   background: none;
+  /* width: 100% !important; */
 }

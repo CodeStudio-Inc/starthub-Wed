@@ -58,6 +58,7 @@ export default function DiagnosticsTools() {
     }
   }, [steps]);
 
+
   const maxSteps = payload.length;
 
   const handleChange = (id, i) => {
