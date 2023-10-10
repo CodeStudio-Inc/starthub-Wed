@@ -13,6 +13,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import { getCurrentQuarter } from "../../utilities/helpers";
 
 import Quarter from "../../Admin/OkrOverview/Quarter";
+import Notes from "../../Admin/OkrOverview/Notes";
 import Tasks from "../../Admin/OkrOverview/Tasks";
 import MenuBar from "../../Admin/OkrOverview/MenuBar";
 import AddObjectiveDialogue from "../../Admin/OkrOverview/AddObjectiveDialogue";
@@ -357,6 +358,9 @@ const OKROverview = () => {
               svg={svg}
             />
           </div>
+        </TabPane>
+        <TabPane tab="Notes Board" key="5">
+          <Notes />
         </TabPane>
       </Tabs>
       <Fab
