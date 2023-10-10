@@ -612,3 +612,22 @@
 .edit-icon:hover {
   cursor: pointer;
 }
+
+.overview-profile-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.overview-profile-row h3 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.overview-profile-txt {
+  font-weight: 300;
+  margin: 0.5rem;
+  align-self: flex-start;
+}

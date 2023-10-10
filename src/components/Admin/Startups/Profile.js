@@ -752,35 +752,6 @@ const Profile = ({ location, history }) => {
         <title>{location?.state?.data?.username}</title>
       </Helmet>
       <StartupNavbar data={location?.state?.data} history={history} />
-      {/* <div className="profile-content">
-        <div className="profile-content-header">
-          <div className="startup-avatar">
-            <h1>{username.substring(0, 1)}</h1>
-          </div>
-        </div>
-        <div className="profile-details-column">
-          <h3>{username}</h3>
-          <div className="profile-details-row">
-            <EmailIcon
-              style={{
-                color: "rgba(0,0,0,0.2)",
-                fontSize: "20px",
-                marginRight: "0.5rem",
-              }}
-            />
-            <h4>{email}</h4>
-          </div>
-          {!profile ? (
-            <button onClick={submitProfile}>Submit Profile</button>
-          ) : null}
-        </div>
-        {loading ? (
-          <img
-            src={svg}
-            style={{ height: "40px", width: "40px", alignSelf: "center" }}
-          />
-        ) : null}
-      </div> */}
       <div className="admin-separator-row">
         <div className="profile-separator" />
         <h4>{!profile ? "Setup company profile" : "Company profile"}</h4>

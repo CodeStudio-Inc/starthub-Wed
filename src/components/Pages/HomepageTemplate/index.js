@@ -92,7 +92,7 @@ const HomepageTemplate = (props) => {
       })
     );
   };
-  const getProfile = () => dispatch(actionCreators.getProfile());
+  const getProfile = () => dispatch(actionCreators.getProfile(() => {}));
 
   const getDiagnostics = () => dispatch(actionCreators.getDiagnostics());
 
