@@ -331,7 +331,7 @@ const Founders = ({
 
   return (
     <div className="accordion">
-      {editFounder ? (
+      {founders?.length > 0 ? (
         <Table
           ref={tableRef}
           columns={columns}
@@ -358,9 +358,6 @@ const Founders = ({
             pageSizeOptions: ["10", "20", "30"],
           }}
         />
-      ) : null}
-      {founders?.length > 0 && !editFounder ? (
-        <RadarGraph data={data} founders={founders} />
       ) : null}
       {!founders?.length ? (
         <div className="add-button-column" onClick={handleAdd}>

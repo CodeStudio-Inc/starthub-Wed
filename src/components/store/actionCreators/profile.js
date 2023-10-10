@@ -56,7 +56,7 @@ export const addProfile = (
       .then((res) => {
         dispatch(stopLoader());
         callback({ success: true });
-        // dispatch(setProfile(res?.data?.profile));
+        dispatch(setProfile(res?.data?.profile));
         // console.log(res.data);
       })
       .catch((error) => {
