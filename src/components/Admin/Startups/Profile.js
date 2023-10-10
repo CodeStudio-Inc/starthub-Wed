@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, svg, StartupNavbar } from "../../Paths";
 import { message } from "antd";
+import { Tabs } from "antd";
 import { Helmet } from "react-helmet";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -28,9 +29,12 @@ import Finance from "../../Pages/StartupProfile/components/Product&Finance";
 import BusinessModal from "../../Pages/StartupProfile/components/BusinessModal";
 import Customer from "../../Pages/StartupProfile/components/Customer";
 import Founders from "../../Pages/StartupProfile/components/Founders";
+import RadarGraph from "../../Pages/StartupProfile/components/RadarGraph";
+import ProductFinanceTable from "../../Pages/StartupProfile/components/Product&FinanceTable";
 
 import "../../Pages/StartupProfile/Styles.css";
 const Profile = ({ location, history }) => {
+  const { TabPane } = Tabs;
   const { profile, loading } = useSelector((state) => state.profile);
   const { userRole } = useSelector((state) => state.auth);
   const [founderInput, setFounderInput] = React.useState([
@@ -176,9 +180,6 @@ const Profile = ({ location, history }) => {
 
   React.useEffect(() => {
     getProfile();
-    updateFounderObject();
-    updateProductsColumnData();
-    updateFoundersColumn();
   }, []);
 
   const handleFounderAdd = () => {
@@ -262,9 +263,27 @@ const Profile = ({ location, history }) => {
     return setProductPayload(newPayload);
   };
 
-  const updateFoundersColumn = () => {
+  const updateProductsData = React.useMemo(() => {
+    if (typeof profile?.finance?.products === "undefined") return [];
+    let paylod = [];
+    paylod = [
+      ...profile?.finance?.products?.map((f) => {
+        const { id, name, price, unitCost } = f;
+        return {
+          id: id,
+          name: { id: id, name: name },
+          price: { id: id, price: price },
+          unitCost: { id: id, unitCost: unitCost },
+        };
+      }),
+    ];
+    return paylod;
+  }, [profile?.finance]);
+
+  const founderTableData = React.useMemo(() => {
     if (typeof profile?.founder === "undefined") return;
-    const newPayload = [
+    let paylod = [];
+    paylod = [
       ...profile?.founder.map((f) => {
         const {
           id,
@@ -290,8 +309,8 @@ const Profile = ({ location, history }) => {
         };
       }),
     ];
-    return setFounderPayload(newPayload);
-  };
+    return paylod;
+  }, [profile]);
 
   const founders = React.useMemo(() => {
     let founderData = [];
@@ -338,8 +357,35 @@ const Profile = ({ location, history }) => {
     return setPayload(newPayload);
   };
 
+  const founderRadarGraphData = React.useMemo(() => {
+    if (typeof founders === "undefined") return;
+    let paylod = [];
+    const newPayload = [
+      {
+        name: "default",
+        growth: 1,
+        product: 2,
+        finance: 5,
+        operations: 8,
+        communication: 10,
+      },
+      ...founders,
+    ];
+    paylod = [
+      ...newPayload.map((f) => {
+        const { name } = f;
+        return {
+          name: name,
+          data: Object.values(newPayload.find((e) => e.name === name)).slice(1),
+          label: Object.keys(newPayload.find((e) => e.name === name)).slice(1),
+        };
+      }),
+    ];
+    return paylod;
+  }, [profile]);
+
   const datasets = [
-    ...payload?.map((f) => ({
+    ...founderRadarGraphData?.map((f) => ({
       label: f.name === "default" ? " " : f.name,
       data: f.data,
       fill: true,
@@ -361,7 +407,7 @@ const Profile = ({ location, history }) => {
   ];
 
   const data = {
-    labels: [...payload.map((f) => f.label)][0],
+    labels: [...founderRadarGraphData.map((f) => f.label)][0],
     datasets: datasets,
     maintainAspectRatio: true,
   };
@@ -752,142 +798,197 @@ const Profile = ({ location, history }) => {
         <title>{location?.state?.data?.username}</title>
       </Helmet>
       <StartupNavbar data={location?.state?.data} history={history} />
-      <div className="admin-separator-row">
-        <div className="profile-separator" />
-        <h4>{!profile ? "Setup company profile" : "Company profile"}</h4>
-        <div className="profile-separator" />
-      </div>
-      <Accordion
-        style={{
-          width: "95%",
-          marginBottom: "1rem",
-        }}
+      <Tabs
+        style={{ width: "100%", marginTop: "3rem" }}
+        centered
+        tabBarStyle={{ color: "#37561b" }}
+        size="small"
+        type="card"
+        defaultActiveKey="1"
       >
-        <AccordionSummary
-          expandIcon={
-            !profile?.founder.length ? (
-              <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            ) : (
-              <CheckBoxIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            )
-          }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className="accordion-row">
-            <PeopleIcon
-              style={{
-                color: "#37561b",
-                fontSize: "45px",
-                marginRight: "0.5rem",
-              }}
+        <TabPane tab="Overview" key="1">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <h3 className="overview-profile-txt">Founding Team</h3>
+            <RadarGraph data={data} founders={profile?.founder} />
+            <h3 className="overview-profile-txt">Product and Finance</h3>
+            <ProductFinanceTable
+              editFinance={editFinance}
+              editRevenue={editRevenue}
+              finance={profile?.finance}
+              setRevenue={setRevenue}
+              updateRevenue={updateRevenue}
+              openRevenueEdit={openRevenueEdit}
+              cancelRevenueEdit={cancelRevenueEdit}
+              revenue={revenue}
+              loading={loading}
+              svg={svg}
+              cancelFinanceEdit={cancelFinanceEdit}
+              productState={productState}
+              payload={updateProductsData}
+              selectedProductId={selectedProductId}
+              setProductState={setProductState}
+              openFinanceEdit={openFinanceEdit}
+              updateProduct={updateProduct}
             />
-            <div className="accordion-column">
-              <h3>Founding Team</h3>
-              <h5>Founders with shares in the company</h5>
-            </div>
           </div>
-        </AccordionSummary>
-        <AccordionDetails className="accordion-content">
-          <Founders
-            founders={profile?.founder}
-            data={data}
-            founderInput={founderInput}
-            editFounder={editFounder}
-            selectedFounderId={selectedFounderId}
-            editFounderTableColumn={editFounderTableColumn}
-            founderState={founderState}
-            payload={foundersPayload}
-            updateFounder={updateFounder}
-            loading={loading}
-            svg={svg}
-            setFounderState={setFounderState}
-            cancelFounderEdit={cancelFounderEdit}
-            openFounderColumnEdit={openFounderColumnEdit}
-            cancelFounderColumnEdit={cancelFounderColumnEdit}
-            handleAdd={handleFounderAdd}
-            handleDelete={handleFounderDelete}
-            handleFounderInputChange={handleFounderNameInputChange}
-            handleFounderTimeInputChange={handleFounderTimeInputChange}
-            handleFounderFocusChange={handleFounderFocusChange}
-            handleFounderGrowthInputChange={handleFounderGrowthInputChange}
-            handleFounderProductInputChange={handleFounderProductInputChange}
-            handleFounderOperationsInputChange={
-              handleFounderOperationsInputChange
-            }
-            handleFounderFinanceInputChange={handleFounderFinanceInputChange}
-            handleFounderCommunicationInputChange={
-              handleFounderCommunicationInputChange
-            }
-          />
-          {!profile?.founder.length ? (
-            <div className="save-button-column" onClick={addFounder}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          ) : null}
-          {profile?.founder.length > 0 && !editFounder ? (
-            <ModeEditOutlineIcon
-              onClick={openFounderEdit}
+        </TabPane>
+        <TabPane tab="Profile" key="2">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Accordion
               style={{
-                fontSize: "20px",
-                color: "#37561b",
-                alignSelf: "flex-end",
+                width: "95%",
+                marginBottom: "1rem",
               }}
-              className="finance-table-icon"
-            />
-          ) : null}
-          {editFounder ? (
-            <CancelIcon
-              onClick={cancelFounderEdit}
-              style={{
-                fontSize: "20px",
-                color: "#37561b",
-                alignSelf: "flex-end",
-              }}
-              className="finance-table-icon"
-            />
-          ) : null}
-        </AccordionDetails>
-      </Accordion>
-      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
-        <AccordionSummary
-          expandIcon={
-            !profile?.customer.length ? (
-              <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            ) : (
-              <CheckBoxIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            )
-          }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className="accordion-row">
-            <GroupsIcon
-              style={{
-                color: "#37561b",
-                fontSize: "45px",
-                marginRight: "0.5rem",
-              }}
-            />
-            <div className="accordion-column">
-              <h3>Customer</h3>
-              <h5>Who is your customer</h5>
-            </div>
-          </div>
-        </AccordionSummary>
-        <AccordionDetails className="accordion-content">
-          <Customer
-            customers={customers}
-            handleCustomerChange={handleCustomerChange}
-          />
-          {/* <div className="save-button-column" onClick={addCustomer}>
+            >
+              <AccordionSummary
+                expandIcon={
+                  !profile?.founder.length ? (
+                    <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
+                  ) : (
+                    <CheckBoxIcon
+                      style={{ color: "#37561b", fontSize: "25px" }}
+                    />
+                  )
+                }
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <div className="accordion-row">
+                  <PeopleIcon
+                    style={{
+                      color: "#37561b",
+                      fontSize: "45px",
+                      marginRight: "0.5rem",
+                    }}
+                  />
+                  <div className="accordion-column">
+                    <h3>Founding Team</h3>
+                    <h5>Founders with shares in the company</h5>
+                  </div>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails className="accordion-content">
+                <Founders
+                  founders={profile?.founder}
+                  data={data}
+                  founderInput={founderInput}
+                  editFounder={editFounder}
+                  selectedFounderId={selectedFounderId}
+                  editFounderTableColumn={editFounderTableColumn}
+                  founderState={founderState}
+                  payload={founderTableData}
+                  updateFounder={updateFounder}
+                  loading={loading}
+                  svg={svg}
+                  setFounderState={setFounderState}
+                  cancelFounderEdit={cancelFounderEdit}
+                  openFounderColumnEdit={openFounderColumnEdit}
+                  cancelFounderColumnEdit={cancelFounderColumnEdit}
+                  handleAdd={handleFounderAdd}
+                  handleDelete={handleFounderDelete}
+                  handleFounderInputChange={handleFounderNameInputChange}
+                  handleFounderTimeInputChange={handleFounderTimeInputChange}
+                  handleFounderFocusChange={handleFounderFocusChange}
+                  handleFounderGrowthInputChange={
+                    handleFounderGrowthInputChange
+                  }
+                  handleFounderProductInputChange={
+                    handleFounderProductInputChange
+                  }
+                  handleFounderOperationsInputChange={
+                    handleFounderOperationsInputChange
+                  }
+                  handleFounderFinanceInputChange={
+                    handleFounderFinanceInputChange
+                  }
+                  handleFounderCommunicationInputChange={
+                    handleFounderCommunicationInputChange
+                  }
+                />
+                {!profile?.founder.length ? (
+                  <div className="save-button-column" onClick={addFounder}>
+                    <SaveIcon
+                      style={{
+                        color: "#37561b",
+                        fontSize: "20px",
+                        marginRight: "0.5rem",
+                      }}
+                    />
+                    <h3>save</h3>
+                  </div>
+                ) : null}
+                {/* {profile?.founder.length > 0 && !editFounder ? (
+                <ModeEditOutlineIcon
+                  onClick={openFounderEdit}
+                  style={{
+                    fontSize: "20px",
+                    color: "#37561b",
+                    alignSelf: "flex-end",
+                  }}
+                  className="finance-table-icon"
+                />
+              ) : null}
+              {editFounder ? (
+                <CancelIcon
+                  onClick={cancelFounderEdit}
+                  style={{
+                    fontSize: "20px",
+                    color: "#37561b",
+                    alignSelf: "flex-end",
+                  }}
+                  className="finance-table-icon"
+                />
+              ) : null} */}
+              </AccordionDetails>
+            </Accordion>
+            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+              <AccordionSummary
+                expandIcon={
+                  !profile?.customer.length ? (
+                    <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
+                  ) : (
+                    <CheckBoxIcon
+                      style={{ color: "#37561b", fontSize: "25px" }}
+                    />
+                  )
+                }
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <div className="accordion-row">
+                  <GroupsIcon
+                    style={{
+                      color: "#37561b",
+                      fontSize: "45px",
+                      marginRight: "0.5rem",
+                    }}
+                  />
+                  <div className="accordion-column">
+                    <h3>Customer</h3>
+                    <h5>Who is your customer</h5>
+                  </div>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails className="accordion-content">
+                <Customer
+                  customers={customers}
+                  handleCustomerChange={handleCustomerChange}
+                />
+                {/* <div className="save-button-column" onClick={addCustomer}>
             <SaveIcon
               style={{
                 color: "#37561b",
@@ -897,40 +998,42 @@ const Profile = ({ location, history }) => {
             />
             <h3>save</h3>
           </div> */}
-        </AccordionDetails>
-      </Accordion>
-      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
-        <AccordionSummary
-          expandIcon={
-            !profile?.businessModal.length ? (
-              <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            ) : (
-              <CheckBoxIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            )
-          }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className="accordion-row">
-            <ManageAccountsIcon
-              style={{
-                color: "#37561b",
-                fontSize: "45px",
-                marginRight: "0.5rem",
-              }}
-            />
-            <div className="accordion-column">
-              <h3>Business Model</h3>
-              <h5>What is your businsess model type</h5>
-            </div>
-          </div>
-        </AccordionSummary>
-        <AccordionDetails className="accordion-content">
-          <BusinessModal
-            businessModals={businessModals}
-            handleBusinessModalChange={handleBusinessModalChange}
-          />
-          {/* <div className="save-button-column" onClick={addBusinessModal}>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+              <AccordionSummary
+                expandIcon={
+                  !profile?.businessModal.length ? (
+                    <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
+                  ) : (
+                    <CheckBoxIcon
+                      style={{ color: "#37561b", fontSize: "25px" }}
+                    />
+                  )
+                }
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <div className="accordion-row">
+                  <ManageAccountsIcon
+                    style={{
+                      color: "#37561b",
+                      fontSize: "45px",
+                      marginRight: "0.5rem",
+                    }}
+                  />
+                  <div className="accordion-column">
+                    <h3>Business Model</h3>
+                    <h5>What is your businsess model type</h5>
+                  </div>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails className="accordion-content">
+                <BusinessModal
+                  businessModals={businessModals}
+                  handleBusinessModalChange={handleBusinessModalChange}
+                />
+                {/* <div className="save-button-column" onClick={addBusinessModal}>
             <SaveIcon
               style={{
                 color: "#37561b",
@@ -940,109 +1043,114 @@ const Profile = ({ location, history }) => {
             />
             <h3>save</h3>
           </div> */}
-        </AccordionDetails>
-      </Accordion>
-      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
-        <AccordionSummary
-          expandIcon={
-            !profile?.finance ? (
-              <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            ) : (
-              <CheckBoxIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            )
-          }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className="accordion-row">
-            <CurrencyExchangeIcon
-              style={{
-                color: "#37561b",
-                fontSize: "45px",
-                marginRight: "0.5rem",
-              }}
-            />
-            <div className="accordion-column">
-              <h3>Product and Finance</h3>
-              <h5>Revenue & Products</h5>
-            </div>
-          </div>
-        </AccordionSummary>
-        <AccordionDetails className="accordion-content">
-          <Finance
-            revenue={revenue}
-            finance={profile?.finance}
-            setRevenue={setRevenue}
-            productInput={productInput}
-            editRevenue={editRevenue}
-            editFinance={editFinance}
-            productState={productState}
-            payload={productsPayload}
-            updateRevenue={updateRevenue}
-            updateProduct={updateProduct}
-            loading={loading}
-            svg={svg}
-            setProductState={setProductState}
-            selectedProductId={selectedProductId}
-            openRevenueEdit={openRevenueEdit}
-            cancelRevenueEdit={cancelRevenueEdit}
-            openFinanceEdit={openFinanceEdit}
-            cancelFinanceEdit={cancelFinanceEdit}
-            handleProductAdd={handleProductAdd}
-            handleProductDelete={handleProductDelete}
-            handleProductNameChange={handleProductNameChange}
-            handleProductPriceChange={handleProductPriceChange}
-            handleProductUnitCostChange={handleProductUnitCostChange}
-          />
-          {!profile?.finance || Object.keys(profile?.finance).length === 0 ? (
-            <div className="save-button-column" onClick={addFinance}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          ) : null}
-        </AccordionDetails>
-      </Accordion>
-      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
-        <AccordionSummary
-          expandIcon={
-            !profile?.goal ? (
-              <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            ) : (
-              <CheckBoxIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            )
-          }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className="accordion-row">
-            <SportsScoreIcon
-              style={{
-                color: "#37561b",
-                fontSize: "45px",
-                marginRight: "0.5rem",
-              }}
-            />
-            <div className="accordion-column">
-              <h3>Goal and Motivation</h3>
-              <h5>What is your motivation to build a business</h5>
-            </div>
-          </div>
-        </AccordionSummary>
-        <AccordionDetails className="accordion-content">
-          <Goal
-            setGoal={setGoal}
-            goal={profile?.goal}
-            editGoal={editGoal}
-            openGoalEdit={openGoalEdit}
-            cancelGoalEdit={cancelGoalEdit}
-          />
-          {/* <div className="save-button-column" onClick={addGoal}>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+              <AccordionSummary
+                expandIcon={
+                  !profile?.finance ? (
+                    <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
+                  ) : (
+                    <CheckBoxIcon
+                      style={{ color: "#37561b", fontSize: "25px" }}
+                    />
+                  )
+                }
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <div className="accordion-row">
+                  <CurrencyExchangeIcon
+                    style={{
+                      color: "#37561b",
+                      fontSize: "45px",
+                      marginRight: "0.5rem",
+                    }}
+                  />
+                  <div className="accordion-column">
+                    <h3>Product and Finance</h3>
+                    <h5>Revenue & Products</h5>
+                  </div>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails className="accordion-content">
+                <Finance
+                  revenue={revenue}
+                  finance={profile?.finance}
+                  setRevenue={setRevenue}
+                  productInput={productInput}
+                  editRevenue={editRevenue}
+                  editFinance={editFinance}
+                  productState={productState}
+                  payload={updateProductsData}
+                  updateRevenue={updateRevenue}
+                  updateProduct={updateProduct}
+                  loading={loading}
+                  svg={svg}
+                  setProductState={setProductState}
+                  selectedProductId={selectedProductId}
+                  openRevenueEdit={openRevenueEdit}
+                  cancelRevenueEdit={cancelRevenueEdit}
+                  openFinanceEdit={openFinanceEdit}
+                  cancelFinanceEdit={cancelFinanceEdit}
+                  handleProductAdd={handleProductAdd}
+                  handleProductDelete={handleProductDelete}
+                  handleProductNameChange={handleProductNameChange}
+                  handleProductPriceChange={handleProductPriceChange}
+                  handleProductUnitCostChange={handleProductUnitCostChange}
+                />
+                {!profile?.finance ||
+                Object.keys(profile?.finance).length === 0 ? (
+                  <div className="save-button-column" onClick={addFinance}>
+                    <SaveIcon
+                      style={{
+                        color: "#37561b",
+                        fontSize: "20px",
+                        marginRight: "0.5rem",
+                      }}
+                    />
+                    <h3>save</h3>
+                  </div>
+                ) : null}
+              </AccordionDetails>
+            </Accordion>
+            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+              <AccordionSummary
+                expandIcon={
+                  !profile?.goal ? (
+                    <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
+                  ) : (
+                    <CheckBoxIcon
+                      style={{ color: "#37561b", fontSize: "25px" }}
+                    />
+                  )
+                }
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <div className="accordion-row">
+                  <SportsScoreIcon
+                    style={{
+                      color: "#37561b",
+                      fontSize: "45px",
+                      marginRight: "0.5rem",
+                    }}
+                  />
+                  <div className="accordion-column">
+                    <h3>Goal and Motivation</h3>
+                    <h5>What is your motivation to build a business</h5>
+                  </div>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails className="accordion-content">
+                <Goal
+                  setGoal={setGoal}
+                  goal={profile?.goal}
+                  editGoal={editGoal}
+                  openGoalEdit={openGoalEdit}
+                  cancelGoalEdit={cancelGoalEdit}
+                />
+                {/* <div className="save-button-column" onClick={addGoal}>
             <SaveIcon
               style={{
                 color: "#37561b",
@@ -1052,105 +1160,115 @@ const Profile = ({ location, history }) => {
             />
             <h3>save</h3>
           </div> */}
-        </AccordionDetails>
-      </Accordion>
-      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
-        <AccordionSummary
-          expandIcon={
-            !profile?.pitch ? (
-              <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            ) : (
-              <CheckBoxIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            )
-          }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className="accordion-row">
-            <CampaignIcon
-              style={{
-                color: "#37561b",
-                fontSize: "45px",
-                marginRight: "0.5rem",
-              }}
-            />
-            <div className="accordion-column">
-              <h3>Elevator Pitch</h3>
-              <h5>
-                For instance, consider problem, solution, uniqueness, market,
-                team
-              </h5>
-            </div>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+              <AccordionSummary
+                expandIcon={
+                  !profile?.pitch ? (
+                    <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
+                  ) : (
+                    <CheckBoxIcon
+                      style={{ color: "#37561b", fontSize: "25px" }}
+                    />
+                  )
+                }
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <div className="accordion-row">
+                  <CampaignIcon
+                    style={{
+                      color: "#37561b",
+                      fontSize: "45px",
+                      marginRight: "0.5rem",
+                    }}
+                  />
+                  <div className="accordion-column">
+                    <h3>Elevator Pitch</h3>
+                    <h5>
+                      For instance, consider problem, solution, uniqueness,
+                      market, team
+                    </h5>
+                  </div>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails className="accordion-content">
+                <Pitch
+                  pitch={elevatorPitch}
+                  elevatorPitch={profile?.pitch}
+                  handleElecatorPitchChange={handleElecatorPitchChange}
+                  openPitchEdit={openPitchEdit}
+                  cancelPitchEdit={cancelPitchEdit}
+                  editPitch={editPitch}
+                />
+                {userRole === "team member" ? null : (
+                  <div
+                    className="save-button-column"
+                    onClick={addElevatorPitch}
+                  >
+                    <SaveIcon
+                      style={{
+                        color: "#37561b",
+                        fontSize: "20px",
+                        marginRight: "0.5rem",
+                      }}
+                    />
+                    <h3>save</h3>
+                  </div>
+                )}
+              </AccordionDetails>
+            </Accordion>
+            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+              <AccordionSummary
+                expandIcon={
+                  !profile?.journey.length ? (
+                    <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
+                  ) : (
+                    <CheckBoxIcon
+                      style={{ color: "#37561b", fontSize: "25px" }}
+                    />
+                  )
+                }
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <div className="accordion-row">
+                  <FollowTheSignsIcon
+                    style={{
+                      color: "#37561b",
+                      fontSize: "45px",
+                      marginRight: "0.5rem",
+                    }}
+                  />
+                  <div className="accordion-column">
+                    <h3>Journey</h3>
+                    <h5>Journey steps archived</h5>
+                  </div>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails className="accordion-content">
+                <Journey
+                  journeySteps={journeySteps}
+                  handleJourneyStepsChange={handleJourneyStepsChange}
+                />
+                {userRole === "team member" ? null : (
+                  <div className="save-button-column" onClick={addJourney}>
+                    <SaveIcon
+                      style={{
+                        color: "#37561b",
+                        fontSize: "20px",
+                        marginRight: "0.5rem",
+                      }}
+                    />
+                    <h3>save</h3>
+                  </div>
+                )}
+              </AccordionDetails>
+            </Accordion>
           </div>
-        </AccordionSummary>
-        <AccordionDetails className="accordion-content">
-          <Pitch
-            pitch={elevatorPitch}
-            elevatorPitch={profile?.pitch}
-            handleElecatorPitchChange={handleElecatorPitchChange}
-            openPitchEdit={openPitchEdit}
-            cancelPitchEdit={cancelPitchEdit}
-            editPitch={editPitch}
-          />
-          {userRole === "team member" ? null : (
-            <div className="save-button-column" onClick={addElevatorPitch}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          )}
-        </AccordionDetails>
-      </Accordion>
-      <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
-        <AccordionSummary
-          expandIcon={
-            !profile?.journey.length ? (
-              <AddIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            ) : (
-              <CheckBoxIcon style={{ color: "#37561b", fontSize: "25px" }} />
-            )
-          }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className="accordion-row">
-            <FollowTheSignsIcon
-              style={{
-                color: "#37561b",
-                fontSize: "45px",
-                marginRight: "0.5rem",
-              }}
-            />
-            <div className="accordion-column">
-              <h3>Journey</h3>
-              <h5>Journey steps archived</h5>
-            </div>
-          </div>
-        </AccordionSummary>
-        <AccordionDetails className="accordion-content">
-          <Journey
-            journeySteps={journeySteps}
-            handleJourneyStepsChange={handleJourneyStepsChange}
-          />
-          {userRole === "team member" ? null : (
-            <div className="save-button-column" onClick={addJourney}>
-              <SaveIcon
-                style={{
-                  color: "#37561b",
-                  fontSize: "20px",
-                  marginRight: "0.5rem",
-                }}
-              />
-              <h3>save</h3>
-            </div>
-          )}
-        </AccordionDetails>
-      </Accordion>
+        </TabPane>
+      </Tabs>
     </div>
   );
 };

@@ -49,6 +49,7 @@ export default function DiagnosticsTools({ location, history }) {
 
   const data = location.state.data;
   const userId = location.state.data._id;
+  const username = location.state.data.username;
 
   React.useEffect(() => {
     if (!payload.length) {
@@ -186,25 +187,25 @@ export default function DiagnosticsTools({ location, history }) {
   const handleAddObjective = () => {
     const quarter = getCurrentQuarter();
     const data = {
-      description,
       quarter,
       category,
       userRole,
+      keyResult: description,
+      updatedBy: username,
       userId,
     };
     dispatch(
       actionCreators.addItem(
-        `catalyzer/objective`,
+        `auth/diagnostics-objective`,
         data,
         (data) => {
-          const { description } = data;
-          if (!description) return false;
+          const { keyResult } = data;
+          if (!keyResult) return false;
           else return true;
         },
         (res) => {
-          const { success, data, error } = res;
+          const { success, error } = res;
           if (success) {
-            dispatch(actionCreators.setObjectives(data.objs));
             message.info("Task successfully added to objectives");
             setAnchorEl(null);
             setDescription("");
