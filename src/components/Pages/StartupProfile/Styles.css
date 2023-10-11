@@ -492,47 +492,6 @@
   font-weight: 400;
 }
 
-.separator-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.separator-row h4 {
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 16px;
-  margin: 0;
-  width: 20%;
-}
-
-.admin-separator-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-}
-
-.admin-separator-row h4 {
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 16px;
-  margin: 0;
-  width: 20%;
-}
-
-.profile-separator {
-  align-self: center;
-  height: 1px;
-  width: 35%;
-  background: rgba(0, 0, 0, 0.1);
-}
-
 .profile-input-column {
   display: flex;
   align-items: center;
@@ -611,4 +570,22 @@
 
 .edit-icon:hover {
   cursor: pointer;
+}
+
+.overview-profile-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.overview-profile-row h3 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.overview-profile-txt {
+  font-weight: 400;
+  margin: 0.5rem;
 }
