@@ -56,12 +56,17 @@ const HomepageTemplate = (props) => {
   const [visible, setVisible] = React.useState(false);
   // console.log(startupLinks);
 
-  const { username, admin, tokenExpiration, category, userRole, features } =
-    useSelector((state) => state.auth);
+  const {
+    username,
+    userId,
+    admin,
+    tokenExpiration,
+    category,
+    userRole,
+    features,
+  } = useSelector((state) => state.auth);
 
   // console.log(category);
-
-  const auth = useSelector((state) => state.auth);
 
   const current_date = Date.now();
 
@@ -71,10 +76,10 @@ const HomepageTemplate = (props) => {
   }, []);
 
   React.useEffect(() => {
-    getProfile();
     getBoards();
     getLists();
     getDiagnostics();
+    createProfile();
     if (current_date >= tokenExpiration) {
       dispatch(actionCreators.removeUser());
       props.history.push("/");
@@ -92,6 +97,27 @@ const HomepageTemplate = (props) => {
       })
     );
   };
+
+  const createProfile = () => {
+    const data = { userId };
+    dispatch(
+      actionCreators.addItem(
+        `catalyzer/create-profile`,
+        data,
+        (data) => {
+          const { userId } = data;
+          if (!userId) return false;
+          else return true;
+        },
+        (res) => {
+          const { success } = res;
+          if (success) getProfile();
+          if (!success) getProfile();
+        }
+      )
+    );
+  };
+
   const getProfile = () => dispatch(actionCreators.getProfile(() => {}));
 
   const getDiagnostics = () => dispatch(actionCreators.getDiagnostics());

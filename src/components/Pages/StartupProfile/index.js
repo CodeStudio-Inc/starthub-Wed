@@ -298,7 +298,6 @@ const StartupProfile = () => {
   const founders = React.useMemo(() => {
     if (typeof profile?.founder === "undefined") return;
     let founderData = [];
-    if (typeof profile?.founder === "undefined") return;
     founderData = Array.from(
       profile?.founder,
       ({ name, growth, product, finance, operations, communication }) => ({
