@@ -73,7 +73,7 @@ export const getProfile = () => {
       .get(`catalyzer/profile`)
       .then((res) => {
         dispatch(setProfile(res?.data?.profile));
-        // console.log(res.data);
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

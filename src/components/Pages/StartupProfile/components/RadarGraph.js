@@ -5,13 +5,17 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
 const RadarGraph = ({ data, founders }) => {
   const founder = [
-    ...founders.map((f) => ({ name: f.name, time: f.time, focus: f.focus })),
+    ...founders?.map((f) => ({
+      name: f?.name,
+      time: f?.time,
+      focus: f?.focus,
+    })),
   ];
 
   return (
     <div className="accordion-founder">
       <div className="founder-card-row">
-        {founder.map((f, i) => (
+        {founder?.map((f, i) => (
           <div
             className={
               founder.length >= 3 ? "resized-founder-card" : "founder-card"
