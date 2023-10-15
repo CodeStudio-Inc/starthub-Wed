@@ -191,6 +191,20 @@ export const setObjectives = (data) => {
   };
 };
 
+export const setNotes = (data) => {
+  return {
+    type: actions.SET_NOTES,
+    data,
+  };
+};
+
+export const setNote = (data) => {
+  return {
+    type: actions.SET_NOTE,
+    data,
+  };
+};
+
 export const setCurrentQuarter = (data) => {
   return {
     type: actions.SET_CURRENT_QUARTER,

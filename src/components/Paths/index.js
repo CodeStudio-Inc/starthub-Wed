@@ -51,6 +51,7 @@ import Error from "../tabs/Error";
 import svg from "../../assets/images/spinner.svg";
 import GAEventsTracker from "../Hooks/GAEventsTracker";
 import logo from "../../assets/images/logo.png";
+import pin from "../../assets/images/pin2.png";
 
 export {
   actionCreators,
@@ -105,5 +106,6 @@ export {
   Error,
   svg,
   logo,
+  pin,
   GAEventsTracker,
 };
