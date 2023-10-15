@@ -10,6 +10,8 @@ const initialState = {
   statements: [],
   quarter: 0,
   objectives: [],
+  notes: [],
+  note: {},
   revenue: [],
   teams: 0,
   vision: 0,
@@ -121,6 +123,18 @@ const requests = (state = initialState, action) => {
       return updateObject(state, {
         loading: false,
         objectives: action.data,
+      });
+
+    case actions.SET_NOTES:
+      return updateObject(state, {
+        loading: false,
+        notes: action.data,
+      });
+
+    case actions.SET_NOTE:
+      return updateObject(state, {
+        loading: false,
+        note: action.data,
       });
 
     case actions.SET_ALL_USERS:

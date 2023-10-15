@@ -45,6 +45,7 @@ const OKROverview = () => {
 
   React.useEffect(() => {
     getObjectives();
+    getNotes();
     setCurrentQuarter();
     updateObjectives();
   }, []);
@@ -78,6 +79,18 @@ const OKROverview = () => {
         if (success) {
           setPayload(data.objs);
           dispatch(actionCreators.setObjectives(data.objs));
+        }
+        if (!success) console.log(error);
+      })
+    );
+  };
+
+  const getNotes = () => {
+    dispatch(
+      actionCreators.getItem(`catalyzer/notes`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setNotes(data.notes));
         }
         if (!success) console.log(error);
       })

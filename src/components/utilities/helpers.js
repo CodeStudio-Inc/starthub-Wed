@@ -111,3 +111,17 @@ export const getLastElement = (array) => {
   }
   return array[array.length - 1];
 };
+
+export const getRandomColor = () => {
+  // Generate random values for the red, green, and blue components
+  const red = Math.floor(Math.random() * 256); // 0 to 255
+  const green = Math.floor(Math.random() * 256); // 0 to 255
+  const blue = Math.floor(Math.random() * 256); // 0 to 255
+
+  // Convert the RGB values to a hexadecimal color code
+  const colorCode = `#${red.toString(16)}${green.toString(16)}${blue.toString(
+    16
+  )}`;
+
+  return colorCode;
+};
