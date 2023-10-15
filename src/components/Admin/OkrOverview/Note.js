@@ -16,7 +16,9 @@ const Note = ({ open, setOpen }) => {
 
   const { loading, note } = useSelector((state) => state.requests);
 
-  const draftHtml = htmlToDraft(note?.description);
+  console.log(note);
+
+  const draftHtml = htmlToDraft("<p></p>");
   const contentState = ContentState.createFromBlockArray(
     draftHtml?.contentBlocks
   );
