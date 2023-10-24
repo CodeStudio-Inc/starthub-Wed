@@ -46,6 +46,7 @@ const AddKeyresult = ({ objId, setPayload, hideAddKeyresult }) => {
       <textarea
         placeholder="Type keyresult..."
         value={state.keyResult}
+        autoFocus
         onChange={(e) =>
           setState({
             ...state,

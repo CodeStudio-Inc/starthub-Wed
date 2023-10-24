@@ -94,6 +94,28 @@
   color: #000000;
 }
 
+.notes-card-edit-row input {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.notes-save-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notes-save-column p {
+  font-size: 14px;
+
+  margin: 0;
+}
+
+.notes-save-column:hover {
+  cursor: pointer;
+}
+
 .notes-card-row {
   display: flex;
   align-items: center;
