@@ -955,7 +955,7 @@ const Profile = ({ location, history }) => {
               ) : null} */}
               </AccordionDetails>
             </Accordion>
-            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+            {/* <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
               <AccordionSummary
                 expandIcon={
                   !profile?.customer.length ? (
@@ -988,7 +988,7 @@ const Profile = ({ location, history }) => {
                   customers={customers}
                   handleCustomerChange={handleCustomerChange}
                 />
-                {/* <div className="save-button-column" onClick={addCustomer}>
+                <div className="save-button-column" onClick={addCustomer}>
             <SaveIcon
               style={{
                 color: "#37561b",
@@ -997,9 +997,9 @@ const Profile = ({ location, history }) => {
               }}
             />
             <h3>save</h3>
-          </div> */}
+          </div>
               </AccordionDetails>
-            </Accordion>
+            </Accordion> */}
             <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
               <AccordionSummary
                 expandIcon={
