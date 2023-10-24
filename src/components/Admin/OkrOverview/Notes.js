@@ -58,7 +58,7 @@ const Notes = () => {
           justifyContent: "center",
         }}
       >
-        {notes.map((n) => (
+        {notes?.map((n) => (
           <div
             key={n._id}
             className="notes-card"
