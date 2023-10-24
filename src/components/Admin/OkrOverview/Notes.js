@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, pin } from "../../Paths";
 import { Row, Input } from "antd";
 import moment from "moment";
+import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -14,7 +15,9 @@ const { Search } = Input;
 
 const Notes = () => {
   const [open, setOpen] = React.useState(false);
+  const [editNote, setEditNote] = React.useState(false);
   const [note, setNote] = React.useState();
+  const [newNote, setNewNote] = React.useState("");
   const { loading, notes } = useSelector((state) => state.requests);
 
   const dispatch = useDispatch();
@@ -23,6 +26,35 @@ const Notes = () => {
     setNote(note);
     dispatch(actionCreators.setNote(note));
     setOpen(true);
+  };
+
+  const handleSetEditNote = (note) => {
+    setEditNote(true);
+    setNewNote(note);
+  };
+
+  const updateNote = (id) => {
+    const data = { title: newNote };
+    dispatch(
+      actionCreators.updateItem(
+        `catalyzer/note/${id}`,
+        data,
+        (data) => {
+          const { title } = data;
+          if (!title) return false;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            setNewNote("");
+            setEditNote(false);
+            dispatch(actionCreators.setNotes(data.notes));
+          }
+          if (!success) console.log(error);
+        }
+      )
+    );
   };
 
   const deleteNote = (id) => {
@@ -64,11 +96,29 @@ const Notes = () => {
             className="notes-card"
             style={{ background: n.color }}
           >
-            <div
-              className="notes-card-edit-row"
-              onClick={() => handleOnClickNote(n)}
-            >
-              <p>{n.title}</p>
+            <div className="notes-card-edit-row">
+              {editNote ? (
+                <div className="notes-save-column">
+                  <input
+                    value={newNote}
+                    onChange={(e) => setNewNote(e.target.value)}
+                    autoFocus
+                  />
+                  <div className="notes-save-column">
+                    <p onClick={() => updateNote(n._id)}>save</p>
+                    <CancelIcon
+                      onClick={() => setEditNote(false)}
+                      style={{
+                        color: "#37561b",
+                        fontSize: "14px",
+                        marginLeft: "0.5rem",
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <p onClick={() => handleOnClickNote(n)}>{n.title}</p>
+              )}
               <img src={pin} style={{ height: "14px", width: "14px" }} />
             </div>
             <div className="notes-card-row">
@@ -81,6 +131,7 @@ const Notes = () => {
               <div className="notes-card-icon-row">
                 <ModeEditOutlineIcon
                   style={{ color: "rgba(0,0,0,0.7)", fontSize: "14px" }}
+                  onClick={() => handleSetEditNote(n.title)}
                 />
                 <DeleteIcon
                   style={{ color: "rgba(0,0,0,0.7)", fontSize: "14px" }}

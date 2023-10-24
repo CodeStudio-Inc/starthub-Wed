@@ -104,6 +104,7 @@ const Keyresult = ({
           <input
             placeholder="Enter keyresult"
             value={keyResult}
+            autoFocus
             onChange={(e) => setKeyresult(e.target.value)}
           />
           <p onClick={() => editKeyresult(k.objId, k._id)}>save</p>
