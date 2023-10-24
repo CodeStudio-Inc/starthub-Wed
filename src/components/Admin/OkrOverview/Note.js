@@ -16,8 +16,6 @@ const Note = ({ open, setOpen }) => {
 
   const { loading, note } = useSelector((state) => state.requests);
 
-  console.log(note);
-
   const draftHtml = htmlToDraft("<p></p>");
   const contentState = ContentState.createFromBlockArray(
     draftHtml?.contentBlocks
@@ -27,16 +25,12 @@ const Note = ({ open, setOpen }) => {
     EditorState.createWithContent(contentState)
   );
 
-  //   console.log(contentState);
-
   const dispatch = useDispatch();
 
   const closeModal = () => {
     setOpen(false);
     setEdit(false);
   };
-
-  //   console.log(editorState);
 
   const handleSetEdit = () => setEdit(true);
   const handleCancelSetEdit = () => setEdit(!edit);
@@ -62,6 +56,8 @@ const Note = ({ open, setOpen }) => {
             setEditorState(() => EditorState.createEmpty());
             setEdit(false);
             dispatch(actionCreators.setNotes(data.notes));
+            const updatedNote = data.notes.find((n) => n._id === note._id);
+            dispatch(actionCreators.setNote(updatedNote));
           }
           if (!success) console.log(error);
         }
@@ -87,6 +83,7 @@ const Note = ({ open, setOpen }) => {
             <h5>{moment(note?.dateCreated).format("DD/MM/YY")}</h5>
           </div>
         </div>
+        <div dangerouslySetInnerHTML={{ __html: note?.description }} />
         {edit ? (
           <Editor
             editorState={editorState}
@@ -96,10 +93,12 @@ const Note = ({ open, setOpen }) => {
             onEditorStateChange={(editorState) => setEditorState(editorState)}
             defaultEditorState={editorState}
             defaultContentState={contentState}
+            editorStyle={{
+              border: "1px solid rgba(0,0,0,0.3)",
+              minHeight: "150px",
+            }}
           />
-        ) : (
-          <div dangerouslySetInnerHTML={{ __html: note?.description }} />
-        )}
+        ) : null}
         {!edit ? (
           <Button style={{ alignSelf: "flex-end" }} onClick={handleSetEdit}>
             edit
