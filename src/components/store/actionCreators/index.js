@@ -46,6 +46,8 @@ export {
   searchItem,
   deleteItem,
   setObjectives,
+  setNotes,
+  setNote,
   setRevenue,
   setCurrentQuarter,
   setUsers,

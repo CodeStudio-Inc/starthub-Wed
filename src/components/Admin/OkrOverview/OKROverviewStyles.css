@@ -53,6 +53,76 @@
   justify-content: flex-start;
 }
 
+.notes-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.notes-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  white-space: break-spaces;
+  padding: 0.5rem;
+  width: 300px;
+  min-width: 300px;
+  background: #eee;
+  box-sizing: border-box;
+  margin: 1rem;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.notes-card:hover {
+  cursor: pointer;
+}
+
+.notes-card-edit-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.notes-card-edit-row p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: #000000;
+}
+
+.notes-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.notes-card-row h5 {
+  margin: 0;
+}
+
+.notes-card-icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-container {
+  height: 40px;
+  width: 40px;
+  border-radius: 100px;
+  margin: 0.2rem;
+}
+
+.color-container:hover {
+  cursor: pointer;
+}
+
 .objective-card {
   display: flex;
   align-items: center;

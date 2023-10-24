@@ -904,7 +904,7 @@ const StartupProfile = () => {
               ) : null} */}
               </AccordionDetails>
             </Accordion>
-            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+            {/* <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
               <AccordionSummary
                 expandIcon={
                   !profile?.customer.length ? (
@@ -948,7 +948,7 @@ const StartupProfile = () => {
                   <h3>save</h3>
                 </div>
               </AccordionDetails>
-            </Accordion>
+            </Accordion> */}
             <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
               <AccordionSummary
                 expandIcon={
