@@ -238,6 +238,7 @@ const OKROverview = () => {
         size="small"
         type="card"
         defaultActiveKey={getCurrentQuarter().toString()}
+        onChange={(activeKey) => setActiveTab(activeKey)}
       >
         <TabPane tab="First Quarter" key="1">
           <div
