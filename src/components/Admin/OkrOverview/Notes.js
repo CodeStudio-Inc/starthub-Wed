@@ -18,14 +18,12 @@ const { Search } = Input;
 const Notes = () => {
   const [open, setOpen] = React.useState(false);
   const [editNote, setEditNote] = React.useState(false);
-  const [note, setNote] = React.useState();
   const [newNote, setNewNote] = React.useState("");
   const { loading, notes } = useSelector((state) => state.requests);
 
   const dispatch = useDispatch();
 
   const handleOnClickNote = (note) => {
-    setNote(note);
     dispatch(actionCreators.setNote(note));
     setOpen(true);
   };
@@ -143,7 +141,7 @@ const Notes = () => {
           </div> */}
         </div>
       ))}
-      {/* <Note open={open} not={note} setOpen={setOpen} /> */}
+      <Note open={open} setOpen={setOpen} />
     </div>
   );
 };

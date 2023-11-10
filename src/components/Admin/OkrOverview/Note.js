@@ -19,6 +19,8 @@ const Note = ({ open, setOpen }) => {
 
   const { loading, note } = useSelector((state) => state.requests);
 
+  console.log(note);
+
   // const draftHtml = htmlToDraft("<p></p>");
   // const contentState = ContentState.createFromBlockArray(
   //   draftHtml?.contentBlocks
@@ -128,7 +130,9 @@ const Note = ({ open, setOpen }) => {
           <h2>{note?.title}</h2>
           <h5>
             with{" "}
-            {note?.mentor?.length > 1 ? note?.mentor?.join("&") : note?.mentor}
+            {note && note?.mentor?.length > 1
+              ? note?.mentor?.join("&")
+              : note?.mentor}
           </h5>
         </div>
         <div className="notes-card-row">
@@ -172,7 +176,7 @@ const Note = ({ open, setOpen }) => {
                   fontSize: "16px",
                 }}
               />
-              <p>{note?.duration?.join("-")}</p>
+              <p>{note && note?.duration?.join("-")}</p>
             </div>
             <div className="notes-row">
               <CalendarMonthIcon
@@ -188,9 +192,7 @@ const Note = ({ open, setOpen }) => {
             </div>
             <h4 style={{ marginTop: "1rem" }}>Members</h4>
             <div className="avatar-column">
-              {note?.startup?.map((s) => (
-                <p>{s}</p>
-              ))}
+              {note && note?.startup?.map((s) => <p>{s}</p>)}
             </div>
             <Upload customRequest={handleCustomRequest}>
               <Button style={{ marginTop: "1rem" }}>Add attachment</Button>
