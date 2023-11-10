@@ -143,7 +143,7 @@ const Notes = () => {
           </div> */}
         </div>
       ))}
-      <Note open={open} not={note} setOpen={setOpen} />
+      {/* <Note open={open} not={note} setOpen={setOpen} /> */}
     </div>
   );
 };

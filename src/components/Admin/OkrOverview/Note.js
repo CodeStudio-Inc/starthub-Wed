@@ -128,7 +128,7 @@ const Note = ({ open, setOpen }) => {
           <h2>{note?.title}</h2>
           <h5>
             with{" "}
-            {/* {note?.mentor?.length > 1 ? note?.mentor?.join("&") : note?.mentor} */}
+            {note?.mentor?.length > 1 ? note?.mentor?.join("&") : note?.mentor}
           </h5>
         </div>
         <div className="notes-card-row">
@@ -172,23 +172,23 @@ const Note = ({ open, setOpen }) => {
                   fontSize: "16px",
                 }}
               />
-              {/* <p>{note?.duration?.join("-")}</p> */}
+              <p>{note?.duration?.join("-")}</p>
             </div>
             <div className="notes-row">
               <CalendarMonthIcon
                 style={{ color: "rgba(0,0,0,0.5)", fontSize: "16px" }}
               />
-              <p>{moment(note.dateCreated).format("ll")}</p>
+              <p>{moment(note?.dateCreated).format("ll")}</p>
             </div>
             <div className="notes-row">
               <PlaceIcon
                 style={{ color: "rgba(0,0,0,0.5)", fontSize: "16px" }}
               />
-              <p>{note.venue}</p>
+              <p>{note?.venue}</p>
             </div>
             <h4 style={{ marginTop: "1rem" }}>Members</h4>
             <div className="avatar-column">
-              {note.startup.map((s) => (
+              {note?.startup?.map((s) => (
                 <p>{s}</p>
               ))}
             </div>
