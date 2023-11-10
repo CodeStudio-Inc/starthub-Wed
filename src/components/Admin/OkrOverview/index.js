@@ -6,6 +6,7 @@ import { actionCreators, svg } from "../../Paths";
 import { Helmet } from "react-helmet";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -37,9 +38,27 @@ const OKROverview = () => {
   const [progressBtn, setProgressBtn] = React.useState(false);
   const [activeCardId, setActiveCardId] = React.useState("");
   const [payload, setPayload] = React.useState([]);
+  const [activeTab, setActiveTab] = React.useState();
   const [selectedKeyresult, setSelectedKeyresult] = React.useState({
     tasks: [],
   });
+
+  const startups = users.filter(
+    (u) => u.teamCategory === "catalyzer" && u.userRole === "startup"
+  );
+  const startupOptions = startups.map((s) => ({
+    label: s.username,
+    value: s.username,
+  }));
+
+  const mentors = users.filter(
+    (u) => u.userRole === "team member" || u.userRole === "team lead"
+  );
+
+  const mentorOptions = mentors.map((s) => ({
+    label: s.username,
+    value: s.username,
+  }));
 
   const dispatch = useDispatch();
 
@@ -186,11 +205,7 @@ const OKROverview = () => {
   };
 
   const handleOpenDialogue = () => {
-    setOpenDialogue(true);
-  };
-
-  const handleCloseDialogue = () => {
-    setOpenDialogue(false);
+    setOpenDialogue(!openDialogue);
   };
 
   return (
@@ -201,11 +216,15 @@ const OKROverview = () => {
       <AddObjectiveDialogue
         open={openDialogue}
         setPayload={setPayload}
-        handleClose={handleCloseDialogue}
+        closeModal={handleOpenDialogue}
+        startupOptions={startupOptions}
+        mentorOptions={mentorOptions}
+        currentQuater={getCurrentQuarter()}
       />
       <MenuBar
         handleOpenDialogue={handleOpenDialogue}
         setPayload={setPayload}
+        activeTab={activeTab}
       />
       <Tasks
         open={open}
@@ -219,6 +238,7 @@ const OKROverview = () => {
         tabBarStyle={{ color: "#37561b" }}
         size="small"
         type="card"
+        onChange={(activeKey) => setActiveTab(activeKey)}
         defaultActiveKey={getCurrentQuarter().toString()}
       >
         <TabPane tab="First Quarter" key="1">
@@ -373,7 +393,7 @@ const OKROverview = () => {
             />
           </div>
         </TabPane>
-        <TabPane tab="Notes Board" key="5">
+        <TabPane tab="Session Notes" key="5">
           <Notes />
         </TabPane>
       </Tabs>
@@ -388,7 +408,7 @@ const OKROverview = () => {
         }}
         onClick={handleOpenDialogue}
       >
-        <AddIcon />
+        {openDialogue ? <CloseIcon /> : <AddIcon />}
       </Fab>
     </div>
   );

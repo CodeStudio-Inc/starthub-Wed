@@ -284,6 +284,28 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.avatar-column {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+
+.avatar-column h2 {
+  margin: 0;
+  font-weight: 300;
+  font-size: 18px;
+}
+
+.radar-graph-column {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+
 .card-content-row-avatar {
   display: flex;
   align-items: center;

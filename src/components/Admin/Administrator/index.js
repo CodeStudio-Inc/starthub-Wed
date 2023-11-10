@@ -1,9 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
+import { Radar } from "react-chartjs-2";
 import moment from "moment";
 import { Line } from "react-chartjs-2";
-import { Table } from "antd";
+import { Row, Table, Card, Avatar, Input, Divider, Button, Select } from "antd";
 import { actionCreators, ModalUI, svg } from "../../Paths";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import AddCardIcon from "@mui/icons-material/AddCard";
@@ -20,289 +22,159 @@ import AddDiagnostics from "./components/AddDiagnostics";
 import AddTeamLead from "./modals/AddTeamLead";
 import "./AdminPanel.css";
 import "../../Pages/Auth/AuthStyles.css";
+
+const { Search } = Input;
+
 const AdminPanel = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [payload, setPayload] = React.useState([]);
-  const [paylod, setPaylod] = React.useState([]);
-  const [diagnostic, setDiagnostic] = React.useState([]);
 
-  const { users } = useSelector((state) => state.admin);
+  const { users, loading } = useSelector((state) => state.admin);
   const { profiles } = useSelector((state) => state.profile);
-  const { userId, category, loading } = useSelector((state) => state.auth);
+  const { userId, category } = useSelector((state) => state.auth);
 
   const tableRef = React.useRef(null);
 
-  const filterUsers = users.filter((el) => el.creator === userId);
-  const teamMembers = users.filter(
-    (el) => el.adminId === userId && el.userRole === "team member"
-  );
   const startups = users.filter(
-    (el) => el.adminId === userId && el.userRole === "startup"
+    (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
   );
-  //   const startups = users.filter(u => )
-  const revenueTotal = users.filter(
-    (el) => el.creator === userId && typeof el.totalRevenue !== "undefined"
-  );
-
-  const totalRevenue = Array.from(
-    revenueTotal,
-    ({ totalRevenue }) => totalRevenue
-  ).reduce((a, b) => a + b, 0);
-  const totalExpectedRevenuePaid = Array.from(
-    revenueTotal,
-    ({ totalRevSharePaid }) => totalRevSharePaid
-  ).reduce((a, b) => a + b, 0);
+  // console.log(startups);
 
   const dispatch = useDispatch();
 
+  let records = [];
+
   React.useEffect(() => {
     getStartups();
-    // getProfiles();
-    // updateProfileObject();
-    // updateStartupObject();
+    getProfiles();
+    updateStartupObject();
   }, []);
 
   const getStartups = () => dispatch(actionCreators.getUsers());
+  const getProfiles = () => dispatch(actionCreators.getAllProfiles());
+  // console.log(profiles);
 
-  // const getProfiles = () => dispatch(actionCreators.getAllProfiles());
+  const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-  // const kawu = startups.find((s) => s.username === "postman")?.diagnostics;
+  const updateStartupObject = () => {
+    const newstartup = [
+      ...startups.map((r) => {
+        const { _id, ...rest } = r;
+        const profile = profiles.find((r) => r.creator === _id);
+        const data = profiles.find((r) => r.creator === _id)?.founder;
+        let destructuredData,
+          defaultPayload,
+          restructuredPayload,
+          datasets,
+          graphData;
+        if (typeof data !== "undefined") {
+          destructuredData = Array.from(
+            data,
+            ({
+              name,
+              growth,
+              product,
+              finance,
+              operations,
+              communication,
+            }) => ({
+              name,
+              growth,
+              product,
+              finance,
+              operations,
+              communication,
+            })
+          );
+          defaultPayload = [
+            {
+              name: "default",
+              growth: 1,
+              product: 2,
+              finance: 5,
+              operations: 8,
+              communication: 10,
+            },
+            ...destructuredData,
+          ];
+          restructuredPayload = [
+            ...defaultPayload.map((f) => {
+              const { name } = f;
+              return {
+                name: name,
+                data: Object.values(
+                  defaultPayload.find((e) => e.name === name)
+                ).slice(1),
+                label: Object.keys(
+                  defaultPayload.find((e) => e.name === name)
+                ).slice(1),
+              };
+            }),
+          ];
+          datasets = [
+            ...restructuredPayload?.map((f) => ({
+              label: f.name === "default" ? " " : f.name,
+              data: f.data,
+              fill: true,
+              backgroundColor:
+                f.name === "default"
+                  ? "rgba(0,0,0,0)"
+                  : ["#36561b56", "#dfa12685", "#61041848"],
+              borderColor:
+                f.name === "default"
+                  ? "rgba(0,0,0,0)"
+                  : ["#37561b", "#dfa126", "#61041848"],
+              pointBackgroundColor:
+                f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
+              pointBorderColor:
+                f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
+              pointHoverBackgroundColor:
+                f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
+              pointHoverBorderColor:
+                f.name === "default" ? "rgba(0,0,0,0)" : "#681a1b",
+              pointStyle: "circle",
+            })),
+          ];
+          graphData = {
+            labels: [...restructuredPayload?.map((f) => f.label)][0],
+            datasets: datasets,
+            maintainAspectRatio: true,
+          };
+        }
 
-  // const updateStartupObject = () => {
-  //   let newPayload = [];
-  //   newPayload = [
-  //     ...kawu.map((k) => {
-  //       const { title, score, steps } = k;
-  //       let newSteps = [...steps.filter((j) => j.checked)];
-  //       return {
-  //         startup: "postman",
-  //         category: title,
-  //         score: score,
-  //         steps: newSteps,
-  //       };
-  //     }),
-  //   ];
-  //   return setPaylod(newPayload);
-  // };
+        return {
+          ...rest,
+          profile: typeof data !== "undefined" ? profile : {},
+          radaGraph:
+            typeof data !== "undefined"
+              ? graphData
+              : {
+                  labels: [
+                    "growth",
+                    "product",
+                    "finance",
+                    "operations",
+                    "communication",
+                  ],
+                  datasets: [],
+                  maintainAspectRatio: true,
+                },
+        };
+      }),
+    ];
+    return setPayload(newstartup);
+  };
 
-  // console.log(paylod);
+  const onChange = (value) => {
+    console.log(`selected ${value}`);
+  };
 
-  // const updateProfileObject = () => {
-  //   let newPayload = [];
-  //   newPayload = [
-  //     ...profiles.map((p) => {
-  //       const { creator, finance, customer, journey, businessModal, ...rest } =
-  //         p;
-  //       let newCustomer = [...customer.filter((c) => c.checked)];
-  //       let newJourney = [...journey.filter((j) => j.checked)];
-  //       let newModel = [...businessModal.filter((b) => b.checked)];
-  //       let startup = startups.find((s) => s._id === creator);
-  //       let products = finance?.products.map((p) => ({
-  //         name: p.name,
-  //         price: p.price,
-  //         unitPrice: p.unitPrice,
-  //       }));
-  //       return {
-  //         ...rest,
-  //         startup: startup.username,
-  //         fullMonthRevenue: finance?.fullMonthRevenue,
-  //         lifeTimeRevenue: finance?.lifeTimeRevenue,
-  //         monthYear: finance?.monthYear,
-  //         products: !finance?.products ? [] : products,
-  //         customer: !customer.length ? [] : newCustomer,
-  //         journey: !journey.length ? [] : newJourney,
-  //         businessModal: !businessModal.length ? [] : newModel,
-  //       };
-  //     }),
-  //   ];
-  //   return setPayload(newPayload);
-  // };
-
-  // const columz = [
-  //   {
-  //     title: "Startup",
-  //     dataIndex: "startup",
-  //     key: "startup",
-  //     align: "left",
-  //   },
-  //   {
-  //     title: "Category",
-  //     dataIndex: "category",
-  //     key: "category",
-  //     align: "left",
-  //   },
-  //   {
-  //     title: "Score",
-  //     dataIndex: "score",
-  //     key: "score",
-  //     align: "left",
-  //     render: (r) => <p>{Math.round(r)}%</p>,
-  //   },
-  //   {
-  //     title: "Steps",
-  //     dataIndex: "steps",
-  //     key: "steps",
-  //     align: "left",
-  //     render: (r) => (
-  //       <div>
-  //         {r.map((s) => (
-  //           <p>{s.step}</p>
-  //         ))}
-  //       </div>
-  //     ),
-  //   },
-  // ];
-
-  // const columns = [
-  //   {
-  //     title: "Startup",
-  //     dataIndex: "startup",
-  //     key: "startup",
-  //     align: "left",
-  //   },
-  //   {
-  //     title: "Founder",
-  //     dataIndex: "founder",
-  //     key: "founder",
-  //     align: "left",
-  //     render: (r) => (
-  //       <div className="admin-table-cells">
-  //         {r.map((f) => (
-  //           <div className="admin-table-cells">
-  //             <div className="admin-table-cells-row">
-  //               <p>Name: </p>
-  //               <p>{f.name}</p>
-  //             </div>
-  //             <div className="admin-table-cells-row">
-  //               <p>Time: </p>
-  //               <p>{f.time}%</p>
-  //             </div>
-  //             <div className="admin-table-cells-row">
-  //               <p>Focus: </p>
-  //               <p>{f.focus}</p>
-  //             </div>
-  //             <div className="admin-table-cells-row">
-  //               <p>Finance: </p>
-  //               <p>{f.finance}</p>
-  //             </div>
-  //             <div className="admin-table-cells-row">
-  //               <p>Growth: </p>
-  //               <p>{f.growth}</p>
-  //             </div>
-  //             <div className="admin-table-cells-row">
-  //               <p>Operations: </p>
-  //               <p>{f.operations}</p>
-  //             </div>
-  //             <div className="admin-table-cells-row">
-  //               <p>Communication: </p>
-  //               <p>{f.communication}</p>
-  //             </div>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: "Customer",
-  //     dataIndex: "customer",
-  //     key: "customer",
-  //     align: "left",
-  //     render: (r) => (
-  //       <div className="admin-table-cells">
-  //         {r.map((c) => (
-  //           <p>{c.name}</p>
-  //         ))}
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: "Business Modal",
-  //     dataIndex: "businessModal",
-  //     key: "businessModal",
-  //     align: "left",
-  //     render: (r) => (
-  //       <div className="admin-table-cells">
-  //         {r.map((b) => (
-  //           <p>{b.name}</p>
-  //         ))}
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: "LifeTime Revenue",
-  //     dataIndex: "lifeTimeRevenue",
-  //     key: "lifeTimeRevenue",
-  //     align: "left",
-  //     render: (r) => <p>{r?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}$</p>,
-  //   },
-  //   {
-  //     title: "Full Month Revenue",
-  //     dataIndex: "fullMonthRevenue",
-  //     key: "fullMonthRevenue",
-  //     align: "left",
-  //     render: (r) => <p>{r?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}$</p>,
-  //   },
-  //   {
-  //     title: "Full Month, Month & Year",
-  //     dataIndex: "monthYear",
-  //     key: "monthYear",
-  //     align: "left",
-  //     render: (r) => <p>{r?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>,
-  //   },
-  //   {
-  //     title: "Products",
-  //     dataIndex: "products",
-  //     key: "products",
-  //     align: "left",
-  //     render: (r) => (
-  //       <div className="admin-table-cells">
-  //         {r.map((p) => (
-  //           <div className="admin-table-cells">
-  //             <div className="admin-table-cells-row">
-  //               <p>Name: </p>
-  //               <p>{p.name}</p>
-  //             </div>
-  //             <div className="admin-table-cells-row">
-  //               <p>Price: </p>
-  //               <p>{p.price}$</p>
-  //             </div>
-  //             <div className="admin-table-cells-row">
-  //               <p>Unit Cost: </p>
-  //               <p>{p.unitCost}$</p>
-  //             </div>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: "Goal",
-  //     dataIndex: "goal",
-  //     key: "goal",
-  //     align: "left",
-  //   },
-  //   {
-  //     title: "Pitch",
-  //     dataIndex: "pitch",
-  //     key: "pitch",
-  //     align: "left",
-  //   },
-  //   {
-  //     title: "Journey",
-  //     dataIndex: "journey",
-  //     key: "journey",
-  //     align: "left",
-  //     render: (r) => (
-  //       <div className="admin-table-cells">
-  //         {r.map((j) => (
-  //           <p>{j.name}</p>
-  //         ))}
-  //       </div>
-  //     ),
-  //   },
-  // ];
+  const onSearchSelect = (value) => {
+    console.log("search:", value);
+  };
 
   return (
     <div className="startups-container">
@@ -322,117 +194,157 @@ const AdminPanel = (props) => {
       >
         <AddTeamLead setOpen={handleClose} />
       </Modal>
-      <div className="admin-row">
-        <div className="admin-card-row">
-          <div className="admin-card">
-            <div className="card-content-column">
-              <div className="card2-row">
-                <div className="card-content-row-avatar">
-                  <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
-                </div>
-                <h3>view users</h3>
-              </div>
-              <h1>
-                {users.length} {users.length === 1 ? "user" : "total users"}
-              </h1>
-            </div>
-          </div>
-          <div className="admin-card">
-            <div className="card-content-column">
-              <div className="card2-row">
-                <div className="card-content-row-avatar">
-                  <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
-                </div>
-                <h3 className="card-txt">Team leads</h3>
-              </div>
-              <h1>
-                {filterUsers.length}{" "}
-                {filterUsers.length === 1 ? "lead" : "leads"}
-              </h1>
-            </div>
-          </div>
-          <div className="admin-card">
-            <div className="card-content-column">
-              <div className="card2-row">
-                <div className="card-content-row-avatar">
-                  <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
-                </div>
-                <h3 className="card-txt">Team members</h3>
-              </div>
-              <h1>
-                {teamMembers.length}{" "}
-                {teamMembers.length === 1 ? "member" : "members"}
-              </h1>
-            </div>
-          </div>
-          <div className="admin-card">
-            <div className="card-content-column">
-              <div className="card2-row">
-                <div className="card-content-row-avatar">
-                  <GroupsIcon style={{ fontSize: "18px", color: "#37561b" }} />
-                </div>
-                <h3 className="card-txt">Startups</h3>
-              </div>
-              <h1>
-                {startups.length}{" "}
-                {startups.length === 1 ? "startup" : "startups"}
-              </h1>
-            </div>
-          </div>
-        </div>
-        {/* <div className="admin-navigation">
-          <div className="navigation-cards">
-            <div>
-              <h3>Generate reports</h3>
-              <p>Startup profiles and diagnostic reports</p>
-            </div>
-            <AssignmentIcon style={{ color: "#37561b", fontSize: "40PX" }} />
-          </div>
-          <DownloadTableExcel
-            filename="postman Diagnostics Report"
-            sheet="Diagnostics"
-            currentTableRef={tableRef.current}
-          >
-            <button> Generate excel sheet </button>
-          </DownloadTableExcel>
-        </div> */}
-        <AddFeatures
-          actionCreators={actionCreators}
-          dispatch={dispatch}
-          loading={loading}
-          svg={svg}
+      <Row
+        xs={12}
+        style={{
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+          width: "95%",
+          margin: "0.5rem",
+        }}
+      >
+        <Search
+          placeholder="search startup"
+          value={searchValue}
+          onSearch={onSearch}
+          onChange={(e) => setSearchValue(e.target.value)}
+          style={{ width: 200, marginRight: "1rem" }}
         />
-        <AddCategories
-          actionCreators={actionCreators}
-          dispatch={dispatch}
-          loading={loading}
-          svg={svg}
-        />
-        <AddDiagnostics
-          actionCreators={actionCreators}
-          dispatch={dispatch}
-          loading={loading}
-          svg={svg}
-        />
-        {/* <Table
-          style={{ width: "100%", marginTop: "1rem" }}
-          ref={tableRef}
-          columns={columz}
-          dataSource={[
-            ...paylod.map((r) => ({
-              ...r,
-              key: r._id,
-            })),
-          ]}
-          pagination={{
-            defaultPageSize: 30,
-            showSizeChanger: true,
-            pageSizeOptions: ["10", "20", "30"],
+        <h3 style={{ margin: "0" }}>Total Users :{users.length}</h3>
+        <Button type="dashed" style={{ marginLeft: "1rem" }}>
+          Add Startup
+        </Button>
+        <Avatar
+          style={{
+            backgroundColor: "#37561b",
+            marginLeft: "1rem",
           }}
-        /> */}
-        {/* <div className="admin-left-container"></div> */}
-        {/* <div className="admin-right-container"></div> */}
-      </div>
+          size={30}
+          icon={loading ? <LoadingOutlined /> : <ReloadOutlined />}
+        />
+      </Row>
+      <Divider />
+      <Row
+        xs={12}
+        style={{
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+          width: "95%",
+        }}
+      >
+        <Select
+          showSearch
+          placeholder="Category"
+          optionFilterProp="children"
+          onChange={onChange}
+          onSearch={onSearchSelect}
+          options={[
+            {
+              value: "catalyzer",
+              label: "Catalyzer",
+            },
+            {
+              value: "SheTechs",
+              label: "SheTechs",
+            },
+            {
+              value: "Greenovation",
+              label: "Tom",
+            },
+            {
+              value: "OIP",
+              label: "OIP",
+            },
+          ]}
+        />
+        <Select
+          showSearch
+          placeholder="Revenue Generated"
+          optionFilterProp="children"
+          onChange={onChange}
+          onSearch={onSearchSelect}
+          style={{ marginLeft: "1rem" }}
+          options={[
+            {
+              value: 500000,
+              label: "1,0000USD",
+            },
+            {
+              value: 1000000,
+              label: "20,000USD",
+            },
+            {
+              value: 1000000,
+              label: "40,OOOUSD",
+            },
+          ]}
+        />
+        <Button type="dashed" style={{ marginLeft: "1rem" }}>
+          Filter
+        </Button>
+      </Row>
+      <Divider />
+      <Row
+        xs={12}
+        gutter={4}
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {payload.map((r) => (
+          <Card
+            style={{
+              width: 550,
+              margin: "1rem",
+            }}
+          >
+            <div className="card-content-column">
+              <Row xs={12}>
+                <div className="avatar-column">
+                  <Avatar
+                    style={{
+                      backgroundColor: "#36561b56",
+                    }}
+                    size={55}
+                  >
+                    {r.username.substring(0, 1)}
+                  </Avatar>
+                  <h3>{r.username}</h3>
+                </div>
+                <div className="avatar-column">
+                  <h2>Pitch Deck</h2>
+                  {/* <h3>{r?.profile?.pitch}</h3> */}
+                  <h3>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </h3>
+                </div>
+              </Row>
+              <Divider />
+              <Row xs={12}>
+                <div className="radar-graph-column">
+                  <h2>Founder skill level on a scale of 10</h2>
+                  <Divider />
+                  {typeof r?.radaGraph === "undefined" ? null : (
+                    <Radar
+                      data={r?.radaGraph}
+                      options={{
+                        aspectRatio: 2,
+                      }}
+                    />
+                  )}
+                </div>
+              </Row>
+            </div>
+          </Card>
+        ))}
+      </Row>
     </div>
   );
 };

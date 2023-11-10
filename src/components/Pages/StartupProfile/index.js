@@ -764,6 +764,17 @@ const StartupProfile = () => {
               flexDirection: "column",
             }}
           >
+            <h3 className="overview-profile-txt">Elevetor Pitch</h3>
+            <h4
+              style={{
+                color: "rgba(0,0,0,0.6)",
+                fontWeight: "300",
+                fontStyle: "italic",
+                fontSize: "18px",
+              }}
+            >
+              "{profile?.pitch}"
+            </h4>
             <h3 className="overview-profile-txt">Founding Team</h3>
             <RadarGraph data={data} founders={profile?.founder} />
             <h3 className="overview-profile-txt">Product and Finance</h3>
@@ -949,7 +960,7 @@ const StartupProfile = () => {
                 </div>
               </AccordionDetails>
             </Accordion> */}
-            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+            {/* <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
               <AccordionSummary
                 expandIcon={
                   !profile?.businessModal.length ? (
@@ -993,7 +1004,7 @@ const StartupProfile = () => {
                   <h3>save</h3>
                 </div>
               </AccordionDetails>
-            </Accordion>
+            </Accordion> */}
             <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
               <AccordionSummary
                 expandIcon={

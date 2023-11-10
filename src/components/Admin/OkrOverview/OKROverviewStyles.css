@@ -33,8 +33,8 @@
 .tool-bar-action-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 20%;
+  justify-content: flex-end;
+  width: 40%;
 }
 
 .tool-bar-action-container input {
@@ -45,6 +45,7 @@
   background: #eee;
   padding-left: 5px;
   color: black;
+  margin-right: 1rem;
 }
 
 .objective-quarter-container {
@@ -61,19 +62,34 @@
   width: 100%;
 }
 
+.notes-total {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 80%;
+}
+
 .notes-card {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
   white-space: break-spaces;
-  padding: 0.5rem;
-  width: 300px;
+  padding: 1rem;
+  width: 80%;
   min-width: 300px;
-  background: #eee;
+  background: #fff;
+  border-left: 4px solid #37561b;
   box-sizing: border-box;
   margin: 1rem;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.note-modal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .notes-card:hover {
@@ -87,10 +103,9 @@
   width: 100%;
 }
 
-.notes-card-edit-row p {
+.notes-card-edit-row h3 {
   margin: 0;
-  font-size: 13px;
-  font-weight: 400;
+  font-weight: "bold";
   color: #000000;
 }
 
@@ -108,24 +123,60 @@
 
 .notes-save-column p {
   font-size: 14px;
-
   margin: 0;
 }
 
-.notes-save-column:hover {
+.notes-save-column p:hover {
   cursor: pointer;
+}
+
+.notes-column {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.notes-column h2 {
+  margin: 0;
+}
+
+.notes-column h5 {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.notes-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+}
+
+.notes-row p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 0.3rem;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .notes-card-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .notes-card-row h5 {
   margin: 0;
+}
+
+.notes-card-row h4 {
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 1rem;
 }
 
 .notes-card-icon-row {
@@ -134,11 +185,55 @@
   justify-content: center;
 }
 
-.color-container {
-  height: 40px;
-  width: 40px;
-  border-radius: 100px;
+.editor-column {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 75%;
+}
+
+.avatar-column {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.avatar-column p {
+  padding: 4px;
+  background: #36561b56;
+  color: #37561b;
+  border-radius: 20px;
+  font-size: 12px;
   margin: 0.2rem;
+}
+
+.multiple-select {
+  margin-bottom: 1rem;
+}
+
+.session-input {
+  height: 40px;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.number-input {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 1rem;
+}
+
+.session-text {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.session-date-picker {
+  width: 45%;
 }
 
 .color-container:hover {
@@ -521,7 +616,7 @@
 }
 
 .keyresult-modal p {
-  margin: 0;
+  /* margin: 0; */
   color: #37561b;
 }
 

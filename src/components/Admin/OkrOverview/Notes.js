@@ -1,13 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, pin } from "../../Paths";
-import { Row, Input } from "antd";
+import { Row, Input, Avatar } from "antd";
 import moment from "moment";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PushPinIcon from "@mui/icons-material/PushPin";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PlaceIcon from "@mui/icons-material/Place";
 
 import Note from "./Note";
 
@@ -29,8 +31,8 @@ const Notes = () => {
   };
 
   const handleSetEditNote = (note) => {
-    setEditNote(true);
-    setNewNote(note);
+    // setEditNote(true);
+    // setNewNote(note);
   };
 
   const updateNote = (id) => {
@@ -57,92 +59,91 @@ const Notes = () => {
     );
   };
 
-  const deleteNote = (id) => {
-    dispatch(
-      actionCreators.deleteItem(`catalyzer/remove-note/${id}`, (res) => {
-        const { success, data, error } = res;
-        if (success) {
-          dispatch(actionCreators.setNotes(data.notes));
-        }
-        if (!success) console.log(error);
-      })
-    );
-  };
-
   return (
     <div className="notes-container">
-      <Search
-        placeholder="search notes"
-        allowClear
-        bordered={false}
-        // onSearch={onSearch}
-        style={{
-          width: "80%",
-          borderRadius: "5px",
-          background: "#eee",
-          marginBottom: "1rem",
-        }}
-      />
-      <Row
-        xs={12}
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {notes?.map((n) => (
-          <div
-            key={n._id}
-            className="notes-card"
-            style={{ background: n.color }}
-          >
-            <div className="notes-card-edit-row">
-              {editNote ? (
+      <div className="notes-total">
+        <h3>Total Sessions : </h3>
+        <h2>{notes.length}</h2>
+      </div>
+      {notes?.map((n) => (
+        <div
+          key={n._id}
+          onClick={() => handleOnClickNote(n)}
+          className="notes-card"
+          style={{ background: n.color }}
+        >
+          <div className="notes-card-edit-row">
+            {editNote ? (
+              <div className="notes-save-column">
+                <input
+                  value={newNote}
+                  onChange={(e) => setNewNote(e.target.value)}
+                  autoFocus
+                />
                 <div className="notes-save-column">
-                  <input
-                    value={newNote}
-                    onChange={(e) => setNewNote(e.target.value)}
-                    autoFocus
+                  <p onClick={() => updateNote(n._id)}>save</p>
+                  <CancelIcon
+                    onClick={() => setEditNote(false)}
+                    style={{
+                      color: "#37561b",
+                      fontSize: "14px",
+                      marginLeft: "0.5rem",
+                    }}
                   />
-                  <div className="notes-save-column">
-                    <p onClick={() => updateNote(n._id)}>save</p>
-                    <CancelIcon
-                      onClick={() => setEditNote(false)}
-                      style={{
-                        color: "#37561b",
-                        fontSize: "14px",
-                        marginLeft: "0.5rem",
-                      }}
-                    />
-                  </div>
                 </div>
-              ) : (
-                <p onClick={() => handleOnClickNote(n)}>{n.title}</p>
-              )}
-              <img src={pin} style={{ height: "14px", width: "14px" }} />
-            </div>
-            <div className="notes-card-row">
-              <div className="notes-card-icon-row">
-                <CalendarMonthIcon
-                  style={{ color: "rgba(0,0,0,0.5)", fontSize: "14px" }}
-                />
-                <h5>{moment(n.dateCreated).format("DD/MM/YY")}</h5>
               </div>
-              <div className="notes-card-icon-row">
-                <ModeEditOutlineIcon
-                  style={{ color: "rgba(0,0,0,0.7)", fontSize: "14px" }}
-                  onClick={() => handleSetEditNote(n.title)}
-                />
-                <DeleteIcon
-                  style={{ color: "rgba(0,0,0,0.7)", fontSize: "14px" }}
-                  onClick={() => deleteNote(n._id)}
-                />
+            ) : (
+              <div className="notes-column">
+                <h3>{n.title}</h3>
+                <h5>
+                  with {n.mentor.length > 1 ? n.mentor.join("&") : n.mentor[0]}
+                </h5>
+                <div className="notes-row">
+                  <AccessTimeIcon
+                    style={{
+                      color: "rgba(0,0,0,0.5)",
+                      fontSize: "16px",
+                    }}
+                  />
+                  <p>{n.duration.join("-")}</p>
+                </div>
+                <div className="notes-row">
+                  <CalendarMonthIcon
+                    style={{ color: "rgba(0,0,0,0.5)", fontSize: "16px" }}
+                  />
+                  <p>{moment(n.dateCreated).format("ll")}</p>
+                </div>
+                <div className="notes-row">
+                  <PlaceIcon
+                    style={{ color: "rgba(0,0,0,0.5)", fontSize: "16px" }}
+                  />
+                  <p>{n.venue}</p>
+                </div>
               </div>
-            </div>
+            )}
+            <Avatar
+              shape="square"
+              size={64}
+              style={{ background: "#36561b56" }}
+            >
+              <h1 style={{ color: "#fff" }}>{n.mentor[0].substring(0, 1)}</h1>
+            </Avatar>
           </div>
-        ))}
-      </Row>
-      <Note open={open} not={note} setOpen={setOpen} />
+          {/* <div className="notes-card-row">
+            <div className="notes-card-icon-row">
+              <ModeEditOutlineIcon
+                style={{ color: "rgba(0,0,0,0.7)", fontSize: "14px" }}
+                onClick={() => handleSetEditNote(n.title)}
+              />
+              <DeleteIcon
+                style={{ color: "rgba(0,0,0,0.7)", fontSize: "14px" }}
+                onClick={() => deleteNote(n._id)}
+              />
+            </div>
+          </div> */}
+        </div>
+      ))}
+      {/* <Note open={open} not={note} setOpen={setOpen} /> */}
     </div>
   );
 };
