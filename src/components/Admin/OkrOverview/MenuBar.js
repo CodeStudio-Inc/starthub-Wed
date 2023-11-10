@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators } from "../../Paths";
+import { Button, DatePicker } from "antd";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,11 +13,14 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import DownloadIcon from "@mui/icons-material/Download";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-const MenuBar = ({ handleOpenDialogue, setPayload, userId }) => {
+const MenuBar = ({ handleOpenDialogue, setPayload, userId, activeTab }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [year, setYear] = React.useState("");
+  const [date, setDate] = React.useState("");
 
   const { loading } = useSelector((state) => state.requests);
+
+  const { RangePicker } = DatePicker;
 
   const dispatch = useDispatch();
 
@@ -56,6 +60,25 @@ const MenuBar = ({ handleOpenDialogue, setPayload, userId }) => {
     }
   };
 
+  const handleDateOnChange = (date, dateString) => {
+    setDate(dateString);
+  };
+
+  const searchNotes = (e) => {
+    if (!date.length) return;
+    dispatch(
+      actionCreators.searchItem(
+        `catalyzer/filter-notes?startDate=${date[0]}&endDate=${date[1]}`,
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setNotes(data.notes));
+          }
+        }
+      )
+    );
+  };
+
   const openMenu = Boolean(anchorEl);
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -77,14 +100,22 @@ const MenuBar = ({ handleOpenDialogue, setPayload, userId }) => {
         <Toolbar className="tool-bar">
           <h1>OKRs</h1>
           <Box className="tool-bar-action-container">
-            <input
-              value={year}
-              placeholder="enter year to search"
-              onKeyUp={(e) => searchOkrs(e)}
-              onChange={(e) => setYear(e.target.value)}
-              disabled={loading}
-            />
-            {userId ? null : (
+            {activeTab === "5" ? (
+              <RangePicker
+                style={{ marginRight: "1rem", width: "300px" }}
+                onChange={handleDateOnChange}
+              />
+            ) : (
+              <input
+                value={year}
+                placeholder="year"
+                onKeyUp={(e) => searchOkrs(e)}
+                onChange={(e) => setYear(e.target.value)}
+                disabled={loading}
+              />
+            )}
+            <Button onClick={searchNotes}>Filter</Button>
+            {/* {userId ? null : (
               <MoreVertIcon
                 id="basic-button"
                 aria-controls={openMenu ? "basic-menu" : undefined}
@@ -93,8 +124,8 @@ const MenuBar = ({ handleOpenDialogue, setPayload, userId }) => {
                 style={{ fontSize: "30px", color: "rgba(0,0,0,0.4)" }}
                 onClick={handleMenuClick}
               />
-            )}
-            <Menu
+            )} */}
+            {/* <Menu
               id="basic-menu"
               anchorEl={anchorEl}
               open={openMenu}
@@ -111,7 +142,7 @@ const MenuBar = ({ handleOpenDialogue, setPayload, userId }) => {
                 </ListItemIcon>
                 add objective
               </MenuItem>
-            </Menu>
+            </Menu> */}
           </Box>
         </Toolbar>
       </AppBar>
