@@ -128,7 +128,9 @@ const Note = ({ open, setOpen }) => {
           <h2>{note?.title}</h2>
           <h5>
             with{" "}
-            {note.mentor.length > 1 ? note.mentor.join("&") : note.mentor[0]}
+            {note?.mentor?.length > 1
+              ? note?.mentor?.join("&")
+              : note?.mentor[0]}
           </h5>
         </div>
         <div className="notes-card-row">
