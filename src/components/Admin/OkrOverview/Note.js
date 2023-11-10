@@ -172,7 +172,7 @@ const Note = ({ open, setOpen }) => {
                   fontSize: "16px",
                 }}
               />
-              <p>{note.duration.join("-")}</p>
+              {/* <p>{note?.duration?.join("-")}</p> */}
             </div>
             <div className="notes-row">
               <CalendarMonthIcon
