@@ -41,6 +41,8 @@ const Revenue = () => {
       (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
     );
 
+  console.log(category);
+
   const [open, setOpen] = React.useState(false);
 
   const showDrawer = () => setOpen(true);

@@ -815,6 +815,17 @@ const Profile = ({ location, history }) => {
               flexDirection: "column",
             }}
           >
+            <h3 className="overview-profile-txt">Elevetor Pitch</h3>
+            <h4
+              style={{
+                color: "rgba(0,0,0,0.6)",
+                fontWeight: "300",
+                fontStyle: "italic",
+                fontSize: "18px",
+              }}
+            >
+              "{profile?.pitch}"
+            </h4>
             <h3 className="overview-profile-txt">Founding Team</h3>
             <RadarGraph data={data} founders={profile?.founder} />
             <h3 className="overview-profile-txt">Product and Finance</h3>
@@ -1000,7 +1011,7 @@ const Profile = ({ location, history }) => {
           </div>
               </AccordionDetails>
             </Accordion> */}
-            <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
+            {/* <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
               <AccordionSummary
                 expandIcon={
                   !profile?.businessModal.length ? (
@@ -1033,7 +1044,7 @@ const Profile = ({ location, history }) => {
                   businessModals={businessModals}
                   handleBusinessModalChange={handleBusinessModalChange}
                 />
-                {/* <div className="save-button-column" onClick={addBusinessModal}>
+                <div className="save-button-column" onClick={addBusinessModal}>
             <SaveIcon
               style={{
                 color: "#37561b",
@@ -1042,9 +1053,9 @@ const Profile = ({ location, history }) => {
               }}
             />
             <h3>save</h3>
-          </div> */}
+          </div>
               </AccordionDetails>
-            </Accordion>
+            </Accordion> */}
             <Accordion style={{ width: "95%", marginBottom: "1rem" }}>
               <AccordionSummary
                 expandIcon={

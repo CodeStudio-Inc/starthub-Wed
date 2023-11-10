@@ -1,56 +1,71 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, svg } from "../../Paths";
-import { message, Tabs, Row } from "antd";
+import {
+  message,
+  Tabs,
+  Row,
+  Select,
+  Modal,
+  Input,
+  InputNumber,
+  DatePicker,
+  TimePicker,
+  Button,
+} from "antd";
 import { getRandomColor } from "../../utilities/helpers";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import { MultiSelect } from "react-multi-select-component";
+import moment from "moment";
 
-const AddObjectiveDialogue = ({ open, handleClose, setPayload }) => {
+import "antd/dist/antd.css"; //
+
+const AddObjectiveDialogue = ({
+  open,
+  closeModal,
+  setPayload,
+  startupOptions,
+  mentorOptions,
+  currentQuater,
+}) => {
   const { TabPane } = Tabs;
+  const { RangePicker } = DatePicker;
   const [state, setState] = React.useState({
     description: "",
     quarter: 0,
   });
+  const [description, setDescription] = React.useState(" ");
+  const [quarter, setQuarter] = React.useState(" ");
   const [title, setTitle] = React.useState(" ");
-  const [color, setColor] = React.useState(" ");
-  const [index, setIndex] = React.useState(" ");
+  const [startup, setStartup] = React.useState([]);
+  const [mentor, setMentor] = React.useState([]);
+  const [venue, setVenue] = React.useState(" ");
+  const [date, setDate] = React.useState(" ");
+  const [duration, setDuration] = React.useState("");
   const [activeTab, setActiveTab] = React.useState("");
+  const [selected, setSelected] = React.useState([]);
 
   const { category } = useSelector((state) => state.auth);
   const { loading } = useSelector((state) => state.requests);
 
   const dispatch = useDispatch();
 
-  const handleSetNoteColor = (color, index) => {
-    setIndex(index);
-    setColor(color);
+  const handleDateOnChange = (date, dateString) => {
+    setDate(dateString);
   };
 
-  const notesColors = [
-    "#f1f58f",
-    "#ffa92f",
-    "#ff33b1",
-    "#4ee8f2",
-    "#74ed4a",
-    "#ddff4f",
-    "#dfa7dd",
-  ];
+  const handleDurationOnChange = (date, dateString) => {
+    setDuration(dateString);
+  };
+
+  const handleQuarterChange = (value) => {
+    setQuarter(value);
+  };
 
   const addObjective = () => {
-    if (activeTab === "2") return addNote();
     const data = {
-      description: state.description,
-      quarter: state.quarter,
+      description: description,
+      quarter: quarter,
       category,
     };
     dispatch(
@@ -71,7 +86,7 @@ const AddObjectiveDialogue = ({ open, handleClose, setPayload }) => {
               description: "",
               quarter: "",
             });
-            handleClose();
+            closeModal();
           }
           if (!success) console.log(success);
         }
@@ -80,27 +95,42 @@ const AddObjectiveDialogue = ({ open, handleClose, setPayload }) => {
   };
 
   const addNote = () => {
+    if (!duration.length || !date)
+      return message.error("Please update the date and duration to proceed!");
     const data = {
-      title,
-      color: color,
+      title: title,
+      startup: [...startup.map((s) => s.value)],
+      mentor: [...mentor.map((m) => m.value)],
+      date: date,
+      duration: duration,
+      venue: venue,
     };
+
     dispatch(
       actionCreators.addItem(
         `catalyzer/note`,
         data,
         (data) => {
           const { title } = data;
-          if (!title) return false;
+          if (
+            !title ||
+            !startup.length ||
+            !mentor.length ||
+            !date ||
+            !duration.length ||
+            !venue
+          )
+            return false;
           else return true;
         },
         (res) => {
           const { success, data, error } = res;
           if (success) {
             setTitle("");
-            setColor("");
-            setIndex("");
+            setDate("");
+            setDuration("");
             dispatch(actionCreators.setNotes(data.notes));
-            handleClose();
+            closeModal();
           }
           if (!success) console.log(error);
         }
@@ -109,91 +139,99 @@ const AddObjectiveDialogue = ({ open, handleClose, setPayload }) => {
   };
 
   return (
-    <Box>
-      <Dialog open={open} onClose={handleClose}>
-        <Tabs
-          style={{ width: "100%" }}
-          tabBarStyle={{ color: "#37561b" }}
-          size="small"
-          type="card"
-          onTabClick={(e) => setActiveTab(e)}
-          defaultActiveKey="1"
-        >
-          <TabPane tab="Add Objective" key="1">
-            <DialogContent>
-              <DialogContentText>
-                Objectives added from here are not restricted to the current
-                quarter
-              </DialogContentText>
-              <TextField
-                autoFocus
-                value={state.description}
-                margin="dense"
-                label="Objective"
-                fullWidth
-                variant="standard"
-                onChange={(e) =>
-                  setState({ ...state, description: e.target.value })
-                }
-                disabled={loading}
-              />
-              <TextField
-                value={state.quarter}
-                margin="dense"
-                label="Quarter"
-                fullWidth
-                variant="standard"
-                type="number"
-                inputProps={{ max: 4, min: 1 }}
-                onChange={(e) =>
-                  setState({ ...state, quarter: e.target.value })
-                }
-                disabled={loading}
-              />
-            </DialogContent>
-          </TabPane>
-          <TabPane tab="Add Note" key="2">
-            <DialogContent>
-              <DialogContentText>
-                Create To-Do lists that will help you get things done
-              </DialogContentText>
-              <TextField
-                autoFocus
-                value={title}
-                margin="dense"
-                label="note"
-                fullWidth
-                variant="standard"
-                onChange={(e) => setTitle(e.target.value)}
-                disabled={loading}
-              />
-              <Row style={{ marginTop: "1rem" }}>
-                {notesColors.map((c, i) => (
-                  <div
-                    className="color-container"
-                    onClick={() => handleSetNoteColor(c, i)}
-                    key={i}
-                    style={{
-                      backgroundColor: c,
-                      border:
-                        i === index ? "2px solid rgba(0,0,0,0.2)" : "none",
-                    }}
-                  />
-                ))}
-              </Row>
-            </DialogContent>
-          </TabPane>
-        </Tabs>
-        <DialogActions>
-          <Button onClick={handleClose} disabled={loading}>
-            Cancel
-          </Button>
+    <Modal
+      // title=""
+      centered
+      visible={open}
+      onOk={closeModal}
+      onCancel={closeModal}
+      footer={null}
+    >
+      <Tabs
+        style={{ width: "100%" }}
+        tabBarStyle={{ color: "#37561b" }}
+        size="small"
+        type="card"
+        onTabClick={(e) => setActiveTab(e)}
+        defaultActiveKey="1"
+      >
+        <TabPane tab="Add Objective" key="1">
+          <h4 className="session-text">Objective</h4>
+          <Input
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={loading}
+            className="session-input"
+          />
+          <h4 className="session-text">Quarter</h4>
+          <InputNumber
+            min={1}
+            max={4}
+            className="number-input"
+            defaultValue={currentQuater}
+            onChange={handleQuarterChange}
+          />
           <Button onClick={addObjective} disabled={loading}>
             Save
           </Button>
-        </DialogActions>
-      </Dialog>
-    </Box>
+        </TabPane>
+        <TabPane tab="Add Session" key="2">
+          <h4 className="session-text">Title</h4>
+          <Input
+            value={title}
+            placeholder="Title"
+            onChange={(e) => setTitle(e.target.value)}
+            disabled={loading}
+            className="session-input"
+          />
+          <h4 className="session-text">Startup</h4>
+          <MultiSelect
+            options={startupOptions}
+            value={startup}
+            className="multiple-select"
+            onChange={setStartup}
+            labelledBy="Select startup"
+          />
+          <h4 className="session-text">Mentor</h4>
+          <MultiSelect
+            options={mentorOptions}
+            className="multiple-select"
+            value={mentor}
+            onChange={setMentor}
+            labelledBy="Select startup"
+          />
+          <Row
+            xs={12}
+            style={{
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "1rem",
+            }}
+          >
+            <DatePicker
+              className="session-date-picker"
+              onChange={handleDateOnChange}
+            />
+            <TimePicker.RangePicker
+              onChange={handleDurationOnChange}
+              format="HH:mm A"
+              use12Hours
+            />
+          </Row>
+          <h4 className="session-text">Venue</h4>
+          <Input
+            value={venue}
+            placeholder="Title"
+            onChange={(e) => setVenue(e.target.value)}
+            disabled={loading}
+            className="session-input"
+          />
+          <Button onClick={addNote} disabled={loading}>
+            Save
+          </Button>
+        </TabPane>
+      </Tabs>
+    </Modal>
   );
 };
 

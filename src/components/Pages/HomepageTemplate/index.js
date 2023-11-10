@@ -206,12 +206,10 @@ const HomepageTemplate = (props) => {
   ];
 
   const adminItems = [
-    getItem("Dashboard", "1", <AppstoreOutlined />),
-    getItem("Teams", "sub1", <GroupOutlined />, [
-      getItem("Team Leads", "3"),
-      getItem("Team Members", "4"),
-      getItem("Startups", "5"),
-    ]),
+    getItem("Startups", "1", <AppstoreOutlined />),
+    getItem("Programs", "2", <AppstoreOutlined />),
+    getItem("Events", "3", <AppstoreOutlined />),
+    getItem("Resources", "3", <AppstoreOutlined />),
   ];
 
   const onClick = ({ key, item, selectedKeys }) => {
