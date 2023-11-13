@@ -37,7 +37,6 @@ const Accounts = () => {
   const [openAddStartupModal, setOpenStartupModal] = React.useState(false);
   const [openAddMentorModal, setOpenMentorModal] = React.useState(false);
   const [openAssignModal, setOpenAssignModal] = React.useState(false);
-  const [assignedStartups, setAssignedStartups] = React.useState([]);
 
   const { loading, users, programs } = useSelector((state) => state.requests);
   const { Search } = Input;
@@ -72,12 +71,12 @@ const Accounts = () => {
     console.log("search:", value);
   };
 
-  const options = programs.map((m) => ({
+  const options = programs?.map((m) => ({
     label: m.name,
     value: m.name,
   }));
 
-  const startupNames = startups.map((m) => ({
+  const startupNames = startups?.map((m) => ({
     label: m.username,
     value: m._id,
   }));
@@ -187,7 +186,7 @@ const Accounts = () => {
               justifyContent: "center",
             }}
           >
-            {startups.map((s) => (
+            {startups?.map((s) => (
               <AccountsCard m={s} key={s._id} />
             ))}
             {[...new Array(3 - (startups.length % 4)).fill()].map((r, i) => (
@@ -213,12 +212,11 @@ const Accounts = () => {
               flexWrap: "wrap",
             }}
           >
-            {mentors.map((m) => (
+            {mentors?.map((m) => (
               <AccountsCard
                 key={m._id}
                 m={m}
                 toggle={handleAssignModalToggle}
-                setAssignedStartups={setAssignedStartups}
               />
             ))}
             {[...new Array(3 - (mentors.length % 3)).fill()].map((r, i) => (
@@ -247,8 +245,6 @@ const Accounts = () => {
         toggle={handleAssignModalToggle}
         open={openAssignModal}
         startupNames={startupNames}
-        startups={assignedStartups?.teams}
-        mentorId={assignedStartups?._id}
       />
     </div>
   );

@@ -9,7 +9,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators } from "../../../Paths";
 
-const AccountsCard = ({ m, toggle, setAssignedStartups }) => {
+const AccountsCard = ({ m, toggle }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const openMenu = Boolean(anchorEl);
@@ -21,7 +21,6 @@ const AccountsCard = ({ m, toggle, setAssignedStartups }) => {
     if (arg === "assign") {
       toggle();
       dispatch(actionCreators.setMentor(m));
-      setAssignedStartups(m);
       setAnchorEl(null);
     }
     setAnchorEl(null);
