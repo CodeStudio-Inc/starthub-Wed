@@ -114,7 +114,9 @@ const MenuBar = ({ handleOpenDialogue, setPayload, userId, activeTab }) => {
                 disabled={loading}
               />
             )}
-            <Button onClick={searchNotes}>Filter</Button>
+            {activeTab === "5" ? (
+              <Button onClick={searchNotes}>Filter</Button>
+            ) : null}
             {/* {userId ? null : (
               <MoreVertIcon
                 id="basic-button"

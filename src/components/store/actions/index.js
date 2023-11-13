@@ -80,3 +80,7 @@ export const SET_PROFILE = "SET_PROFILE";
 export const SET_ALL_PROFILES = "SET_ALL_PROFILES";
 
 export const SET_CURRENT_QUARTER = "SET_CURRENT_QUARTER";
+
+export const SET_PROGRAMS = "SET_PROGRAMS";
+
+export const SET_MENTOR = "SET_MENTOR";

@@ -125,3 +125,44 @@ export const getRandomColor = () => {
 
   return colorCode;
 };
+
+// return first letter string with more than one word
+export const getFirstLetterAfterSpace = (str) => {
+  // Split the string into words using a space as the separator
+  const words = str.split(" ");
+
+  // Check if there is at least one word after a space
+  if (words.length > 1) {
+    // Get the first word after a space and return its first letter
+    const firstLetters = words.map((word) => word.charAt(0));
+
+    return firstLetters.join("");
+  } else {
+    // Return an empty string or handle the case when there are no words after a space
+    return str.substring(1, 0);
+  }
+};
+
+// calaculates and returns the difference between two dates
+export const calculateDaysBetweenDates = (dateArray) => {
+  if (dateArray.length !== 2) {
+    // Check if the input array contains exactly two date elements
+    return "Invalid input. Please provide an array with two date elements.";
+  }
+
+  const date1 = new Date(dateArray[0]);
+  const date2 = new Date(dateArray[1]);
+
+  if (isNaN(date1) || isNaN(date2)) {
+    // Check if the dates are valid Date objects
+    return "Invalid date format. Please provide valid date strings.";
+  }
+
+  // Calculate the time difference in milliseconds
+  const timeDifference = date2 - date1;
+
+  // Convert the time difference to days (1 day = 24 hours x 60 minutes x 60 seconds x 1000 milliseconds)
+  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  return daysDifference;
+};

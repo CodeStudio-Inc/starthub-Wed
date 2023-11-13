@@ -301,9 +301,119 @@
 .radar-graph-column {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 50%;
+}
+
+.radar-graph-column h2 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.radar-graph-column h3 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.progress-bar-column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  /* background: #dfa126; */
+}
+
+.progress-bar-column p {
+  font-weight: "100";
+  margin: 0;
+  font-size: 12px;
+  margin-right: 0.5rem;
+}
+
+.rev-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 0.5rem;
+  width: 100%;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.rev-card-column {
+  display: flex;
+  align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.rev-card-column h4 {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 400;
+}
+
+.rev-card-column h2 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.acc-card-column {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.acc-card-column h3 {
+  margin: 0;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
+
+.acc-card-column h4 {
+  margin: 0;
+  font-weight: 300;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.acc-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.acc-centered-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.acc-centered-column p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.acc-centered-column h4 {
+  margin: 0;
+  font-weight: 600;
 }
 
 .card-content-row-avatar {

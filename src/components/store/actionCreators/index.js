@@ -48,11 +48,13 @@ export {
   setObjectives,
   setNotes,
   setNote,
+  setPrograms,
   setRevenue,
   setCurrentQuarter,
   setUsers,
   setBoards,
   setCanvasLists,
+  setMentor,
 } from "./requests";
 
 export {

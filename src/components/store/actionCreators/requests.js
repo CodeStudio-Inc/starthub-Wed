@@ -205,6 +205,20 @@ export const setNote = (data) => {
   };
 };
 
+export const setPrograms = (data) => {
+  return {
+    type: actions.SET_PROGRAMS,
+    data,
+  };
+};
+
+export const setMentor = (data) => {
+  return {
+    type: actions.SET_MENTOR,
+    data,
+  };
+};
+
 export const setCurrentQuarter = (data) => {
   return {
     type: actions.SET_CURRENT_QUARTER,

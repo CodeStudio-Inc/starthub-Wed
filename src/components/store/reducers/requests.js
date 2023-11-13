@@ -12,6 +12,8 @@ const initialState = {
   objectives: [],
   notes: [],
   note: {},
+  mentor: {},
+  programs: [],
   revenue: [],
   teams: 0,
   vision: 0,
@@ -135,6 +137,18 @@ const requests = (state = initialState, action) => {
       return updateObject(state, {
         loading: false,
         note: action.data,
+      });
+
+    case actions.SET_PROGRAMS:
+      return updateObject(state, {
+        loading: false,
+        programs: action.data,
+      });
+
+    case actions.SET_MENTOR:
+      return updateObject(state, {
+        loading: false,
+        mentor: action.data,
       });
 
     case actions.SET_ALL_USERS:

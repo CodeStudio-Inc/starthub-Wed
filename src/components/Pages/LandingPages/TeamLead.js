@@ -19,17 +19,10 @@ const Teamlead = ({ index, title }) => {
       }}
     >
       {index === 1 ? <TeamLead /> : null}
-      {index === 3 ? <AddMember /> : null}
-      {index === 4 ? <AddStartup /> : null}
-      {index === 5 ? <TeamleadStartups /> : null}
-      {index === 7 ? <StartupList title={title} /> : null}
-      {index === 8 ? <StartupList title={title} /> : null}
-      {index === 9 ? <StartupList title={title} /> : null}
-      {index === 10 ? <StartupList title={title} /> : null}
-      {index === 11 ? <StartupList title={title} /> : null}
-      {index === 12 ? <StartupList title={title} /> : null}
-      {index === 13 ? <Revenue /> : null}
-      {index === 14 ? <OkrOverview /> : null}
+      {index === 2 ? <AddMember /> : null}
+      {index === 3 ? <AddStartup /> : null}
+      {index === 4 ? <Revenue /> : null}
+      {index === 5 ? <OkrOverview /> : null}
     </div>
   );
 };

@@ -174,22 +174,11 @@ const HomepageTemplate = (props) => {
   ];
 
   const teamLeadItems = [
-    getItem("Dashboard", "1", <AppstoreOutlined />),
-    getItem("Accounts", "sub1", <ContainerOutlined />, [
-      getSubItem("Add Mentor", "add mentor", "3"),
-      getSubItem("Add Startup", "add startup", "4"),
-      getSubItem("All Startups", "all teams", "5"),
-    ]),
-    getItem("My Startups", "sub2", <ContainerOutlined />, [
-      getSubItem("Catalyzer", "catalyzer", "7"),
-      getSubItem("OIP", "OIP", "8"),
-      getSubItem("SheTechs", "SheTechs", "9"),
-      getSubItem("UDSM", "UDSM", "10"),
-      getSubItem("LPUSP", "LPUSP", "11"),
-      getSubItem("Greenovation", "Greenovation", "12"),
-    ]),
-    getItem("Revenue", "13", <PaymentIcon />),
-    getItem("OKRs", "14", <ContainerOutlined />),
+    getItem("Startup Portfolio", "1", <ProfileOutlined />),
+    getItem("Accounts", "2", <GroupOutlined />),
+    getItem("Programs", "3", <AppstoreOutlined />),
+    getItem("Revenue", "4", <PaymentIcon />),
+    getItem("OKRs", "5", <ContainerOutlined />),
   ];
 
   const teamMembersItems = [
@@ -226,13 +215,13 @@ const HomepageTemplate = (props) => {
     ({ index, visible, title }) => {
       switch (userRole) {
         case "admin":
-          return <Admin index={index} />;
+          return <TeamLead index={index} title={title} />;
           break;
         case "team lead":
           return <TeamLead index={index} title={title} />;
           break;
         case "team member":
-          return <TeamMember index={index} title={title} />;
+          return <TeamLead index={index} title={title} />;
           break;
         case "startup":
           return <Startup index={index} visible={visible} />;
@@ -257,7 +246,7 @@ const HomepageTemplate = (props) => {
             onClick={onClick}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={adminItems}
+            items={teamLeadItems}
             style={{ background: "none", color: "#37561b" }}
           />
         );
@@ -279,7 +268,7 @@ const HomepageTemplate = (props) => {
             onClick={onClick}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={teamMembersItems}
+            items={teamLeadItems}
             style={{ background: "none", color: "#37561b" }}
           />
         );
