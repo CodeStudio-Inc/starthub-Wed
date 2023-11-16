@@ -5,8 +5,8 @@ import Kalend, {
   onSelectView,
   selectedView,
   onPageChange,
-} from "kalend"; // import component
-import "kalend/dist/styles/index.css"; // import styles
+} from "kalend";
+import "kalend/dist/styles/index.css";
 
 const Schedule = ({ events }) => {
   return (

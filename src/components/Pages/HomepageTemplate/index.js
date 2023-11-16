@@ -70,6 +70,8 @@ const HomepageTemplate = (props) => {
   React.useEffect(() => {
     setIndex(1);
     getStartups();
+    getEvents();
+    getPrograms();
   }, []);
 
   React.useEffect(() => {
@@ -82,6 +84,30 @@ const HomepageTemplate = (props) => {
       props.history.push("/");
     }
   }, []);
+
+  const getEvents = () => {
+    dispatch(
+      actionCreators.getItem(`catalyzer/events`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setEvents(data.events));
+        }
+        if (!success) console.log(error);
+      })
+    );
+  };
+
+  const getPrograms = () => {
+    dispatch(
+      actionCreators.getItem(`catalyzer/programs`, (res) => {
+        const { success, data, error } = res;
+        if (success) {
+          dispatch(actionCreators.setPrograms(data.programs));
+        }
+        if (!success) console.log(error);
+      })
+    );
+  };
 
   const getStartups = () => {
     dispatch(

@@ -54,8 +54,6 @@ const Programs = () => {
     (u) => u.userRole === "team lead" || u.userRole === "team member"
   );
 
-  console.log(programs);
-
   const events = programs?.map((p) => ({
     id: p._id,
     startAt: getFirstDateElement(p.duration),

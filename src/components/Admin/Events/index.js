@@ -44,8 +44,6 @@ const Evaluation = () => {
     (state) => state.requests
   );
 
-  console.log(events);
-
   const startups = users.filter((u) => u.userRole === "startup");
 
   const { TabPane } = Tabs;
