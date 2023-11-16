@@ -34,11 +34,13 @@ import AddMentorDrawer from "./components/AddMentorDrawer";
 import "../TeamLead/TeamLead.css";
 const Accounts = () => {
   const [searchValue, setSearchValue] = React.useState("");
+  const [program, setProgram] = React.useState("");
   const [openAddStartupModal, setOpenStartupModal] = React.useState(false);
   const [openAddMentorModal, setOpenMentorModal] = React.useState(false);
   const [openAssignModal, setOpenAssignModal] = React.useState(false);
 
   const { loading, users, programs } = useSelector((state) => state.requests);
+  const { userRole } = useSelector((state) => state.auth);
   const { Search } = Input;
   const { TabPane } = Tabs;
   const dispatch = useDispatch();
@@ -50,7 +52,40 @@ const Accounts = () => {
 
   const onSearch = (value) => {
     dispatch(
-      actionCreators.getItem(`auth/search-users?username=${value}`, (res) => {
+      actionCreators.searchItem(
+        `auth/search-users?username=${value}`,
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setUsers(data.users));
+          }
+          if (!success) console.log(error);
+        }
+      )
+    );
+  };
+
+  const handleFilterUsers = () => {
+    console.log(program);
+    dispatch(
+      actionCreators.searchItem(
+        `auth/filter-users?program=${program}&totalRevenue=${0}`,
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setUsers(data.users));
+            console.log(data.users);
+            setProgram("");
+          }
+          if (!success) console.log(error);
+        }
+      )
+    );
+  };
+
+  const getStartups = () => {
+    dispatch(
+      actionCreators.getItem(`auth/users`, (res) => {
         const { success, data, error } = res;
         if (success) {
           dispatch(actionCreators.setUsers(data.users));
@@ -68,8 +103,10 @@ const Accounts = () => {
   };
 
   const onSearchSelect = (value) => {
-    console.log("search:", value);
+    setProgram(value);
   };
+
+  console.log(program);
 
   const options = programs?.map((m) => ({
     label: m.name,
@@ -105,13 +142,15 @@ const Accounts = () => {
         >
           Add Startup
         </Button>
-        <Button
-          type="dashed"
-          style={{ marginRight: "1rem" }}
-          onClick={handleMentorModalToggle}
-        >
-          Add Mentor
-        </Button>
+        {userRole === "team member" ? null : (
+          <Button
+            type="dashed"
+            style={{ marginRight: "1rem" }}
+            onClick={handleMentorModalToggle}
+          >
+            Add Mentor
+          </Button>
+        )}
         <Search
           placeholder="search"
           value={searchValue}
@@ -119,12 +158,17 @@ const Accounts = () => {
           onChange={(e) => setSearchValue(e.target.value)}
           style={{ width: 200, marginRight: "1rem" }}
         />
-        <h3 style={{ margin: "0" }}>Total Users :{users.length}</h3>
+        <h3 style={{ margin: "0", fontWeight: "300" }}>
+          Total Users :{" "}
+          <strong style={{ fontWeight: "bold" }}>{users?.length}</strong>
+        </h3>
         <Avatar
+          onClick={getStartups}
           style={{
             backgroundColor: "#37561b",
             marginLeft: "1rem",
           }}
+          className="refresh-avatar"
           size={30}
           icon={loading ? <LoadingOutlined /> : <ReloadOutlined />}
         />
@@ -143,7 +187,7 @@ const Accounts = () => {
           showSearch
           placeholder="Category"
           optionFilterProp="children"
-          onChange={onChange}
+          onChange={onSearchSelect}
           onSearch={onSearchSelect}
           options={[
             {
@@ -156,7 +200,7 @@ const Accounts = () => {
             },
             {
               value: "Greenovation",
-              label: "Tom",
+              label: "Greenovation",
             },
             {
               value: "OIP",
@@ -164,7 +208,12 @@ const Accounts = () => {
             },
           ]}
         />
-        <Button type="dashed" style={{ marginLeft: "1rem" }}>
+        <Button
+          disabled={loading}
+          type="dashed"
+          style={{ marginLeft: "1rem" }}
+          onClick={handleFilterUsers}
+        >
           Filter
         </Button>
       </Row>

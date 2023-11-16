@@ -55,6 +55,7 @@ export {
   setBoards,
   setCanvasLists,
   setMentor,
+  setEvents,
 } from "./requests";
 
 export {

@@ -147,6 +147,7 @@ const Note = ({ open, setOpen }) => {
               editorStyle={{
                 border: "1px solid rgba(0,0,0,0.3)",
                 minHeight: "150px",
+                paddingLeft: "10px",
               }}
             />
             {note?.description.length > 7 ? (

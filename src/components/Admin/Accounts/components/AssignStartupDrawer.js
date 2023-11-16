@@ -116,7 +116,7 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
       // title="Assign Startup"
       // width={400}
       closeIcon={null}
-      width={200}
+      width="12.6rem"
       onClose={toggle}
       placement="right"
       visible={open}

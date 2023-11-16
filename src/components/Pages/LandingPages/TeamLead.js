@@ -7,6 +7,7 @@ import {
   AddStartup,
   AddMember,
   StartupList,
+  Events,
 } from "../../Paths";
 const Teamlead = ({ index, title }) => {
   return (
@@ -21,8 +22,9 @@ const Teamlead = ({ index, title }) => {
       {index === 1 ? <TeamLead /> : null}
       {index === 2 ? <AddMember /> : null}
       {index === 3 ? <AddStartup /> : null}
-      {index === 4 ? <Revenue /> : null}
-      {index === 5 ? <OkrOverview /> : null}
+      {index === 4 ? <Events /> : null}
+      {index === 5 ? <Revenue /> : null}
+      {index === 6 ? <OkrOverview /> : null}
     </div>
   );
 };

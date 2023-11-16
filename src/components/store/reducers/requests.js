@@ -11,6 +11,7 @@ const initialState = {
   quarter: 0,
   objectives: [],
   notes: [],
+  events: [],
   note: {},
   mentor: {},
   programs: [],
@@ -149,6 +150,12 @@ const requests = (state = initialState, action) => {
       return updateObject(state, {
         loading: false,
         mentor: action.data,
+      });
+
+    case actions.SET_EVENTS:
+      return updateObject(state, {
+        loading: false,
+        events: action.data,
       });
 
     case actions.SET_ALL_USERS:

@@ -166,3 +166,20 @@ export const calculateDaysBetweenDates = (dateArray) => {
 
   return daysDifference;
 };
+
+// Return first date element in the array if array is empty return the current date
+export const getFirstDateElement = (arr) => {
+  if (Array.isArray(arr) && arr.length > 0) {
+    return arr[0];
+  } else {
+    return new Date().toISOString();
+  }
+};
+
+// Return last date element in the array if array is empty return the current date
+export const getLastDateElement = (array) => {
+  if (array.length === 0) {
+    return new Date().toISOString();
+  }
+  return array[array.length - 1];
+};

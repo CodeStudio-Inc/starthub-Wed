@@ -7,10 +7,7 @@ import {
   ReloadOutlined,
   LineChartOutlined,
   UserOutlined,
-  MoreOutlined,
 } from "@ant-design/icons";
-import moment, { duration } from "moment";
-import { Line } from "react-chartjs-2";
 import {
   Table,
   Button,
@@ -25,7 +22,6 @@ import {
   message,
   Tabs,
   Col,
-  Dropdown,
 } from "antd";
 import { actionCreators, ModalUI, svg } from "../../Paths";
 import {
@@ -35,42 +31,35 @@ import {
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import moment from "moment";
 
+import AddEventModal from "./components/AddEventModal";
 import Schedule from "../Calender/Schedule";
-import AddProgramModal from "./components/AddProgramModal";
-import ProgramCard from "./components/ProgramCard";
+import Event from "./components/Event";
 import "./Styles.css";
-const Programs = () => {
-  const [searchValue, setSearchValue] = React.useState("");
-  const [openModal, setOpenModal] = React.useState(false);
+const Evaluation = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const { loading, users, programs, events } = useSelector(
+    (state) => state.requests
+  );
+
+  const startups = users.filter((u) => u.userRole === "startup");
 
   const { TabPane } = Tabs;
   const { Search } = Input;
   const dispatch = useDispatch();
 
-  const { loading, users, programs } = useSelector((state) => state.requests);
-
-  const mentors = users.filter(
-    (u) => u.userRole === "team lead" || u.userRole === "team member"
-  );
-
-  const events = programs?.map((p) => ({
-    id: p._id,
-    startAt: getFirstDateElement(p.duration),
-    endAt: getLastDateElement(p.duration),
-    summary: p.name,
-    color: "#36561b56",
-    calendarID: "work",
-  }));
+  const handleModalToggle = () => setOpen(!open);
 
   const onSearch = (value, _e, info) => {
     dispatch(
       actionCreators.searchItem(
-        `catalyzer/search-programs?name=${value}`,
+        `catalyzer/search-events?name=${value}`,
         (res) => {
           const { success, data, error } = res;
           if (success) {
-            dispatch(actionCreators.setPrograms(data.programs));
+            dispatch(actionCreators.setEvents(data.events));
           }
           if (!success) console.log(error);
         }
@@ -78,14 +67,21 @@ const Programs = () => {
     );
   };
 
-  const handleOpenModalToggle = () => setOpenModal(!openModal);
+  const eventsCalender = events?.map((e) => ({
+    id: e._id,
+    startAt: getFirstDateElement(e.duration),
+    endAt: getLastDateElement(e.duration),
+    summary: e.name,
+    color: "#36561b56",
+    calendarID: "work",
+  }));
 
-  const getPrograms = () => {
+  const getEvents = () => {
     dispatch(
-      actionCreators.getItem(`catalyzer/programs`, (res) => {
+      actionCreators.getItem(`catalyzer/events`, (res) => {
         const { success, data, error } = res;
         if (success) {
-          dispatch(actionCreators.setPrograms(data.programs));
+          dispatch(actionCreators.setEvents(data.events));
         }
         if (!success) console.log(error);
       })
@@ -93,14 +89,19 @@ const Programs = () => {
   };
 
   React.useEffect(() => {
-    getPrograms();
+    getEvents();
   }, []);
 
   return (
-    <div className="startups-container">
+    <div className="main-container">
       <Helmet>
         <title>Startup Portfolio</title>
       </Helmet>
+      <AddEventModal
+        open={open}
+        toggle={handleModalToggle}
+        startups={startups}
+      />
       <Row
         xs={12}
         style={{
@@ -113,14 +114,12 @@ const Programs = () => {
       >
         <Search
           placeholder="search"
-          value={searchValue}
           onSearch={onSearch}
-          onChange={(e) => setSearchValue(e.target.value)}
           style={{ width: 200, marginRight: "1rem" }}
         />
         <h3 style={{ margin: "0", fontWeight: "300" }}>
-          Total Programs :{" "}
-          <strong style={{ fontWeight: "bold" }}>{programs?.length}</strong>
+          Total Events :
+          <strong style={{ fontWeight: "bold" }}>{events?.length}</strong>
         </h3>
         <Avatar
           style={{
@@ -128,7 +127,7 @@ const Programs = () => {
             marginLeft: "1rem",
           }}
           className="refresh-avatar"
-          onClick={getPrograms}
+          onClick={getEvents}
           size={30}
           icon={loading ? <LoadingOutlined /> : <ReloadOutlined />}
         />
@@ -142,25 +141,24 @@ const Programs = () => {
         type="card"
         defaultActiveKey="1"
       >
-        <TabPane tab="Programs" key="1">
+        <TabPane tab="Events" key="1">
           <Row
             xs={12}
+            gutter={4}
             style={{
-              width: "100%",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            {programs.map((p) => (
-              <ProgramCard key={p._id} id={p._id} program={p} />
+            {events?.map((e) => (
+              <Event event={e} />
             ))}
-            {[...new Array(3 - (programs.length % 3)).fill()].map((r, i) => (
+            {[...new Array(2 - (events?.length % 2)).fill()].map((r, i) => (
               <div
                 style={{
                   margin: "0.5rem",
-                  width: "30%",
+                  width: "45%",
                   visibility: "hidden",
-                  height: "100px",
                 }}
                 key={i}
               />
@@ -176,16 +174,10 @@ const Programs = () => {
               justifyContent: "center",
             }}
           >
-            <Schedule events={events} />
+            <Schedule events={eventsCalender} />
           </Row>
         </TabPane>
       </Tabs>
-
-      <AddProgramModal
-        toggle={handleOpenModalToggle}
-        open={openModal}
-        mentors={mentors}
-      />
       <Fab
         aria-label="add"
         style={{
@@ -195,12 +187,12 @@ const Programs = () => {
           background: "#37561b",
           color: "#fff",
         }}
-        onClick={handleOpenModalToggle}
+        onClick={handleModalToggle}
       >
-        {openModal ? <CloseIcon /> : <AddIcon />}
+        {open ? <CloseIcon /> : <AddIcon />}
       </Fab>
     </div>
   );
 };
 
-export default Programs;
+export default Evaluation;

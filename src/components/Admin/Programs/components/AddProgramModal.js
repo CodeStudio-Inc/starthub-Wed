@@ -11,11 +11,12 @@ import {
   Space,
   Upload,
   message,
+  Modal,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators } from "../../../Paths";
 
-const AddProgramDrawer = ({ toggle, open, mentors }) => {
+const AddProgramModal = ({ toggle, open, mentors }) => {
   const [name, setName] = React.useState("");
   const [programLead, setProgramLead] = React.useState("");
   const [date, setDate] = React.useState("");
@@ -70,44 +71,23 @@ const AddProgramDrawer = ({ toggle, open, mentors }) => {
   };
 
   return (
-    <Drawer
-      title="Add Program"
-      // width={400}
-      closeIcon={null}
-      height={450}
-      onClose={toggle}
-      placement="bottom"
+    <Modal
       visible={open}
-      extra={
-        <Space>
-          <Button className="btn" onClick={toggle}>
-            Cancel
-          </Button>
-          <Button disabled={loading} className="btn" onClick={handleAddProgram}>
-            Submit
-          </Button>
-          {/* {loading ? (
-            <img src={svg} style={{ height: "30px", width: "30px" }} />
-          ) : null} */}
-        </Space>
-      }
+      onCancel={toggle}
+      footer={null}
+      width={600}
+      title="Add Program"
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Form
-          span={20}
-          layout="vertical"
-          validateMessages="All fields required"
-          style={{
-            width: "60%",
-          }}
-        >
-          <Row gutter={12}>
+      <div className="event-modal">
+        <div className="event-modal-content">
+          <Form
+            span={20}
+            layout="vertical"
+            validateMessages="All fields required"
+            style={{
+              width: "100%",
+            }}
+          >
             <Form.Item
               name="program"
               label="Program Name"
@@ -125,11 +105,9 @@ const AddProgramDrawer = ({ toggle, open, mentors }) => {
                 size="large"
               />
             </Form.Item>
-          </Row>
-          <Row gutter={12}>
             <Form.Item
               name="lead"
-              label="Progran Lead"
+              label="Program Lead"
               style={{ width: "90%" }}
               rules={[
                 {
@@ -140,8 +118,7 @@ const AddProgramDrawer = ({ toggle, open, mentors }) => {
             >
               <Select size="large" options={options} onChange={handleChange} />
             </Form.Item>
-          </Row>
-          <Row gutter={12}>
+
             <Form.Item
               name="duration"
               label="Duration"
@@ -154,16 +131,114 @@ const AddProgramDrawer = ({ toggle, open, mentors }) => {
               ]}
             >
               <RangePicker
+                showTime
                 style={{ marginRight: "1rem", width: "100%" }}
                 onChange={handleDateOnChange}
                 size="large"
+                format="YYYY-MM-DDTHH:mm"
               />
             </Form.Item>
-          </Row>
-        </Form>
+            <Button disabled={loading} onClick={handleAddProgram}>
+              Save
+            </Button>
+          </Form>
+        </div>
       </div>
-    </Drawer>
+    </Modal>
   );
 };
 
-export default AddProgramDrawer;
+export default AddProgramModal;
+
+{
+  /* <Drawer
+  title="Add Program"
+  // width={400}
+  closeIcon={null}
+  height={450}
+  onClose={toggle}
+  placement="bottom"
+  visible={open}
+  extra={
+    <Space>
+      <Button className="btn" onClick={toggle}>
+        Cancel
+      </Button>
+      <Button disabled={loading} className="btn" onClick={handleAddProgram}>
+        Submit
+      </Button>
+    </Space>
+  }
+>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <Form
+      span={20}
+      layout="vertical"
+      validateMessages="All fields required"
+      style={{
+        width: "60%",
+      }}
+    >
+      <Row gutter={12}>
+        <Form.Item
+          name="program"
+          label="Program Name"
+          style={{ width: "90%" }}
+          rules={[
+            {
+              required: true,
+              message: "Please enter program name",
+            },
+          ]}
+        >
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            size="large"
+          />
+        </Form.Item>
+      </Row>
+      <Row gutter={12}>
+        <Form.Item
+          name="lead"
+          label="Progran Lead"
+          style={{ width: "90%" }}
+          rules={[
+            {
+              required: true,
+              message: "Please enter program Lead",
+            },
+          ]}
+        >
+          <Select size="large" options={options} onChange={handleChange} />
+        </Form.Item>
+      </Row>
+      <Row gutter={12}>
+        <Form.Item
+          name="duration"
+          label="Duration"
+          style={{ width: "90%" }}
+          rules={[
+            {
+              required: true,
+              message: "Please enter duration",
+            },
+          ]}
+        >
+          <RangePicker
+            style={{ marginRight: "1rem", width: "100%" }}
+            onChange={handleDateOnChange}
+            size="large"
+          />
+        </Form.Item>
+      </Row>
+    </Form>
+  </div>
+</Drawer>; */
+}

@@ -28,22 +28,17 @@ import Profile from "../Admin/Startups/Profile";
 import Startups from "../Admin/Startups";
 import AdminPanel from "../Admin/Administrator";
 import TeamLead from "../Admin/TeamLead";
-import TeamleadStartups from "../Admin/TeamLead/TeamleadStartups";
 import TeamLeads from "../Admin/Administrator/TeamLeads";
 import TeamMembers from "../Admin/Administrator/TeamMembers";
 import AdminStartups from "../Admin/Administrator/Startups";
 import StartupList from "../Admin/Startups/StartupList";
 import AddStartup from "../Admin/Programs";
 import AddMember from "../Admin/Accounts";
-import Loans from "../Admin/Loans";
+import Events from "../Admin/Events";
 import Startup from "../Admin/Startups/Startup";
 import OkrOverview from "../Admin/OkrOverview";
 import StartupOkrs from "../Pages/OkrOverview";
-import Revenues from "../Admin/Revenue";
 import Revenue from "../Admin/TeamLead/Revenue";
-import Overview from "../Admin/Revenue/Overview";
-import RevenueShare from "../Admin/Revenue/RevenueShare";
-import RevenueAccumulation from "../Admin/Revenue/RevenueAccumulation";
 import ResourceFiles from "../Admin/ResourceFiles";
 import ObjectivesTable from "../Admin/Startups/OKRs";
 import DiagnosticTools from "../Admin/Startups/DiagnosticsTools";
@@ -73,7 +68,6 @@ export {
   DiagnosticsTest,
   Navbar,
   Card,
-  TeamleadStartups,
   TeamLeads,
   TeamMembers,
   AdminStartups,
@@ -87,7 +81,7 @@ export {
   Startups,
   AdminPanel,
   TeamLead,
-  Loans,
+  Events,
   Startup,
   StartupList,
   AddStartup,
@@ -95,11 +89,7 @@ export {
   Profile,
   OkrOverview,
   StartupOkrs,
-  Revenues,
-  Overview,
-  RevenueShare,
   Revenue,
-  RevenueAccumulation,
   ResourceFiles,
   DiagnosticTools,
   ObjectivesTable,

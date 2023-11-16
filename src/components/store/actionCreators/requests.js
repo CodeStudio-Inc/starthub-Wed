@@ -219,6 +219,13 @@ export const setMentor = (data) => {
   };
 };
 
+export const setEvents = (data) => {
+  return {
+    type: actions.SET_EVENTS,
+    data,
+  };
+};
+
 export const setCurrentQuarter = (data) => {
   return {
     type: actions.SET_CURRENT_QUARTER,

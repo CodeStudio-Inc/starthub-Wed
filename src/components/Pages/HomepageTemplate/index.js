@@ -12,7 +12,6 @@ import {
   actionCreators,
   ModalUI,
   Startups,
-  Loans,
   Revenues,
   ResourceFiles,
 } from "../../Paths";
@@ -24,13 +23,13 @@ import {
   ProfileOutlined,
   GroupOutlined,
   BarChartOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 import { Tabs, Menu } from "antd";
 import axios from "axios";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import BuildIcon from "@material-ui/icons/Build";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -38,14 +37,10 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PaymentIcon from "@mui/icons-material/Payment";
 import LogoutIcon from "@mui/icons-material/Logout";
-import CloseIcon from "@mui/icons-material/Close";
-import FolderIcon from "@mui/icons-material/Folder";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import LocalAtmIcon from "@mui/icons-material/LocalAtm";
-import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 
 import { Admin, TeamLead, TeamMember, Startup } from "../LandingPages";
 import "./HomepageStyles.css";
@@ -177,28 +172,9 @@ const HomepageTemplate = (props) => {
     getItem("Startup Portfolio", "1", <ProfileOutlined />),
     getItem("Accounts", "2", <GroupOutlined />),
     getItem("Programs", "3", <AppstoreOutlined />),
-    getItem("Revenue", "4", <PaymentIcon />),
-    getItem("OKRs", "5", <ContainerOutlined />),
-  ];
-
-  const teamMembersItems = [
-    getItem("Dashboard", "1", <AppstoreOutlined />),
-    getItem("Startups", "sub1", <GroupOutlined />, [
-      getSubItem("Catalyzer", "catalyzer", "3"),
-      getSubItem("OIP", "OIP", "4"),
-      getSubItem("SheTechs", "SheTechs", "5"),
-      getSubItem("UDSM", "UDSM", "6"),
-      getSubItem("LPUSP", "LPUSP", "7"),
-      getSubItem("Greenovation", "Greenovation", "8"),
-    ]),
-    getItem("OKRs", "9", <ContainerOutlined />),
-  ];
-
-  const adminItems = [
-    getItem("Startups", "1", <AppstoreOutlined />),
-    getItem("Programs", "2", <AppstoreOutlined />),
-    getItem("Events", "3", <AppstoreOutlined />),
-    getItem("Resources", "3", <AppstoreOutlined />),
+    getItem("Events", "4", <CalendarOutlined />),
+    getItem("Revenue", "5", <PaymentIcon />),
+    getItem("OKRs", "6", <ContainerOutlined />),
   ];
 
   const onClick = ({ key, item, selectedKeys }) => {

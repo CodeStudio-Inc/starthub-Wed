@@ -84,3 +84,5 @@ export const SET_CURRENT_QUARTER = "SET_CURRENT_QUARTER";
 export const SET_PROGRAMS = "SET_PROGRAMS";
 
 export const SET_MENTOR = "SET_MENTOR";
+
+export const SET_EVENTS = "SET_EVENTS";

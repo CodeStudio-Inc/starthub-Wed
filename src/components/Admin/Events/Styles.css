@@ -1,0 +1,70 @@
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.event-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 45%;
+  padding: 10px;
+  margin: 0.5rem;
+  border-left: 5px solid #37561b;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.event-content-column {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.event-content-column h3 {
+  margin: 0;
+}
+
+.event-content-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 0.5rem;
+}
+
+.event-content-row p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.5);
+  margin-left: 0.3rem;
+  font-size: 12px;
+}
+
+.event-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.event-modal-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 90%;
+}
+
+.multiple-select {
+  margin-bottom: 1rem;
+}
+
+.session-date-picker {
+  width: 100%;
+}

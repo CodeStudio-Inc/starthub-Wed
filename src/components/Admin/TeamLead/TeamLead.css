@@ -96,6 +96,10 @@
   margin-bottom: 1rem;
 }
 
+.refresh-avatar:hover {
+  cursor: pointer;
+}
+
 .card {
   display: flex;
   align-items: flex-start;

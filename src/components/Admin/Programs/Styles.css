@@ -102,3 +102,7 @@
   margin: 0;
   font-size: 30px;
 }
+
+.refresh-avatar:hover {
+  cursor: pointer;
+}
