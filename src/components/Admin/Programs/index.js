@@ -54,6 +54,8 @@ const Programs = () => {
     (u) => u.userRole === "team lead" || u.userRole === "team member"
   );
 
+  console.log(programs);
+
   const events = programs?.map((p) => ({
     id: p._id,
     startAt: getFirstDateElement(p.duration),
@@ -151,10 +153,10 @@ const Programs = () => {
               justifyContent: "center",
             }}
           >
-            {programs.map((p) => (
+            {programs?.map((p) => (
               <ProgramCard key={p._id} id={p._id} program={p} />
             ))}
-            {[...new Array(3 - (programs.length % 3)).fill()].map((r, i) => (
+            {[...new Array(3 - (programs?.length % 3)).fill()].map((r, i) => (
               <div
                 style={{
                   margin: "0.5rem",

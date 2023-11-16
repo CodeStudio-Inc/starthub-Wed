@@ -105,8 +105,6 @@ const Accounts = () => {
     setProgram(value);
   };
 
-  console.log(program);
-
   const options = programs?.map((m) => ({
     label: m.name,
     value: m.name,
