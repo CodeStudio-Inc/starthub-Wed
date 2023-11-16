@@ -94,7 +94,9 @@ const Accounts = () => {
     );
   };
 
-  const mentors = users.filter((u) => u.userRole === "team member");
+  const mentors = users.filter(
+    (u) => u.userRole === "team member" || u.userRole === "team lead"
+  );
   const startups = users.filter((u) => u.userRole === "startup");
 
   const onChange = (value) => {

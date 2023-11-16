@@ -16,48 +16,25 @@ import {
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators } from "../../../Paths";
+import { MultiSelect } from "react-multi-select-component";
 
 const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
   const { loading, mentor } = useSelector((state) => state.requests);
 
-  const [checkedList, setCheckedList] = React.useState([]);
-  const [UncheckedList, setUnCheckedList] = React.useState([]);
-  const [toggleBtn, setToggleBtn] = React.useState(false);
+  const [assignStartup, setAssignStartup] = React.useState([]);
+  const [unAssignStartup, setUnAssignStartup] = React.useState([]);
 
   const mentorId = mentor?._id;
-
-  const CheckboxGroup = Checkbox.Group;
   const dispatch = useDispatch();
-
-  const checkAll = startupNames?.length === checkedList?.length;
-  const indeterminate =
-    checkedList?.length > 0 && checkedList?.length < startupNames?.length;
-
-  const handleAssignToggle = () => setToggleBtn(false);
-  const handleUnAssignToggle = () => setToggleBtn(true);
-
-  const onChange = (list) => {
-    setCheckedList(list);
-    handleAssignToggle();
-  };
-  const onUnAssignChange = (list) => {
-    setUnCheckedList(list);
-    handleUnAssignToggle();
-  };
-
-  const onCheckAllChange = (e) => {
-    setCheckedList(e.target.checked ? startupNames?.map((m) => m.value) : []);
-  };
 
   const assignedStartups = mentor?.teams?.map((m) => ({
     label: startupNames?.find((s) => s.value === m)?.label,
     value: m,
   }));
 
-  const assignStartup = () => {
-    if (toggleBtn) return unAssignStartup();
+  const handleAssignStartup = () => {
     const data = {
-      teams: checkedList,
+      teams: assignStartup.map((s) => s.value),
     };
     dispatch(
       actionCreators.updateItem(
@@ -73,9 +50,7 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
           if (success) {
             message.info("Successfully assigned startup");
             dispatch(actionCreators.setUsers(data.users));
-            setCheckedList([]);
             toggle();
-            handleAssignToggle();
           }
           if (!success) console.log(error);
         }
@@ -83,9 +58,9 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
     );
   };
 
-  const unAssignStartup = () => {
+  const handleUnAssignStartup = () => {
     const data = {
-      teams: UncheckedList,
+      teams: unAssignStartup.map((s) => s.value),
     };
     dispatch(
       actionCreators.updateItem(
@@ -101,9 +76,7 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
           if (success) {
             message.info("Successfully unassigned startup");
             dispatch(actionCreators.setUsers(data.users));
-            dispatch(actionCreators.setUsers(data.users));
             toggle();
-            handleAssignToggle();
           }
           if (!success) console.log(error);
         }
@@ -113,24 +86,16 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
 
   return (
     <Drawer
-      // title="Assign Startup"
-      // width={400}
       closeIcon={null}
-      width="12.6rem"
+      width="20rem"
       onClose={toggle}
       placement="right"
       visible={open}
       extra={
         <Space>
-          {/* <Button className="btn" onClick={toggle}>
-            Cancel
-          </Button> */}
-          <Button className="btn" onClick={assignStartup}>
-            {toggleBtn ? "UnAssign" : "Assign"}
+          <Button disabled={loading} className="btn" onClick={toggle}>
+            cancel
           </Button>
-          {/* {loading ? (
-            <img src={svg} style={{ height: "30px", width: "30px" }} />
-          ) : null} */}
         </Space>
       }
     >
@@ -142,29 +107,41 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
           alignItems: "flex-start",
         }}
       >
-        <h4 style={{ color: "rgba(0,0,0,0.4)" }}>Select Startups</h4>
-        <Checkbox
-          indeterminate={indeterminate}
-          onChange={onCheckAllChange}
-          checked={checkAll}
-        >
-          Check all
-        </Checkbox>
-        <Divider />
-        <CheckboxGroup
+        <h4 style={{ color: "rgba(0,0,0,0.8)" }}>Select Startups</h4>
+        <MultiSelect
+          disabled={loading}
           options={startupNames}
-          value={checkedList}
-          onChange={onChange}
+          value={assignStartup}
+          className="startup-multiple-select"
+          onChange={setAssignStartup}
+          labelledBy="Select startup"
         />
+        <Button
+          disabled={loading}
+          type="link"
+          style={{ color: "#37561b" }}
+          onClick={handleAssignStartup}
+        >
+          Assign
+        </Button>
         <Divider />
-        <h4 style={{ color: "rgba(0,0,0,0.4)" }}>Check to unassigned</h4>
-        {
-          <CheckboxGroup
-            options={assignedStartups}
-            value={UncheckedList}
-            onChange={onUnAssignChange}
-          />
-        }
+        <h4 style={{ color: "rgba(0,0,0,0.8)" }}>Assign Startup</h4>
+        <MultiSelect
+          disabled={loading}
+          options={assignedStartups}
+          value={unAssignStartup}
+          className="startup-multiple-select"
+          onChange={setUnAssignStartup}
+          labelledBy="Select startup"
+        />
+        <Button
+          disabled={loading}
+          type="link"
+          style={{ color: "#37561b" }}
+          onClick={handleUnAssignStartup}
+        >
+          UnAssign
+        </Button>
         <Divider />
       </div>
     </Drawer>

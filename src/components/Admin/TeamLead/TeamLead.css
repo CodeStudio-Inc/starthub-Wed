@@ -566,6 +566,11 @@
   color: rgba(0, 0, 0, 0.3);
 }
 
+.startup-multiple-select {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
 .admin-okrs-container {
   display: flex;
   align-items: center;
