@@ -38,7 +38,9 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import PaymentIcon from "@mui/icons-material/Payment";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
+import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
@@ -170,8 +172,16 @@ const HomepageTemplate = (props) => {
 
   const teamLeadItems = [
     getItem("Startup Portfolio", "1", <ProfileOutlined />),
-    getItem("Accounts", "2", <GroupOutlined />),
-    getItem("Programs", "3", <AppstoreOutlined />),
+    getItem(
+      "Accounts",
+      "2",
+      <ManageAccountsOutlinedIcon style={{ fontSize: "18px" }} />
+    ),
+    getItem(
+      "Programs",
+      "3",
+      <EventNoteOutlinedIcon style={{ fontSize: "18px" }} />
+    ),
     getItem("Events", "4", <CalendarOutlined />),
     getItem("Revenue", "5", <PaymentIcon />),
     getItem("OKRs", "6", <ContainerOutlined />),

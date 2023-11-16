@@ -202,7 +202,7 @@ const TeamLead = (props) => {
         style={{
           display: "flex",
           alignItems: "flex-end",
-          justifyContent: "flex-end",
+          justifyContent: "flex-start",
           width: "95%",
         }}
       >

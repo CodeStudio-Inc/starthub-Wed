@@ -57,7 +57,7 @@ const AddEventModal = ({ open, toggle, startups }) => {
         data,
         (data) => {
           const { name, venue, type, duration } = data;
-          if (!name || !duration.length || !venue || !type) return false;
+          if (!name || !duration?.length || !venue || !type) return false;
           else return true;
         },
         (res) => {

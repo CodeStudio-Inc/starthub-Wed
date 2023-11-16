@@ -66,7 +66,6 @@ const Accounts = () => {
   };
 
   const handleFilterUsers = () => {
-    console.log(program);
     dispatch(
       actionCreators.searchItem(
         `auth/filter-users?program=${program}&totalRevenue=${0}`,
@@ -179,7 +178,7 @@ const Accounts = () => {
         style={{
           display: "flex",
           alignItems: "flex-end",
-          justifyContent: "flex-end",
+          justifyContent: "flex-start",
           width: "95%",
         }}
       >
