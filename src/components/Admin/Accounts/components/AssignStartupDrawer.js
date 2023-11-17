@@ -6,13 +6,17 @@ import {
   Drawer,
   Form,
   Input,
-  Row,
+  List,
   Select,
+  Row,
+  Grid,
   Space,
   Upload,
   message,
   Checkbox,
   Divider,
+  Avatar,
+  Typography,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators } from "../../../Paths";
@@ -125,7 +129,7 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
           Assign
         </Button>
         <Divider />
-        <h4 style={{ color: "rgba(0,0,0,0.8)" }}>Assign Startup</h4>
+        <h4 style={{ color: "rgba(0,0,0,0.8)" }}>Selcet to unassign Startup</h4>
         <MultiSelect
           disabled={loading}
           options={assignedStartups}
@@ -143,6 +147,31 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
           UnAssign
         </Button>
         <Divider />
+        <h4 style={{ color: "rgba(0,0,0,0.8)" }}>Assigned Startup</h4>
+        {assignedStartups.map((s) => (
+          <Row
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Avatar
+              size={35}
+              style={{ background: "#36561b56", margin: "0.2rem" }}
+            >
+              <Typography>{s?.label?.substring(0, 1)}</Typography>
+            </Avatar>
+            <h4
+              style={{
+                // margin: 0,
+                fontSize: "14px",
+              }}
+            >
+              {s.label}
+            </h4>
+          </Row>
+        ))}
       </div>
     </Drawer>
   );
