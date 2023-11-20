@@ -82,8 +82,8 @@ const TeamLead = (props) => {
           totalExpectedRevenueShare,
           ...rest
         } = r;
-        const profile = profiles.find((r) => r.creator === _id);
-        const data = profiles.find((r) => r.creator === _id)?.founder;
+        const profile = profiles?.find((r) => r.creator === _id);
+        const data = profiles?.find((r) => r.creator === _id)?.founder;
 
         return {
           ...rest,
