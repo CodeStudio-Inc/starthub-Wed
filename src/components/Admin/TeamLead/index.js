@@ -63,8 +63,6 @@ const TeamLead = (props) => {
     return users.filter((u) => teams.includes(u._id));
   }, [users]);
 
-  console.log(sortedStartups);
-
   const mentor = users?.find((r) => r._id === record?._id);
 
   const dispatch = useDispatch();
@@ -279,7 +277,7 @@ const TeamLead = (props) => {
       <Row
         xs={12}
         style={{
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "center",
         }}
       >
