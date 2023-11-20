@@ -38,7 +38,7 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
 
   const handleAssignStartup = () => {
     const data = {
-      teams: assignStartup.map((s) => s.value),
+      teams: assignStartup?.map((s) => s.value),
     };
     dispatch(
       actionCreators.updateItem(
@@ -64,7 +64,7 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
 
   const handleUnAssignStartup = () => {
     const data = {
-      teams: unAssignStartup.map((s) => s.value),
+      teams: unAssignStartup?.map((s) => s.value),
     };
     dispatch(
       actionCreators.updateItem(
