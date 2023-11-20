@@ -377,7 +377,7 @@
 
 .acc-card-column h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   color: rgba(0, 0, 0, 0.8);
   font-weight: 500;
 }
@@ -387,6 +387,26 @@
   font-weight: 300;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.3);
+}
+
+.acc-card-column p {
+  margin: 0;
+  color: #37561b;
+}
+
+.acc-card-column p:hover {
+  cursor: pointer;
+}
+
+.acc-card-column input {
+  border: none;
+  outline: none;
+  margin: 0.2rem;
+  width: 250px;
+  padding-left: 5px;
+  height: 40px;
+  background: #eeeeee68;
+  border-radius: 5px;
 }
 
 .acc-card-row {

@@ -237,11 +237,11 @@ const Accounts = () => {
             {startups?.map((s) => (
               <AccountsCard m={s} key={s._id} />
             ))}
-            {[...new Array(3 - (startups.length % 4)).fill()].map((r, i) => (
+            {[...new Array(3 - (startups.length % 3)).fill()].map((r, i) => (
               <div
                 style={{
                   margin: "0.5rem",
-                  width: "20rem",
+                  width: "25rem",
                   visibility: "hidden",
                 }}
                 key={i}
@@ -271,7 +271,7 @@ const Accounts = () => {
               <div
                 style={{
                   margin: "0.5rem",
-                  width: "20rem",
+                  width: "25rem",
                   visibility: "hidden",
                 }}
                 key={i}

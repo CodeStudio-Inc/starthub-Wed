@@ -232,7 +232,7 @@ const AddEventModal = ({ open, toggle, startups }) => {
             </Form.Item>
             <Form.Item
               name="venue"
-              label="Venue"
+              label="location"
               width="100%"
               rules={[
                 {

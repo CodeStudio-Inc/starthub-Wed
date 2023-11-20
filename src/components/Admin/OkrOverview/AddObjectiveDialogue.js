@@ -218,7 +218,7 @@ const AddObjectiveDialogue = ({
               use12Hours
             />
           </Row>
-          <h4 className="session-text">Venue</h4>
+          <h4 className="session-text">Location</h4>
           <Input
             value={venue}
             placeholder="Title"

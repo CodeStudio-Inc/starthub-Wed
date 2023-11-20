@@ -10,11 +10,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators } from "../../../Paths";
 
 const AccountsCard = ({ m, toggle }) => {
+  const [email, setEmail] = React.useState(m.email);
+  const [username, setUsername] = React.useState(m.username);
+  const [edit, setEdit] = React.useState(false);
+  const [activeCard, setActiveCard] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const { loading } = useSelector((state) => state.requests);
 
   const openMenu = Boolean(anchorEl);
   const dispatch = useDispatch();
+
+  const toggleEdit = () => setEdit(!edit);
+
   const handleMenuClick = (event) => {
+    setEdit(false);
     setAnchorEl(event.currentTarget);
   };
   const handleMenuClose = (arg) => {
@@ -26,10 +36,42 @@ const AccountsCard = ({ m, toggle }) => {
     setAnchorEl(null);
   };
 
+  const handleEditUser = (id) => {
+    toggleEdit();
+    setActiveCard(id);
+    setAnchorEl(null);
+  };
+
+  const handleUpdateUser = () => {
+    const data = {
+      email,
+      username,
+    };
+    dispatch(
+      actionCreators.updateItem(
+        `/auth/update-user/${activeCard}`,
+        data,
+        (data) => {
+          const { email, username } = data;
+          if (!email || !username) return false;
+          else return true;
+        },
+        (res) => {
+          const { success, data, error } = res;
+          if (success) {
+            dispatch(actionCreators.setUsers(data.users));
+            // console.log(data.users);
+            setEdit(false);
+          }
+        }
+      )
+    );
+  };
+
   return (
     <Card
       key={m._id}
-      style={{ margin: "0.5rem", width: "20rem" }}
+      style={{ margin: "0.5rem", width: "25rem" }}
       bodyStyle={{ padding: 10 }}
     >
       <div
@@ -48,6 +90,7 @@ const AccountsCard = ({ m, toggle }) => {
           aria-expanded={openMenu ? "true" : undefined}
           style={{ fontSize: "30px", color: "rgba(0,0,0,0.4)" }}
           onClick={handleMenuClick}
+          disabled={loading}
         />
         <Menu
           id="basic-menu"
@@ -58,7 +101,7 @@ const AccountsCard = ({ m, toggle }) => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={() => handleMenuClose()}>
+          <MenuItem onClick={() => handleEditUser(m._id)}>
             <ListItemIcon>
               <EditOutlined />
             </ListItemIcon>
@@ -92,10 +135,31 @@ const AccountsCard = ({ m, toggle }) => {
           // shape="square"
           size={80}
         />
-        <div className="acc-card-column">
-          <h3>{m.username}</h3>
-          <h4>{m.teamCategory}</h4>
-        </div>
+        {edit && activeCard === m._id ? (
+          <div className="acc-card-column">
+            <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              autoFocus
+              onFocus={() => setActiveCard(m._id)}
+              disabled={loading}
+            />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onFocus={() => setActiveCard(m._id)}
+              disabled={loading}
+            />
+            <p disabled={loading} onClick={handleUpdateUser}>
+              {loading ? "updating" : "save"}
+            </p>
+          </div>
+        ) : (
+          <div className="acc-card-column">
+            <h3>{m.username}</h3>
+            <h4>{m.email}</h4>
+          </div>
+        )}
       </Row>
 
       <Row className="acc-card-row">
