@@ -32,6 +32,7 @@ export const setUser = (
   username,
   email,
   category,
+  teams,
   features,
   userRole,
   permissions,
@@ -53,6 +54,7 @@ export const setUser = (
     username,
     email,
     category,
+    teams,
     features,
     userRole,
     permissions,
@@ -103,13 +105,13 @@ export const login = (email, password, callback) => {
       .post(`auth/signin`, data)
       .then((res) => {
         dispatch(stopLoader());
-        // console.log(res.data);
         dispatch(
           setUser(
             res.data.userId,
             res.data.username,
             res.data.email,
             res.data.category,
+            res.data.teams,
             res.data.features,
             res.data.userRole,
             res.data.permissions,
@@ -148,6 +150,7 @@ export const getUser = (userId) => {
             res.data.username,
             res.data.email,
             res.data.category,
+            res.data.teams,
             res.data.features,
             res.data.userRole,
             res.data.permissions,

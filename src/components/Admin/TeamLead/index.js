@@ -44,7 +44,9 @@ const TeamLead = (props) => {
   const [searchValue, setSearchValue] = React.useState("");
   const [showEmailDrawer, setShowEmailDrawer] = React.useState(false);
 
-  const { userId, category } = useSelector((state) => state.auth);
+  const { userId, category, userRole, teams } = useSelector(
+    (state) => state.auth
+  );
   const { profiles } = useSelector((state) => state.profile);
   const { loading, users } = useSelector((state) => state.requests);
 
@@ -53,6 +55,15 @@ const TeamLead = (props) => {
   const startups = users.filter(
     (r) => r.teamCategory === "catalyzer" && r.userRole === "startup"
   );
+
+  const sortedStartups = React.useMemo(() => {
+    if (userRole === "team lead")
+      return users.filter((r) => r.userRole === "startup");
+
+    return users.filter((u) => teams.includes(u._id));
+  }, [users]);
+
+  console.log(sortedStartups);
 
   const mentor = users?.find((r) => r._id === record?._id);
 
@@ -65,7 +76,7 @@ const TeamLead = (props) => {
 
   const payload = useMemo(() => {
     const newstartup = [
-      ...startups.map((r) => {
+      ...sortedStartups.map((r) => {
         const {
           _id,
           totalExpense,
@@ -90,7 +101,7 @@ const TeamLead = (props) => {
       }),
     ];
     return newstartup;
-  }, [startups, profiles]);
+  }, [sortedStartups, profiles]);
 
   const getStartups = () => {
     dispatch(
@@ -183,7 +194,9 @@ const TeamLead = (props) => {
         />
         <h3 style={{ margin: "0", fontWeight: "300" }}>
           Total Users :{" "}
-          <strong style={{ fontWeight: "bold" }}>{users?.length}</strong>
+          <strong style={{ fontWeight: "bold" }}>
+            {sortedStartups?.length}
+          </strong>
         </h3>
         <Avatar
           style={{
