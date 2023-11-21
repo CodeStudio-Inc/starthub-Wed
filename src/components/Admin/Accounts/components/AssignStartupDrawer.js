@@ -148,7 +148,7 @@ const AssignStartupDrawer = ({ toggle, open, startupNames }) => {
         </Button>
         <Divider />
         <h4 style={{ color: "rgba(0,0,0,0.8)" }}>Assigned Startup</h4>
-        {assignedStartups.map((s) => (
+        {assignedStartups?.map((s) => (
           <Row
             style={{
               display: "flex",
