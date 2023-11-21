@@ -75,12 +75,7 @@ const PortfolioCard = ({ r, props, email }) => {
           <div className="avatar-column">
             <h2>Pitch Deck</h2>
             {/* <h3>{r?.profile?.pitch}</h3> */}
-            <h3>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </h3>
+            <h3>{r?.profile?.pitch ? r?.profile?.pitch : "Company Pitch"}</h3>
           </div>
         </Row>
         <Divider />
